@@ -5,6 +5,7 @@
    • CAT_EMOJI : อิโมจิประจำหมวด (ใช้แสดงผล)
    ============================================================ */
 const EMBEDDED_QB = {
+  "เซต": { 1:{sub:"นิยามและสับเซต",level:4}, 2:{sub:"เพาเวอร์เซต",level:4}, 3:{sub:"เพาเวอร์เซต",level:5}, 4:{sub:"การดำเนินการและผลคูณคาร์ทีเซียน",level:4}, 5:{sub:"นิยามและสับเซต",level:2}, 6:{sub:"จำนวนสมาชิก",level:3}, 7:{sub:"เพาเวอร์เซต",level:4}, 8:{sub:"จำนวนสมาชิก",level:4}, 9:{sub:"โจทย์ประยุกต์",level:4}, 10:{sub:"โจทย์ประยุกต์",level:5}, 11:{sub:"เพาเวอร์เซต",level:4}, 12:{sub:"นิยามและสับเซต",level:5}, 13:{sub:"โจทย์ประยุกต์",level:5}, 14:{sub:"สมบัติและพีชคณิตเซต",level:4}, 15:{sub:"สมบัติและพีชคณิตเซต",level:4}, 16:{sub:"นิยามและสับเซต",level:4}, 17:{sub:"จำนวนสมาชิก",level:4}, 18:{sub:"จำนวนสมาชิก",level:5}, 19:{sub:"โจทย์ประยุกต์",level:4}, 20:{sub:"เพาเวอร์เซต",level:5}, 21:{sub:"โจทย์ประยุกต์",level:5}, 22:{sub:"โจทย์ประยุกต์",level:4}, 23:{sub:"โจทย์ประยุกต์",level:4}, 24:{sub:"สมบัติและพีชคณิตเซต",level:5}, 25:{sub:"สมบัติและพีชคณิตเซต",level:5}, 26:{sub:"จำนวนสมาชิก",level:5}, 27:{sub:"เพาเวอร์เซต",level:5}, 28:{sub:"การดำเนินการและผลคูณคาร์ทีเซียน",level:4}, 29:{sub:"จำนวนสมาชิก",level:4}, 30:{sub:"สมบัติและพีชคณิตเซต",level:5} },
   "Expo Logarithm": {
     1:{sub:"สมการเอกซ์โพเนนเชียล",level:3},2:{sub:"กราฟ/การเปรียบเทียบ Expo",level:2},
     3:{sub:"อสมการล็อการิทึม",level:4},4:{sub:"อสมการเอกซ์โพเนนเชียล",level:3},
@@ -41,7 +42,57 @@ const EMBEDDED_QB = {
   }
 };
 
-const PRACTICE_BANK={"Expo Logarithm":[{n:1,c:"สมการเอกซ์โพเนนเชียล",l:2,s:"PAT 1 มี.ค. 52",y:"2552",yt:"https://www.youtube.com/watch?v=hFaDUjBu4P0&list=PLc4ncgz2CJ7OjRvsaXGHaJONCnH33zMK5&index=1"},
+const PRACTICE_BANK={
+  "เซต": [
+    { n:1, c:"นิยามและสับเซต", l:3, s:"PAT1 มี.ค.52", y:"2552", yt:"https://youtube.com/watch?v=FKlr7ODDS20" },
+    { n:2, c:"เพาเวอร์เซต", l:3, s:"PAT1 มี.ค.52", y:"2552", yt:"https://youtube.com/watch?v=l76K0jkdmhA" },
+    { n:3, c:"โจทย์ประยุกต์", l:3, s:"PAT1 ก.ค.52", y:"2552", yt:"https://youtube.com/watch?v=H38vgn8PDQs" },
+    { n:4, c:"นิยามและสับเซต", l:3, s:"PAT1 ก.ค.52", y:"2552", yt:"https://youtube.com/watch?v=O-wtH4aYcY4" },
+    { n:5, c:"เพาเวอร์เซต", l:3, s:"PAT1 ต.ค.52", y:"2552", yt:"https://youtube.com/watch?v=um9aREqygrg" },
+    { n:6, c:"นิยามและสับเซต", l:5, s:"PAT1 ต.ค.52", y:"2552", yt:"https://youtube.com/watch?v=tpp20Kb8aTA" },
+    { n:7, c:"จำนวนสมาชิก", l:3, s:"PAT1 ต.ค.52", y:"2552", yt:"https://youtube.com/watch?v=BB4-HRkJ7YE" },
+    { n:8, c:"เพาเวอร์เซต", l:4, s:"PAT1 มี.ค.53", y:"2553", yt:"https://youtube.com/watch?v=oSUAy93HFX0" },
+    { n:9, c:"จำนวนสมาชิก", l:4, s:"PAT1 มี.ค.53", y:"2553", yt:"https://youtube.com/watch?v=WK-TUl0nyBc" },
+    { n:10, c:"เพาเวอร์เซต", l:4, s:"PAT1 ก.ค.53", y:"2553", yt:"https://youtube.com/watch?v=qZf2UGxzCD4" },
+    { n:11, c:"โจทย์ประยุกต์", l:4, s:"PAT1 ก.ค.53", y:"2553", yt:"https://youtube.com/watch?v=GOMfDEq9uok" },
+    { n:12, c:"จำนวนสมาชิก", l:5, s:"PAT1 ต.ค.53", y:"2553", yt:"https://youtube.com/watch?v=RIZf7zNibyI" },
+    { n:13, c:"โจทย์ประยุกต์", l:5, s:"PAT1 มี.ค.54", y:"2554", yt:"https://youtube.com/watch?v=S5LDhw0bch0" },
+    { n:14, c:"เพาเวอร์เซต", l:4, s:"PAT1 ต.ค.54", y:"2554", yt:"https://youtube.com/watch?v=ot9QGkY5Luw" },
+    { n:15, c:"จำนวนสมาชิก", l:4, s:"PAT1 ต.ค.54", y:"2554", yt:"https://youtube.com/watch?v=IarKSKyAnZs" },
+    { n:16, c:"นิยามและสับเซต", l:5, s:"PAT1 มี.ค.55", y:"2555", yt:"https://youtube.com/watch?v=2jJykbmPiLc" },
+    { n:17, c:"โจทย์ประยุกต์", l:5, s:"PAT1 มี.ค.55", y:"2555", yt:"https://youtube.com/watch?v=L5r9edZ4SrQ" },
+    { n:18, c:"สมบัติและพีชคณิตเซต", l:4, s:"PAT1 ต.ค.55", y:"2555", yt:"https://youtube.com/watch?v=eF3TfPAsmtU" },
+    { n:19, c:"โจทย์ประยุกต์", l:4, s:"PAT1 ต.ค.55", y:"2555", yt:"https://youtube.com/watch?v=PRGsjfU8doU" },
+    { n:20, c:"สมบัติและพีชคณิตเซต", l:4, s:"PAT1 มี.ค.56", y:"2556", yt:"https://youtube.com/watch?v=krjuz5rJTiU" },
+    { n:21, c:"นิยามและสับเซต", l:4, s:"PAT1 มี.ค.56", y:"2556", yt:"https://youtube.com/watch?v=rSaHtYQg6UI" },
+    { n:22, c:"จำนวนสมาชิก", l:4, s:"PAT1 มี.ค.57", y:"2557", yt:"https://youtube.com/watch?v=K_i6-uTyPI8" },
+    { n:23, c:"จำนวนสมาชิก", l:4, s:"PAT1 เม.ย.57", y:"2557", yt:"https://youtube.com/watch?v=MChcyaJdHi4" },
+    { n:24, c:"จำนวนสมาชิก", l:5, s:"PAT1 พ.ย.57", y:"2557", yt:"https://youtube.com/watch?v=nUP3x0s_Ops" },
+    { n:25, c:"โจทย์ประยุกต์", l:4, s:"PAT1 มี.ค.58", y:"2558", yt:"https://youtube.com/watch?v=T7o9aJLaBhk" },
+    { n:26, c:"เพาเวอร์เซต", l:5, s:"PAT1 มี.ค.58", y:"2558", yt:"https://youtube.com/watch?v=yYYavQIwPWI" },
+    { n:27, c:"สมบัติและพีชคณิตเซต", l:4, s:"PAT1 ต.ค.58", y:"2558", yt:"https://youtube.com/watch?v=AJTeakPZOwI" },
+    { n:28, c:"โจทย์ประยุกต์", l:5, s:"PAT1 ต.ค.58", y:"2558", yt:"https://youtube.com/watch?v=nwZ1A0EbN2g" },
+    { n:29, c:"โจทย์ประยุกต์", l:4, s:"PAT1 ต.ค.58", y:"2558", yt:"https://youtube.com/watch?v=qk7-GxbkOes" },
+    { n:30, c:"โจทย์ประยุกต์", l:4, s:"PAT1 มี.ค.59", y:"2559", yt:"https://youtube.com/watch?v=MsAC1Hc9It8" },
+    { n:31, c:"สมบัติและพีชคณิตเซต", l:5, s:"PAT1 มี.ค.59", y:"2559", yt:"https://youtube.com/watch?v=Of9s2QsOSbQ" },
+    { n:32, c:"สมบัติและพีชคณิตเซต", l:5, s:"PAT1 ต.ค.59", y:"2559", yt:"https://youtube.com/watch?v=BxkH3M0jVUo" },
+    { n:33, c:"จำนวนสมาชิก", l:5, s:"PAT1 ต.ค.59", y:"2559", yt:"https://youtube.com/watch?v=RariG9ZXy-A" },
+    { n:34, c:"นิยามและสับเซต", l:3, s:"9 วิชาสามัญ 60", y:"2560", yt:"https://youtube.com/watch?v=VUnb_Y4I808" },
+    { n:35, c:"สมบัติและพีชคณิตเซต", l:5, s:"PAT1 มี.ค.60", y:"2560", yt:"https://youtube.com/watch?v=ReoZ1A-BcMg" },
+    { n:36, c:"โจทย์ประยุกต์", l:4, s:"PAT1 มี.ค.60", y:"2560", yt:"https://youtube.com/watch?v=ojNnsvvwIY8" },
+    { n:37, c:"เพาเวอร์เซต", l:5, s:"PAT1 ก.พ.61", y:"2561", yt:"https://youtube.com/watch?v=vytRFtLOqEE" },
+    { n:38, c:"จำนวนสมาชิก", l:4, s:"PAT1 ก.พ.62", y:"2562", yt:"https://youtube.com/watch?v=UqCSVoZ543A" },
+    { n:39, c:"การดำเนินการและผลคูณคาร์ทีเซียน", l:4, s:"PAT1 ก.พ.62", y:"2562", yt:"https://youtube.com/watch?v=mdf9CnYPyxg" },
+    { n:40, c:"สมบัติและพีชคณิตเซต", l:5, s:"PAT1 ก.พ.63", y:"2563", yt:"https://youtube.com/watch?v=MDuUkWEKQFU" },
+    { n:41, c:"จำนวนสมาชิก", l:4, s:"PAT1 ก.พ.63", y:"2563", yt:"https://youtube.com/watch?v=O-UzFkvQuiw" },
+    { n:42, c:"จำนวนสมาชิก", l:3, s:"9 วิชาสามัญ 64", y:"2564", yt:"https://youtube.com/watch?v=pb8ZxRMi-2Q" },
+    { n:43, c:"โจทย์ประยุกต์", l:5, s:"PAT1 มี.ค.65", y:"2565", yt:"https://youtube.com/watch?v=gdEl5wLDGZs" },
+    { n:44, c:"การดำเนินการและผลคูณคาร์ทีเซียน", l:3, s:"9 วิชาสามัญ 65", y:"2565", yt:"https://youtube.com/watch?v=QF_Teipvjdw" },
+    { n:45, c:"จำนวนสมาชิก", l:4, s:"A-Level 66", y:"2566", yt:"https://youtube.com/watch?v=FAZqGZlpyv4" },
+    { n:46, c:"จำนวนสมาชิก", l:3, s:"A-Level 67", y:"2567", yt:"https://youtube.com/watch?v=ItXoKoYbOnU" },
+    { n:47, c:"เพาเวอร์เซต", l:3, s:"A-Level 68", y:"2568", yt:"https://youtube.com/watch?v=vbxRn6ajGuw" },
+    { n:48, c:"จำนวนสมาชิก", l:4, s:"A-Level 68", y:"2568", yt:"https://youtube.com/watch?v=Q5VTD3vIuJA" },
+  ],"Expo Logarithm":[{n:1,c:"สมการเอกซ์โพเนนเชียล",l:2,s:"PAT 1 มี.ค. 52",y:"2552",yt:"https://www.youtube.com/watch?v=hFaDUjBu4P0&list=PLc4ncgz2CJ7OjRvsaXGHaJONCnH33zMK5&index=1"},
 {n:2,c:"อสมการเอกซ์โพเนนเชียล",l:3,s:"PAT 1 มี.ค. 52",y:"2552",yt:"https://www.youtube.com/watch?v=XisIfB8WPCc&list=PLc4ncgz2CJ7OjRvsaXGHaJONCnH33zMK5&index=2"},
 {n:3,c:"สมการล็อการิทึม",l:3,s:"PAT 1 มี.ค. 52",y:"2552",yt:"https://www.youtube.com/watch?v=usuF-H9GcVU&list=PLc4ncgz2CJ7OjRvsaXGHaJONCnH33zMK5&index=3"},
 {n:4,c:"สมการล็อการิทึม",l:3,s:"PAT 1 กรกฎาคม 52",y:"2552",yt:"https://www.youtube.com/watch?v=8y4ANiJ1IPI&list=PLc4ncgz2CJ7OjRvsaXGHaJONCnH33zMK5&index=4"},
@@ -171,4 +222,5 @@ const PRACTICE_BANK={"Expo Logarithm":[{n:1,c:"สมการเอกซ์โ
 {n:128,c:"สมการล็อการิทึม",l:4,s:"A-Level 67",y:"2567",yt:"https://www.youtube.com/watch?v=oXkFyfLnr6M&list=PLc4ncgz2CJ7OjRvsaXGHaJONCnH33zMK5&index=128"},
 {n:129,c:"สมบัติ/ทฤษฎีบท",l:3,s:"A-Level 68",y:"2568",yt:"https://www.youtube.com/watch?v=wVDJlQXND8g&list=PLc4ncgz2CJ7OjRvsaXGHaJONCnH33zMK5&index=129"}]};
 
-const CAT_EMOJI={'สมการเอกซ์โพเนนเชียล':'🔵','อสมการเอกซ์โพเนนเชียล':'🟠','สมการล็อการิทึม':'🟢','อสมการล็อการิทึม':'🟡','สมบัติ/ทฤษฎีบท':'🟣','กราฟฟังก์ชัน':'🔴','โจทย์ประยุกต์':'🟤'};
+const CAT_EMOJI={
+  "นิยามและสับเซต":"🔵","เพาเวอร์เซต":"🟠","การดำเนินการและผลคูณคาร์ทีเซียน":"🟢","สมบัติและพีชคณิตเซต":"🟡","จำนวนสมาชิก":"🟣","โจทย์ประยุกต์":"🔴",'สมการเอกซ์โพเนนเชียล':'🔵','อสมการเอกซ์โพเนนเชียล':'🟠','สมการล็อการิทึม':'🟢','อสมการล็อการิทึม':'🟡','สมบัติ/ทฤษฎีบท':'🟣','กราฟฟังก์ชัน':'🔴','โจทย์ประยุกต์':'🟤'};
