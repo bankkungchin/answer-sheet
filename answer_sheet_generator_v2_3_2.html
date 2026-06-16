@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Answer Sheet Generator v2.3</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F2EFE9; --card: #FDFCF9; --ink: #1A1A1A; --ink2: #666;
+    --accent: #1B3A6B; --border: #D5CFC5;
+    --correct: #D6EAD7; --careless: #FFF3CD; --wrong: #FADADD;
+    --concept: #FAE0FF; --cant: #FFE4CC; --late: #D6EEFF;
+  }
+  html, body { min-height: 100vh; font-family: 'Sarabun', sans-serif; background: var(--bg); }
+  body { display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem 4rem; }
+  .container { width: 100%; max-width: 520px; }
+  .brand { text-align: center; margin-bottom: 2rem; padding-top: 1rem; }
+  .brand-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--accent);
+    margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+  .brand h1 { font-size: 20px; font-weight: 600; color: var(--ink); }
+  .brand p  { font-size: 13px; color: var(--ink2); margin-top: 4px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 1.5rem; box-shadow: 0 2px 20px rgba(0,0,0,0.07); }
+  .field { margin-bottom: 1.1rem; }
+  .field label { display: block; font-size: 11px; font-weight: 600; color: var(--ink2);
+    letter-spacing: 0.7px; text-transform: uppercase; margin-bottom: 6px; }
+  .field input, .field select { width: 100%; height: 48px; padding: 0 14px;
+    font-family: 'Sarabun', sans-serif; font-size: 16px; color: var(--ink);
+    background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px;
+    outline: none; transition: border-color 0.15s; -webkit-appearance: none; appearance: none; }
+  .field input:focus, .field select:focus { border-color: var(--accent); background: #fff; }
+  .field input::placeholder { color: #BBBBBB; }
+  .select-wrap { position: relative; }
+  .select-wrap::after { content: ''; position: absolute; right: 14px; top: 50%;
+    transform: translateY(-50%); border: 5px solid transparent;
+    border-top-color: #999; margin-top: 3px; pointer-events: none; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+
+  /* legend preview */
+  .legend-preview { display: flex; gap: 6px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .lp-item { display: flex; align-items: center; gap: 6px; padding: 5px 10px;
+    border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); font-size: 12px; font-weight: 600; }
+  .lp-sym { width: 26px; height: 26px; border-radius: 5px; display: flex;
+    align-items: center; justify-content: center; font-size: 15px; font-weight: 700; }
+
+  .btn { width: 100%; height: 52px; background: var(--accent); color: #fff;
+    font-family: 'Sarabun', sans-serif; font-size: 16px; font-weight: 600;
+    border: none; border-radius: 10px; cursor: pointer; display: flex;
+    align-items: center; justify-content: center; gap: 8px;
+    transition: opacity 0.15s, transform 0.1s; -webkit-tap-highlight-color: transparent; }
+  .btn:hover { opacity: 0.88; }
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { background: #AAA; cursor: not-allowed; transform: none; }
+  .status { text-align: center; font-size: 13px; color: var(--ink2); margin-top: 10px; min-height: 18px; }
+  .status.ok  { color: #2A7A4F; font-weight: 500; }
+  .status.err { color: #B33; }
+  #pdfLink { display: none; margin-top: 12px; text-align: center; font-size: 15px;
+    font-weight: 600; color: #1B3A6B; padding: 14px; border-radius: 10px;
+    background: #EEF2FA; border: 1px solid #B0BCCC; text-decoration: none; width: 100%; }
+  @media (min-width: 600px) { body { padding: 3rem 2rem 5rem; } .card { padding: 2rem; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="brand">
+    <div class="brand-icon">📋</div>
+    <h1>Answer Sheet Generator</h1>
+    <p>พิมพ์ชื่อข้อสอบ แล้วรับ PDF พร้อมปริ้นทันที</p>
+  </div>
+  <div class="card">
+    <div class="field">
+      <label>ชื่อข้อสอบ (Topic)</label>
+      <input type="text" id="topic" placeholder="เช่น Expo Logarithm" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label>วันที่ (Date)</label>
+      <input type="text" id="date" placeholder="เช่น 6 Jun 2026" autocomplete="off" />
+    </div>
+    <hr class="divider">
+    <div class="row2">
+      <div class="field">
+        <label>จำนวนข้อ</label>
+        <div class="select-wrap">
+          <select id="totalQ">
+            <option value="15">15 ข้อ (1 หน้า)</option>
+            <option value="30" selected>30 ข้อ (2 หน้า)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>ขนาด</label>
+        <div class="select-wrap">
+          <select id="pageSize"><option value="a4" selected>A4</option></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend-preview">
+      <div style="font-size:11px;font-weight:600;color:#888;width:100%;margin-bottom:6px;">Legend — urgency to improve →</div>
+      <div class="lp-item" style="background:#E8F5E9;">
+        <div class="lp-sym" style="background:#C8E6C9;color:#1B5E20;">✓</div>
+        <span style="color:#1B5E20;">Right</span>
+      </div>
+      <div class="lp-item" style="background:#FFF8E1;">
+        <div class="lp-sym" style="background:#FFE082;color:#7a5800;">0</div>
+        <span style="color:#7a5800;">Careless</span>
+      </div>
+      <div class="lp-item" style="background:#FBE9E7;">
+        <div class="lp-sym" style="background:#FFAB91;color:#6D1F00;">C</div>
+        <span style="color:#BF360C;">Wrong concept</span>
+      </div>
+      <div class="lp-item" style="background:#FCE4EC;">
+        <div class="lp-sym" style="background:#F48FB1;color:#4A0033;">X</div>
+        <span style="color:#880E4F;">Can't do</span>
+      </div>
+      <div class="lp-item" style="background:#EDE7F6;">
+        <div class="lp-sym" style="background:#B39DDB;color:#1A0060;">T</div>
+        <span style="color:#311B92;">Ran out of time</span>
+      </div>
+    </div>
+
+    <button class="btn" id="genBtn" onclick="generate()">📄 สร้าง PDF</button>
+    <div class="status" id="status"></div>
+    <a id="pdfLink" href="#" target="_blank"></a>
+  </div>
+</div>
+
+<script>
+const { jsPDF } = window.jspdf;
+
+function ln(ctx, x1,y1,x2,y2) { ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); }
+function rrect(ctx, x,y,w,h,r,fill,stroke) {
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w,y+h-r); ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+  ctx.lineTo(x+r,y+h); ctx.arcTo(x,y+h,x,y+h-r,r);
+  ctx.lineTo(x,y+r); ctx.arcTo(x,y,x+r,y,r);
+  ctx.closePath();
+  if (fill) ctx.fill();
+  if (stroke) ctx.stroke();
+}
+
+async function renderPage(pageNum, startQ, endQ, totalQ, topic, date) {
+  const DPI = 200;
+  const ppm = DPI / 25.4;
+  const W = Math.round(210 * ppm);
+  const H = Math.round(297 * ppm);
+  const p = v => v * ppm;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  await document.fonts.ready;
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, W, H);
+
+  const M = p(10);   // margin ลดจาก 18 → 10
+  const cw = W - 2*M;
+
+  // ── HEADER (compact) ─────────────────────────────────────────
+  // แถวเดียว: TOPIC [value]  |  DATE [value]  สูงแค่ p(14)
+  const hh = p(14), hy = M;
+  ctx.fillStyle = '#F0F2F5';
+  ctx.strokeStyle = '#B0BCCC';
+  ctx.lineWidth = p(0.4);
+  rrect(ctx, M, hy, cw, hh, p(2), true, true);
+
+  const labelY = hy + hh * 0.42;
+  const valY   = hy + hh * 0.82;
+  const pad = p(5);
+
+  // divider line ระหว่าง topic / date
+  const divX = M + cw * 0.65;
+  ctx.strokeStyle = '#C0C8D8'; ctx.lineWidth = p(0.3);
+  ln(ctx, divX, hy + p(2), divX, hy + hh - p(2));
+
+  // labels
+  ctx.fillStyle = '#888888';
+  ctx.font = `${p(2.8)}px Sarabun, sans-serif`;
+  ctx.textAlign = 'left';
+  ctx.fillText('TOPIC', M + pad, labelY);
+  ctx.fillText('DATE',  divX + pad, labelY);
+
+  // values
+  ctx.fillStyle = '#111111';
+  ctx.font = `600 ${p(5)}px Sarabun, sans-serif`;
+  if (topic) ctx.fillText(topic, M + pad, valY);
+  if (date)  ctx.fillText(date,  divX + pad, valY);
+
+  // ── LEGEND BAR ───────────────────────────────────────────────
+  // แถวบาง ๆ ใต้ header อธิบายสัญลักษณ์ O / X —
+  const lgY = hy + hh + p(1.5);
+  const lgH = p(8);
+  ctx.fillStyle = '#F8F8F6';
+  ctx.strokeStyle = '#C8C8C0';
+  ctx.lineWidth = p(0.3);
+  rrect(ctx, M, lgY, cw, lgH, p(1.5), true, true);
+
+  // legend items — urgency palette
+  const items = [
+    { sym: '✓', label: 'Right',          bg: '#C8E6C9', fg: '#1B5E20' },
+    { sym: '0', label: 'Careless',        bg: '#FFE082', fg: '#7a5800' },
+    { sym: 'C', label: 'Wrong concept',   bg: '#FFAB91', fg: '#6D1F00' },
+    { sym: 'X', label: "Can't do",        bg: '#F48FB1', fg: '#4A0033' },
+    { sym: 'T', label: 'Ran out of time', bg: '#B39DDB', fg: '#1A0060' },
+  ];
+  const itemW = cw / items.length;
+  items.forEach((it, i) => {
+    const ix = M + i * itemW;
+    const cy2 = lgY + lgH / 2;
+    const boxS = p(5.5);
+    const bx = ix + p(4);
+    // colored box
+    ctx.fillStyle = it.bg;
+    ctx.strokeStyle = it.fg + '80';
+    ctx.lineWidth = p(0.4);
+    rrect(ctx, bx, cy2 - boxS/2, boxS, boxS, p(0.8), true, true);
+    // symbol inside box
+    ctx.fillStyle = it.fg;
+    ctx.font = `700 ${p(4)}px Sarabun, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText(it.sym, bx + boxS/2, cy2 + p(1.5));
+    // label text
+    ctx.fillStyle = '#444444';
+    ctx.font = `${p(2.8)}px Sarabun, sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.fillText(it.label, bx + boxS + p(1.5), cy2 + p(1));
+  });
+
+  // ── COL HEADER ───────────────────────────────────────────────
+  // 7 คอลัมน์: No. | ถูก | สะเพร่า | คอนเซปต์ | ทำไม่ได้ | ทำไม่ทัน | Notes
+  const noW   = p(10);
+  const ckW   = p(14);   // ถูก
+  const caW   = p(16);   // สะเพร่า
+  const cnW   = p(18);   // ผิดคอนเซปต์
+  const cdW   = p(18);   // ทำไม่ได้
+  const ctW   = p(18);   // ทำไม่ทัน
+  const leftW = noW + ckW + caW + cnW + cdW + ctW;
+  const notesW = cw - leftW;
+
+  const colX  = [M, M+noW, M+noW+ckW, M+noW+ckW+caW, M+noW+ckW+caW+cnW, M+noW+ckW+caW+cnW+cdW, M+leftW];
+  const colWs = [noW, ckW, caW, cnW, cdW, ctW, notesW];
+  const chY = lgY + lgH + p(1.5);
+  const chH = p(9);
+
+  ctx.fillStyle = '#2C4C82';
+  ctx.fillRect(M, chY, cw, chH);
+
+  const colLabels = ['No.', 'Right', 'Careless', 'Wrong concept', "Can't do", 'Ran out of time', 'Photos / Notes'];
+  const colSub    = ['',   '✓',    '0',         'C',             'X',        'T',                ''];
+  ctx.fillStyle = '#FFFFFF';
+  colX.forEach((cx, i) => {
+    ctx.textAlign = 'center';
+    if (colSub[i]) {
+      // ชื่อบน
+      ctx.font = `600 ${p(2.5)}px Sarabun, sans-serif`;
+      ctx.fillText(colLabels[i], cx + colWs[i]/2, chY + chH * 0.38);
+      // สัญลักษณ์ล่าง
+      ctx.font = `700 ${p(3.2)}px Sarabun, sans-serif`;
+      ctx.fillText(colSub[i], cx + colWs[i]/2, chY + chH * 0.80);
+    } else {
+      ctx.font = `600 ${p(2.8)}px Sarabun, sans-serif`;
+      ctx.fillText(colLabels[i], cx + colWs[i]/2, chY + chH * 0.62);
+    }
+  });
+  ctx.strokeStyle = '#4A78B0'; ctx.lineWidth = p(0.2);
+  colX.slice(1).forEach(cx => ln(ctx, cx, chY, cx, chY+chH));
+
+  // ── ROWS ─────────────────────────────────────────────────────
+  const tableTop = chY + chH;
+  const rowH = (H - M - tableTop - p(12)) / (endQ - startQ + 1);
+
+  for (let i = 0; i <= endQ - startQ; i++) {
+    const qnum = startQ + i;
+    const ry = tableTop + i * rowH;
+
+    ctx.fillStyle = i%2===0 ? '#F0F4FB' : '#FFFFFF';
+    ctx.fillRect(M, ry, cw, rowH);
+
+    // column backgrounds — urgency palette: green→yellow→orange→red→purple
+    const colBg    = ['#E8F5E9','#FFF8E1','#FBE9E7','#FCE4EC','#EDE7F6'];
+    const colBorder = ['#2E7D32','#F9A825','#D84315','#AD1457','#4527A0'];
+    [1,2,3,4,5].forEach(ci => {
+      ctx.fillStyle = colBg[ci-1];
+      ctx.fillRect(colX[ci], ry, colWs[ci], rowH);
+    });
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(colX[6], ry, colWs[6], rowH);
+
+    // row divider
+    ctx.strokeStyle = '#BBC8DC'; ctx.lineWidth = p(0.15);
+    ln(ctx, M, ry, M+cw, ry);
+    colX.slice(1).forEach(cx => ln(ctx, cx, ry, cx, ry+rowH));
+
+    // circle number
+    const cxNo = colX[0] + colWs[0]/2;
+    const cyNo = ry + rowH/2;
+    ctx.fillStyle = '#1B3A6B';
+    ctx.beginPath(); ctx.arc(cxNo, cyNo, p(3.5), 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#FFFFFF'; ctx.textAlign = 'center';
+    ctx.font = `700 ${p(4)}px Sarabun, sans-serif`;
+    ctx.fillText(String(qnum), cxNo, cyNo + p(1.5));
+
+    // checkboxes — 5 cols
+    for (let ci = 1; ci <= 5; ci++) {
+      const maxH = rowH * 0.72;
+      const maxW = colWs[ci] * 0.72;
+      const bs = Math.min(maxH, maxW);
+      const bx = colX[ci] + colWs[ci]/2 - bs/2;
+      const by = cyNo - bs/2;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.strokeStyle = colBorder[ci-1];
+      ctx.lineWidth = p(0.6);
+      rrect(ctx, bx, by, bs, bs, p(1.5), true, true);
+    }
+  }
+
+  const lastY = tableTop + (endQ-startQ+1)*rowH;
+  ctx.strokeStyle = '#BBC8DC'; ctx.lineWidth = p(0.2);
+  ln(ctx, M, lastY, M+cw, lastY);
+
+  // outer border around table
+  ctx.strokeStyle = '#2C4C82'; ctx.lineWidth = p(0.5);
+  rrect(ctx, M, chY, cw, lastY - chY, p(2), false, true);
+
+  // ── SCORE BOX ────────────────────────────────────────────────
+  const sw = cw, sh = p(8);
+  const sx = M;
+  const sy = lastY + p(2);
+  const scoreLabels = [`Score _____ / ${totalQ}`, 'Careless _____', 'Wrong concept _____', "Can't do _____", 'Ran out _____'];
+  const cellW = sw / scoreLabels.length;
+
+  ctx.fillStyle = '#EEF2FA'; ctx.strokeStyle = '#2C4C82'; ctx.lineWidth = p(0.3);
+  rrect(ctx, sx, sy, sw, sh, p(1.5), true, true);
+
+  scoreLabels.forEach((lbl, i) => {
+    if (i > 0) {
+      ctx.strokeStyle = '#B0BCCC'; ctx.lineWidth = p(0.25);
+      ln(ctx, sx + i*cellW, sy + p(1), sx + i*cellW, sy + sh - p(1));
+    }
+    ctx.fillStyle = '#1B3A6B'; ctx.textAlign = 'center';
+    ctx.font = `600 ${p(3.0)}px Sarabun, sans-serif`;
+    ctx.fillText(lbl, sx + i*cellW + cellW/2, sy + sh*0.65);
+  });
+
+  return canvas.toDataURL('image/jpeg', 0.95);
+}
+
+async function generate() {
+  const topic  = document.getElementById('topic').value.trim();
+  const date   = document.getElementById('date').value.trim();
+  const totalQ = parseInt(document.getElementById('totalQ').value);
+  const btn    = document.getElementById('genBtn');
+  const status = document.getElementById('status');
+  const pdfLink = document.getElementById('pdfLink');
+
+  btn.disabled = true; btn.textContent = 'กำลังสร้าง...';
+  status.className = 'status'; status.textContent = '';
+  pdfLink.style.display = 'none';
+
+  await new Promise(r => setTimeout(r, 30));
+
+  try {
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const pages = totalQ <= 15 ? [[1,1,totalQ]] : [[1,1,15],[2,16,totalQ]];
+
+    for (let i = 0; i < pages.length; i++) {
+      const [pageNum, startQ, endQ] = pages[i];
+      if (i > 0) doc.addPage();
+      const imgData = await renderPage(pageNum, startQ, endQ, totalQ, topic, date);
+      doc.addImage(imgData, 'JPEG', 0, 0, 210, 297, '', 'FAST');
+    }
+
+    const filename = [topic, date].filter(Boolean).join('_').replace(/[\s/\\:*?"<>|]+/g,'_') || 'answer_sheet';
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+    if (isIOS) {
+      const blob = doc.output('blob');
+      const url = URL.createObjectURL(blob);
+      pdfLink.href = url;
+      pdfLink.textContent = '📄 แตะที่นี่เพื่อเปิด PDF → กด Share > Save to Files';
+      pdfLink.style.display = 'block';
+      status.className = 'status ok';
+      status.textContent = '✓ พร้อมแล้ว';
+    } else {
+      doc.save(filename + '.pdf');
+      status.className = 'status ok';
+      status.textContent = '✓ ดาวน์โหลดสำเร็จ!';
+    }
+  } catch(e) {
+    console.error(e);
+    status.className = 'status err';
+    status.textContent = 'เกิดข้อผิดพลาด: ' + e.message;
+  }
+
+  btn.disabled = false; btn.textContent = '📄 สร้าง PDF';
+}
+
+// default date
+const today = new Date();
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+document.getElementById('date').value = `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
+</script>
+</body>
+</html>
