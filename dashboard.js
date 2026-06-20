@@ -219,10 +219,13 @@ function renderPracticePlan(d){
 
 function parseStatus(val){
   if(!val)return'blank';
-  if(val.includes('สะเพร่า'))return'care';
-  if(val.includes('ผิด'))return'wrong';
-  if(val.includes('ถูก'))return'ok';
-  if(val.includes('ไม่ทำ'))return'blank';
+  const v=val.trim();
+  if(v==='✅'||v.includes('ถูก'))return'ok';
+  if(v==='⚠️'||v.includes('สะเพร่า'))return'care';
+  if(v==='C'||v.includes('คอนเซปต์'))return'concept';
+  if(v==='X'||v.includes('ทำไม่ได้'))return'cant';
+  if(v==='⏰'||v.includes('ไม่ทัน')||v.includes('ไม่ทำ'))return'timeout';
+  if(v.includes('ผิด'))return'cant';
   return'blank';
 }
 
@@ -230,7 +233,7 @@ async function fetchDashData(){
   selectedGroups=null; // reset ตัวกรองกลุ่มทุกครั้งที่ดึงข้อมูลใหม่
   const topicFilter=document.getElementById('topicFilter').value.trim();
   const [resData,longData]=await Promise.all([
-    fetch(`${BASE}/${SHEET_ID}/values/${encodeURIComponent('results!A:AN')}?key=${API_KEY}`).then(r=>r.json()),
+    fetch(`${BASE}/${SHEET_ID}/values/${encodeURIComponent('results!A:AR')}?key=${API_KEY}`).then(r=>r.json()),
     fetch(`${BASE}/${SHEET_ID}/values/${encodeURIComponent('results_long!A:H')}?key=${API_KEY}`).then(r=>r.json())
   ]);
   const rows=resData.values||[];
@@ -252,17 +255,17 @@ async function fetchDashData(){
   dashErr='';
   const myRow=myRows[myRows.length-1];
   const group=myRow[2]||'',date=myRow[3]||'',topic=myRow[4]||'';
-  const score=parseInt(myRow[36])||0,care=parseInt(myRow[37])||0,wrong=parseInt(myRow[38])||0,blank=parseInt(myRow[39])||0;
+  const score=parseInt(myRow[36])||0,care=parseInt(myRow[37])||0,concept=parseInt(myRow[38])||0,cant=parseInt(myRow[39])||0,timeout=parseInt(myRow[40])||0,wrong=cant,blank=timeout;
   const qResults={};
   for(let i=1;i<=30;i++)qResults[i]=parseStatus(myRow[5+i]||'');
   const latestByName={};
   rows.slice(1).filter(r=>r[2]===group&&(!topicFilter||(r[4]||'').includes(topicFilter))).forEach(r=>{latestByName[r[1]]=r;});
-  const groupMembers=Object.values(latestByName).map(r=>({name:r[1],score:parseInt(r[36])||0,care:parseInt(r[37])||0,isMe:r[1]===currentStudent})).sort((a,b)=>b.score-a.score);
+  const groupMembers=Object.values(latestByName).map(r=>({name:r[1],score:parseInt(r[36])||0,care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0,isMe:r[1]===currentStudent})).sort((a,b)=>b.score-a.score);
   const rank=groupMembers.findIndex(m=>m.isMe)+1;
   // เทียบทุกคนที่สอบบทเดียวกัน (ทุกกลุ่ม)
   const latestAllByName={};
   rows.slice(1).filter(r=>_norm(r[4])===_norm(topic)).forEach(r=>{latestAllByName[_norm(r[1])]=r;});
-  const allMembers=Object.values(latestAllByName).map(r=>({name:r[1],group:r[2]||'',score:parseInt(r[36])||0,care:parseInt(r[37])||0,isMe:_norm(r[1])===me})).sort((a,b)=>b.score-a.score);
+  const allMembers=Object.values(latestAllByName).map(r=>({name:r[1],group:r[2]||'',score:parseInt(r[36])||0,care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0,isMe:_norm(r[1])===me})).sort((a,b)=>b.score-a.score);
   const allRank=allMembers.findIndex(m=>m.isMe)+1;
   const allAvg=allMembers.length?Math.round(allMembers.reduce((s,m)=>s+m.score,0)/allMembers.length):0;
   // รายชื่อกลุ่มทั้งหมดที่สอบบทนี้ (สำหรับ picker)
@@ -284,7 +287,7 @@ async function fetchDashData(){
   myAna.forEach(r=>{
     const st=r[6]||'',lv=parseInt(r[7])||0,status=parseStatus(r[5]||'');
     if(!st||st==='—')return;
-    if(!stMap[st])stMap[st]={name:st,level:lv,ok:0,care:0,wrong:0,blank:0,total:0};
+    if(!stMap[st])stMap[st]={name:st,level:lv,ok:0,care:0,concept:0,cant:0,timeout:0,wrong:0,blank:0,total:0};
     stMap[st].total++;
     if(status==='ok')stMap[st].ok++;
     else if(status==='care')stMap[st].care++;
@@ -300,10 +303,14 @@ async function fetchDashData(){
   grpLong.forEach(r=>{
     const st=r[6]||'',status=parseStatus(r[5]||'');
     if(!st||st==='—')return;
-    if(!grpStMap[st])grpStMap[st]={name:st,ok:0,care:0,wrong:0,blank:0,total:0};
+    if(!grpStMap[st])grpStMap[st]={name:st,ok:0,care:0,concept:0,cant:0,timeout:0,wrong:0,blank:0,total:0};
     grpStMap[st].total++;
     if(status==='ok')grpStMap[st].ok++;else if(status==='care')grpStMap[st].care++;
-    else if(status==='wrong')grpStMap[st].wrong++;else grpStMap[st].blank++;
+    else if(status==='concept')grpStMap[st].concept++;
+    else if(status==='cant')grpStMap[st].cant++;
+    else if(status==='timeout')grpStMap[st].timeout++;
+    else if(status==='wrong')grpStMap[st].wrong++;
+    else grpStMap[st].blank++;
   });
   const grpSubtopics=Object.values(grpStMap).sort((a,b)=>a.ok/a.total-b.ok/b.total);
   // สถิติรวมกลุ่ม
@@ -313,7 +320,7 @@ async function fetchDashData(){
   const grpHi=grpScores.length?Math.max(...grpScores):0;
   const grpLo=grpScores.length?Math.min(...grpScores):0;
   const grpStats={avg:grpAvg,careAvg:grpCareAvg,hi:grpHi,lo:grpLo,count:groupMembers.length};
-  dashData={group,date,topic,score,care,wrong,blank,qResults,groupMembers,rank,allMembers,allRank,allAvg,groupsInTopic,subtopics,diffMap,myAna,grpSubtopics,grpStats,shortName:currentStudent.replace(/\s*\(.*\)/,'')};
+  dashData={group,date,topic,score,care,concept,cant,timeout,wrong,blank,qResults,groupMembers,rank,allMembers,allRank,allAvg,groupsInTopic,subtopics,diffMap,myAna,grpSubtopics,grpStats,shortName:currentStudent.replace(/\s*\(.*\)/,'')};
 }
 
 function showDashboard(mode){
@@ -350,10 +357,10 @@ function renderStudentDash(d){
     encEl.innerHTML=msg;
     encEl.style.display='block';
   }
-  const qClass={ok:'q-ok',care:'q-care',wrong:'q-wrong',blank:'q-blank'};
+  const qClass={ok:'q-ok',care:'q-care',concept:'q-concept',cant:'q-cant',timeout:'q-timeout',wrong:'q-wrong',blank:'q-blank'};
   ['qgrid1','qgrid2'].forEach(id=>document.getElementById(id).innerHTML='');
   for(let i=1;i<=30;i++){const g=document.getElementById(i<=15?'qgrid1':'qgrid2');const el=document.createElement('div');el.className='q-cell '+qClass[d.qResults[i]];el.textContent=i;g.appendChild(el);}
-  const needReview=d.myAna.filter(r=>['wrong','blank','care'].includes(parseStatus(r[5]||''))).map(r=>({q:parseInt(r[4]),sub:r[6]||'',year:r[3]||'',level:parseInt(r[7])||0,type:parseStatus(r[5]||'')})).sort((a,b)=>b.level-a.level||a.q-b.q);
+  const needReview=d.myAna.filter(r=>['wrong','blank','care','concept','cant','timeout'].includes(parseStatus(r[5]||''))).map(r=>({q:parseInt(r[4]),sub:r[6]||'',year:r[3]||'',level:parseInt(r[7])||0,type:parseStatus(r[5]||'')})).sort((a,b)=>b.level-a.level||a.q-b.q);
   const rl=document.getElementById('s-reviewList');rl.innerHTML='';
   if(!needReview.length){rl.innerHTML='<div style="font-size:13px;color:var(--text2);padding:8px 0">ทำถูกทุกข้อ 🎉</div>';}
   else needReview.forEach(r=>{const color=r.type==='wrong'?'#A32D2D':r.type==='blank'?'#999993':'#BA7517';const icon=r.type==='wrong'?'ti-x':r.type==='blank'?'ti-minus':'ti-alert-triangle';const stars='★'.repeat(r.level)+'☆'.repeat(5-r.level);rl.innerHTML+=`<div class="rev-row"><div style="min-width:20px;font-size:11px;color:var(--text2);font-weight:500">${r.q}</div><div style="flex:1"><div style="font-size:12px;color:var(--text1)">${r.sub}</div><div style="font-size:10px;color:var(--text3)">${r.year} · ระดับ ${r.level} <span style="color:#BA7517">${stars}</span></div></div><i class="ti ${icon}" style="font-size:14px;color:${color}"></i></div>`;});
@@ -591,6 +598,12 @@ function renderParentDash(d){
 
   // วิเคราะห์ปัญหา
   const problems=[];
+  // ── สรุปรวมต้องทบทวน ──
+  const totalReview=(d.care||0)+(d.concept||0)+(d.cant||0)+(d.timeout||0);
+  if(totalReview>0)problems.push({icon:'🔁',color:'var(--amber-bg,#fff7ed)',border:'var(--amber,#f59e0b)',title:'ต้องทบทวนรวม '+totalReview+' ข้อ',desc:'แบ่งเป็น: ⚠️สะเพร่า '+(d.care||0)+' | 🧠คอนเซปต์ '+(d.concept||0)+' | ❌ทำไม่ได้ '+(d.cant||0)+' | ⏰ไม่ทัน '+(d.timeout||0)+' ข้อ'});
+  if((d.concept||0)>0)problems.push({icon:'🧠',color:'#f3e8ff',border:'#a855f7',title:'คอนเซปต์ยังไม่แน่น '+(d.concept||0)+' ข้อ',desc:'ทำผิดเพราะยังไม่เข้าใจทฤษฎี — ควรกลับไปทบทวนคอนเซปต์ก่อนทำโจทย์เพิ่ม'});
+  if((d.cant||0)>0)problems.push({icon:'❌',color:'#fee2e2',border:'#ef4444',title:'ทำไม่ได้ '+(d.cant||0)+' ข้อ',desc:'ยังขาดทักษะ — ควรดูคลิปหรือให้ครูอธิบายเพิ่มเติมแล้วลองทำใหม่'});
+  if((d.timeout||0)>0)problems.push({icon:'⏰',color:'#f1f5f9',border:'#94a3b8',title:'ไม่ทันเวลา '+(d.timeout||0)+' ข้อ',desc:'ทำไม่ทันในห้อง — ฝึกจับเวลาและทำข้อง่ายก่อนเพื่อสร้างความเร็ว'});
   if(d.wrong>0)problems.push({icon:'🔴',color:'var(--red-l)',border:'var(--red)',title:'เนื้อหาที่ยังต้องเรียนรู้เพิ่ม',desc:`ทำผิด ${d.wrong} ข้อ — เป็นจุดที่ยังไม่เข้าใจเต็มที่ แก้ได้ด้วยการทบทวนเพิ่มเติมจากคลิป เอกสาร หรือถามผู้รู้ ไม่ใช่เรื่องน่ากังวล แต่เป็นโอกาสพัฒนา`,count:d.wrong,countColor:'var(--red)'});
   if(d.care>0)problems.push({icon:'🟡',color:'var(--amber-l)',border:'var(--amber)',title:'รู้คำตอบแล้ว แต่พลาดจากความรีบ',desc:`พลาด ${d.care} ข้อทั้งที่ทำเป็น — ความรอบคอบเป็นทักษะที่ฝึกได้เหมือนกล้ามเนื้อ ลองชวนลูกอธิบายวิธีตรวจคำตอบให้ฟัง จะช่วยได้มากกว่าการเตือนให้ระวัง`,count:d.care,countColor:'var(--amber)'});
   if(d.blank>0)problems.push({icon:'⬜',color:'var(--surf)',border:'var(--border-md)',title:'ข้อที่ยังไม่ได้ลงมือทำ',desc:`มี ${d.blank} ข้อที่เว้นไว้ — ลองถามลูกด้วยความเข้าใจว่าเป็นเพราะเวลาไม่พอ ยังไม่เข้าใจโจทย์ หรือไม่มั่นใจ เพื่อช่วยให้ตรงจุด`,count:d.blank,countColor:'var(--text3)'});
@@ -644,7 +657,7 @@ function renderParentDash(d){
   }
 
   // q-grid
-  const qClass={ok:'q-ok',care:'q-care',wrong:'q-wrong',blank:'q-blank'};
+  const qClass={ok:'q-ok',care:'q-care',concept:'q-concept',cant:'q-cant',timeout:'q-timeout',wrong:'q-wrong',blank:'q-blank'};
   ['p-qgrid1','p-qgrid2'].forEach(id=>document.getElementById(id).innerHTML='');
   for(let i=1;i<=30;i++){const g=document.getElementById(i<=15?'p-qgrid1':'p-qgrid2');const el=document.createElement('div');el.className='q-cell '+qClass[d.qResults[i]];el.textContent=i;g.appendChild(el);}
 }
