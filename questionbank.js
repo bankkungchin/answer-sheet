@@ -2,7 +2,7 @@
 // สร้างใหม่: เพิ่มตรีโกณมิติ + เผื่อโครงสร้างสำหรับทุกบท
 // วิธีเพิ่มบทใหม่: (1) เพิ่ม EMBEDDED_QB  (2) เพิ่ม PRACTICE_BANK  (3) เพิ่ม PLAYLISTS
 
-const EMBEDDED_QB = {
+var EMBEDDED_QB = {
 
   // ─── เซต (30 ข้อ) ───────────────────────────────────────────────
   "เซต": {
@@ -201,7 +201,7 @@ const EMBEDDED_QB = {
 // PRACTICE_BANK — คลังข้อสอบสำหรับสุ่มแนะนำ
 // วิธีเพิ่มบทใหม่: เพิ่ม key ใหม่พร้อม array ของข้อสอบ
 // schema: {n:int, c:"หมวด", sub:"sub_topic", l:int, s:"ที่มา", y:"ปี", yt:"URL"}
-const PRACTICE_BANK = {
+var PRACTICE_BANK = {
 
   // ─── เซต (64 ข้อ) ─────────────────────────────────────────────
   "เซต": [
@@ -584,14 +584,14 @@ const PRACTICE_BANK = {
 
 };
 
-const PLAYLISTS = {
+var PLAYLISTS = {
   "เซต":            "PLc4ncgz2CJ7NaaLBirripaazcj04QZTdG",
   "Expo Logarithm": "PLc4ncgz2CJ7OjRvsaXGHaJONCnH33zMK5",
   "ตรีโกณมิติ":     "PLc4ncgz2CJ7NDZGezv4Dlpj3WuJsJNPxC",
   // เพิ่ม playlist บทใหม่ที่นี่
 };
 
-const CAT_EMOJI = {
+var CAT_EMOJI = {
   // เซต
   "นิยามและสับเซต":"🔵","เพาเวอร์เซต":"🟠",
   "การดำเนินการและผลคูณคาร์ทีเซียน":"🟢","สมบัติและพีชคณิตเซต":"🟡",
