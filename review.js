@@ -37,21 +37,32 @@ function openReviewLibrary(){
   rvLoad();
   goTo('p6');
   var html='';
-  var keys = Object.keys(PRACTICE_BANK);
-  keys.forEach(function(k){
+  // รวม Ent เข้ากับบทหลัก
+  var chapMap = {};
+  Object.keys(PRACTICE_BANK).forEach(function(k){
     var arr = PRACTICE_BANK[k];
     if(!arr || !arr.length) return;
-    var baseName = k.replace(/ Ent$/,'');
-    var icon = RV_CHAP_ICON[baseName] || RV_CHAP_ICON[k] || '📘';
-    var seenCount = RV_SEEN[k] ? Object.keys(RV_SEEN[k]).length : 0;
-    var label = k;
-    var sub = arr.length + ' ข้อ';
-    if(k.indexOf('Ent')>-1) sub += ' · เฉลย HTML';
-    else sub += ' · มีคลิป';
-    if(seenCount>0) sub += ' · ดูแล้ว '+seenCount;
-    html += '<div class="chap-card" onclick="rvOpenChapter(\''+k.replace(/'/g,"\\'")+'\')">'+
+    var isEnt = k.indexOf(' Ent') > -1;
+    var base = isEnt ? k.replace(/ Ent$/,'') : k;
+    if(!chapMap[base]) chapMap[base] = {yt:[], ent:[]};
+    if(isEnt) chapMap[base].ent = arr;
+    else chapMap[base].yt = arr;
+  });
+  Object.keys(chapMap).forEach(function(base){
+    var ch = chapMap[base];
+    var totalQ = ch.yt.length + ch.ent.length;
+    var icon = RV_CHAP_ICON[base] || '📘';
+    var seenYt = RV_SEEN[base] ? Object.keys(RV_SEEN[base]).length : 0;
+    var seenEnt = RV_SEEN[base+' Ent'] ? Object.keys(RV_SEEN[base+' Ent']).length : 0;
+    var seenTotal = seenYt + seenEnt;
+    var subParts = [];
+    if(ch.yt.length) subParts.push(ch.yt.length+' ข้อมีคลิป');
+    if(ch.ent.length) subParts.push(ch.ent.length+' ข้อเฉลย HTML');
+    var sub = subParts.join(' + ');
+    if(seenTotal>0) sub += ' · ดูแล้ว '+seenTotal;
+    html += '<div class="chap-card" style="cursor:pointer" data-base="'+base+'" onclick="rvOpenChapterMerged(this.dataset.base)">'+
       '<div class="chap-icon">'+icon+'</div>'+
-      '<div class="chap-info"><div class="chap-name">'+label+'</div>'+
+      '<div class="chap-info"><div class="chap-name">'+base+'</div>'+
       '<div class="chap-count">'+sub+'</div></div>'+
       '<div class="chap-arrow">›</div></div>';
   });
@@ -59,9 +70,21 @@ function openReviewLibrary(){
 }
 
 // ── เปิดบท → หน้ารายข้อ ──
+function rvOpenChapterMerged(base){
+  if(typeof base !== "string") base = base.dataset ? base.dataset.base : base;
+  var entBank = PRACTICE_BANK[base+' Ent'] || [];
+  RV.chapter = base;
+  RV.bank = ytBank.concat(entBank);
+  if(!RV_SEEN[base]) RV_SEEN[base]={};
+  rvOpenChapterCore();
+}
 function rvOpenChapter(chap){
   RV.chapter = chap;
   RV.bank = PRACTICE_BANK[chap] || [];
+  if(!RV_SEEN[chap]) RV_SEEN[chap]={};
+  rvOpenChapterCore();
+}
+function rvOpenChapterCore(){
   RV.cats = [];
   RV.levels = [];
   RV.bank.forEach(function(q){
@@ -195,6 +218,11 @@ function rvRowHtml(q,seen){
 }
 
 function rvMarkSeen(n){
+  var q = (RV.bank||[]).find(function(x){return x.n===n;});
+  var chapKey = RV.chapter;
+  if(q && (q.yt||'').includes('.html#q')) chapKey = RV.chapter+' Ent';
+  if(!RV_SEEN[chapKey]) RV_SEEN[chapKey]={};
+  RV_SEEN[chapKey]['n'+n]=true;
   if(!RV_SEEN[RV.chapter]) RV_SEEN[RV.chapter]={};
   RV_SEEN[RV.chapter]['n'+n]=true;
   rvSave();
