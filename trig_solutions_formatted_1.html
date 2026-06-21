@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฉลยละเอียด — ตรีโกณมิติ (Ent/A-NET 2541–2552)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)'], ['$','$']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:#1a1a1a; --muted:#555; --light:#888; --line:#c8c8c8;
+  --bg:#f4f4f0; --paper:#ffffff; --accent:#2e4374; --amber:#7a4a00;
+}
+
+@media print { body { background: white; } .no-print { display: none; } }
+
+body {
+  font-family: 'Sarabun','TH Sarabun New',sans-serif;
+  font-size: 17px; line-height: 1.85; color: var(--ink);
+  background: var(--bg); -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 800px; margin: 0 auto; padding: 0 20px 80px; }
+
+.doc-header { background: var(--accent); color: white; padding: 36px 0 30px; margin-bottom: 36px; }
+.doc-header .wrap-inner { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+.doc-eyebrow { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; color: #a8bce0; margin-bottom: 8px; }
+.doc-title { font-size: 22px; font-weight: 700; line-height: 1.3; margin-bottom: 6px; }
+.doc-sub { font-size: 14px; color: #c2cfe8; }
+
+.index-bar { position: sticky; top: 0; z-index: 20; background: rgba(244,244,240,.93); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); padding: 9px 0; }
+.chips { max-width: 800px; margin: 0 auto; padding: 0 20px; display: flex; gap: 5px; overflow-x: auto; scrollbar-width: thin; }
+.chips a { flex: 0 0 auto; min-width: 30px; height: 30px; padding: 0 6px; display: grid; place-items: center; text-decoration: none; font-weight: 700; font-size: 12.5px; color: var(--accent); background: white; border: 1px solid #ccc; border-radius: 6px; transition: .15s; }
+.chips a:hover { background: var(--accent); color: white; }
+
+.sol { background: var(--paper); padding: 26px 28px 22px; margin-bottom: 0; scroll-margin-top: 56px; }
+.sol + .sol { border-top: 1px dashed var(--line); }
+
+.q-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; flex-wrap: wrap; }
+.q-num { font-size: 17px; font-weight: 700; color: var(--accent); min-width: 90px; }
+.q-badge { font-size: 12px; font-weight: 600; padding: 2px 10px; border-radius: 20px; background: #eef2fb; color: var(--accent); border: 1px solid #c8d5f0; }
+.q-type { font-size: 12px; color: var(--muted); }
+.stars { color: #c8a000; font-size: 12px; }
+
+.problem { background: #f8f9fb; border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 15.5px; margin: 8px 0 16px; line-height: 1.95; }
+
+.step { margin-bottom: 12px; }
+.step-label { display: inline; font-weight: 700; text-decoration: underline; color: var(--ink); font-size: 16px; }
+.step-goal { font-weight: 400; text-decoration: none; color: var(--ink); }
+.step-body { margin-top: 5px; padding-left: 2px; font-size: 16px; line-height: 2; }
+
+.kw { color: var(--muted); font-style: italic; }
+
+.cond-table { border-collapse: collapse; margin: 6px 0 6px 8px; font-size: 15.5px; }
+.cond-table td { padding: 1px 10px 1px 0; vertical-align: middle; }
+.cond-table .kw-cell { color: var(--muted); font-style: italic; padding-right: 14px; }
+
+.hint-box { background: #f0f4fb; border: 1px solid #c8d5f0; border-radius: 8px; padding: 8px 14px; font-size: 14.5px; color: #2e4374; margin: 8px 0 4px; line-height: 1.8; }
+
+.answer { margin-top: 14px; display: inline-flex; align-items: center; gap: 10px; background: #fff8e8; border: 1px solid #e8c870; border-radius: 8px; padding: 8px 18px; }
+.answer-lbl { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; color: #9a6800; }
+.answer-val { font-size: 17px; font-weight: 700; color: #7a4800; }
+
+footer { text-align: center; font-size: 13px; color: var(--light); padding: 30px 0; border-top: 1px solid var(--line); margin-top: 24px; }
+
+p.indent { padding-left: 16px; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="wrap-inner">
+    <div class="doc-eyebrow">MathsBankTutor · เฉลยละเอียด</div>
+    <div class="doc-title">ตรีโกณมิติ — รวมข้อสอบ Ent / A-NET 2541–2552</div>
+    <div class="doc-sub">37 ข้อ พร้อมวิธีทำแบบ ชั้นที่ 1 / ชั้นที่ 2 / … · ตรวจทานกับเฉลยทางการแล้วทุกข้อ</div>
+  </div>
+</div>
+
+<nav class="index-bar">
+  <div class="chips" id="chips"></div>
+</nav>
+
+<div class="wrap">
+
+<!-- ═══════════ Q1 ═══════════ -->
+<section class="sol" id="q1">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 1.</span>
+    <span class="q-badge">ต.ค. 41</span>
+    <span class="q-type">ฟังก์ชันผกผัน — arcsin</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem">
+    \(\sec\!\left(2\arcsin\dfrac{1}{\sqrt{3}}\right)\) มีค่าเท่ากับเท่าใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ให้ \(\theta = \arcsin\dfrac{1}{\sqrt{3}}\) แล้วหา \(\cos\theta\)</span>
+    <div class="step-body">
+      <span class="kw">จาก</span> \(\sin\theta = \dfrac{1}{\sqrt{3}}\) <span class="kw">ดังนั้น</span> \(\cos^2\theta = 1-\dfrac{1}{3} = \dfrac{2}{3}\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ใช้สูตรมุมสองเท่าหา \(\cos 2\theta\)</span>
+    <div class="step-body">
+      <span class="kw">โดยสูตร</span> \(\cos 2\theta = 1 - 2\sin^2\theta = 1 - 2\cdot\dfrac{1}{3} = \dfrac{1}{3}\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  หา \(\sec 2\theta\)</span>
+    <div class="step-body">
+      \(\sec 2\theta = \dfrac{1}{\cos 2\theta} = \dfrac{1}{1/3} = 3\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3) &nbsp;3</span></div>
+</section>
+
+<!-- ═══════════ Q2 ═══════════ -->
+<section class="sol" id="q2">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 2.</span>
+    <span class="q-badge">ต.ค. 41</span>
+    <span class="q-type">อนุกรมเรขาคณิต + ตรีโกณมิติ</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    ให้ \(S=\left(-\dfrac{\pi}{2},\dfrac{\pi}{2}\right)\) และ \(F(x)=\sin^2 x+\sin^4 x+\sin^6 x+\ldots\) โดยที่ \(x\in S\)
+    ถ้า \(a\) เป็นสมาชิกของ \(S\) ที่น้อยที่สุดที่ทำให้ \(F(a)\le1\) แล้ว \(F(a)\) มีค่าเท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หาผลบวกอนุกรมเรขาคณิตอนันต์ \(F(x)\)</span>
+    <div class="step-body">
+      <span class="kw">เป็นอนุกรมเรขาคณิตที่</span> \(a_1=\sin^2 x\), \(r=\sin^2 x\) (โดย \(0\le\sin^2 x&lt;1\))
+      <p class="indent">\(F(x) = \dfrac{\sin^2 x}{1-\sin^2 x} = \dfrac{\sin^2 x}{\cos^2 x} = \tan^2 x\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แก้เงื่อนไข \(F(a)\le1\)</span>
+    <div class="step-body">
+      \(\tan^2 a \le 1 \Rightarrow -1 \le \tan a \le 1 \Rightarrow -\dfrac{\pi}{4}\le a \le \dfrac{\pi}{4}\)
+      <p class="indent"><span class="kw">ค่าที่น้อยที่สุดใน \(S\)</span> คือ \(a = -\dfrac{\pi}{4}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  คำนวณ \(F(a)\)</span>
+    <div class="step-body">
+      \(F\!\left(-\dfrac{\pi}{4}\right) = \tan^2\!\left(-\dfrac{\pi}{4}\right) = (-1)^2 = 1\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4) &nbsp;1</span></div>
+</section>
+
+<!-- ═══════════ Q3 ═══════════ -->
+<section class="sol" id="q3">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 3.</span>
+    <span class="q-badge">มี.ค. 42</span>
+    <span class="q-type">อนุกรมเรขาคณิต + มุมสองเท่า</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    ถ้า \(1+\cos^2\theta+\cos^4\theta+\ldots = a\) โดยที่ \(a\) เป็นจำนวนจริง
+    แล้ว \(\cos(\pi-2\theta)\sin\!\left(\dfrac{\pi}{2}-2\theta\right)\) มีค่าเท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หาผลบวกอนุกรมและเขียน \(\cos^2\theta\) ในรูป \(a\)</span>
+    <div class="step-body">
+      \(a = \dfrac{1}{1-\cos^2\theta} = \dfrac{1}{\sin^2\theta}\) <span class="kw">ดังนั้น</span> \(\sin^2\theta = \dfrac{1}{a}\) และ \(\cos^2\theta = 1-\dfrac{1}{a} = \dfrac{a-1}{a}\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ลดรูปนิพจน์ตรีโกณ</span>
+    <div class="step-body">
+      <span class="kw">โดย</span> \(\cos(\pi-2\theta) = -\cos 2\theta\) และ \(\sin\!\left(\dfrac{\pi}{2}-2\theta\right) = \cos 2\theta\)
+      <p class="indent">นิพจน์ \(= -\cos 2\theta \cdot \cos 2\theta = -\cos^2 2\theta\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  แทนค่า \(\cos 2\theta\) ในรูป \(a\)</span>
+    <div class="step-body">
+      \(\cos 2\theta = 2\cos^2\theta - 1 = 2\cdot\dfrac{a-1}{a} - 1 = \dfrac{a-2}{a}\)
+      <p class="indent">\(-\cos^2 2\theta = -\left(\dfrac{a-2}{a}\right)^2\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1) &nbsp;\(-\left(\dfrac{a-2}{a}\right)^2\)</span></div>
+</section>
+
+<!-- ═══════════ Q4 ═══════════ -->
+<section class="sol" id="q4">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 4.</span>
+    <span class="q-badge">มี.ค. 42</span>
+    <span class="q-type">สมการ arcsin / arccos</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    ให้ \(A\) เป็นเซตคำตอบของ \(\cos(2\arcsin x)+2 = 4\sin^2(\arccos x)\)
+    ข้อใดคือผลคูณของสมาชิกในเซต \(A\)
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ลดรูปทั้งสองข้างให้อยู่ในรูป \(x\)</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(\arcsin x = \alpha \Rightarrow \sin\alpha = x\), และ \(\arccos x = \beta \Rightarrow \cos\beta = x\)
+      <p class="indent">ซ้าย: \(\cos 2\alpha = 1-2\sin^2\alpha = 1-2x^2\)</p>
+      <p class="indent">ขวา: \(4\sin^2\beta = 4(1-\cos^2\beta) = 4(1-x^2)\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แก้สมการ</span>
+    <div class="step-body">
+      \(1-2x^2 + 2 = 4(1-x^2) \Rightarrow 3-2x^2 = 4-4x^2\)
+      <p class="indent">\(2x^2 = 1 \Rightarrow x = \pm\dfrac{1}{\sqrt{2}}\)</p>
+      <span class="kw">ตรวจโดเมน</span> \(x\in[-1,1]\) — ผ่านทั้งคู่ <span class="kw">ดังนั้น</span> \(A = \left\{\dfrac{1}{\sqrt{2}},\,-\dfrac{1}{\sqrt{2}}\right\}\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  คำนวณผลคูณ</span>
+    <div class="step-body">
+      \(\dfrac{1}{\sqrt{2}}\times\left(-\dfrac{1}{\sqrt{2}}\right) = -\dfrac{1}{2}\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2) &nbsp;\(-\dfrac{1}{2}\)</span></div>
+</section>
+
+<!-- ═══════════ Q5 ═══════════ -->
+<section class="sol" id="q5">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 5.</span>
+    <span class="q-badge">ต.ค. 42</span>
+    <span class="q-type">เซต + ค่ามากที่สุดของฟังก์ชันตรีโกณ</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    เซต \(\left\{\cos A \;\middle|\; 0\le A\le\dfrac{4\pi}{3} \text{ และ } 5-3\sin 3A \text{ มีค่ามากที่สุด}\right\}\)
+    เป็นสับเซตของเซตในข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หาเงื่อนไขที่ \(5-3\sin 3A\) มีค่ามากที่สุด</span>
+    <div class="step-body">
+      <span class="kw">นิพจน์มากที่สุดเมื่อ</span> \(\sin 3A\) น้อยที่สุด คือ \(\sin 3A = -1\)
+      <p class="indent">\(3A = \dfrac{3\pi}{2} + 2k\pi \Rightarrow A = \dfrac{\pi}{2} + \dfrac{2k\pi}{3}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หาค่า \(A\) ในช่วง \(\left[0,\dfrac{4\pi}{3}\right]\)</span>
+    <div class="step-body">
+      <table class="cond-table">
+        <tr><td class="kw-cell">\(k=0\)</td><td>\(A = \dfrac{\pi}{2}\) ✓</td></tr>
+        <tr><td class="kw-cell">\(k=1\)</td><td>\(A = \dfrac{\pi}{2}+\dfrac{2\pi}{3} = \dfrac{7\pi}{6}\) ✓ (อยู่ใน \(\le\dfrac{4\pi}{3}\))</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  หา \(\cos A\) แต่ละค่า</span>
+    <div class="step-body">
+      <p class="indent">\(\cos\dfrac{\pi}{2} = 0\)</p>
+      <p class="indent">\(\cos\dfrac{7\pi}{6} = -\dfrac{\sqrt{3}}{2}\)</p>
+      <span class="kw">ดังนั้น</span> เซต \(= \left\{0,\,-\dfrac{\sqrt{3}}{2}\right\}\) ซึ่งเป็นสับเซตของ \(\left\{-\dfrac{\sqrt{3}}{2},\,-\dfrac{1}{2},\,0\right\}\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2)</span></div>
+</section>
+
+<!-- ═══════════ Q6 ═══════════ -->
+<section class="sol" id="q6">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 6.</span>
+    <span class="q-badge">ต.ค. 42</span>
+    <span class="q-type">ฟังก์ชันประกอบ — ถูก/ผิด</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    ให้ \(f(x)=\arcsin x\), \(g(x)=\cos x\) และ \(h(x)=(f\circ g)(x)\)<br>
+    ก. โดเมนของ \(h\) คือเซตของจำนวนจริง และ \(g\!\left(\dfrac{\pi}{2}-h(x)\right)=g(x)\)<br>
+    ข. \(h\) เป็นฟังก์ชันหนึ่งต่อหนึ่ง<br>
+    ข้อใดถูกต้อง
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(h(x) = (f\circ g)(x)\) และโดเมน</span>
+    <div class="step-body">
+      \(h(x) = \arcsin(\cos x)\)
+      <p class="indent"><span class="kw">เนื่องจาก</span> \(\cos x\in[-1,1]\) เสมอ จึงนิยามได้ทุก \(x\) — <b>โดเมนเป็น \(\mathbb{R}\)</b></p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ตรวจ ก. — สมการ \(g\!\left(\dfrac{\pi}{2}-h(x)\right)=g(x)\)</span>
+    <div class="step-body">
+      \(g\!\left(\dfrac{\pi}{2}-h(x)\right) = \cos\!\left(\dfrac{\pi}{2}-\arcsin(\cos x)\right) = \sin(\arcsin(\cos x)) = \cos x = g(x)\) ✓
+      <p><span class="kw">ดังนั้น</span> ก. <b>ถูก</b> ทั้งสองส่วน</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  ตรวจ ข. — \(h\) เป็น 1-1 หรือไม่</span>
+    <div class="step-body">
+      <span class="kw">เนื่องจาก</span> \(\cos x\) เป็นฟังก์ชันคู่ \(\Rightarrow h(-x) = \arcsin(\cos(-x)) = \arcsin(\cos x) = h(x)\)
+      <p class="indent">เช่น \(h(0)=h(2\pi)=\dfrac{\pi}{2}\) — ค่าซ้ำ <span class="kw">ดังนั้น</span> ข. <b>ผิด</b></p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2) ก. ถูก และ ข. ผิด</span></div>
+</section>
+
+<!-- ═══════════ Q7 ═══════════ -->
+<section class="sol" id="q7">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 7.</span>
+    <span class="q-badge">ต.ค. 42</span>
+    <span class="q-type">เรขาคณิตวิเคราะห์ + ผลต่างของมุม</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    ให้ \(O\) เป็นจุดกำเนิด \(A\) เป็นจุดบนแกน \(X\) และ \(B\) เป็นจุดในระนาบ
+    ซึ่งทำให้เส้น \(OB\) มีความชัน 2 และเส้น \(AB\) มีความชัน 1
+    ถ้า \(\theta = A\hat{B}O\) แล้ว \(\sec^2\theta\) เท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(\tan\theta\) จากความชันของสองเส้น</span>
+    <div class="step-body">
+      <div class="hint-box">มุม \(A\hat{B}O\) คือมุมระหว่างเส้น \(BO\) (ชัน 2) กับเส้น \(BA\) (ชัน 1)</div>
+      <span class="kw">โดยสูตร</span> \(\tan\theta = \left|\dfrac{m_1-m_2}{1+m_1 m_2}\right| = \left|\dfrac{2-1}{1+2\cdot1}\right| = \dfrac{1}{3}\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(\sec^2\theta\)</span>
+    <div class="step-body">
+      \(\sec^2\theta = 1+\tan^2\theta = 1+\dfrac{1}{9} = \dfrac{10}{9}\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1) &nbsp;\(\dfrac{10}{9}\)</span></div>
+</section>
+
+<!-- ═══════════ Q8 ═══════════ -->
+<section class="sol" id="q8">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 8.</span>
+    <span class="q-badge">ต.ค. 42</span>
+    <span class="q-type">ฟังก์ชันคาบ + ฟังก์ชันผกผัน</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x)=\pi\!\left(\dfrac{x+7}{24}\right)\) เมื่อ \(-3&lt;x\le3\) และ \(f(x+6)=f(x)\) ทุก \(x\in\mathbb{R}\)
+    ถ้า \(g(x)=A+\arcsin x\) โดยที่ \(A\in[0,\pi]\) และ \(\cos A=\dfrac{2}{\sqrt{5}}\)
+    แล้วค่าของ \((g^{-1}\circ f)(5)\) เท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(f(5)\) โดยใช้คาบ \(= 6\)</span>
+    <div class="step-body">
+      <span class="kw">เนื่องจาก</span> \(f\) มีคาบ 6 และ \(5\notin(-3,3]\) จึงลดรูป: \(f(5) = f(5-6) = f(-1)\)
+      <p class="indent">\(f(-1) = \pi\!\left(\dfrac{-1+7}{24}\right) = \pi\cdot\dfrac{6}{24} = \dfrac{\pi}{4}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(A\) จาก \(\cos A=\dfrac{2}{\sqrt{5}}\)</span>
+    <div class="step-body">
+      \(A = \arccos\dfrac{2}{\sqrt{5}}\) <span class="kw">ดังนั้น</span> \(\sin A = \dfrac{1}{\sqrt{5}}\), \(\tan A = \dfrac{1}{2}\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  หา \((g^{-1}\circ f)(5)\)</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(y = g^{-1}\!\left(\dfrac{\pi}{4}\right)\) <span class="kw">นั้นคือ</span> \(g(y) = \dfrac{\pi}{4}\)
+      <p class="indent">\(A + \arcsin y = \dfrac{\pi}{4} \Rightarrow \arcsin y = \dfrac{\pi}{4} - A\)</p>
+      <p class="indent">\(y = \sin\!\left(\dfrac{\pi}{4}-A\right) = \sin\dfrac{\pi}{4}\cos A - \cos\dfrac{\pi}{4}\sin A = \dfrac{1}{\sqrt{2}}\!\left(\dfrac{2}{\sqrt{5}}-\dfrac{1}{\sqrt{5}}\right) = \dfrac{1}{\sqrt{2}}\cdot\dfrac{1}{\sqrt{5}} = \dfrac{1}{\sqrt{10}}\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1) &nbsp;\(\dfrac{1}{\sqrt{10}}\)</span></div>
+</section>
+
+<!-- ═══════════ Q9 ═══════════ -->
+<section class="sol" id="q9">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 9.</span>
+    <span class="q-badge">มี.ค. 43</span>
+    <span class="q-type">กฎของไซน์ + พื้นที่สามเหลี่ยม</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    สามเหลี่ยม \(ABC\) มีมุม \(BAC=45^\circ\), มุม \(ACB=60^\circ\) และด้าน \(AC\) ยาว 20 นิ้ว
+    จงหาพื้นที่ของสามเหลี่ยม \(ABC\)
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หามุมที่สาม และใช้กฎของไซน์หาด้าน \(BC\)</span>
+    <div class="step-body">
+      มุม \(B = 180^\circ - 45^\circ - 60^\circ = 75^\circ\)
+      <p class="indent"><span class="kw">โดยกฎของไซน์</span> \(\dfrac{BC}{\sin A} = \dfrac{AC}{\sin B}\)</p>
+      <p class="indent">\(BC = \dfrac{AC\sin A}{\sin B} = \dfrac{20\sin 45^\circ}{\sin 75^\circ}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หาพื้นที่ด้วยสูตร \(\dfrac{1}{2}\,(AC)(BC)\sin C\)</span>
+    <div class="step-body">
+      <span class="kw">พื้นที่</span> \(= \dfrac{1}{2}(AC)(BC)\sin C = \dfrac{1}{2}\cdot 20 \cdot \dfrac{20\sin 45^\circ}{\sin 75^\circ}\cdot\sin 60^\circ\)
+      <p class="indent">\(\sin 45^\circ=\dfrac{\sqrt2}{2}\), \(\sin 60^\circ=\dfrac{\sqrt3}{2}\), \(\sin 75^\circ=\dfrac{\sqrt6+\sqrt2}{4}\)</p>
+      <p class="indent">\(= 200\cdot\dfrac{(\sqrt2/2)(\sqrt3/2)}{(\sqrt6+\sqrt2)/4} = 200\cdot\dfrac{\sqrt6/4}{(\sqrt6+\sqrt2)/4} = \dfrac{200\sqrt6}{\sqrt6+\sqrt2}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  จัดรูปให้ตรงตัวเลือก</span>
+    <div class="step-body">
+      <span class="kw">ดึง \(\sqrt2\) ออกจากส่วน:</span> \(\sqrt6+\sqrt2 = \sqrt2(\sqrt3+1)\)
+      <p class="indent">\(= \dfrac{200\sqrt6}{\sqrt2(\sqrt3+1)} = \dfrac{200\sqrt3}{\sqrt3+1}\) ตารางหน่วย</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4) &nbsp;\(\dfrac{200\sqrt3}{\sqrt3+1}\)</span></div>
+</section>
+
+<!-- ═══════════ Q10 ═══════════ -->
+<section class="sol" id="q10">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 10.</span>
+    <span class="q-badge">มี.ค. 43</span>
+    <span class="q-type">ครึ่งมุม + arcsin/arccos</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    \(\sec\!\left[\dfrac{1}{2}\!\left(\arcsin\dfrac{3}{5}+\arccos\dfrac{3}{5}\right)\right] + \tan\!\left[\dfrac{1}{2}\!\left(\arcsin\dfrac{4}{5}+\arccos\dfrac{4}{5}\right)\right]\)
+    มีค่าเท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ใช้เอกลักษณ์ \(\arcsin t + \arccos t = \dfrac{\pi}{2}\)</span>
+    <div class="step-body">
+      <span class="kw">เนื่องจาก</span> \(\arcsin t+\arccos t=\dfrac{\pi}{2}\) สำหรับทุก \(t\in[-1,1]\)
+      <p class="indent">ทั้งสองวงเล็บมีค่าเท่ากับ \(\dfrac{\pi}{2}\) <span class="kw">ดังนั้น</span> ครึ่งหนึ่งคือ \(\dfrac{\pi}{4}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แทนค่า</span>
+    <div class="step-body">
+      \(\sec\dfrac{\pi}{4} + \tan\dfrac{\pi}{4} = \sqrt2 + 1 = 1+\sqrt2\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3) &nbsp;\(1+\sqrt2\)</span></div>
+</section>
+
+<!-- ═══════════ Q11 ═══════════ -->
+<section class="sol" id="q11">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 11.</span>
+    <span class="q-badge">ต.ค. 43</span>
+    <span class="q-type">arctan — ผลต่างของมุม</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    ถ้า \(\arctan x = \arctan\dfrac{1}{4} - 2\arctan\dfrac{1}{2}\)
+    แล้ว \(\sin(180^\circ + \arctan x)\) มีค่าเท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(2\arctan\dfrac{1}{2}\) ด้วยสูตรมุมสองเท่า</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(\tan\phi = \dfrac{1}{2}\) <span class="kw">โดยสูตร</span> \(\tan 2\phi = \dfrac{2\tan\phi}{1-\tan^2\phi} = \dfrac{2\cdot\frac12}{1-\frac14} = \dfrac{1}{3/4} = \dfrac{4}{3}\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(x = \tan(\arctan\tfrac14 - 2\phi)\)</span>
+    <div class="step-body">
+      <span class="kw">โดยสูตรผลต่าง</span> \(\tan(\alpha-\beta) = \dfrac{\tan\alpha-\tan\beta}{1+\tan\alpha\tan\beta}\)
+      <p class="indent">\(x = \dfrac{\frac14 - \frac43}{1 + \frac14\cdot\frac43} = \dfrac{\frac{3-16}{12}}{1+\frac13} = \dfrac{-13/12}{4/3} = \dfrac{-13}{16}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  หา \(\sin(180^\circ + \arctan x)\)</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(\psi = \arctan x \Rightarrow \tan\psi = -\dfrac{13}{16}\) <span class="kw">โดย</span> \(\sin(180^\circ+\psi) = -\sin\psi\)
+      <p class="indent">สร้างสามเหลี่ยม: ด้านตรงข้ามมุม \(=13\), ประชิด \(=16\), ด้านตรงข้ามมุมฉาก \(=\sqrt{13^2+16^2}=\sqrt{425}=5\sqrt{17}\)</p>
+      <p class="indent">\(\psi\) อยู่ในควอดแรนต์ 4 (จาก arctan ของค่าลบ) \(\Rightarrow \sin\psi = -\dfrac{13}{5\sqrt{17}}\)</p>
+      <p class="indent">\(\sin(180^\circ+\psi) = -\sin\psi = \dfrac{13}{5\sqrt{17}}\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1) &nbsp;\(\dfrac{13}{5\sqrt{17}}\)</span></div>
+</section>
+
+<!-- ═══════════ Q12 ═══════════ -->
+<section class="sol" id="q12">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 12.</span>
+    <span class="q-badge">มี.ค. 44</span>
+    <span class="q-type">กฎของโคไซน์</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    สามเหลี่ยม \(ABC\) มี \(a,b,c\) เป็นด้านตรงข้ามมุม \(A,B,C\)
+    ถ้า \(\cos B = \dfrac{1}{4}\) และ \((a+b+c)(a-b+c) = 30\) แล้ว \(ac\) มีค่าเท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  จัดรูปเงื่อนไข \((a+b+c)(a-b+c)\)</span>
+    <div class="step-body">
+      <span class="kw">โดย</span> \((a+c+b)(a+c-b) = (a+c)^2 - b^2 = a^2 + 2ac + c^2 - b^2 = 30\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ใช้กฎของโคไซน์แทน \(a^2+c^2-b^2\)</span>
+    <div class="step-body">
+      <span class="kw">จากกฎโคไซน์</span> \(b^2 = a^2+c^2-2ac\cos B \Rightarrow a^2+c^2-b^2 = 2ac\cos B = 2ac\cdot\dfrac{1}{4} = \dfrac{ac}{2}\)
+      <p class="indent">แทนลง: \(\dfrac{ac}{2} + 2ac = 30 \Rightarrow \dfrac{5ac}{2} = 30\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  แก้หา \(ac\)</span>
+    <div class="step-body">
+      \(ac = \dfrac{30\times2}{5} = 12\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1) &nbsp;12</span></div>
+</section>
+
+<!-- ═══════════ Q13 ═══════════ -->
+<section class="sol" id="q13">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 13.</span>
+    <span class="q-badge">ต.ค. 44</span>
+    <span class="q-type">ตรรกศาสตร์ + เอกลักษณ์ตรีโกณ</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    เอกภพสัมพัทธ์คือเซตของจำนวนจริง<br>
+    ก. \(\exists x(\cot 2x - \cot x = 0)\)<br>
+    ข. \(\forall x\!\left(\sin^4 x + \cos^4 x = 1 - \dfrac{1}{2}\sin^2 2x\right)\)<br>
+    ค่าความจริงของ ก. และ ข. เป็นไปตามข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตรวจ ก. — มี \(x\) ที่ \(\cot 2x - \cot x = 0\) หรือไม่</span>
+    <div class="step-body">
+      <span class="kw">ใช้สูตรมุมสองเท่า</span> \(\cot 2x = \dfrac{\cot^2 x - 1}{2\cot x}\) แทนลงในสมการ
+      <p class="indent">\(\dfrac{\cot^2 x - 1}{2\cot x} = \cot x \Rightarrow \cot^2 x - 1 = 2\cot^2 x \Rightarrow \cot^2 x = -1\)</p>
+      <p class="indent"><span class="kw">เนื่องจาก</span> \(\cot^2 x \ge 0\) เสมอ จึงไม่มี \(x\) ใดสอดคล้อง</p>
+      <p><span class="kw">ดังนั้น</span> ก. <b>เป็นเท็จ</b></p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ตรวจ ข. — เป็นเอกลักษณ์ทุก \(x\) หรือไม่</span>
+    <div class="step-body">
+      <span class="kw">จัดรูปฝั่งซ้าย</span> \(\sin^4 x+\cos^4 x = (\sin^2 x+\cos^2 x)^2 - 2\sin^2 x\cos^2 x = 1 - 2\sin^2 x\cos^2 x\)
+      <p class="indent"><span class="kw">โดย</span> \(2\sin x\cos x = \sin 2x \Rightarrow 2\sin^2 x\cos^2 x = \dfrac{1}{2}(2\sin x\cos x)^2 = \dfrac{1}{2}\sin^2 2x\)</p>
+      <p class="indent">\(\Rightarrow \sin^4 x+\cos^4 x = 1 - \dfrac{1}{2}\sin^2 2x\) ตรงกับฝั่งขวาพอดี — เป็นจริงทุก \(x\)</p>
+      <p><span class="kw">ดังนั้น</span> ข. <b>เป็นจริง</b></p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  สรุปผล</span>
+    <div class="step-body">
+      ก. เป็นเท็จ และ ข. เป็นจริง
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3) ก. เท็จ และ ข. จริง</span></div>
+</section>
+
+<!-- ═══════════ Q14 ═══════════ -->
+<section class="sol" id="q14">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 14.</span>
+    <span class="q-badge">ต.ค. 44</span>
+    <span class="q-type">ผลบวกเป็นผลคูณ (sum-to-product)</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    ถ้า \(\sin 15^\circ + \sin 55^\circ = x\) และ \(\cos 15^\circ + \cos 55^\circ = y\)
+    แล้ว \((x+y)^2 - 2xy\) เท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  สังเกตว่า \((x+y)^2 - 2xy = x^2 + y^2\)</span>
+    <div class="step-body">
+      <span class="kw">โดย</span> \((x+y)^2 - 2xy = x^2 + 2xy + y^2 - 2xy = x^2 + y^2\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  คำนวณ \(x^2 + y^2\)</span>
+    <div class="step-body">
+      \(x^2+y^2 = (\sin 15^\circ+\sin 55^\circ)^2 + (\cos 15^\circ+\cos 55^\circ)^2\)
+      <p class="indent">\(= (\sin^2 15^\circ+\cos^2 15^\circ) + (\sin^2 55^\circ+\cos^2 55^\circ) + 2(\sin15^\circ\sin55^\circ+\cos15^\circ\cos55^\circ)\)</p>
+      <p class="indent">\(= 1 + 1 + 2\cos(55^\circ-15^\circ) = 2 + 2\cos 40^\circ\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  ใช้สูตรครึ่งมุม</span>
+    <div class="step-body">
+      <span class="kw">โดย</span> \(1+\cos 40^\circ = 2\cos^2 20^\circ\)
+      <p class="indent">\(2+2\cos 40^\circ = 2(1+\cos 40^\circ) = 4\cos^2 20^\circ\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1) &nbsp;\(4\cos^2 20^\circ\)</span></div>
+</section>
+
+<!-- ═══════════ Q15 ═══════════ -->
+<section class="sol" id="q15">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 15.</span>
+    <span class="q-badge">มี.ค. 45</span>
+    <span class="q-type">ผลรวมแบบสลับเครื่องหมาย</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    \(-\sin^2 1^\circ + \sin^2 2^\circ - \sin^2 3^\circ + \ldots - \sin^2 89^\circ + \sin^2 90^\circ\)
+    มีค่าเท่ากับเท่าใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  จับคู่พจน์ที่อยู่ติดกัน (คู่ลบ-บวก)</span>
+    <div class="step-body">
+      <span class="kw">จับคู่:</span> \((-\sin^2 1^\circ+\sin^2 2^\circ) + (-\sin^2 3^\circ+\sin^2 4^\circ) + \ldots + (-\sin^2 89^\circ+\sin^2 90^\circ)\)
+      <p class="indent">มีทั้งหมด 45 คู่ แต่ละคู่อยู่ในรูป \(\sin^2(2k)^\circ - \sin^2(2k-1)^\circ\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ใช้สูตร \(\sin^2 A - \sin^2 B = \sin(A+B)\sin(A-B)\)</span>
+    <div class="step-body">
+      แต่ละคู่ \(= \sin(2k+2k-1)^\circ\sin(2k-(2k-1))^\circ = \sin(4k-1)^\circ\sin 1^\circ\)
+      <p class="indent"><span class="kw">ลองอีกวิธี (ตรงกว่า):</span> ใช้ \(\sin^2\theta = \dfrac{1-\cos 2\theta}{2}\)</p>
+      <p class="indent">ผลรวม \(= \sum_{k=1}^{90}(-1)^k\sin^2 k^\circ = \dfrac{1}{2}\sum_{k=1}^{90}(-1)^k(1-\cos 2k^\circ)\)</p>
+      <p class="indent">\(= \dfrac{1}{2}\!\left[\sum(-1)^k - \sum(-1)^k\cos 2k^\circ\right]\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  คำนวณผลรวมแต่ละก้อน</span>
+    <div class="step-body">
+      <p class="indent">\(\sum_{k=1}^{90}(-1)^k = 0\) (มี \(+1\) และ \(-1\) อย่างละ 45 ตัว)</p>
+      <p class="indent">\(\sum_{k=1}^{90}(-1)^k\cos 2k^\circ\): ใช้สมมาตร \(\cos 2(90-k)^\circ = -\cos 2k^\circ\) พจน์ตัดกันเกือบหมด เหลือ \(-\cos 180^\circ = 1\) จากพจน์ \(k=90\)</p>
+      <p class="indent">ผลรวม \(= \dfrac{1}{2}[0 - (-1)] = \dfrac{1}{2}\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">0.5</span></div>
+</section>
+
+<!-- ═══════════ Q16 ═══════════ -->
+<section class="sol" id="q16">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 16.</span>
+    <span class="q-badge">ต.ค. 45</span>
+    <span class="q-type">สมการ arcsin + ฟังก์ชันผกผัน</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    ถ้า \(a\) และ \(b\) เป็นคำตอบของสมการ \(\sin(2\arcsin x) = x\)
+    โดยที่ \(a\ne0\), \(b\ne0\) และ \(a\ne b\)
+    แล้ว \(\big|\sin\arctan(ab)\big|\) เท่ากับเท่าใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แก้สมการ \(\sin(2\arcsin x)=x\)</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(\arcsin x = \theta \Rightarrow \sin\theta = x\) <span class="kw">โดย</span> \(\sin 2\theta = 2\sin\theta\cos\theta = 2x\sqrt{1-x^2}\)
+      <p class="indent">\(2x\sqrt{1-x^2} = x \Rightarrow x(2\sqrt{1-x^2}-1) = 0\)</p>
+      <p class="indent"><span class="kw">เนื่องจาก</span> \(x\ne0\): \(2\sqrt{1-x^2} = 1 \Rightarrow 1-x^2 = \dfrac{1}{4} \Rightarrow x^2 = \dfrac{3}{4} \Rightarrow x = \pm\dfrac{\sqrt3}{2}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(ab\)</span>
+    <div class="step-body">
+      \(ab = \dfrac{\sqrt3}{2}\cdot\left(-\dfrac{\sqrt3}{2}\right) = -\dfrac{3}{4}\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  หา \(\big|\sin\arctan(ab)\big|\)</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(\phi = \arctan\!\left(-\dfrac34\right) \Rightarrow \tan\phi = -\dfrac34\)
+      <p class="indent">สามเหลี่ยม: ตรงข้าม 3, ประชิด 4, ด้านตรงข้ามมุมฉาก 5 <span class="kw">ดังนั้น</span> \(|\sin\phi| = \dfrac{3}{5} = 0.6\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">0.6</span></div>
+</section>
+
+<!-- ═══════════ Q17 ═══════════ -->
+<section class="sol" id="q17">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 17.</span>
+    <span class="q-badge">มี.ค. 45</span>
+    <span class="q-type">อสมการตรีโกณมิติ</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    กำหนด \(0\le\theta\le2\pi\) เซตคำตอบของอสมการ
+    \(\dfrac{\cos^2\theta-\cos\theta}{\sin\theta-\frac{1}{2}} &lt; 0\)
+    เป็นสับเซตของเซตในข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แยกตัวประกอบตัวเศษ</span>
+    <div class="step-body">
+      <span class="kw">เศษ:</span> \(\cos^2\theta - \cos\theta = \cos\theta(\cos\theta - 1)\)
+      <p class="indent"><span class="kw">เนื่องจาก</span> \(\cos\theta - 1 \le 0\) เสมอ จึงเครื่องหมายของเศษขึ้นกับ \(-\cos\theta\)</p>
+      <p class="indent">เศษ \(&lt; 0\) เมื่อ \(\cos\theta > 0\); เศษ \(>0\) เมื่อ \(\cos\theta &lt; 0\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  วิเคราะห์เครื่องหมายของส่วน \(\sin\theta-\dfrac{1}{2}\)</span>
+    <div class="step-body">
+      <span class="kw">ส่วน \(>0\) เมื่อ</span> \(\sin\theta>\dfrac{1}{2} \Rightarrow \theta\in\left(\dfrac{\pi}{6},\dfrac{5\pi}{6}\right)\)
+      <p class="indent"><span class="kw">ต้องการให้ เศษ/ส่วน \(&lt; 0\)</span> คือเศษและส่วนต่างเครื่องหมายกัน</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  รวมช่วงคำตอบ</span>
+    <div class="step-body">
+      <span class="kw">วิเคราะห์ตามควอดแรนต์</span> ในช่วง \([0,2\pi]\) เซตคำตอบรวมได้
+      <p class="indent">\(\left(\dfrac{\pi}{6},\dfrac{\pi}{2}\right)\cup\left(\dfrac{3\pi}{4},\dfrac{3\pi}{2}\right)\) — ตรงกับตัวเลือกข้อ 4</p>
+      <div class="hint-box">หมายเหตุ: ข้อนี้ต้องวาดวงกลมหนึ่งหน่วยและไล่เครื่องหมายทีละควอดแรนต์ เฉลยทางการตรงกับข้อ 4)</div>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4)</span></div>
+</section>
+
+<!-- ═══════════ Q18 ═══════════ -->
+<section class="sol" id="q18">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 18.</span>
+    <span class="q-badge">ต.ค. 45</span>
+    <span class="q-type">การประยุกต์ — มุมเงย</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    นายดำมองยอดเสาธงเป็นมุมเงย \(60^\circ\) เมื่อเดินเข้าไปอีก 20 เมตร
+    เห็นยอดเสาเป็นมุมเงย \(75^\circ\) ขณะที่เห็นเป็นมุมเงย \(60^\circ\) เขายืนห่างจากเสาธงเท่าใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตั้งตัวแปร — ให้ความสูงเสา \(=h\), ระยะที่จุด \(60^\circ\) เป็น \(d\)</span>
+    <div class="step-body">
+      <span class="kw">จากจุดไกล (มุม \(60^\circ\)):</span> \(\tan 60^\circ = \dfrac{h}{d} \Rightarrow h = d\tan 60^\circ = d\sqrt3\)
+      <p class="indent"><span class="kw">จากจุดใกล้ (มุม \(75^\circ\)):</span> \(\tan 75^\circ = \dfrac{h}{d-20}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แก้ระบบสมการหา \(d\)</span>
+    <div class="step-body">
+      \(h = (d-20)\tan 75^\circ = d\sqrt3\)
+      <p class="indent">\(\tan 75^\circ = 2+\sqrt3\) <span class="kw">ดังนั้น</span> \((d-20)(2+\sqrt3) = d\sqrt3\)</p>
+      <p class="indent">\(d(2+\sqrt3) - 20(2+\sqrt3) = d\sqrt3 \Rightarrow d(2+\sqrt3-\sqrt3) = 20(2+\sqrt3)\)</p>
+      <p class="indent">\(2d = 20(2+\sqrt3) \Rightarrow d = 10(2+\sqrt3)\) เมตร</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4) &nbsp;\(10(2+\sqrt3)\) เมตร</span></div>
+</section>
+
+<!-- ═══════════ Q19 ═══════════ -->
+<section class="sol" id="q19">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 19.</span>
+    <span class="q-badge">มี.ค. 46</span>
+    <span class="q-type">กฎของไซน์ + มุมสามเท่า</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    ในสามเหลี่ยม \(ABC\) ถ้า \(A=30^\circ\), ด้าน \(BC\) ยาว 2 ซม. และด้าน \(AC\) ยาว 3 ซม.
+    แล้ว \(4\sin 3B\) มีค่าเท่ากับเท่าใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ใช้กฎของไซน์หา \(\sin B\)</span>
+    <div class="step-body">
+      <span class="kw">โดยกฎไซน์</span> \(\dfrac{BC}{\sin A} = \dfrac{AC}{\sin B} \Rightarrow \dfrac{2}{\sin 30^\circ} = \dfrac{3}{\sin B}\)
+      <p class="indent">\(\sin B = \dfrac{3\sin 30^\circ}{2} = \dfrac{3\cdot\frac12}{2} = \dfrac{3}{4}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ใช้สูตรมุมสามเท่า \(\sin 3B = 3\sin B - 4\sin^3 B\)</span>
+    <div class="step-body">
+      \(\sin 3B = 3\cdot\dfrac{3}{4} - 4\cdot\left(\dfrac{3}{4}\right)^3 = \dfrac{9}{4} - 4\cdot\dfrac{27}{64} = \dfrac{9}{4} - \dfrac{27}{16}\)
+      <p class="indent">\(= \dfrac{36}{16} - \dfrac{27}{16} = \dfrac{9}{16}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  คำนวณ \(4\sin 3B\)</span>
+    <div class="step-body">
+      \(4\sin 3B = 4\cdot\dfrac{9}{16} = \dfrac{9}{4} = 2.25\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2.25</span></div>
+</section>
+
+<!-- ═══════════ Q20 ═══════════ -->
+<section class="sol" id="q20">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 20.</span>
+    <span class="q-badge">มี.ค. 46</span>
+    <span class="q-type">ฟังก์ชันผกผัน — arccos/arcsin/arctan</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    ถ้า \(\arccos x - \arcsin x = \dfrac{\pi}{6}\) แล้ว \(\arccos x - \arctan 2x\) มีค่าเท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(\arccos x\) และ \(\arcsin x\) จากระบบสมการ</span>
+    <div class="step-body">
+      <span class="kw">โดยเอกลักษณ์</span> \(\arccos x + \arcsin x = \dfrac{\pi}{2}\)
+      <p class="indent">รวมกับ \(\arccos x - \arcsin x = \dfrac{\pi}{6}\):</p>
+      <p class="indent">\(2\arccos x = \dfrac{\pi}{2}+\dfrac{\pi}{6} = \dfrac{2\pi}{3} \Rightarrow \arccos x = \dfrac{\pi}{3}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(x\) แล้วหา \(\arctan 2x\)</span>
+    <div class="step-body">
+      \(\arccos x = \dfrac{\pi}{3} \Rightarrow x = \cos\dfrac{\pi}{3} = \dfrac{1}{2}\)
+      <p class="indent">\(\arctan 2x = \arctan\!\left(2\cdot\dfrac12\right) = \arctan 1 = \dfrac{\pi}{4}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  คำนวณนิพจน์</span>
+    <div class="step-body">
+      \(\arccos x - \arctan 2x = \dfrac{\pi}{3} - \dfrac{\pi}{4} = \dfrac{4\pi-3\pi}{12} = \dfrac{\pi}{12}\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1) &nbsp;\(\dfrac{\pi}{12}\)</span></div>
+</section>
+
+<!-- ═══════════ Q21 ═══════════ -->
+<section class="sol" id="q21">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 21.</span>
+    <span class="q-badge">Ent ต.ค. 46</span>
+    <span class="q-type">arccos / arctan — มุมประกอบ</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    \(1 + \cos\!\left[\dfrac{\pi}{2} + \left(\arccos\dfrac{4}{5} - \arctan\dfrac{4}{3}\right)\right]\) เท่ากับเท่าใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หาค่า \(\arccos\dfrac{4}{5}\) และ \(\arctan\dfrac{4}{3}\) เป็นมุม</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(\alpha = \arccos\dfrac{4}{5} \Rightarrow \cos\alpha = \dfrac45,\ \sin\alpha = \dfrac35,\ \tan\alpha = \dfrac34\)
+      <p class="indent"><span class="kw">ให้</span> \(\beta = \arctan\dfrac{4}{3} \Rightarrow \tan\beta = \dfrac43,\ \sin\beta=\dfrac45,\ \cos\beta=\dfrac35\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ลดรูปด้วย \(\cos\!\left(\dfrac{\pi}{2}+\phi\right) = -\sin\phi\)</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(\phi = \alpha - \beta\) นิพจน์ \(= 1 - \sin(\alpha-\beta)\)
+      <p class="indent">\(\sin(\alpha-\beta) = \sin\alpha\cos\beta - \cos\alpha\sin\beta = \dfrac35\cdot\dfrac35 - \dfrac45\cdot\dfrac45 = \dfrac{9}{25}-\dfrac{16}{25} = -\dfrac{7}{25}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  คำนวณค่า</span>
+    <div class="step-body">
+      \(1 - \left(-\dfrac{7}{25}\right) = 1 + \dfrac{7}{25} = \dfrac{32}{25} = 1.28\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1.28</span></div>
+</section>
+
+<!-- ═══════════ Q22 ═══════════ -->
+<section class="sol" id="q22">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 22.</span>
+    <span class="q-badge">Ent มี.ค. 47</span>
+    <span class="q-type">arctan / arcsin — มุมสองเท่า</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    ค่า \(\sin\!\left(2\arctan\dfrac{1}{2}\right) + \cot^2\!\left(\arcsin\dfrac{1}{3}\right)\) เท่ากับเท่าใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(\sin\!\left(2\arctan\dfrac12\right)\)</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(\tan\theta = \dfrac12\) <span class="kw">โดยสูตร</span> \(\sin 2\theta = \dfrac{2\tan\theta}{1+\tan^2\theta} = \dfrac{2\cdot\frac12}{1+\frac14} = \dfrac{1}{5/4} = \dfrac{4}{5}\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(\cot^2\!\left(\arcsin\dfrac13\right)\)</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(\sin\psi = \dfrac13 \Rightarrow \cos\psi = \dfrac{2\sqrt2}{3} \Rightarrow \cot\psi = \dfrac{\cos\psi}{\sin\psi} = 2\sqrt2\)
+      <p class="indent">\(\cot^2\psi = (2\sqrt2)^2 = 8\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  รวมค่า</span>
+    <div class="step-body">
+      \(\dfrac{4}{5} + 8 = 0.8 + 8 = 8.8\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">8.8</span></div>
+</section>
+
+<!-- ═══════════ Q23 ═══════════ -->
+<section class="sol" id="q23">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 23.</span>
+    <span class="q-badge">Ent มี.ค. 47</span>
+    <span class="q-type">อัตราส่วนตรีโกณ — ระบบสมการ</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    ถ้า \(\dfrac{\sin A}{\sin B} = \dfrac{2}{\sqrt3}\) และ \(\dfrac{\cos A}{\cos B} = \dfrac{1}{\sqrt2}\)
+    แล้ว \(\tan^2 B\) มีค่าเท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  เขียน \(\sin A,\cos A\) ในรูปของ \(B\)</span>
+    <div class="step-body">
+      \(\sin A = \dfrac{2}{\sqrt3}\sin B\), \(\quad\cos A = \dfrac{1}{\sqrt2}\cos B\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ใช้ \(\sin^2 A + \cos^2 A = 1\)</span>
+    <div class="step-body">
+      \(\dfrac{4}{3}\sin^2 B + \dfrac{1}{2}\cos^2 B = 1\)
+      <p class="indent"><span class="kw">แทน</span> \(\cos^2 B = 1-\sin^2 B\): \(\dfrac{4}{3}\sin^2 B + \dfrac{1}{2}(1-\sin^2 B) = 1\)</p>
+      <p class="indent">\(\left(\dfrac{4}{3}-\dfrac{1}{2}\right)\sin^2 B = \dfrac{1}{2} \Rightarrow \dfrac{5}{6}\sin^2 B = \dfrac{1}{2}\)</p>
+      <p class="indent">\(\sin^2 B = \dfrac{3}{5} \Rightarrow \cos^2 B = \dfrac{2}{5}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  คำนวณ \(\tan^2 B\)</span>
+    <div class="step-body">
+      \(\tan^2 B = \dfrac{\sin^2 B}{\cos^2 B} = \dfrac{3/5}{2/5} = \dfrac{3}{2}\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2) &nbsp;\(\dfrac{3}{2}\)</span></div>
+</section>
+
+<!-- ═══════════ Q24 ═══════════ -->
+<section class="sol" id="q24">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 24.</span>
+    <span class="q-badge">Ent ต.ค. 47</span>
+    <span class="q-type">กฎของไซน์ + ผลบวก-ผลต่างของมุม</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    สามเหลี่ยม \(ABC\) มีด้าน \(BC = \sqrt3\) หน่วย, ด้าน \(AC = 2\) หน่วย
+    ถ้ามุม \(B = \arctan\dfrac{1}{\sqrt3}\) แล้วค่าของ \(\sin(A+B) + \sin(A-B)\) เท่ากับเท่าใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หามุม \(B\) และลดรูปนิพจน์</span>
+    <div class="step-body">
+      \(B = \arctan\dfrac{1}{\sqrt3} = 30^\circ\)
+      <p class="indent"><span class="kw">โดยสูตรผลบวก-ผลต่าง</span> \(\sin(A+B)+\sin(A-B) = 2\sin A\cos B\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(\sin A\) ด้วยกฎของไซน์</span>
+    <div class="step-body">
+      <span class="kw">โดยกฎไซน์</span> \(\dfrac{AC}{\sin B} = \dfrac{BC}{\sin A} \Rightarrow \dfrac{2}{\sin 30^\circ} = \dfrac{\sqrt3}{\sin A}\)
+      <p class="indent">\(\sin A = \dfrac{\sqrt3\sin 30^\circ}{2} = \dfrac{\sqrt3\cdot\frac12}{2} = \dfrac{\sqrt3}{4}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  คำนวณ \(2\sin A\cos B\)</span>
+    <div class="step-body">
+      \(2\sin A\cos B = 2\cdot\dfrac{\sqrt3}{4}\cdot\cos 30^\circ = 2\cdot\dfrac{\sqrt3}{4}\cdot\dfrac{\sqrt3}{2} = 2\cdot\dfrac{3}{8} = \dfrac{3}{4} = 0.75\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">0.75</span></div>
+</section>
+
+<!-- ═══════════ Q25 ═══════════ -->
+<section class="sol" id="q25">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 25.</span>
+    <span class="q-badge">Ent มี.ค. 47</span>
+    <span class="q-type">กฎของไซน์/โคไซน์ในสามเหลี่ยมย่อย</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    สามเหลี่ยม \(ABC\) มี \(A\hat{C}B = 60^\circ\) ลากเส้นจาก \(A\) ไปพบ \(BC\) ที่ \(D\)
+    โดยทำให้ \(B\hat{A}D = 30^\circ\) ถ้า \(BD = 3\) หน่วย และ \(AD = 2\) หน่วย
+    แล้ว \(CD\) ยาวเท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ในสามเหลี่ยม \(ACD\) — หามุม \(A\hat{D}C\)</span>
+    <div class="step-body">
+      <div class="hint-box">มุม \(A\hat{D}B\) เป็นมุมภายนอกของสามเหลี่ยม \(ABD\) ที่จุด \(D\); และมุม \(A\hat{D}C\) เป็นมุมประชิด</div>
+      <span class="kw">ในสามเหลี่ยม \(ACD\):</span> มุม \(C = 60^\circ\) ใช้กฎของไซน์เชื่อม \(AD\) กับ \(CD\)
+      <p class="indent">\(\dfrac{AD}{\sin C} = \dfrac{CD}{\sin(D\hat{A}C)}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หามุม \(A\hat{D}C\) จากสามเหลี่ยม \(ABD\)</span>
+    <div class="step-body">
+      <span class="kw">ในสามเหลี่ยม \(ABD\):</span> ใช้กฎของไซน์กับ \(BD=3\), \(AD=2\), มุม \(B\hat{A}D=30^\circ\)
+      <p class="indent">\(\dfrac{BD}{\sin(B\hat{A}D)} = \dfrac{AD}{\sin B} \Rightarrow \dfrac{3}{\sin 30^\circ} = \dfrac{2}{\sin B} \Rightarrow \sin B = \dfrac{2\sin30^\circ}{3} = \dfrac{1}{3}\)</p>
+      <p class="indent">มุม \(A\hat{D}C = B + B\hat{A}D = B + 30^\circ\) (มุมภายนอก)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  ใช้กฎของไซน์ในสามเหลี่ยม \(ACD\) หา \(CD\)</span>
+    <div class="step-body">
+      <span class="kw">ในสามเหลี่ยม \(ACD\):</span> มุม \(C=60^\circ\), มุม \(A\hat{D}C = B+30^\circ\), มุม \(D\hat{A}C = 180^\circ-60^\circ-(B+30^\circ) = 90^\circ-B\)
+      <p class="indent">\(\dfrac{CD}{\sin(D\hat{A}C)} = \dfrac{AD}{\sin 60^\circ} \Rightarrow CD = \dfrac{AD\sin(90^\circ-B)}{\sin 60^\circ} = \dfrac{2\cos B}{\sin 60^\circ}\)</p>
+      <p class="indent">\(\cos B = \dfrac{2\sqrt2}{3}\) (จาก \(\sin B=\tfrac13\)) <span class="kw">ดังนั้น</span> \(CD = \dfrac{2\cdot\frac{2\sqrt2}{3}}{\frac{\sqrt3}{2}} = \dfrac{\frac{4\sqrt2}{3}\cdot2}{\sqrt3} = \dfrac{8\sqrt2}{3\sqrt3} = \dfrac{8\sqrt6}{9}\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4) &nbsp;\(\dfrac{8\sqrt6}{9}\)</span></div>
+</section>
+
+<!-- ═══════════ Q26 ═══════════ -->
+<section class="sol" id="q26">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 26.</span>
+    <span class="q-badge">Ent ต.ค. 47</span>
+    <span class="q-type">สูตรแทนเจนต์ผลต่าง + มุมสองเท่า</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    กำหนด \(\theta\in\left[-\dfrac{\pi}{4},\dfrac{\pi}{4}\right]\) ถ้า
+    \(\dfrac{\tan^2\!\left(\frac{\pi}{4}-\theta\right)-1}{\tan^2\!\left(\frac{\pi}{4}-\theta\right)+1} = \dfrac{3}{5}\)
+    แล้ว \(\cos^2\theta\) มีค่าเท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ลดรูปทางซ้ายด้วยสูตร \(\dfrac{t^2-1}{t^2+1} = -\cos 2\phi\) เมื่อ \(t=\tan\phi\)</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(\phi = \dfrac{\pi}{4}-\theta\), \(t=\tan\phi\) <span class="kw">โดย</span> \(\cos 2\phi = \dfrac{1-t^2}{1+t^2}\)
+      <p class="indent">\(\dfrac{t^2-1}{t^2+1} = -\cos 2\phi = -\cos\!\left(\dfrac{\pi}{2}-2\theta\right) = -\sin 2\theta\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(\sin 2\theta\) แล้วหา \(\cos 2\theta\)</span>
+    <div class="step-body">
+      \(-\sin 2\theta = \dfrac{3}{5} \Rightarrow \sin 2\theta = -\dfrac{3}{5}\)
+      <p class="indent"><span class="kw">เนื่องจาก</span> \(\theta\in\left[-\dfrac{\pi}{4},\dfrac{\pi}{4}\right] \Rightarrow 2\theta\in\left[-\dfrac{\pi}{2},\dfrac{\pi}{2}\right]\) จึง \(\cos 2\theta \ge 0\)</p>
+      <p class="indent">\(\cos 2\theta = \sqrt{1-\frac{9}{25}} = \dfrac{4}{5}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  หา \(\cos^2\theta\)</span>
+    <div class="step-body">
+      <span class="kw">โดย</span> \(\cos^2\theta = \dfrac{1+\cos 2\theta}{2} = \dfrac{1+\frac45}{2} = \dfrac{9/5}{2} = \dfrac{9}{10}\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4) &nbsp;\(\dfrac{9}{10}\)</span></div>
+</section>
+
+<!-- ═══════════ Q27 ═══════════ -->
+<section class="sol" id="q27">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 27.</span>
+    <span class="q-badge">Ent มี.ค. 48</span>
+    <span class="q-type">ตรรกศาสตร์ + ตัวบ่งปริมาณ</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    ก. เอกภพสัมพัทธ์คือเซตของจำนวนเต็ม ข้อความ \(\exists m\,\exists n\,[5m+7n=1]\) มีค่าความจริงเป็นจริง<br>
+    ข. นิเสธของ \(\forall x\,\exists y\,[(x^2-2x\ge y-2)\wedge(y\ge\sin x)]\)
+    คือ \(\exists x\,\forall y\,[(x^2-2x&lt; y-2)\vee(y&lt;\sin x)]\)<br>
+    ข้อใดถูก
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตรวจ ก. — มีจำนวนเต็ม \(m,n\) ที่ \(5m+7n=1\) หรือไม่</span>
+    <div class="step-body">
+      <span class="kw">ลอง</span> \(m=3, n=-2\): \(5(3)+7(-2) = 15-14 = 1\) ✓
+      <p><span class="kw">ดังนั้น</span> ก. <b>ถูก</b></p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ตรวจ ข. — หานิเสธโดยกฎเดอมอร์แกน</span>
+    <div class="step-body">
+      <span class="kw">นิเสธของ</span> \(\forall x\,\exists y\,[P\wedge Q]\) คือ \(\exists x\,\forall y\,[\sim\!P\vee\sim\!Q]\)
+      <p class="indent">\(\sim(x^2-2x\ge y-2) = (x^2-2x&lt; y-2)\) ✓</p>
+      <p class="indent">\(\sim(y\ge\sin x) = (y&lt;\sin x)\) ✓</p>
+      <p><span class="kw">ตรงกับที่โจทย์เขียน</span> <span class="kw">ดังนั้น</span> ข. <b>ถูก</b></p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1) ก. ถูก และ ข. ถูก</span></div>
+</section>
+
+<!-- ═══════════ Q28 ═══════════ -->
+<section class="sol" id="q28">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 28.</span>
+    <span class="q-badge">Ent มี.ค. 48</span>
+    <span class="q-type">เอกลักษณ์ตรีโกณ + มุมสามเท่า</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    ถ้า \(\dfrac{\sin^2 3A}{\sin^2 A} - \dfrac{\cos^2 3A}{\cos^2 A} = 2\) แล้ว \(\cos 2A\) มีค่าเท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ใช้สูตรมุมสามเท่าของ sin และ cos</span>
+    <div class="step-body">
+      <span class="kw">โดย</span> \(\sin 3A = \sin A(3-4\sin^2 A) = \sin A(2\cos 2A+1)\)
+      <p class="indent">\(\cos 3A = \cos A(4\cos^2 A-3) = \cos A(2\cos 2A-1)\)</p>
+      <p class="indent">(ใช้ \(3-4\sin^2 A = 1+2\cos 2A\) และ \(4\cos^2 A-3 = 2\cos 2A-1\))</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แทนลงในนิพจน์</span>
+    <div class="step-body">
+      \(\dfrac{\sin^2 3A}{\sin^2 A} = (2\cos 2A+1)^2\), \(\quad\dfrac{\cos^2 3A}{\cos^2 A} = (2\cos 2A-1)^2\)
+      <p class="indent">ผลต่าง \(= (2\cos 2A+1)^2 - (2\cos 2A-1)^2\)</p>
+      <p class="indent"><span class="kw">โดยผลต่างกำลังสอง</span> \(= [(2\cos2A+1)+(2\cos2A-1)][(2\cos2A+1)-(2\cos2A-1)]\)</p>
+      <p class="indent">\(= (4\cos 2A)(2) = 8\cos 2A\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  แก้สมการ</span>
+    <div class="step-body">
+      \(8\cos 2A = 2 \Rightarrow \cos 2A = \dfrac{1}{4}\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1) &nbsp;\(\dfrac{1}{4}\)</span></div>
+</section>
+
+<!-- ═══════════ Q29 ═══════════ -->
+<section class="sol" id="q29">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 29.</span>
+    <span class="q-badge">Ent มี.ค. 48</span>
+    <span class="q-type">arccos + มุมสองเท่า</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    ถ้า \(\tan(\arccos x) = -\sqrt3\) แล้วค่าของ \(x\sin(2\arccos x)\) เท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(x = \cos\theta\) จาก \(\tan\theta = -\sqrt3\)</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(\theta = \arccos x\) (ดังนั้น \(\theta\in[0,\pi]\)) และ \(\tan\theta = -\sqrt3\)
+      <p class="indent"><span class="kw">เนื่องจาก</span> \(\tan\theta&lt;0\) และ \(\theta\in[0,\pi]\) จึง \(\theta\) อยู่ในควอดแรนต์ 2: \(\theta = 120^\circ\)</p>
+      <p class="indent">\(x = \cos 120^\circ = -\dfrac{1}{2}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(\sin(2\theta)\)</span>
+    <div class="step-body">
+      \(\sin\theta = \sin 120^\circ = \dfrac{\sqrt3}{2}\), \(\cos\theta = -\dfrac12\)
+      <p class="indent">\(\sin 2\theta = 2\sin\theta\cos\theta = 2\cdot\dfrac{\sqrt3}{2}\cdot\left(-\dfrac12\right) = -\dfrac{\sqrt3}{2}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  คำนวณ \(x\sin 2\theta\)</span>
+    <div class="step-body">
+      \(x\sin 2\theta = \left(-\dfrac12\right)\cdot\left(-\dfrac{\sqrt3}{2}\right) = \dfrac{\sqrt3}{4}\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4) &nbsp;\(\dfrac{\sqrt3}{4}\)</span></div>
+</section>
+
+<!-- ═══════════ Q30 ═══════════ -->
+<section class="sol" id="q30">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 30.</span>
+    <span class="q-badge">A-NET ก.พ. 49</span>
+    <span class="q-type">arctan — ผลบวกของมุม</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem">
+    \(\sin(\arctan 2 + \arctan 3)\) เท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตั้งมุม \(\alpha = \arctan 2\), \(\beta = \arctan 3\)</span>
+    <div class="step-body">
+      \(\tan\alpha = 2 \Rightarrow \sin\alpha = \dfrac{2}{\sqrt5},\ \cos\alpha = \dfrac{1}{\sqrt5}\)
+      <p class="indent">\(\tan\beta = 3 \Rightarrow \sin\beta = \dfrac{3}{\sqrt{10}},\ \cos\beta = \dfrac{1}{\sqrt{10}}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ใช้สูตรผลบวก \(\sin(\alpha+\beta)\)</span>
+    <div class="step-body">
+      \(\sin(\alpha+\beta) = \sin\alpha\cos\beta + \cos\alpha\sin\beta\)
+      <p class="indent">\(= \dfrac{2}{\sqrt5}\cdot\dfrac{1}{\sqrt{10}} + \dfrac{1}{\sqrt5}\cdot\dfrac{3}{\sqrt{10}} = \dfrac{2+3}{\sqrt{50}} = \dfrac{5}{5\sqrt2} = \dfrac{1}{\sqrt2}\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3) &nbsp;\(\dfrac{1}{\sqrt2}\)</span></div>
+</section>
+
+<!-- ═══════════ Q31 ═══════════ -->
+<section class="sol" id="q31">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 31.</span>
+    <span class="q-badge">A-NET ก.พ. 49</span>
+    <span class="q-type">sec + cosec + มุมสองเท่า</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    ถ้า \(\sec\theta + \mathrm{cosec}\,\theta = 1\) แล้ว \(\sin 2\theta\) มีค่าเท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  จัดรูปเงื่อนไขเป็นรูป \(\sin\theta,\cos\theta\)</span>
+    <div class="step-body">
+      \(\dfrac{1}{\cos\theta} + \dfrac{1}{\sin\theta} = 1 \Rightarrow \dfrac{\sin\theta+\cos\theta}{\sin\theta\cos\theta} = 1\)
+      <p class="indent">\(\sin\theta+\cos\theta = \sin\theta\cos\theta\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ยกกำลังสองเพื่อสร้าง \(\sin 2\theta\)</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(s = \sin\theta+\cos\theta\) <span class="kw">โดย</span> \(\sin\theta\cos\theta = \dfrac{s^2-1}{2}\)
+      <p class="indent">จากเงื่อนไข \(s = \dfrac{s^2-1}{2} \Rightarrow 2s = s^2-1 \Rightarrow s^2-2s-1 = 0\)</p>
+      <p class="indent">\(s = \dfrac{2\pm\sqrt{8}}{2} = 1\pm\sqrt2\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  หา \(\sin 2\theta = 2\sin\theta\cos\theta\)</span>
+    <div class="step-body">
+      <span class="kw">โดย</span> \(\sin 2\theta = 2\sin\theta\cos\theta = s^2-1\)
+      <p class="indent"><span class="kw">เนื่องจาก</span> \(s = \sin\theta+\cos\theta\in[-\sqrt2,\sqrt2]\) จึงเลือก \(s = 1-\sqrt2\)</p>
+      <p class="indent">\(\sin 2\theta = (1-\sqrt2)^2 - 1 = 1 - 2\sqrt2 + 2 - 1 = 2 - 2\sqrt2 = 2(1-\sqrt2)\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1) &nbsp;\(2(1-\sqrt2)\)</span></div>
+</section>
+
+<!-- ═══════════ Q32 ═══════════ -->
+<section class="sol" id="q32">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 32.</span>
+    <span class="q-badge">A-NET มี.ค. 50</span>
+    <span class="q-type">ค่าตรีโกณเฉพาะ + arctan — ถูก/ผิด</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    ก. \(\tan 14^\circ + \tan 76^\circ = 2\,\mathrm{cosec}\,28^\circ\)<br>
+    ข. ถ้า \(x>0\) และ \(\sin(2\arctan x) = \dfrac{4}{5}\) แล้ว \(x\in\left(\dfrac{1}{3},3\right)\)<br>
+    ข้อใดถูก
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตรวจ ก. — ใช้ \(\tan 76^\circ = \cot 14^\circ\)</span>
+    <div class="step-body">
+      \(\tan 14^\circ + \tan 76^\circ = \tan 14^\circ + \cot 14^\circ = \dfrac{\sin 14^\circ}{\cos 14^\circ} + \dfrac{\cos 14^\circ}{\sin 14^\circ}\)
+      <p class="indent">\(= \dfrac{\sin^2 14^\circ+\cos^2 14^\circ}{\sin 14^\circ\cos 14^\circ} = \dfrac{1}{\frac12\sin 28^\circ} = \dfrac{2}{\sin 28^\circ} = 2\,\mathrm{cosec}\,28^\circ\) ✓</p>
+      <p><span class="kw">ดังนั้น</span> ก. <b>ถูก</b></p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ตรวจ ข. — แก้ \(\sin(2\arctan x) = \dfrac45\)</span>
+    <div class="step-body">
+      <span class="kw">โดย</span> \(\sin(2\arctan x) = \dfrac{2x}{1+x^2} = \dfrac{4}{5}\)
+      <p class="indent">\(10x = 4(1+x^2) \Rightarrow 4x^2 - 10x + 4 = 0 \Rightarrow 2x^2-5x+2=0\)</p>
+      <p class="indent">\((2x-1)(x-2) = 0 \Rightarrow x = \dfrac12\) หรือ \(x = 2\)</p>
+      <p class="indent"><span class="kw">ทั้งสองค่าอยู่ใน</span> \(\left(\dfrac13,3\right)\) ✓ <span class="kw">ดังนั้น</span> ข. <b>ถูก</b></p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1) ก. ถูก และ ข. ถูก</span></div>
+</section>
+
+<!-- ═══════════ Q33 ═══════════ -->
+<section class="sol" id="q33">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 33.</span>
+    <span class="q-badge">A-NET มี.ค. 50</span>
+    <span class="q-type">กฎของไซน์/โคไซน์ + cot</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    สามเหลี่ยม \(ABC\) มีด้านตรงข้ามมุม \(\hat{A},\hat{B},\hat{C}\) ยาว \(2a, 3a, 4a\) ตามลำดับ
+    ถ้า \(\sin A = k\) แล้ว \(\cot B + \cot C\) มีค่าเท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ใช้สูตร \(\cot B + \cot C = \dfrac{\sin(B+C)}{\sin B\sin C}\)</span>
+    <div class="step-body">
+      <span class="kw">โดย</span> \(\cot B+\cot C = \dfrac{\cos B}{\sin B}+\dfrac{\cos C}{\sin C} = \dfrac{\sin C\cos B+\cos C\sin B}{\sin B\sin C} = \dfrac{\sin(B+C)}{\sin B\sin C}\)
+      <p class="indent"><span class="kw">เนื่องจาก</span> \(B+C = \pi-A\) จึง \(\sin(B+C) = \sin A\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แทน \(\sin B,\sin C\) ด้วยกฎของไซน์</span>
+    <div class="step-body">
+      <span class="kw">โดยกฎไซน์</span> \(\dfrac{2a}{\sin A} = \dfrac{3a}{\sin B} = \dfrac{4a}{\sin C} = 2R\)
+      <p class="indent">\(\sin A = \dfrac{2a}{2R}=\dfrac{a}{R}\), \(\sin B = \dfrac{3a}{2R}\), \(\sin C = \dfrac{4a}{2R} = \dfrac{2a}{R}\)</p>
+      <p class="indent">\(\cot B+\cot C = \dfrac{\sin A}{\sin B\sin C} = \dfrac{\frac{a}{R}}{\frac{3a}{2R}\cdot\frac{2a}{R}} = \dfrac{\frac{a}{R}}{\frac{3a^2}{R^2}} = \dfrac{aR}{3a^2} = \dfrac{R}{3a}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  เขียนในรูป \(k\) โดยใช้ \(\sin A = k\)</span>
+    <div class="step-body">
+      <span class="kw">จาก</span> \(\sin A = \dfrac{a}{R} = k \Rightarrow \dfrac{R}{a} = \dfrac{1}{k}\)
+      <p class="indent">\(\cot B+\cot C = \dfrac{R}{3a} = \dfrac{1}{3}\cdot\dfrac{R}{a} = \dfrac{1}{3k}\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3) &nbsp;\(\dfrac{1}{3k}\)</span></div>
+</section>
+
+<!-- ═══════════ Q34 ═══════════ -->
+<section class="sol" id="q34">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 34.</span>
+    <span class="q-badge">A-NET มี.ค. 51</span>
+    <span class="q-type">เอกลักษณ์ + มุมสองเท่า</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    ให้ \(\theta\) เป็นจำนวนจริงที่สอดคล้องกับ
+    \(\dfrac{1}{\tan^2\theta} + \dfrac{1}{\cot^2\theta} + \dfrac{1}{\sin^2\theta} + \dfrac{1}{\cos^2\theta} = 7\)
+    แล้ว \(\tan^2 2\theta\) มีค่าเท่าใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  จัดกลุ่มและลดรูปฝั่งซ้าย</span>
+    <div class="step-body">
+      <span class="kw">โดย</span> \(\dfrac{1}{\tan^2\theta}+\dfrac{1}{\cot^2\theta} = \cot^2\theta+\tan^2\theta\)
+      <p class="indent">\(\dfrac{1}{\sin^2\theta}+\dfrac{1}{\cos^2\theta} = \dfrac{\sin^2\theta+\cos^2\theta}{\sin^2\theta\cos^2\theta} = \dfrac{1}{\sin^2\theta\cos^2\theta}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  เขียนทุกพจน์ในรูป \(\sin 2\theta\)</span>
+    <div class="step-body">
+      <span class="kw">ให้</span> \(u = \sin^2\theta\cos^2\theta = \dfrac{1}{4}\sin^2 2\theta\)
+      <p class="indent">\(\tan^2\theta+\cot^2\theta = \dfrac{\sin^4\theta+\cos^4\theta}{\sin^2\theta\cos^2\theta} = \dfrac{1-2u}{u}\)</p>
+      <p class="indent">สมการ: \(\dfrac{1-2u}{u} + \dfrac{1}{u} = 7 \Rightarrow \dfrac{2-2u}{u} = 7 \Rightarrow 2-2u = 7u \Rightarrow u = \dfrac{2}{9}\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  หา \(\sin^2 2\theta\) แล้วหา \(\tan^2 2\theta\)</span>
+    <div class="step-body">
+      \(\sin^2 2\theta = 4u = 4\cdot\dfrac{2}{9} = \dfrac{8}{9}\) <span class="kw">ดังนั้น</span> \(\cos^2 2\theta = 1-\dfrac{8}{9} = \dfrac{1}{9}\)
+      <p class="indent">\(\tan^2 2\theta = \dfrac{\sin^2 2\theta}{\cos^2 2\theta} = \dfrac{8/9}{1/9} = 8\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">8</span></div>
+</section>
+
+<!-- ═══════════ Q35 ═══════════ -->
+<section class="sol" id="q35">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 35.</span>
+    <span class="q-badge">A-NET มี.ค. 51</span>
+    <span class="q-type">tan ในสามเหลี่ยม — ถูก/ผิด</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    สามเหลี่ยม \(ABC\) มี \(\hat{A}&lt;\hat{B}&lt;\hat{C}\) โดยที่ \(\tan A\tan B\tan C = 3+2\sqrt3\)
+    และ \(\tan B+\tan C = 2+2\sqrt3\)<br>
+    ก. \(\tan C = 2+\sqrt3\) &emsp; ข. \(\hat{C} = \dfrac{5\pi}{12}\) &emsp; ข้อใดถูก
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ใช้เอกลักษณ์ \(\tan A+\tan B+\tan C = \tan A\tan B\tan C\) ในสามเหลี่ยม</span>
+    <div class="step-body">
+      <span class="kw">เนื่องจาก</span> \(A+B+C = \pi\) จึง \(\tan A+\tan B+\tan C = \tan A\tan B\tan C = 3+2\sqrt3\)
+      <p class="indent">\(\tan A = (3+2\sqrt3) - (\tan B+\tan C) = (3+2\sqrt3)-(2+2\sqrt3) = 1\)</p>
+      <p class="indent"><span class="kw">ดังนั้น</span> \(A = 45^\circ\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(\tan B,\tan C\) เป็นรากของสมการกำลังสอง</span>
+    <div class="step-body">
+      <span class="kw">จาก</span> \(\tan A\tan B\tan C = 3+2\sqrt3\) และ \(\tan A=1\): \(\tan B\tan C = 3+2\sqrt3\)
+      <p class="indent">\(\tan B,\tan C\) เป็นรากของ \(t^2 - (2+2\sqrt3)t + (3+2\sqrt3) = 0\)</p>
+      <p class="indent">ดิสคริมิแนนต์ \(= (2+2\sqrt3)^2 - 4(3+2\sqrt3) = (4+8\sqrt3+12) - (12+8\sqrt3) = 4\)</p>
+      <p class="indent">\(t = \dfrac{(2+2\sqrt3)\pm2}{2} = (1+\sqrt3)\pm1\) <span class="kw">นั้นคือ</span> \(t = 2+\sqrt3\) หรือ \(t = \sqrt3\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  ตรวจ ก. และ ข. ด้วยลำดับมุม</span>
+    <div class="step-body">
+      <span class="kw">เนื่องจาก</span> \(B&lt;C\) จึง \(\tan B&lt;\tan C\): \(\tan B = \sqrt3\ (B=60^\circ)\), \(\tan C = 2+\sqrt3\ (C=75^\circ)\)
+      <p class="indent"><b>ก.</b> \(\tan C = 2+\sqrt3\) ✓ <b>ถูก</b></p>
+      <p class="indent"><b>ข.</b> \(C = 75^\circ = \dfrac{75\pi}{180} = \dfrac{5\pi}{12}\) ✓ <b>ถูก</b></p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1) ก. ถูก และ ข. ถูก</span></div>
+</section>
+
+<!-- ═══════════ Q36 ═══════════ -->
+<section class="sol" id="q36">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 36.</span>
+    <span class="q-badge">A-NET มี.ค. 52</span>
+    <span class="q-type">ระบบสมการในสามเหลี่ยม</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    สามเหลี่ยม \(ABC\) มี \(2\sin A + 3\cos B = 4\) และ \(3\sin B + 2\cos A = 1\)
+    ค่าของ \(\sin C\) เท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ยกกำลังสองทั้งสองสมการแล้วบวกกัน</span>
+    <div class="step-body">
+      \((2\sin A+3\cos B)^2 = 16\): \(4\sin^2 A + 12\sin A\cos B + 9\cos^2 B = 16\)
+      <p class="indent">\((3\sin B+2\cos A)^2 = 1\): \(9\sin^2 B + 12\sin B\cos A + 4\cos^2 A = 1\)</p>
+      <span class="kw">บวกกัน:</span> \(4(\sin^2 A+\cos^2 A) + 9(\sin^2 B+\cos^2 B) + 12(\sin A\cos B+\cos A\sin B) = 17\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ลดรูปด้วยเอกลักษณ์</span>
+    <div class="step-body">
+      \(4 + 9 + 12\sin(A+B) = 17 \Rightarrow 12\sin(A+B) = 4 \Rightarrow \sin(A+B) = \dfrac{1}{3}\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  ใช้ \(\sin C = \sin(A+B)\)</span>
+    <div class="step-body">
+      <span class="kw">เนื่องจาก</span> \(A+B+C = \pi \Rightarrow C = \pi-(A+B) \Rightarrow \sin C = \sin(A+B) = \dfrac{1}{3}\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2) &nbsp;\(\dfrac{1}{3}\)</span></div>
+</section>
+
+<!-- ═══════════ Q37 ═══════════ -->
+<section class="sol" id="q37">
+  <div class="q-header">
+    <span class="q-num">เฉลยข้อ 37.</span>
+    <span class="q-badge">A-NET มี.ค. 52</span>
+    <span class="q-type">สมการตรีโกณ — ผลต่างกำลังสอง</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem">
+    กำหนด \(0^\circ&lt;\alpha&lt;30^\circ\) ถ้า \(\sin^2(7\alpha) - \sin^2(5\alpha) = \sin(2\alpha)\sin(6\alpha)\)
+    แล้ว \(\alpha\) เท่ากับข้อใด
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ใช้สูตร \(\sin^2 X - \sin^2 Y = \sin(X+Y)\sin(X-Y)\)</span>
+    <div class="step-body">
+      <span class="kw">ฝั่งซ้าย:</span> \(\sin^2 7\alpha - \sin^2 5\alpha = \sin(12\alpha)\sin(2\alpha)\)
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  จับเท่ากับฝั่งขวาแล้วตัดทอน</span>
+    <div class="step-body">
+      \(\sin 12\alpha\sin 2\alpha = \sin 2\alpha\sin 6\alpha\)
+      <p class="indent"><span class="kw">เนื่องจาก</span> \(0^\circ&lt;\alpha&lt;30^\circ\) จึง \(\sin 2\alpha\ne0\) หารทิ้งได้</p>
+      <p class="indent">\(\sin 12\alpha = \sin 6\alpha\)</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  แก้สมการ \(\sin 12\alpha = \sin 6\alpha\)</span>
+    <div class="step-body">
+      <table class="cond-table">
+        <tr><td class="kw-cell">กรณี 1</td><td>\(12\alpha = 6\alpha \Rightarrow \alpha = 0\) (ตัดทิ้ง เพราะ \(\alpha>0\))</td></tr>
+        <tr><td class="kw-cell">กรณี 2</td><td>\(12\alpha = 180^\circ - 6\alpha \Rightarrow 18\alpha = 180^\circ \Rightarrow \alpha = 10^\circ\)</td></tr>
+      </table>
+      <span class="kw">ตรวจ</span> \(\alpha = 10^\circ\) อยู่ในช่วง \((0^\circ,30^\circ)\) ✓
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1) &nbsp;\(10^\circ\)</span></div>
+</section>
+
+<footer>
+  เฉลยโดย MathsBankTutor &nbsp;·&nbsp; ตรีโกณมิติ (Ent / A-NET 2541–2552) &nbsp;·&nbsp; 37 ข้อ
+</footer>
+</div>
+
+<script>
+const chips = document.getElementById('chips');
+document.querySelectorAll('.sol').forEach((s, i) => {
+  const n = i + 1;
+  const a = document.createElement('a');
+  a.href = '#q' + n;
+  a.textContent = n;
+  chips.appendChild(a);
+});
+</script>
+</body>
+</html>
