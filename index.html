@@ -208,6 +208,8 @@ html,body{min-height:100vh;font-family:'Sarabun',sans-serif;background:var(--bg)
 .rv-count-val{font-size:15px;font-weight:500;color:var(--text1);min-width:24px;text-align:center}
 .addmore-btn{padding:6px 14px;border-radius:var(--r-md);border:0.5px solid var(--border-md);background:var(--card);color:var(--text1);font-size:12px;cursor:pointer;font-family:'Sarabun',sans-serif}
 .addmore-btn:hover{background:var(--blue);color:#fff}
+/* ซ่อนปุ่มดูคลิปติว ใน sub-topic (เปิดเมื่อพร้อม) */
+.subtopic-clip-btn { display: none !important; }
 </style>
 </head>
 <body>
@@ -403,7 +405,6 @@ html,body{min-height:100vh;font-family:'Sarabun',sans-serif;background:var(--bg)
         <span><span class="leg-dot" style="background:#a855f7"></span>คอนเซปต์</span>
         <span><span class="leg-dot" style="background:#D93025"></span>ผิด/ทำไม่ได้</span>
         <span><span class="leg-dot" style="background:#94a3b8"></span>ไม่ทัน</span>
-        <span><span class="leg-dot" style="background:repeating-linear-gradient(45deg,#E8E6E0,#E8E6E0 3px,#C8C5BC 3px,#C8C5BC 6px);border:1px dashed #999"></span>ไม่ทำ</span>
       </div>
     </div>
     <div class="d-card"><div class="slabel">ข้อที่ต้องทบทวน</div><div id="s-reviewList"></div></div>
@@ -504,7 +505,6 @@ html,body{min-height:100vh;font-family:'Sarabun',sans-serif;background:var(--bg)
       <span><span class="leg-dot" style="background:#a855f7"></span>คอนเซปต์</span>
       <span><span class="leg-dot" style="background:#D93025"></span>ผิด/ทำไม่ได้</span>
       <span><span class="leg-dot" style="background:#94a3b8"></span>ไม่ทัน</span>
-      <span><span class="leg-dot" style="background:repeating-linear-gradient(45deg,#E8E6E0,#E8E6E0 3px,#C8C5BC 3px,#C8C5BC 6px);border:1px dashed #999"></span>ไม่ทำ</span>
     </div>
   </div>
 </div>

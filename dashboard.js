@@ -117,7 +117,7 @@ function ytLink(topic){
   return 'https://www.youtube.com/@' + YT_CHANNEL + '/search?query=' + encodeURIComponent(topic);
 }
 function ytBtn(query,label){
-  return `<a href="${ytLink(query)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surf,#FAF9F5);color:#B3261E;border:1px solid #E4C7C5;font-size:11px;font-weight:500;padding:4px 10px;border-radius:12px;text-decoration:none;margin-top:6px">▶ ${label||'ดูคลิปติว'}</a>`;
+  return `<a href="${ytLink(query)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surf,#FAF9F5);color:#B3261E;border:1px solid #E4C7C5;font-size:11px;font-weight:500;padding:4px 10px;border-radius:12px;text-decoration:none;margin-top:6px" class="subtopic-clip-btn">▶ ${label||'ดูคลิปติว'}</a>`;
 }
 
 
@@ -201,6 +201,8 @@ function renderPracticePlan(d){
   // หาคลังฝึก: ลองชื่อบทตรงๆ ก่อน ถ้าไม่เจอ ตัด "ชุดที่ N" ออกแล้วลองใหม่
   let bank=PRACTICE_BANK[d.topic];
   if(!bank){ const baseTopic=d.topic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); bank=PRACTICE_BANK[baseTopic]; }
+  // รวมคลัง Ent เข้ากับคลังหลัก (เช่น ตรีโกณมิติ + ตรีโกณมิติ Ent)
+  if(bank){ const _base=d.topic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); const _ent=PRACTICE_BANK[_base+' Ent']; if(_ent) bank=[...bank,..._ent]; }
   if(!bank){ el.innerHTML='<div class="d-card"><div style="font-size:13px;color:var(--text2);line-height:1.6;padding:4px 0">ยังไม่มีคลังฝึกพร้อมเฉลยวิดีโอสำหรับบท <b>'+d.topic+'</b> ครับ — ตอนนี้พร้อมเฉพาะบท <b>Expo Logarithm</b></div></div>'; return; }
   // รวมยอดพลาดตามหมวด (จาก d.subtopics)
   const catMap={};
@@ -419,21 +421,27 @@ function renderStudentDash(d){
     if(careQs.length)steps.push({n:steps.length+1,icon:'⚡',color:'#F5A623',title:`เก็บคะแนนจากข้อสะเพร่า (${careQs.length} ข้อ)`,
       desc:`ข้อ ${careQs.map(c=>c.q).join(', ')} — ทำเป็นอยู่แล้ว! ลองทำซ้ำแบบไม่รีบ แล้วจดว่าครั้งแรกพลาดตรงไหน (อ่านโจทย์ตก? คำนวณพลาด?) ใช้เวลาน้อยสุดแต่ได้คะแนนคืนเต็ม ๆ`});
     // ขั้น 2: ข้อผิดระดับง่าย-กลาง (1-3)
-    const easyWrong=d.myAna.filter(r=>parseStatus(r[5]||'')==='wrong'&&parseInt(r[7])<=3).map(r=>({q:parseInt(r[4]),sub:r[6]||''}));
+    // ขั้น 2: ข้อคอนเซปต์ (C) ระดับง่าย-กลาง
+    const conceptQs=d.myAna.filter(r=>parseStatus(r[5]||'')==='concept'&&parseInt(r[7])<=3).map(r=>({q:parseInt(r[4]),sub:r[6]||''}));
+    if(conceptQs.length)steps.push({n:steps.length+1,icon:'💡',color:'#a855f7',title:`เสริมคอนเซปต์พื้นฐาน (${conceptQs.length} ข้อ)`,
+      desc:`ข้อ ${conceptQs.map(c=>c.q).join(', ')} — ผิดเพราะยังไม่เข้าใจหลักการ ดูคลิปติวหัวข้อ ${[...new Set(conceptQs.map(c=>c.sub))].slice(0,2).join(', ')} ก่อนทำซ้ำ`,
+      yt:[...new Set(conceptQs.map(c=>c.sub))].slice(0,3)});
+    // ขั้น 3: ข้อผิด/ทำไม่ได้ระดับง่าย-กลาง (wrong + cant)
+    const easyWrong=d.myAna.filter(r=>['wrong','cant'].includes(parseStatus(r[5]||''))&&parseInt(r[7])<=3).map(r=>({q:parseInt(r[4]),sub:r[6]||''}));
     if(easyWrong.length)steps.push({n:steps.length+1,icon:'📗',color:'#4C9A2A',title:`แก้ข้อผิดระดับพื้นฐาน (${easyWrong.length} ข้อ)`,
-      desc:`ข้อ ${easyWrong.map(c=>c.q).join(', ')} — ระดับไม่ยาก ทบทวนหลักการของหัวข้อ ${[...new Set(easyWrong.map(c=>c.sub))].join(', ')} แล้วลองทำใหม่`,
+      desc:`ข้อ ${easyWrong.map(c=>c.q).join(', ')} — ระดับไม่ยาก ทบทวนหลักการของหัวข้อ ${[...new Set(easyWrong.map(c=>c.sub))].join(', ')} ก่อน 💪`,
       yt:[...new Set(easyWrong.map(c=>c.sub))].slice(0,3)});
-    // ขั้น 3: ข้อไม่ทำระดับง่าย-กลาง
-    const easyBlank=d.myAna.filter(r=>parseStatus(r[5]||'')==='blank'&&parseInt(r[7])<=3).map(r=>({q:parseInt(r[4]),sub:r[6]||''}));
-    if(easyBlank.length)steps.push({n:steps.length+1,icon:'📘',color:'#185FA5',title:`ลองข้อที่เว้นไว้ระดับพื้นฐาน (${easyBlank.length} ข้อ)`,
-      desc:`ข้อ ${easyBlank.map(c=>c.q).join(', ')} — ยังไม่เคยลอง อาจทำได้มากกว่าที่คิด เริ่มจากอ่านโจทย์ช้า ๆ แล้วเขียนสิ่งที่รู้ออกมาก่อน`,
+    // ขั้น 4: ข้อไม่ทัน/ไม่ทำระดับง่าย-กลาง
+    const easyBlank=d.myAna.filter(r=>['blank','timeout'].includes(parseStatus(r[5]||''))&&parseInt(r[7])<=3).map(r=>({q:parseInt(r[4]),sub:r[6]||''}));
+    if(easyBlank.length)steps.push({n:steps.length+1,icon:'📘',color:'#185FA5',title:`ลองข้อที่ไม่ทัน/ไม่ได้ทำระดับพื้นฐาน (${easyBlank.length} ข้อ)`,
+      desc:`ข้อ ${easyBlank.map(c=>c.q).join(', ')} — ยังไม่ได้ทำหรือเวลาไม่ทัน เริ่มจากอ่านโจทย์ช้า ๆ แล้วเขียนสิ่งที่รู้ออกมาก่อน`,
       yt:[...new Set(easyBlank.map(c=>c.sub))].slice(0,3)});
-    // ขั้น 4: ข้อยาก (4-5) ที่ผิดหรือไม่ทำ
-    const hardOnes=d.myAna.filter(r=>['wrong','blank'].includes(parseStatus(r[5]||''))&&parseInt(r[7])>=4).map(r=>({q:parseInt(r[4]),sub:r[6]||'',lv:parseInt(r[7])}));
+    // ขั้น 5: ข้อยาก (4-5)
+    const hardOnes=d.myAna.filter(r=>['wrong','blank','concept','cant','timeout'].includes(parseStatus(r[5]||''))&&parseInt(r[7])>=4).map(r=>({q:parseInt(r[4]),sub:r[6]||''}));
     if(hardOnes.length)steps.push({n:steps.length+1,icon:'🏔️',color:'#A32D2D',title:`ท้าทายข้อยาก (${hardOnes.length} ข้อ)`,
-      desc:`ข้อ ${hardOnes.map(c=>c.q).join(', ')} — ระดับ 4-5 ทำทีหลังสุดเมื่อพื้นฐานแน่นแล้ว ศึกษาจากคลิปติวในช่อง MathsBankTutor แล้วลองทำเองซ้ำโดยไม่ดูเฉลย`,
+      desc:`ข้อ ${hardOnes.map(c=>c.q).join(', ')} — ระดับ 4-5 ทำทีหลังสุดเมื่อพื้นฐานแน่นแล้ว ศึกษาจากคลิปติวในช่อง MathsBankTutor`,
       yt:[...new Set(hardOnes.map(c=>c.sub))].slice(0,3)});
-    if(!steps.length){planEl.innerHTML='<div style="font-size:13px;color:var(--green);padding:8px 0">ทำถูกครบทุกข้อ ไม่มีอะไรต้องทบทวน 🎉</div>';}
+    if(!steps.length){planEl.innerHTML='<div style="font-size:13px;color:var(--green);padding:8px 0">ทำถูกครบทุกข้อ ไม่มีอะไรต้องทบทวน 🎉</div>'; return;}
     else steps.forEach(s=>{
       planEl.innerHTML+=`<div style="display:flex;gap:12px;padding:12px 0;border-bottom:0.5px solid var(--border)">
         <div style="width:32px;height:32px;border-radius:50%;background:${s.color};color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;flex-shrink:0">${s.n}</div>
