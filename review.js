@@ -72,6 +72,7 @@ function openReviewLibrary(){
 // ── เปิดบท → หน้ารายข้อ ──
 function rvOpenChapterMerged(base){
   if(typeof base !== "string") base = base.dataset ? base.dataset.base : base;
+  var ytBank = PRACTICE_BANK[base] || [];
   var entBank = PRACTICE_BANK[base+' Ent'] || [];
   RV.chapter = base;
   RV.bank = ytBank.concat(entBank);
@@ -97,9 +98,9 @@ function rvOpenChapterCore(){
   RV.queue=[]; RV.tab='browse';
   if(!RV_SEEN[RV.chapter]) RV_SEEN[RV.chapter]={};
 
-  var baseName = chap.replace(/ Ent$/,'');
-  document.getElementById('rv-chapIcon').textContent = RV_CHAP_ICON[baseName] || RV_CHAP_ICON[chap] || '📘';
-  document.getElementById('rv-chapName').textContent = chap;
+  var baseName = RV.chapter.replace(/ Ent$/,'');
+  document.getElementById('rv-chapIcon').textContent = RV_CHAP_ICON[baseName] || RV_CHAP_ICON[RV.chapter] || '📘';
+  document.getElementById('rv-chapName').textContent = RV.chapter;
   document.getElementById('rv-chapSub').textContent = RV.bank.length + ' ข้อ';
 
   // สร้าง chips หมวด+ระดับ (ทั้ง browse และ random)
