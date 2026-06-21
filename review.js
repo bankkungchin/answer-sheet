@@ -95,7 +95,7 @@ function rvOpenChapterCore(){
   RV.fCat=''; RV.fLvl=0; RV.fUnseen=false;
   RV.rCat=''; RV.rLvl=0; RV.rUnseen=false;
   RV.queue=[]; RV.tab='browse';
-  if(!RV_SEEN[chap]) RV_SEEN[chap]={};
+  if(!RV_SEEN[RV.chapter]) RV_SEEN[RV.chapter]={};
 
   var baseName = chap.replace(/ Ent$/,'');
   document.getElementById('rv-chapIcon').textContent = RV_CHAP_ICON[baseName] || RV_CHAP_ICON[chap] || '📘';

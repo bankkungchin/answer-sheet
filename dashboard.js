@@ -397,7 +397,7 @@ function renderStudentDash(d){
   const needReview=d.myAna.filter(r=>['wrong','blank','care','concept','cant','timeout'].includes(parseStatus(r[5]||''))).map(r=>({q:parseInt(r[4]),sub:r[6]||'',year:r[3]||'',level:parseInt(r[7])||0,type:parseStatus(r[5]||'')})).sort((a,b)=>b.level-a.level||a.q-b.q);
   const rl=document.getElementById('s-reviewList');rl.innerHTML='';
   if(!needReview.length){rl.innerHTML='<div style="font-size:13px;color:var(--text2);padding:8px 0">ทำถูกทุกข้อ 🎉</div>';}
-  else needReview.forEach(r=>{const color=r.type==='wrong'?'#A32D2D':r.type==='blank'?'#999993':'#BA7517';const icon=r.type==='wrong'?'ti-x':r.type==='blank'?'ti-minus':'ti-alert-triangle';const stars='★'.repeat(r.level)+'☆'.repeat(5-r.level);rl.innerHTML+=`<div class="rev-row"><div style="min-width:20px;font-size:11px;color:var(--text2);font-weight:500">${r.q}</div><div style="flex:1"><div style="font-size:12px;color:var(--text1)">${r.sub}</div><div style="font-size:10px;color:var(--text3)">${r.year} · ระดับ ${r.level} <span style="color:#BA7517">${stars}</span></div></div><i class="ti ${icon}" style="font-size:14px;color:${color}"></i></div>`;});
+  else needReview.forEach(r=>{const statusEmoji={ok:'✅',care:'⚠️',concept:'🧠',cant:'❌',timeout:'⏰',wrong:'❌',blank:'⬜'}[r.type]||'⚠️';const stars='★'.repeat(r.level)+'☆'.repeat(5-r.level);rl.innerHTML+=`<div class="rev-row"><div style="min-width:20px;font-size:11px;color:var(--text2);font-weight:500">${r.q}</div><div style="flex:1"><div style="font-size:12px;color:var(--text1)">${r.sub}</div><div style="font-size:10px;color:var(--text3)">${r.year} · ระดับ ${r.level} <span style="color:#BA7517">${stars}</span></div></div><span style="font-size:16px">${statusEmoji}</span></div>`;});;
   const sl=document.getElementById('s-subtopicList');sl.innerHTML='';
   // คำแนะนำว่าควรโฟกัสหัวข้อไหน
   const weakSt=d.subtopics.filter(st=>Math.round(st.ok/st.total*100)<70);
@@ -613,6 +613,9 @@ function renderParentDash(d){
 
   document.getElementById('p-avatar').textContent=name.substring(0,3);
   document.getElementById('p-topic').textContent=d.topic+' · '+d.date;
+  // แสดงชื่อนักเรียนใน header parent view
+  const _pHeader=document.querySelector('#p5 .container [style*="font-size:15px"]');
+  if(_pHeader) _pHeader.textContent='รายงานผลการเรียน — '+name;
 
   // summary
   document.getElementById('p-summary').innerHTML=`
