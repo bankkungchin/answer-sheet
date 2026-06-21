@@ -122,9 +122,20 @@ function ytBtn(query,label){
 
 
 
-// ── หมวดหมู่: แปลงชื่อ sub-topic ของข้อสอบ → 1 ใน 7 หมวด ของคลังฝึก ──
+// ── emoji ของหมวด: ถ้าชื่อหมวดมี emoji นำหน้าแล้ว (บทใหม่) → ไม่เติมซ้ำ ──
+function emojiOf(cat){
+  cat=cat||'';
+  if(/^[\u{1F534}\u{1F535}\u{1F7E0}\u{1F7E1}\u{1F7E2}\u{1F7E3}\u{1F7E4}\u{26AB}\u{26AA}]/u.test(cat)) return '';
+  return (typeof CAT_EMOJI!=='undefined' && CAT_EMOJI[cat]) || '\u2022';
+}
+// ── หมวดหมู่: แปลงชื่อ sub-topic ของข้อสอบ → หมวดของคลังฝึก ──
+// บทแบบใหม่ (ตรีโกณ ฯลฯ): sub = ชื่อหมวดพร้อม emoji อยู่แล้ว → คืนค่าตรงๆ
+// บทเก่า (Expo Logarithm): เดาหมวดจาก keyword
 function catOf(s){
   s=s||'';
+  // ถ้าขึ้นต้นด้วย emoji วงกลมสี (หมวดแบบใหม่) → เป็นชื่อหมวดอยู่แล้ว คืนค่าตรงๆ
+  if(/^[\u{1F534}\u{1F535}\u{1F7E0}\u{1F7E1}\u{1F7E2}\u{1F7E3}\u{1F7E4}\u{26AB}\u{26AA}]/u.test(s)) return s;
+  // ── logic เดิมสำหรับ Expo Logarithm ──
   if(/อสมการ/.test(s)){ if(/ล็อก|log/i.test(s)) return 'อสมการล็อการิทึม'; return 'อสมการเอกซ์โพเนนเชียล'; }
   if(/กราฟ|เปรียบเทียบ/.test(s)) return 'กราฟฟังก์ชัน';
   if(/ประยุกต์/.test(s)) return 'โจทย์ประยุกต์';
@@ -187,7 +198,9 @@ ${body}
 // ── แผนฝึกเพิ่ม: เลือกข้อจากคลัง 129 ข้อ ตามสัดส่วนที่พลาดในแต่ละหัวข้อ ──
 function renderPracticePlan(d){
   const el=document.getElementById('s-practice'); if(!el)return;
-  const bank=PRACTICE_BANK[d.topic];
+  // หาคลังฝึก: ลองชื่อบทตรงๆ ก่อน ถ้าไม่เจอ ตัด "ชุดที่ N" ออกแล้วลองใหม่
+  let bank=PRACTICE_BANK[d.topic];
+  if(!bank){ const baseTopic=d.topic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); bank=PRACTICE_BANK[baseTopic]; }
   if(!bank){ el.innerHTML='<div class="d-card"><div style="font-size:13px;color:var(--text2);line-height:1.6;padding:4px 0">ยังไม่มีคลังฝึกพร้อมเฉลยวิดีโอสำหรับบท <b>'+d.topic+'</b> ครับ — ตอนนี้พร้อมเฉพาะบท <b>Expo Logarithm</b></div></div>'; return; }
   // รวมยอดพลาดตามหมวด (จาก d.subtopics)
   const catMap={};
@@ -204,8 +217,8 @@ function renderPracticePlan(d){
     if(pool.length<=need){ pick=pool.slice(); }
     else { const step=pool.length/need; for(let i=0;i<need;i++) pick.push(pool[Math.floor(i*step)]); }
     grand+=pick.length;
-    planForPrint.push({cat:c.cat,emoji:CAT_EMOJI[c.cat]||'•',pct:pct,ok:c.ok,total:c.total,picks:pick.map(q=>({n:q.n,s:q.s,l:q.l,yt:q.yt}))});
-    const emoji=CAT_EMOJI[c.cat]||'•';
+    planForPrint.push({cat:c.cat,emoji:emojiOf(c.cat),pct:pct,ok:c.ok,total:c.total,picks:pick.map(q=>({n:q.n,s:q.s,l:q.l,yt:q.yt}))});
+    const emoji=emojiOf(c.cat);
     let rows='';
     pick.forEach(q=>{ const stars='★'.repeat(q.l)+'☆'.repeat(5-q.l);
       rows+=`<div class="rev-row"><div style="flex:1"><div style="font-size:12px;color:var(--text1);font-weight:500">ข้อ ${q.n} <span style="color:var(--text3);font-weight:400">· ${q.s}</span></div><div style="font-size:10px;color:var(--text3)">ระดับ ${q.l} <span style="color:#BA7517">${stars}</span></div></div><a href="${q.yt}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surf,#FAF9F5);color:#B3261E;border:1px solid #E4C7C5;font-size:11px;font-weight:500;padding:5px 12px;border-radius:12px;text-decoration:none;white-space:nowrap">▶ เฉลย</a></div>`; });
