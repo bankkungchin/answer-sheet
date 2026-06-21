@@ -286,6 +286,16 @@ async function fetchDashData(){
   // ดึงจาก results_long: A=ชื่อ B=กลุ่ม C=วันที่ D=บท E=ข้อที่ F=สถานะ G=sub_topic H=ระดับ
   const longRows=(longData.values||[]).slice(1);
   let myAna=longRows.filter(r=>r[0]===currentStudent&&(!topicFilter||(r[3]||'').includes(topicFilter))&&(r[3]||'')===topic);
+  // เติม sub/level จาก EMBEDDED_QB ถ้า results_long ไม่มี (column G/H ว่างหรือเป็น 0)
+  if(myAna.length&&EMBEDDED_QB[topic]){
+    myAna=myAna.map(r=>{
+      const qNum=parseInt(r[4])||0;
+      const qb=EMBEDDED_QB[topic][qNum]||{};
+      const sub=(r[6]&&r[6]!=='—')?r[6]:(qb.sub||'—');
+      const lvl=(parseInt(r[7])>0)?r[7]:(qb.level||0);
+      return [r[0],r[1],r[2],r[3],r[4],r[5],sub,lvl];
+    });
+  }
   // Fallback: results_long ยังไม่มีข้อมูลการสอบนี้ → คำนวณจาก QUESTION_BANK ที่ฝังไว้
   if(!myAna.length&&EMBEDDED_QB[topic]){
     myAna=[];
@@ -311,7 +321,16 @@ async function fetchDashData(){
   const diffMap={};
   myAna.forEach(r=>{const lv=parseInt(r[7])||0,status=parseStatus(r[5]||'');if(!diffMap[lv])diffMap[lv]={ok:0,total:0};diffMap[lv].total++;if(status==='ok')diffMap[lv].ok++;});
   // ── สถิติกลุ่มย่อย: sub-topic ที่ทั้งกลุ่มอ่อนร่วมกัน (จาก results_long ของทุกคนในกลุ่ม บทนี้) ──
-  const grpLong=longRows.filter(r=>(r[1]||'')===group&&(r[3]||'')===topic);
+  let grpLong=longRows.filter(r=>(r[1]||'')===group&&(r[3]||'')===topic);
+  // เติม sub จาก EMBEDDED_QB ถ้า results_long ไม่มี (เหมือน myAna)
+  if(grpLong.length&&EMBEDDED_QB[topic]){
+    grpLong=grpLong.map(r=>{
+      const qNum=parseInt(r[4])||0;
+      const qb=EMBEDDED_QB[topic][qNum]||{};
+      const sub=(r[6]&&r[6]!=='—')?r[6]:(qb.sub||'—');
+      return [r[0],r[1],r[2],r[3],r[4],r[5],sub,r[7]];
+    });
+  }
   const grpStMap={};
   grpLong.forEach(r=>{
     const st=r[6]||'',status=parseStatus(r[5]||'');
