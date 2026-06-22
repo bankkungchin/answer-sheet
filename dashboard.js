@@ -298,6 +298,8 @@ async function fetchDashData(){
       return [r[0],r[1],r[2],r[3],r[4],r[5],sub,lvl];
     });
   }
+  // dedup: เก็บเฉพาะ row แรกของแต่ละข้อ (กัน results_long มีหลาย row ต่อข้อ)
+  const seenQ={}; myAna=myAna.filter(r=>{const q=r[4]; if(seenQ[q])return false; seenQ[q]=true; return true;});
   // Fallback: results_long ยังไม่มีข้อมูลการสอบนี้ → คำนวณจาก QUESTION_BANK ที่ฝังไว้
   if(!myAna.length&&EMBEDDED_QB[topic]){
     myAna=[];
@@ -394,10 +396,15 @@ function renderStudentDash(d){
   const qClass={ok:'q-ok',care:'q-care',concept:'q-concept',cant:'q-cant',timeout:'q-timeout',wrong:'q-wrong',blank:'q-blank'};
   ['qgrid1','qgrid2'].forEach(id=>document.getElementById(id).innerHTML='');
   for(let i=1;i<=30;i++){const g=document.getElementById(i<=15?'qgrid1':'qgrid2');const el=document.createElement('div');el.className='q-cell '+qClass[d.qResults[i]];el.textContent=i;g.appendChild(el);}
-  const needReview=d.myAna.filter(r=>['wrong','blank','care','concept','cant','timeout'].includes(parseStatus(r[5]||''))).map(r=>({q:parseInt(r[4]),sub:r[6]||'',year:r[3]||'',level:parseInt(r[7])||0,type:parseStatus(r[5]||'')})).sort((a,b)=>b.level-a.level||a.q-b.q);
+  const needReview=d.myAna.filter(r=>['wrong','blank','care','concept','cant','timeout'].includes(parseStatus(r[5]||''))).map(r=>({q:parseInt(r[4]),sub:r[6]||'',year:r[3]||'',level:parseInt(r[7])||0,type:parseStatus(r[5]||'')})).sort((a,b)=>{
+    const pri={care:0,concept:1,wrong:2,cant:2,timeout:3,blank:4};
+    const pa=pri[a.type]!=null?pri[a.type]:9;
+    const pb=pri[b.type]!=null?pri[b.type]:9;
+    return pa-pb||b.level-a.level||a.q-b.q;
+  });
   const rl=document.getElementById('s-reviewList');rl.innerHTML='';
   if(!needReview.length){rl.innerHTML='<div style="font-size:13px;color:var(--text2);padding:8px 0">ทำถูกทุกข้อ 🎉</div>';}
-  else needReview.forEach(r=>{const statusEmoji={ok:'✅',care:'⚠️',concept:'🧠',cant:'❌',timeout:'⏰',wrong:'❌',blank:'⬜'}[r.type]||'⚠️';const stars='★'.repeat(r.level)+'☆'.repeat(5-r.level);rl.innerHTML+=`<div class="rev-row"><div style="min-width:20px;font-size:11px;color:var(--text2);font-weight:500">${r.q}</div><div style="flex:1"><div style="font-size:12px;color:var(--text1)">${r.sub}</div><div style="font-size:10px;color:var(--text3)">${r.year} · ระดับ ${r.level} <span style="color:#BA7517">${stars}</span></div></div><span style="font-size:16px">${statusEmoji}</span></div>`;});;
+  else needReview.forEach(r=>{const statusEmoji={ok:'✅',care:'⚠️',concept:'💡',cant:'❌',timeout:'⏰',wrong:'❌',blank:'⬜'}[r.type]||'⚠️';const stars='★'.repeat(r.level)+'☆'.repeat(5-r.level);rl.innerHTML+=`<div class="rev-row"><div style="min-width:20px;font-size:11px;color:var(--text2);font-weight:500">${r.q}</div><div style="flex:1"><div style="font-size:12px;color:var(--text1)">${r.sub}</div><div style="font-size:10px;color:var(--text3)">${r.year} · ระดับ ${r.level} <span style="color:#BA7517">${stars}</span></div></div><span style="font-size:16px">${statusEmoji}</span></div>`;});;
   const sl=document.getElementById('s-subtopicList');sl.innerHTML='';
   // คำแนะนำว่าควรโฟกัสหัวข้อไหน
   const weakSt=d.subtopics.filter(st=>Math.round(st.ok/st.total*100)<70);

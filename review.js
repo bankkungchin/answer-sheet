@@ -19,6 +19,8 @@ var RV = {
   levels: [],         // ระดับที่มี
   fCat: '', fLvl: 0, fUnseen: false,            // filter เลือกข้อเอง
   rCat: '', rLvl: 0, rUnseen: false,            // filter สุ่ม
+  fPeriod: 'all',     // filter ช่วงปี browse: 'all' | 'yt' | 'ent'
+  rPeriod: 'all',     // filter ช่วงปี random: 'all' | 'yt' | 'ent'
   queue: [],          // ผลสุ่ม
   tab: 'browse'
 };
@@ -93,8 +95,8 @@ function rvOpenChapterCore(){
     if(RV.levels.indexOf(q.l)<0) RV.levels.push(q.l);
   });
   RV.levels.sort(function(a,b){return a-b;});
-  RV.fCat=''; RV.fLvl=0; RV.fUnseen=false;
-  RV.rCat=''; RV.rLvl=0; RV.rUnseen=false;
+  RV.fCat=''; RV.fLvl=0; RV.fUnseen=false; RV.fPeriod='all';
+  RV.rCat=''; RV.rLvl=0; RV.rUnseen=false; RV.rPeriod='all';
   RV.queue=[]; RV.tab='browse';
   if(!RV_SEEN[RV.chapter]) RV_SEEN[RV.chapter]={};
 
@@ -131,6 +133,24 @@ function rvBuildChips(){
   });
   document.getElementById('rv-flvl').innerHTML = lvlHtml;
 
+  // browse period — แบ่งข้อสอบเป็นช่วงปี (ถ้ามีทั้ง YT และ Ent)
+  var hasYt = RV.bank.some(function(q){ return !(q.yt||'').includes('.html#'); });
+  var hasEnt = RV.bank.some(function(q){ return (q.yt||'').includes('.html#'); });
+  if(hasYt && hasEnt) {
+    var ytYears = RV.bank.filter(function(q){ return !(q.yt||'').includes('.html#'); }).map(function(q){return q.y||'';});
+    var entYears = RV.bank.filter(function(q){ return (q.yt||'').includes('.html#'); }).map(function(q){return q.y||'';});
+    var ytRange = Math.min.apply(null,ytYears.filter(Boolean).map(Number))+'-'+Math.max.apply(null,ytYears.filter(Boolean).map(Number));
+    var entRange = Math.min.apply(null,entYears.filter(Boolean).map(Number))+'-'+Math.max.apply(null,entYears.filter(Boolean).map(Number));
+    var periodHtml = '<span class="rv-flbl">ช่วงปี</span>'+
+      '<button class="chip active" onclick="rvSetPeriod(this,\'all\')">ทั้งหมด</button>'+
+      '<button class="chip" onclick="rvSetPeriod(this,\'yt\')">▶ มีคลิป ('+ytRange+')</button>'+
+      '<button class="chip" onclick="rvSetPeriod(this,\'ent\')">📄 เฉลย HTML ('+entRange+')</button>';
+    // insert period row
+    var frow = document.createElement('div'); frow.className='rv-frow'; frow.id='rv-fperiod'; frow.innerHTML=periodHtml;
+    var filterDiv = document.getElementById('rv-fcat').parentNode;
+    if(!document.getElementById('rv-fperiod')) filterDiv.insertBefore(frow, document.getElementById('rv-fcat'));
+  }
+
   // random cat
   var rcatHtml = '<span class="rv-flbl">หมวด</span>'+
     '<button class="chip active" onclick="rvrSetCat(this,\'\')">ทั้งหมด</button>';
@@ -145,6 +165,17 @@ function rvBuildChips(){
     rlvlHtml += '<button class="chip" onclick="rvrSetLvl(this,'+l+')">'+'★'.repeat(l)+'</button>';
   });
   document.getElementById('rvr-flvl').innerHTML = rlvlHtml;
+
+  // random period — เหมือน browse
+  if(hasYt && hasEnt) {
+    var rperiodHtml = '<span class="rv-flbl">ช่วงปี</span>'+
+      '<button class="chip active" onclick="rvrSetPeriod(this,\'all\')">ทั้งหมด</button>'+
+      '<button class="chip" onclick="rvrSetPeriod(this,\'yt\')">▶ มีคลิป</button>'+
+      '<button class="chip" onclick="rvrSetPeriod(this,\'ent\')">📄 เฉลย HTML</button>';
+    var rfrow = document.createElement('div'); rfrow.className='rv-frow'; rfrow.id='rvr-fperiod'; rfrow.innerHTML=rperiodHtml;
+    var rfilterDiv = document.getElementById('rvr-fcat').parentNode;
+    if(!document.getElementById('rvr-fperiod')) rfilterDiv.appendChild(rfrow);
+  }
 }
 
 // ── tab switch ──
@@ -160,6 +191,8 @@ function rvSwitchTab(t){
 // ── browse filters ──
 function rvSetCat(el,v){ RV.fCat=v; rvChipActive('rv-fcat',el); rvRender(); }
 function rvSetLvl(el,v){ RV.fLvl=v; rvChipActive('rv-flvl',el); rvRender(); }
+function rvSetPeriod(el,v){ RV.fPeriod=v; rvChipActive('rv-fperiod',el); rvRender(); }
+function rvrSetPeriod(el,v){ RV.rPeriod=v; rvChipActive('rvr-fperiod',el); }
 function rvToggleUnseen(){
   RV.fUnseen=!RV.fUnseen;
   var c=document.getElementById('rv-unseen-chip');
@@ -181,6 +214,8 @@ function rvFiltered(){
     if(RV.fCat && x.c!==RV.fCat) return false;
     if(RV.fLvl && x.l!==RV.fLvl) return false;
     if(RV.fUnseen && seen['n'+x.n]) return false;
+    if(RV.fPeriod==='yt' && (x.yt||'').includes('.html#')) return false;
+    if(RV.fPeriod==='ent' && !(x.yt||'').includes('.html#')) return false;
     if(q){
       var hay=((x.sub||'')+' '+(x.s||'')+' '+(x.y||'')+' '+x.n).toLowerCase();
       if(hay.indexOf(q)<0) return false;
@@ -205,7 +240,7 @@ function rvRender(){
 
 function rvRowHtml(q,seen){
   var isSeen = !!seen['n'+q.n];
-  var isEnt = RV.chapter.indexOf('Ent')>-1;
+  var isEnt = (q.yt||'').includes('.html#');
   var btnLabel = isEnt ? '📄 ดูเฉลย' : '▶ ดูคลิป';
   var topic = q.sub || q.c;
   return '<div class="qrow'+(isSeen?' seen':'')+'">'+
@@ -247,6 +282,8 @@ function rvrPool(){
     if(RV.rCat && x.c!==RV.rCat) return false;
     if(RV.rLvl && x.l!==RV.rLvl) return false;
     if(RV.rUnseen && seen['n'+x.n]) return false;
+    if(RV.rPeriod==='yt' && (x.yt||'').includes('.html#')) return false;
+    if(RV.rPeriod==='ent' && !(x.yt||'').includes('.html#')) return false;
     return true;
   });
 }
@@ -279,7 +316,7 @@ function rvrRenderResult(){
   if(!RV.queue.length){ wrap.innerHTML=''; return; }
   var seen = RV_SEEN[RV.chapter]||{};
   var doneCount = RV.queue.filter(function(q){return !!seen['n'+q.n];}).length;
-  var isEnt = RV.chapter.indexOf('Ent')>-1;
+  var isEnt = (q.yt||'').includes('.html#');
   var btnLabel = isEnt ? '📄 ดูเฉลย' : '▶ ดูคลิป';
   var html = '<div class="d-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+
     '<span style="font-size:13px;color:var(--text2)">'+RV.queue.length+' ข้อ · ดูแล้ว '+doneCount+'/'+RV.queue.length+'</span>'+
@@ -294,7 +331,7 @@ function rvrRenderResult(){
       '<div class="qrow-meta"><span class="qrow-cat">'+q.c+'</span>'+
       '<span>'+(q.s||'')+' · ข้อ '+q.n+'</span>'+
       (isSeen?'<span class="qrow-seen">✓ ดูแล้ว</span>':'')+'</div></div>'+
-      '<a class="qrow-btn" href="'+q.yt+'" target="_blank" onclick="rvMarkSeen('+q.n+')">'+btnLabel+'</a></div>';
+      '<a class="qrow-btn" href="'+q.yt+'" target="_blank" onclick="rvMarkSeen('+q.n+')">'+ ((q.yt||'').includes('.html#')?'📄 ดูเฉลย':'▶ ดูคลิป') +'</a></div>';
   }).join('');
   html += '</div>';
   wrap.innerHTML = html;
