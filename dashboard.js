@@ -400,7 +400,7 @@ function renderStudentDash(d){
     const pri={care:0,concept:1,wrong:2,cant:2,timeout:3,blank:4};
     const pa=pri[a.type]!=null?pri[a.type]:9;
     const pb=pri[b.type]!=null?pri[b.type]:9;
-    return pa-pb||b.level-a.level||a.q-b.q;
+    return pa-pb||a.q-b.q;
   });
   const rl=document.getElementById('s-reviewList');rl.innerHTML='';
   if(!needReview.length){rl.innerHTML='<div style="font-size:13px;color:var(--text2);padding:8px 0">ทำถูกทุกข้อ 🎉</div>';}
