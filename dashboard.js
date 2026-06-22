@@ -620,7 +620,7 @@ function renderParentDash(d){
 
   const aboveAvg=d.score>=avg;
 
-  document.getElementById('p-avatar').textContent=name.substring(0,3);
+  (function(){const el=document.getElementById('p-avatar');el.textContent=name;el.style.fontSize=name.length>5?'9px':name.length>3?'11px':'13px';el.style.lineHeight='1.2';el.style.textAlign='center';}());
   document.getElementById('p-topic').textContent=d.topic+' · '+d.date;
   // แสดงชื่อนักเรียนใน header parent view
   const _pHeader=document.querySelector('#p5 .container [style*="font-size:15px"]');
@@ -652,10 +652,10 @@ function renderParentDash(d){
   const problems=[];
   // ── สรุปรวมต้องทบทวน ──
   const totalReview=(d.care||0)+(d.concept||0)+(d.cant||0)+(d.timeout||0);
-  if(totalReview>0)problems.push({icon:'🔁',color:'var(--amber-bg,#fff7ed)',border:'var(--amber,#f59e0b)',title:'ต้องทบทวนรวม '+totalReview+' ข้อ',desc:'แบ่งเป็น: ⚠️สะเพร่า '+(d.care||0)+' | 🧠คอนเซปต์ '+(d.concept||0)+' | ❌ทำไม่ได้ '+(d.cant||0)+' | ⏰ไม่ทัน '+(d.timeout||0)+' ข้อ'});
-  if((d.concept||0)>0)problems.push({icon:'🧠',color:'#f3e8ff',border:'#a855f7',title:'คอนเซปต์ยังไม่แน่น '+(d.concept||0)+' ข้อ',desc:'ทำผิดเพราะยังไม่เข้าใจทฤษฎี — ควรกลับไปทบทวนคอนเซปต์ก่อนทำโจทย์เพิ่ม'});
-  if((d.cant||0)>0)problems.push({icon:'❌',color:'#fee2e2',border:'#ef4444',title:'ทำไม่ได้ '+(d.cant||0)+' ข้อ',desc:'ยังขาดทักษะ — ควรดูคลิปหรือให้ครูอธิบายเพิ่มเติมแล้วลองทำใหม่'});
-  if((d.timeout||0)>0)problems.push({icon:'⏰',color:'#f1f5f9',border:'#94a3b8',title:'ไม่ทันเวลา '+(d.timeout||0)+' ข้อ',desc:'ทำไม่ทันในห้อง — ฝึกจับเวลาและทำข้อง่ายก่อนเพื่อสร้างความเร็ว'});
+  if(totalReview>0)problems.push({icon:'🔁',color:'var(--amber-bg,#fff7ed)',border:'var(--amber,#f59e0b)',count:totalReview,countColor:'var(--amber,#f59e0b)',title:'ต้องทบทวนรวม '+totalReview+' ข้อ',desc:'แบ่งเป็น: ⚠️สะเพร่า '+(d.care||0)+' | 🧠คอนเซปต์ '+(d.concept||0)+' | ❌ทำไม่ได้ '+(d.cant||0)+' | ⏰ไม่ทัน '+(d.timeout||0)+' ข้อ'});
+  if((d.concept||0)>0)problems.push({icon:'🧠',color:'#f3e8ff',border:'#a855f7',count:(d.concept||0),countColor:'#a855f7',title:'คอนเซปต์ยังไม่แน่น '+(d.concept||0)+' ข้อ',desc:'ทำผิดเพราะยังไม่เข้าใจทฤษฎี — ควรกลับไปทบทวนคอนเซปต์ก่อนทำโจทย์เพิ่ม'});
+  if((d.cant||0)>0)problems.push({icon:'❌',color:'#fee2e2',border:'#ef4444',count:(d.cant||0),countColor:'#ef4444',title:'ทำไม่ได้ '+(d.cant||0)+' ข้อ',desc:'ยังขาดทักษะ — ควรดูคลิปหรือให้ครูอธิบายเพิ่มเติมแล้วลองทำใหม่'});
+  if((d.timeout||0)>0)problems.push({icon:'⏰',color:'#f1f5f9',border:'#94a3b8',count:(d.timeout||0),countColor:'#94a3b8',title:'ไม่ทันเวลา '+(d.timeout||0)+' ข้อ',desc:'ทำไม่ทันในห้อง — ฝึกจับเวลาและทำข้อง่ายก่อนเพื่อสร้างความเร็ว'});
   if(d.wrong>0)problems.push({icon:'🔴',color:'var(--red-l)',border:'var(--red)',title:'เนื้อหาที่ยังต้องเรียนรู้เพิ่ม',desc:`ทำผิด ${d.wrong} ข้อ — เป็นจุดที่ยังไม่เข้าใจเต็มที่ แก้ได้ด้วยการทบทวนเพิ่มเติมจากคลิป เอกสาร หรือถามผู้รู้ ไม่ใช่เรื่องน่ากังวล แต่เป็นโอกาสพัฒนา`,count:d.wrong,countColor:'var(--red)'});
   if(d.care>0)problems.push({icon:'🟡',color:'var(--amber-l)',border:'var(--amber)',title:'รู้คำตอบแล้ว แต่พลาดจากความรีบ',desc:`พลาด ${d.care} ข้อทั้งที่ทำเป็น — ความรอบคอบเป็นทักษะที่ฝึกได้เหมือนกล้ามเนื้อ ลองชวนลูกอธิบายวิธีตรวจคำตอบให้ฟัง จะช่วยได้มากกว่าการเตือนให้ระวัง`,count:d.care,countColor:'var(--amber)'});
   if(d.blank>0)problems.push({icon:'⬜',color:'var(--surf)',border:'var(--border-md)',title:'ข้อที่ยังไม่ได้ลงมือทำ',desc:`มี ${d.blank} ข้อที่เว้นไว้ — ลองถามลูกด้วยความเข้าใจว่าเป็นเพราะเวลาไม่พอ ยังไม่เข้าใจโจทย์ หรือไม่มั่นใจ เพื่อช่วยให้ตรงจุด`,count:d.blank,countColor:'var(--text3)'});
