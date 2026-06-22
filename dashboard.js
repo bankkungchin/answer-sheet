@@ -404,7 +404,9 @@ function renderStudentDash(d){
   });
   const rl=document.getElementById('s-reviewList');rl.innerHTML='';
   if(!needReview.length){rl.innerHTML='<div style="font-size:13px;color:var(--text2);padding:8px 0">ทำถูกทุกข้อ 🎉</div>';}
-  else needReview.forEach(r=>{const statusEmoji={ok:'✅',care:'⚠️',concept:'💡',cant:'❌',timeout:'⏰',wrong:'❌',blank:'⬜'}[r.type]||'⚠️';const stars='★'.repeat(r.level)+'☆'.repeat(5-r.level);rl.innerHTML+=`<div class="rev-row"><div style="min-width:20px;font-size:11px;color:var(--text2);font-weight:500">${r.q}</div><div style="flex:1"><div style="font-size:12px;color:var(--text1)">${r.sub}</div><div style="font-size:10px;color:var(--text3)">${r.year} · ระดับ ${r.level} <span style="color:#BA7517">${stars}</span></div></div><span style="font-size:16px">${statusEmoji}</span></div>`;});;
+  else { rl.innerHTML='<div style="font-size:11px;color:var(--text2);margin-bottom:10px;display:flex;flex-wrap:wrap;gap:10px"><span>⚠️ สะเพร่า</span><span>📖 คอนเซปต์</span><span>❌ ผิด/ทำไม่ได้</span><span>⏰ ไม่ทัน</span></div>';
+  needReview.forEach(r=>{const statusEmoji={ok:'✅',care:'⚠️',concept:'📖',cant:'❌',timeout:'⏰',wrong:'❌',blank:'⬜'}[r.type]||'⚠️';const stars='★'.repeat(r.level)+'☆'.repeat(5-r.level);rl.innerHTML+=`<div class="rev-row"><div style="min-width:20px;font-size:11px;color:var(--text2);font-weight:500">${r.q}</div><div style="flex:1"><div style="font-size:12px;color:var(--text1)">${r.sub}</div><div style="font-size:10px;color:var(--text3)">${r.year} · ระดับ ${r.level} <span style="color:#BA7517">${stars}</span></div></div><span style="font-size:16px">${statusEmoji}</span></div>`;});
+  } // close else
   const sl=document.getElementById('s-subtopicList');sl.innerHTML='';
   // คำแนะนำว่าควรโฟกัสหัวข้อไหน
   const weakSt=d.subtopics.filter(st=>Math.round(st.ok/st.total*100)<70);

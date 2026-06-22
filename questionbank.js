@@ -254,23 +254,6 @@ var PRACTICE_BANK = {
     {n:47,c:"🟠 เพาเวอร์เซต",sub:"เพาเวอร์เซต",l:3,s:"A-Level 68",y:"2568",yt:"https://youtube.com/watch?v=vbxRn6ajGuw"},
     {n:48,c:"🟣 จำนวนสมาชิก",sub:"จำนวนสมาชิก",l:4,s:"A-Level 68",y:"2568",yt:"https://youtube.com/watch?v=Q5VTD3vIuJA"},
 
-  // ─── เซต Ent 2541–2548 (16 ข้อ เฉลย HTML) ─────────────────────
-  {n:49,c:"🟠 เพาเวอร์เซต",sub:"เพาเวอร์เซต",l:4,s:"Ent ต.ค. 41",y:"2541",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q1"},
-  {n:50,c:"🟢 การดำเนินการและผลคูณคาร์ทีเซียน",sub:"การดำเนินการ/คาร์ทีเซียน",l:4,s:"Ent มี.ค. 42",y:"2542",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q2"},
-  {n:51,c:"🔵 นิยามและสับเซต",sub:"นิยามและสับเซต",l:3,s:"Ent มี.ค. 42",y:"2542",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q3"},
-  {n:52,c:"🔵 นิยามและสับเซต",sub:"นิยามและสับเซต",l:4,s:"Ent มี.ค. 43",y:"2543",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q4"},
-  {n:53,c:"🟣 จำนวนสมาชิก",sub:"จำนวนสมาชิก",l:4,s:"Ent ต.ค. 43",y:"2543",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q5"},
-  {n:54,c:"🟠 เพาเวอร์เซต",sub:"เพาเวอร์เซต",l:4,s:"Ent ต.ค. 43",y:"2543",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q6"},
-  {n:55,c:"🟣 จำนวนสมาชิก",sub:"จำนวนสมาชิก",l:4,s:"Ent มี.ค. 44",y:"2544",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q7"},
-  {n:56,c:"🔵 นิยามและสับเซต",sub:"นิยามและสับเซต",l:4,s:"Ent ต.ค. 44",y:"2544",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q8"},
-  {n:57,c:"🟣 จำนวนสมาชิก",sub:"จำนวนสมาชิก",l:4,s:"Ent มี.ค. 45",y:"2545",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q9"},
-  {n:58,c:"🟣 จำนวนสมาชิก",sub:"จำนวนสมาชิก",l:5,s:"Ent ต.ค. 45",y:"2545",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q10"},
-  {n:59,c:"🟠 เพาเวอร์เซต",sub:"เพาเวอร์เซต",l:5,s:"Ent ต.ค. 45",y:"2545",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q11"},
-  {n:60,c:"🟢 การดำเนินการและผลคูณคาร์ทีเซียน",sub:"การดำเนินการ/คาร์ทีเซียน",l:4,s:"Ent มี.ค. 46",y:"2546",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q12"},
-  {n:61,c:"🔵 นิยามและสับเซต",sub:"นิยามและสับเซต",l:4,s:"Ent ต.ค. 46",y:"2546",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q13"},
-  {n:62,c:"🟣 จำนวนสมาชิก",sub:"จำนวนสมาชิก",l:4,s:"Ent มี.ค. 47",y:"2547",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q14"},
-  {n:63,c:"🔵 นิยามและสับเซต",sub:"นิยามและสับเซต",l:5,s:"Ent ต.ค. 47",y:"2547",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q15"},
-  {n:64,c:"🟡 สมบัติและพีชคณิตเซต",sub:"สมบัติและพีชคณิตเซต",l:4,s:"Ent มี.ค. 48",y:"2548",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q16"},
   ],
 
   // ─── Expo Logarithm (129 ข้อ PAT/9วิชา/A-Level 52–68) ──────────
@@ -584,6 +567,27 @@ var PRACTICE_BANK = {
     {n:35,c:"🟡 กฎไซน์/โคไซน์",sub:"tan ในสามเหลี่ยม — ถูก/ผิด",l:5,s:"A-NET มี.ค. 51",y:"2551",yt:"https://bankkungchin.github.io/answer-sheet/trig_solutions_formatted_1.html#q35"},
     {n:36,c:"🟡 กฎไซน์/โคไซน์",sub:"ระบบสมการในสามเหลี่ยม",l:5,s:"A-NET มี.ค. 52",y:"2552",yt:"https://bankkungchin.github.io/answer-sheet/trig_solutions_formatted_1.html#q36"},
     {n:37,c:"🔵 สมการตรีโกณมิติ",sub:"สมการตรีโกณ — ผลต่างกำลังสอง",l:5,s:"A-NET มี.ค. 52",y:"2552",yt:"https://bankkungchin.github.io/answer-sheet/trig_solutions_formatted_1.html#q37"},
+  ],
+
+
+  // ─── เซต Ent 2541–2548 (16 ข้อ เฉลย HTML) ─────────────────────
+  "เซต Ent": [
+    {n:1,c:"🟠 เพาเวอร์เซต",sub:"เพาเวอร์เซต",l:4,s:"Ent ต.ค. 41",y:"2541",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q1"},
+    {n:2,c:"🟢 การดำเนินการและผลคูณคาร์ทีเซียน",sub:"การดำเนินการ/คาร์ทีเซียน",l:4,s:"Ent มี.ค. 42",y:"2542",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q2"},
+    {n:3,c:"🔵 นิยามและสับเซต",sub:"นิยามและสับเซต",l:3,s:"Ent มี.ค. 42",y:"2542",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q3"},
+    {n:4,c:"🔵 นิยามและสับเซต",sub:"นิยามและสับเซต",l:4,s:"Ent มี.ค. 43",y:"2543",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q4"},
+    {n:5,c:"🟣 จำนวนสมาชิก",sub:"จำนวนสมาชิก",l:4,s:"Ent ต.ค. 43",y:"2543",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q5"},
+    {n:6,c:"🟠 เพาเวอร์เซต",sub:"เพาเวอร์เซต",l:4,s:"Ent ต.ค. 43",y:"2543",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q6"},
+    {n:7,c:"🟣 จำนวนสมาชิก",sub:"จำนวนสมาชิก",l:4,s:"Ent มี.ค. 44",y:"2544",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q7"},
+    {n:8,c:"🔵 นิยามและสับเซต",sub:"นิยามและสับเซต",l:4,s:"Ent ต.ค. 44",y:"2544",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q8"},
+    {n:9,c:"🟣 จำนวนสมาชิก",sub:"จำนวนสมาชิก",l:4,s:"Ent มี.ค. 45",y:"2545",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q9"},
+    {n:10,c:"🟣 จำนวนสมาชิก",sub:"จำนวนสมาชิก",l:5,s:"Ent ต.ค. 45",y:"2545",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q10"},
+    {n:11,c:"🟠 เพาเวอร์เซต",sub:"เพาเวอร์เซต",l:5,s:"Ent ต.ค. 45",y:"2545",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q11"},
+    {n:12,c:"🟢 การดำเนินการและผลคูณคาร์ทีเซียน",sub:"การดำเนินการ/คาร์ทีเซียน",l:4,s:"Ent มี.ค. 46",y:"2546",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q12"},
+    {n:13,c:"🔵 นิยามและสับเซต",sub:"นิยามและสับเซต",l:4,s:"Ent ต.ค. 46",y:"2546",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q13"},
+    {n:14,c:"🟣 จำนวนสมาชิก",sub:"จำนวนสมาชิก",l:4,s:"Ent มี.ค. 47",y:"2547",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q14"},
+    {n:15,c:"🔵 นิยามและสับเซต",sub:"นิยามและสับเซต",l:5,s:"Ent ต.ค. 47",y:"2547",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q15"},
+    {n:16,c:"🟡 สมบัติและพีชคณิตเซต",sub:"สมบัติและพีชคณิตเซต",l:4,s:"Ent มี.ค. 48",y:"2548",yt:"https://bankkungchin.github.io/answer-sheet/set_2541-2548_v2.html#q16"},
   ],
 
   // ─── TODO: บทที่รอ PRACTICE_BANK ─────────────────────────────────
