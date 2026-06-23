@@ -289,10 +289,18 @@ async function fetchDashData(){
   const longRows=(longData.values||[]).slice(1);
   let myAna=longRows.filter(r=>r[0]===currentStudent&&(!topicFilter||(r[3]||'').includes(topicFilter))&&(r[3]||'')===topic);
   // เติม sub/level จาก EMBEDDED_QB ถ้า results_long ไม่มี (column G/H ว่างหรือเป็น 0)
-  if(myAna.length&&EMBEDDED_QB[topic]){
+  // normalize topic name ให้ตรงกับ EMBEDDED_QB key
+  const normTopic=(t)=>{
+    if(!t) return t;
+    // "Exponential logarithm" → "Expo Logarithm"
+    return t.replace(/^Exponential logarithm/i,'Expo Logarithm')
+            .replace(/^exponential logarithm/i,'Expo Logarithm');
+  };
+  const embTopic = normTopic(topic);
+  if(myAna.length&&EMBEDDED_QB[embTopic]){
     myAna=myAna.map(r=>{
       const qNum=parseInt(r[4])||0;
-      const qb=EMBEDDED_QB[topic][qNum]||{};
+      const qb=EMBEDDED_QB[embTopic][qNum]||{};
       const sub=(r[6]&&r[6]!=='—')?r[6]:(qb.sub||'—');
       const lvl=(parseInt(r[7])>0)?r[7]:(qb.level||0);
       return [r[0],r[1],r[2],r[3],r[4],r[5],sub,lvl];
@@ -301,12 +309,12 @@ async function fetchDashData(){
   // dedup: เก็บเฉพาะ row แรกของแต่ละข้อ (กัน results_long มีหลาย row ต่อข้อ)
   const seenQ={}; myAna=myAna.filter(r=>{const q=r[4]; if(seenQ[q])return false; seenQ[q]=true; return true;});
   // Fallback: results_long ยังไม่มีข้อมูลการสอบนี้ → คำนวณจาก QUESTION_BANK ที่ฝังไว้
-  if(!myAna.length&&EMBEDDED_QB[topic]){
+  if(!myAna.length&&EMBEDDED_QB[embTopic]){
     myAna=[];
     for(let q=1;q<=30;q++){
       const st=myRow[5+q]||'';
       if(!st)continue;
-      const qb=EMBEDDED_QB[topic][q]||{};
+      const qb=EMBEDDED_QB[embTopic][q]||{};
       myAna.push([currentStudent,group,date,topic,q,st,qb.sub||'—',qb.level||0]);
     }
   }
@@ -327,10 +335,10 @@ async function fetchDashData(){
   // ── สถิติกลุ่มย่อย: sub-topic ที่ทั้งกลุ่มอ่อนร่วมกัน (จาก results_long ของทุกคนในกลุ่ม บทนี้) ──
   let grpLong=longRows.filter(r=>(r[1]||'')===group&&(r[3]||'')===topic);
   // เติม sub จาก EMBEDDED_QB ถ้า results_long ไม่มี (เหมือน myAna)
-  if(grpLong.length&&EMBEDDED_QB[topic]){
+  if(grpLong.length&&EMBEDDED_QB[embTopic]){
     grpLong=grpLong.map(r=>{
       const qNum=parseInt(r[4])||0;
-      const qb=EMBEDDED_QB[topic][qNum]||{};
+      const qb=EMBEDDED_QB[embTopic][qNum]||{};
       const sub=(r[6]&&r[6]!=='—')?r[6]:(qb.sub||'—');
       return [r[0],r[1],r[2],r[3],r[4],r[5],sub,r[7]];
     });
