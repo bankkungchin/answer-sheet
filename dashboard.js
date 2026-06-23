@@ -199,10 +199,13 @@ ${body}
 function renderPracticePlan(d){
   const el=document.getElementById('s-practice'); if(!el)return;
   // หาคลังฝึก: ลองชื่อบทตรงๆ ก่อน ถ้าไม่เจอ ตัด "ชุดที่ N" ออกแล้วลองใหม่
-  let bank=PRACTICE_BANK[d.topic];
-  if(!bank){ const baseTopic=d.topic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); bank=PRACTICE_BANK[baseTopic]; }
+  // normalize topic ก่อน lookup (เช่น "Exponential logarithm" → "Expo Logarithm")
+  const _normT=(t)=>t?t.replace(/^Exponential logarithm/i,'Expo Logarithm'):t;
+  const _nTopic=_normT(d.topic);
+  let bank=PRACTICE_BANK[_nTopic];
+  if(!bank){ const baseTopic=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); bank=PRACTICE_BANK[baseTopic]; }
   // รวมคลัง Ent เข้ากับคลังหลัก (เช่น ตรีโกณมิติ + ตรีโกณมิติ Ent)
-  if(bank){ const _base=d.topic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); const _ent=PRACTICE_BANK[_base+' Ent']; if(_ent) bank=[...bank,..._ent]; }
+  if(bank){ const _base=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); const _ent=PRACTICE_BANK[_base+' Ent']; if(_ent) bank=[...bank,..._ent]; }
   if(!bank){ el.innerHTML='<div class="d-card"><div style="font-size:13px;color:var(--text2);line-height:1.6;padding:4px 0">ยังไม่มีคลังฝึกพร้อมเฉลยวิดีโอสำหรับบท <b>'+d.topic+'</b> ครับ — ตอนนี้พร้อมเฉพาะบท <b>Expo Logarithm</b></div></div>'; return; }
   // รวมยอดพลาดตามหมวด (จาก d.subtopics)
   const catMap={};
