@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฉลยละเอียด — Expo & Log (Ent/A-NET 2541–2552)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans+Thai:wght@500;600;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)'],['$','$']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink:#1a1a1a; --muted:#555; --light:#888; --line:#d4d8e8; --bg:#f4f5fb;
+  --paper:#ffffff; --accent:#2e4374; --accent-light:#eef2fb;
+  --amber:#7a4a00; --amber-bg:#fff8e8; --amber-border:#e8c870;
+  --red:#8b1a1a; --red-bg:#fff4f4; --red-border:#f5c6c6;
+  --green-bg:#f0faf2; --green-border:#a8d9b5; --green:#1a5c2e;
+  --blue-bg:#f0f5ff; --blue-border:#bdd0f8;
+  --purple-bg:#f8f0ff; --purple-border:#d4b8f5;
+}
+body {
+  font-family:'Sarabun','TH Sarabun New',sans-serif;
+  font-size:17px; line-height:1.85; color:var(--ink);
+  background:var(--bg); -webkit-font-smoothing:antialiased;
+}
+.wrap { max-width:820px; margin:0 auto; padding:0 20px 80px; }
+
+/* ── HEADER ── */
+.doc-header {
+  background:linear-gradient(135deg,#2e4374 0%,#1e2d52 100%);
+  color:white; padding:36px 0 28px;
+}
+.doc-header .inner { max-width:820px; margin:0 auto; padding:0 20px; }
+.doc-eyebrow {
+  font-family:'IBM Plex Sans Thai',sans-serif;
+  font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+  font-weight:600; color:#a8bce0; margin-bottom:8px;
+}
+.doc-title { font-size:24px; font-weight:700; line-height:1.3; margin-bottom:6px; }
+.doc-sub { font-size:14px; color:#c2cfe8; }
+
+/* ── INDEX BAR ── */
+.index-bar {
+  position:sticky; top:0; z-index:20;
+  background:rgba(244,245,251,.95); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line); padding:9px 0;
+}
+.chips {
+  max-width:820px; margin:0 auto; padding:0 20px;
+  display:flex; gap:5px; overflow-x:auto; scrollbar-width:thin;
+}
+.chips a {
+  flex:0 0 auto; min-width:30px; height:30px; padding:0 6px;
+  display:grid; place-items:center; text-decoration:none;
+  font-weight:700; font-size:12.5px; color:var(--accent);
+  background:white; border:1px solid #ccc; border-radius:6px; transition:.15s;
+}
+.chips a:hover { background:var(--accent); color:white; }
+
+/* ── CHEAT SHEET ── */
+.cheat-sheet {
+  background:linear-gradient(135deg,#f0f4ff,#e8efff);
+  border:1px solid #bdd0f8; border-radius:14px;
+  padding:22px 24px; margin:24px 0 8px;
+}
+.cheat-sheet h2 {
+  font-family:'IBM Plex Sans Thai',sans-serif;
+  font-size:16px; font-weight:700; color:var(--accent);
+  margin-bottom:14px; display:flex; align-items:center; gap:8px;
+}
+.cheat-row { margin-bottom:9px; font-size:15.5px; line-height:1.75; }
+.cheat-row b { color:var(--accent); }
+.cheat-warning {
+  background:var(--red-bg); border:1px solid var(--red-border);
+  border-radius:10px; padding:14px 18px; margin-top:16px;
+}
+.cheat-warning h3 {
+  font-size:13px; font-weight:700; color:var(--red);
+  text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px;
+}
+.warn-table { width:100%; border-collapse:collapse; font-size:14.5px; }
+.warn-table th {
+  background:#fde8e8; padding:7px 12px; font-weight:700;
+  border:1px solid var(--red-border); color:var(--red); text-align:left;
+}
+.warn-table td { padding:7px 12px; border:1px solid var(--red-border); vertical-align:top; }
+.warn-table tr:nth-child(even) td { background:#fff8f8; }
+
+/* ── SOLUTION BLOCK ── */
+.sol {
+  background:var(--paper); border:1px solid var(--line); border-radius:14px;
+  padding:22px 24px 18px; margin:16px 0; scroll-margin-top:58px;
+  box-shadow:0 1px 3px rgba(20,30,70,.05);
+}
+
+/* ── Q-HEADER ── */
+.q-header {
+  display:flex; align-items:center; gap:10px;
+  flex-wrap:wrap; margin-bottom:10px;
+}
+.q-num {
+  font-family:'IBM Plex Sans Thai',sans-serif;
+  font-weight:700; font-size:19px; color:var(--accent);
+  background:var(--accent-light); border-radius:9px;
+  min-width:44px; height:44px; display:grid;
+  place-items:center; padding:0 8px;
+}
+.q-badge {
+  font-size:12px; font-weight:600; padding:3px 10px;
+  border-radius:20px; background:#eef2fb; color:var(--accent);
+  border:1px solid #c8d5f0;
+}
+.q-type { font-size:12.5px; font-weight:600; color:var(--muted); }
+.stars { color:#c8a000; font-size:12px; }
+.sub-tag {
+  font-size:11.5px; font-weight:600; padding:2px 9px;
+  border-radius:999px; background:#f0f5ff; border:1px solid #bdd0f8;
+  color:#3050a0; margin-left:auto;
+}
+
+/* ── PROBLEM BOX ── */
+.problem {
+  background:#fafbfe; border-left:3px solid var(--accent);
+  border-radius:0 8px 8px 0; padding:10px 14px;
+  font-size:15.5px; margin:8px 0 14px; line-height:1.9;
+}
+
+/* ── CONCEPT BOX ── */
+.concept {
+  background:var(--blue-bg); border:1px solid var(--blue-border);
+  border-left:3px solid var(--accent); border-radius:0 8px 8px 0;
+  padding:10px 14px; margin-bottom:14px; font-size:14.5px; line-height:1.7;
+}
+.concept-label {
+  font-family:'IBM Plex Sans Thai',sans-serif;
+  font-weight:700; font-size:11.5px; color:var(--accent);
+  text-transform:uppercase; letter-spacing:.1em; margin-bottom:5px;
+}
+
+/* ── STEPS ── */
+.step { margin-bottom:12px; }
+.step-label {
+  display:inline; font-weight:700;
+  text-decoration:underline; color:var(--ink); font-size:16px;
+}
+.step-goal { font-weight:400; text-decoration:none; color:var(--ink); }
+.step-body { margin-top:5px; padding-left:2px; font-size:16px; line-height:2; }
+.kw { color:var(--muted); font-style:italic; }
+p.indent { padding-left:16px; }
+.cond-table { border-collapse:collapse; margin:6px 0 6px 8px; font-size:15.5px; }
+.cond-table td { padding:2px 10px 2px 0; vertical-align:middle; }
+.cond-table .kw-cell { color:var(--muted); font-style:italic; padding-right:14px; }
+
+/* ── CARELESS NOTE ── */
+.careless {
+  background:var(--red-bg); border:1px solid var(--red-border);
+  border-left:3px solid #cc3333; border-radius:0 8px 8px 0;
+  padding:9px 14px; margin-top:12px; font-size:14.5px; line-height:1.65;
+}
+.careless-label {
+  font-weight:700; color:#cc3333; font-size:12px;
+  text-transform:uppercase; letter-spacing:.08em; margin-bottom:3px;
+}
+
+/* ── TECHNIQUE BOX ── */
+.technique {
+  background:var(--green-bg); border:1px solid var(--green-border);
+  border-left:3px solid var(--green); border-radius:0 8px 8px 0;
+  padding:9px 14px; margin-top:10px; font-size:14.5px; line-height:1.65;
+}
+.technique-label {
+  font-weight:700; color:var(--green); font-size:12px;
+  text-transform:uppercase; letter-spacing:.08em; margin-bottom:3px;
+}
+
+/* ── ANSWER ── */
+.answer {
+  margin-top:14px; display:inline-flex; align-items:center; gap:10px;
+  background:var(--amber-bg); border:1px solid var(--amber-border);
+  border-radius:8px; padding:8px 18px;
+}
+.answer-lbl {
+  font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  font-weight:600; color:#9a6800;
+}
+.answer-val { font-size:17px; font-weight:700; color:var(--amber); }
+
+footer {
+  text-align:center; font-size:13px; color:var(--light);
+  padding:30px 0; border-top:1px solid var(--line); margin-top:24px;
+}
+a.home { color:var(--accent); font-weight:600; text-decoration:none; }
+@media (max-width:540px) { body{font-size:16px} .sol{padding:18px 16px} .doc-title{font-size:20px} }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="inner">
+    <div class="doc-eyebrow">MathsBankTutor · เฉลยละเอียด</div>
+    <div class="doc-title">ฟังก์ชันเอกซ์โพเนนเชียล &amp; ลอการิทึม — Ent / A-NET 2541–2552</div>
+    <div class="doc-sub">39 ข้อ · วิธีทำทีละขั้น · Concept &amp; Careless Note · เหมาะสำหรับเตรียมสอบแพทย์ / วิศวะ</div>
+  </div>
+</div>
+
+<nav class="index-bar"><div class="chips" id="chips"></div></nav>
+
+<div class="wrap">
+
+<!-- ════════════════════ CHEAT SHEET ════════════════════ -->
+<div class="cheat-sheet">
+  <h2>🧠 Cheat Sheet — เทคนิคสรุป Expo &amp; Log สำหรับสอบเข้าแพทย์ / วิศวะ</h2>
+
+  <div class="cheat-row"><b>1. สมการเอกซ์โพเนนเชียล</b> — ทำให้ฐานเท่ากัน หรือตั้ง \(t = a^x\) (จำ: \(t > 0\) เสมอ) แล้วแก้เป็นสมการพหุนาม</div>
+  <div class="cheat-row"><b>2. สมการลอการิทึม</b> — ต้องเช็ค <u>ตัวตั้ง &gt; 0</u> และ <u>ฐาน &gt; 0, ≠ 1</u> ทุกครั้ง ก่อนและหลังแก้</div>
+  <div class="cheat-row"><b>3. อสมการฐาน &lt; 1</b> — ต้องกลับเครื่องหมายอสมการทุกครั้ง (\(0 &lt; a &lt; 1 \Rightarrow \log_a\) เป็นฟังก์ชันลด)</div>
+  <div class="cheat-row"><b>4. เปลี่ยนฐาน</b> — \(\log_a b = \dfrac{\log_c b}{\log_c a}\), \(\log_a b \cdot \log_b a = 1\), \(\log_{a^k} b = \tfrac{1}{k}\log_a b\)</div>
+  <div class="cheat-row"><b>5. อัตลักษณ์สำคัญ</b> — \(a^{\log_a x} = x\), \(\log_a a^n = n\), \(9^{\log_3 x} = x^2\), \(\log_{1/a} x = -\log_a x\)</div>
+  <div class="cheat-row"><b>6. แยกตัวประกอบ Expo</b> — \((A^x - p)(B^x - q) = 0\) → แก้แต่ละตัวประกอบ (ใช้บ่อยมากในข้อสอบ Ent)</div>
+  <div class="cheat-row"><b>7. Log ซ้อนชั้น</b> — ถอดจากนอกสุดเข้าในทีละชั้น ระวังเงื่อนไขโดเมนแต่ละชั้น</div>
+
+  <div class="cheat-warning">
+    <h3>⚠️ จุดพลาดบ่อย (Careless &amp; Wrong Concept)</h3>
+    <table class="warn-table">
+      <tr><th>กับดัก</th><th>สิ่งที่ถูกต้อง</th><th>ประเภทความผิด</th></tr>
+      <tr><td>ตั้ง \(t=a^x\) แล้วลืมบังคับ \(t&gt;0\)</td><td>ตัดคำตอบที่ได้ \(t\leq0\) ทิ้งเสมอ</td><td>Wrong Concept</td></tr>
+      <tr><td>ฐาน \(&lt;1\) แล้วไม่กลับเครื่องหมาย</td><td>เขียนกำกับไว้ว่า "ฐาน&lt;1 → กลับทิศ"</td><td>Careless / Wrong Concept</td></tr>
+      <tr><td>ลืมตรวจโดเมนหลังแก้สมการ log</td><td>แทนค่ากลับทุกครั้ง</td><td>Wrong Concept</td></tr>
+      <tr><td>\(\log(a+b) = \log a + \log b\)</td><td>\(\log(ab) = \log a + \log b\) เท่านั้น</td><td>Wrong Concept</td></tr>
+      <tr><td>สมการ \(a^{f(x)} = a^{g(x)}\) ตัดฐาน เมื่อ \(a=1\)</td><td>\(1^{anything}=1\) เสมอ ต้องระวัง \(n=1\) เป็นคำตอบพิเศษ</td><td>Wrong Concept</td></tr>
+      <tr><td>อสมการ \((4^x-2)\log(\cdot)&gt;0\) มองข้ามกรณี log=0</td><td>ตรวจว่า \(x=0\) ทำให้ log=0 หรือเปล่า → ตัดออก</td><td>Careless</td></tr>
+      <tr><td>Log ซ้อนชั้น: ลืมเงื่อนไขโดเมนชั้นใน</td><td>ทุกชั้นต้องมีอาร์กิวเมนต์ &gt; 0</td><td>Wrong Concept</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════ Q1 ═══════════════════ -->
+<section class="sol" id="q1">
+  <div class="q-header">
+    <span class="q-num">1</span>
+    <span class="q-badge">ต.ค. 2541</span>
+    <span class="q-type">สมการลอการิทึม</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 สมการล็อก</span>
+  </div>
+  <div class="problem">จงหาเซตคำตอบของ \(\log_2(x^2-x-4)^2 = \log_{0.1}(0.01)\) แล้วตอบว่าเป็นสับเซตของช่วงใด</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    คำนวณค่าด้านขวาให้เป็นตัวเลขก่อน โดยใช้ \(\log_{a^k}x = \tfrac{1}{k}\log_a x\) แล้วถอด log ออกพร้อมแยกกรณี \(\pm\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  คำนวณค่า RHS</span>
+    <div class="step-body">
+      <p class="indent">\(\log_{0.1}(0.01) = \log_{10^{-1}}(10^{-2}) = \dfrac{-2}{-1} = 2\)</p>
+      <span class="kw">ดังนั้น</span> สมการกลายเป็น \(\log_2(x^2-x-4)^2 = 2\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ถอด log และแยกกรณี</span>
+    <div class="step-body">
+      <p class="indent">\((x^2-x-4)^2 = 4 \Rightarrow x^2-x-4 = \pm2\)</p>
+      <p class="indent"><b>กรณี +:</b> \(x^2-x-6=0 \Rightarrow x=3\) หรือ \(x=-2\)</p>
+      <p class="indent"><b>กรณี −:</b> \(x^2-x-2=0 \Rightarrow x=2\) หรือ \(x=-1\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  ตรวจโดเมน</span>
+    <div class="step-body">
+      ต้องการ \((x^2-x-4)^2 > 0\) ซึ่งเป็นจริงสำหรับทุกคำตอบข้างต้น<br>
+      เซตคำตอบ \(= \{-2,-1,2,3\} \subseteq [-3,3]\)
+    </div>
+  </div>
+  <div class="careless">
+    <div class="careless-label">⚠️ Careless Point</div>
+    อย่าลืมว่าถอด \(\sqrt{(\cdot)^2}\) ได้ \(\pm\) — ต้องแยกทั้งสองกรณีเสมอ
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4 — \(\{-2,-1,2,3\}\subseteq[-3,3]\)</span></div>
+</section>
+
+<!-- ═══════════════════ Q2 ═══════════════════ -->
+<section class="sol" id="q2">
+  <div class="q-header">
+    <span class="q-num">2</span>
+    <span class="q-badge">ต.ค. 2541</span>
+    <span class="q-type">โดเมน / เรนจ์</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🔴 โจทย์ประยุกต์</span>
+  </div>
+  <div class="problem">กำหนด \(f=\{(x,y)\mid y=\log(x+1)+\log(x+2)-\log(4-x^2)\}\) และ \(g=\{(x,y)\mid y=2^{x}-1,\ x\ge0\}\) จงหา \(D_f\cap R_g\) ว่าเป็นสับเซตของข้อใด</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ก่อนอื่นหา \(D_f\) โดยต้องการให้ทุก argument ของ log เป็นบวก จากนั้นหา \(R_g\) จากช่วง \(x\ge0\) แล้วเอา intersection
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หาโดเมนของ \(f\)</span>
+    <div class="step-body">
+      <table class="cond-table">
+        <tr><td class="kw-cell">ต้องการ</td><td>\(x+1>0\)</td><td style="padding:0 10px">และ</td><td>\(x+2>0\)</td><td style="padding:0 10px">และ</td><td>\(4-x^2>0\)</td></tr>
+        <tr><td class="kw-cell">นั้นคือ</td><td>\(x>-1\)</td><td></td><td>\(x>-2\)</td><td></td><td>\(-2&lt;x&lt;2\)</td></tr>
+      </table>
+      <span class="kw">ดังนั้น</span> \(D_f = (-1,2)\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หาเรนจ์ของ \(g\)</span>
+    <div class="step-body">
+      \(y = 2^x - 1\) เพิ่ม, \(x\ge0 \Rightarrow y\ge 2^0-1=0\) <span class="kw">ดังนั้น</span> \(R_g = [0,\infty)\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  หา intersection</span>
+    <div class="step-body">
+      \(D_f\cap R_g = (-1,2)\cap[0,\infty) = [0,2) \subseteq (0.5,2.5)\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2</span></div>
+</section>
+
+<!-- ═══════════════════ Q3 ═══════════════════ -->
+<section class="sol" id="q3">
+  <div class="q-header">
+    <span class="q-num">3</span>
+    <span class="q-badge">มี.ค. 2542</span>
+    <span class="q-type">สมบัติลอการิทึม</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟣 สมบัติ/ทฤษฎีบท</span>
+  </div>
+  <div class="problem">\(\log_{10}\!\sqrt{28}-\log_{1/10}\!\sqrt{325}+\log_{1/100}91\) มีค่าเท่าใด</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    แปลงฐาน log ทุกพจน์ให้เป็นฐาน 10 โดยใช้ \(\log_{a^k}x = \frac{1}{k}\log_a x\) แล้วรวมพจน์
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แปลงฐาน</span>
+    <div class="step-body">
+      <p class="indent">\(\log_{1/10}\!\sqrt{325} = -\tfrac{1}{2}\log_{10}325\), \(\quad\log_{1/100}91 = -\tfrac{1}{2}\log_{10}91\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  รวมพจน์</span>
+    <div class="step-body">
+      <p class="indent">\(\tfrac{1}{2}\log 28 + \tfrac{1}{2}\log 325 - \tfrac{1}{2}\log 91 = \tfrac{1}{2}\log\dfrac{28\times325}{91} = \tfrac{1}{2}\log 100 = 1\)</p>
+    </div>
+  </div>
+  <div class="technique">
+    <div class="technique-label">💎 เทคนิค</div>
+    รวม log ก่อนคำนวณ — พยายามให้ argument ภายใน log ออกมาเป็นกำลังของ 10 เสมอ
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1</span></div>
+</section>
+
+<!-- ═══════════════════ Q4 ═══════════════════ -->
+<section class="sol" id="q4">
+  <div class="q-header">
+    <span class="q-num">4</span>
+    <span class="q-badge">มี.ค. 2542</span>
+    <span class="q-type">ฟังก์ชันขั้นบันได / โดเมน-เรนจ์</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🔴 โจทย์ประยุกต์</span>
+  </div>
+  <div class="problem">กำหนด \(f(x)=0\) เมื่อ \(x&lt;0\), และ \(f(x)=1\) เมื่อ \(x\ge0\); \(g=\{(x,y)\mid y=f(1-e^x),\ y>0\}\) ข้อใดถูก</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    \(y = f(1-e^x) > 0\) หมายความว่า \(f\) ต้องให้ค่าเป็น 1 → ต้องการ argument ≥ 0 → หา \(x\) ที่ทำให้ \(1-e^x \ge 0\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หาเงื่อนไข \(y > 0\)</span>
+    <div class="step-body">
+      \(f(1-e^x) = 1\) เมื่อ \(1-e^x \ge 0 \Rightarrow e^x \le 1 \Rightarrow x \le 0\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  สรุป \(D_g, R_g\)</span>
+    <div class="step-body">
+      \(D_g = (-\infty,0]\), \(R_g = \{1\}\), \(R_g' = \mathbb{R}\setminus\{1\} \supseteq D_g\) → ข้อ 1 ถูก
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1</span></div>
+</section>
+
+<!-- ═══════════════════ Q5 ═══════════════════ -->
+<section class="sol" id="q5">
+  <div class="q-header">
+    <span class="q-num">5</span>
+    <span class="q-badge">มี.ค. 2542</span>
+    <span class="q-type">ระบบสมการ Expo + Log</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔵 สมการ Expo + 🟢 สมการล็อก</span>
+  </div>
+  <div class="problem">ระบบสมการ: \(9^{\log_3 x}+4^{\log_2 y}=16\) และ \(\log_3 x-\log_{1/3}y=2-\log_3 2\) จงหา \(|x^2-y^2|\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ใช้ \(a^{\log_a x} = x\) → \(9^{\log_3 x} = x^2\), \(4^{\log_2 y} = y^2\) แปลงสมการแรกเป็น \(x^2+y^2=16\) แล้วใช้ \(\log_{1/3}y=-\log_3 y\) แปลงสมการสอง
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แปลงสมการแรก</span>
+    <div class="step-body">
+      <p class="indent">\(9^{\log_3 x} = (3^2)^{\log_3 x} = (3^{\log_3 x})^2 = x^2\), \(\quad 4^{\log_2 y} = y^2\)</p>
+      <span class="kw">ดังนั้น</span> \(x^2 + y^2 = 16\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แปลงสมการสอง</span>
+    <div class="step-body">
+      \(\log_3 x + \log_3 y = 2 - \log_3 2 = \log_3\dfrac{9}{2}\) <span class="kw">ดังนั้น</span> \(xy = \dfrac{9}{2}\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  คำนวณ \(|x^2-y^2|\)</span>
+    <div class="step-body">
+      <p class="indent">\((x^2-y^2)^2 = (x^2+y^2)^2 - 4x^2y^2 = 256 - 4\!\left(\tfrac{9}{2}\right)^2 = 256-81 = 175\)</p>
+      <span class="kw">ดังนั้น</span> \(|x^2-y^2| = \sqrt{175} = 5\sqrt{7}\)
+    </div>
+  </div>
+  <div class="technique">
+    <div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>
+    จดจำ identity \((x^2-y^2)^2=(x^2+y^2)^2-4(xy)^2\) — ใช้บ่อยมากในข้อสอบที่ให้ \(x^2+y^2\) และ \(xy\) แต่ถามเกี่ยวกับ \(x^2-y^2\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">\(5\sqrt{7}\)</span></div>
+</section>
+
+<!-- ═══════════════════ Q6 ═══════════════════ -->
+<section class="sol" id="q6">
+  <div class="q-header">
+    <span class="q-num">6</span>
+    <span class="q-badge">ต.ค. 2542</span>
+    <span class="q-type">สมการเอกซ์โพเนนเชียล</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔵 สมการ Expo</span>
+  </div>
+  <div class="problem">กำหนด \(A=\{x\in\mathbb{R}\mid 5^{3^{2x}+3}=25^{5(3^{x-1/2})}\}\) จงหาผลบวกของสมาชิกทั้งหมดใน \(A\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    แปลงเป็นฐาน 5 เดียวกัน เทียบเลขชี้กำลัง แล้วตั้ง \(u=3^x\) เพื่อแก้สมการกำลังสอง
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  เทียบเลขชี้กำลังฐาน 5</span>
+    <div class="step-body">
+      \(25^{5\cdot3^{x-1/2}} = 5^{10\cdot3^{x-1/2}}\) → \(3^{2x}+3 = \dfrac{10}{\sqrt{3}}\cdot 3^x\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ตั้ง \(u = 3^x\)</span>
+    <div class="step-body">
+      <p class="indent">\(\sqrt{3}u^2 - 10u + 3\sqrt{3} = 0\), &nbsp; Disc \(= 100-36 = 64\)</p>
+      <p class="indent">\(u = \dfrac{10\pm8}{2\sqrt{3}}\) → \(u = 3^{3/2}\) หรือ \(u = 3^{-1/2}\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  หาผลบวก</span>
+    <div class="step-body">
+      \(x = \tfrac{3}{2}\) หรือ \(x = -\tfrac{1}{2}\) → ผลบวก \(= 1\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1</span></div>
+</section>
+
+<!-- ═══════════════════ Q7 ═══════════════════ -->
+<section class="sol" id="q7">
+  <div class="q-header">
+    <span class="q-num">7</span>
+    <span class="q-badge">ต.ค. 2542</span>
+    <span class="q-type">สมการลอการิทึม + การนับ</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 สมการล็อก</span>
+  </div>
+  <div class="problem">ให้ \(a,b\) เป็นคำตอบของ \(\log_3 x + 6\log_x 3 = 5\) โดยที่ \(a&lt;b\); กำหนด \(A=\{x\in\mathbb{Z}^+\mid x\in[a,b]\text{ และ }3\mid x\}\) จงหา \(n(A)\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ตั้ง \(t = \log_3 x\) จะได้ \(\log_x 3 = 1/t\) แล้วแก้สมการกำลังสองใน \(t\) — จำไว้ว่า \(a,b\) คือค่าของ \(x\) ไม่ใช่ \(t\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตั้ง \(t = \log_3 x\)</span>
+    <div class="step-body">
+      <p class="indent">\(t + \dfrac{6}{t} = 5 \Rightarrow t^2-5t+6=0 \Rightarrow t=2\) หรือ \(t=3\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(a, b\)</span>
+    <div class="step-body">
+      \(t=2 \Rightarrow x=9=a\); \(t=3 \Rightarrow x=27=b\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  นับจำนวนเต็มใน \([9,27]\) ที่หาร 3 ลงตัว</span>
+    <div class="step-body">
+      \(9,12,15,18,21,24,27\) → \(n(A) = 7\)
+    </div>
+  </div>
+  <div class="careless">
+    <div class="careless-label">⚠️ กับดักข้อนี้</div>
+    ถ้าเข้าใจผิดว่า \(a,b\) คือค่า \(t\) (ไม่ใช่ \(x\)) จะได้ช่วง \([2,3]\) แล้วตอบ 1 ซึ่งผิด — \(a,b\) คือค่า \(x = 3^t\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2 — 7</span></div>
+</section>
+
+<!-- ═══════════════════ Q8 ═══════════════════ -->
+<section class="sol" id="q8">
+  <div class="q-header">
+    <span class="q-num">8</span>
+    <span class="q-badge">มี.ค. 2543</span>
+    <span class="q-type">สมการ Expo — แยกฐานเฉพาะ</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 สมการ Expo</span>
+  </div>
+  <div class="problem">จงหา \(x\) ที่เป็นรากของ \(2^{3x-1}\cdot6^{x}\cdot25^{5x-1} = 75^{x}\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    แยกทุกเลขออกเป็นฐานเฉพาะ (2, 3, 5) แล้วเปรียบเทียบเลขชี้กำลังของแต่ละฐาน
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แยกฐานเฉพาะ</span>
+    <div class="step-body">
+      <p class="indent">LHS \(= 2^{4x-1}\cdot3^{x}\cdot5^{10x-2}\); &nbsp; RHS \(= 3^{x}\cdot5^{2x}\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  เทียบเลขชี้กำลัง</span>
+    <div class="step-body">
+      <table class="cond-table">
+        <tr><td class="kw-cell">ฐาน 2:</td><td>\(4x-1=0 \Rightarrow x=\tfrac{1}{4}\)</td></tr>
+        <tr><td class="kw-cell">ฐาน 5:</td><td>\(10x-2=2x \Rightarrow x=\tfrac{1}{4}\) ✓</td></tr>
+        <tr><td class="kw-cell">ฐาน 3:</td><td>เลขชี้กำลัง \(x=x\) ✓ ทุก \(x\)</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">0.25</span></div>
+</section>
+
+<!-- ═══════════════════ Q9 ═══════════════════ -->
+<section class="sol" id="q9">
+  <div class="q-header">
+    <span class="q-num">9</span>
+    <span class="q-badge">มี.ค. 2543</span>
+    <span class="q-type">สมบัติลอการิทึม — แยกตัวประกอบ</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟣 สมบัติ/ทฤษฎีบท</span>
+  </div>
+  <div class="problem">\(\log_3\!\dfrac{3+3\sqrt{\!\sqrt{27}}}{\sqrt{3}+5\sqrt{\!\sqrt{3}}+6}\) มีค่าเท่าใด</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ตั้ง \(u = 3^{1/4}\) แทนทุกพจน์ (เพราะ \(\sqrt{\sqrt{3}}=3^{1/4}\), \(\sqrt{\sqrt{27}}=3^{3/4}\)) แล้วแยกตัวประกอบเศษและส่วน
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตั้ง \(u = 3^{1/4}\) แทน</span>
+    <div class="step-body">
+      <p class="indent">ตัวเศษ \(= u^4+3u^3 = u^3(u+3)\)</p>
+      <p class="indent">ตัวส่วน \(= u^2+5u+6 = (u+2)(u+3)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ลดรูปและหา log</span>
+    <div class="step-body">
+      <p class="indent">\(\dfrac{u^3(u+3)}{(u+2)(u+3)} = \dfrac{u^3}{u+2} = \dfrac{3^{3/4}}{3^{1/4}+2}\)</p>
+      <p class="indent">\(\log_3\dfrac{3^{3/4}}{3^{1/4}+2} = \tfrac{3}{4} - \log_3(3^{1/4}+2)\) ← ตรงกับข้อ 1</p>
+    </div>
+  </div>
+  <div class="technique">
+    <div class="technique-label">💎 เทคนิค</div>
+    เมื่อเห็น \(\sqrt{\sqrt{x}}\) ให้ตั้งตัวแปรแทนทันที เช่น \(u = x^{1/4}\) ช่วยให้ตัวส่วนกลายเป็นพหุนามที่แยกตัวประกอบง่าย
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1</span></div>
+</section>
+
+<!-- ═══════════════════ Q10 ═══════════════════ -->
+<section class="sol" id="q10">
+  <div class="q-header">
+    <span class="q-num">10</span>
+    <span class="q-badge">ต.ค. 2543</span>
+    <span class="q-type">ถูก/ผิด — Expo &amp; Log</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 สมการ Expo + 🟢 สมการล็อก</span>
+  </div>
+  <div class="problem">กำหนด \(U=\{2n\mid n\in\mathbb{Z}^+\}\) (จำนวนคู่บวก)<br>ก. มี \(x\in U\) ที่สอดคล้อง \(2^{2x+3}-18(2^x)+4=0\)<br>ข. มี \(x\in U\) ที่สอดคล้อง \(\log_2(x+2)+\log_2(x-1)=2\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตรวจ ก. ตั้ง \(t=2^x\)</span>
+    <div class="step-body">
+      <p class="indent">\(8t^2-18t+4=0 \Rightarrow (4t-1)(t-2)=0 \Rightarrow t=\tfrac{1}{4}\) หรือ \(t=2\)</p>
+      <p class="indent">\(x=-2\) หรือ \(x=1\) — ทั้งคู่ไม่อยู่ใน \(U\) → <b>ก. ผิด</b></p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ตรวจ ข.</span>
+    <div class="step-body">
+      <p class="indent">\((x+2)(x-1)=4 \Rightarrow x^2+x-6=0 \Rightarrow x=2\) (ใช้ได้) หรือ \(x=-3\) (ตัดทิ้ง)</p>
+      <p class="indent">\(x=2\in U\) → <b>ข. ถูก</b></p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3 (ก ผิด ข ถูก)</span></div>
+</section>
+
+<!-- ═══════════════════ Q11 ═══════════════════ -->
+<section class="sol" id="q11">
+  <div class="q-header">
+    <span class="q-num">11</span>
+    <span class="q-badge">ต.ค. 2543</span>
+    <span class="q-type">สมการ Log — เซต</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟢 สมการล็อก</span>
+  </div>
+  <div class="problem">\(A=\{x\in\mathbb{R}^+\mid x^{\log_3 x^3}=9x\}\), \(B=\{x\in\mathbb{R}^+\mid \log_3 x^x = \frac{x}{3}\}\), \(C=\{ab\mid a\in A,\,b\in B\}\) — เซตใดเป็นสับเซตของ \(C\)?</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ตั้ง \(p = \log_3 x\) แก้แต่ละเซต แล้วคำนวณ \(C\) จากการคูณ \(a \times b\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(A\)</span>
+    <div class="step-body">
+      <p class="indent">ให้ \(p=\log_3 x\): \(3p^2-p-2=0 \Rightarrow p=-\tfrac{2}{3}\) หรือ \(p=1\)</p>
+      <p class="indent">\(A = \{3^{-2/3},\;3\}\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(B\)</span>
+    <div class="step-body">
+      <p class="indent">\(x\log_3 x = \tfrac{x}{3} \Rightarrow \log_3 x = \tfrac{1}{3} \Rightarrow B = \{3^{1/3}\}\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  หา \(C\)</span>
+    <div class="step-body">
+      \(C = \{3^{-2/3}\cdot3^{1/3},\;3\cdot3^{1/3}\} = \{3^{-1/3},\;3^{4/3}\}\) ← ตรงข้อ 2
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2</span></div>
+</section>
+
+<!-- ═══════════════════ Q12 ═══════════════════ -->
+<section class="sol" id="q12">
+  <div class="q-header">
+    <span class="q-num">12</span>
+    <span class="q-badge">ต.ค. 2543</span>
+    <span class="q-type">กราฟ Expo + เส้นตรง</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔴 กราฟฟังก์ชัน</span>
+  </div>
+  <div class="problem">เส้นโค้ง \(y=2^{2x}-2^{x+2}-45\) ตัดแกน \(x\) ที่จุด \(A\) และเส้นผ่านจุด \(A\) และ \(B(0,b)\) ขนานกับ \(y=(\log_3 2)x-4\) จงหา \(b\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หาจุด \(A\)</span>
+    <div class="step-body">
+      <p class="indent">ให้ \(t=2^x\): \(t^2-4t-45=0 \Rightarrow t=9\) → \(x=\log_2 9\), \(A=(\log_2 9,0)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ใช้ความชันหา \(b\)</span>
+    <div class="step-body">
+      <p class="indent">ความชัน \(= -\dfrac{b}{\log_2 9} = \log_3 2\)</p>
+      <p class="indent">\(b = -\log_2 9\cdot\log_3 2 = -2\log_2 3\cdot\dfrac{1}{\log_2 3} = -2\)</p>
+    </div>
+  </div>
+  <div class="technique">
+    <div class="technique-label">💎 เทคนิค</div>
+    \(\log_2 9\cdot\log_3 2 = 2\log_2 3\cdot\dfrac{\log_2 2}{\log_2 3} = 2\) — ใช้ chain rule ของ log เปลี่ยนฐาน
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">\(-2\)</span></div>
+</section>
+
+<!-- ═══════════════════ Q13 ═══════════════════ -->
+<section class="sol" id="q13">
+  <div class="q-header">
+    <span class="q-num">13</span>
+    <span class="q-badge">มี.ค. 2544</span>
+    <span class="q-type">อสมการลอการิทึมซ้อน</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟡 อสมการล็อก</span>
+  </div>
+  <div class="problem">ให้ \(A\) คือเซตคำตอบของ \(\log_4\!\log_3\!\log_2(x^2+2x)\le0\) จงหาจำนวนเต็มใน \(A\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ถอด log ซ้อนชั้นจาก<b>นอกสุดเข้าใน</b>ทีละชั้น — แต่ละชั้นต้องระวังทิศอสมการและเงื่อนไขโดเมน (argument &gt; 0)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ถอดทีละชั้น</span>
+    <div class="step-body">
+      <p class="indent">\(\log_4(\cdot)\le0 \Rightarrow 0 < \log_3\!\log_2(x^2+2x) \le 1\)</p>
+      <p class="indent">\(\Rightarrow 1 < \log_2(x^2+2x) \le 3 \Rightarrow 2 < x^2+2x \le 8\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แก้อสมการกำลังสอง</span>
+    <div class="step-body">
+      <p class="indent">\(A = [-4,\,-1-\sqrt{3}\,)\cup(-1+\sqrt{3},\,2]\)</p>
+      <p class="indent">(\(-1-\sqrt{3}\approx-2.73\), \(-1+\sqrt{3}\approx0.73\))</p>
+      <p class="indent">จำนวนเต็มในช่วง: \(-4,-3,1,2\) → <b>4 จำนวน</b></p>
+    </div>
+  </div>
+  <div class="careless">
+    <div class="careless-label">⚠️ Careless Point</div>
+    เมื่อถอดชั้น \(\log_4(\cdot)\le0\) ต้องบังคับ argument &gt; 0 ด้วย → ได้ \(0 &lt; \log_3\!\log_2(\cdot) \le 1\) ไม่ใช่ \(\le1\) อย่างเดียว
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4</span></div>
+</section>
+
+<!-- ═══════════════════ Q14 ═══════════════════ -->
+<section class="sol" id="q14">
+  <div class="q-header">
+    <span class="q-num">14</span>
+    <span class="q-badge">มี.ค. 2544</span>
+    <span class="q-type">อสมการเอกซ์โพเนนเชียล</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟠 อสมการ Expo</span>
+  </div>
+  <div class="problem">เซตคำตอบของ \(2^{x^2(x-3)} &lt; 8^{\,\frac{2}{3}-x}\) เป็นสับเซตของข้อใด</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    แปลงเป็นฐาน 2 เดียวกัน (ฐาน &gt; 1 → ทิศเดิม) แล้วแยกตัวประกอบพหุนามกำลัง 3 โดยลองแทน \(x=2\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แปลงฐาน</span>
+    <div class="step-body">
+      \(8^{2/3-x} = 2^{2-3x}\) → \(x^2(x-3) &lt; 2-3x\) → \(x^3-3x^2+3x-2 &lt; 0\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แยกตัวประกอบ</span>
+    <div class="step-body">
+      ลอง \(x=2\): เป็น 0 ✓ → \((x-2)(x^2-x+1) &lt; 0\)<br>
+      \(x^2-x+1 > 0\) เสมอ → \(x-2 &lt; 0\) → \(x &lt; 2\) (ข้อ 4)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4 — \((-\infty,2)\)</span></div>
+</section>
+
+<!-- ═══════════════════ Q15 ═══════════════════ -->
+<section class="sol" id="q15">
+  <div class="q-header">
+    <span class="q-num">15</span>
+    <span class="q-badge">ต.ค. 2544</span>
+    <span class="q-type">อสมการลอการิทึม</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟡 อสมการล็อก</span>
+  </div>
+  <div class="problem">ช่วงเปิด \((a,b)\) เป็นเซตคำตอบของ \(\log(3x+4) > \log(x-1)+1\) จงหา \(a+b\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  โดเมน + แก้</span>
+    <div class="step-body">
+      <p class="indent">โดเมน: \(x>1\)</p>
+      <p class="indent">\(\log(3x+4) > \log[10(x-1)] \Rightarrow 3x+4 > 10x-10 \Rightarrow x &lt; 2\)</p>
+      <p class="indent">\((a,b)=(1,2)\) → \(a+b=3\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3</span></div>
+</section>
+
+<!-- ═══════════════════ Q16 ═══════════════════ -->
+<section class="sol" id="q16">
+  <div class="q-header">
+    <span class="q-num">16</span>
+    <span class="q-badge">ต.ค. 2544</span>
+    <span class="q-type">อสมการ Log + ตรีโกณ</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟡 อสมการล็อก</span>
+  </div>
+  <div class="problem">สำหรับ \(0&lt;x&lt;\dfrac{\pi}{4}\) แก้ \(\log_{0.5}(\sin x)+\log_{0.5}(\sin 2x)&lt;\log_{0.5}(\cos x)+\log_{0.5}(\cos 2x)\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ฐาน \(0.5 &lt; 1\) → <b>กลับเครื่องหมายอสมการ</b> แล้วรวม log ทั้งสองข้าง ใช้สูตรผลคูณ-ผลต่างตรีโกณ
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  กลับทิศ (ฐาน &lt; 1)</span>
+    <div class="step-body">
+      <p class="indent">\(\sin x\cdot\sin 2x > \cos x\cdot\cos 2x \Rightarrow \cos x\cos 2x - \sin x\sin 2x &lt; 0\)</p>
+      <p class="indent">\(\Rightarrow \cos 3x &lt; 0\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หาช่วง</span>
+    <div class="step-body">
+      \(3x\in(0,\tfrac{3\pi}{4})\), \(\cos 3x &lt; 0 \Rightarrow 3x\in(\tfrac{\pi}{2},\tfrac{3\pi}{4})\) → \(x\in(\tfrac{\pi}{6},\tfrac{\pi}{4})\) (ข้อ 4)
+    </div>
+  </div>
+  <div class="careless">
+    <div class="careless-label">⚠️ จุดพลาดบ่อย</div>
+    ฐาน 0.5 &lt; 1 ต้องกลับเครื่องหมาย — ถ้าลืมกลับจะได้คำตอบผิดทันที
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4 — \(x\in(\tfrac{\pi}{6},\tfrac{\pi}{4})\)</span></div>
+</section>
+
+<!-- ═══════════════════ Q17 ═══════════════════ -->
+<section class="sol" id="q17">
+  <div class="q-header">
+    <span class="q-num">17</span>
+    <span class="q-badge">ต.ค. 2544</span>
+    <span class="q-type">สมการ Expo</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 สมการ Expo</span>
+  </div>
+  <div class="problem">เซตคำตอบของ \(4\cdot3^{2x}+9\cdot2^{2x}=13\cdot6^{x}\) เป็นสับเซตของข้อใด</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    หารทั้งสมการด้วย \(6^x\) แล้วตั้ง \(u=(\tfrac{3}{2})^x\) จะได้สมการกำลังสองใน \(u\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หาร \(6^x\) ตั้ง \(u=(\tfrac{3}{2})^x\)</span>
+    <div class="step-body">
+      \(4u + \dfrac{9}{u} = 13 \Rightarrow 4u^2-13u+9=0 \Rightarrow u=\tfrac{9}{4}\) หรือ \(u=1\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แปลงกลับ</span>
+    <div class="step-body">
+      \(x=2\) หรือ \(x=0\) → เซตคำตอบ \(\{0,2\}\subseteq[-2,2]\) (ข้อ 3)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3</span></div>
+</section>
+
+<!-- ═══════════════════ Q18 ═══════════════════ -->
+<section class="sol" id="q18">
+  <div class="q-header">
+    <span class="q-num">18</span>
+    <span class="q-badge">มี.ค. 2545</span>
+    <span class="q-type">สมการลอการิทึมซับซ้อน</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟢 สมการล็อก</span>
+  </div>
+  <div class="problem">\(\dfrac{\log 2x}{\log 3}+\log_3(x-12) = \log_{\sqrt{3}}\!\big[\sqrt{x}\,(\sqrt{x+5}-\sqrt{x-5})\big]\) จงหา \(x\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    แปลง LHS ให้เป็น \(\log_3\) เดียว, แปลง RHS โดยใช้ \(\log_{\sqrt{3}}=2\log_3\) แล้วคูณสังยุคเพื่อจัดรูป
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แปลง LHS</span>
+    <div class="step-body">
+      \(\log_3 2x + \log_3(x-12) = \log_3[2x(x-12)]\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แปลง RHS และแก้</span>
+    <div class="step-body">
+      RHS \(= \log_3[2x(x-\sqrt{x^2-25})]\)
+      <p class="indent">\(x-12 = x-\sqrt{x^2-25} \Rightarrow \sqrt{x^2-25}=12 \Rightarrow x=13\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">13</span></div>
+</section>
+
+<!-- ═══════════════════ Q19 ═══════════════════ -->
+<section class="sol" id="q19">
+  <div class="q-header">
+    <span class="q-num">19</span>
+    <span class="q-badge">มี.ค. 2545</span>
+    <span class="q-type">อสมการลอการิทึม</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟡 อสมการล็อก</span>
+  </div>
+  <div class="problem">กำหนด \(a>0\) เป็นคำตอบของ \(4^a - 9\cdot2^{a-1} + 2 = 0\); จงหาเซตคำตอบของ \(2\log_a(x+2)-\log_a(x-1)&lt;4\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(a\)</span>
+    <div class="step-body">
+      ตั้ง \(t=2^a\): \(2t^2-9t+4=0 \Rightarrow t=4\) (ใช้ \(a>0\)) → \(a=2\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แก้อสมการ \(\log_2\)</span>
+    <div class="step-body">
+      <p class="indent">โดเมน: \(x>1\)</p>
+      <p class="indent">\(\dfrac{(x+2)^2}{x-1} &lt; 16 \Rightarrow (x-2)(x-10)&lt;0 \Rightarrow 2&lt;x&lt;10 \subseteq (1,10)\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4</span></div>
+</section>
+
+<!-- ═══════════════════ Q20 ═══════════════════ -->
+<section class="sol" id="q20">
+  <div class="q-header">
+    <span class="q-num">20</span>
+    <span class="q-badge">ต.ค. 2545</span>
+    <span class="q-type">Log ซ้อนชั้น</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 สมการล็อก</span>
+  </div>
+  <div class="problem">\(\log_8(\log_4(\log_2 x)) = 2\) ถ้า \(x = 4^{(2^n)}\) จงหา \(n\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ถอดชั้นจากนอกสุดเข้าในทีละชั้น → \(\log_4\) → \(\log_2\) → หา \(x\) จากนั้นเทียบรูป \(4^{2^n}\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ถอดทีละชั้น</span>
+    <div class="step-body">
+      <p class="indent">\(\log_4(\log_2 x) = 8^2=64 \Rightarrow \log_2 x = 4^{64} = 2^{128} \Rightarrow x = 2^{2^{128}}\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  เทียบ \(4^{2^n}\)</span>
+    <div class="step-body">
+      \(4^{2^n} = 2^{2^{n+1}}\) → \(2^{n+1} = 2^{128}\) → \(n = 127\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">127</span></div>
+</section>
+
+<!-- ═══════════════════ Q21 ═══════════════════ -->
+<section class="sol" id="q21">
+  <div class="q-header">
+    <span class="q-num">21</span>
+    <span class="q-badge">ต.ค. 2545</span>
+    <span class="q-type">Log &amp; Expo — ผลต่างเซต</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟡 อสมการล็อก + 🟠 อสมการ Expo</span>
+  </div>
+  <div class="problem">\(A\): เซตคำตอบของ \(\log_{16}x+\log_4 x+\log_2 x &lt; 7\); \(B\): เซตคำตอบของ \(3^{4x-3}-26(3^{2x-3})\ge1\); จงหา \(A-B\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    หา \(A\) โดยแปลงทุก log เป็นฐาน 2 แล้วรวมสัมประสิทธิ์ — หา \(B\) โดยตั้ง \(u=3^{2x}\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(A\)</span>
+    <div class="step-body">
+      \((\tfrac{1}{4}+\tfrac{1}{2}+1)\log_2 x &lt; 7 \Rightarrow \tfrac{7}{4}\log_2 x &lt; 7 \Rightarrow A=(0,16)\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(B\)</span>
+    <div class="step-body">
+      ตั้ง \(u=3^{2x}\): \(u^2-26u-27\ge0 \Rightarrow u\ge27 \Rightarrow B=[\tfrac{3}{2},\infty)\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span>
+    <div class="step-body">
+      \(A-B = (0,16)-[\tfrac{3}{2},\infty) = (0,\tfrac{3}{2})\) (ข้อ 1)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1</span></div>
+</section>
+
+<!-- ═══════════════════ Q22 ═══════════════════ -->
+<section class="sol" id="q22">
+  <div class="q-header">
+    <span class="q-num">22</span>
+    <span class="q-badge">มี.ค. 2546</span>
+    <span class="q-type">อสมการผลคูณ — เครื่องหมาย</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟡 อสมการล็อก</span>
+  </div>
+  <div class="problem">เซตคำตอบของ \((4^x-2)\log(1-x^2) > 0\) เป็นสับเซตของข้อใด</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    โดเมน: \(-1&lt;x&lt;1\) → ในช่วงนี้ \(0&lt;1-x^2\le1\) → \(\log(1-x^2)\le0\) เสมอ
+    ดังนั้นต้องการ \(4^x-2&lt;0\) เพื่อให้ผลคูณเป็นบวก (ลบ×ลบ=บวก) และต้องระวัง \(x=0\) ที่ทำให้ log=0
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  วิเคราะห์เครื่องหมาย</span>
+    <div class="step-body">
+      <p class="indent">\(\log(1-x^2)\le0\) ใน \((-1,1)\); ต้องการ \(4^x-2&lt;0 \Rightarrow x&lt;\tfrac{1}{2}\)</p>
+      <p class="indent">ตัด \(x=0\) (log=0) → เซตคำตอบ \(=(-1,\tfrac{1}{2})\setminus\{0\}\subseteq(-2,\tfrac{1}{2})\)</p>
+    </div>
+  </div>
+  <div class="careless">
+    <div class="careless-label">⚠️ Careless Point</div>
+    อย่าลืม \(x=0\): \(\log(1-0)=0\) → ผลคูณ = 0 ไม่ตอบโจทย์ที่ต้องการ &gt; 0
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1</span></div>
+</section>
+
+<!-- ═══════════════════ Q23 ═══════════════════ -->
+<section class="sol" id="q23">
+  <div class="q-header">
+    <span class="q-num">23</span>
+    <span class="q-badge">ต.ค. 2546</span>
+    <span class="q-type">อสมการ Log ฐาน \(x\)</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟡 อสมการล็อก</span>
+  </div>
+  <div class="problem">\(S\) คือเซตคำตอบของ \(\log_x\!\dfrac{x+3}{x-1}\ge1\) และ \(T=\{\log_{\sqrt{3}}x\mid x\in S\}\) จงหาว่า \(T\subseteq\) ข้อใด</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ฐานเป็น \(x\) ต้องแยก 2 กรณี: \(x&gt;1\) (ทิศคงเดิม) และ \(0&lt;x&lt;1\) (กลับทิศ)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  กรณี \(x&gt;1\)</span>
+    <div class="step-body">
+      <p class="indent">\(\dfrac{x+3}{x-1}\ge x \Rightarrow x^2-2x-3\le0 \Rightarrow x\le3\)</p>
+      <p class="indent">รวมกับ \(x&gt;1\) → \(S=(1,3]\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(T\)</span>
+    <div class="step-body">
+      \(\log_{\sqrt{3}}x = 2\log_3 x\); \(x\in(1,3] \Rightarrow T=(0,2] \subseteq [0,2]\) (ข้อ 1)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1</span></div>
+</section>
+
+<!-- ═══════════════════ Q24 ═══════════════════ -->
+<section class="sol" id="q24">
+  <div class="q-header">
+    <span class="q-num">24</span>
+    <span class="q-badge">ต.ค. 2546</span>
+    <span class="q-type">Expo — แยกตัวประกอบ</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔵 สมการ Expo</span>
+  </div>
+  <div class="problem">\(a,b\) เป็นคำตอบของ \(6^x-3^{x+1}-2^{x+2}+12=0\); จงหาคำตอบของ \((ab)^{2x+1}=(ab+3)^x\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    จัดกลุ่มแยกตัวประกอบ: \(3^x(2^x-3)-4(2^x-3)=(3^x-4)(2^x-3)\) — เทคนิคนี้ใช้บ่อยมากในข้อสอบ Ent ยุค 2540s
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แยกตัวประกอบ</span>
+    <div class="step-body">
+      <p class="indent">\((3^x-4)(2^x-3)=0 \Rightarrow a=\log_3 4,\; b=\log_2 3\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  คำนวณ \(ab\)</span>
+    <div class="step-body">
+      \(ab = \log_3 4\cdot\log_2 3 = \log_2 4 = 2\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  แก้สมการใหม่</span>
+    <div class="step-body">
+      <p class="indent">\(2^{2x+1} = 5^x \Rightarrow \left(\tfrac{5}{4}\right)^x = 2 \Rightarrow x = \dfrac{1}{\log_2 5-2}\) (ข้อ 4)</p>
+    </div>
+  </div>
+  <div class="technique">
+    <div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>
+    \(\log_a b\cdot\log_b c = \log_a c\) (chain rule) — จำไว้ให้ขึ้นใจ ใช้คิด \(ab\) ได้ในไม่กี่วินาที
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4</span></div>
+</section>
+
+<!-- ═══════════════════ Q25 ═══════════════════ -->
+<section class="sol" id="q25">
+  <div class="q-header">
+    <span class="q-num">25</span>
+    <span class="q-badge">มี.ค. 2547</span>
+    <span class="q-type">สมการลอการิทึม</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 สมการล็อก</span>
+  </div>
+  <div class="problem">จงหาผลบวกคำตอบของ \(\log_2(4^{x-1}+2^{x-1}+6) = 2+\log_2(2^{x-1}+1)\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตั้ง \(t=2^{x-1}\)</span>
+    <div class="step-body">
+      <p class="indent">\(t^2+t+6 = 4(t+1) \Rightarrow t^2-3t+2=0 \Rightarrow t=1\) หรือ \(t=2\)</p>
+      <p class="indent">\(x=1\) หรือ \(x=2\) → ผลบวก \(=3\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3</span></div>
+</section>
+
+<!-- ═══════════════════ Q26 ═══════════════════ -->
+<section class="sol" id="q26">
+  <div class="q-header">
+    <span class="q-num">26</span>
+    <span class="q-badge">มี.ค. 2547</span>
+    <span class="q-type">อสมการ Expo ฐาน log</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟠 อสมการ Expo</span>
+  </div>
+  <div class="problem">\(S\) คือเซตคำตอบของ \(4\cdot2^{\log x^2}-9\cdot2^{\log\frac{x}{10}+1}+2\le0\); ให้ \(a,b\) เป็นค่าสูงสุดและต่ำสุดของ \(S\) จงหา \(\dfrac{a}{b}\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ตั้ง \(u=2^{\log x}\) จะได้ \(2^{\log x^2}=u^2\) และ \(2^{\log(x/10)+1}=u\) (เพราะ \(\log(x/10)+1=\log x\)) แล้วแก้กำลังสอง
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตั้ง \(u=2^{\log x}\)</span>
+    <div class="step-body">
+      \(4u^2-9u+2\le0 \Rightarrow \tfrac{1}{4}\le u \le 2 \Rightarrow -2\le\log x\le1\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(a/b\)</span>
+    <div class="step-body">
+      \(b=10^{-2}=0.01\), \(a=10\) → \(\dfrac{a}{b} = 1000\) (ข้อ 4)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4 — 1000</span></div>
+</section>
+
+<!-- ═══════════════════ Q27 ═══════════════════ -->
+<section class="sol" id="q27">
+  <div class="q-header">
+    <span class="q-num">27</span>
+    <span class="q-badge">ต.ค. 2547</span>
+    <span class="q-type">สมการลอการิทึมซับซ้อน</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟢 สมการล็อก</span>
+  </div>
+  <div class="problem">จงหาผลบวกคำตอบของ \(1+(2\log_x 3)(\log_9(9-x)) = \log_x 14\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ลดรูปด้วยการเปลี่ยนฐาน</span>
+    <div class="step-body">
+      <p class="indent">\(\log_9(9-x) = \dfrac{\log_x(9-x)}{2\log_x 3}\) → พจน์กลาง \(= \log_x(9-x)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แก้สมการ</span>
+    <div class="step-body">
+      <p class="indent">\(\log_x[x(9-x)] = \log_x 14 \Rightarrow x(9-x)=14 \Rightarrow x=2\) หรือ \(x=7\)</p>
+      <p class="indent">ตรวจโดเมน: ทั้งคู่ใช้ได้ → ผลบวก \(=9\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">9</span></div>
+</section>
+
+<!-- ═══════════════════ Q28 ═══════════════════ -->
+<section class="sol" id="q28">
+  <div class="q-header">
+    <span class="q-num">28</span>
+    <span class="q-badge">ต.ค. 2547</span>
+    <span class="q-type">อสมการ Expo — ค่าสัมบูรณ์</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟠 อสมการ Expo</span>
+  </div>
+  <div class="problem">\(S\) คือเซตคำตอบของ \(5^{2x}+11\le|12(5^x)-9|\); ให้ \(a,b\) เป็นค่าสูงสุดและต่ำสุดของ \(S\) จงหา \(a+b\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ตั้ง \(t=5^x&gt;0\) แล้วแยกกรณีค่าสัมบูรณ์: \(t\ge\tfrac{3}{4}\) และ \(t&lt;\tfrac{3}{4}\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แยกกรณี \(|12t-9|\)</span>
+    <div class="step-body">
+      <p class="indent">กรณี \(t\ge\tfrac{3}{4}\): \(t^2-12t+20\le0 \Rightarrow 2\le t\le10\) ✓</p>
+      <p class="indent">กรณี \(t&lt;\tfrac{3}{4}\): ไม่มีคำตอบ (ตรวจสอบแล้ว)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(a+b\)</span>
+    <div class="step-body">
+      \(2\le5^x\le10 \Rightarrow a=\log_5 10, b=\log_5 2\) → \(a+b=\log_5 20\) (ข้อ 2)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2 — \(\log_5 20\)</span></div>
+</section>
+
+<!-- ═══════════════════ Q29 ═══════════════════ -->
+<section class="sol" id="q29">
+  <div class="q-header">
+    <span class="q-num">29</span>
+    <span class="q-badge">มี.ค. 2548</span>
+    <span class="q-type">สมการ Expo — แยกตัวประกอบ</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 สมการ Expo</span>
+  </div>
+  <div class="problem">จงหาผลบวกคำตอบของ \(12^x-2(3^x)-9(4^x)+18=0\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  จัดกลุ่ม</span>
+    <div class="step-body">
+      <p class="indent">\(3^x(4^x-2)-9(4^x-2) = (4^x-2)(3^x-9) = 0\)</p>
+      <p class="indent">\(x=\tfrac{1}{2}\) หรือ \(x=2\) → ผลบวก \(=2.5\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2.5</span></div>
+</section>
+
+<!-- ═══════════════════ Q30 ═══════════════════ -->
+<section class="sol" id="q30">
+  <div class="q-header">
+    <span class="q-num">30</span>
+    <span class="q-badge">มี.ค. 2548</span>
+    <span class="q-type">อสมการ Log ซ้อน</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟡 อสมการล็อก</span>
+  </div>
+  <div class="problem">\(S\) คือเซตคำตอบของ \(\log(\log x)+\log(9-\log x^2)\ge1\); ให้ \(a,b\) เป็นค่าสูงสุดและต่ำสุดของ \(S\) จงหา \(ab\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตั้ง \(u=\log x\)</span>
+    <div class="step-body">
+      <p class="indent">\(u(9-2u)\ge10 \Rightarrow 2u^2-9u+10\le0 \Rightarrow 2\le u\le\tfrac{5}{2}\)</p>
+      <p class="indent">\(\Rightarrow x\in[10^2, 10^{5/2}]\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  คำนวณ \(ab\)</span>
+    <div class="step-body">
+      \(ab = 10^2\cdot10^{5/2} = 10^{9/2}\) (ข้อ 2)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2 — \(10^{9/2}\)</span></div>
+</section>
+
+<!-- ═══════════════════ Q31 ═══════════════════ -->
+<section class="sol" id="q31">
+  <div class="q-header">
+    <span class="q-num">31</span>
+    <span class="q-badge">A-NET ก.พ. 2549</span>
+    <span class="q-type">เปรียบเทียบค่า Log</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟣 สมบัติ/ทฤษฎีบท</span>
+  </div>
+  <div class="problem">ข้อใดเรียงลำดับ \(\log_7 3,\;\log_5 3,\;\log_7 10\) ได้ถูกต้อง</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ใช้ \(\log_a b = \log b/\log a\) ประมาณค่าตัวเลข หรือเปรียบเทียบโดยใช้ argument เดียวกัน: \(\log_7 3 &lt; \log_5 3\) (ฐานใหญ่กว่า → ค่าน้อยกว่า)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  เปรียบเทียบ</span>
+    <div class="step-body">
+      \(\log_7 3\approx0.565\), \(\log_5 3\approx0.683\), \(\log_7 10\approx1.183\)<br>
+      <span class="kw">ดังนั้น</span> \(\log_7 3 &lt; \log_5 3 &lt; \log_7 10\) (ข้อ 1)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1</span></div>
+</section>
+
+<!-- ═══════════════════ Q32 ═══════════════════ -->
+<section class="sol" id="q32">
+  <div class="q-header">
+    <span class="q-num">32</span>
+    <span class="q-badge">A-NET ก.พ. 2549</span>
+    <span class="q-type">อสมการ Log ซ้อน — นับจำนวนเต็ม</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟡 อสมการล็อก</span>
+  </div>
+  <div class="problem">จำนวนเต็ม \(x\) ที่สอดคล้อง \(\log_{1/2}[\log_3(x+1)] > -1\) มีกี่จำนวน</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ถอด (ฐาน \(\tfrac{1}{2}&lt;1\) สลับทิศ)</span>
+    <div class="step-body">
+      <p class="indent">\(0&lt;\log_3(x+1)&lt;2 \Rightarrow 0&lt;x&lt;8\)</p>
+      <p class="indent">จำนวนเต็ม: \(1,2,3,4,5,6,7\) → <b>7 จำนวน</b></p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2 — 7</span></div>
+</section>
+
+<!-- ═══════════════════ Q33 ═══════════════════ -->
+<section class="sol" id="q33">
+  <div class="q-header">
+    <span class="q-num">33</span>
+    <span class="q-badge">A-NET มี.ค. 2550</span>
+    <span class="q-type">ระบบสมการลอการิทึม</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟢 สมการล็อก</span>
+  </div>
+  <div class="problem">\(A=\!\left\{z\in\mathbb{R}\;\middle|\;z=\dfrac{x}{y},\;6\log(x-2y)=\log x^3+\log y^3\right\}\) จงหาผลบวกสมาชิกใน \(A\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  จัดรูปสมการ</span>
+    <div class="step-body">
+      <p class="indent">\((x-2y)^2 = xy \Rightarrow x^2-5xy+4y^2=0 \Rightarrow z^2-5z+4=0\) → \(z=1\) หรือ \(z=4\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ตรวจโดเมน</span>
+    <div class="step-body">
+      <p class="indent">\(z=1\): \(x-2y=-x&lt;0\) ❌ | \(z=4\): \(x-2y=2y&gt;0\) ✓</p>
+      <p class="indent">\(A=\{4\}\) → ผลบวก \(=4\)</p>
+    </div>
+  </div>
+  <div class="careless">
+    <div class="careless-label">⚠️ จุดพลาดบ่อย</div>
+    ต้องตรวจว่า \(x-2y&gt;0\) ด้วย (argument ของ log) — \(z=1\) ทำให้ \(x=y\) แล้ว \(x-2y&lt;0\) → ตัดออก
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2 — 4</span></div>
+</section>
+
+<!-- ═══════════════════ Q34 ═══════════════════ -->
+<section class="sol" id="q34">
+  <div class="q-header">
+    <span class="q-num">34</span>
+    <span class="q-badge">A-NET มี.ค. 2550</span>
+    <span class="q-type">สมการ Expo — ใช้ค่า log ที่กำหนด</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 สมการ Expo</span>
+  </div>
+  <div class="problem">กำหนด \(\log_2 3 = 1.59\) จงหา \(x\) จากสมการ \(2^{2x+1}\cdot3^{2x+2} = 12^{2x}\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แยกฐานและเทียบ</span>
+    <div class="step-body">
+      <p class="indent">\(2^{1-2x}\cdot3^2=1 \Rightarrow (1-2x)\log 2 = -2\log 3 \Rightarrow 1-2x = -2\log_2 3\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แทนค่า</span>
+    <div class="step-body">
+      \(1-2x = -3.18 \Rightarrow x = 2.09\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2.09</span></div>
+</section>
+
+<!-- ═══════════════════ Q35 ═══════════════════ -->
+<section class="sol" id="q35">
+  <div class="q-header">
+    <span class="q-num">35</span>
+    <span class="q-badge">A-NET มี.ค. 2551</span>
+    <span class="q-type">สมการ Log — กำลังเศษส่วน</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟢 สมการล็อก</span>
+  </div>
+  <div class="problem">จงหาผลบวกรากของ \(\log_3\!\left(3^{1/x}+27\right) = \log_3 4+1+\dfrac{1}{2x}\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    แปลง RHS เป็น \(\log_3[\cdots]\) เดียว แล้วตั้ง \(u=3^{1/(2x)}\) เพื่อเปลี่ยนเป็นสมการกำลังสอง
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แปลง RHS</span>
+    <div class="step-body">
+      RHS \(= \log_3\left[12\cdot3^{1/(2x)}\right]\) → ตั้ง \(u=3^{1/(2x)}\): \(u^2+27=12u\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แก้สมการ</span>
+    <div class="step-body">
+      <p class="indent">\((u-3)(u-9)=0 \Rightarrow u=3\to x=\tfrac{1}{2}\), หรือ \(u=9\to x=\tfrac{1}{4}\)</p>
+      <p class="indent">ผลบวก \(= \tfrac{1}{2}+\tfrac{1}{4} = \tfrac{3}{4}\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3 — \(\tfrac{3}{4}\)</span></div>
+</section>
+
+<!-- ═══════════════════ Q36 ═══════════════════ -->
+<section class="sol" id="q36">
+  <div class="q-header">
+    <span class="q-num">36</span>
+    <span class="q-badge">A-NET มี.ค. 2551</span>
+    <span class="q-type">อสมการ Log — เปลี่ยนฐาน</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟡 อสมการล็อก</span>
+  </div>
+  <div class="problem">\(A=(a,b)\) คือเซตคำตอบของ \(\log_2(2x-1)-\log_4\!\left(x^2+\tfrac{1}{2}\right)&lt;\tfrac{1}{2}\) จงหา \(a+b\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แปลง \(\log_4\to\log_2\)</span>
+    <div class="step-body">
+      <p class="indent">\(\log_2\dfrac{(2x-1)^2}{x^2+\frac{1}{2}} &lt; 1 \Rightarrow (2x-1)^2 &lt; 2x^2+1 \Rightarrow 0&lt;x&lt;2\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  รวมกับโดเมน</span>
+    <div class="step-body">
+      โดเมน: \(x>\tfrac{1}{2}\) → \((a,b)=(\tfrac{1}{2},2)\) → \(a+b=2.5\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2.5</span></div>
+</section>
+
+<!-- ═══════════════════ Q37 ═══════════════════ -->
+<section class="sol" id="q37">
+  <div class="q-header">
+    <span class="q-num">37</span>
+    <span class="q-badge">A-NET 2552</span>
+    <span class="q-type">ถูก/ผิด — สมบัติ Log &amp; กราฟ</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔴 กราฟฟังก์ชัน + 🟣 สมบัติ</span>
+  </div>
+  <div class="problem">ก. ถ้า \((\log a)^3=x-1\) และ \((\log b)^3=x+1\) แล้ว \(\log(a+b)=\sqrt[3]{x^2-1}\)<br>ข. กราฟ \(y=x^2\) และ \(y=2^x\) ตัดกัน 2 จุด</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตรวจ ก.</span>
+    <div class="step-body">
+      \(\sqrt[3]{x^2-1} = (\log a)(\log b) \ne \log(a+b)\) ทั่วไป → <b>ก. ผิด</b>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ตรวจ ข.</span>
+    <div class="step-body">
+      \(x^2=2^x\) มีคำตอบ 3 ค่า: \(x=2, x=4, x\approx-0.77\) → กราฟตัดกัน <b>3 จุด ไม่ใช่ 2</b> → <b>ข. ผิด</b>
+    </div>
+  </div>
+  <div class="careless">
+    <div class="careless-label">⚠️ จุดพลาดบ่อย</div>
+    มองข้ามจุดตัดแถวจำนวนลบ \(x\approx-0.77\) — ควรวาดกราฟคร่าวๆ เสมอ
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4 (ก ผิด ข ผิด)</span></div>
+</section>
+
+<!-- ═══════════════════ Q38 ═══════════════════ -->
+<section class="sol" id="q38">
+  <div class="q-header">
+    <span class="q-num">38</span>
+    <span class="q-badge">A-NET 2552</span>
+    <span class="q-type">สมการ Expo — จำนวนธรรมชาติ</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 สมการ Expo</span>
+  </div>
+  <div class="problem">\(A=\{n\in\mathbb{N}\mid n^{n^2+9}=n^{n^3-9}\}\), \(B=\{n\in\mathbb{N}\mid\log n=\log(n+1)\}\) จงหาผลบวกสมาชิกใน \(A\cup B\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    สมการ \(n^p=n^q\) มีคำตอบพิเศษ \(n=1\) (เพราะ \(1^k=1\) เสมอ) นอกจาก \(p=q\) — อย่าลืมตรวจกรณีนี้ด้วย
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(A\)</span>
+    <div class="step-body">
+      <p class="indent">\(n=1\): \(1^k=1\) ✓; กรณี \(n\ge2\): \(n^2+9=n^3-9 \Rightarrow n=3\) ✓</p>
+      <p class="indent">\(A=\{1,3\}\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(B\)</span>
+    <div class="step-body">
+      \(\log n=\log(n+1)\) เป็นไปไม่ได้ → \(B=\varnothing\) → ผลบวก \(=1+3=4\)
+    </div>
+  </div>
+  <div class="careless">
+    <div class="careless-label">⚠️ กับดักข้อนี้ (Wrong Concept)</div>
+    ถ้าตัดฐานทันทีจะได้ \(n^2+9=n^3-9\) แล้วหา \(n=3\) เท่านั้น — แต่ลืม \(n=1\) เป็นคำตอบพิเศษ!
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4</span></div>
+</section>
+
+<!-- ═══════════════════ Q39 ═══════════════════ -->
+<section class="sol" id="q39">
+  <div class="q-header">
+    <span class="q-num">39</span>
+    <span class="q-badge">A-NET 2552</span>
+    <span class="q-type">อัตลักษณ์ Log — พีทาโกรัส</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟣 สมบัติ/ทฤษฎีบท</span>
+  </div>
+  <div class="problem">กำหนด \(a>1,\ b,c>0,\ a^2+b^2=c^2\) และ \(\log_{c+b}a+\log_{c-b}a = x\cdot(\log_{c+b}a)(\log_{c-b}a)\) จงหา \(x\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    หารทั้งสองข้างด้วยผลคูณ แล้วใช้ \(\frac{1}{\log_p a}=\log_a p\) เพื่อเปลี่ยนกลับ จากนั้นใช้ \(c^2-b^2=a^2\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หาร และแปลงด้วย \(\frac{1}{\log_p a}=\log_a p\)</span>
+    <div class="step-body">
+      <p class="indent">\(x = \log_a(c-b)+\log_a(c+b) = \log_a(c^2-b^2)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ใช้ \(a^2+b^2=c^2\)</span>
+    <div class="step-body">
+      \(c^2-b^2=a^2 \Rightarrow x=\log_a a^2 = 2\)
+    </div>
+  </div>
+  <div class="technique">
+    <div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>
+    ข้อที่ดู "ซับซ้อน" มักซ่อนขั้นตอนสั้นมาก — มองหาการ "หารสมการ" ออกจากทั้งสองข้างก่อนเสมอ
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2</span></div>
+</section>
+
+<footer>
+  เฉลยโดย MathsBankTutor · Expo &amp; Log (Ent/A-NET 2541–2552) · 39 ข้อ ·
+  <a class="home" href="index.html">กลับหน้า Dashboard</a>
+</footer>
+</div>
+
+<script>
+const chips = document.getElementById('chips');
+document.querySelectorAll('.sol').forEach((s,i) => {
+  const n = i+1;
+  const a = document.createElement('a');
+  a.href = '#q'+n; a.textContent = n;
+  chips.appendChild(a);
+});
+</script>
+</body>
+</html>
