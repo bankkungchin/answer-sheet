@@ -11,8 +11,7 @@ const YT_CHANNEL = 'mathsbanktutor';
 // ── เพลย์ลิสต์เฉลยรายบท (เพิ่มเมื่อมีบทใหม่) ──
 //   key = ชื่อบท (ตรงกับใน questionbank.js), value = playlist id
 const PLAYLISTS = {
-   "เซต": "PLc4ncgz2CJ7NaaLBirripaazcj04QZTdG",
-  "Expo Logarithm": "PLc4ncgz2CJ7OjRvsaXGHaJONCnH33zMK5"
+  "เซต": "PLc4ncgz2CJ7NaaLBirripaazcj04QZTdG",
+  "Expo Logarithm": "PLc4ncgz2CJ7OjRvsaXGHaJONCnH33zMK5",
   "จำนวนจริง": "PLc4ncgz2CJ7NpDEo9YhNBzxn4nQPIKcbl"
-     
 };
