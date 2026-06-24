@@ -93,7 +93,13 @@ async function verifyPin(){
     const rows=data.values||[];
     const row=rows.find(r=>r[0]===currentStudent);
     const correctPin=row&&row[4]?String(row[4]).trim():null;
-    if(!correctPin||(pinBuffer===correctPin)){
+    // ถ้าไม่มี PIN ตั้งไว้ หรือ PIN ไม่ตรง → reject
+    if(!correctPin){
+      document.getElementById('p2status').className='status err';
+      document.getElementById('p2status').textContent='ยังไม่ได้ตั้ง PIN — กรุณาติดต่อครู';
+      pinBuffer=''; updatePinDots(); return;
+    }
+    if(pinBuffer===correctPin){
       document.getElementById('p2status').textContent='';
       const short=currentStudent.replace(/\s*\(.*\)/,'');
       document.getElementById('modeAvatar').textContent=short.substring(0,3);

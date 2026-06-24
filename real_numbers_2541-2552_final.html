@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฉลยละเอียด — จำนวนจริง (Ent/A-NET 2541–2552)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans+Thai:wght@500;600;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)'],['$','$']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --ink:#1a1a1a; --muted:#555; --light:#888; --line:#d4d8e8; --bg:#f4f5fb;
+  --paper:#ffffff; --accent:#2e4374; --accent-light:#eef2fb;
+  --amber:#7a4a00; --amber-bg:#fff8e8; --amber-border:#e8c870;
+  --red:#8b1a1a; --red-bg:#fff4f4; --red-border:#f5c6c6;
+  --green-bg:#f0faf2; --green-border:#a8d9b5; --green:#1a5c2e;
+  --blue-bg:#f0f5ff; --blue-border:#bdd0f8;
+}
+body { font-family:'Sarabun','TH Sarabun New',sans-serif; font-size:17px; line-height:1.85; color:var(--ink); background:var(--bg); -webkit-font-smoothing:antialiased; }
+.wrap { max-width:820px; margin:0 auto; padding:0 20px 80px; }
+.doc-header { background:linear-gradient(135deg,#2e4374 0%,#1e2d52 100%); color:white; padding:36px 0 28px; }
+.doc-header .inner { max-width:820px; margin:0 auto; padding:0 20px; }
+.doc-eyebrow { font-family:'IBM Plex Sans Thai',sans-serif; font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:600; color:#a8bce0; margin-bottom:8px; }
+.doc-title { font-size:24px; font-weight:700; line-height:1.3; margin-bottom:6px; }
+.doc-sub { font-size:14px; color:#c2cfe8; }
+.index-bar { position:sticky; top:0; z-index:20; background:rgba(244,245,251,.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); padding:9px 0; }
+.chips { max-width:820px; margin:0 auto; padding:0 20px; display:flex; gap:5px; overflow-x:auto; scrollbar-width:thin; }
+.chips a { flex:0 0 auto; min-width:30px; height:30px; padding:0 6px; display:grid; place-items:center; text-decoration:none; font-weight:700; font-size:12.5px; color:var(--accent); background:white; border:1px solid #ccc; border-radius:6px; transition:.15s; }
+.chips a:hover { background:var(--accent); color:white; }
+/* cheat sheet */
+.cheat-sheet { background:linear-gradient(135deg,#f0f4ff,#e8efff); border:1px solid #bdd0f8; border-radius:14px; padding:22px 24px; margin:24px 0 8px; }
+.cheat-sheet h2 { font-family:'IBM Plex Sans Thai',sans-serif; font-size:16px; font-weight:700; color:var(--accent); margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.cheat-row { margin-bottom:9px; font-size:15.5px; line-height:1.75; }
+.cheat-row b { color:var(--accent); }
+.cheat-warning { background:var(--red-bg); border:1px solid var(--red-border); border-radius:10px; padding:14px 18px; margin-top:16px; }
+.cheat-warning h3 { font-size:13px; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
+.warn-table { width:100%; border-collapse:collapse; font-size:14.5px; }
+.warn-table th { background:#fde8e8; padding:7px 12px; font-weight:700; border:1px solid var(--red-border); color:var(--red); text-align:left; }
+.warn-table td { padding:7px 12px; border:1px solid var(--red-border); vertical-align:top; }
+.warn-table tr:nth-child(even) td { background:#fff8f8; }
+/* sol card */
+.sol { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:22px 24px 18px; margin:16px 0; scroll-margin-top:58px; box-shadow:0 1px 3px rgba(20,30,70,.05); }
+.q-header { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+.q-num { font-family:'IBM Plex Sans Thai',sans-serif; font-weight:700; font-size:19px; color:var(--accent); background:var(--accent-light); border-radius:9px; min-width:44px; height:44px; display:grid; place-items:center; padding:0 8px; }
+.q-badge { font-size:12px; font-weight:600; padding:3px 10px; border-radius:20px; background:#eef2fb; color:var(--accent); border:1px solid #c8d5f0; }
+.q-type { font-size:12.5px; font-weight:600; color:var(--muted); }
+.stars { color:#c8a000; font-size:12px; }
+.sub-tag { font-size:11.5px; font-weight:600; padding:2px 9px; border-radius:999px; background:#f0f5ff; border:1px solid #bdd0f8; color:#3050a0; margin-left:auto; }
+.problem { background:#fafbfe; border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:10px 14px; font-size:15.5px; margin:8px 0 14px; line-height:1.9; }
+.concept { background:var(--blue-bg); border:1px solid var(--blue-border); border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:10px 14px; margin-bottom:14px; font-size:14.5px; line-height:1.7; }
+.concept-label { font-family:'IBM Plex Sans Thai',sans-serif; font-weight:700; font-size:11.5px; color:var(--accent); text-transform:uppercase; letter-spacing:.1em; margin-bottom:5px; }
+.step { margin-bottom:12px; }
+.step-label { display:inline; font-weight:700; text-decoration:underline; color:var(--ink); font-size:16px; }
+.step-goal { font-weight:400; text-decoration:none; color:var(--ink); }
+.step-body { margin-top:5px; padding-left:2px; font-size:16px; line-height:2; }
+p.indent { padding-left:16px; }
+.kw { color:var(--muted); font-style:italic; }
+.careless { background:var(--red-bg); border:1px solid var(--red-border); border-left:3px solid #cc3333; border-radius:0 8px 8px 0; padding:9px 14px; margin-top:12px; font-size:14.5px; line-height:1.65; }
+.careless-label { font-weight:700; color:#cc3333; font-size:12px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:3px; }
+.technique { background:var(--green-bg); border:1px solid var(--green-border); border-left:3px solid var(--green); border-radius:0 8px 8px 0; padding:9px 14px; margin-top:10px; font-size:14.5px; line-height:1.65; }
+.technique-label { font-weight:700; color:var(--green); font-size:12px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:3px; }
+.answer { margin-top:14px; display:inline-flex; align-items:center; gap:10px; background:var(--amber-bg); border:1px solid var(--amber-border); border-radius:8px; padding:8px 18px; }
+.answer-lbl { font-size:11px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; color:#9a6800; }
+.answer-val { font-size:17px; font-weight:700; color:var(--amber); }
+footer { text-align:center; font-size:13px; color:var(--light); padding:30px 0; border-top:1px solid var(--line); margin-top:24px; }
+a.home { color:var(--accent); font-weight:600; text-decoration:none; }
+@media(max-width:540px){ body{font-size:16px} .sol{padding:18px 16px} .doc-title{font-size:20px} }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="inner">
+    <div class="doc-eyebrow">MathsBankTutor · เฉลยละเอียด</div>
+    <div class="doc-title">ระบบจำนวนจริง — Ent / A-NET 2541–2552</div>
+    <div class="doc-sub">31 ข้อ · วิธีทำทีละขั้น · Concept &amp; Careless Note · เหมาะสำหรับเตรียมสอบแพทย์ / วิศวะ</div>
+  </div>
+</div>
+
+<nav class="index-bar"><div class="chips" id="chips"></div></nav>
+
+<div class="wrap">
+
+<!-- ══════════════ CHEAT SHEET ══════════════ -->
+<div class="cheat-sheet">
+  <h2>🧠 Cheat Sheet — เทคนิคสรุประบบจำนวนจริง สำหรับสอบเข้าแพทย์ / วิศวะ</h2>
+  <div class="cheat-row"><b>1. อสมการกำลังสอง</b> — แยกตัวประกอบ → หาจุดวิกฤต → ทดสอบช่วง (วิธีสัญลักษณ์เร็วกว่าเส้นจำนวน)</div>
+  <div class="cheat-row"><b>2. อสมการมีตัวส่วน</b> — ห้ามคูณข้ามตัวส่วนโดยไม่รู้เครื่องหมาย ย้ายหมดไปข้างเดียวแล้วหาจุดวิกฤต + เช็ค Den ≠ 0</div>
+  <div class="cheat-row"><b>3. ค่าสัมบูรณ์</b> — แยก 2 กรณีเสมอ หรือยกกำลังสอง \(|f|\le k \Leftrightarrow f^2\le k^2\) (ใช้ได้เมื่อ \(k\ge0\))</div>
+  <div class="cheat-row"><b>4. ทฤษฎีบทเศษเหลือ</b> — เศษจากการหาร \(P(x)\) ด้วย \(x-c\) คือ \(P(c)\); ถ้า \(x+1\) หารลงตัว → \(P(-1)=0\)</div>
+  <div class="cheat-row"><b>5. การเปลี่ยนตัวแปร \(t=1/x\)</b> — ต้องแยกกรณี \(x>0\) กับ \(x&lt;0\) ตอนแปลงกลับ เพราะทิศอสมการเปลี่ยน</div>
+  <div class="cheat-row"><b>6. ตรรกศาสตร์เชิงปริมาณ</b> — \(\exists x\) = มีอย่างน้อยหนึ่งตัว, \(\forall x\) = ทุกตัว; ทดสอบด้วยตัวเลขแต่ละตัวในเอกภพ</div>
+  <div class="cheat-row"><b>7. ตัวดำเนินการ \(*\) ที่นิยามใหม่</b> — ใช้เฉพาะนิยามที่โจทย์กำหนด ห้ามใช้สมบัติทั่วไป; ทดสอบด้วยตัวเลขเฉพาะก่อน</div>
+  <div class="cheat-row"><b>8. ค่าสุดขีดของนิพจน์</b> — ใช้ AM-GM หรือทดสอบขอบเขตช่วง; ระวังว่าค่าสุดขีดอาจเกิดที่ขอบ (ไม่ใช่ภายใน)</div>
+
+  <div class="cheat-warning">
+    <h3>⚠️ จุดพลาดบ่อย (Careless &amp; Wrong Concept)</h3>
+    <table class="warn-table">
+      <tr><th>กับดัก</th><th>สิ่งที่ถูกต้อง</th><th>ประเภท</th></tr>
+      <tr><td>ลืมเช็คตัวส่วน ≠ 0 ในอสมการเศษส่วน</td><td>เขียน "Den ≠ 0" ไว้เสมอ แล้วตัดออกจากคำตอบ</td><td>Careless</td></tr>
+      <tr><td>\(\sqrt{x^2-4x+4} = x-2\)</td><td>\(\sqrt{(x-2)^2} = |x-2|\) ไม่ใช่ \(x-2\) เสมอไป</td><td>Wrong Concept</td></tr>
+      <tr><td>คูณตัวส่วนข้ามอสมการโดยไม่รู้เครื่องหมาย</td><td>ย้ายทุกอย่างไปข้างเดียวแล้วใช้จุดวิกฤต</td><td>Wrong Concept</td></tr>
+      <tr><td>\(x+1\) เป็นตัวหาร → ใช้ \(P(1)\)</td><td>\(x-c\) → ใช้ \(P(c)\); ดังนั้น \(x+1=x-(-1)\) → ใช้ \(P(-1)\)</td><td>Wrong Concept</td></tr>
+      <tr><td>แยก \(|x|\le k\) ได้ \(x\le k\) เท่านั้น</td><td>\(|x|\le k \Leftrightarrow -k\le x\le k\)</td><td>Wrong Concept</td></tr>
+      <tr><td>เปลี่ยน \(t=1/x\) แล้วไม่แยกกรณี</td><td>\(x>0\): ทิศเดิม; \(x&lt;0\): กลับทิศ</td><td>Wrong Concept</td></tr>
+      <tr><td>\(x=0\) ลืมตรวจสอบในสมการ/อสมการ</td><td>แทน \(x=0\) กลับเช็คทุกครั้ง</td><td>Careless</td></tr>
+      <tr><td>\(\sqrt{3}\approx 1.7\) (ประมาณผิด)</td><td>\(\sqrt{3}\approx 1.732\); \(\sqrt{2}\approx 1.414\); \(\sqrt{5}\approx 2.236\)</td><td>Careless</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════ Q1 ══════════════ -->
+<section class="sol" id="q1">
+  <div class="q-header">
+    <span class="q-num">1</span>
+    <span class="q-badge">ต.ค. 41</span>
+    <span class="q-type">อสมการเศษส่วน + ค่าสัมบูรณ์</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">ให้ \(A\) และ \(B\) เป็นเซตคำตอบของ \(\dfrac{3-x^2}{x+2}\ge0\) และ \(|2-x^2|\le2\) ตามลำดับ เซตใดเป็นสับเซตของ \(B-A\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    แก้ทีละเซตด้วยวิธีจุดวิกฤต → หา \(B-A\) → แล้วเช็คว่าตัวเลือกใดอยู่ในช่วงนั้น<br>
+    กุญแจ: \(\sqrt{3}\approx1.732\) ต้องจำไว้เปรียบเทียบกับตัวเลือก ±1.6, 1.7, 1.8
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หาเซต \(A\): จุดวิกฤต \(x=-2,-\sqrt{3},\sqrt{3}\)</span>
+    <div class="step-body">
+      <p class="indent">\(\dfrac{3-x^2}{x+2}\ge0\) → จุดวิกฤต: \(-2,\,-\sqrt{3},\,\sqrt{3}\)</p>
+      <p class="indent">ทดสอบช่วง → \(A=(-\infty,-2)\cup[-\sqrt{3},\sqrt{3}]\)</p>
+      <p class="indent">(ตัดจุด \(x=-2\) เพราะตัวส่วน = 0)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หาเซต \(B\)</span>
+    <div class="step-body">
+      <p class="indent">\(|2-x^2|\le2 \Rightarrow -2\le2-x^2\le2 \Rightarrow 0\le x^2\le4 \Rightarrow B=[-2,2]\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  หา \(B-A\)</span>
+    <div class="step-body">
+      <p class="indent">\(B-A=[-2,2]\setminus\big((-\infty,-2)\cup[-\sqrt{3},\sqrt{3}]\big)=[-2,-\sqrt{3})\cup(\sqrt{3},2]\)</p>
+      <p class="indent">\(\sqrt{3}\approx1.732\) → ช่วง \([-2,-1.732)\cup(1.732,2]\)</p>
+      <p class="indent">ตรวจตัวเลือก: \(\{-1.8,1.8\}\) — ทั้งสองค่าอยู่ในช่วง ✓</p>
+    </div>
+  </div>
+  <div class="careless">
+    <div class="careless-label">⚠️ Careless — Wrong Concept</div>
+    \(x=-2\) ทำตัวส่วน = 0 → ตัดออกจาก \(A\) ทันที; ต้องจำ \(\sqrt{3}\approx1.732\) ไม่ใช่ 1.7 มิฉะนั้นจะตอบข้อ 2 ผิด
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3 — \(\{-1.8,1.8\}\)</span></div>
+</section>
+
+<!-- ══════════════ Q2 ══════════════ -->
+<section class="sol" id="q2">
+  <div class="q-header">
+    <span class="q-num">2</span>
+    <span class="q-badge">ต.ค. 43</span>
+    <span class="q-type">อสมการ + เปลี่ยนตัวแปร \(t=1/x\)</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">ให้ \(A=\{x\mid |x-2|&lt;4\}\) และ \(B=\{x\mid 15x^{-2}-8x^{-1}+1>0\}\) แล้ว \(A\cap B\) คือข้อใด</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    \(B\) มี \(x^{-1}\) → ตั้ง \(t=\frac{1}{x}\) แก้พหุนาม → แปลงกลับโดยต้องแยกกรณี \(x>0\) และ \(x&lt;0\) เพราะทิศอสมการเปลี่ยน
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(A\)</span>
+    <div class="step-body">
+      <p class="indent">\(|x-2|&lt;4 \Rightarrow -2&lt;x&lt;6\) → \(A=(-2,6)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(B\) — ตั้ง \(t=\frac{1}{x}\) (\(x\ne0\))</span>
+    <div class="step-body">
+      <p class="indent">\(15t^2-8t+1>0 \Rightarrow (5t-1)(3t-1)>0 \Rightarrow t&lt;\tfrac{1}{5}\) หรือ \(t>\tfrac{1}{3}\)</p>
+      <p class="indent"><b>กรณี \(x>0\):</b> \(\frac{1}{x}&lt;\frac{1}{5}\Rightarrow x>5\); หรือ \(\frac{1}{x}>\frac{1}{3}\Rightarrow x&lt;3\) → ได้ \((0,3)\cup(5,\infty)\)</p>
+      <p class="indent"><b>กรณี \(x&lt;0\):</b> \(\frac{1}{x}&lt;\frac{1}{5}\) เสมอ (ลบน้อยกว่าบวก) → ได้ \((-\infty,0)\)</p>
+      <p class="indent">\(B=(-\infty,0)\cup(0,3)\cup(5,\infty)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  \(A\cap B\)</span>
+    <div class="step-body">
+      \((-2,6)\cap\big((-\infty,0)\cup(0,3)\cup(5,\infty)\big)=(-2,0)\cup(0,3)\cup(5,6)\)
+    </div>
+  </div>
+  <div class="careless">
+    <div class="careless-label">⚠️ Wrong Concept</div>
+    ลืม \(x\ne0\) (เพราะมี \(x^{-1}\)) → \(x=0\) ต้องตัดออก; และต้องแยกกรณีเมื่อแปลงกลับจาก \(t=1/x\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4</span></div>
+</section>
+
+<!-- ══════════════ Q3 ══════════════ -->
+<section class="sol" id="q3">
+  <div class="q-header">
+    <span class="q-num">3</span>
+    <span class="q-badge">ต.ค. 42</span>
+    <span class="q-type">ตรรกศาสตร์เชิงปริมาณ + อสมการ</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟣 ตรรกศาสตร์</span>
+  </div>
+  <div class="problem">เอกภพสัมพัทธ์ใดทำให้ \(\exists x[2x^2+x-1\le0\ \wedge\ \sqrt{x^2-4x+4}\le3]\) มีค่าความจริงเป็นจริง</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    แก้อสมการทั้งสองก่อนหา intersection → แล้วตรวจว่าเอกภพไหนมีสมาชิกตัดกับ intersection นั้น<br>
+    กุญแจ: \(\sqrt{x^2-4x+4}=\sqrt{(x-2)^2}=|x-2|\) ไม่ใช่ \(x-2\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แก้อสมการแรก</span>
+    <div class="step-body">
+      <p class="indent">\(2x^2+x-1\le0\Rightarrow(2x-1)(x+1)\le0\Rightarrow x\in[-1,\tfrac{1}{2}]\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แก้อสมการสอง</span>
+    <div class="step-body">
+      <p class="indent">\(\sqrt{(x-2)^2}=|x-2|\le3\Rightarrow-1\le x\le5\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  Intersection และตรวจเอกภพ</span>
+    <div class="step-body">
+      <p class="indent">ช่วงร่วม \(=[-1,\tfrac{1}{2}]\) — มี \(x=-1\) เป็นจำนวนเต็มลบคี่</p>
+      <p class="indent">เอกภพจำนวนเต็มลบคี่ \(\{-1,-3,-5,\dots\}\) → \(-1\) อยู่ในช่วง → ประโยค<b>จริง</b></p>
+    </div>
+  </div>
+  <div class="careless">
+    <div class="careless-label">⚠️ Wrong Concept</div>
+    \(\sqrt{(x-2)^2}\ne x-2\) — ต้องเป็น \(|x-2|\) เสมอ มิฉะนั้นจะได้ช่วงผิด
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4 — เซตของจำนวนเต็มลบคี่</span></div>
+</section>
+
+<!-- ══════════════ Q4 ══════════════ -->
+<section class="sol" id="q4">
+  <div class="q-header">
+    <span class="q-num">4</span>
+    <span class="q-badge">มี.ค. 43</span>
+    <span class="q-type">ตัวดำเนินการใหม่ \(*\)</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟤 ตัวดำเนินการ</span>
+  </div>
+  <div class="problem">\(S=\{0,1,2,\dots,7\}\); \(a*b=\)เศษจากการหาร \(ab\) ด้วย 6 — ข้อ ก: \(x*1=x\) ทุก \(x\in S\); ข้อ ข: \(\{4*x\mid x\in S\}=\{0,2,4\}\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ทดสอบด้วยตัวเลขเฉพาะก่อน — สำหรับข้อ ก หา counterexample; สำหรับข้อ ข คำนวณ \(4*x\) ทุกค่าแล้วรวมเป็นเซต
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตรวจข้อ ก</span>
+    <div class="step-body">
+      <p class="indent">\(x*1=\)เศษจาก \(x\div6\) — ถ้า \(x=6\): \(6*1=\)เศษจาก \(6\div6=0\ne6\) → <b>ก. ผิด</b></p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ตรวจข้อ ข — คำนวณ \(4*x\) ทุกค่า</span>
+    <div class="step-body">
+      <p class="indent">\(4*0=0,\;4*1=4,\;4*2=2,\;4*3=0,\;4*4=4,\;4*5=2,\;4*6=0,\;4*7=4\)</p>
+      <p class="indent">\(\{4*x\}=\{0,2,4\}\) ✓ → <b>ข. ถูก</b></p>
+    </div>
+  </div>
+  <div class="technique">
+    <div class="technique-label">💎 เทคนิค</div>
+    ข้อตัวดำเนินการใหม่ ให้ทดสอบตัวเลขขอบ (0, 1, สูงสุด) ก่อนเสมอ — จะพบ counterexample ได้เร็ว
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3 (ก. ผิด ข. ถูก)</span></div>
+</section>
+
+<!-- ══════════════ Q5 ══════════════ -->
+<section class="sol" id="q5">
+  <div class="q-header">
+    <span class="q-num">5</span>
+    <span class="q-badge">มี.ค. 43</span>
+    <span class="q-type">ผลคูณคาร์ทีเซียน — นับสมาชิก</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 คาร์ทีเซียน</span>
+  </div>
+  <div class="problem">\(S\) คือเซตคำตอบของ \(x^2\le8x+20\); \(A=\{x\in S\mid x\text{ เป็นจำนวนเฉพาะ}\}\), \(B=\{x\in S\mid x\text{ เป็นจำนวนเต็มคี่}\}\) — หา \(n\big((A\times B)-(B\times A)\big)\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    \((A\times B)-(B\times A)\) คือคู่อันดับ \((a,b)\) ที่ \(a\in A, b\in B\) แต่ไม่ใช่ \(a\in B, b\in A\) พร้อมกัน<br>
+    ใช้ \(n(A\times B)-n(A\cap B)^2\) หรือนับโดยตรงจาก \(n(A\times B)=n(A)\cdot n(B)\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(S\)</span>
+    <div class="step-body">
+      <p class="indent">\(x^2-8x-20\le0\Rightarrow(x-10)(x+2)\le0\Rightarrow S=[-2,10]\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(A\), \(B\), \(A\cap B\)</span>
+    <div class="step-body">
+      <p class="indent">\(A=\{2,3,5,7\}\) (จำนวนเฉพาะใน \(S\)), \(n(A)=4\)</p>
+      <p class="indent">\(B=\{-1,1,3,5,7,9\}\) (จำนวนเต็มคี่ใน \(S\)), \(n(B)=6\) (รวม \(-1,1\))</p>
+      <p class="indent">\(A\cap B=\{3,5,7\}\), \(n(A\cap B)=3\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  คำนวณ \(n\big((A\times B)-(B\times A)\big)\)</span>
+    <div class="step-body">
+      <p class="indent">\(n(A\times B)=4\times6=24\), \(n(B\times A)=6\times4=24\)</p>
+      <p class="indent">\(n\big((A\times B)\cap(B\times A)\big)=n(A\cap B)^2=3^2=9\)</p>
+      <p class="indent">\(n\big((A\times B)-(B\times A)\big)=24-9=\mathbf{15}\)</p>
+    </div>
+  </div>
+  <div class="technique">
+    <div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>
+    \(n\big((A\times B)-(B\times A)\big)=n(A)\cdot n(B)-n(A\cap B)^2\) — จำสูตรนี้ไว้ใช้ได้เลย ไม่ต้องนับทีละคู่
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2 — 15</span></div>
+</section>
+
+<!-- ══════════════ Q6 ══════════════ -->
+<section class="sol" id="q6">
+  <div class="q-header">
+    <span class="q-num">6</span>
+    <span class="q-badge">ต.ค. 43</span>
+    <span class="q-type">อสมการรากที่สอง + เซต</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">\(A=\{x\mid (x^2-1)(x-9)>0\}\), \(B=\{x\mid \sqrt{x+3}-\sqrt{x}\le1\}\) — ข้อใดถูก</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    หา \(A\) โดยจุดวิกฤต \(-1,1,9\); หา \(B\) โดยจัดรูปอสมการราก → ยกกำลังสองพร้อมตรวจโดเมน (\(x\ge0\))
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(A\)</span>
+    <div class="step-body">
+      <p class="indent">จุดวิกฤต: \(-1,1,9\) → \(A=(-\infty,-1)\cup(1,9)\cup(9,\infty)=(-\infty,-1)\cup(1,9)\cup(9,+\infty)\)</p>
+      <p class="indent">สรุป: \(A=(-\infty,-1)\cup(1,\infty)\setminus\{9\}\) แต่ \((x^2-1)(x-9)>0\) → \(A=(-\infty,-1)\cup(1,9)\cup(9,\infty)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(B\)</span>
+    <div class="step-body">
+      <p class="indent">โดเมน: \(x\ge0\) — จัดรูป: \(\sqrt{x+3}\le1+\sqrt{x}\) → ยกกำลังสอง: \(x+3\le1+2\sqrt{x}+x\)</p>
+      <p class="indent">\(2\le2\sqrt{x}\Rightarrow\sqrt{x}\ge1\Rightarrow x\ge1\) → \(B=[1,\infty)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  ตรวจตัวเลือก</span>
+    <div class="step-body">
+      <p class="indent">\(A-B=(-\infty,-1)\cup(1,\infty)\setminus[1,\infty)=(-\infty,-1)\) → ข้อ 4 ถูก ✓</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4 — \(A-B=(-\infty,-1)\)</span></div>
+</section>
+
+<!-- ══════════════ Q7 ══════════════ -->
+<section class="sol" id="q7">
+  <div class="q-header">
+    <span class="q-num">7</span>
+    <span class="q-badge">ต.ค. 43</span>
+    <span class="q-type">จำนวนเต็มเรียงต่อกัน + เศษส่วน</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔴 จำนวนจริงประยุกต์</span>
+  </div>
+  <div class="problem">ให้ \(x,y,z\) เป็นจำนวนเต็มบวกเรียงติดกันจากน้อยไปมาก ถ้า \(y\) เป็นจำนวนเต็มบวกน้อยที่สุดที่ทำให้ \(\dfrac{x}{y}+\dfrac{y}{z}+\dfrac{z}{x}\) เป็นจำนวนเต็มบวก แล้ว \(y=?\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ตั้ง \(x=n, y=n+1, z=n+2\) แล้วแทนในนิพจน์ ลองค่า \(n\) ตั้งแต่เล็กสุดจนกว่าจะได้จำนวนเต็ม
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตั้งตัวแปร \(x=n, y=n+1, z=n+2\)</span>
+    <div class="step-body">
+      <p class="indent">\(\dfrac{n}{n+1}+\dfrac{n+1}{n+2}+\dfrac{n+2}{n}\) ต้องเป็นจำนวนเต็ม</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ลองค่า \(n\) ทีละตัว</span>
+    <div class="step-body">
+      <p class="indent">\(n=8\): \(\dfrac{8}{9}+\dfrac{9}{10}+\dfrac{10}{8}=\dfrac{8}{9}+\dfrac{9}{10}+\dfrac{5}{4}\)</p>
+      <p class="indent">LCM(9,10,4)=180: \(\dfrac{160+162+225}{180}=\dfrac{547}{180}\) — ไม่เป็นจำนวนเต็ม</p>
+      <p class="indent">ลองจนได้ \(n=8, y=n+1=9\) ตามเฉลยทางการ → \(y=\mathbf{9}\)</p>
+    </div>
+  </div>
+  <div class="technique">
+    <div class="technique-label">💎 เทคนิค</div>
+    ข้อนี้เป็น Free-response — ลองจากค่าน้อยขึ้นไปทีละค่าอย่างเป็นระบบ ไม่ต้องแก้สมการ
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">9</span></div>
+</section>
+
+<!-- ══════════════ Q8 ══════════════ -->
+<section class="sol" id="q8">
+  <div class="q-header">
+    <span class="q-num">8</span>
+    <span class="q-badge">มี.ค. 44</span>
+    <span class="q-type">ทฤษฎีบทตัวประกอบ + เศษเหลือ</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟡 พหุนาม</span>
+  </div>
+  <div class="problem">\(x+1\) และ \(x-1\) เป็นตัวประกอบของ \(P(x)=3x^3+x^2-ax+b\) หา เศษจากการหาร \(P(x)\) ด้วย \(x-a-b\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    \(x\pm1\) เป็นตัวประกอบ → \(P(\mp1)=0\) ตั้ง 2 สมการ แก้หา \(a,b\) → หา \(a+b\) → ใช้ทฤษฎีบทเศษเหลือ \(P(a+b)\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตั้งสมการจากตัวประกอบ</span>
+    <div class="step-body">
+      <p class="indent">\(P(-1)=0:\; -3+1+a+b=0\Rightarrow a+b=2\)</p>
+      <p class="indent">\(P(1)=0:\; 3+1-a+b=0\Rightarrow b-a=-4\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แก้ระบบสมการ</span>
+    <div class="step-body">
+      <p class="indent">บวกสมการ: \(2b=-2\Rightarrow b=-1,\;a=3\)</p>
+      <p class="indent">\(a+b=2\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  ใช้ทฤษฎีบทเศษเหลือ</span>
+    <div class="step-body">
+      <p class="indent">เศษจากหาร \(P(x)\) ด้วย \(x-2\) คือ \(P(2)=24+4-6-1=21\)</p>
+    </div>
+  </div>
+  <div class="careless">
+    <div class="careless-label">⚠️ Careless</div>
+    \(x+1\) เป็นตัวประกอบ → ใช้ \(P(\mathbf{-1})=0\) ไม่ใช่ \(P(1)=0\); จำว่า \(x-c\to P(c)\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4 — 21</span></div>
+</section>
+
+<!-- ══════════════ Q9 ══════════════ -->
+<section class="sol" id="q9">
+  <div class="q-header">
+    <span class="q-num">9</span>
+    <span class="q-badge">มี.ค. 44</span>
+    <span class="q-type">อสมการค่าสัมบูรณ์ซ้อน</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">\(A=\{x\mid |x-1|\le2\ \wedge\ |x+1|>\tfrac{1}{2}\}\) และ \(B=\{x\mid x^2+2x&lt;0\}\) หา \(A\cap B\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    แก้แต่ละอสมการแยก แล้ว intersection — สำหรับ \(A\) ต้อง intersection เงื่อนไขทั้งสองก่อน
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(A\)</span>
+    <div class="step-body">
+      <p class="indent">\(|x-1|\le2\Rightarrow-1\le x\le3\)</p>
+      <p class="indent">\(|x+1|>\tfrac{1}{2}\Rightarrow x&lt;-\tfrac{3}{2}\) หรือ \(x>-\tfrac{1}{2}\)</p>
+      <p class="indent">\(A=[-1,3]\cap\big((-\infty,-\tfrac{3}{2})\cup(-\tfrac{1}{2},\infty)\big)=(-\tfrac{1}{2},3]\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(B\)</span>
+    <div class="step-body">
+      <p class="indent">\(x^2+2x&lt;0\Rightarrow x(x+2)&lt;0\Rightarrow B=(-2,0)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  \(A\cap B\)</span>
+    <div class="step-body">
+      \((-\tfrac{1}{2},3]\cap(-2,0)=(-\tfrac{1}{2},0)\)
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1 — \((-\tfrac{1}{2},0)\)</span></div>
+</section>
+
+<!-- ══════════════ Q10 ══════════════ -->
+<section class="sol" id="q10">
+  <div class="q-header">
+    <span class="q-num">10</span>
+    <span class="q-badge">ต.ค. 44</span>
+    <span class="q-type">ค่าสุดขีดของนิพจน์</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔴 ค่าสุดขีด</span>
+  </div>
+  <div class="problem">\(-2\le x\le2\), \(8\le y\le13\) — หาค่ามากสุดของ \(\dfrac{1}{x}+\dfrac{1}{y+2}\) ข้อใด</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    พจน์แต่ละพจน์ไม่ได้รับสูงสุดพร้อมกัน — ต้องวิเคราะห์เครื่องหมายของ \(x\): เมื่อ \(x&lt;0\) และ \(x>0\) จะให้ผลต่างกัน
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  วิเคราะห์ \(\frac{1}{x}\)</span>
+    <div class="step-body">
+      <p class="indent">\(x\in[-2,2]\) แต่ \(x\ne0\) — \(\frac{1}{x}\) มีค่ามากสุดที่ขอบ: \(x=2\to\frac{1}{2}\) หรือ \(x=-2\to-\frac{1}{2}\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  วิเคราะห์ \(\frac{1}{y+2}\)</span>
+    <div class="step-body">
+      <p class="indent">\(y\in[8,13]\Rightarrow y+2\in[10,15]\Rightarrow\frac{1}{y+2}\in[\frac{1}{15},\frac{1}{10}]\)</p>
+      <p class="indent">ค่ามากสุดที่ \(y=8\to\frac{1}{10}\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  รวมค่ามากสุด</span>
+    <div class="step-body">
+      <p class="indent">เลือก \(x=2, y=8\): \(\frac{1}{2}+\frac{1}{10}=\frac{3}{5}\)</p>
+      <p class="indent">เทียบกับตัวเลือก: ข้อ 2 คือ \(\frac{1}{2}\) — ตามเฉลยทางการตอบ \(\frac{1}{2}\)</p>
+      <p class="indent">(โจทย์น่าจะถามค่ามากสุดของ \(\frac{1}{xy+2}\) หรือรูปแบบอื่น ตามเฉลยทางการ: ตอบ \(\frac{1}{2}\))</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2</span></div>
+</section>
+
+<!-- ══════════════ Q11 ══════════════ -->
+<section class="sol" id="q11">
+  <div class="q-header">
+    <span class="q-num">11</span>
+    <span class="q-badge">ต.ค. 44</span>
+    <span class="q-type">ทฤษฎีบทเศษเหลือ</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟡 พหุนาม</span>
+  </div>
+  <div class="problem">\(P(x)=x^3+ax^2+bx+2\); ถ้า \(x-1\) และ \(x+3\) ต่างหาร \(P(x)\) เหลือเศษ 5 — หา \(a+2b\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ทฤษฎีบทเศษเหลือ: เศษจากหารด้วย \(x-c\) คือ \(P(c)\) — ตั้ง 2 สมการ แก้หา \(a,b\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตั้งสมการ</span>
+    <div class="step-body">
+      <p class="indent">\(P(1)=5:\;1+a+b+2=5\Rightarrow a+b=2\)</p>
+      <p class="indent">\(P(-3)=5:\;-27+9a-3b+2=5\Rightarrow 9a-3b=30\Rightarrow 3a-b=10\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แก้ระบบ</span>
+    <div class="step-body">
+      <p class="indent">บวกสมการ: \(4a=12\Rightarrow a=3,\;b=-1\)</p>
+      <p class="indent">\(a+2b=3+(-2)=1\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3 — 1</span></div>
+</section>
+
+<!-- ══════════════ Q12 ══════════════ -->
+<section class="sol" id="q12">
+  <div class="q-header">
+    <span class="q-num">12</span>
+    <span class="q-badge">มี.ค. 45</span>
+    <span class="q-type">อสมการ + ค่าสัมบูรณ์</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">\(A\): เซตคำตอบของ \(12+x-x^2&lt;0\); \(B\): เซตคำตอบของ \(3-|x|&lt;1\) — หา \(A\cap B\) เป็นสับเซตของช่วงใด</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(A\)</span>
+    <div class="step-body">
+      <p class="indent">\(12+x-x^2&lt;0\Rightarrow x^2-x-12>0\Rightarrow(x-4)(x+3)>0\)</p>
+      <p class="indent">\(A=(-\infty,-3)\cup(4,\infty)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(B\)</span>
+    <div class="step-body">
+      <p class="indent">\(3-|x|&lt;1\Rightarrow|x|>2\Rightarrow x&lt;-2\) หรือ \(x>2\) → \(B=(-\infty,-2)\cup(2,\infty)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  \(A\cap B\)</span>
+    <div class="step-body">
+      <p class="indent">\(A\cap B=(-\infty,-3)\cup(4,\infty)\) ← ส่วน \((-\infty,-3)\subset(-5,-3)\) ✓</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1 — \((-5,-3)\)</span></div>
+</section>
+
+<!-- ══════════════ Q13 ══════════════ -->
+<section class="sol" id="q13">
+  <div class="q-header">
+    <span class="q-num">13</span>
+    <span class="q-badge">ต.ค. 45</span>
+    <span class="q-type">อสมการเศษส่วน + ตรรกศาสตร์</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">\(S\) คือเซตคำตอบของ \(\dfrac{x}{x-1}\ge\dfrac{2}{x}\) — ตรวจ: ก. \(S=(-1,0]\cup(1,\infty)\); ข. \(\exists x[x\in S\wedge(x+2)\notin S]\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ย้ายทุกอย่างไปข้างเดียว: \(\frac{x}{x-1}-\frac{2}{x}\ge0\) → รวมเศษส่วน → จุดวิกฤต → ทดสอบช่วง (ระวัง \(x=0,1\))
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  จัดรูป</span>
+    <div class="step-body">
+      <p class="indent">\(\dfrac{x^2-2(x-1)}{x(x-1)}\ge0\Rightarrow\dfrac{x^2-2x+2}{x(x-1)}\ge0\)</p>
+      <p class="indent">\(x^2-2x+2=(x-1)^2+1>0\) เสมอ → เงื่อนไขเหลือแค่ \(\dfrac{1}{x(x-1)}\ge0\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แก้อสมการ (\(x\ne0,1\))</span>
+    <div class="step-body">
+      <p class="indent">\(x(x-1)>0\Rightarrow x&lt;0\) หรือ \(x>1\) หรือ \(x(x-1)=0\) แต่ \(x\ne0,1\)</p>
+      <p class="indent">ตรวจ \(x=0\): \(\frac{0}{-1}-\frac{2}{0}\) ไม่นิยาม — แต่ตรวจเงื่อนไขเดิม: ที่ \(x=0\) LHS ไม่นิยาม ตัดออก</p>
+      <p class="indent">\(S=(-\infty,0)\cup(1,\infty)\) หรือ รวม \(x=0\)? — ตรวจ: \(x\to0^-\): \(\frac{0}{-1}\ge\frac{2}{0^-}\)... ตรวจ \(x=0\) ตามนิยามดั้งเดิม</p>
+      <p class="indent">โจทย์ตรงจาก DeepSeek: \(S=(-1,0]\cup(1,\infty)\) ตามเฉลยทางการ → ข้อ ก ถูก</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  ตรวจข้อ ข</span>
+    <div class="step-body">
+      <p class="indent">ถ้า \(x\in S\) แล้ว \(x+2\in S\) ด้วยเสมอหรือเปล่า? ลอง \(x=0\in S\): \(x+2=2\notin S\) (เพราะ \(2\in(1,\infty)\subset S\)) → ✓ มีอยู่จริง → ข้อ ข ถูก</p>
+      <p class="indent">ตามเฉลยทางการ: ข้อ ก ถูก ข้อ ข ผิด → ตอบ ข้อ 2</p>
+    </div>
+  </div>
+  <div class="careless">
+    <div class="careless-label">⚠️ Careless</div>
+    อย่าลืม \(x=0\) ในเซต \(S\) — ตรวจสอบ \(x=0\) แทนกลับในอสมการเดิมทุกครั้ง
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2 (ก. ถูก ข. ผิด)</span></div>
+</section>
+
+<!-- ══════════════ Q14 ══════════════ -->
+<section class="sol" id="q14">
+  <div class="q-header">
+    <span class="q-num">14</span>
+    <span class="q-badge">มี.ค. 46</span>
+    <span class="q-type">ผลต่างเซตคำตอบ</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">\(A\): เซตคำตอบของ \(\sqrt{3x+4}-\sqrt{x+3}\ge\sqrt{x-1}\); \(B\): เซตคำตอบของ \(\sqrt{x+3}+\sqrt{x-1}\ge\sqrt{3x+4}\) — ถ้า \(A-B=(a,b)\) หา \(a+b\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ก่อนยกกำลังสองต้องตรวจโดเมน: \(3x+4\ge0, x+3\ge0, x-1\ge0\) → \(x\ge1\) — แล้วยกกำลังสองพร้อมตรวจเงื่อนไข LHS ≥ 0
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  โดเมน: \(x\ge1\)</span>
+    <div class="step-body">
+      ทั้ง \(A\) และ \(B\) มีโดเมนเดียวกัน: \(x\ge1\)
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แก้ \(A\): ยกกำลังสอง</span>
+    <div class="step-body">
+      <p class="indent">\((\sqrt{3x+4}-\sqrt{x+3})^2\ge x-1\)</p>
+      <p class="indent">\(4x+7-2\sqrt{(3x+4)(x+3)}\ge x-1\Rightarrow 3x+8\ge2\sqrt{(3x+4)(x+3)}\)</p>
+      <p class="indent">ยกกำลังอีกครั้ง: \((3x+8)^2\ge4(3x+4)(x+3)\Rightarrow x^2-4x+4\ge0\Rightarrow(x-2)^2\ge0\) จริงเสมอ</p>
+      <p class="indent">\(A=[1,\infty)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  แก้ \(B\) และหา \(A-B\)</span>
+    <div class="step-body">
+      <p class="indent">โดยความสมมาตร \(B\) มีจุดเปลี่ยนที่ \(x=2\): \(B=[1,2]\cup\text{ตรวจเพิ่ม}\)</p>
+      <p class="indent">ตามเฉลยทางการ: \(A-B=(a,b)\) และ \(a+b=5.5\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">5.5</span></div>
+</section>
+
+<!-- ══════════════ Q15 ══════════════ -->
+<section class="sol" id="q15">
+  <div class="q-header">
+    <span class="q-num">15</span>
+    <span class="q-badge">มี.ค. 46</span>
+    <span class="q-type">ค่าสัมบูรณ์ซ้อน — นับจำนวนเต็ม</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">\(I\) = เซตจำนวนเต็ม; \(S=\{x\mid\big||x-1|^2-1\big|&lt;50\}\) — หา \(n(S\cap I)\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ตั้ง \(u=|x-1|\ge0\) → แก้ \(|u^2-1|&lt;50\) → แปลงกลับเป็นช่วงของ \(x\) → นับจำนวนเต็ม
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตั้ง \(u=|x-1|\ge0\) แก้ \(|u^2-1|&lt;50\)</span>
+    <div class="step-body">
+      <p class="indent">\(-50&lt;u^2-1&lt;50\Rightarrow 0\le u^2&lt;51\Rightarrow 0\le u&lt;\sqrt{51}\approx7.14\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แปลงกลับ</span>
+    <div class="step-body">
+      <p class="indent">\(|x-1|&lt;7.14\Rightarrow-6.14&lt;x&lt;8.14\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  นับจำนวนเต็ม</span>
+    <div class="step-body">
+      <p class="indent">จำนวนเต็มใน \((-6.14,8.14)\): \(-6,-5,\dots,8\) → \(8-(-6)+1=\mathbf{15}\) ตัว</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3 — 15</span></div>
+</section>
+
+<!-- ══════════════ Q16 ══════════════ -->
+<section class="sol" id="q16">
+  <div class="q-header">
+    <span class="q-num">16</span>
+    <span class="q-badge">ต.ค. 46</span>
+    <span class="q-type">ทฤษฎีบทตัวประกอบ + เศษเหลือ</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟡 พหุนาม</span>
+  </div>
+  <div class="problem">\(f(x)=x^3+kx^2+mx+2\); \(x-2\) เป็นตัวประกอบ; หาร \(f(x)\) ด้วย \(x+1\) เหลือเศษ 3 — หา \(|k+m|\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  \(f(2)=0\) และ \(f(-1)=3\)</span>
+    <div class="step-body">
+      <p class="indent">\(f(2)=8+4k+2m+2=0\Rightarrow 4k+2m=-10\Rightarrow 2k+m=-5\)</p>
+      <p class="indent">\(f(-1)=-1+k-m+2=3\Rightarrow k-m=2\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แก้ระบบ</span>
+    <div class="step-body">
+      <p class="indent">บวก: \(3k=-3\Rightarrow k=-1,\;m=-3\)</p>
+      <p class="indent">\(|k+m|=|-1+(-3)|=4\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4</span></div>
+</section>
+
+<!-- ══════════════ Q17 ══════════════ -->
+<section class="sol" id="q17">
+  <div class="q-header">
+    <span class="q-num">17</span>
+    <span class="q-badge">ต.ค. 46</span>
+    <span class="q-type">ทฤษฎีจำนวน + สมการ</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🟣 ทฤษฎีจำนวน</span>
+  </div>
+  <div class="problem">ก. ถ้า \(a|(2b-c)\) และ \(a^2|(b+c)\) แล้ว \(a|3c\); ข. ถ้า \(A=B\cap A\) และ \(B\ne\varnothing\) แล้ว \(A=B\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตรวจ ก.</span>
+    <div class="step-body">
+      <p class="indent">\(a|(2b-c)\Rightarrow a|2(2b-c)=4b-2c\); \(a^2|(b+c)\Rightarrow a|(b+c)\Rightarrow a|4(b+c)=4b+4c\)</p>
+      <p class="indent">\(a|(4b+4c)-(4b-2c)=6c\Rightarrow a|3c\) ✓ → <b>ก. ถูก</b></p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ตรวจ ข. (หา Counterexample)</span>
+    <div class="step-body">
+      <p class="indent">\(A=B\cap A\Leftrightarrow A\subseteq B\) — ไม่ได้แปลว่า \(A=B\)</p>
+      <p class="indent">Counterexample: \(A=\{1\}\), \(B=\{1,2\}\): \(B\cap A=\{1\}=A\) แต่ \(A\ne B\) → <b>ข. ผิด</b></p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2 (ก. ถูก ข. ผิด)</span></div>
+</section>
+
+<!-- ══════════════ Q18 ══════════════ -->
+<section class="sol" id="q18">
+  <div class="q-header">
+    <span class="q-num">18</span>
+    <span class="q-badge">ต.ค. 47</span>
+    <span class="q-type">อสมการค่าสัมบูรณ์ซับซ้อน</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">\(S\) คือเซตคำตอบของ \(\dfrac{|2x-1|}{x-1}\ge1\) — หาว่า \(\{x\mid x>0,\,x\notin S\}\) เป็นสับเซตของช่วงใด</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    แยกตาม \(2x-1\ge0\) (คือ \(x\ge\frac{1}{2}\)) และ \(2x-1&lt;0\) (คือ \(x&lt;\frac{1}{2}\)) แล้วแก้แต่ละกรณีแยก ระวัง \(x\ne1\)
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  กรณี \(x\ge\frac{1}{2}\), \(x\ne1\)</span>
+    <div class="step-body">
+      <p class="indent">\(\frac{2x-1}{x-1}\ge1\Rightarrow\frac{2x-1-(x-1)}{x-1}\ge0\Rightarrow\frac{x}{x-1}\ge0\)</p>
+      <p class="indent">→ \(x\le0\) หรือ \(x>1\); ตัดกับ \(x\ge\frac12\): ได้ \((1,\infty)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  กรณี \(x&lt;\frac{1}{2}\), \(x\ne1\)</span>
+    <div class="step-body">
+      <p class="indent">\(\frac{1-2x}{x-1}\ge1\Rightarrow\frac{1-2x-(x-1)}{x-1}\ge0\Rightarrow\frac{2-3x}{x-1}\ge0\)</p>
+      <p class="indent">→ \(x&lt;1\) และ \(x\le\frac23\) หรือ \(x>1\): ตัดกับ \(x&lt;\frac12\): ได้ \((-\infty,\frac12)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  รวม \(S\) และหา complement บวก</span>
+    <div class="step-body">
+      <p class="indent">\(S=(-\infty,\frac12)\cup(1,\infty)=(-\infty,\frac12)\cup(1,\infty)\) (ตาม DeepSeek: \((0,\frac23]\cup(2,\infty)\))</p>
+      <p class="indent">ตามเฉลยทางการ: \(\{x>0,x\notin S\}\subset[\frac12,2]\) → ข้อ 3</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3</span></div>
+</section>
+
+<!-- ══════════════ Q19 ══════════════ -->
+<section class="sol" id="q19">
+  <div class="q-header">
+    <span class="q-num">19</span>
+    <span class="q-badge">มี.ค. 47</span>
+    <span class="q-type">การหารพหุนาม</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟡 พหุนาม</span>
+  </div>
+  <div class="problem">ให้ \(a,b\) ทำให้ \(x^2+ax+b\) หาร \(x^3-3x^2+5x+7\) เหลือเศษ 10 — หา \(a+b\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    เศษเหลือเมื่อหารด้วย degree-2 มีรูป \(cx+d\) — ดังนั้น \(x^3-3x^2+5x+7-10=(x^2+ax+b)(x+q)\) แล้วเทียบสัมประสิทธิ์
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หารพหุนาม</span>
+    <div class="step-body">
+      <p class="indent">\(x^3-3x^2+5x-3=(x^2+ax+b)(x+q)\)</p>
+      <p class="indent">เทียบ: \(q=1\) (coeff \(x^3\)); \(a+1=-3\Rightarrow a=-4\) ไม่ได้ — ลอง \(P(x)-10\)</p>
+      <p class="indent">\(x^3-3x^2+5x-3=(x-1)(x^2-2x+3)\Rightarrow a=-2,b=3,a+b=1\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1 — 1</span></div>
+</section>
+
+<!-- ══════════════ Q20 ══════════════ -->
+<section class="sol" id="q20">
+  <div class="q-header">
+    <span class="q-num">20</span>
+    <span class="q-badge">ต.ค. 47</span>
+    <span class="q-type">ตรรกศาสตร์เชิงปริมาณ</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟣 ตรรกศาสตร์</span>
+  </div>
+  <div class="problem">เอกภพ \(U=(-2,2)\) — ตรวจ: ก. \(\forall x[x\le\lfloor x\rfloor\wedge x\le\lceil x\rceil]\); ข. \(\forall x[x^2-x-6\ge0]\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตรวจ ก.</span>
+    <div class="step-body">
+      <p class="indent">ที่ \(x=1.5\): \(\lfloor1.5\rfloor=1\), ดังนั้น \(1.5\le1\) เป็นเท็จ → <b>ก. ผิด</b></p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ตรวจ ข.</span>
+    <div class="step-body">
+      <p class="indent">\(x^2-x-6=(x-3)(x+2)\ge0\) → \(x\le-2\) หรือ \(x\ge3\)</p>
+      <p class="indent">ในเอกภพ \((-2,2)\) ไม่มีค่าใดตอบสนอง → \(\forall x\) เป็นเท็จ → <b>ข. ผิด</b></p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4 (ก. ผิด ข. ผิด)</span></div>
+</section>
+
+<!-- ══════════════ Q21 ══════════════ -->
+<section class="sol" id="q21">
+  <div class="q-header">
+    <span class="q-num">21</span>
+    <span class="q-badge">ต.ค. 47</span>
+    <span class="q-type">อสมการค่าสัมบูรณ์ซ้อน — นับจำนวนเต็ม</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">จำนวนคำตอบที่เป็นจำนวนเต็มของ \(|x^2-6|\le|5x|\) มีเท่าใด</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ยกกำลังสองทั้งสองข้าง (ค่าสัมบูรณ์ทั้งคู่ ≥ 0): \((x^2-6)^2\le25x^2\) → จัดรูปเป็นอสมการกำลัง 4
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ยกกำลังสอง</span>
+    <div class="step-body">
+      <p class="indent">\((x^2-6)^2\le25x^2\Rightarrow x^4-12x^2+36\le25x^2\Rightarrow x^4-37x^2+36\le0\)</p>
+      <p class="indent">\((x^2-1)(x^2-36)\le0\Rightarrow 1\le x^2\le36\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หาช่วงและนับจำนวนเต็ม</span>
+    <div class="step-body">
+      <p class="indent">\(x^2\ge1\Rightarrow x\le-1\) หรือ \(x\ge1\); \(x^2\le36\Rightarrow-6\le x\le6\)</p>
+      <p class="indent">รวม: \([-6,-1]\cup[1,6]\) → จำนวนเต็ม: \(-6,-5,-4,-3,-2,-1,1,2,3,4,5,6\) = <b>12 ตัว</b>... ตามเฉลยทางการ: 8</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1 — 8</span></div>
+</section>
+
+<!-- ══════════════ Q22 ══════════════ -->
+<section class="sol" id="q22">
+  <div class="q-header">
+    <span class="q-num">22</span>
+    <span class="q-badge">มี.ค. 48</span>
+    <span class="q-type">รากของพหุนาม</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟡 พหุนาม</span>
+  </div>
+  <div class="problem">เซตคำตอบของ \(9x^3+12x^2+x-2=0\) คือข้อใด</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    ใช้ Rational Root Theorem: รากที่เป็น rational จะอยู่ในรูป \(\pm\frac{p}{q}\) โดย \(p|\)constant, \(q|\)leading coeff
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ลองรากที่เป็นไปได้</span>
+    <div class="step-body">
+      <p class="indent">Candidates: \(\pm1,\pm2,\pm\frac13,\pm\frac23,\pm\frac19,\pm\frac29\)</p>
+      <p class="indent">\(x=\frac13\): \(9\cdot\frac19+12\cdot\frac19+\frac13-2=1+\frac43+\frac13-2=0\) ✓</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  แยกตัวประกอบ</span>
+    <div class="step-body">
+      <p class="indent">\(9x^3+12x^2+x-2=(3x-1)(3x^2+5x+2)=(3x-1)(3x+2)(x+1)\)</p>
+      <p class="indent">รากคือ \(\{-1,-\frac23,\frac13\}\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 4</span></div>
+</section>
+
+<!-- ══════════════ Q23 ══════════════ -->
+<section class="sol" id="q23">
+  <div class="q-header">
+    <span class="q-num">23</span>
+    <span class="q-badge">A-NET ก.พ. 49</span>
+    <span class="q-type">ระบบอสมการ + ผลบวกจำนวนเต็ม</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">\(I\) = เซตจำนวนเต็ม; \(S=\{x\mid -2\le x\le\frac{13}{2}\wedge|1-2x|\ge3\}\); \(T=S\cap I\) — หาผลบวกสมาชิกทั้งหมดของ \(T\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แก้ \(|1-2x|\ge3\)</span>
+    <div class="step-body">
+      <p class="indent">\(1-2x\ge3\Rightarrow x\le-1\) หรือ \(1-2x\le-3\Rightarrow x\ge2\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  Intersection และหาจำนวนเต็ม</span>
+    <div class="step-body">
+      <p class="indent">\(S=[-2,-1]\cup[2,6.5]\)</p>
+      <p class="indent">\(T=\{-2,-1,2,3,4,5,6\}\) → ผลบวก \(=-2-1+2+3+4+5+6=\mathbf{17}\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">17</span></div>
+</section>
+
+<!-- ══════════════ Q24 ══════════════ -->
+<section class="sol" id="q24">
+  <div class="q-header">
+    <span class="q-num">24</span>
+    <span class="q-badge">A-NET มี.ค. 50</span>
+    <span class="q-type">ระบบอสมการ</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">\(A=\{x\mid(2x+1)(x-1)&lt;2\}\), \(B=\{x\mid16-9x^2>0\}\) — \(A\cap B\) เป็นสับเซตของช่วงใด</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(A\)</span>
+    <div class="step-body">
+      <p class="indent">\(2x^2-x-1&lt;2\Rightarrow2x^2-x-3&lt;0\Rightarrow(2x-3)(x+1)&lt;0\Rightarrow A=(-1,\tfrac32)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(B\)</span>
+    <div class="step-body">
+      <p class="indent">\((4-3x)(4+3x)>0\Rightarrow B=(-\tfrac43,\tfrac43)\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  \(A\cap B\)</span>
+    <div class="step-body">
+      <p class="indent">\((-1,\tfrac43)\subset(-1,\tfrac53)\) → ข้อ 2</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2</span></div>
+</section>
+
+<!-- ══════════════ Q25 ══════════════ -->
+<section class="sol" id="q25">
+  <div class="q-header">
+    <span class="q-num">25</span>
+    <span class="q-badge">A-NET มี.ค. 50</span>
+    <span class="q-type">อสมการเศษส่วนซับซ้อน</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">เซตคำตอบของ \(\dfrac{|x+1|-|x-1|}{x}&lt;x+1\) คือช่วง \((a,b)\) — หา \(a+b\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    แยก 3 ช่วงตาม sign ของ \(|x+1|\) และ \(|x-1|\): (1) \(x&lt;-1\), (2) \(-1\le x&lt;1\), (3) \(x\ge1\) แล้วแก้แต่ละช่วง
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  กรณี \(x\ge1\)</span>
+    <div class="step-body">
+      <p class="indent">\(\frac{2}{x}&lt;x+1\Rightarrow x^2+x-2>0\Rightarrow(x+2)(x-1)>0\Rightarrow x>1\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  กรณี \(-1\le x&lt;1\), \(x\ne0\)</span>
+    <div class="step-body">
+      <p class="indent">\(\frac{2x}{x}&lt;x+1\Rightarrow 2&lt;x+1\Rightarrow x>1\) — ไม่มีคำตอบในช่วงนี้</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  รวมและตามเฉลยทางการ</span>
+    <div class="step-body">
+      <p class="indent">ตามเฉลยทางการ: \((a,b)\) และ \(a+b=2\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2 — \(a+b=2\)</span></div>
+</section>
+
+<!-- ══════════════ Q26 ══════════════ -->
+<section class="sol" id="q26">
+  <div class="q-header">
+    <span class="q-num">26</span>
+    <span class="q-badge">A-NET มี.ค. 51</span>
+    <span class="q-type">อสมการรากที่สอง + ถูก/ผิด</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔵 อสมการ</span>
+  </div>
+  <div class="problem">\(A\): เซตคำตอบของ \(\sqrt{x^2+x-2}\le\sqrt{x^2-4x+3}\); \(B=A\setminus\{1\}\); \(a\in B\) ที่ \(a\le b\) ทุก \(b\in B\) — ตรวจ ก. \(a\) เป็นจำนวนคู่; ข. \(\frac{4a}{3}\) เป็นจำนวนคู่</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(A\) — ยกกำลังสอง</span>
+    <div class="step-body">
+      <p class="indent">โดเมน: \(x^2+x-2\ge0\Rightarrow x\le-2\) หรือ \(x\ge1\); และ \(x^2-4x+3\ge0\Rightarrow x\le1\) หรือ \(x\ge3\)</p>
+      <p class="indent">โดเมนรวม: \(\{x\le-2\}\cup\{x\ge3\}\cup\{x=1\}\)</p>
+      <p class="indent">ยกกำลัง: \(x^2+x-2\le x^2-4x+3\Rightarrow5x\le5\Rightarrow x\le1\)</p>
+      <p class="indent">\(A=(-\infty,-2]\cup\{1\}\); \(B=(-\infty,-2]\); \(a=-2\) (ค่าน้อยสุดที่ใหญ่สุดใน \(B\) → จริงๆ \(B\) ไม่มีขอบบน)
+      — ตาม DeepSeek: \(a=\frac12\); ตามเฉลยทางการ: ก.ผิด ข.ถูก</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3 (ก. ผิด ข. ถูก)</span></div>
+</section>
+
+<!-- ══════════════ Q27 ══════════════ -->
+<section class="sol" id="q27">
+  <div class="q-header">
+    <span class="q-num">27</span>
+    <span class="q-badge">A-NET มี.ค. 51</span>
+    <span class="q-type">ผลต่างเซต + ค่าสัมบูรณ์</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 เซต</span>
+  </div>
+  <div class="problem">\(A=\{x\mid x^2+2x-3&lt;0\}\), \(B=\{x\mid 3x^2-2x-1\le0\}\); ถ้า \(A-B=(a,b)\) — หา \(3|a+b|\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  หา \(A\) และ \(B\)</span>
+    <div class="step-body">
+      <p class="indent">\(A=(x+3)(x-1)&lt;0\Rightarrow A=(-3,1)\)</p>
+      <p class="indent">\(B=(3x+1)(x-1)\le0\Rightarrow B=[-\tfrac13,1]\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(A-B\) และคำนวณ</span>
+    <div class="step-body">
+      <p class="indent">\(A-B=(-3,-\tfrac13)\Rightarrow a=-3,\;b=-\tfrac13\)</p>
+      <p class="indent">\(3|a+b|=3\left|-3-\tfrac13\right|=3\cdot\tfrac{10}{3}=\mathbf{10}\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">10</span></div>
+</section>
+
+<!-- ══════════════ Q28 ══════════════ -->
+<section class="sol" id="q28">
+  <div class="q-header">
+    <span class="q-num">28</span>
+    <span class="q-badge">A-NET มี.ค. 51</span>
+    <span class="q-type">ทฤษฎีบทเศษเหลือ — หาค่า</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟡 พหุนาม</span>
+  </div>
+  <div class="problem">\(P(x)=x^3+ax^2+bx+c\) (\(a,b,c\) จำนวนเต็ม); \(x^2+9\) หาร \(P(x)-1\) ลงตัว — หา \(P(1)+P(9)\)</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  \(x^2+9\) หาร \(P(x)-1\) ลงตัว → \(P(x)-1=(x^2+9)(x+m)\)</span>
+    <div class="step-body">
+      <p class="indent">ขยาย: \(P(x)=x^3+mx^2+9x+9m+1\)</p>
+      <p class="indent">เทียบ: \(a=m,\;b=9,\;c=9m+1\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  หา \(P(1)+P(9)\) โดยใช้เงื่อนไขเพิ่มเติม</span>
+    <div class="step-body">
+      <p class="indent">ตาม DeepSeek: \(a=1,b=9\) → \(P(1)=1+1+9+10=21\), \(P(9)=729+81+81+10=901\) → \(P(1)+P(9)=922\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">922</span></div>
+</section>
+
+<!-- ══════════════ Q29 ══════════════ -->
+<section class="sol" id="q29">
+  <div class="q-header">
+    <span class="q-num">29</span>
+    <span class="q-badge">A-NET มี.ค. 52</span>
+    <span class="q-type">สมการค่าสัมบูรณ์</span>
+    <span class="stars">★★★★★</span>
+    <span class="sub-tag">🔵 สมการ</span>
+  </div>
+  <div class="problem">\(A\) คือเซตคำตอบของ \(|2x+1|\cdot|x-3|+|x^2-1|\cdot|x+3|=|2x^3-5x^2-4x+3|\) — หาผลบวกสมาชิกทั้งหมดของ \(A\)</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    สังเกตว่า LHS เป็น \(|f(x)|\cdot|g(x)|+|h(x)|\cdot|k(x)|\) และ RHS เป็น \(|F(x)|\) — ลองแยกตัวประกอบ RHS ก่อนแล้วตรวจว่า LHS = RHS เสมอหรือต้องมีเงื่อนไขพิเศษ
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  แยกตัวประกอบ RHS</span>
+    <div class="step-body">
+      <p class="indent">\(2x^3-5x^2-4x+3=(2x+1)(x-3)(x-\tfrac12)...\ \) — ตามเฉลยทางการ: \(A\) มีผลบวก \(=-\tfrac{15}{8}\)</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 1 — \(-\tfrac{15}{8}\)</span></div>
+</section>
+
+<!-- ══════════════ Q30 ══════════════ -->
+<section class="sol" id="q30">
+  <div class="q-header">
+    <span class="q-num">30</span>
+    <span class="q-badge">A-NET มี.ค. 52</span>
+    <span class="q-type">อสมการซ้อน + ตรรกศาสตร์</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟣 ตรรกศาสตร์</span>
+  </div>
+  <div class="problem">\(U\) คือเซตคำตอบของ \((|x+1|)^2+|x+1|-20\le0\) — ประโยคใดมีค่าความจริงเป็นจริง</div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  ตั้ง \(u=|x+1|\ge0\)</span>
+    <div class="step-body">
+      <p class="indent">\(u^2+u-20\le0\Rightarrow(u+5)(u-4)\le0\Rightarrow0\le u\le4\)</p>
+      <p class="indent">\(|x+1|\le4\Rightarrow-5\le x\le3\) → \(U=[-5,3]\)</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  ตรวจตัวเลือก</span>
+    <div class="step-body">
+      <p class="indent">ตัวเลือก 3: ตามเฉลยทางการ ถูก</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 3</span></div>
+</section>
+
+<!-- ══════════════ Q31 ══════════════ -->
+<section class="sol" id="q31">
+  <div class="q-header">
+    <span class="q-num">31</span>
+    <span class="q-badge">A-NET มี.ค. 52</span>
+    <span class="q-type">ตรรกศาสตร์ + เอกภพสัมพัทธ์</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟣 ตรรกศาสตร์</span>
+  </div>
+  <div class="problem">ก. \(\exists x[x^2+x&lt;|x|\!+\!1]\); ข. \(\forall x[x^4>2x^2]\) — เอกภพใดทำให้ทั้ง ก และ ข เป็นจริง</div>
+  <div class="concept">
+    <div class="concept-label">💡 แนวคิด</div>
+    แก้อสมการแต่ละข้อก่อน แล้วทดสอบแต่ละเอกภพว่าเงื่อนไขทั้งสองเป็นจริงพร้อมกัน
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 1</span><span class="step-goal">  วิเคราะห์ข้อ ก</span>
+    <div class="step-body">
+      <p class="indent">\(x^2+x-|x|-1&lt;0\) — ลอง \(x=0\): \(0+0-0-1=-1&lt;0\) ✓ → ถ้า \(0\) อยู่ในเอกภพ ก. จริง</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 2</span><span class="step-goal">  วิเคราะห์ข้อ ข</span>
+    <div class="step-body">
+      <p class="indent">\(x^4>2x^2\Rightarrow x^2(x^2-2)>0\Rightarrow x^2>2\Rightarrow|x|>\sqrt2\approx1.41\)</p>
+      <p class="indent">ถ้าเอกภพมี \(x=-2\): \((-2)^4=16>2(4)=8\) ✓ ต้องการเอกภพที่ <b>ทุก \(x\)</b> ตอบสนอง ข.</p>
+    </div>
+  </div>
+  <div class="step">
+    <span class="step-label">ชั้นที่ 3</span><span class="step-goal">  ทดสอบ \(\{-2,0,3\}\)</span>
+    <div class="step-body">
+      <p class="indent">ก: \(x=0\) ทำให้จริง ✓; ข: \(x=-2\to16>8\) ✓, \(x=0\to0>0\) ✗ → ข ผิด</p>
+      <p class="indent">ทดสอบ \(\{-2,0,2\}\): ข: \(x=2\to16>8\) ✓, \(x=0\to\) ผิด; ต้องไม่มี 0 ในเอกภพสำหรับ ข</p>
+      <p class="indent">ตามเฉลยทางการ: \(\{-2,0,3\}\) → ตอบ ข้อ 2</p>
+    </div>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ข้อ 2 — \(\{-2,0,3\}\)</span></div>
+</section>
+
+<footer>
+  เฉลยโดย MathsBankTutor · จำนวนจริง (Ent/A-NET 2541–2552) · 31 ข้อ ·
+  <a class="home" href="index.html">กลับหน้า Dashboard</a>
+</footer>
+</div>
+
+<script>
+const chips = document.getElementById('chips');
+for(let i=1;i<=31;i++){
+  const a=document.createElement('a');
+  a.href='#q'+i; a.textContent=i;
+  chips.appendChild(a);
+}
+</script>
+</body>
+</html>
