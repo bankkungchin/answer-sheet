@@ -376,7 +376,9 @@ async function fetchDashData(){
   dashData={group,date,topic,score,care,concept,cant,timeout,wrong,blank,qResults,groupMembers,rank,allMembers,allRank,allAvg,groupsInTopic,subtopics,diffMap,myAna,grpSubtopics,grpStats,shortName:currentStudent.replace(/\s*\(.*\)/,'')};
 }
 
-function showDashboard(mode){
+async function showDashboard(mode){
+  dashData=null;
+  await fetchDashData();
   if(!dashData){alert(dashErr||'ยังไม่มีข้อมูลสอบในระบบ');return;}
   const d=dashData;
   if(mode==='student'){
