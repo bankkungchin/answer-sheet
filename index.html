@@ -10,18 +10,18 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#F5F4F1;--card:#FFFFFF;--border:rgba(0,0,0,0.08);--border-md:rgba(0,0,0,0.14);
-  --text1:#1A1A1A;--text2:#666660;--text3:#999993;--surf:#F0EEE9;
-  --blue:#185FA5;--blue-l:#E6F1FB;--blue-m:#B5D4F4;
-  --amber:#BA7517;--amber-l:#FAEEDA;
-  --red:#A32D2D;--red-l:#FCEBEB;
-  --green:#3B6D11;--green-l:#EAF3DE;
-  --r-md:8px;--r-lg:14px;
+--bg:#F5F4F1;--card:#FFFFFF;--border:rgba(0,0,0,0.08);--border-md:rgba(0,0,0,0.14);
+--text1:#1A1A1A;--text2:#666660;--text3:#999993;--surf:#F0EEE9;
+--blue:#185FA5;--blue-l:#E6F1FB;--blue-m:#B5D4F4;
+--amber:#BA7517;--amber-l:#FAEEDA;
+--red:#A32D2D;--red-l:#FCEBEB;
+--green:#3B6D11;--green-l:#EAF3DE;
+--r-md:8px;--r-lg:14px;
 }
 @media(prefers-color-scheme:dark){:root{
-  --bg:#1C1C1A;--card:#252523;--border:rgba(255,255,255,0.08);--border-md:rgba(255,255,255,0.15);
-  --text1:#F0EEE9;--text2:#A8A8A0;--text3:#666660;--surf:#2C2C2A;
-  --blue-l:#042C53;--amber-l:#412402;--red-l:#501313;--green-l:#173404;
+--bg:#1C1C1A;--card:#252523;--border:rgba(255,255,255,0.08);--border-md:rgba(255,255,255,0.15);
+--text1:#F0EEE9;--text2:#A8A8A0;--text3:#666660;--surf:#2C2C2A;
+--blue-l:#042C53;--amber-l:#412402;--red-l:#501313;--green-l:#173404;
 }}
 html,body{min-height:100vh;font-family:'Sarabun',sans-serif;background:var(--bg)}
 .page{display:none;justify-content:center;padding:2rem 1rem 4rem}
@@ -29,24 +29,24 @@ html,body{min-height:100vh;font-family:'Sarabun',sans-serif;background:var(--bg)
 .container{width:100%;max-width:560px}
 .brand{text-align:center;margin-bottom:2rem;padding-top:1rem}
 .brand-icon{width:60px;height:60px;border-radius:16px;background:var(--blue);margin:0 auto 14px;
-  display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff}
+display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff}
 .brand h1{font-size:22px;font-weight:500;color:var(--text1)}
 .brand p{font-size:14px;color:var(--text2);margin-top:5px}
 .card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r-lg);padding:1.75rem;box-shadow:0 2px 16px rgba(0,0,0,0.06)}
 .field{margin-bottom:1.1rem}
 .field label{display:block;font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px}
 .field select,.field input{width:100%;height:50px;padding:0 16px;font-family:'Sarabun',sans-serif;font-size:16px;
-  color:var(--text1);background:var(--surf);border:1.5px solid var(--border-md);border-radius:var(--r-md);
-  outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none}
+color:var(--text1);background:var(--surf);border:1.5px solid var(--border-md);border-radius:var(--r-md);
+outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none}
 .field select:focus,.field input:focus{border-color:var(--blue);background:var(--card)}
 .field input::placeholder{color:var(--text3)}
 .sel-wrap{position:relative}
 .sel-wrap::after{content:'';position:absolute;right:16px;top:50%;transform:translateY(-50%);
-  border:5px solid transparent;border-top-color:#999;margin-top:3px;pointer-events:none}
+border:5px solid transparent;border-top-color:#999;margin-top:3px;pointer-events:none}
 .divider{border:none;border-top:0.5px solid var(--border);margin:1.5rem 0}
 .btn{width:100%;height:54px;background:var(--blue);color:#fff;font-family:'Sarabun',sans-serif;
-  font-size:16px;font-weight:500;border:none;border-radius:var(--r-md);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s,transform .1s}
+font-size:16px;font-weight:500;border:none;border-radius:var(--r-md);cursor:pointer;
+display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s,transform .1s}
 .btn:hover{opacity:.88}.btn:active{transform:scale(.97)}.btn:disabled{background:#AAA;cursor:not-allowed}
 .btn-ghost{background:var(--surf);color:var(--text1);border:0.5px solid var(--border-md)}
 .status{text-align:center;font-size:14px;margin-top:10px;min-height:18px}
@@ -57,15 +57,15 @@ html,body{min-height:100vh;font-family:'Sarabun',sans-serif;background:var(--bg)
 .pin-dot.error{background:var(--red);border-color:var(--red)}
 .numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:.75rem}
 .num-btn{height:68px;font-size:22px;font-weight:500;color:var(--text1);background:var(--surf);
-  border:0.5px solid var(--border);border-radius:var(--r-md);cursor:pointer;font-family:'Sarabun',sans-serif;
-  transition:background .1s,transform .1s;-webkit-tap-highlight-color:transparent}
+border:0.5px solid var(--border);border-radius:var(--r-md);cursor:pointer;font-family:'Sarabun',sans-serif;
+transition:background .1s,transform .1s;-webkit-tap-highlight-color:transparent}
 .num-btn:hover{background:var(--border-md)}.num-btn:active{transform:scale(.94)}
 .num-btn.del{font-size:24px;color:var(--text2)}
 .num-btn.empty{background:transparent;border:none;cursor:default}
 .attempts-msg{font-size:13px;color:var(--red);text-align:center;margin-top:8px;min-height:18px}
 .mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1rem}
 .mode-card{background:var(--surf);border:1.5px solid var(--border-md);border-radius:var(--r-lg);
-  padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent}
+padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent}
 .mode-card:hover{border-color:var(--blue);background:var(--blue-l)}
 .mode-card:active{transform:scale(.97)}
 .mode-icon{font-size:32px;margin-bottom:10px}
@@ -83,7 +83,7 @@ html,body{min-height:100vh;font-family:'Sarabun',sans-serif;background:var(--bg)
 .q-ok{background:#4C9A2A;color:#fff}
 .q-care{background:#FDE910;color:#5C3A00;font-weight:600}
 .q-concept { background: #F5A623; color: #fff; }
-.q-cant    { background: #ef4444; color: #fff; }
+.q-cant { background: #ef4444; color: #fff; }
 .q-timeout { background: #a855f7; color: #fff; }
 .q-wrong{background:#D93025;color:#fff}
 .q-blank{background:repeating-linear-gradient(45deg,#E8E6E0,#E8E6E0 4px,#D8D5CC 4px,#D8D5CC 8px);color:#777;border:1px dashed #AAA}
@@ -108,11 +108,11 @@ html,body{min-height:100vh;font-family:'Sarabun',sans-serif;background:var(--bg)
 .rev-row:last-child{border-bottom:none}
 .tab-row{display:flex;gap:8px;margin-bottom:14px}
 .tab{padding:7px 18px;font-size:14px;font-weight:500;border-radius:var(--r-md);cursor:pointer;
-  border:0.5px solid var(--border-md);background:var(--card);color:var(--text2);font-family:'Sarabun',sans-serif}
+border:0.5px solid var(--border-md);background:var(--card);color:var(--text2);font-family:'Sarabun',sans-serif}
 .tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
 .pane{display:none}.pane.active{display:block}
 .back-btn{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--text2);
-  background:none;border:none;cursor:pointer;font-family:'Sarabun',sans-serif;margin-bottom:1.5rem;padding:4px 0}
+background:none;border:none;cursor:pointer;font-family:'Sarabun',sans-serif;margin-bottom:1.5rem;padding:4px 0}
 .back-btn:hover{color:var(--text1)}
 .summary-box{background:var(--blue-l);border:1.5px solid var(--blue-m);border-radius:var(--r-lg);padding:1.25rem 1.5rem;margin-bottom:14px}
 .summary-headline{font-size:17px;font-weight:500;color:var(--text1);line-height:1.6;margin-bottom:8px}
@@ -137,15 +137,15 @@ html,body{min-height:100vh;font-family:'Sarabun',sans-serif;background:var(--bg)
 .weak-topic:last-child{border-bottom:none}
 .mode-toggle{display:flex;gap:8px;margin-bottom:1.25rem}
 .mode-toggle-btn{flex:1;padding:8px;font-size:13px;font-weight:500;border-radius:var(--r-md);cursor:pointer;
-  border:0.5px solid var(--border-md);background:var(--surf);color:var(--text2);font-family:'Sarabun',sans-serif;text-align:center}
+border:0.5px solid var(--border-md);background:var(--surf);color:var(--text2);font-family:'Sarabun',sans-serif;text-align:center}
 .mode-toggle-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
 @media(min-width:640px){
-  .container{max-width:600px}
-  .card{padding:2rem}
-  .num-btn{height:76px;font-size:24px}
-  .metric-val{font-size:30px}
+.container{max-width:600px}
+.card{padding:2rem}
+.num-btn{height:76px;font-size:24px}
+.metric-val{font-size:30px}
 }
 .combo{position:relative}
 .combo input{width:100%;height:50px;padding:0 16px;font-family:'Sarabun',sans-serif;font-size:16px;color:var(--text1);background:var(--surf);border:1.5px solid var(--border-md);border-radius:var(--r-md);outline:none;transition:border-color .15s}
@@ -217,341 +217,345 @@ html,body{min-height:100vh;font-family:'Sarabun',sans-serif;background:var(--bg)
 <!-- PAGE 1: หน้าแรก — 2 ทางเลือก -->
 <div class="page active" id="p1">
 <div class="container">
-  <div class="brand">
-    <div class="brand-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
-    <h1>Math Tutor Dashboard</h1>
-    <p>เลือกสิ่งที่ต้องการ</p>
-  </div>
-  <div class="card">
-    <div class="entry-grid">
-      <div class="entry-card" onclick="goTo('p1b')">
-        <div class="entry-icon">📊</div>
-        <div class="entry-title">ดูผลสอบนักเรียน</div>
-        <div class="entry-desc">เข้าระบบด้วย PIN ดูคะแนน วิเคราะห์จุดอ่อน</div>
-      </div>
-      <div class="entry-card" onclick="openReviewLibrary()">
-        <div class="entry-icon">📚</div>
-        <div class="entry-title">คลังทบทวน</div>
-        <div class="entry-desc">เลือกข้อ/สุ่มข้อ ฝึกทำพร้อมเฉลย — ใครก็เข้าได้</div>
-      </div>
-    </div>
-  </div>
+<div class="brand">
+<div class="brand-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
+<h1>Math Tutor Dashboard</h1>
+<p>เลือกสิ่งที่ต้องการ</p>
+</div>
+<div class="card">
+<div class="entry-grid">
+<div class="entry-card" onclick="goTo('p1b')">
+<div class="entry-icon">📊</div>
+<div class="entry-title">ดูผลสอบนักเรียน</div>
+<div class="entry-desc">เข้าระบบด้วย PIN ดูคะแนน วิเคราะห์จุดอ่อน</div>
+</div>
+<div class="entry-card" onclick="openReviewLibrary()">
+<div class="entry-icon">📚</div>
+<div class="entry-title">คลังทบทวน</div>
+<div class="entry-desc">เลือกข้อ/สุ่มข้อ ฝึกทำพร้อมเฉลย — ใครก็เข้าได้</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 
 <!-- PAGE 1b: เลือกชื่อนักเรียน -->
 <div class="page" id="p1b">
 <div class="container">
-  <button class="back-btn" onclick="goTo('p1')"><i class="ti ti-arrow-left" aria-hidden="true"></i> กลับ</button>
-  <div class="brand">
-    <div class="brand-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
-    <h1>ดูผลสอบนักเรียน</h1>
-    <p>เลือกชื่อนักเรียนเพื่อดูผลสอบ</p>
-  </div>
-  <div class="card">
-    <div class="field">
-      <label>เลือกชื่อนักเรียน</label>
-      <div class="combo" id="studentCombo">
-        <input id="studentSearch" type="text" autocomplete="off" placeholder="พิมพ์ชื่อเพื่อค้นหา…" oninput="filterStudents()" onfocus="filterStudents()" onkeydown="comboKey(event)">
-        <div id="studentOptions" class="combo-list"></div>
-      </div>
-    </div>
+<button class="back-btn" onclick="goTo('p1')"><i class="ti ti-arrow-left" aria-hidden="true"></i> กลับ</button>
+<div class="brand">
+<div class="brand-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
+<h1>ดูผลสอบนักเรียน</h1>
+<p>เลือกชื่อนักเรียนเพื่อดูผลสอบ</p>
+</div>
+<div class="card">
+<div class="field">
+<label>เลือกชื่อนักเรียน</label>
+<div class="combo" id="studentCombo">
+<input id="studentSearch" type="text" autocomplete="off" placeholder="พิมพ์ชื่อเพื่อค้นหา…" oninput="filterStudents()" onfocus="filterStudents()" onkeydown="comboKey(event)">
+<div id="studentOptions" class="combo-list"></div>
+</div>
+</div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem">
-      <button class="btn btn-ghost" onclick="loadStudents()"><i class="ti ti-refresh" aria-hidden="true"></i> โหลดรายชื่อ</button>
-      <button class="btn" onclick="goToPin()">ถัดไป <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
-    </div>
-    <div class="status err" id="p1status"></div>
-  </div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem">
+<button class="btn btn-ghost" onclick="loadStudents()"><i class="ti ti-refresh" aria-hidden="true"></i> โหลดรายชื่อ</button>
+<button class="btn" onclick="goToPin()">ถัดไป <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+</div>
+<div class="status err" id="p1status"></div>
+</div>
 </div>
 </div>
 
 <!-- PAGE 2: PIN -->
 <div class="page" id="p2">
 <div class="container">
-  <button class="back-btn" onclick="goTo('p1b')"><i class="ti ti-arrow-left" aria-hidden="true"></i> กลับ</button>
-  <div class="brand" style="margin-bottom:1.5rem">
-    <div id="p2avatar" style="width:56px;height:56px;border-radius:50%;background:var(--blue-l);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;color:var(--blue)"></div>
-    <h1 id="p2name" style="font-size:18px"></h1>
-    <p>กรอก PIN 4 หลักของคุณ</p>
-  </div>
-  <div class="card">
-    <div class="pin-display" id="pinDots">
-      <div class="pin-dot" id="dot0"></div>
-      <div class="pin-dot" id="dot1"></div>
-      <div class="pin-dot" id="dot2"></div>
-      <div class="pin-dot" id="dot3"></div>
-    </div>
-    <div class="attempts-msg" id="attemptsMsg"></div>
-    <div class="numpad">
-      <button class="num-btn" onclick="pinAdd(1)">1</button>
-      <button class="num-btn" onclick="pinAdd(2)">2</button>
-      <button class="num-btn" onclick="pinAdd(3)">3</button>
-      <button class="num-btn" onclick="pinAdd(4)">4</button>
-      <button class="num-btn" onclick="pinAdd(5)">5</button>
-      <button class="num-btn" onclick="pinAdd(6)">6</button>
-      <button class="num-btn" onclick="pinAdd(7)">7</button>
-      <button class="num-btn" onclick="pinAdd(8)">8</button>
-      <button class="num-btn" onclick="pinAdd(9)">9</button>
-      <button class="num-btn empty" disabled></button>
-      <button class="num-btn" onclick="pinAdd(0)">0</button>
-      <button class="num-btn del" onclick="pinDel()">⌫</button>
-    </div>
-    <div class="status" id="p2status" style="margin-top:1rem"></div>
-  </div>
+<button class="back-btn" onclick="goTo('p1b')"><i class="ti ti-arrow-left" aria-hidden="true"></i> กลับ</button>
+<div class="brand" style="margin-bottom:1.5rem">
+<div id="p2avatar" style="width:56px;height:56px;border-radius:50%;background:var(--blue-l);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;color:var(--blue)"></div>
+<h1 id="p2name" style="font-size:18px"></h1>
+<p>กรอก PIN 4 หลักของคุณ</p>
+</div>
+<div class="card">
+<div class="pin-display" id="pinDots">
+<div class="pin-dot" id="dot0"></div>
+<div class="pin-dot" id="dot1"></div>
+<div class="pin-dot" id="dot2"></div>
+<div class="pin-dot" id="dot3"></div>
+</div>
+<div class="attempts-msg" id="attemptsMsg"></div>
+<div class="numpad">
+<button class="num-btn" onclick="pinAdd(1)">1</button>
+<button class="num-btn" onclick="pinAdd(2)">2</button>
+<button class="num-btn" onclick="pinAdd(3)">3</button>
+<button class="num-btn" onclick="pinAdd(4)">4</button>
+<button class="num-btn" onclick="pinAdd(5)">5</button>
+<button class="num-btn" onclick="pinAdd(6)">6</button>
+<button class="num-btn" onclick="pinAdd(7)">7</button>
+<button class="num-btn" onclick="pinAdd(8)">8</button>
+<button class="num-btn" onclick="pinAdd(9)">9</button>
+<button class="num-btn empty" disabled></button>
+<button class="num-btn" onclick="pinAdd(0)">0</button>
+<button class="num-btn del" onclick="pinDel()">⌫</button>
+</div>
+<div class="status" id="p2status" style="margin-top:1rem"></div>
+</div>
 </div>
 </div>
 
 <!-- PAGE 3: เลือก mode -->
 <div class="page" id="p3">
 <div class="container">
-  <button class="back-btn" onclick="goTo('p1');resetAll()"><i class="ti ti-arrow-left" aria-hidden="true"></i> กลับ</button>
-  <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.75rem">
-    <div id="modeAvatar" style="width:46px;height:46px;border-radius:50%;background:var(--blue-l);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--blue);flex-shrink:0"></div>
-    <div>
-      <div style="font-size:16px;font-weight:500;color:var(--text1)" id="modeName"></div>
-      <div style="font-size:12px;color:var(--text3)">เข้าสู่ระบบสำเร็จ — เลือกมุมมองที่ต้องการ</div>
-    </div>
-  </div>
+<button class="back-btn" onclick="goTo('p1');resetAll()"><i class="ti ti-arrow-left" aria-hidden="true"></i> กลับ</button>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.75rem">
+<div id="modeAvatar" style="width:46px;height:46px;border-radius:50%;background:var(--blue-l);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--blue);flex-shrink:0"></div>
+<div>
+<div style="font-size:16px;font-weight:500;color:var(--text1)" id="modeName"></div>
+<div style="font-size:12px;color:var(--text3)">เข้าสู่ระบบสำเร็จ — เลือกมุมมองที่ต้องการ</div>
+</div>
+</div>
 
-  <div class="field" style="margin-bottom:1.2rem">
-    <label style="display:block;font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px">กรองเฉพาะบท</label>
-    <div class="sel-wrap"><select id="topicFilter" style="width:100%;height:50px;padding:0 16px;font-family:Sarabun,sans-serif;font-size:15px;color:var(--text1);background:var(--surf);border:1.5px solid var(--border-md);border-radius:var(--r-md);outline:none;-webkit-appearance:none;appearance:none"><option value="">— ทุกบท (ใช้ผลสอบล่าสุด) —</option><option value="เซต">เซต</option><option value="จำนวนจริง ชุดที่ 1">จำนวนจริง ชุดที่ 1</option><option value="จำนวนจริง ชุดที่ 2">จำนวนจริง ชุดที่ 2</option><option value="ความสัมพันธ์และฟังก์ชัน ชุดที่ 1">ความสัมพันธ์และฟังก์ชัน ชุดที่ 1</option><option value="ความสัมพันธ์และฟังก์ชัน ชุดที่ 2">ความสัมพันธ์และฟังก์ชัน ชุดที่ 2</option><option value="เรขาคณิตวิเคราะห์และภาคตัดกรวย ชุดที่ 1">เรขาคณิตวิเคราะห์และภาคตัดกรวย ชุดที่ 1</option><option value="เรขาคณิตวิเคราะห์และภาคตัดกรวย ชุดที่ 2">เรขาคณิตวิเคราะห์และภาคตัดกรวย ชุดที่ 2</option><option value="Exponential logarithm ชุดที่ 1">Exponential logarithm ชุดที่ 1</option><option value="Exponential logarithm ชุดที่ 2">Exponential logarithm ชุดที่ 2</option><option value="ตรีโกณมิติ ชุดที่ 1">ตรีโกณมิติ ชุดที่ 1</option><option value="ตรีโกณมิติ ชุดที่ 2">ตรีโกณมิติ ชุดที่ 2</option><option value="เวกเตอร์">เวกเตอร์</option><option value="จำนวนเชิงซ้อน">จำนวนเชิงซ้อน</option><option value="ลำดับและอนุกรม ชุดที่ 1">ลำดับและอนุกรม ชุดที่ 1</option><option value="ลำดับและอนุกรม ชุดที่ 2">ลำดับและอนุกรม ชุดที่ 2</option><option value="แคลคูลัส ชุดที่ 1">แคลคูลัส ชุดที่ 1</option><option value="แคลคูลัส ชุดที่ 2">แคลคูลัส ชุดที่ 2</option><option value="เรียงลำดับและจัดหมู่">เรียงลำดับและจัดหมู่</option><option value="ความน่าจะเป็น">ความน่าจะเป็น</option><option value="สถิติ ชุดที่ 1">สถิติ ชุดที่ 1</option><option value="สถิติ ชุดที่ 2">สถิติ ชุดที่ 2</option><option value="เมทริกซ์">เมทริกซ์</option><option value="ตรรกศาสตร์">ตรรกศาสตร์</option></select></div>
-  </div>
-  <div class="mode-grid">
-    <div class="mode-card" onclick="showDashboard('student')">
-      <div class="mode-icon">👤</div>
-      <div class="mode-title">มุมมองนักเรียน</div>
-      <div class="mode-desc">รายข้อ sub-topic เปรียบเทียบกลุ่ม</div>
-    </div>
-    <div class="mode-card" onclick="showDashboard('parent')">
-      <div class="mode-icon">👨‍👩‍👧</div>
-      <div class="mode-title">มุมมองผู้ปกครอง</div>
-      <div class="mode-desc">สรุปภาษาง่าย วิเคราะห์ และคำแนะนำ</div>
-    </div>
-  </div>
+<div class="field" style="margin-bottom:1.2rem">
+<label style="display:block;font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px">กรองเฉพาะบท</label>
+<div class="sel-wrap"><select id="topicFilter" style="width:100%;height:50px;padding:0 16px;font-family:Sarabun,sans-serif;font-size:15px;color:var(--text1);background:var(--surf);border:1.5px solid var(--border-md);border-radius:var(--r-md);outline:none;-webkit-appearance:none;appearance:none"><option value="">— ทุกบท (ใช้ผลสอบล่าสุด) —</option><option value="เซต">เซต</option><option value="จำนวนจริง ชุดที่ 1">จำนวนจริง ชุดที่ 1</option><option value="จำนวนจริง ชุดที่ 2">จำนวนจริง ชุดที่ 2</option><option value="ความสัมพันธ์และฟังก์ชัน ชุดที่ 1">ความสัมพันธ์และฟังก์ชัน ชุดที่ 1</option><option value="ความสัมพันธ์และฟังก์ชัน ชุดที่ 2">ความสัมพันธ์และฟังก์ชัน ชุดที่ 2</option><option value="เรขาคณิตวิเคราะห์และภาคตัดกรวย ชุดที่ 1">เรขาคณิตวิเคราะห์และภาคตัดกรวย ชุดที่ 1</option><option value="เรขาคณิตวิเคราะห์และภาคตัดกรวย ชุดที่ 2">เรขาคณิตวิเคราะห์และภาคตัดกรวย ชุดที่ 2</option><option value="Exponential logarithm ชุดที่ 1">Exponential logarithm ชุดที่ 1</option><option value="Exponential logarithm ชุดที่ 2">Exponential logarithm ชุดที่ 2</option><option value="ตรีโกณมิติ ชุดที่ 1">ตรีโกณมิติ ชุดที่ 1</option><option value="ตรีโกณมิติ ชุดที่ 2">ตรีโกณมิติ ชุดที่ 2</option><option value="เวกเตอร์">เวกเตอร์</option><option value="จำนวนเชิงซ้อน">จำนวนเชิงซ้อน</option><option value="ลำดับและอนุกรม ชุดที่ 1">ลำดับและอนุกรม ชุดที่ 1</option><option value="ลำดับและอนุกรม ชุดที่ 2">ลำดับและอนุกรม ชุดที่ 2</option><option value="แคลคูลัส ชุดที่ 1">แคลคูลัส ชุดที่ 1</option><option value="แคลคูลัส ชุดที่ 2">แคลคูลัส ชุดที่ 2</option><option value="เรียงลำดับและจัดหมู่">เรียงลำดับและจัดหมู่</option><option value="ความน่าจะเป็น">ความน่าจะเป็น</option><option value="สถิติ ชุดที่ 1">สถิติ ชุดที่ 1</option><option value="สถิติ ชุดที่ 2">สถิติ ชุดที่ 2</option><option value="เมทริกซ์">เมทริกซ์</option><option value="ตรรกศาสตร์">ตรรกศาสตร์</option></select></div>
+</div>
+<div class="mode-grid">
+<div class="mode-card" onclick="showDashboard('student')">
+<div class="mode-icon">👤</div>
+<div class="mode-title">มุมมองนักเรียน</div>
+<div class="mode-desc">รายข้อ sub-topic เปรียบเทียบกลุ่ม</div>
+</div>
+<div class="mode-card" onclick="showDashboard('parent')">
+<div class="mode-icon">👨‍👩‍👧</div>
+<div class="mode-title">มุมมองผู้ปกครอง</div>
+<div class="mode-desc">สรุปภาษาง่าย วิเคราะห์ และคำแนะนำ</div>
+</div>
+</div>
 </div>
 </div>
 
 <!-- PAGE 4: นักเรียน dashboard -->
 <div class="page" id="p4">
 <div class="container">
-  <button class="back-btn" onclick="goTo('p3')"><i class="ti ti-arrow-left" aria-hidden="true"></i> เปลี่ยนมุมมอง</button>
-  <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.25rem">
-    <div id="s-avatar" style="width:42px;height:42px;border-radius:50%;background:var(--blue-l);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--blue);flex-shrink:0"></div>
-    <div>
-      <div style="font-size:15px;font-weight:500;color:var(--text1)"><span id="s-name"></span> <span style="font-size:12px;color:var(--text2)" id="s-group"></span></div>
-      <div style="font-size:11px;color:var(--text3)" id="s-topic"></div>
-    </div>
-    <div style="margin-left:auto;text-align:right">
-      <div style="font-size:11px;color:var(--text3)">อันดับในกลุ่ม</div>
-      <div style="font-size:20px;font-weight:500;color:var(--blue)" id="s-rank"></div>
-    </div>
-  </div>
-  <div class="metric-row">
-    <div class="metric">
-      <div class="metric-label">คะแนน</div>
-      <div class="metric-val" style="color:var(--blue)" id="s-score"></div>
-      <div class="metric-sub" id="s-scorepct"></div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">จุดต้องแก้</div>
-      <div class="metric-val" style="color:var(--red)" id="s-wrong"></div>
-      <div class="metric-sub" id="s-wrongsub"></div>
-    </div>
-  </div>
-  <div id="s-encourage" style="display:none;background:var(--blue-l);border-radius:var(--r-md);padding:12px 16px;font-size:13px;color:var(--text1);line-height:1.6;margin-bottom:14px"></div>
-  <div class="tab-row" style="flex-wrap:wrap">
-    <button class="tab active" onclick="switchTab('questions')">รายข้อ</button>
-    <button class="tab" onclick="switchTab('subtopic')">Sub-topic</button>
-    <button class="tab" onclick="switchTab('plan')">แผนทบทวน</button>
-    <button class="tab" onclick="switchTab('practice')">🎯 ฝึกเพิ่ม</button>
-    <button class="tab" onclick="switchTab('compare')">กลุ่ม</button>
-  </div>
-  <div id="pane-questions" class="pane active">
-    <div class="d-card" style="padding:1rem">
-      <div class="slabel">ข้อ 1–15</div>
-      <div class="q-grid" id="qgrid1"></div>
-      <div class="slabel" style="margin-top:10px">ข้อ 16–30</div>
-      <div class="q-grid" id="qgrid2"></div>
-      <div class="leg-row">
-        <span><span class="leg-dot" style="background:#4C9A2A"></span>ถูก</span>
-        <span><span class="leg-dot" style="background:#FDE910"></span>สะเพร่า</span>
-        <span><span class="leg-dot" style="background:#F5A623"></span>คอนเซปต์</span>
-        <span><span class="leg-dot" style="background:#D93025"></span>ผิด/ทำไม่ได้</span>
-        <span><span class="leg-dot" style="background:#a855f7"></span>ไม่ทัน</span>
-      </div>
-    </div>
-    <div class="d-card"><div class="slabel">ข้อที่ต้องทบทวน</div><div id="s-reviewList"></div></div>
-  </div>
-  <div id="pane-subtopic" class="pane">
-    <div class="d-card"><div class="slabel">แผนที่บท — ผลแยกตามหัวข้อ</div><div id="s-subtopicHint" style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.6"></div><div id="s-subtopicList"></div></div>
-    <div class="d-card" style="padding:1rem">
-      <div class="slabel" style="margin-bottom:8px">% ถูกแยกตามระดับความยาก</div>
-      <div style="position:relative;width:100%;height:180px"><canvas id="s-diffChart"></canvas></div>
-    </div>
-  </div>
-  <div id="pane-plan" class="pane">
-    <div class="d-card">
-      <div class="slabel">แผนทบทวน — เรียงตามคะแนนที่ได้คืนง่ายที่สุด</div>
-      <div style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.6">เริ่มจากขั้นที่ 1 ใช้แรงน้อยแต่ได้คะแนนคืนเร็วที่สุด ✨</div>
-      <div id="s-studyPlan"></div>
-    </div>
-  </div>
-  <div id="pane-practice" class="pane">
-    <div id="s-practice"></div>
-  </div>
-  <div id="pane-compare" class="pane">
-    <div class="d-card">
-      <div class="slabel">① เทียบในกลุ่ม <span id="s-grpName" style="color:var(--text2);font-weight:400"></span></div>
-      <div id="s-grpStats" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0"></div>
-      <div id="s-compareList"></div>
-    </div>
-    <div class="d-card">
-      <div class="slabel">② เทียบกับกลุ่มอื่น</div>
-      <div style="font-size:12px;color:var(--text2);margin:4px 0 10px">เลือกกลุ่มที่อยากนำมาเทียบ (ทุกกลุ่มที่สอบบทเดียวกัน)</div>
-      <div id="s-grpPicker" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px"></div>
-      <div id="s-allStats" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px"></div>
-      <div id="s-allDistWrap" style="margin-bottom:14px">
-        <div class="slabel" style="font-size:12px;margin-bottom:6px">การกระจายคะแนนทั้งหมด — ▾ คือตำแหน่งของคุณ</div>
-        <div style="position:relative;width:100%;height:170px"><canvas id="s-distChart"></canvas></div>
-      </div>
-      <div id="s-top10Wrap">
-        <div class="slabel" style="font-size:12px;margin-bottom:6px">อันดับต้น ๆ (Top 10)</div>
-        <div id="s-top10"></div>
-      </div>
-      <div id="s-allCompareList" style="display:none"></div>
-    </div>
-    <div class="d-card">
-      <div class="slabel">หัวข้อที่กลุ่มควรทบทวนร่วมกัน</div>
-      <div style="font-size:12px;color:var(--text2);margin-bottom:10px">เรียงจากหัวข้อที่ทั้งกลุ่มทำได้ต่ำสุด — เหมาะกับการติวรวมกลุ่ม</div>
-      <div id="s-grpWeak"></div>
-    </div>
-    <div class="d-card" style="padding:1rem">
-      <div class="slabel" style="margin-bottom:8px">คะแนน vs สะเพร่า (ในกลุ่ม)</div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="s-groupChart"></canvas></div>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;font-size:11px;color:var(--text2)">
-        <span><span class="leg-dot" style="background:#185FA5"></span>คะแนน (คุณ)</span>
-        <span><span class="leg-dot" style="background:#B5D4F4"></span>คะแนน (เพื่อน)</span>
-        <span><span class="leg-dot" style="background:#FDE910"></span>สะเพร่า</span>
-      </div>
-    </div>
-  </div>
+<button class="back-btn" onclick="goTo('p3')"><i class="ti ti-arrow-left" aria-hidden="true"></i> เปลี่ยนมุมมอง</button>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.25rem">
+<div id="s-avatar" style="width:42px;height:42px;border-radius:50%;background:var(--blue-l);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--blue);flex-shrink:0"></div>
+<div>
+<div style="font-size:15px;font-weight:500;color:var(--text1)"><span id="s-name"></span> <span style="font-size:12px;color:var(--text2)" id="s-group"></span></div>
+<div style="font-size:11px;color:var(--text3)" id="s-topic"></div>
+</div>
+<div style="margin-left:auto;text-align:right">
+<div style="font-size:11px;color:var(--text3)">อันดับในกลุ่ม</div>
+<div style="font-size:20px;font-weight:500;color:var(--blue)" id="s-rank"></div>
+</div>
+</div>
+<div class="metric-row">
+<div class="metric">
+<div class="metric-label">คะแนน</div>
+<div class="metric-val" style="color:var(--blue)" id="s-score"></div>
+<div class="metric-sub" id="s-scorepct"></div>
+</div>
+<div class="metric">
+<div class="metric-label">จุดต้องแก้</div>
+<div class="metric-val" style="color:var(--red)" id="s-wrong"></div>
+<div class="metric-sub" id="s-wrongsub"></div>
+</div>
+</div>
+<div id="s-encourage" style="display:none;background:var(--blue-l);border-radius:var(--r-md);padding:12px 16px;font-size:13px;color:var(--text1);line-height:1.6;margin-bottom:14px"></div>
+<div class="tab-row" style="flex-wrap:wrap">
+<button class="tab active" onclick="switchTab('questions')">รายข้อ</button>
+<button class="tab" onclick="switchTab('subtopic')">Sub-topic</button>
+<button class="tab" onclick="switchTab('plan')">แผนทบทวน</button>
+<button class="tab" onclick="switchTab('practice')">🎯 ฝึกเพิ่ม</button>
+<button class="tab" onclick="switchTab('compare')">กลุ่ม</button>
+<button class="tab" onclick="switchTab('progress')">📈 พัฒนาการ</button>
+</div>
+<div id="pane-questions" class="pane active">
+<div class="d-card" style="padding:1rem">
+<div class="slabel">ข้อ 1–15</div>
+<div class="q-grid" id="qgrid1"></div>
+<div class="slabel" style="margin-top:10px">ข้อ 16–30</div>
+<div class="q-grid" id="qgrid2"></div>
+<div class="leg-row">
+<span><span class="leg-dot" style="background:#4C9A2A"></span>ถูก</span>
+<span><span class="leg-dot" style="background:#FDE910"></span>สะเพร่า</span>
+<span><span class="leg-dot" style="background:#F5A623"></span>คอนเซปต์</span>
+<span><span class="leg-dot" style="background:#D93025"></span>ผิด/ทำไม่ได้</span>
+<span><span class="leg-dot" style="background:#a855f7"></span>ไม่ทัน</span>
+</div>
+</div>
+<div class="d-card"><div class="slabel">ข้อที่ต้องทบทวน</div><div id="s-reviewList"></div></div>
+</div>
+<div id="pane-subtopic" class="pane">
+<div class="d-card"><div class="slabel">แผนที่บท — ผลแยกตามหัวข้อ</div><div id="s-subtopicHint" style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.6"></div><div id="s-subtopicList"></div></div>
+<div class="d-card" style="padding:1rem">
+<div class="slabel" style="margin-bottom:8px">% ถูกแยกตามระดับความยาก</div>
+<div style="position:relative;width:100%;height:180px"><canvas id="s-diffChart"></canvas></div>
+</div>
+</div>
+<div id="pane-plan" class="pane">
+<div class="d-card">
+<div class="slabel">แผนทบทวน — เรียงตามคะแนนที่ได้คืนง่ายที่สุด</div>
+<div style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.6">เริ่มจากขั้นที่ 1 ใช้แรงน้อยแต่ได้คะแนนคืนเร็วที่สุด ✨</div>
+<div id="s-studyPlan"></div>
+</div>
+</div>
+<div id="pane-practice" class="pane">
+<div id="s-practice"></div>
+</div>
+<div id="pane-compare" class="pane">
+<div class="d-card">
+<div class="slabel">① เทียบในกลุ่ม <span id="s-grpName" style="color:var(--text2);font-weight:400"></span></div>
+<div id="s-grpStats" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0"></div>
+<div id="s-compareList"></div>
+</div>
+<div class="d-card">
+<div class="slabel">② เทียบกับกลุ่มอื่น</div>
+<div style="font-size:12px;color:var(--text2);margin:4px 0 10px">เลือกกลุ่มที่อยากนำมาเทียบ (ทุกกลุ่มที่สอบบทเดียวกัน)</div>
+<div id="s-grpPicker" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px"></div>
+<div id="s-allStats" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px"></div>
+<div id="s-allDistWrap" style="margin-bottom:14px">
+<div class="slabel" style="font-size:12px;margin-bottom:6px">การกระจายคะแนนทั้งหมด — ▾ คือตำแหน่งของคุณ</div>
+<div style="position:relative;width:100%;height:170px"><canvas id="s-distChart"></canvas></div>
+</div>
+<div id="s-top10Wrap">
+<div class="slabel" style="font-size:12px;margin-bottom:6px">อันดับต้น ๆ (Top 10)</div>
+<div id="s-top10"></div>
+</div>
+<div id="s-allCompareList" style="display:none"></div>
+</div>
+<div class="d-card">
+<div class="slabel">หัวข้อที่กลุ่มควรทบทวนร่วมกัน</div>
+<div style="font-size:12px;color:var(--text2);margin-bottom:10px">เรียงจากหัวข้อที่ทั้งกลุ่มทำได้ต่ำสุด — เหมาะกับการติวรวมกลุ่ม</div>
+<div id="s-grpWeak"></div>
+</div>
+<div class="d-card" style="padding:1rem">
+<div class="slabel" style="margin-bottom:8px">คะแนน vs สะเพร่า (ในกลุ่ม)</div>
+<div style="position:relative;width:100%;height:220px"><canvas id="s-groupChart"></canvas></div>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;font-size:11px;color:var(--text2)">
+<span><span class="leg-dot" style="background:#185FA5"></span>คะแนน (คุณ)</span>
+<span><span class="leg-dot" style="background:#B5D4F4"></span>คะแนน (เพื่อน)</span>
+<span><span class="leg-dot" style="background:#FDE910"></span>สะเพร่า</span>
+</div>
+</div>
+</div>
+<div id="pane-progress" class="pane">
+<!-- chart และตารางสรุปจะถูก inject โดย renderProgressTrend() -->
+</div>
 </div>
 </div>
 
 <!-- PAGE 5: ผู้ปกครอง dashboard -->
 <div class="page" id="p5">
 <div class="container">
-  <button class="back-btn" onclick="goTo('p3')"><i class="ti ti-arrow-left" aria-hidden="true"></i> เปลี่ยนมุมมอง</button>
-  <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem">
-    <div id="p-avatar" style="width:46px;height:46px;border-radius:50%;background:var(--blue-l);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--blue);flex-shrink:0"></div>
-    <div>
-      <div style="font-size:15px;font-weight:500;color:var(--text1)">รายงานผลการเรียน</div>
-      <div style="font-size:12px;color:var(--text3)" id="p-topic"></div>
-    </div>
-    <div style="margin-left:auto">
-      <span style="font-size:11px;color:var(--text3)">มุมมองผู้ปกครอง</span>
-      <div style="font-size:10px;background:var(--surf);padding:2px 8px;border-radius:10px;color:var(--text2);margin-top:2px;text-align:center">👨‍👩‍👧</div>
-    </div>
-  </div>
-  <div class="summary-box" id="p-summary"></div>
-  <div class="d-card">
-    <div class="slabel" style="margin-bottom:14px">วิเคราะห์ — ปัญหาหลักคืออะไร</div>
-    <div id="p-problems"></div>
-  </div>
-  <div class="d-card" id="p-weakcard">
-    <div class="slabel" style="margin-bottom:12px">หัวข้อที่ควรทบทวน</div>
-    <div id="p-weaktopics"></div>
-  </div>
-  <div id="p-actions"></div>
-  <div class="d-card" id="p-talkcard">
-    <div class="slabel" style="margin-bottom:4px">💬 คำถามชวนคุยกับลูก</div>
-    <div style="font-size:11px;color:var(--text3);margin-bottom:12px">คำถามปลายเปิดช่วยให้ลูกเล่าได้มากกว่าคำถามว่า "ได้คะแนนเท่าไหร่"</div>
-    <div id="p-talkList"></div>
-  </div>
-  <div class="d-card" style="padding:1rem">
-    <div class="slabel" style="margin-bottom:10px">ภาพรวมรายข้อ</div>
-    <div class="q-grid" id="p-qgrid1"></div>
-    <div class="q-grid" style="margin-top:4px" id="p-qgrid2"></div>
-    <div class="leg-row">
-      <span><span class="leg-dot" style="background:#4C9A2A"></span>ถูก</span>
-      <span><span class="leg-dot" style="background:#FDE910"></span>สะเพร่า</span>
-      <span><span class="leg-dot" style="background:#F5A623"></span>คอนเซปต์</span>
-      <span><span class="leg-dot" style="background:#D93025"></span>ผิด/ทำไม่ได้</span>
-      <span><span class="leg-dot" style="background:#a855f7"></span>ไม่ทัน</span>
-    </div>
-  </div>
+<button class="back-btn" onclick="goTo('p3')"><i class="ti ti-arrow-left" aria-hidden="true"></i> เปลี่ยนมุมมอง</button>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem">
+<div id="p-avatar" style="width:46px;height:46px;border-radius:50%;background:var(--blue-l);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--blue);flex-shrink:0"></div>
+<div>
+<div style="font-size:15px;font-weight:500;color:var(--text1)">รายงานผลการเรียน</div>
+<div style="font-size:12px;color:var(--text3)" id="p-topic"></div>
+</div>
+<div style="margin-left:auto">
+<span style="font-size:11px;color:var(--text3)">มุมมองผู้ปกครอง</span>
+<div style="font-size:10px;background:var(--surf);padding:2px 8px;border-radius:10px;color:var(--text2);margin-top:2px;text-align:center">👨‍👩‍👧</div>
+</div>
+</div>
+<div class="summary-box" id="p-summary"></div>
+<div class="d-card">
+<div class="slabel" style="margin-bottom:14px">วิเคราะห์ — ปัญหาหลักคืออะไร</div>
+<div id="p-problems"></div>
+</div>
+<div class="d-card" id="p-weakcard">
+<div class="slabel" style="margin-bottom:12px">หัวข้อที่ควรทบทวน</div>
+<div id="p-weaktopics"></div>
+</div>
+<div id="p-actions"></div>
+<div class="d-card" id="p-talkcard">
+<div class="slabel" style="margin-bottom:4px">💬 คำถามชวนคุยกับลูก</div>
+<div style="font-size:11px;color:var(--text3);margin-bottom:12px">คำถามปลายเปิดช่วยให้ลูกเล่าได้มากกว่าคำถามว่า "ได้คะแนนเท่าไหร่"</div>
+<div id="p-talkList"></div>
+</div>
+<div class="d-card" style="padding:1rem">
+<div class="slabel" style="margin-bottom:10px">ภาพรวมรายข้อ</div>
+<div class="q-grid" id="p-qgrid1"></div>
+<div class="q-grid" style="margin-top:4px" id="p-qgrid2"></div>
+<div class="leg-row">
+<span><span class="leg-dot" style="background:#4C9A2A"></span>ถูก</span>
+<span><span class="leg-dot" style="background:#FDE910"></span>สะเพร่า</span>
+<span><span class="leg-dot" style="background:#F5A623"></span>คอนเซปต์</span>
+<span><span class="leg-dot" style="background:#D93025"></span>ผิด/ทำไม่ได้</span>
+<span><span class="leg-dot" style="background:#a855f7"></span>ไม่ทัน</span>
+</div>
+</div>
 </div>
 </div>
 
 <!-- PAGE 6: คลังทบทวน — เลือกบท -->
 <div class="page" id="p6">
 <div class="container">
-  <button class="back-btn" onclick="goTo('p1')"><i class="ti ti-arrow-left" aria-hidden="true"></i> กลับ</button>
-  <div class="brand">
-    <div class="brand-icon">📚</div>
-    <h1>คลังทบทวน</h1>
-    <p>เลือกบทที่ต้องการฝึก</p>
-  </div>
-  <div id="rv-chapList"></div>
+<button class="back-btn" onclick="goTo('p1')"><i class="ti ti-arrow-left" aria-hidden="true"></i> กลับ</button>
+<div class="brand">
+<div class="brand-icon">📚</div>
+<h1>คลังทบทวน</h1>
+<p>เลือกบทที่ต้องการฝึก</p>
+</div>
+<div id="rv-chapList"></div>
 </div>
 </div>
 
 <!-- PAGE 7: คลังทบทวน — รายข้อ + สุ่ม -->
 <div class="page" id="p7">
 <div class="container">
-  <button class="back-btn" onclick="goTo('p6')"><i class="ti ti-arrow-left" aria-hidden="true"></i> เลือกบทอื่น</button>
-  <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem">
-    <div class="chap-icon" id="rv-chapIcon">📐</div>
-    <div>
-      <div style="font-size:17px;font-weight:500;color:var(--text1)" id="rv-chapName"></div>
-      <div style="font-size:12px;color:var(--text3)" id="rv-chapSub"></div>
-    </div>
-  </div>
-  <div class="tab-row">
-    <button class="tab active" id="rvtab-browse" onclick="rvSwitchTab('browse')">เลือกข้อเอง</button>
-    <button class="tab" id="rvtab-random" onclick="rvSwitchTab('random')">🎲 สุ่มข้อ</button>
-  </div>
+<button class="back-btn" onclick="goTo('p6')"><i class="ti ti-arrow-left" aria-hidden="true"></i> เลือกบทอื่น</button>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem">
+<div class="chap-icon" id="rv-chapIcon">📐</div>
+<div>
+<div style="font-size:17px;font-weight:500;color:var(--text1)" id="rv-chapName"></div>
+<div style="font-size:12px;color:var(--text3)" id="rv-chapSub"></div>
+</div>
+</div>
+<div class="tab-row">
+<button class="tab active" id="rvtab-browse" onclick="rvSwitchTab('browse')">เลือกข้อเอง</button>
+<button class="tab" id="rvtab-random" onclick="rvSwitchTab('random')">🎲 สุ่มข้อ</button>
+</div>
 
-  <!-- TAB: เลือกข้อเอง -->
-  <div class="pane active" id="rvpane-browse">
-    <div class="d-card" style="padding:1rem">
-      <div class="rv-stats">
-        <div class="rv-stat"><div class="rv-stat-num" id="rv-total">0</div><div class="rv-stat-lbl">ทั้งหมด</div></div>
-        <div class="rv-stat"><div class="rv-stat-num" id="rv-seen" style="color:var(--green)">0</div><div class="rv-stat-lbl">ดูแล้ว</div></div>
-        <div class="rv-stat"><div class="rv-stat-num" id="rv-show">0</div><div class="rv-stat-lbl">แสดง</div></div>
-      </div>
-      <div class="rv-prog"><div class="rv-prog-fill" id="rv-prog" style="width:0%"></div></div>
-      <div class="rv-filter">
-        <div class="rv-frow" id="rv-fcat"><span class="rv-flbl">หมวด</span></div>
-        <div class="rv-frow" id="rv-flvl"><span class="rv-flbl">ระดับ</span></div>
-        <div class="rv-frow"><button class="chip" id="rv-unseen-chip" onclick="rvToggleUnseen()">เฉพาะที่ยังไม่ดู</button></div>
-      </div>
-      <div class="rv-search"><input id="rv-search" placeholder="ค้นหา หมวด / ปีสอบ / เลขข้อ…" oninput="rvRender()"></div>
-    </div>
-    <div id="rv-list"></div>
-  </div>
+<!-- TAB: เลือกข้อเอง -->
+<div class="pane active" id="rvpane-browse">
+<div class="d-card" style="padding:1rem">
+<div class="rv-stats">
+<div class="rv-stat"><div class="rv-stat-num" id="rv-total">0</div><div class="rv-stat-lbl">ทั้งหมด</div></div>
+<div class="rv-stat"><div class="rv-stat-num" id="rv-seen" style="color:var(--green)">0</div><div class="rv-stat-lbl">ดูแล้ว</div></div>
+<div class="rv-stat"><div class="rv-stat-num" id="rv-show">0</div><div class="rv-stat-lbl">แสดง</div></div>
+</div>
+<div class="rv-prog"><div class="rv-prog-fill" id="rv-prog" style="width:0%"></div></div>
+<div class="rv-filter">
+<div class="rv-frow" id="rv-fcat"><span class="rv-flbl">หมวด</span></div>
+<div class="rv-frow" id="rv-flvl"><span class="rv-flbl">ระดับ</span></div>
+<div class="rv-frow"><button class="chip" id="rv-unseen-chip" onclick="rvToggleUnseen()">เฉพาะที่ยังไม่ดู</button></div>
+</div>
+<div class="rv-search"><input id="rv-search" placeholder="ค้นหา หมวด / ปีสอบ / เลขข้อ…" oninput="rvRender()"></div>
+</div>
+<div id="rv-list"></div>
+</div>
 
-  <!-- TAB: สุ่มข้อ -->
-  <div class="pane" id="rvpane-random">
-    <div class="d-card">
-      <div class="slabel">ตั้งค่าการสุ่ม</div>
-      <div class="rv-filter">
-        <div class="rv-frow" id="rvr-fcat"><span class="rv-flbl">หมวด</span></div>
-        <div class="rv-frow" id="rvr-flvl"><span class="rv-flbl">ระดับ</span></div>
-        <div class="rv-frow"><button class="chip" id="rvr-unseen-chip" onclick="rvrToggleUnseen()">เน้นที่ยังไม่ดู</button></div>
-      </div>
-      <div class="rv-count-row">
-        <span class="rv-flbl">จำนวน</span>
-        <input type="range" min="1" max="20" value="5" id="rvr-slider" oninput="document.getElementById('rvr-cnt').textContent=this.value">
-        <span class="rv-count-val" id="rvr-cnt">5</span>
-        <span style="font-size:12px;color:var(--text2)">ข้อ</span>
-      </div>
-      <button class="rv-btn" onclick="rvrGenerate()">🎲 สุ่มข้อใหม่</button>
-    </div>
-    <div id="rvr-result"></div>
-  </div>
+<!-- TAB: สุ่มข้อ -->
+<div class="pane" id="rvpane-random">
+<div class="d-card">
+<div class="slabel">ตั้งค่าการสุ่ม</div>
+<div class="rv-filter">
+<div class="rv-frow" id="rvr-fcat"><span class="rv-flbl">หมวด</span></div>
+<div class="rv-frow" id="rvr-flvl"><span class="rv-flbl">ระดับ</span></div>
+<div class="rv-frow"><button class="chip" id="rvr-unseen-chip" onclick="rvrToggleUnseen()">เน้นที่ยังไม่ดู</button></div>
+</div>
+<div class="rv-count-row">
+<span class="rv-flbl">จำนวน</span>
+<input type="range" min="1" max="20" value="5" id="rvr-slider" oninput="document.getElementById('rvr-cnt').textContent=this.value">
+<span class="rv-count-val" id="rvr-cnt">5</span>
+<span style="font-size:12px;color:var(--text2)">ข้อ</span>
+</div>
+<button class="rv-btn" onclick="rvrGenerate()">🎲 สุ่มข้อใหม่</button>
+</div>
+<div id="rvr-result"></div>
+</div>
 </div>
 </div>
 

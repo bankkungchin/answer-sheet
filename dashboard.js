@@ -4,7 +4,7 @@
    ============================================================ */
 let pinBuffer='', pinAttempts=0, currentStudent='';
 let dashData = null;let dashErr='';let selectedGroups=null;
-let diffChartInst=null, groupChartInst=null, distChartInst=null;
+let diffChartInst=null, groupChartInst=null, distChartInst=null, trendChartInst=null;
 
 function goTo(id){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
 function resetAll(){ pinBuffer=''; pinAttempts=0; updatePinDots(); document.getElementById('attemptsMsg').textContent=''; document.getElementById('p2status').textContent=''; }
@@ -132,7 +132,7 @@ function ytBtn(query,label){
 function emojiOf(cat){
   cat=cat||'';
   if(/^[\u{1F534}\u{1F535}\u{1F7E0}\u{1F7E1}\u{1F7E2}\u{1F7E3}\u{1F7E4}\u{26AB}\u{26AA}]/u.test(cat)) return '';
-  return (typeof CAT_EMOJI!=='undefined' && CAT_EMOJI[cat]) || '\u2022';
+  return (typeof CAT_EMOJI!=='undefined' && CAT_EMOJI[cat]) || '•';
 }
 // ── หมวดหมู่: แปลงชื่อ sub-topic ของข้อสอบ → หมวดของคลังฝึก ──
 // บทแบบใหม่ (ตรีโกณ ฯลฯ): sub = ชื่อหมวดพร้อม emoji อยู่แล้ว → คืนค่าตรงๆ
@@ -373,7 +373,8 @@ async function fetchDashData(){
   const grpHi=grpScores.length?Math.max(...grpScores):0;
   const grpLo=grpScores.length?Math.min(...grpScores):0;
   const grpStats={avg:grpAvg,careAvg:grpCareAvg,hi:grpHi,lo:grpLo,count:groupMembers.length};
-  dashData={group,date,topic,score,care,concept,cant,timeout,wrong,blank,qResults,groupMembers,rank,allMembers,allRank,allAvg,groupsInTopic,subtopics,diffMap,myAna,grpSubtopics,grpStats,shortName:currentStudent.replace(/\s*\(.*\)/,'')};
+  const allExams=allMine.map(r=>({topic:r[4]||'',date:r[3]||'',score:parseInt(r[36])||0,care:parseInt(r[37])||0})).sort((a,b)=>a.date.localeCompare(b.date)||a.topic.localeCompare(b.topic));
+  dashData={group,date,topic,score,care,concept,cant,timeout,wrong,blank,qResults,groupMembers,rank,allMembers,allRank,allAvg,groupsInTopic,subtopics,diffMap,myAna,grpSubtopics,grpStats,allExams,shortName:currentStudent.replace(/\s*\(.*\)/,'')};
 }
 
 async function showDashboard(mode){
@@ -481,6 +482,7 @@ function renderStudentDash(d){
       </div>`;
     });
   }
+  renderProgressTrend(d);
   if(diffChartInst){diffChartInst.destroy();diffChartInst=null;}
   const diffLevels=Object.keys(d.diffMap).sort((a,b)=>a-b);
   diffChartInst=new Chart(document.getElementById('s-diffChart'),{type:'bar',data:{labels:diffLevels.map(l=>'ระดับ '+l),datasets:[{label:'% ถูก',data:diffLevels.map(lv=>Math.round(d.diffMap[lv].ok/d.diffMap[lv].total*100)),backgroundColor:['#B5D4F4','#85B7EB','#378ADD','#185FA5','#0C447C'],borderRadius:4,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+'%'}}},scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%',stepSize:25},grid:{color:'rgba(128,128,128,0.1)'}},x:{grid:{display:false}}}}});
@@ -733,8 +735,55 @@ function renderParentDash(d){
   for(let i=1;i<=30;i++){const g=document.getElementById(i<=15?'p-qgrid1':'p-qgrid2');const el=document.createElement('div');el.className='q-cell '+qClass[d.qResults[i]];el.textContent=i;g.appendChild(el);}
 }
 
+function renderProgressTrend(d){
+  if(trendChartInst){trendChartInst.destroy();trendChartInst=null;}
+  const wrap=document.getElementById('pane-progress');
+  if(!wrap)return;
+  if(!d.allExams||d.allExams.length<2){
+    wrap.innerHTML='<div class="d-card"><div style="font-size:13px;color:var(--text2);padding:8px 0;line-height:1.6">สอบแค่ครั้งเดียว — เมื่อสอบเพิ่มอีกบท แผนภูมิแนวโน้มจะแสดงที่นี่ครับ 📈</div></div>';
+    return;
+  }
+  const shorten=t=>{let s=t.replace(/^Exponential logarithm/i,'Expo').replace(/\s*ชุดที่\s*(\d+)$/,' ชุด$1');[['ความสัมพันธ์และฟังก์ชัน','ฟังก์ชัน'],['เรขาคณิตวิเคราะห์และภาคตัดกรวย','เรขาฯ'],['เรียงลำดับและจัดหมู่','เรียงฯ'],['ลำดับและอนุกรม','ลำดับฯ'],['ตรีโกณมิติ','ตรีโกณฯ']].forEach(([k,v])=>{s=s.replace(k,v);});return s;};
+  const exams=d.allExams;
+  const labels=exams.map(e=>shorten(e.topic));
+  const scores=exams.map(e=>e.score);
+  // linear regression
+  const n=scores.length, xm=(n-1)/2;
+  const ym=scores.reduce((a,b)=>a+b,0)/n;
+  let num=0,den=0;
+  scores.forEach((s,i)=>{num+=(i-xm)*(s-ym);den+=(i-xm)*(i-xm);});
+  const slope=den?num/den:0;
+  const trendData=scores.map((_,i)=>+(ym+slope*(i-xm)).toFixed(2));
+  const ptColors=scores.map(s=>s>=24?'#3B7D2A':s>=18?'#185FA5':s>=12?'#BA7517':'#A32D2D');
+  wrap.innerHTML=`<div class="d-card" style="padding:1rem">
+    <div class="slabel" style="margin-bottom:8px">📈 แนวโน้มคะแนน — ${exams.length} ครั้งที่สอบแล้ว</div>
+    <div style="position:relative;width:100%;height:200px"><canvas id="s-trendChart"></canvas></div>
+    <div style="display:flex;gap:14px;margin-top:10px;font-size:11px;color:var(--text2)">
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#185FA5;margin-right:4px;vertical-align:middle"></span>คะแนน</span>
+      <span><span style="display:inline-block;width:20px;height:2px;background:#F5A623;margin-right:4px;vertical-align:middle"></span>แนวโน้ม</span>
+    </div>
+  </div>
+  <div class="d-card" style="padding:1rem;margin-top:0">
+    <div class="slabel" style="margin-bottom:8px">ตารางสรุป</div>
+    ${exams.map((e,i)=>{const pct=Math.round(e.score/30*100);const cls=pct>=80?'diff-ok':pct>=60?'diff-warn':'diff-bad';return`<div class="st-row"><div style="flex:1"><div style="font-size:13px;color:var(--text1)">${shorten(e.topic)}</div><div style="font-size:11px;color:var(--text3)">${e.date}</div></div><div class="diff-badge ${cls}">${e.score}/30</div></div>`;}).join('')}
+  </div>`;
+  const ctx=document.getElementById('s-trendChart');
+  if(!ctx)return;
+  trendChartInst=new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets:[
+      {label:'คะแนน',data:scores,borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,0.08)',pointBackgroundColor:ptColors,pointBorderColor:ptColors,pointRadius:7,pointHoverRadius:9,tension:0.3,fill:true,order:1},
+      {label:'แนวโน้ม',data:trendData,borderColor:'#F5A623',borderDash:[5,3],borderWidth:2,pointRadius:0,tension:0,fill:false,order:2}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{title:i=>d.allExams[i[0].dataIndex].date+' · '+labels[i[0].dataIndex],label:c=>c.dataset.label+': '+(c.datasetIndex===0?c.raw+'/30 ('+Math.round(c.raw/30*100)+'%)':c.raw)}}},
+      scales:{y:{min:0,max:30,ticks:{stepSize:5,callback:v=>v+'/30'},grid:{color:'rgba(128,128,128,0.1)'}},x:{grid:{display:false},ticks:{font:{size:10},maxRotation:35,minRotation:15}}}
+    }
+  });
+}
+
 function switchTab(name){
-  const names=['questions','subtopic','plan','practice','compare'];
+  const names=['questions','subtopic','plan','practice','compare','progress'];
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',names[i]===name));
   document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('active',p.id==='pane-'+name));
   // ถ้ากด tab กลุ่ม → resize chart เพื่อแก้กรณี canvas วาดตอน pane ซ่อนอยู่
@@ -743,6 +792,9 @@ function switchTab(name){
       try{if(groupChartInst) groupChartInst.resize();}catch(e){}
       try{if(distChartInst)  distChartInst.resize();}catch(e){}
     }, 50);
+  }
+  if(name==='progress'){
+    setTimeout(()=>{try{if(trendChartInst) trendChartInst.resize();}catch(e){}},50);
   }
 }
 document.addEventListener('DOMContentLoaded',()=>{try{loadStudents();}catch(e){}});
