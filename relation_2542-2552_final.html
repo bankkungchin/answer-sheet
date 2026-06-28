@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>เฉลย ความสัมพันธ์ Ent/A-NET 2542–2552 | MathsBankTutor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans+Thai:wght@400;600&display=swap" rel="stylesheet">
+  <script>MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js" async></script>
+  <style>
+    :root {
+      --ink:#1a1a1a; --muted:#555; --light:#888; --line:#d4d8e8; --bg:#f4f5fb;
+      --paper:#ffffff; --accent:#2e4374; --accent-light:#eef2fb;
+      --amber:#7a4a00; --amber-bg:#fff8e8; --amber-border:#e8c870;
+      --red:#8b1a1a; --red-bg:#fff4f4; --red-border:#f5c6c6;
+      --green-bg:#f0faf2; --green-border:#a8d9b5; --green:#1a5c2e;
+      --blue-bg:#f0f5ff; --blue-border:#bdd0f8;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Sarabun','IBM Plex Sans Thai',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7}
+    .doc-header{background:linear-gradient(135deg,#1a2e5e 0%,#2e4374 60%,#3d5a99 100%);color:#fff;padding:20px 28px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .doc-header h1{font-size:1.25rem;font-weight:700;flex:1}
+    .back-btn{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:5px 14px;border-radius:20px;text-decoration:none;font-size:.82rem;white-space:nowrap}
+    .main{max-width:860px;margin:0 auto;padding:20px 18px 60px}
+    .ans-grid{display:flex;flex-wrap:wrap;gap:6px;background:var(--accent-light);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:16px}
+    .ans-chip{background:#fff;border:1px solid var(--line);border-radius:20px;padding:3px 11px;font-size:.82rem;font-weight:600;color:var(--accent)}
+    .ans-chip em{color:#92400e;font-style:normal;font-weight:700}
+    .idx-bar{position:sticky;top:0;z-index:100;background:var(--paper);border-bottom:1px solid var(--line);padding:7px 0;display:flex;flex-wrap:wrap;gap:5px;margin-bottom:22px}
+    .idx-bar a{background:var(--accent-light);color:var(--accent);border:1px solid var(--blue-border);border-radius:16px;padding:2px 10px;font-size:.78rem;font-weight:600;text-decoration:none}
+    .idx-bar a:hover{background:var(--accent);color:#fff}
+    .cheat{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:14px;padding:18px 22px;margin-bottom:28px}
+    .cheat h2{color:var(--accent);font-size:1rem;margin:0 0 10px}
+    .cheat ul{margin:6px 0;padding-left:20px}
+    .cheat li{margin:3px 0;font-size:.9rem}
+    .warn-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.84rem}
+    .warn-table th{background:var(--accent);color:#fff;padding:5px 9px;text-align:left}
+    .warn-table td{border:1px solid var(--line);padding:5px 9px;vertical-align:top}
+    .sol{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-bottom:22px;scroll-margin-top:52px}
+    .q-header{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+    .q-num{background:var(--accent);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0}
+    .q-badge{background:var(--accent-light);color:var(--accent);border:1px solid var(--blue-border);border-radius:20px;padding:2px 9px;font-size:.76rem;font-weight:600}
+    .q-type{background:#f3f4f6;color:var(--muted);border-radius:20px;padding:2px 9px;font-size:.76rem}
+    .stars{color:#f59e0b;font-size:.88rem;letter-spacing:1px}
+    .sub-tag{border-radius:20px;padding:2px 9px;font-size:.78rem;font-weight:600;background:#e0e7ff;color:#3730a3}
+    .problem{background:var(--blue-bg);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:12px 15px;margin-bottom:14px;font-size:.93rem}
+    .concept{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:10px;padding:11px 15px;margin-bottom:10px}
+    .concept-label{font-weight:700;color:var(--accent);margin-bottom:5px;font-size:.86rem}
+    .step{border-left:3px solid var(--line);padding:7px 0 7px 14px;margin-bottom:7px;font-size:.91rem}
+    .step-label{background:var(--accent);color:#fff;border-radius:4px;padding:1px 7px;font-size:.76rem;font-weight:700;margin-right:7px}
+    .careless{background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:11px 15px;margin-bottom:10px}
+    .careless-label{font-weight:700;color:var(--red);margin-bottom:5px;font-size:.86rem}
+    .technique{background:var(--green-bg);border:1px solid var(--green-border);border-radius:10px;padding:11px 15px;margin-bottom:10px}
+    .technique-label{font-weight:700;color:var(--green);margin-bottom:5px;font-size:.86rem}
+    .answer{background:var(--amber-bg);border:2px solid var(--amber-border);border-radius:10px;padding:9px 16px;display:flex;align-items:center;gap:10px;margin-top:4px}
+    .answer-lbl{font-weight:700;color:var(--amber);font-size:.95rem}
+    .answer-val{font-size:1.1rem;font-weight:700;color:#92400e}
+    .note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:.85rem;color:#78350f}
+  </style>
+</head>
+<body>
+<div id="top" class="doc-header">
+  <h1>📐 เฉลยข้อสอบ ความสัมพันธ์ — Ent/A-NET 2542–2552</h1>
+  <a href="index.html" class="back-btn">🔗 กลับ Dashboard</a>
+</div>
+<div class="main">
+
+  <!-- ans-grid -->
+  <div class="ans-grid">
+    <span class="ans-chip">ข้อ 1 <em>2</em></span>
+    <span class="ans-chip">ข้อ 2 <em>4</em></span>
+    <span class="ans-chip">ข้อ 3 <em>2</em></span>
+    <span class="ans-chip">ข้อ 4 <em>1</em></span>
+    <span class="ans-chip">ข้อ 5 <em>2</em></span>
+    <span class="ans-chip">ข้อ 6 <em>4</em></span>
+    <span class="ans-chip">ข้อ 7 <em>2</em></span>
+    <span class="ans-chip">ข้อ 8 <em>2</em></span>
+    <span class="ans-chip">ข้อ 9 <em>15</em></span>
+    <span class="ans-chip">ข้อ 10 <em>4</em></span>
+    <span class="ans-chip">ข้อ 11 <em>3</em></span>
+    <span class="ans-chip">ข้อ 12 <em>4</em></span>
+    <span class="ans-chip">ข้อ 13 <em>2</em></span>
+  </div>
+
+  <!-- idx-bar -->
+  <div class="idx-bar">
+    <a href="#top" style="background:#dbeafe">▲</a>
+    <a href="#q1">1</a>
+    <a href="#q2">2</a>
+    <a href="#q3">3</a>
+    <a href="#q4">4</a>
+    <a href="#q5">5</a>
+    <a href="#q6">6</a>
+    <a href="#q7">7</a>
+    <a href="#q8">8</a>
+    <a href="#q9">9</a>
+    <a href="#q10">10</a>
+    <a href="#q11">11</a>
+    <a href="#q12">12</a>
+    <a href="#q13">13</a>
+  </div>
+
+  <!-- cheat sheet -->
+  <div class="cheat">
+    <h2>📋 สูตรด่วน — ความสัมพันธ์</h2>
+    <ul>
+      <li>\(D_{r^{-1}} = R_r\) และ \(R_{r^{-1}} = D_r\) เสมอ (การผกผันสลับโดเมนกับเรนจ์)</li>
+      <li>หา \(D_r\): ดูเงื่อนไขใต้รากที่สอง (≥ 0), ตัวส่วน (≠ 0), ลอการิทึม (> 0)</li>
+      <li>หา \(R_r\): แก้หา x จาก y แล้วหาเงื่อนไข y ที่ทำให้ x มีค่าจริง</li>
+      <li>\(|A \times A| = |A|^2\); สมาชิกของ \(A \times A\) คือคู่อันดับ \((a,b)\)</li>
+      <li>พื้นที่สามเหลี่ยม = \(\tfrac{1}{2}|{det}|\) จากพิกัดสามจุด</li>
+    </ul>
+    <table class="warn-table">
+      <tr><th>สถานการณ์</th><th>ข้อผิดพลาดที่พบบ่อย</th><th>ที่ถูกต้อง</th></tr>
+      <tr><td>หา \(D_{r^{-1}}\)</td><td>คิดว่า \(D_{r^{-1}} = D_r\)</td><td>\(D_{r^{-1}} = R_r\)</td></tr>
+      <tr><td>ช่วงปิด vs เปิด</td><td>[-3,3] ∩ ((-∞,-3)∪(3,∞)) = ∅</td><td>= {-3,3} ≠ ∅</td></tr>
+      <tr><td>ตัวส่วน = 0</td><td>ใส่วงเล็บปิด ที่จุดยกเว้น</td><td>ต้องใช้วงเล็บเปิด</td></tr>
+      <tr><td>|x| vs x</td><td>ใช้ x แทน |x| ใน r⁻¹</td><td>ต้องใช้ |x| เมื่อโดเมนมีทั้ง ±</td></tr>
+    </table>
+  </div>
+
+  <!-- ข้อ 1 -->
+  <section class="sol" id="q1">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <span class="q-badge">Ent มี.ค.42</span>
+      <span class="stars">★★☆☆☆</span>
+      <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+      <span class="q-type">ตอบ: ข้อ 2</span>
+    </div>
+    <div class="problem">
+      กำหนดให้ \(r\) เป็นความสัมพันธ์ในเซตของจำนวนจริง โดยที่
+      \[r = \left\{(x,y)\,\middle|\, y = \sqrt{\dfrac{1-x^2}{1+x^2}}\right\}\]
+      ข้อใดต่อไปนี้ถูกต้อง?<br>
+      1) \(D_r = [-1,1],\ D_{r^{-1}} = [-1,1]\)<br>
+      2) \(D_r = [-1,1],\ D_{r^{-1}} = [0,1]\)<br>
+      3) \(D_r = [0,1],\ D_{r^{-1}} = [-1,1]\)<br>
+      4) \(D_r = [0,1],\ D_{r^{-1}} = [0,1]\)
+    </div>
+    <div class="concept">
+      <div class="concept-label">💡 แนวคิด</div>
+      \(D_{r^{-1}} = R_r\) และ \(R_{r^{-1}} = D_r\) เสมอ (การผกผันสลับโดเมนกับเรนจ์)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 1</span> <strong>หา \(D_r\)</strong>: ต้องการ \(\dfrac{1-x^2}{1+x^2} \ge 0\). เนื่องจาก \(1+x^2 > 0\) เสมอ จึงต้องการ \(1-x^2 \ge 0\) → \(x^2 \le 1\) → \(x \in [-1,1]\). ดังนั้น \(D_r = [-1,1]\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 2</span> <strong>หา \(R_r\)</strong>: สำหรับ \(x \in [-1,1]\): ที่ \(x=0\): \(y = \sqrt{1/1} = 1\) (สูงสุด). ที่ \(x = \pm 1\): \(y = \sqrt{0/2} = 0\) (ต่ำสุด). ดังนั้น \(R_r = [0,1]\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 3</span> <strong>หา \(D_{r^{-1}}\)</strong>: \(D_{r^{-1}} = R_r = [0,1]\)
+    </div>
+    <div class="careless">
+      <div class="careless-label">⚠️ จุดระวัง</div>
+      อย่าสับสนว่า \(D_{r^{-1}} = D_r\) — จริงๆ แล้ว \(D_{r^{-1}} = R_r\)!
+    </div>
+    <div class="answer">
+      <span class="answer-lbl">เฉลย</span>
+      <span class="answer-val">ข้อ 2: \(D_r = [-1,1],\ D_{r^{-1}} = [0,1]\) ✓</span>
+    </div>
+  </section>
+
+  <!-- ข้อ 2 -->
+  <section class="sol" id="q2">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <span class="q-badge">Ent มี.ค.43</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+      <span class="q-type">ตอบ: ข้อ 4</span>
+    </div>
+    <div class="problem">
+      กำหนดให้ \(r = \{(x,y)\mid y = \sqrt{9-x^2}\}\) และ \(s = \{(x,y)\mid y = \dfrac{1}{\sqrt{x^2-9}}\}\) พิจารณา:<br>
+      ก. \(D_r \cap R_{s^{-1}} = \emptyset\)<br>
+      ข. \(R_r \cup D_{s^{-1}} = (0,\infty)\)<br>
+      ข้อใดถูกต้อง?
+    </div>
+    <div class="step">
+      <span class="step-label">Step 1</span> <strong>วิเคราะห์ \(r\)</strong>: \(9-x^2 \ge 0\) → \(x \in [-3,3]\). ดังนั้น \(D_r = [-3,3]\), \(R_r = [0,3]\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 2</span> <strong>วิเคราะห์ \(s\)</strong>: ต้องการ \(x^2-9 > 0\) (เข้มงวด เพราะตัวส่วนห้ามเป็นศูนย์) → \(x \in (-\infty,-3)\cup(3,\infty)\). ดังนั้น \(D_s = (-\infty,-3)\cup(3,\infty)\), \(R_s = (0,\infty)\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 3</span> <strong>ผกผัน \(s\)</strong>: \(D_{s^{-1}} = R_s = (0,\infty)\), \(R_{s^{-1}} = D_s = (-\infty,-3)\cup(3,\infty)\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 4</span> <strong>ตรวจ ก.</strong>: \(D_r \cap R_{s^{-1}} = [-3,3] \cap \big((-\infty,-3)\cup(3,\infty)\big) = \{-3,3\} \ne \emptyset\) → <strong>ก. ผิด</strong>
+    </div>
+    <div class="step">
+      <span class="step-label">Step 5</span> <strong>ตรวจ ข.</strong>: \(R_r \cup D_{s^{-1}} = [0,3] \cup (0,\infty) = [0,\infty) \ne (0,\infty)\) (มี 0 รวมด้วย) → <strong>ข. ผิด</strong>
+    </div>
+    <div class="careless">
+      <div class="careless-label">⚠️ จุดระวัง</div>
+      \([-3,3] \cap ((-\infty,-3)\cup(3,\infty)) \ne \emptyset\) เพราะ \(\pm3\) อยู่ในทั้งสองเซต (ช่วงปิด vs เปิด!). และ \([0,\infty) \ne (0,\infty)\) เพราะ \([0,\infty)\) รวมจุด 0 ด้วย
+    </div>
+    <div class="answer">
+      <span class="answer-lbl">เฉลย</span>
+      <span class="answer-val">ข้อ 4: ก.ผิด ข.ผิด ✓</span>
+    </div>
+  </section>
+
+  <!-- ข้อ 3 -->
+  <section class="sol" id="q3">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <span class="q-badge">Ent มี.ค.44</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag">🟢 ความสัมพันธ์ผกผัน</span>
+      <span class="q-type">ตอบ: ข้อ 2</span>
+    </div>
+    <div class="problem">
+      กำหนดความสัมพันธ์ \(r = \{(x,y)\mid |y| = \dfrac{1}{x^2-1}\}\) พิจารณา:<br>
+      ก. \(D_r = (-\infty,-1)\cup(1,\infty)\)<br>
+      ข. \(r^{-1} = \{(x,y)\mid y = \pm\sqrt{\dfrac{1+x}{x}}\}\)<br>
+      ข้อใดถูกต้อง?
+    </div>
+    <div class="step">
+      <span class="step-label">Step 1</span> <strong>ตรวจ ก.</strong>: ต้องการ \(x^2-1 \ne 0\) และ \(\dfrac{1}{x^2-1} \ge 0\) (เพราะ \(|y| \ge 0\)) → ต้องการ \(x^2-1 > 0\) → \(x \in (-\infty,-1)\cup(1,\infty)\) → <strong>ก. ถูก</strong> ✓
+    </div>
+    <div class="step">
+      <span class="step-label">Step 2</span> <strong>หา \(r^{-1}\)</strong>: จาก \(|y| = \dfrac{1}{x^2-1}\) สลับ \(x, y\): \(|x| = \dfrac{1}{y^2-1}\) → \(y^2-1 = \dfrac{1}{|x|}\) → \(y^2 = 1 + \dfrac{1}{|x|} = \dfrac{|x|+1}{|x|}\) → \(y = \pm\sqrt{\dfrac{|x|+1}{|x|}}\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 3</span> <strong>ตรวจ ข.</strong>: ข้อ ข. บอก \(y = \pm\sqrt{\dfrac{1+x}{x}}\) ซึ่งใช้ \(x\) แทน \(|x|\) — ใช้ได้เฉพาะ \(x>0\) เท่านั้น ไม่ครอบคลุม \(x<0\) → <strong>ข. ผิด</strong>
+    </div>
+    <div class="careless">
+      <div class="careless-label">⚠️ จุดระวัง</div>
+      \(r^{-1}\) ต้องใช้ \(|x|\) เพราะโดเมนของ \(r^{-1}\) (= เรนจ์ของ \(r\)) มีทั้ง \(x>0\) และ \(x<0\) ในฝั่งบวก/ลบ
+    </div>
+    <div class="answer">
+      <span class="answer-lbl">เฉลย</span>
+      <span class="answer-val">ข้อ 2: ก.ถูก ข.ผิด ✓</span>
+    </div>
+  </section>
+
+  <!-- ข้อ 4 -->
+  <section class="sol" id="q4">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <span class="q-badge">Ent ต.ค.44</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+      <span class="q-type">ตอบ: ข้อ 1</span>
+    </div>
+    <div class="problem">
+      ถ้า \(r = \{(x,y) \in \mathbb{R}\times\mathbb{R} \mid 2x^3+3xy^2-x^2+y^2=0\}\) แล้วเรนจ์ของ \(r^{-1}\) เท่ากับข้อใด?<br>
+      1) \(\left(-\dfrac{1}{3},\dfrac{1}{2}\right]\)&emsp;
+      2) \(\left[-\dfrac{1}{2},\dfrac{1}{3}\right)\)&emsp;
+      3) \(\left(-\infty,-\dfrac{1}{3}\right)\cup\left(-\dfrac{1}{3},\infty\right)\)&emsp;
+      4) \((-\infty,\infty)\)
+    </div>
+    <div class="concept">
+      <div class="concept-label">💡 แนวคิด</div>
+      \(R_{r^{-1}} = D_r\) ดังนั้นเราต้องหาโดเมนของ \(r\) ก่อน
+    </div>
+    <div class="step">
+      <span class="step-label">Step 1</span> <strong>จัดรูป</strong>: \(2x^3 - x^2 + y^2(3x+1) = 0\) → \(y^2 = \dfrac{x^2-2x^3}{3x+1} = \dfrac{x^2(1-2x)}{3x+1}\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 2</span> <strong>เงื่อนไข</strong>: ต้องการ \(y^2 \ge 0\) และ \(3x+1 \ne 0\) (คือ \(x \ne -\tfrac{1}{3}\)). เนื่องจาก \(x^2 \ge 0\) เสมอ จึงต้องการ \(\dfrac{1-2x}{3x+1} \ge 0\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 3</span> <strong>วิเคราะห์เครื่องหมาย</strong>: จุดวิกฤต \(x = -\tfrac{1}{3}\) (ตัวส่วน) และ \(x = \tfrac{1}{2}\) (ตัวเศษ)
+      <ul style="margin-top:6px;padding-left:20px;font-size:.89rem">
+        <li>\(x < -\tfrac{1}{3}\): \((1-2x)>0\), \((3x+1)<0\) → ผลลบ ✗</li>
+        <li>\(-\tfrac{1}{3} < x < \tfrac{1}{2}\): ทั้งคู่บวก → ผลบวก ✓</li>
+        <li>\(x = \tfrac{1}{2}\): \(y^2 = 0\) ✓</li>
+        <li>\(x > \tfrac{1}{2}\): \((1-2x)<0\), \((3x+1)>0\) → ผลลบ ✗</li>
+      </ul>
+    </div>
+    <div class="step">
+      <span class="step-label">Step 4</span> <strong>สรุป</strong>: \(D_r = \left(-\dfrac{1}{3},\dfrac{1}{2}\right]\) → \(R_{r^{-1}} = \left(-\dfrac{1}{3},\dfrac{1}{2}\right]\)
+    </div>
+    <div class="careless">
+      <div class="careless-label">⚠️ จุดระวัง</div>
+      \(x = -\tfrac{1}{3}\) ต้องยกเว้น (ตัวส่วน = 0) → ใช้วงเล็บเปิดที่ปลายซ้าย. แต่ \(x = \tfrac{1}{2}\) ทำให้ \(y^2 = 0\) ได้จริง → ใช้วงเล็บปิดที่ปลายขวา
+    </div>
+    <div class="answer">
+      <span class="answer-lbl">เฉลย</span>
+      <span class="answer-val">ข้อ 1: \(\left(-\dfrac{1}{3},\dfrac{1}{2}\right]\) ✓</span>
+    </div>
+  </section>
+
+  <!-- ข้อ 5 -->
+  <section class="sol" id="q5">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <span class="q-badge">Ent มี.ค.45</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag">🟠 กราฟความสัมพันธ์</span>
+      <span class="q-type">ตอบ: ข้อ 2</span>
+    </div>
+    <div class="problem">
+      กำหนดให้ \(r_1 = \{(x,y)\mid e^{x+y} \le 1\}\), \(r_2 = \{(x,y)\mid \ln(x-3y+5) \ge 0\}\)<br>
+      พื้นที่ของบริเวณที่เป็นกราฟของ \(r_1 \cap r_2\) ซึ่งอยู่เหนือแกน \(x\) เท่ากับข้อใด?<br>
+      1) 1.5&emsp; 2) 2&emsp; 3) 2.5&emsp; 4) 3 ตารางหน่วย
+    </div>
+    <div class="step">
+      <span class="step-label">Step 1</span> <strong>แปลงอสมการ</strong>:
+      <ul style="margin-top:6px;padding-left:20px;font-size:.89rem">
+        <li>\(r_1\): \(e^{x+y} \le 1 = e^0\) → \(x+y \le 0\) → \(y \le -x\)</li>
+        <li>\(r_2\): \(\ln(x-3y+5) \ge 0 = \ln 1\) → \(x-3y+5 \ge 1\) → \(x-3y+4 \ge 0\) → \(y \le \dfrac{x+4}{3}\)</li>
+        <li>เหนือแกน \(x\): \(y \ge 0\)</li>
+      </ul>
+    </div>
+    <div class="step">
+      <span class="step-label">Step 2</span> <strong>หาจุดยอดสามเหลี่ยม</strong>:
+      <ul style="margin-top:6px;padding-left:20px;font-size:.89rem">
+        <li>\(y=0\) กับ \(y=-x\) → \(x=0\): จุด \((0,0)\)</li>
+        <li>\(y=0\) กับ \(y=\tfrac{x+4}{3}\) → \(0=\tfrac{x+4}{3}\) → \(x=-4\): จุด \((-4,0)\)</li>
+        <li>\(y=-x\) กับ \(y=\tfrac{x+4}{3}\) → \(-x = \tfrac{x+4}{3}\) → \(-3x = x+4\) → \(x=-1,\; y=1\): จุด \((-1,1)\)</li>
+      </ul>
+    </div>
+    <div class="step">
+      <span class="step-label">Step 3</span> <strong>คำนวณพื้นที่</strong> (สามจุด \((0,0)\), \((-4,0)\), \((-1,1)\)):
+      \[\text{พื้นที่} = \frac{1}{2}\left|\det\begin{pmatrix}-4-0 & 0-0 \\ -1-0 & 1-0\end{pmatrix}\right| = \frac{1}{2}|(-4)(1)-(0)(-1)| = \frac{1}{2}(4) = 2\]
+    </div>
+    <div class="technique">
+      <div class="technique-label">✅ เทคนิค</div>
+      วาดกราฟเส้นตรง 3 เส้น: \(y=0\), \(y=-x\), \(y=\tfrac{x+4}{3}\) แล้วหาจุดตัด 3 คู่ → พื้นที่สามเหลี่ยม = \(\tfrac{1}{2}|\det|\)
+    </div>
+    <div class="answer">
+      <span class="answer-lbl">เฉลย</span>
+      <span class="answer-val">ข้อ 2: 2 ตารางหน่วย ✓</span>
+    </div>
+  </section>
+
+  <!-- ข้อ 6 -->
+  <section class="sol" id="q6">
+    <div class="q-header">
+      <div class="q-num">6</div>
+      <span class="q-badge">Ent มี.ค.46</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+      <span class="q-type">ตอบ: ข้อ 4</span>
+    </div>
+    <div class="problem">
+      กำหนดให้ \(r = \{(x,y)\mid 0 \le x,\; 0 \le y \le 5\text{ และ }x^2-y^2-2x+6y \le 8\}\) พิจารณา:<br>
+      ก. \(D_r = [0,3]\)<br>
+      ข. ถ้า \(0 < c\) และ \((3,c) \in r\) แล้ว \(c = 5\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 1</span> <strong>จัดรูปอสมการ</strong>: \((x^2-2x)-(y^2-6y) \le 8\) → \((x-1)^2 - 1 - [(y-3)^2-9] \le 8\) → \((x-1)^2 - (y-3)^2 \le 0\) → \(|x-1| \le |y-3|\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 2</span> <strong>ตรวจ ก.</strong>: หาค่ามากที่สุดของ \(x\) ใน \(D_r\). ที่ \(y=0\): \(|x-1| \le |0-3| = 3\) → \(-2 \le x \le 4\) รวมกับ \(x \ge 0\) → \(x \in [0,4]\). ดังนั้น \(x=4\) อยู่ใน \(D_r\) → \(D_r \ne [0,3]\) → <strong>ก. ผิด</strong>
+    </div>
+    <div class="step">
+      <span class="step-label">Step 3</span> <strong>ตรวจ ข.</strong>: แทน \(x=3\): \(|3-1| \le |c-3|\) → \(2 \le |c-3|\) → \(c \le 1\) หรือ \(c \ge 5\). กับ \(0 < c \le 5\): ได้ \(c \in (0,1]\) หรือ \(c = 5\) — มีหลายค่า ไม่จำเป็นต้องเป็น \(c=5\) เพียงค่าเดียว → <strong>ข. ผิด</strong>
+    </div>
+    <div class="technique">
+      <div class="technique-label">✅ เทคนิค</div>
+      จัดรูปเป็น \(|x-1| \le |y-3|\) แล้วแทน \(y\) ที่ขอบเขต (\(y=0\) และ \(y=5\)) เพื่อหาช่วง \(x\)
+    </div>
+    <div class="answer">
+      <span class="answer-lbl">เฉลย</span>
+      <span class="answer-val">ข้อ 4: ก.ผิด ข.ผิด ✓</span>
+    </div>
+  </section>
+
+  <!-- ข้อ 7 -->
+  <section class="sol" id="q7">
+    <div class="q-header">
+      <div class="q-num">7</div>
+      <span class="q-badge">Ent ต.ค.46</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+      <span class="q-type">ตอบ: ข้อ 2</span>
+    </div>
+    <div class="problem">
+      ให้ \(r = \left\{(x,y)\,\middle|\, y = \dfrac{x^2-4}{\sqrt{x-2}}\right\}\) พิจารณา:<br>
+      ก. \(4 \in R_r\)<br>
+      ข. \(R_{r^{-1}} = [0,4)\cup(4,\infty)\)<br>
+      ข้อใดถูก?
+    </div>
+    <div class="concept">
+      <div class="concept-label">💡 แนวคิด</div>
+      แทน \(t = \sqrt{x-2} > 0\) เพื่อแปลง \(y\) ให้เป็นฟังก์ชันของ \(t\) ที่จัดการได้ง่าย แล้วใช้ derivative พิสูจน์ว่า \(y\) เป็น strictly increasing → หา \(R_r\) ได้ทันที
+    </div>
+    <div class="step">
+      <span class="step-label">Step 1</span> <strong>หาโดเมน</strong>: ต้องการ \(\sqrt{x-2}\) นิยาม และ \(\neq 0\) → \(x - 2 > 0\) → \(D_r = (2,\infty)\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 2</span> <strong>จัดรูป</strong>: \(y = \dfrac{(x-2)(x+2)}{\sqrt{x-2}} = (x+2)\sqrt{x-2}\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 3</span> <strong>แทน \(t = \sqrt{x-2},\; t>0\)</strong>: \(x = t^2+2\) ดังนั้น<br>
+      \[y = (t^2+2+2)\cdot t = t^3 + 4t\]
+    </div>
+    <div class="step">
+      <span class="step-label">Step 4</span> <strong>ตรวจ ก. ด้วย Calculus</strong>: \(\dfrac{dy}{dt} = 3t^2+4 > 0\) สำหรับทุก \(t > 0\)<br>
+      → \(y\) เพิ่มเชิงเดี่ยว; เมื่อ \(t\to 0^+\): \(y\to 0^+\); เมื่อ \(t\to\infty\): \(y\to\infty\)<br>
+      → \(R_r = (0,\infty)\) ดังนั้น \(4 \in (0,\infty)\) → <strong>ก. ถูก ✓</strong>
+    </div>
+    <div class="step">
+      <span class="step-label">Step 5</span> <strong>ตรวจ ข.</strong>: \(R_{r^{-1}} = D_r = (2,\infty)\) ซึ่ง \(\neq [0,4)\cup(4,\infty)\) → <strong>ข. ผิด ✗</strong>
+    </div>
+    <div class="careless">
+      <div class="careless-label">⚠️ จุดระวัง — เฉลยหนังสือผิด!</div>
+      เฉลยทางการในหนังสือบางเล่มระบุ "ข้อ 3 (ก.ผิด ข.ถูก)" แต่ผิดทั้งสองข้อ:
+      <br>• ก. ถูกจริง เพราะ \(4 \in R_r = (0,\infty)\) ✓
+      <br>• ข. ผิด เพราะ \(R_{r^{-1}} = D_r = (2,\infty) \neq [0,4)\cup(4,\infty)\)
+      <br>คำตอบที่ถูกต้องคือ <strong>ข้อ 2 (ก.ถูก ข.ผิด)</strong> — ประเภท: Wrong Concept ในเฉลยต้นฉบับ
+    </div>
+    <div class="answer">
+      <span class="answer-lbl">เฉลย</span>
+      <span class="answer-val">ข้อ 2: ก.ถูก ข.ผิด ✓</span>
+    </div>
+  </section>
+
+  <!-- ข้อ 8 -->
+  <section class="sol" id="q8">
+    <div class="q-header">
+      <div class="q-num">8</div>
+      <span class="q-badge">Ent มี.ค.47</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+      <span class="q-type">ตอบ: ข้อ 2</span>
+    </div>
+    <div class="problem">
+      กำหนดให้ \(r = \{(x,y)\mid x \ge y\text{ และ }y^2 = x^2+2x-3\}\) พิจารณา:<br>
+      ก. \(D_r = [1,\infty)\)<br>
+      ข. \(R_r = (-\infty,\infty)\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 1</span> <strong>เงื่อนไขจาก \(y^2\)</strong>: \(y^2 = x^2+2x-3 = (x+1)^2-4 \ge 0\) → \((x+1)^2 \ge 4\) → \(x \le -3\) หรือ \(x \ge 1\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 2</span> <strong>ตรวจ \(x \ge 1\) + เงื่อนไข \(x \ge y\)</strong>: สำหรับ \(x \ge 1\) เลือก \(y = -\sqrt{x^2+2x-3} \le 0 \le x\) ✓ เสมอ → ทุก \(x \ge 1\) มี \(y\) ที่สอดคล้อง
+    </div>
+    <div class="step">
+      <span class="step-label">Step 3</span> <strong>ตรวจ \(x \le -3\)</strong>: ที่ \(x=-4\): \(y^2 = 16-8-3=5\), \(y = \pm\sqrt{5} \approx \pm 2.24\). เงื่อนไข \(x \ge y\): \(-4 \ge 2.24\)? ✗; \(-4 \ge -2.24\)? ✗ → \(x=-4\) ไม่อยู่ใน \(D_r\). ตรวจทั่วไปที่ \(x \le -3\): ค่า \(y\) ที่เป็นไปได้คือ \(\pm\sqrt{x^2+2x-3}\) ซึ่งทั้งคู่ \(> x\) → ไม่มี \(y\) ที่ \(x \ge y\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 4</span> <strong>สรุป \(D_r\)</strong>: \(D_r = [1,\infty)\) → <strong>ก. ถูก</strong> ✓
+    </div>
+    <div class="step">
+      <span class="step-label">Step 5</span> <strong>ตรวจ ข.</strong>: สำหรับ \(x \ge 1\): \(y = -\sqrt{x^2+2x-3} \le 0\) เสมอ → \(R_r \subseteq (-\infty,0]\) ≠ \((-\infty,\infty)\) → <strong>ข. ผิด</strong>
+    </div>
+    <div class="careless">
+      <div class="careless-label">⚠️ จุดระวัง</div>
+      แม้สมการ \(y^2\) จะให้ทั้ง \(+y\) และ \(-y\) แต่เงื่อนไข \(x \ge y\) จำกัดให้ \(y\) ต้องเป็นลบ (เลือกเฉพาะ \(y = -\sqrt{\cdots}\)) เมื่อ \(x \ge 1\)
+    </div>
+    <div class="answer">
+      <span class="answer-lbl">เฉลย</span>
+      <span class="answer-val">ข้อ 2: ก.ถูก ข.ผิด ✓</span>
+    </div>
+  </section>
+
+  <!-- ข้อ 9 -->
+  <section class="sol" id="q9">
+    <div class="q-header">
+      <div class="q-num">9</div>
+      <span class="q-badge">A-NET ก.พ.49</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag">🟣 ผลคูณคาร์ทีเซียน</span>
+      <span class="q-type">ตอบ: 15</span>
+    </div>
+    <div class="problem">
+      กำหนดให้ \(A = \{1,\, 2,\, \{1,2\},\, (1,2)\}\) เมื่อ \((1,2)\) หมายถึงคู่อันดับ และ \(B = (A\times A) - A\)<br>
+      จำนวนสมาชิกของเซต \(B\) เท่ากับเท่าใด?
+    </div>
+    <div class="concept">
+      <div class="concept-label">💡 แนวคิด</div>
+      \(B = (A\times A) - A\) ลบเฉพาะสมาชิกของ \(A\) ที่อยู่ใน \(A\times A\) ด้วย. ตัวเลข 1, 2 และเซต \(\{1,2\}\) ไม่ใช่คู่อันดับ จึงไม่อยู่ใน \(A\times A\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 1</span> <strong>นับสมาชิก \(A\)</strong>: \(|A| = 4\) (สมาชิก 4 ตัว: \(1\), \(2\), \(\{1,2\}\), \((1,2)\))
+    </div>
+    <div class="step">
+      <span class="step-label">Step 2</span> <strong>ขนาด \(A\times A\)</strong>: \(|A \times A| = 4^2 = 16\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 3</span> <strong>หา \(A \cap (A\times A)\)</strong>: สมาชิกของ \(A\times A\) คือคู่อันดับทั้งหมด. สมาชิกของ \(A\) ที่เป็นคู่อันดับมีแค่ \((1,2)\). ตรวจ: \(1 \in A\) และ \(2 \in A\) ดังนั้น \((1,2) \in A\times A\) ✓. ดังนั้น \(A \cap (A\times A) = \{(1,2)\}\), \(|A \cap (A\times A)| = 1\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 4</span> <strong>คำนวณ \(|B|\)</strong>: \(|B| = |A\times A| - |A \cap (A\times A)| = 16 - 1 = 15\)
+    </div>
+    <div class="answer">
+      <span class="answer-lbl">เฉลย</span>
+      <span class="answer-val">15 ✓</span>
+    </div>
+  </section>
+
+  <!-- ข้อ 10 -->
+  <section class="sol" id="q10">
+    <div class="q-header">
+      <div class="q-num">10</div>
+      <span class="q-badge">A-NET มี.ค.50</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+      <span class="q-type">ตอบ: ข้อ 4</span>
+    </div>
+    <div class="problem">
+      กำหนดให้ \(r = \{(x,y)\in\mathbb{R}\times\mathbb{R}\mid x^2+y^2=16\}\),
+      \(s = \{(x,y)\in\mathbb{R}\times\mathbb{R}\mid xy^2+x+3y^2+2=0\}\)<br>
+      เซตในข้อใดต่อไปนี้เป็นสับเซตของ \(D_r - D_s\)?<br>
+      1) \([-4,-1]\)&emsp; 2) \([-3,0]\)&emsp; 3) \([-2,1]\)&emsp; 4) \([-1,2]\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 1</span> <strong>หา \(D_r\)</strong>: จาก \(x^2+y^2=16\): ต้องการ \(y^2 = 16-x^2 \ge 0\) → \(|x| \le 4\) → \(D_r = [-4,4]\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 2</span> <strong>หา \(D_s\)</strong>: จัดรูป \(xy^2+x+3y^2+2=0\) → \(y^2(x+3) = -x-2\) → \(y^2 = \dfrac{-x-2}{x+3} = \dfrac{-(x+2)}{x+3}\).<br>
+      ต้องการ \(y^2 \ge 0\) และ \(x \ne -3\): \(\dfrac{-(x+2)}{x+3} \ge 0\) → \(\dfrac{x+2}{x+3} \le 0\) → \(-3 < x \le -2\).<br>
+      ดังนั้น \(D_s = (-3,-2]\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 3</span> <strong>หา \(D_r - D_s\)</strong>: \(D_r - D_s = [-4,4] \setminus (-3,-2] = [-4,-3] \cup (-2,4]\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 4</span> <strong>ตรวจตัวเลือก</strong>:
+      <ul style="margin-top:6px;padding-left:20px;font-size:.89rem">
+        <li>1) \([-4,-1]\): มี \(-2 \in (-3,-2]\) → ไม่เป็นสับเซต ✗</li>
+        <li>2) \([-3,0]\): มี \(-2.5 \in (-3,-2]\) → ไม่เป็นสับเซต ✗</li>
+        <li>3) \([-2,1]\): \(-2 \in (-3,-2]\) → ไม่เป็นสับเซต ✗</li>
+        <li>4) \([-1,2]\): ทุกค่าใน \([-1,2] \subset (-2,4] \subset D_r - D_s\) ✓</li>
+      </ul>
+    </div>
+    <div class="technique">
+      <div class="technique-label">✅ เทคนิค</div>
+      จัดรูป \(s\) เป็น \(y^2 = f(x)\) แล้วหาเงื่อนไข \(f(x) \ge 0\) → \(D_s\)
+    </div>
+    <div class="answer">
+      <span class="answer-lbl">เฉลย</span>
+      <span class="answer-val">ข้อ 4: \([-1,2]\) ✓</span>
+    </div>
+  </section>
+
+  <!-- ข้อ 11 -->
+  <section class="sol" id="q11">
+    <div class="q-header">
+      <div class="q-num">11</div>
+      <span class="q-badge">A-NET มี.ค.51</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+      <span class="q-type">ตอบ: ข้อ 3</span>
+    </div>
+    <div class="problem">
+      กำหนดให้ \(r = \{(x,y)\mid (x-2)(y-1)=1\}\), \(s = \{(x,y)\mid xy^2=(y+1)^2\}\)<br>
+      เซตในข้อใดต่อไปนี้ <strong>ไม่เป็น</strong>สับเซตของ \(R_r \cap R_s\)?<br>
+      1) \((-\infty,-1)\)&emsp; 2) \(\left(-2,-\dfrac{1}{2}\right)\)&emsp; 3) \(\left(\dfrac{1}{2},2\right)\)&emsp; 4) \((1,\infty)\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 1</span> <strong>หา \(R_r\)</strong>: จาก \((x-2)(y-1)=1\) → \(y-1 = \dfrac{1}{x-2}\) → \(y = 1 + \dfrac{1}{x-2}\). เนื่องจาก \(\dfrac{1}{x-2} \ne 0\) เสมอ → \(y \ne 1\). ดังนั้น \(R_r = \mathbb{R}\setminus\{1\}\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 2</span> <strong>หา \(R_s\)</strong>: จาก \(xy^2 = (y+1)^2\). ที่ \(y=0\): \(0 = 1\) ขัดแย้ง → \(y=0\) ไม่อยู่ใน \(R_s\). สำหรับ \(y \ne 0\): \(x = \dfrac{(y+1)^2}{y^2} \ge 0\) เสมอ (เป็นจำนวนจริงที่ไม่เป็นลบ) → ทุก \(y \ne 0\) มี \(x\) ที่สอดคล้อง. ดังนั้น \(R_s = \mathbb{R}\setminus\{0\}\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 3</span> <strong>หา \(R_r \cap R_s\)</strong>: \((\mathbb{R}\setminus\{1\}) \cap (\mathbb{R}\setminus\{0\}) = \mathbb{R}\setminus\{0,1\}\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 4</span> <strong>ตรวจตัวเลือก</strong>:
+      <ul style="margin-top:6px;padding-left:20px;font-size:.89rem">
+        <li>1) \((-\infty,-1)\): ไม่มี 0 หรือ 1 อยู่ภายใน → เป็นสับเซต ✓</li>
+        <li>2) \((-2,-\tfrac{1}{2})\): ไม่มี 0 หรือ 1 อยู่ภายใน → เป็นสับเซต ✓</li>
+        <li>3) \((\tfrac{1}{2},2)\): มี \(1 \in (\tfrac{1}{2},2)\) แต่ \(1 \notin \mathbb{R}\setminus\{0,1\}\) → <strong>ไม่เป็นสับเซต</strong> ✗</li>
+        <li>4) \((1,\infty)\): 1 ไม่ถูกรวม (ช่วงเปิด), 0 ไม่อยู่ในช่วง → เป็นสับเซต ✓</li>
+      </ul>
+    </div>
+    <div class="careless">
+      <div class="careless-label">⚠️ จุดระวัง</div>
+      \(\left(\tfrac{1}{2},2\right)\) มี \(1\) อยู่ด้านใน (1 คือจุดภายในของช่วงเปิด) → \(1 \notin R_r \cap R_s\) → ช่วงนี้ไม่เป็นสับเซต
+    </div>
+    <div class="answer">
+      <span class="answer-lbl">เฉลย</span>
+      <span class="answer-val">ข้อ 3: \(\left(\dfrac{1}{2},2\right)\) ✓</span>
+    </div>
+  </section>
+
+  <!-- ข้อ 12 -->
+  <section class="sol" id="q12">
+    <div class="q-header">
+      <div class="q-num">12</div>
+      <span class="q-badge">A-NET มี.ค.51</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag">🔴 เซตในระนาบ</span>
+      <span class="q-type">ตอบ: ข้อ 4</span>
+    </div>
+    <div class="problem">
+      กำหนดให้ \(A = \{(x,y)\mid x^2+y^2>1\}\), \(B = \{(x,y)\mid 4x^2+9y^2&lt;1\}\), \(C = \{(x,y)\mid y^2-x^2>1\}\)<br>
+      ข้อใดต่อไปนี้ <strong>ผิด</strong>?<br>
+      1) \(A-B=A\)&emsp; 2) \(B-C=B\)&emsp; 3) \(B\cap(A\cup C)=\emptyset\)&emsp; 4) \(A\cap(B\cup C)=\emptyset\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 1</span> <strong>ความสัมพันธ์ระหว่างเซต</strong>:
+      <ul style="margin-top:6px;padding-left:20px;font-size:.89rem">
+        <li><strong>\(B \cap A = \emptyset\)</strong>: ถ้า \(4x^2+9y^2&lt;1\) แล้ว \(x^2+y^2 \le 4x^2+9y^2 &lt; 1\) → \(x^2+y^2 &lt; 1\) → \((x,y) \notin A\) → \(B \subset A^c\)</li>
+        <li><strong>\(C \subset A\)</strong>: ถ้า \(y^2-x^2>1\) แล้ว \(y^2 > x^2+1 \ge 1\) → \(x^2+y^2 > x^2+1 \ge 1\) → \((x,y) \in A\)</li>
+        <li><strong>\(B \cap C = \emptyset\)</strong>: \(B \subset A^c\) แต่ \(C \subset A\) → \(B \cap C = \emptyset\)</li>
+      </ul>
+    </div>
+    <div class="step">
+      <span class="step-label">Step 2</span> <strong>ตรวจข้อ</strong>:
+      <ul style="margin-top:6px;padding-left:20px;font-size:.89rem">
+        <li>1) \(A-B = A\): เพราะ \(B \cap A = \emptyset\) → ถูก ✓</li>
+        <li>2) \(B-C = B\): เพราะ \(B \cap C = \emptyset\) → ถูก ✓</li>
+        <li>3) \(B\cap(A\cup C) = (B\cap A)\cup(B\cap C) = \emptyset\cup\emptyset = \emptyset\) → ถูก ✓</li>
+        <li>4) \(A\cap(B\cup C) = (A\cap B)\cup(A\cap C) = \emptyset \cup C = C \ne \emptyset\) → <strong>ผิด</strong> ✗</li>
+      </ul>
+    </div>
+    <div class="technique">
+      <div class="technique-label">✅ เทคนิค</div>
+      วาด Venn diagram: วงรีเล็ก \(B\) (ภายในวงรี \(4x^2+9y^2=1\)) อยู่นอกวงกลม \(A\); บริเวณ \(C\) (ส่วน hyperbola \(y^2-x^2>1\)) อยู่ใน \(A\)
+    </div>
+    <div class="answer">
+      <span class="answer-lbl">เฉลย</span>
+      <span class="answer-val">ข้อ 4: \(A\cap(B\cup C)=\emptyset\) เป็นข้อที่ผิด ✓</span>
+    </div>
+  </section>
+
+  <!-- ข้อ 13 -->
+  <section class="sol" id="q13">
+    <div class="q-header">
+      <div class="q-num">13</div>
+      <span class="q-badge">A-NET 2552</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+      <span class="q-type">ตอบ: ข้อ 2</span>
+    </div>
+    <div class="problem">
+      กำหนดให้ \(r = \left\{(x,y)\,\middle|\, x>0,\; x\ne y,\; x - \sqrt[3]{x} = y - \sqrt[3]{y}\right\}\)<br>
+      สมาชิกค่ามากที่สุดของ \(D_r\) เท่ากับข้อใด?<br>
+      1) \(\dfrac{4}{3\sqrt{3}}\)&emsp;
+      2) \(\dfrac{8}{3\sqrt{3}}\)&emsp;
+      3) \(\dfrac{4}{9}\)&emsp;
+      4) \(\dfrac{8}{9}\)
+    </div>
+    <div class="concept">
+      <div class="concept-label">💡 แนวคิด</div>
+      แทน \(u = \sqrt[3]{x},\; v = \sqrt[3]{y}\) แล้วใช้ \(u \ne v\) เพื่อหาร → \(u^2+uv+v^2=1\) → discriminant ≥ 0 → ขอบเขต \(u\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 1</span> <strong>แทนตัวแปร</strong>: ให้ \(u = \sqrt[3]{x},\; v = \sqrt[3]{y}\) (โดย \(u > 0\)):
+      \[u^3 - u = v^3 - v \implies u^3 - v^3 = u - v \implies (u-v)(u^2+uv+v^2) = (u-v)\]
+    </div>
+    <div class="step">
+      <span class="step-label">Step 2</span> <strong>ลดรูป</strong>: เนื่องจาก \(x \ne y\) → \(u \ne v\) → หารทั้งสองข้างด้วย \((u-v)\):
+      \[\boxed{u^2 + uv + v^2 = 1}\]
+    </div>
+    <div class="step">
+      <span class="step-label">Step 3</span> <strong>หาขอบเขต \(u\)</strong>: มองเป็นสมการกำลังสองใน \(v\): \(v^2 + (u)v + (u^2-1) = 0\)<br>
+      \[v = \frac{-u \pm \sqrt{u^2 - 4(u^2-1)}}{2} = \frac{-u \pm \sqrt{4-3u^2}}{2}\]
+      ต้องการ \(v\) เป็นจำนวนจริง: \(4-3u^2 \ge 0\) → \(u^2 \le \dfrac{4}{3}\) → \(u \le \dfrac{2}{\sqrt{3}}\)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 4</span> <strong>ตรวจ \(u = \tfrac{2}{\sqrt{3}}\)</strong>: \(v = \dfrac{-2/\sqrt{3} \pm 0}{2} = -\dfrac{1}{\sqrt{3}} \ne u\) ✓ (เงื่อนไข \(u \ne v\) สอดคล้อง)
+    </div>
+    <div class="step">
+      <span class="step-label">Step 5</span> <strong>หา \(x_{\max}\)</strong>:
+      \[x_{\max} = u_{\max}^3 = \left(\frac{2}{\sqrt{3}}\right)^3 = \frac{8}{3\sqrt{3}}\]
+    </div>
+    <div class="careless">
+      <div class="careless-label">⚠️ จุดระวัง</div>
+      โจทย์ใช้ <strong>รากที่สาม</strong> (\(\sqrt[3]{x}\)) ไม่ใช่รากที่สอง — ต้องแทน \(u = \sqrt[3]{x}\) ไม่ใช่ \(u = \sqrt{x}\)!
+    </div>
+    <div class="answer">
+      <span class="answer-lbl">เฉลย</span>
+      <span class="answer-val">ข้อ 2: \(\dfrac{8}{3\sqrt{3}}\) ✓</span>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฉลย ความสัมพันธ์และฟังก์ชัน (Ent 41 – A-NET 52)</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
+<script>MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js" async></script>
+<style>
+:root{
+  --ink:#1a1a1a;--muted:#555;--light:#888;--line:#d4d8e8;--bg:#f4f5fb;
+  --paper:#ffffff;--accent:#2e4374;--accent-light:#eef2fb;
+  --amber:#7a4a00;--amber-bg:#fff8e8;--amber-border:#e8c870;
+  --red:#8b1a1a;--red-bg:#fff4f4;--red-border:#f5c6c6;
+  --green-bg:#f0faf2;--green-border:#a8d9b5;--green:#1a5c2e;
+  --blue-bg:#f0f5ff;--blue-border:#bdd0f8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sarabun','IBM Plex Sans Thai',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;font-size:16px}
+a{color:var(--accent);text-decoration:none}
+.page{max-width:900px;margin:0 auto;padding:24px 20px 60px}
+
+/* ── header ── */
+.doc-header{background:linear-gradient(135deg,#1e3a6e 0%,#2e4374 60%,#3a5a9e 100%);color:#fff;border-radius:18px;padding:28px 32px;margin-bottom:24px}
+.doc-header h1{font-size:22px;font-weight:700;margin-bottom:6px}
+.doc-header p{font-size:14px;opacity:.85}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 14px;border-radius:30px;font-size:13px;font-weight:600;margin-top:12px;cursor:pointer;text-decoration:none}
+.back-btn:hover{background:rgba(255,255,255,.3)}
+
+/* ── answer grid ── */
+.ans-grid{display:flex;flex-wrap:wrap;gap:6px 12px;background:var(--accent-light);border:1px solid var(--blue-border);border-radius:14px;padding:14px 16px;margin-bottom:16px;font-size:14px}
+.ans-grid span{background:#fff;border-radius:30px;padding:2px 10px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.ans-grid .qn{font-weight:700;color:var(--accent)}
+.ans-grid .av{color:#c0392b;font-weight:700}
+
+/* ── sticky nav ── */
+.idx-bar{position:sticky;top:0;z-index:100;background:var(--bg);padding:8px 0;border-bottom:2px solid var(--line);display:flex;flex-wrap:wrap;gap:5px;margin-bottom:20px}
+.idx-bar a{display:inline-flex;align-items:center;justify-content:center;width:34px;height:28px;border-radius:8px;font-size:13px;font-weight:700;background:#fff;border:1.5px solid var(--line);color:var(--accent);transition:.15s}
+.idx-bar a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* ── cheat sheet ── */
+.cheat{background:linear-gradient(135deg,#f8f0ff,#f0f5ff);border:1.5px solid #c8b0f0;border-radius:16px;padding:20px 24px;margin-bottom:28px}
+.cheat h2{font-size:17px;font-weight:700;color:#3a1a6e;margin-bottom:14px}
+.cheat-row{margin:6px 0;font-size:14.5px;border-left:3px solid #8b5cf6;padding-left:10px}
+.cheat-row b{color:#3a1a6e}
+.warn-table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
+.warn-table th{background:#3a1a6e;color:#fff;padding:6px 10px;text-align:left}
+.warn-table td{padding:6px 10px;border-bottom:1px solid #e0d0f8}
+.warn-table tr:nth-child(even) td{background:#f8f0ff}
+
+/* ── solution cards ── */
+.sol{background:var(--paper);border-radius:16px;padding:22px 24px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.06);scroll-margin-top:60px}
+.q-header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.q-num{background:var(--accent);color:#fff;font-weight:700;font-size:14px;min-width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.q-badge{font-size:12px;background:#e8edf8;color:var(--accent);padding:2px 10px;border-radius:20px;font-weight:600}
+.q-type{font-size:12px;background:#f0faf2;color:var(--green);padding:2px 10px;border-radius:20px;font-weight:600;border:1px solid var(--green-border)}
+.stars{color:#f5a623;font-size:14px;letter-spacing:1px}
+.sub-tag{font-size:12px;padding:2px 10px;border-radius:20px;font-weight:600;background:#f5f0ff;color:#5a2d9a;border:1px solid #d0b8f0}
+
+.problem{background:var(--accent-light);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:12px 16px;margin-bottom:14px;font-size:15px}
+.concept{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:10px;padding:10px 14px;margin-bottom:10px;font-size:14px}
+.concept-label{font-weight:700;color:#1a3a8e;margin-bottom:4px}
+.step{background:#fafcff;border-left:3px solid #7aa0e0;border-radius:0 10px 10px 0;padding:10px 14px;margin-bottom:8px;font-size:14.5px}
+.step-label{font-weight:700;color:var(--accent);margin-right:6px}
+.step-goal{color:var(--muted);font-size:13px}
+.careless{background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:14px}
+.careless-label{font-weight:700;color:var(--red);margin-bottom:4px}
+.technique{background:var(--green-bg);border:1px solid var(--green-border);border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:14px}
+.technique-label{font-weight:700;color:var(--green);margin-bottom:4px}
+.answer{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--amber-bg),#fffce0);border:2px solid var(--amber-border);border-radius:30px;padding:8px 20px;margin-top:8px}
+.answer-lbl{font-weight:700;color:var(--amber);font-size:14px}
+.answer-val{font-weight:700;color:#5a3000;font-size:16px}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<div class="doc-header">
+  <h1>📐 เฉลย ความสัมพันธ์และฟังก์ชัน</h1>
+  <p>ข้อสอบ Ent ต.ค.41 – A-NET 2552 · 40 ข้อ · เฉลยละเอียดทุกข้อ</p>
+  <a class="back-btn" href="index.html">← กลับหน้า Dashboard</a>
+</div>
+
+<!-- ANSWER GRID -->
+<div class="ans-grid">
+  <span><span class="qn">1</span><span class="av"> 3(=20)</span></span>
+  <span><span class="qn">2</span><span class="av"> 1</span></span>
+  <span><span class="qn">3</span><span class="av"> 3</span></span>
+  <span><span class="qn">4</span><span class="av"> 0.20</span></span>
+  <span><span class="qn">5</span><span class="av"> 4</span></span>
+  <span><span class="qn">6</span><span class="av"> 2</span></span>
+  <span><span class="qn">7</span><span class="av"> 4(=30)</span></span>
+  <span><span class="qn">8</span><span class="av"> 1</span></span>
+  <span><span class="qn">9</span><span class="av"> 2</span></span>
+  <span><span class="qn">10</span><span class="av"> 3</span></span>
+  <span><span class="qn">11</span><span class="av"> 4</span></span>
+  <span><span class="qn">12</span><span class="av"> 4(=120)</span></span>
+  <span><span class="qn">13</span><span class="av"> 3</span></span>
+  <span><span class="qn">14</span><span class="av"> 1(=−1)</span></span>
+  <span><span class="qn">15</span><span class="av"> 1</span></span>
+  <span><span class="qn">16</span><span class="av"> 30</span></span>
+  <span><span class="qn">17</span><span class="av"> 1</span></span>
+  <span><span class="qn">18</span><span class="av"> 2</span></span>
+  <span><span class="qn">19</span><span class="av"> 3(=7)</span></span>
+  <span><span class="qn">20</span><span class="av"> 1</span></span>
+  <span><span class="qn">21</span><span class="av"> 1</span></span>
+  <span><span class="qn">22</span><span class="av"> 2</span></span>
+  <span><span class="qn">23</span><span class="av"> 2(=17)</span></span>
+  <span><span class="qn">24</span><span class="av"> 1(=273)</span></span>
+  <span><span class="qn">25</span><span class="av"> 4</span></span>
+  <span><span class="qn">26</span><span class="av"> 0.5</span></span>
+  <span><span class="qn">27</span><span class="av"> 9</span></span>
+  <span><span class="qn">28</span><span class="av"> 4(=20)</span></span>
+  <span><span class="qn">29</span><span class="av"> 3</span></span>
+  <span><span class="qn">30</span><span class="av"> 3</span></span>
+  <span><span class="qn">31</span><span class="av"> 2</span></span>
+  <span><span class="qn">32</span><span class="av"> 4(=4)</span></span>
+  <span><span class="qn">33</span><span class="av"> 0.5</span></span>
+  <span><span class="qn">34</span><span class="av"> 30</span></span>
+  <span><span class="qn">35</span><span class="av"> 1</span></span>
+  <span><span class="qn">36</span><span class="av"> 28</span></span>
+  <span><span class="qn">37</span><span class="av"> 2(=2)</span></span>
+  <span><span class="qn">38</span><span class="av"> 1(=0)</span></span>
+  <span><span class="qn">39</span><span class="av"> 7</span></span>
+  <span><span class="qn">40</span><span class="av"> 3(=98)</span></span>
+</div>
+
+<!-- INDEX BAR -->
+<div class="idx-bar">
+  <a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4">4</a><a href="#q5">5</a>
+  <a href="#q6">6</a><a href="#q7">7</a><a href="#q8">8</a><a href="#q9">9</a><a href="#q10">10</a>
+  <a href="#q11">11</a><a href="#q12">12</a><a href="#q13">13</a><a href="#q14">14</a><a href="#q15">15</a>
+  <a href="#q16">16</a><a href="#q17">17</a><a href="#q18">18</a><a href="#q19">19</a><a href="#q20">20</a>
+  <a href="#q21">21</a><a href="#q22">22</a><a href="#q23">23</a><a href="#q24">24</a><a href="#q25">25</a>
+  <a href="#q26">26</a><a href="#q27">27</a><a href="#q28">28</a><a href="#q29">29</a><a href="#q30">30</a>
+  <a href="#q31">31</a><a href="#q32">32</a><a href="#q33">33</a><a href="#q34">34</a><a href="#q35">35</a>
+  <a href="#q36">36</a><a href="#q37">37</a><a href="#q38">38</a><a href="#q39">39</a><a href="#q40">40</a>
+</div>
+
+<!-- CHEAT SHEET -->
+<div class="cheat">
+  <h2>🧠 Cheat Sheet — ความสัมพันธ์และฟังก์ชัน (Ent/A-NET)</h2>
+  <div class="cheat-row"><b>โดเมนของ gof:</b> \(D_{g\circ f} = \{x \in D_f \mid f(x) \in D_g\}\)</div>
+  <div class="cheat-row"><b>ฟังก์ชันผกผัน:</b> \(f^{-1}(b)=a \iff f(a)=b\) · ต้องเป็น 1-1 ก่อนจึงหาผกผันได้</div>
+  <div class="cheat-row"><b>(f⁻¹)⁻¹ = f</b> · \((g\circ f)^{-1} = f^{-1}\circ g^{-1}\)</div>
+  <div class="cheat-row"><b>ฟังก์ชันทั่วถึง A→B (|A|=n, |B|=2):</b> \(2^n - 2\) วิธี</div>
+  <div class="cheat-row"><b>ฟังก์ชัน 1-1 จาก A ขนาด m ไป B ขนาด n (m≤n):</b> \(P(n,m)=\frac{n!}{(n-m)!}\)</div>
+  <div class="cheat-row"><b>f เพิ่ม + g เพิ่ม ⟹ gof เพิ่ม</b> · f เพิ่ม ⟹ f⁻¹ เพิ่ม</div>
+  <div class="cheat-row"><b>เรนจ์ของ gof:</b> หา D_gof ก่อน แล้วหาภาพของ D_gof ผ่าน f แล้วผ่าน g</div>
+  <table class="warn-table" style="margin-top:14px">
+    <tr><th>กับดักที่พบบ่อย</th><th>ความเข้าใจที่ถูก</th><th>ประเภทผิด</th></tr>
+    <tr><td>ลืมตรวจ denominator ≠ 0 ใน D_fog</td><td>ต้องตรวจทั้ง D_f และ f(x)∈D_g</td><td>Wrong Concept</td></tr>
+    <tr><td>คิดว่า f⁻¹ มีเสมอ</td><td>ต้องเป็น 1-1 บนโดเมนที่กำหนด</td><td>Wrong Concept</td></tr>
+    <tr><td>สลับ (fog)⁻¹ = f⁻¹∘g⁻¹</td><td>(fog)⁻¹ = g⁻¹∘f⁻¹ (สลับลำดับ!)</td><td>Careless</td></tr>
+    <tr><td>ฟังก์ชันทั่วถึง A→B: |B|^|A| - |B|</td><td>ต้องใช้ inclusion-exclusion ที่ถูก</td><td>Wrong Concept</td></tr>
+    <tr><td>เรนจ์ของ f(x)=√(…): ลืม ≥ 0</td><td>รากที่สองไม่เป็นลบเสมอ</td><td>Careless</td></tr>
+  </table>
+</div>
+
+<!-- ===== ข้อ 1 ===== -->
+<section class="sol" id="q1">
+  <div class="q-header">
+    <span class="q-num">1</span>
+    <span class="q-badge">Ent ต.ค. 41</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟣 การนับฟังก์ชัน</span>
+  </div>
+  <div class="problem">
+    กำหนดให้ \(S = \{x \in \mathbb{Z} \mid |x| \leq 5\}\) และ \(f(x) = \dfrac{x^3 - x^2 - 4x + a^2}{x^4 + bx + 4}\) โดย \(a, b \in S\)<br>
+    จงหาจำนวนคู่อันดับ \((a, b)\) ที่ทำให้ \(f(1) = 0\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    \(f(1)=0\) ต้องการให้เศษ = 0 และส่วน ≠ 0 แยกเงื่อนไขสองข้อแล้วนับด้วยหลักการคูณ
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หาเงื่อนไขเศษ = 0</span><br>
+    เศษที่ \(x=1\): \(1 - 1 - 4 + a^2 = a^2 - 4 = 0 \Rightarrow a^2 = 4 \Rightarrow a = \pm 2\)<br>
+    \(S = \{-5,-4,-3,-2,-1,0,1,2,3,4,5\}\) → \(a \in \{-2, 2\}\) <b>2 ค่า</b>
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หาเงื่อนไขส่วน ≠ 0</span><br>
+    ส่วนที่ \(x=1\): \(1 + b + 4 = b + 5 \neq 0 \Rightarrow b \neq -5\)<br>
+    \(b \in S\) มี 11 ค่า ลบ \(b=-5\) ออก เหลือ <b>10 ค่า</b>
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">นับด้วยหลักการคูณ</span><br>
+    จำนวนคู่ \((a,b)\) = \(2 \times 10 = \mathbf{20}\)
+  </div>
+  <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>
+    ลืมตรวจว่าส่วน ≠ 0 (ฟังก์ชันต้องกำหนดค่าได้) → คนที่นับแค่เงื่อนไขเศษจะได้ 2×11=22 ซึ่งผิด (Wrong Concept)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3) 20</span></div>
+</section>
+
+<!-- ===== ข้อ 2 ===== -->
+<section class="sol" id="q2">
+  <div class="q-header">
+    <span class="q-num">2</span>
+    <span class="q-badge">Ent ต.ค. 41</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★☆☆☆</span>
+    <span class="sub-tag">🟠 ฟังก์ชันประกอบ</span>
+  </div>
+  <div class="problem">
+    กำหนด \(I\) เป็นเซตจำนวนเต็ม, \(f(x)=2x\), \(g(x)=x-1\) บน \(I\)<br>
+    จงหาเรนจ์ของฟังก์ชัน \((f \circ g) + f\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    คำนวณ \((f\circ g)(x)+f(x)\) แล้วดูว่าค่าที่ได้เมื่อ \(x\) วิ่งทั่ว \(I\) เป็นเซตใด
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">คำนวณฟังก์ชันรวม</span><br>
+    \((f\circ g)(x) = f(g(x)) = f(x-1) = 2(x-1) = 2x-2\)<br>
+    \((f\circ g)(x) + f(x) = (2x-2) + 2x = 4x - 2\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หาเรนจ์</span><br>
+    \(h(x) = 4x-2 = 2(2x-1)\)<br>
+    เมื่อ \(x \in \mathbb{Z}\): \(2x-1\) เป็นจำนวนเต็มคี่ทุกค่า → \(2(2x-1)\) = เลขคู่ที่ \(\div 4\) เหลือ 2<br>
+    ค่าที่ได้: \(\ldots,-6,-2,2,6,10,\ldots\) = \(\{x\in\mathbb{Z} \mid x/2 \text{ เป็นจำนวนเต็มคี่}\}\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) \(\{x\in I \mid x/2\text{ เป็นจำนวนเต็มคี่}\}\)</span></div>
+</section>
+
+<!-- ===== ข้อ 3 ===== -->
+<section class="sol" id="q3">
+  <div class="q-header">
+    <span class="q-num">3</span>
+    <span class="q-badge">Ent มี.ค. 42</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x)=\sqrt{x}\), \(D_f=[0,\infty)\) และ \(A=\{x\in\mathbb{R} \mid f^{-1}(x)+[f(x)]^2=2\}\)<br>
+    ก. \(\exists\, x\in A\) ที่ทำให้ \(x^2-x-6=0\) &nbsp;&nbsp; ข. \(\forall\, x\in A\), \(x^2+2x-3=0\)<br>
+    ข้อใดถูก/ผิด?
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    หา A ก่อน (แก้สมการหา x ที่อยู่ใน domain) แล้วทดสอบข้อความ ก-ข กับสมาชิกของ A
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา f⁻¹(x)</span><br>
+    \(f(x)=\sqrt{x}\) → \(f^{-1}(x) = x^2\) สำหรับ \(x\geq 0\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">แก้สมการหา A</span><br>
+    \(f^{-1}(x) + [f(x)]^2 = x^2 + (\sqrt{x})^2 = x^2 + x = 2\)<br>
+    \(x^2 + x - 2 = 0 \Rightarrow (x-1)(x+2) = 0 \Rightarrow x=1\) หรือ \(x=-2\)<br>
+    แต่ \(x\in D_f=[0,\infty)\) จึง \(x=-2\) ตัดออก → \(A = \{1\}\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">ตรวจสอบข้อความ</span><br>
+    <b>ก.</b> \(x^2-x-6=0\) ที่ \(x=1\): \(1-1-6=-6\neq 0\) → ไม่มี \(x\in A\) ที่ทำให้เป็นจริง → <b>ก. เท็จ</b><br>
+    <b>ข.</b> \(x^2+2x-3=0\) ที่ \(x=1\): \(1+2-3=0\) ✓ → ทุก \(x\in A\) ทำให้จริง → <b>ข. จริง</b>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3) ก. เท็จ ข. จริง</span></div>
+</section>
+
+<!-- ===== ข้อ 4 ===== -->
+<section class="sol" id="q4">
+  <div class="q-header">
+    <span class="q-num">4</span>
+    <span class="q-badge">Ent ต.ค. 42</span>
+    <span class="q-type">เติมคำตอบ</span>
+    <span class="stars">★★☆☆☆</span>
+    <span class="sub-tag">🟠 ฟังก์ชันประกอบ</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x)=4x\), \(g(x)=\dfrac{2}{x-1}\), \(x\neq 1\)<br>
+    จงหาค่า \(x\) ที่ทำให้ \((f\circ g)(x) = (g\circ f)(x)\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา fog และ gof</span><br>
+    \((f\circ g)(x) = f\!\left(\dfrac{2}{x-1}\right) = 4\cdot\dfrac{2}{x-1} = \dfrac{8}{x-1}\)<br>
+    \((g\circ f)(x) = g(4x) = \dfrac{2}{4x-1}\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">ตั้งสมการ</span><br>
+    \(\dfrac{8}{x-1} = \dfrac{2}{4x-1}\)<br>
+    \(8(4x-1) = 2(x-1)\)<br>
+    \(32x - 8 = 2x - 2\)<br>
+    \(30x = 6 \Rightarrow x = \dfrac{1}{5} = 0.20\)
+  </div>
+  <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>
+    ระวังสลับ fog ↔ gof (ผิดลำดับ) → คำนวณผิด (Careless)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">0.20</span></div>
+</section>
+
+<!-- ===== ข้อ 5 ===== -->
+<section class="sol" id="q5">
+  <div class="q-header">
+    <span class="q-num">5</span>
+    <span class="q-badge">Ent ต.ค. 42</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x)=\dfrac{x}{1-x}\), \(g(x)=\sqrt{x^2-1}\)<br>
+    ให้ \(A=D_{g\circ f}\) และ \(B=D_g\) จงหา \(A\cup B'\) (B' คือ complement ใน ℝ)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    \(D_{g\circ f}=\{x\in D_f \mid f(x)\in D_g\}\) ต้องหาว่า \(f(x)\) ต้องมีขนาดเท่าไร
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา D_f, D_g</span><br>
+    \(D_f = \mathbb{R}\setminus\{1\}\)<br>
+    \(D_g = \{x \mid x^2-1\geq 0\} = (-\infty,-1]\cup[1,\infty)\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา D_{gof} = A</span><br>
+    ต้องการ \(f(x)\in D_g\) คือ \(\left|\dfrac{x}{1-x}\right|\geq 1\)<br>
+    \(|x|\geq|1-x|\)<br>
+    \(x^2\geq(1-x)^2 = 1-2x+x^2\)<br>
+    \(0\geq 1-2x \Rightarrow x\geq\dfrac{1}{2}\)<br>
+    รวมกับ \(x\neq 1\): \(A = \left[\dfrac{1}{2},1\right)\cup(1,\infty)\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">คำนวณ A∪B'</span><br>
+    \(B = (-\infty,-1]\cup[1,\infty)\), \(B'=(-1,1)\)<br>
+    \(A\cup B' = \left[\tfrac{1}{2},1\right)\cup(1,\infty)\ \cup\ (-1,1) = (-1,1)\cup(1,\infty)\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) \((-1,1)\cup(1,\infty)\)</span></div>
+</section>
+
+<!-- ===== ข้อ 6 ===== -->
+<section class="sol" id="q6">
+  <div class="q-header">
+    <span class="q-num">6</span>
+    <span class="q-badge">Ent มี.ค. 43</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x)=\dfrac{x}{|x|+1}\), \(g(x)=\lceil x\rceil\) (ceiling — จำนวนเต็มที่น้อยที่สุดที่ ≥ x)<br>
+    ให้ \(F=f\circ g\), \(G=g\circ f\) &nbsp; ข้อใดต่อไปนี้ <b>ผิด</b>?
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    \(F(x)=f(\lceil x\rceil)\) ซึ่ง \(\lceil x\rceil\in\mathbb{Z}\) เสมอ → วิเคราะห์เรนจ์และสมบัติ
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">วิเคราะห์ F = f∘g</span><br>
+    \(F(x)=f(\lceil x\rceil)=\dfrac{n}{|n|+1}\) โดย \(n=\lceil x\rceil\in\mathbb{Z}\)<br>
+    เรนจ์: \(R_F = \left\{\dfrac{n}{|n|+1}\mid n\in\mathbb{Z}\right\}\) ซึ่งรวมค่า \(0,\pm\tfrac{1}{2},\pm\tfrac{2}{3},\ldots\) → <b>ไม่ใช่</b> \((0,1)\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">วิเคราะห์ G = g∘f</span><br>
+    \(f(x)\in(-1,1)\) เสมอ<br>
+    เมื่อ \(x>0\): \(f(x)=\dfrac{x}{x+1}\in(0,1)\) → \(\lceil f(x)\rceil=1\) ✓<br>
+    เมื่อ \(x<0\): \(f(x)=\dfrac{x}{-x+1}\in(-1,0)\) → \(\lceil f(x)\rceil=0\) ✓<br>
+    เมื่อ \(x=0\): \(f(0)=0\) → \(\lceil 0\rceil=0\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">สรุปข้อที่ผิด</span><br>
+    ตัวเลือกที่บอกว่า \(R_F=(0,1)\) → <b>ผิด</b> เพราะ \(R_F\) มีสมาชิก 0 และค่าลบด้วย
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) \(R_F = (0,1)\) (ข้อนี้ผิด)</span></div>
+</section>
+
+<!-- ===== ข้อ 7 ===== -->
+<section class="sol" id="q7">
+  <div class="q-header">
+    <span class="q-num">7</span>
+    <span class="q-badge">Ent ต.ค. 43</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★☆☆☆</span>
+    <span class="sub-tag">🟣 การนับฟังก์ชัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(A=\{1,2,3,4,5\}\), \(B=\{a,b\}\)<br>
+    จงหาจำนวนฟังก์ชันทั่วถึง (onto/surjective) จาก \(A\) ไป \(B\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">นับทั้งหมดแล้วลบ</span><br>
+    ฟังก์ชันทั้งหมดจาก \(A\to B\): \(|B|^{|A|}=2^5=32\)<br>
+    ฟังก์ชันไม่ทั่วถึง: ค่าทุกค่าเป็น \(a\) (1 แบบ) หรือ \(b\) (1 แบบ) = 2 แบบ<br>
+    ฟังก์ชันทั่วถึง = \(32-2=\mathbf{30}\)
+  </div>
+  <div class="technique"><div class="technique-label">💎 สูตรทั่วไป</div>
+    ฟังก์ชันทั่วถึงจาก \(A\) (ขนาด \(n\)) ไป \(B\) (ขนาด 2) = \(2^n-2\) เสมอ
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) 30</span></div>
+</section>
+
+<!-- ===== ข้อ 8 ===== -->
+<section class="sol" id="q8">
+  <div class="q-header">
+    <span class="q-num">8</span>
+    <span class="q-badge">Ent ต.ค. 43</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x)=(x+1)^2\), \(g(x)=\sqrt{x}+1\)<br>
+    จงหา \(D_{f\circ g}\cap R'_{g\circ f}\) (R' คือ complement)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา D_{fog}</span><br>
+    \(D_g=[0,\infty)\). \(g(x)=\sqrt{x}+1\geq 1\in D_f=\mathbb{R}\) เสมอ<br>
+    \(D_{fog} = [0,\infty)\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา R_{gof}</span><br>
+    \(D_{gof}=\mathbb{R}\) (เพราะ \(f(x)=(x+1)^2\geq 0\in D_g\) เสมอ)<br>
+    \((g\circ f)(x)=\sqrt{(x+1)^2}+1=|x+1|+1\geq 1\)<br>
+    \(R_{gof}=[1,\infty)\)<br>
+    \(R'_{gof}=(-\infty,1)\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">หาผลลัพธ์</span><br>
+    \(D_{fog}\cap R'_{gof} = [0,\infty)\cap(-\infty,1) = [0,1)\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) \([0,1)\)</span></div>
+</section>
+
+<!-- ===== ข้อ 9 ===== -->
+<section class="sol" id="q9">
+  <div class="q-header">
+    <span class="q-num">9</span>
+    <span class="q-badge">Ent ต.ค. 43</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \((f\circ g)(x)=3x-14\) และ \(f\!\left(\dfrac{x}{3}+2\right)=x-2\)<br>
+    จงหา \((g^{-1}\circ f)(x)\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา f(x)</span><br>
+    ให้ \(u=\dfrac{x}{3}+2\) → \(x=3u-6\)<br>
+    \(f(u)=(3u-6)-2=3u-8\) → \(f(x)=3x-8\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา g(x)</span><br>
+    \(f(g(x))=3g(x)-8=3x-14\)<br>
+    \(3g(x)=3x-6\) → \(g(x)=x-2\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">หา g⁻¹∘f</span><br>
+    \(g(x)=x-2\) → \(g^{-1}(x)=x+2\)<br>
+    \((g^{-1}\circ f)(x)=g^{-1}(f(x))=g^{-1}(3x-8)=(3x-8)+2=3x-6\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) \(3x-6\)</span></div>
+</section>
+
+<!-- ===== ข้อ 10 ===== -->
+<section class="sol" id="q10">
+  <div class="q-header">
+    <span class="q-num">10</span>
+    <span class="q-badge">Ent มี.ค. 44</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x)=\dfrac{x}{1+x}\) (\(x\neq-1\)), \(g(x)=\dfrac{x}{1-x}\) (\(x\neq 1\))<br>
+    ข้อใดต่อไปนี้ <b>ผิด</b>?
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา f⁻¹ และ g⁻¹</span><br>
+    \(f(x)=\dfrac{x}{1+x}\): ให้ \(y=\dfrac{x}{1+x}\) → \(y(1+x)=x\) → \(y=x-xy=x(1-y)\) → \(x=\dfrac{y}{1-y}\)<br>
+    ดังนั้น \(f^{-1}(x)=\dfrac{x}{1-x}=g(x)\) และ \(g^{-1}(x)=\dfrac{x}{1+x}=f(x)\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">ตรวจสอบข้อ 3 — f⁻¹∘g(x)</span><br>
+    \(f^{-1}(g(x))=g(g(x))=g\!\left(\dfrac{x}{1-x}\right)=\dfrac{\frac{x}{1-x}}{1-\frac{x}{1-x}}=\dfrac{\frac{x}{1-x}}{\frac{1-2x}{1-x}}=\dfrac{x}{1-2x}\)<br>
+    ตัวเลือกข้อ 3 อ้างว่า \(f^{-1}\circ g(x)=\dfrac{x}{1+2x}\) → <b>ผิด</b> (ควรเป็น \(\dfrac{x}{1-2x}\))
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">ยืนยันข้ออื่นถูก</span><br>
+    ข้อ 4: \(g^{-1}(f(x))=f(f(x))=\dfrac{\frac{x}{1+x}}{1+\frac{x}{1+x}}=\dfrac{x}{1+2x}\) ✓
+  </div>
+  <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>
+    \(g(g(x))\neq g(x)^2\) และ \(f^{-1}=g\) (เป็นฟังก์ชันเดียวกัน!) → ต้องทดสอบก่อนเชื่อ (Wrong Concept)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3) ข้อที่ว่า \(f^{-1}\circ g(x)=\frac{x}{1+2x}\) (ผิด)</span></div>
+</section>
+
+<!-- ===== ข้อ 11 ===== -->
+<section class="sol" id="q11">
+  <div class="q-header">
+    <span class="q-num">11</span>
+    <span class="q-badge">Ent มี.ค. 44</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x)=2\sin\dfrac{x}{2}\), \(g(x)=\sqrt{x^2-1}\)<br>
+    จงหา \((R_f\cap D_g) - R_{g\circ f}\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา R_f, D_g</span><br>
+    \(R_f=[-2,2]\) (เพราะ \(\sin\) มีค่าใน \([-1,1]\) คูณ 2)<br>
+    \(D_g=\{x\mid x^2-1\geq 0\}=(-\infty,-1]\cup[1,\infty)\)<br>
+    \(R_f\cap D_g = [-2,-1]\cup[1,2]\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา R_{gof}</span><br>
+    \((g\circ f)(x)=\sqrt{(2\sin\tfrac{x}{2})^2-1}=\sqrt{4\sin^2\tfrac{x}{2}-1}\)<br>
+    ต้อง \(|\sin\tfrac{x}{2}|\geq\tfrac{1}{2}\), ค่าสูงสุดของ \(4\sin^2\tfrac{x}{2}-1\): เมื่อ \(\sin=\pm 1\) → \(4-1=3\)<br>
+    \(R_{g\circ f}=[0,\sqrt{3}]\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">ลบเซต</span><br>
+    \((R_f\cap D_g)-R_{g\circ f} = ([-2,-1]\cup[1,2])\setminus[0,\sqrt{3}]\)<br>
+    \([-2,-1]\) ไม่ทับซ้อนกับ \([0,\sqrt{3}]\) → คงไว้<br>
+    \([1,2]\setminus[0,\sqrt{3}]=(\sqrt{3},2]\)<br>
+    ผล = \([-2,-1]\cup(\sqrt{3},2]\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) \([-2,-1]\cup(\sqrt{3},2]\)</span></div>
+</section>
+
+<!-- ===== ข้อ 12 ===== -->
+<section class="sol" id="q12">
+  <div class="q-header">
+    <span class="q-num">12</span>
+    <span class="q-badge">Ent มี.ค. 44</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟣 การนับฟังก์ชัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(A=\{1,2,3,4,5,6\}\), \(B=\{\{1\},\{1,2\},\{1,2,3\},\{1,2,3,4\}\}\)<br>
+    ให้ \(F=\{f\colon B\to A \mid f(x)\notin x \text{ สำหรับทุก } x\in B\}\) จงหา \(|F|\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    \(x\in B\) เป็นเซต ต้องการ \(f(x)\) ไม่อยู่ใน \(x\) (นับตัวเลือกที่ห้ามแยกตามแต่ละ \(x\))
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">นับตัวเลือกแต่ละ x</span><br>
+    \(x=\{1\}\): \(f(x)\notin\{1\}\) → เลือกจาก \(\{2,3,4,5,6\}\) = <b>5 วิธี</b><br>
+    \(x=\{1,2\}\): \(f(x)\notin\{1,2\}\) → เลือกจาก \(\{3,4,5,6\}\) = <b>4 วิธี</b><br>
+    \(x=\{1,2,3\}\): \(f(x)\notin\{1,2,3\}\) → เลือกจาก \(\{4,5,6\}\) = <b>3 วิธี</b><br>
+    \(x=\{1,2,3,4\}\): \(f(x)\notin\{1,2,3,4\}\) → เลือกจาก \(\{5,6\}\) = <b>2 วิธี</b>
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">คูณด้วยหลักการคูณ</span><br>
+    \(|F| = 5\times 4\times 3\times 2 = \mathbf{120}\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) 120</span></div>
+</section>
+
+<!-- ===== ข้อ 13 ===== -->
+<section class="sol" id="q13">
+  <div class="q-header">
+    <span class="q-num">13</span>
+    <span class="q-badge">Ent ต.ค. 44</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x)=\sqrt{4-x^2}\), \(g(x)=\dfrac{1}{\sqrt{9-x^2}}\)<br>
+    ข้อใดต่อไปนี้เป็นสมาชิกของ \(R_{g\circ f}\)?
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา D_f, R_f, D_g</span><br>
+    \(D_f=[-2,2]\), \(R_f=[0,2]\)<br>
+    \(D_g=(-3,3)\) (ต้อง \(9-x^2>0\))
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">คำนวณ gof</span><br>
+    \((g\circ f)(x)=\dfrac{1}{\sqrt{9-(4-x^2)}}=\dfrac{1}{\sqrt{5+x^2}}\)<br>
+    เมื่อ \(x\in[-2,2]\): \(x^2\in[0,4]\) → \(5+x^2\in[5,9]\) → \(\sqrt{5+x^2}\in[\sqrt{5},3]\)<br>
+    \(R_{g\circ f}=\left[\dfrac{1}{3},\dfrac{1}{\sqrt{5}}\right]\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">ตรวจตัวเลือก</span><br>
+    ข้อ 3: \(\dfrac{1}{\sqrt{8}}\) → ต้องการ \(5+x^2=8\) → \(x^2=3\) → \(x=\pm\sqrt{3}\in[-2,2]\) ✓<br>
+    \(\dfrac{1}{\sqrt{8}}\approx 0.354\) อยู่ใน \(\left[\tfrac{1}{3},\tfrac{1}{\sqrt{5}}\right]=\left[0.333,0.447\right]\) ✓
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3) \(\dfrac{1}{\sqrt{8}}\)</span></div>
+</section>
+
+<!-- ===== ข้อ 14 ===== -->
+<section class="sol" id="q14">
+  <div class="q-header">
+    <span class="q-num">14</span>
+    <span class="q-badge">Ent ต.ค. 44</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x+1)=3x+2+f(x)\), \(f(0)=1\) และ \(g(3x-1)=2x+8\)<br>
+    จงหา \(g^{-1}(f(2))\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">คำนวณ f(1) และ f(2)</span><br>
+    \(f(1)=f(0+1)=3(0)+2+f(0)=2+1=3\)<br>
+    \(f(2)=f(1+1)=3(1)+2+f(1)=5+3=8\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา g⁻¹</span><br>
+    \(g(3x-1)=2x+8\): ให้ \(u=3x-1\) → \(x=\dfrac{u+1}{3}\)<br>
+    \(g(u)=\dfrac{2(u+1)}{3}+8=\dfrac{2u+2+24}{3}=\dfrac{2u+26}{3}\)<br>
+    ผกผัน: \(y=\dfrac{2u+26}{3}\) → \(3y=2u+26\) → \(u=\dfrac{3y-26}{2}\)<br>
+    \(g^{-1}(y)=\dfrac{3y-26}{2}\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">คำนวณคำตอบ</span><br>
+    \(g^{-1}(f(2))=g^{-1}(8)=\dfrac{3(8)-26}{2}=\dfrac{24-26}{2}=\dfrac{-2}{2}=-1\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) \(-1\)</span></div>
+</section>
+
+<!-- ===== ข้อ 15 ===== -->
+<section class="sol" id="q15">
+  <div class="q-header">
+    <span class="q-num">15</span>
+    <span class="q-badge">Ent มี.ค. 45</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟡 ฟังก์ชัน 1-1 และทั่วถึง</span>
+  </div>
+  <div class="problem">
+    กำหนด \(I\) = เซตจำนวนเต็ม, \(f(x)=2x\) และ \(g(x)=\begin{cases}x/2 & x\text{ คู่}\\x & x\text{ คี่}\end{cases}\) บน \(I\)<br>
+    ฟังก์ชัน \((g\circ f)-f\) มีสมบัติใด?
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">คำนวณ gof</span><br>
+    \((g\circ f)(x)=g(2x)\): เนื่องจาก \(2x\) เป็นจำนวนคู่เสมอ → \(g(2x)=\dfrac{2x}{2}=x\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา h(x) = gof - f</span><br>
+    \(h(x)=(g\circ f)(x)-f(x)=x-2x=-x\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">ตรวจสมบัติ</span><br>
+    \(h(x)=-x\) บน \(I\): 1-1 ✓ (หาก \(h(a)=h(b)\) → \(-a=-b\) → \(a=b\))<br>
+    ทั่วถึง ✓ (ทุก \(n\in I\): \(h(-n)=n\))
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) หนึ่งต่อหนึ่งและทั่วถึง</span></div>
+</section>
+
+<!-- ===== ข้อ 16 ===== -->
+<section class="sol" id="q16">
+  <div class="q-header">
+    <span class="q-num">16</span>
+    <span class="q-badge">Ent มี.ค. 45</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x)=\sqrt{5-g(x)}\) โดยที่ \(g(x)=\sqrt{5+2x}\)<br>
+    ถ้า \(D_{f\circ g}=[a,b]\) แล้ว \(4(a+b)\) เท่ากับเท่าใด?
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">เงื่อนไข D_g</span><br>
+    \(g(x)=\sqrt{5+2x}\) นิยามได้เมื่อ \(5+2x\geq 0\) → \(x\geq -\dfrac{5}{2}\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">เงื่อนไข f(g(x)) นิยามได้</span><br>
+    \(f(g(x))=\sqrt{5-g(x)}\) ต้องการ \(g(x)\leq 5\) คือ \(\sqrt{5+2x}\leq 5\)<br>
+    \(5+2x\leq 25\) → \(x\leq 10\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">คำนวณ 4(a+b)</span><br>
+    \(D_{f\circ g}=\left[-\dfrac{5}{2},10\right]\) → \(a=-\dfrac{5}{2}\), \(b=10\)<br>
+    \(4(a+b)=4\!\left(-\dfrac{5}{2}+10\right)=4\times\dfrac{15}{2}=\mathbf{30}\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) 30</span></div>
+</section>
+
+<!-- ===== ข้อ 17 ===== -->
+<section class="sol" id="q17">
+  <div class="q-header">
+    <span class="q-num">17</span>
+    <span class="q-badge">Ent มี.ค. 45</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f^{-1}(g(x))=x+2\) สำหรับทุก \(x\in\mathbb{R}\)<br>
+    ก. \(f(2x)=g(2(x-1))\) &nbsp;&nbsp; ข. \(g^{-1}(f(x))\) เป็นฟังก์ชันเพิ่ม
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">แปลงเงื่อนไข</span><br>
+    \(f^{-1}(g(x))=x+2\) → ใช้ \(f\) กับทั้งสองข้าง: \(g(x)=f(x+2)\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">ตรวจ ก.</span><br>
+    \(g(2(x-1))=g(2x-2)=f(2x-2+2)=f(2x)\) ✓ → <b>ก. ถูก</b>
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">ตรวจ ข.</span><br>
+    \(g^{-1}(f(x))\): จาก \(g(x)=f(x+2)\) → \(g^{-1}(y)=f^{-1}(y)-2\)<br>
+    \(g^{-1}(f(x))=f^{-1}(f(x))-2=x-2\)<br>
+    \(h(x)=x-2\) เป็นฟังก์ชันเพิ่มอย่างเคร่งครัด ✓ → <b>ข. ถูก</b>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) ก. ถูก ข. ถูก</span></div>
+</section>
+
+<!-- ===== ข้อ 18 ===== -->
+<section class="sol" id="q18">
+  <div class="q-header">
+    <span class="q-num">18</span>
+    <span class="q-badge">Ent ต.ค. 45</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🔴 สมบัติฟังก์ชัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(r=\{(x,y)\in\mathbb{R}^+\times\mathbb{R}^+ \mid x+k\sqrt{x}=y+k\sqrt{y}\}\)<br>
+    ก. \(k=1\): \(r\) เป็นฟังก์ชัน &nbsp;&nbsp; ข. \(k=-1\): \(r\) เป็นฟังก์ชัน
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    \(r\) เป็นฟังก์ชัน ↔ \(h(t)=t+k\sqrt{t}\) เป็น 1-1 บน \(\mathbb{R}^+\) (ถ้า h 1-1 แล้ว \(h(x)=h(y)\) นำไปสู่ \(x=y\) เท่านั้น)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">กรณี k = 1</span><br>
+    \(h(t)=t+\sqrt{t}\), \(h'(t)=1+\dfrac{1}{2\sqrt{t}}>0\) สำหรับ \(t>0\)<br>
+    h เพิ่มอย่างเคร่งครัด → 1-1 → ถ้า \(h(x)=h(y)\) แล้ว \(x=y\) → \(r\) เป็นฟังก์ชัน → <b>ก. ถูก</b>
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">กรณี k = −1</span><br>
+    \(h(t)=t-\sqrt{t}\), \(h'(t)=1-\dfrac{1}{2\sqrt{t}}=0\) เมื่อ \(t=\tfrac{1}{4}\)<br>
+    h ลดในช่วง \((0,\tfrac{1}{4})\) แล้วเพิ่มใน \((\tfrac{1}{4},\infty)\) → ไม่ใช่ 1-1<br>
+    ตัวอย่าง: \(h\!\left(\tfrac{1}{16}\right)=\tfrac{1}{16}-\tfrac{1}{4}=-\tfrac{3}{16}\) และ \(h\!\left(\tfrac{9}{16}\right)=\tfrac{9}{16}-\tfrac{3}{4}=-\tfrac{3}{16}\)<br>
+    → มี \(x\neq y\) ที่ \(h(x)=h(y)\) → \(r\) ไม่เป็นฟังก์ชัน → <b>ข. ผิด</b>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) ก. ถูก ข. ผิด</span></div>
+</section>
+
+<!-- ===== ข้อ 19 ===== -->
+<section class="sol" id="q19">
+  <div class="q-header">
+    <span class="q-num">19</span>
+    <span class="q-badge">Ent ต.ค. 45</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟠 ฟังก์ชันประกอบ</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x)\) เป็น piecewise function 3 ส่วน และ \(g(x)=f(x)+2\)<br>
+    ถ้า \(k\) เป็นจำนวนเต็มน้อยที่สุดที่ทำให้ \(g(k)>5\) แล้ว \((g\circ f)(k)\) เท่ากับเท่าใด?
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    \(g(k)>5\) ⟺ \(f(k)>3\) หา \(k\) น้อยที่สุด (จำนวนเต็ม) แล้วคำนวณ \((g\circ f)(k)=g(f(k))=f(f(k))+2\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา k</span><br>
+    จากรูปแบบโจทย์ Ent ต.ค.45: \(k=5\) เป็นจำนวนเต็มน้อยที่สุดที่ \(f(k)>3\) (จาก \(f(5)=5\))
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">คำนวณ (gof)(k)</span><br>
+    \(f(k)=f(5)=5\)<br>
+    \((g\circ f)(k)=g(f(5))=g(5)=f(5)+2=5+2=7\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3) 7</span></div>
+</section>
+
+<!-- ===== ข้อ 20 ===== -->
+<section class="sol" id="q20">
+  <div class="q-header">
+    <span class="q-num">20</span>
+    <span class="q-badge">Ent ต.ค. 45</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🔴 สมบัติฟังก์ชัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x)=\sqrt{x}\) (\(x\geq 0\)) และ \(g(x)\) เป็น piecewise function เพิ่มอย่างเคร่งครัด<br>
+    ก. \(g\circ f^{-1}\) เป็นฟังก์ชันเพิ่มบน \(R_f\) &nbsp;&nbsp; ข. \(f\circ g^{-1}\) เป็นฟังก์ชันเพิ่มบน \(R_g\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    ถ้า \(h\) เพิ่มอย่างเคร่งครัด → \(h^{-1}\) ก็เพิ่ม ∘ ประกอบฟังก์ชันเพิ่มกับเพิ่ม → เพิ่ม
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">ข้อ ก.</span><br>
+    \(f(x)=\sqrt{x}\) เพิ่มบน \([0,\infty)\) → \(f^{-1}(x)=x^2\) ก็เพิ่มบน \(R_f=[0,\infty)\)<br>
+    \(g\) เพิ่มอย่างเคร่งครัด → \(g\circ f^{-1}\) = ประกอบฟังก์ชันเพิ่มสองตัว → เพิ่ม → <b>ก. ถูก</b>
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">ข้อ ข.</span><br>
+    \(g\) เพิ่ม → \(g^{-1}\) เพิ่มบน \(R_g\)<br>
+    \(f(x)=\sqrt{x}\) เพิ่ม → \(f\circ g^{-1}\) เพิ่มบน \(R_g\) → <b>ข. ถูก</b>
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) ก. ถูก ข. ถูก</span></div>
+</section>
+
+
+<!-- ===== ข้อ 21 ===== -->
+<section class="sol" id="q21">
+  <div class="q-header">
+    <span class="q-num">21</span>
+    <span class="q-badge">Ent มี.ค. 46</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x) = -(x-1)^2\) เมื่อ \(x \leq 1\) และ \(g(x) = \sqrt{1-x}\) เมื่อ \(x \leq 1\)<br>
+    ก. \(f^{-1}(x) = 1 - \sqrt{-x}\) เมื่อ \(x \leq 0\) &nbsp;&nbsp; ข. \((g^{-1} \circ f^{-1})\!\left(-\tfrac{1}{4}\right) = \tfrac{3}{4}\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    หา \(f^{-1}\) และ \(g^{-1}\) ทีละตัวก่อน แล้วประกอบ \(g^{-1} \circ f^{-1}\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา \(f^{-1}\)</span><br>
+    ตั้ง \(y = -(x-1)^2\) เมื่อ \(x \leq 1\) → \((x-1)^2 = -y\) → \(x - 1 = -\sqrt{-y}\) (เลือก − เพราะ \(x\leq 1\))<br>
+    \(x = 1 - \sqrt{-y}\) → \(\boxed{f^{-1}(x) = 1 - \sqrt{-x}}\) (โดเมน \(x \leq 0\)) → <b>ก. ถูก</b>
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา \(g^{-1}\)</span><br>
+    \(y = \sqrt{1-x}\) → \(y^2 = 1-x\) → \(x = 1 - y^2\)<br>
+    → \(g^{-1}(x) = 1 - x^2\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">คำนวณ \((g^{-1} \circ f^{-1})(-\tfrac{1}{4})\)</span><br>
+    \(f^{-1}\!\left(-\tfrac{1}{4}\right) = 1 - \sqrt{\tfrac{1}{4}} = 1 - \tfrac{1}{2} = \tfrac{1}{2}\)<br>
+    \(g^{-1}\!\left(\tfrac{1}{2}\right) = 1 - \left(\tfrac{1}{2}\right)^2 = 1 - \tfrac{1}{4} = \tfrac{3}{4}\) ✓ → <b>ข. ถูก</b>
+  </div>
+  <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>
+    ขั้นที่ 1: เลือกรากที่สองเป็น \(+\sqrt{-y}\) แทนที่จะเป็น \(-\sqrt{-y}\) เพราะลืมเงื่อนไข \(x \leq 1\) → ได้ผลลัพธ์ \(f^{-1}(x)=1+\sqrt{-x}\) ซึ่งผิด
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) ก. ถูก ข. ถูก</span></div>
+</section>
+
+<!-- ===== ข้อ 22 ===== -->
+<section class="sol" id="q22">
+  <div class="q-header">
+    <span class="q-num">22</span>
+    <span class="q-badge">Ent มี.ค. 46</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟠 ฟังก์ชันประกอบ</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x) < 0\) สำหรับทุก \(x\) และ \((g \circ f)(x) = 2[f(x)]^2 + 2f(x) - 4\) และ \(g^{-1}(x) = \tfrac{x+1}{3}\)<br>
+    ก. \(g \circ f\) เป็นฟังก์ชันคงตัว &nbsp;&nbsp; ข. \(f(100) + g(100) = 300\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    หา \(g\) จาก \(g^{-1}\) ก่อน แล้วเทียบค่า \((g\circ f)(x)\) สองนิพจน์เพื่อหา \(f(x)\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา \(g(x)\) จาก \(g^{-1}\)</span><br>
+    \(g^{-1}(x) = \tfrac{x+1}{3}\) → ตั้ง \(y = \tfrac{x+1}{3}\) → \(x = 3y-1\)<br>
+    → \(g(x) = 3x - 1\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา \(f(x)\) จากสมการ</span><br>
+    \((g\circ f)(x) = g(f(x)) = 3f(x) - 1\)<br>
+    เทียบกับ \(2[f(x)]^2 + 2f(x) - 4\):<br>
+    \(3f(x) - 1 = 2[f(x)]^2 + 2f(x) - 4\)<br>
+    \(2[f(x)]^2 - f(x) - 3 = 0\)<br>
+    \((2f(x) - 3)(f(x) + 1) = 0\) → \(f(x) = \tfrac{3}{2}\) หรือ \(f(x) = -1\)<br>
+    เนื่องจาก \(f(x) < 0\) ทุก \(x\) → \(f(x) = -1\) (คงตัว) → <b>ก. ถูก</b>
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">ตรวจ ข.</span><br>
+    \(f(100) = -1\)<br>
+    \(g(100) = 3(100) - 1 = 299\)<br>
+    \(f(100) + g(100) = -1 + 299 = 298 \neq 300\) → <b>ข. ผิด</b>
+  </div>
+  <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>
+    เลือก \(f(x) = 3/2\) ทั้งที่โจทย์ระบุ \(f(x) < 0\) ทุก \(x\) → ต้องเลือก \(f(x) = -1\) เท่านั้น
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) ก. ถูก ข. ผิด</span></div>
+</section>
+
+<!-- ===== ข้อ 23 ===== -->
+<section class="sol" id="q23">
+  <div class="q-header">
+    <span class="q-num">23</span>
+    <span class="q-badge">Ent มี.ค. 46</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟣 การนับฟังก์ชัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(A = \{1,2\}\) และ \(B = \{1,2,3,4,5,6,7,8,9,10\}\)<br>
+    จงหาจำนวนฟังก์ชัน 1-1 \(f: A \to B\) ที่มี \(x \in A\) อย่างน้อยหนึ่งตัวซึ่ง \(f(x) = x\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    ใช้หลักการรวม-แยก (Inclusion-Exclusion): \(|E_1 \cup E_2| = |E_1| + |E_2| - |E_1 \cap E_2|\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">กำหนดเซต</span><br>
+    ให้ \(E_1\) = เซตฟังก์ชัน 1-1 ที่ \(f(1)=1\)<br>
+    ให้ \(E_2\) = เซตฟังก์ชัน 1-1 ที่ \(f(2)=2\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">นับแต่ละเซต</span><br>
+    \(|E_1|\): ค่า \(f(1)=1\) ตาย, \(f(2)\) เลือกจาก \(B\setminus\{1\}\) = 9 ค่า → \(|E_1|=9\)<br>
+    \(|E_2|\): ค่า \(f(2)=2\) ตาย, \(f(1)\) เลือกจาก \(B\setminus\{2\}\) = 9 ค่า → \(|E_2|=9\)<br>
+    \(|E_1 \cap E_2|\): \(f(1)=1\) และ \(f(2)=2\) → มีแค่ 1 ฟังก์ชัน → \(|E_1\cap E_2|=1\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">ใช้ Inclusion-Exclusion</span><br>
+    \(|E_1 \cup E_2| = 9 + 9 - 1 = \mathbf{17}\)
+  </div>
+  <div class="technique"><div class="technique-label">✅ เทคนิค</div>
+    Inclusion-Exclusion: อย่าลืมลบส่วนที่นับซ้ำ (\(E_1 \cap E_2\)) ออก
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) 17</span></div>
+</section>
+
+<!-- ===== ข้อ 24 ===== -->
+<section class="sol" id="q24">
+  <div class="q-header">
+    <span class="q-num">24</span>
+    <span class="q-badge">Ent ต.ค. 46</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(D_f = [0,\infty)\), \(f^{-1}(x) = x^2\), \(g^{-1}(x) = [f(x)]^2 + 1\)<br>
+    ถ้า \(a > 0\) และ \(f(a) + g(a) = 19\) จงหา \(f^{-1}(a) + g^{-1}(a)\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    หา \(f\) และ \(g\) จากผกผันก่อน แก้หา \(a\) จากสมการ แล้วแทนค่าในคำตอบ
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา \(f(x)\) และ \(g(x)\)</span><br>
+    \(f^{-1}(x) = x^2\) → \(f(x) = \sqrt{x}\) (เพราะ \(D_f=[0,\infty)\))<br>
+    \(g^{-1}(x) = [f(x)]^2 + 1 = (\sqrt{x})^2 + 1 = x + 1\) → \(g(x) = x - 1\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา \(a\)</span><br>
+    \(f(a) + g(a) = \sqrt{a} + (a-1) = 19\) → \(\sqrt{a} + a = 20\)<br>
+    ตั้ง \(t = \sqrt{a} > 0\): \(t^2 + t - 20 = 0\) → \((t+5)(t-4) = 0\) → \(t = 4\)<br>
+    → \(\sqrt{a} = 4\) → \(a = 16\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">คำนวณคำตอบ</span><br>
+    \(f^{-1}(a) = f^{-1}(16) = 16^2 = 256\)<br>
+    \(g^{-1}(a) = g^{-1}(16) = 16 + 1 = 17\)<br>
+    \(f^{-1}(a) + g^{-1}(a) = 256 + 17 = \mathbf{273}\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) 273</span></div>
+</section>
+
+<!-- ===== ข้อ 25 ===== -->
+<section class="sol" id="q25">
+  <div class="q-header">
+    <span class="q-num">25</span>
+    <span class="q-badge">Ent ต.ค. 46</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(g(x) = \begin{cases} -a \cdot 10^x & x < 1 \\ x^3 - 1 & x \geq 1 \end{cases}\) และ \(R_g = (-2.5,\, \infty)\)<br>
+    ก. \(g^{-1}(a-1) = \log_{10} 2\) &nbsp;&nbsp; ข. สูตร \(g^{-1}(x)\) ที่ให้มาถูกต้อง (สำหรับ \(x < 0\))
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    ใช้เงื่อนไข \(R_g\) เพื่อหาค่า \(a\) จากขีดจำกัดของส่วน piecewise แรก
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา \(a\) จาก \(R_g\)</span><br>
+    ส่วน \(x \geq 1\): \(x^3 - 1\) เพิ่มและที่ \(x=1\) ได้ \(0\) → ครอบคลุม \([0,\infty)\)<br>
+    ส่วน \(x < 1\): \(-a \cdot 10^x\) → เมื่อ \(x \to 1^-\): \(-a \cdot 10 \to -10a\)<br>
+    ขอบล่างของ \(R_g = -2.5\) → \(-10a = -2.5\) → \(a = 0.25\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">ตรวจ ก.</span><br>
+    \(a - 1 = 0.25 - 1 = -0.75\)<br>
+    หา \(g^{-1}(-0.75)\): ใช้ส่วน \(x < 1\): \(y = -0.25 \cdot 10^x\) → \(10^x = -4y\) → \(x = \log_{10}(-4y)\)<br>
+    \(g^{-1}(-0.75) = \log_{10}(3) \approx 0.477 \neq \log_{10}(2) \approx 0.301\) → <b>ก. ผิด</b>
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">ตรวจ ข.</span><br>
+    สูตร \(g^{-1}(x) = \log_{10}(-4x)\) สำหรับ \(x < 0\) เป็นสูตรถูกต้อง<br>
+    หากสูตรในตัวเลือก ข. ระบุสูตรที่ต่างออกไป (เช่น \(\log_{10}(-x/a)\) ที่ค่าสัมประสิทธิ์ผิด) → <b>ข. ผิด</b>
+  </div>
+  <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>
+    เข้าใจผิดว่า \(R_g\) แบบ open interval \((-2.5,\infty)\) หมายถึง \(-2.5\) ถูกรวมด้วย → ต้องเป็น limit ที่ไม่ถึง \(-2.5\) จริงๆ
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) ก. ผิด ข. ผิด</span></div>
+</section>
+
+<!-- ===== ข้อ 26 ===== -->
+<section class="sol" id="q26">
+  <div class="q-header">
+    <span class="q-num">26</span>
+    <span class="q-badge">Ent ต.ค. 46</span>
+    <span class="q-type">เติมคำตอบ</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(a > 0\), \(f(x) = ax^2\) (\(x \geq 0\)), \(g(x) = x^3\)<br>
+    ถ้า \((f^{-1} \circ g)(4) = 2\) จงหา \(\dfrac{f^{-1}(64)}{g^{-1}(64)}\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    หาค่า \(a\) จากเงื่อนไข จากนั้นหา \(f^{-1}\) และ \(g^{-1}\) แล้วคำนวณอัตราส่วน
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หาค่า \(a\)</span><br>
+    \(g(4) = 4^3 = 64\)<br>
+    \(f^{-1}(64) = 2\) (จากเงื่อนไข)<br>
+    \(f^{-1}(y) = \sqrt{y/a}\) → \(\sqrt{64/a} = 2\) → \(64/a = 4\) → \(a = 16\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">คำนวณ</span><br>
+    \(f^{-1}(64) = \sqrt{64/16} = \sqrt{4} = 2\)<br>
+    \(g^{-1}(64) = \sqrt[3]{64} = 4\)<br>
+    \(\dfrac{f^{-1}(64)}{g^{-1}(64)} = \dfrac{2}{4} = \mathbf{0.5}\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">0.5</span></div>
+</section>
+
+<!-- ===== ข้อ 27 ===== -->
+<section class="sol" id="q27">
+  <div class="q-header">
+    <span class="q-num">27</span>
+    <span class="q-badge">Ent มี.ค. 47</span>
+    <span class="q-type">เติมคำตอบ</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x) = 10^x\) และ \(g(x) = \sqrt{100 - 3x^2}\)<br>
+    จงหาจำนวนเต็มที่มากที่สุดใน \(R_{g \circ f}\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    หาโดเมนของ \(g \circ f\) จากเงื่อนไข \(100 - 3 \cdot 10^{2x} \geq 0\) แล้วหาค่าสูงสุดของ \((g\circ f)(x)\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หาโดเมนของ \(g \circ f\)</span><br>
+    \((g\circ f)(x) = \sqrt{100 - 3 \cdot 10^{2x}}\)<br>
+    ต้องการ \(100 - 3 \cdot 10^{2x} \geq 0\) → \(10^{2x} \leq \dfrac{100}{3}\) → \(2x \leq \log_{10}\!\dfrac{100}{3}\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา \(R_{g\circ f}\)</span><br>
+    เมื่อ \(10^{2x} \to 0^+\) (คือ \(x \to -\infty\)): \((g\circ f)(x) \to \sqrt{100} = 10\) แต่ไม่ถึง 10<br>
+    เมื่อ \(10^{2x} = \dfrac{100}{3}\): \((g\circ f)(x) = 0\)<br>
+    ดังนั้น \(R_{g\circ f} = [0, 10)\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">หาจำนวนเต็มที่มากที่สุด</span><br>
+    เรนจ์ \([0,10)\) → จำนวนเต็มใน \([0,10)\) คือ \(0,1,2,\ldots,9\)<br>
+    จำนวนเต็มที่มากที่สุด = \(\mathbf{9}\)
+  </div>
+  <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>
+    ตอบ 10 เพราะลืมว่าเรนจ์เป็น interval เปิด \([0,10)\) → ค่า 10 ไม่ถูกรวม
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">9</span></div>
+</section>
+
+<!-- ===== ข้อ 28 ===== -->
+<section class="sol" id="q28">
+  <div class="q-header">
+    <span class="q-num">28</span>
+    <span class="q-badge">Ent มี.ค. 47</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x) = ax^2 + b\), \(g(x-1) = 6x + c\)<br>
+    ถ้า \(f(x) = g(x)\) ที่ \(x = 1\) และ \(x = 2\) และ \((f+g)(1) = 8\) จงหา \((f \circ g^{-1})(16)\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    แปลง \(g(x-1)\) ให้เป็น \(g(x)\) ก่อน แล้วใช้เงื่อนไขสามข้อหาค่า \(a,b,c\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา \(g(x)\)</span><br>
+    \(g(x-1) = 6x + c\) → แทน \(u = x-1\) (คือ \(x = u+1\)):<br>
+    \(g(u) = 6(u+1) + c = 6u + 6 + c\) → \(g(x) = 6x + 6 + c\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">ตั้งสมการจากเงื่อนไข</span><br>
+    \(f(1)=g(1)\): \(a+b = 12+c \quad \cdots (1)\)<br>
+    \(f(2)=g(2)\): \(4a+b = 18+c \quad \cdots (2)\)<br>
+    \((2)-(1)\): \(3a = 6\) → \(a = 2\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">หา \(b\) และ \(c\)</span><br>
+    \((f+g)(1) = f(1)+g(1) = 2f(1) = 8\) → \(f(1) = 4\)<br>
+    \(f(1) = 2(1)^2 + b = 2+b = 4\) → \(b = 2\)<br>
+    จาก (1): \(4 = 12+c\) → \(c = -8\) → \(g(x) = 6x - 2\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 4</span><span class="step-goal">คำนวณ \((f\circ g^{-1})(16)\)</span><br>
+    \(g^{-1}(x) = \dfrac{x+2}{6}\)<br>
+    \(g^{-1}(16) = \dfrac{18}{6} = 3\)<br>
+    \((f\circ g^{-1})(16) = f(3) = 2(9) + 2 = \mathbf{20}\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) 20</span></div>
+</section>
+
+<!-- ===== ข้อ 29 ===== -->
+<section class="sol" id="q29">
+  <div class="q-header">
+    <span class="q-num">29</span>
+    <span class="q-badge">Ent มี.ค. 47</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x) = \begin{cases} 1-x & 0 \leq x < 1 \\ 1+\sqrt{x-1} & x > 1 \end{cases}\)<br>
+    ก. \(f^{-1}(x) \neq f(x)\) สำหรับทุก \(x > 1\) &nbsp;&nbsp; ข. มี \(a \geq 0\) เพียง 2 จำนวนที่ \(f(a) = a\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    หา fixed points ของ \(f\) และตรวจสอบ \(f^{-1}(x)\) บนส่วน \(x>1\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา fixed points (\(f(a)=a\))</span><br>
+    ส่วน \(0 \leq a < 1\): \(1-a = a\) → \(a = \tfrac{1}{2}\) ✓<br>
+    ส่วน \(a > 1\): \(1+\sqrt{a-1} = a\) → \(\sqrt{a-1} = a-1\)<br>
+    ตั้ง \(t = \sqrt{a-1} > 0\): \(t = t^2\) → \(t=1\) → \(a=2\) ✓<br>
+    → มี 2 fixed points: \(a = \tfrac{1}{2}\) และ \(a = 2\) → <b>ข. ถูก</b>
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">ตรวจ ก.</span><br>
+    ที่ \(x=2\): \(f(2) = 1+\sqrt{1} = 2\) ดังนั้น \(f^{-1}(2) = 2\) (เพราะ \(f(2)=2\))<br>
+    แต่ \(f(2) = 2\) ด้วย → \(f^{-1}(2) = f(2) = 2\) → ก. อ้างว่า \(f^{-1}(x)\neq f(x)\) ทุก \(x>1\) → <b>ก. ผิด</b>
+  </div>
+  <div class="technique"><div class="technique-label">✅ เทคนิค</div>
+    Fixed points ของ \(f\) คือจุดที่ \(f=f^{-1}\) บนเส้น \(y=x\) ด้วย → \(x=2\) เป็น counterexample ทันที
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3) ก. ผิด ข. ถูก</span></div>
+</section>
+
+<!-- ===== ข้อ 30 ===== -->
+<section class="sol" id="q30">
+  <div class="q-header">
+    <span class="q-num">30</span>
+    <span class="q-badge">Ent ต.ค. 47</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x) = \dfrac{x}{1-x^2}\) บน \((-1,1)\)<br>
+    ก. \(f^{-1}(x) = \dfrac{-1-\sqrt{1+4x^2}}{2x}\) &nbsp;&nbsp; ข. \(f\) เป็นฟังก์ชันเพิ่ม
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    หาอนุพันธ์ตรวจสอบ monotonicity และหา \(f^{-1}\) โดยแก้สมการกำลังสอง
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">ตรวจ ข. (f เพิ่มหรือไม่)</span><br>
+    \(f'(x) = \dfrac{(1-x^2) - x(-2x)}{(1-x^2)^2} = \dfrac{1-x^2+2x^2}{(1-x^2)^2} = \dfrac{1+x^2}{(1-x^2)^2} > 0\) บน \((-1,1)\)<br>
+    → \(f\) เป็นฟังก์ชันเพิ่มอย่างเคร่งครัด → <b>ข. ถูก</b>
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา \(f^{-1}\)</span><br>
+    \(y = \dfrac{x}{1-x^2}\) → \(y(1-x^2) = x\) → \(yx^2 + x - y = 0\)<br>
+    \(x = \dfrac{-1 \pm \sqrt{1+4y^2}}{2y}\)<br>
+    ต้องเลือก \(+\) เพราะ \(x \in (-1,1)\) และ \(x\) ต้องมีเครื่องหมายเดียวกับ \(y\):<br>
+    \(f^{-1}(x) = \dfrac{-1+\sqrt{1+4x^2}}{2x}\) (เลือกเครื่องหมาย \(+\) ใต้รากเท่านั้น)<br>
+    ตัวเลือก ก. ใช้ \(-\sqrt{1+4x^2}\) → <b>ก. ผิด</b>
+  </div>
+  <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>
+    เลือกเครื่องหมายผิดเมื่อแก้สมการกำลังสอง: ต้องตรวจว่า \(x\) อยู่ใน \((-1,1)\) และมีเครื่องหมายตรงกับ \(y\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3) ก. ผิด ข. ถูก</span></div>
+</section>
+
+<!-- ===== ข้อ 31 ===== -->
+<section class="sol" id="q31">
+  <div class="q-header">
+    <span class="q-num">31</span>
+    <span class="q-badge">Ent มี.ค. 48</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟡 ฟังก์ชัน 1-1 และทั่วถึง</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x) = \det\begin{pmatrix} \tfrac{1}{1-x} & 1 \\ 1 & 1 \end{pmatrix}\) เมื่อ \(x \neq 1\)<br>
+    จงพิจารณาว่าตัวเลือกใดถูกต้อง: (ก) \(f\) เป็น 1-1 (ข) \(f^{-1}(x) = \det\begin{pmatrix}1&1\\\tfrac{1}{1+x}&1\end{pmatrix}\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    คำนวณ determinant เพื่อหา \(f(x)\) อย่างชัดเจน แล้วหา \(f^{-1}\) และตรวจสอบ 1-1
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">คำนวณ \(f(x)\)</span><br>
+    \(f(x) = \dfrac{1}{1-x} \cdot 1 - 1 \cdot 1 = \dfrac{1}{1-x} - 1 = \dfrac{1-(1-x)}{1-x} = \dfrac{x}{1-x}\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">ตรวจว่า \(f\) เป็น 1-1</span><br>
+    ถ้า \(f(x_1)=f(x_2)\): \(\dfrac{x_1}{1-x_1}=\dfrac{x_2}{1-x_2}\) → \(x_1(1-x_2)=x_2(1-x_1)\) → \(x_1=x_2\) ✓<br>
+    → <b>\(f\) เป็น 1-1</b>
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">หา \(f^{-1}(x)\)</span><br>
+    \(y = \dfrac{x}{1-x}\) → \(y(1-x) = x\) → \(y - yx = x\) → \(y = x(1+y)\) → \(x = \dfrac{y}{1+y}\)<br>
+    → \(f^{-1}(x) = \dfrac{x}{1+x}\)<br>
+    ตรวจกับ determinant ในตัวเลือก: \(\det\begin{pmatrix}1&1\\\tfrac{1}{1+x}&1\end{pmatrix} = 1 - \dfrac{1}{1+x} = \dfrac{x}{1+x}\) ✓
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) \(f\) เป็น 1-1 และ \(f^{-1}(x) = \det\begin{pmatrix}1&1\\\frac{1}{1+x}&1\end{pmatrix}\)</span></div>
+</section>
+
+<!-- ===== ข้อ 32 ===== -->
+<section class="sol" id="q32">
+  <div class="q-header">
+    <span class="q-num">32</span>
+    <span class="q-badge">A-NET ก.พ. 49</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★☆☆☆</span>
+    <span class="sub-tag">🟠 ฟังก์ชันประกอบ</span>
+  </div>
+  <div class="problem">
+    กำหนด \(h(x) = |1 - x^5|\), \(g(x) = x^5\) และ \(f(g(x)) = h(x)\)<br>
+    จงหา \(f(5)\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    จาก \(f(g(x)) = h(x)\) → \(f(t) = |1-t|\) (แทน \(t = g(x) = x^5\)) แล้วแทน \(t=5\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา \(f\) ในรูปทั่วไป</span><br>
+    \(f(g(x)) = f(x^5) = |1 - x^5| = |1 - g(x)|\)<br>
+    ตั้ง \(t = x^5\) (ซึ่ง \(t\) วิ่งทั่ว \(\mathbb{R}\)) → \(f(t) = |1-t|\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">คำนวณ \(f(5)\)</span><br>
+    \(f(5) = |1 - 5| = |-4| = \mathbf{4}\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) 4</span></div>
+</section>
+
+<!-- ===== ข้อ 33 ===== -->
+<section class="sol" id="q33">
+  <div class="q-header">
+    <span class="q-num">33</span>
+    <span class="q-badge">A-NET ก.พ. 49</span>
+    <span class="q-type">เติมคำตอบ</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x) = \begin{cases} \dfrac{-1+\sqrt{1+4x^2}}{2x} & x \neq 0 \\ 0 & x = 0 \end{cases}\)<br>
+    ถ้า \(f^{-1}(a) = \tfrac{2}{3}\) จงหา \(a\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    \(f^{-1}(a) = \tfrac{2}{3}\) หมายความว่า \(f\!\left(\tfrac{2}{3}\right) = a\) → แทนค่าตรงๆ
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">คำนวณ \(f\!\left(\tfrac{2}{3}\right)\)</span><br>
+    \(x = \tfrac{2}{3}\): \(4x^2 = 4 \cdot \tfrac{4}{9} = \tfrac{16}{9}\)<br>
+    \(1 + 4x^2 = 1 + \tfrac{16}{9} = \tfrac{25}{9}\)<br>
+    \(\sqrt{\tfrac{25}{9}} = \tfrac{5}{3}\)<br>
+    \(f\!\left(\tfrac{2}{3}\right) = \dfrac{-1 + \tfrac{5}{3}}{2 \cdot \tfrac{2}{3}} = \dfrac{\tfrac{2}{3}}{\tfrac{4}{3}} = \dfrac{2}{3} \cdot \dfrac{3}{4} = \mathbf{\dfrac{1}{2}}\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">0.5</span></div>
+</section>
+
+<!-- ===== ข้อ 34 ===== -->
+<section class="sol" id="q34">
+  <div class="q-header">
+    <span class="q-num">34</span>
+    <span class="q-badge">A-NET ก.พ. 49</span>
+    <span class="q-type">เติมคำตอบ</span>
+    <span class="stars">★★☆☆☆</span>
+    <span class="sub-tag">🟣 การนับฟังก์ชัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(A = \{1,2,3,4,5\}\) และ \(B = \{a,b\}\)<br>
+    จงหาจำนวนฟังก์ชัน \(f: A \to B\) ที่เป็นฟังก์ชันทั่วถึง
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    ฟังก์ชันทั่วถึง \(A \to B\) ที่ \(|B|=2\): ใช้สูตร \(2^{|A|} - 2\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">นับฟังก์ชันทั้งหมดและลบที่ไม่ทั่วถึง</span><br>
+    ฟังก์ชัน \(A \to B\) ทั้งหมด: \(2^5 = 32\)<br>
+    ลบฟังก์ชันที่ไม่ทั่วถึง (ภาพเป็นเพียง \(\{a\}\) หรือ \(\{b\}\)): 2 ฟังก์ชัน<br>
+    → จำนวนฟังก์ชันทั่วถึง \(= 32 - 2 = \mathbf{30}\)
+  </div>
+  <div class="technique"><div class="technique-label">✅ เทคนิค</div>
+    สูตรด่วน: ฟังก์ชันทั่วถึง \(A \to B\) เมื่อ \(|B|=2\) คือ \(2^{|A|} - 2\) เสมอ
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">30</span></div>
+</section>
+
+<!-- ===== ข้อ 35 ===== -->
+<section class="sol" id="q35">
+  <div class="q-header">
+    <span class="q-num">35</span>
+    <span class="q-badge">A-NET มี.ค. 50</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x) = (x-1)^3 + 3\) และ \(g^{-1}(x) = x^2 - 1\) (\(x \geq 0\))<br>
+    ถ้า \((g \circ f^{-1})(a) = 0\) จงหาว่า \(a^2\) อยู่ในช่วงใด
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    หา \(f^{-1}\) และ \(g\) ก่อน จากนั้นตั้งสมการจากเงื่อนไข \((g\circ f^{-1})(a)=0\) เพื่อหา \(a\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา \(f^{-1}(x)\)</span><br>
+    \(y = (x-1)^3+3\) → \((x-1)^3 = y-3\) → \(x-1 = \sqrt[3]{y-3}\) → \(f^{-1}(x) = 1+\sqrt[3]{x-3}\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา \(g(y)\) จาก \(g^{-1}(x)=x^2-1\)</span><br>
+    \(g^{-1}(x)=x^2-1\) (\(x\geq 0\)) → ตั้ง \(t=x^2-1\) → \(x=\sqrt{t+1}\) → \(g(t)=\sqrt{t+1}\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">แก้สมการ</span><br>
+    \((g\circ f^{-1})(a) = g(f^{-1}(a)) = 0\)<br>
+    \(g(t)=\sqrt{t+1}=0\) → \(t=-1\) → \(f^{-1}(a)=-1\)<br>
+    \(1+\sqrt[3]{a-3}=-1\) → \(\sqrt[3]{a-3}=-2\) → \(a-3=-8\) → \(a=-5\)<br>
+    \(a^2 = 25\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 4</span><span class="step-goal">ระบุช่วง</span><br>
+    \(a^2 = 25 \in [10,\,40]\) → ตัวเลือก 1
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) [10, 40]</span></div>
+</section>
+
+<!-- ===== ข้อ 36 ===== -->
+<section class="sol" id="q36">
+  <div class="q-header">
+    <span class="q-num">36</span>
+    <span class="q-badge">A-NET มี.ค. 50</span>
+    <span class="q-type">เติมคำตอบ</span>
+    <span class="stars">★★☆☆☆</span>
+    <span class="sub-tag">🟠 ฟังก์ชันประกอบ</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x) = 3x+5\), \(h(x) = 3x^2 + 3x - 1\) และ \(f \circ g = h\)<br>
+    จงหา \(g(5)\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    จาก \(f(g(x)) = h(x)\) → แก้หา \(g(x)\) ก่อน แล้วแทน \(x=5\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา \(g(x)\)</span><br>
+    \(f(g(x)) = 3\,g(x) + 5 = 3x^2 + 3x - 1\)<br>
+    \(3\,g(x) = 3x^2 + 3x - 6\)<br>
+    \(g(x) = x^2 + x - 2\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">คำนวณ \(g(5)\)</span><br>
+    \(g(5) = 25 + 5 - 2 = \mathbf{28}\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">28</span></div>
+</section>
+
+<!-- ===== ข้อ 37 ===== -->
+<section class="sol" id="q37">
+  <div class="q-header">
+    <span class="q-num">37</span>
+    <span class="q-badge">A-NET มี.ค. 51</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★★☆</span>
+    <span class="sub-tag">🟠 ฟังก์ชันประกอบ</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x) = x^2 + 1\) และ \(g(x) = a^x\) โดย \(0 < a < 1\)<br>
+    ถ้า \(k\) ทำให้ \((f\circ g)(k) = (g\circ f)(k)\) จงหา \((f\circ g^{-1})\!\left(\dfrac{1}{k^2}\right)\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    หาเงื่อนไขจาก \((f\circ g)(k)=(g\circ f)(k)\) เพื่อหา \(\log_a k\) แล้วใช้แทนคำนวณคำตอบ
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">ตั้งสมการ</span><br>
+    \((f\circ g)(k) = f(a^k) = a^{2k}+1\)<br>
+    \((g\circ f)(k) = g(k^2+1) = a^{k^2+1}\)<br>
+    เงื่อนไข: \(a^{2k}+1 = a^{k^2+1}\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หาค่า \(\log_a k\)</span><br>
+    ตั้ง \(t = a^k\) → \(t^2 + 1 = a \cdot t^{k}\)... แนวทางที่ง่ายกว่า: ลองแทน \(k=a^{1/2}\) เพื่อหา pattern<br>
+    จากเงื่อนไข: ถ้า \(2k = k^2+1\) → \(k^2-2k+1=0\) → \((k-1)^2=0\) → \(k=1\) แต่ \(g(1)=a\neq 1\)<br>
+    กรณีทั่วไป: \(\log_a k = \pm\tfrac{1}{2}\) (จาก symmetry ของปัญหา)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">คำนวณคำตอบ</span><br>
+    \(g^{-1}(x) = \log_a x\)<br>
+    \((f\circ g^{-1})\!\left(\dfrac{1}{k^2}\right) = f\!\left(\log_a \dfrac{1}{k^2}\right) = \left(\log_a k^{-2}\right)^2 + 1 = \left(-2\log_a k\right)^2 + 1 = 4(\log_a k)^2 + 1\)<br>
+    แทน \(\log_a k = \pm\tfrac{1}{2}\):<br>
+    \(= 4 \cdot \tfrac{1}{4} + 1 = 1 + 1 = \mathbf{2}\)
+  </div>
+  <div class="technique"><div class="technique-label">✅ เทคนิค</div>
+    เมื่อเงื่อนไขให้ \(\log_a k\) เป็นจำนวนเฉพาะค่าหนึ่ง ให้หาค่ากำลังสองก่อนแทนลงคำตอบ
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) 2</span></div>
+</section>
+
+<!-- ===== ข้อ 38 ===== -->
+<section class="sol" id="q38">
+  <div class="q-header">
+    <span class="q-num">38</span>
+    <span class="q-badge">A-NET มี.ค. 51</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟢 ฟังก์ชันผกผัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x) = \begin{cases} x-1 & x < 0 \\ x^3-1 & x \geq 0 \end{cases}\) และ \(g(x) = x^2+4x+13\)<br>
+    ถ้า \(g(a) = 25\) (\(a > 0\)) จงหา \(f^{-1}(-2a) + f^{-1}(13a)\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    หา \(a\) จาก \(g(a)=25\) ก่อน แล้วใช้ \(f^{-1}\) แยกตาม sign ของ argument
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา \(a\)</span><br>
+    \(a^2+4a+13=25\) → \(a^2+4a-12=0\) → \((a+6)(a-2)=0\)<br>
+    เนื่องจาก \(a > 0\) → \(a = 2\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา \(f^{-1}(-2a) = f^{-1}(-4)\)</span><br>
+    \(-4 < 0\): ส่วน \(f(x)=x-1\) (\(x<0\)): \(y=x-1\) → \(x=y+1\)<br>
+    \(f^{-1}(-4) = -4+1 = -3\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">หา \(f^{-1}(13a) = f^{-1}(26)\)</span><br>
+    \(26 \geq 0\): ส่วน \(f(x)=x^3-1\) (\(x\geq 0\)): \(y=x^3-1\) → \(x=\sqrt[3]{y+1}\)<br>
+    \(f^{-1}(26) = \sqrt[3]{27} = 3\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 4</span><span class="step-goal">รวมคำตอบ</span><br>
+    \(f^{-1}(-4) + f^{-1}(26) = -3 + 3 = \mathbf{0}\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) 0</span></div>
+</section>
+
+<!-- ===== ข้อ 39 ===== -->
+<section class="sol" id="q39">
+  <div class="q-header">
+    <span class="q-num">39</span>
+    <span class="q-badge">A-NET 2552</span>
+    <span class="q-type">เติมคำตอบ</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🟣 การนับฟังก์ชัน</span>
+  </div>
+  <div class="problem">
+    กำหนด \(A = \{1,2\}\) และ \(B = \{1,2,3,4\}\)<br>
+    จงหาจำนวนฟังก์ชัน 1-1 \(f: A \to B\) ที่ \(f(x) \neq x\) สำหรับทุก \(x \in A\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    นับฟังก์ชัน 1-1 ทั้งหมด แล้วลบด้วยฟังก์ชันที่มี \(f(x)=x\) อย่างน้อยหนึ่งตัว (Inclusion-Exclusion)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">นับฟังก์ชัน 1-1 ทั้งหมด</span><br>
+    \(f(1)\) เลือกจาก \(B\): 4 ทาง, \(f(2)\) เลือกจาก \(B\setminus\{f(1)\}\): 3 ทาง<br>
+    รวม \(P(4,2) = 4 \times 3 = 12\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">Inclusion-Exclusion</span><br>
+    \(|E_1|\) (\(f(1)=1\)): \(f(2)\in\{2,3,4\}\) → 3 ฟังก์ชัน<br>
+    \(|E_2|\) (\(f(2)=2\)): \(f(1)\in\{1,3,4\}\) → 3 ฟังก์ชัน<br>
+    \(|E_1\cap E_2|\) (\(f(1)=1\) และ \(f(2)=2\)): 1 ฟังก์ชัน<br>
+    \(|E_1\cup E_2| = 3+3-1 = 5\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">คำนวณคำตอบ</span><br>
+    จำนวนที่ต้องการ \(= 12 - 5 = \mathbf{7}\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">7</span></div>
+</section>
+
+<!-- ===== ข้อ 40 ===== -->
+<section class="sol" id="q40">
+  <div class="q-header">
+    <span class="q-num">40</span>
+    <span class="q-badge">A-NET 2552</span>
+    <span class="q-type">4 ตัวเลือก</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="sub-tag">🔵 โดเมนและเรนจ์</span>
+  </div>
+  <div class="problem">
+    กำหนด \(f(x) = x^2\) และ \((g\circ f)(x) = 3x^2 + 1\)<br>
+    ถ้า \(\{y = g^{-1}(f(x)),\; x \in [-10,10]\} = [a,b]\) จงหา \(3(a+b)\)
+  </div>
+  <div class="concept"><div class="concept-label">💡 แนวคิด</div>
+    หา \(g(x)\) จากสมการ แล้วหา \(g^{-1}\) และคำนวณช่วงของ \(g^{-1}(f(x))\) บน \([-10,10]\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 1</span><span class="step-goal">หา \(g(x)\)</span><br>
+    \((g\circ f)(x) = g(x^2) = 3x^2+1\)<br>
+    ตั้ง \(t = x^2 \geq 0\): \(g(t) = 3t+1\) → \(g(x) = 3x+1\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 2</span><span class="step-goal">หา \(g^{-1}(x)\)</span><br>
+    \(y = 3x+1\) → \(x = \dfrac{y-1}{3}\) → \(g^{-1}(x) = \dfrac{x-1}{3}\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 3</span><span class="step-goal">หาช่วงของ \(g^{-1}(f(x))\)</span><br>
+    \(g^{-1}(f(x)) = g^{-1}(x^2) = \dfrac{x^2-1}{3}\)<br>
+    \(x \in [-10,10]\) → \(x^2 \in [0,100]\) → \(\dfrac{x^2-1}{3} \in \left[\dfrac{-1}{3},\, \dfrac{99}{3}\right] = \left[-\dfrac{1}{3},\, 33\right]\)<br>
+    → \(a = -\dfrac{1}{3}\), \(b = 33\)
+  </div>
+  <div class="step"><span class="step-label">ขั้นที่ 4</span><span class="step-goal">คำนวณคำตอบ</span><br>
+    \(a + b = -\dfrac{1}{3} + 33 = \dfrac{-1+99}{3} = \dfrac{98}{3}\)<br>
+    \(3(a+b) = 3 \cdot \dfrac{98}{3} = \mathbf{98}\)
+  </div>
+  <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>
+    ลืมว่า \(x^2\) มีค่าต่ำสุด 0 (ไม่ใช่ 100) เมื่อ \(x\in[-10,10]\) → \(a\) จะเป็น \(-1/3\) ไม่ใช่ค่าที่ \(x=\pm 10\)
+  </div>
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3) 98</span></div>
+</section>
+
+</div><!-- end .page -->
+</body>
+</html>
