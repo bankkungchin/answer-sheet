@@ -162,7 +162,7 @@ function printPracticeSet(){
     let rows='';
     c.picks.forEach(q=>{
       const stars='★'.repeat(q.l)+'☆'.repeat(5-q.l);
-      rows+=`<tr><td class="chk">☐</td><td class="qn">ข้อ ${q.n}</td><td class="src">${esc(q.s)}</td><td class="lvl">ระดับ ${q.l} ${stars}</td><td class="yt"><a href="${q.yt}">▶ ดูเฉลย</a><div class="url">${esc(q.yt)}</div></td></tr>`;
+      rows+=`<tr><td class="chk">☐</td><td class="qn">ข้อ ${displayN(q)}</td><td class="src">${esc(q.s)}</td><td class="lvl">ระดับ ${q.l} ${stars}</td><td class="yt"><a href="${q.yt}">▶ ดูเฉลย</a><div class="url">${esc(q.yt)}</div></td></tr>`;
     });
     body+=`<div class="cat"><div class="cat-h"><span>${c.emoji} ${esc(c.cat)}</span><span class="pct">พลาด ${c.pct}% · ฝึก ${c.picks.length} ข้อ</span></div><table>${rows}</table></div>`;
   });
