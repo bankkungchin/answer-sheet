@@ -13,5 +13,7 @@ const YT_CHANNEL = 'mathsbanktutor';
 const PLAYLISTS = {
   "เซต": "PLc4ncgz2CJ7NaaLBirripaazcj04QZTdG",
   "Expo Logarithm": "PLc4ncgz2CJ7OjRvsaXGHaJONCnH33zMK5",
-  "จำนวนจริง": "PLc4ncgz2CJ7NpDEo9YhNBzxn4nQPIKcbl"
+  "จำนวนจริง": "PLc4ncgz2CJ7NpDEo9YhNBzxn4nQPIKcbl",
+   "ความสัมพันธ์": "PLc4ncgz2CJ7NY9jKCP5fV5ooYxI7-VzWS",
+"ฟังก์ชัน":     "PLc4ncgz2CJ7Nnlb-DevGFB977eEkdWCwA",
 };
