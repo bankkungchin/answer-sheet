@@ -42,6 +42,7 @@ function openReviewLibrary(){
   // รวม Ent เข้ากับบทหลัก
   var chapMap = {};
   Object.keys(PRACTICE_BANK).forEach(function(k){
+    if(k.includes('ความสัมพันธ์และ')) return;
     var arr = PRACTICE_BANK[k];
     if(!arr || !arr.length) return;
     var isEnt = k.indexOf(' Ent') > -1;
