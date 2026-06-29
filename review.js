@@ -330,7 +330,7 @@ function rvrRenderResult(){
       '<span class="qrow-stars">'+'★'.repeat(q.l)+'</span></div>'+
       '<div class="qrow-info"><div class="qrow-topic">'+topic+'</div>'+
       '<div class="qrow-meta"><span class="qrow-cat">'+q.c+'</span>'+
-      '<span>'+(q.s||'')+' · ข้อ '+displayN(q)+'</span>+
+      '<span>'+(q.s||'')+' · ข้อ '+displayN(q)+'</span>'+
       (isSeen?'<span class="qrow-seen">✓ ดูแล้ว</span>':'')+'</div></div>'+
       '<a class="qrow-btn" href="'+q.yt+'" target="_blank" onclick="rvMarkSeen('+q.n+')">'+ ((q.yt||'').includes('.html#')?'📄 ดูเฉลย':'▶ ดูคลิป') +'</a></div>';
   }).join('');
