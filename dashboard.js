@@ -162,7 +162,7 @@ function printPracticeSet(){
     let rows='';
     c.picks.forEach(q=>{
       const stars='★'.repeat(q.l)+'☆'.repeat(5-q.l);
-      rows+=`<tr><td class="chk">☐</td><td class="qn">ข้อ ${displayN(q)}</td><td class="src">${esc(q.s)}</td><td class="lvl">ระดับ ${q.l} ${stars}</td><td class="yt"><a href="${q.yt}">▶ ดูเฉลย</a><div class="url">${esc(q.yt)}</div></td></tr>`;
+      rows+=`<tr><td class="chk">☐</td><td class="qn">${sourceLabel(q)}ข้อ ${displayN(q)}</td><td class="src">${esc(q.s)}</td><td class="lvl">ระดับ ${q.l} ${stars}</td><td class="yt"><a href="${q.yt}">▶ ดูเฉลย</a><div class="url">${esc(q.yt)}</div></td></tr>`;
     });
     body+=`<div class="cat"><div class="cat-h"><span>${c.emoji} ${esc(c.cat)}</span><span class="pct">พลาด ${c.pct}% · ฝึก ${c.picks.length} ข้อ</span></div><table>${rows}</table></div>`;
   });
@@ -208,6 +208,15 @@ function displayN(q){
   if(my) return +my[1];
   return q.n;
 }
+// เพิ่มต่อเลย:
+function sourceLabel(q){
+  if(!q||!q.yt) return '';
+  if(q.yt.includes('relation')) return 'ความสัมพันธ์ ';
+  if(q.yt.includes('function_')) return 'ฟังก์ชัน ';
+  if(q.yt.includes('PLc4ncgz2CJ7NY9jKCP5fV5ooYxI7-VzWS')) return 'ความสัมพันธ์ ';
+  if(q.yt.includes('PLc4ncgz2CJ7Nnlb-DevGFB977eEkdWCwA')) return 'ฟังก์ชัน ';
+  return '';
+}
 // ── แผนฝึกเพิ่ม: เลือกข้อจากคลัง 129 ข้อ ตามสัดส่วนที่พลาดในแต่ละหัวข้อ ──
 function renderPracticePlan(d){
   const el=document.getElementById('s-practice'); if(!el)return;
@@ -239,7 +248,7 @@ function renderPracticePlan(d){
     const emoji=emojiOf(c.cat);
     let rows='';
     pick.forEach(q=>{ const stars='★'.repeat(q.l)+'☆'.repeat(5-q.l);
-      rows+=`<div class="rev-row"><div style="flex:1"><div style="font-size:12px;color:var(--text1);font-weight:500">ข้อ ${displayN(q)} <span style="color:var(--text3);font-weight:400">· ${q.s}</span></div><div style="font-size:10px;color:var(--text3)">ระดับ ${q.l} <span style="color:#BA7517">${stars}</span></div></div><a href="${q.yt}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surf,#FAF9F5);color:#B3261E;border:1px solid #E4C7C5;font-size:11px;font-weight:500;padding:5px 12px;border-radius:12px;text-decoration:none;white-space:nowrap">▶ เฉลย</a></div>`; });
+      rows+=`<div class="rev-row"><div style="flex:1"><div style="font-size:12px;color:var(--text1);font-weight:500">${sourceLabel(q)}ข้อ ${displayN(q)} <span style="color:var(--text3);font-weight:400">· ${q.s}</span></div><div style="font-size:10px;color:var(--text3)">ระดับ ${q.l} <span style="color:#BA7517">${stars}</span></div></div><a href="${q.yt}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surf,#FAF9F5);color:#B3261E;border:1px solid #E4C7C5;font-size:11px;font-weight:500;padding:5px 12px;border-radius:12px;text-decoration:none;white-space:nowrap">▶ เฉลย</a></div>`; });
     cards.push(`<div class="d-card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"><div style="font-size:14px;font-weight:500;color:var(--text1)">${emoji} ${c.cat}</div><div class="diff-badge ${pct>=50?'diff-bad':'diff-warn'}">พลาด ${pct}%</div></div><div style="font-size:11px;color:var(--text2);margin-bottom:8px">ทำได้ ${c.ok}/${c.total} ข้อในหัวข้อนี้ → แนะนำฝึก <b>${pick.length} ข้อ</b> จากคลังข้อสอบจริง</div>${rows}</div>`);
   });
   // เก็บแผนไว้สำหรับพิมพ์
