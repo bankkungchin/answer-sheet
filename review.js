@@ -245,7 +245,7 @@ function rvRowHtml(q,seen){
   var btnLabel = isEnt ? '📄 ดูเฉลย' : '▶ ดูคลิป';
   var topic = q.sub || q.c;
   return '<div class="qrow'+(isSeen?' seen':'')+'">'+
-    '<div class="qrow-left"><span class="qrow-n">'+q.n+'</span>'+
+    '<div class="qrow-left"><span class="qrow-n">'+displayN(q)+'</span>'+
     '<span class="qrow-stars">'+'★'.repeat(q.l)+'</span></div>'+
     '<div class="qrow-info"><div class="qrow-topic">'+topic+'</div>'+
     '<div class="qrow-meta"><span class="qrow-cat">'+q.c+'</span>'+
@@ -330,7 +330,7 @@ function rvrRenderResult(){
       '<span class="qrow-stars">'+'★'.repeat(q.l)+'</span></div>'+
       '<div class="qrow-info"><div class="qrow-topic">'+topic+'</div>'+
       '<div class="qrow-meta"><span class="qrow-cat">'+q.c+'</span>'+
-      '<span>'+(q.s||'')+' · ข้อ '+q.n+'</span>'+
+      '<span>'+(q.s||'')+' · ข้อ '+displayN(q)+'</span>+
       (isSeen?'<span class="qrow-seen">✓ ดูแล้ว</span>':'')+'</div></div>'+
       '<a class="qrow-btn" href="'+q.yt+'" target="_blank" onclick="rvMarkSeen('+q.n+')">'+ ((q.yt||'').includes('.html#')?'📄 ดูเฉลย':'▶ ดูคลิป') +'</a></div>';
   }).join('');
