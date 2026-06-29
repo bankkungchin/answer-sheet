@@ -222,7 +222,7 @@ function renderPracticePlan(d){
   cats.forEach(c=>{
     const pct=Math.round(c.rate*100);
     let need=Math.min(8,Math.max(2,Math.round(c.rate*16)));   // พลาด 25% → ~4 ข้อ
-    let pool=_shuffle(bank.filter(q=>q.c===c.cat)).sort((a,b)=>a.l-b.l);
+    let pool=bank.filter(q=>q.c===c.cat).sort((a,b)=>a.n-b.n);
     need=Math.min(need,pool.length);   // ไม่เกินจำนวนข้อที่มีจริงในหัวข้อนั้น (ไม่ยืมข้ามหัวข้อ)
     let pick=[];
     if(pool.length<=need){ pick=pool.slice(); }
