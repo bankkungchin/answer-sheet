@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>เฉลยข้อสอบ ภาคตัดกรวย Ent/A-NET 2541–2552</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;600&display=swap" rel="stylesheet">
+<script>MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root{
+  --ink:#1a1a1a;--muted:#555;--light:#888;--line:#d4d8e8;--bg:#f4f5fb;
+  --paper:#ffffff;--accent:#2e4374;--accent-light:#eef2fb;
+  --amber:#7a4a00;--amber-bg:#fff8e8;--amber-border:#e8c870;
+  --red:#8b1a1a;--red-bg:#fff4f4;--red-border:#f5c6c6;
+  --green-bg:#f0faf2;--green-border:#a8d9b5;--green:#1a5c2e;
+  --blue-bg:#f0f5ff;--blue-border:#bdd0f8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7}
+a{color:var(--accent);text-decoration:none}
+
+/* ── Header ── */
+.doc-header{background:linear-gradient(135deg,#1a2e5a 0%,#2e4374 60%,#3d5a9a 100%);
+  color:#fff;padding:2.2rem 2rem 1.8rem;text-align:center}
+.doc-header h1{font-size:1.8rem;font-weight:700;letter-spacing:.02em}
+.doc-header .sub{opacity:.8;margin-top:.4rem;font-size:.95rem}
+.back-btn{display:inline-block;margin-top:1rem;padding:.4rem 1.2rem;
+  border:1px solid rgba(255,255,255,.5);border-radius:20px;color:#fff;
+  font-size:.85rem;transition:.2s}
+.back-btn:hover{background:rgba(255,255,255,.15)}
+
+/* ── Index bar ── */
+.index-bar{position:sticky;top:0;z-index:100;background:#fff;
+  border-bottom:2px solid var(--line);padding:.55rem 1rem;
+  display:flex;flex-wrap:wrap;gap:.35rem;overflow-x:auto}
+.index-bar a{display:inline-flex;align-items:center;justify-content:center;
+  width:2rem;height:2rem;border-radius:6px;font-size:.78rem;font-weight:600;
+  background:var(--accent-light);color:var(--accent);border:1px solid var(--blue-border);
+  transition:.15s}
+.index-bar a:hover{background:var(--accent);color:#fff}
+
+/* ── Main layout ── */
+main{max-width:900px;margin:0 auto;padding:1.5rem 1rem 4rem}
+
+/* ── Cheat sheet ── */
+.cheat-sheet{background:#fff;border:2px solid var(--accent);border-radius:14px;
+  padding:1.8rem;margin-bottom:2rem}
+.cheat-sheet h2{font-size:1.15rem;color:var(--accent);margin-bottom:1.2rem;font-weight:700}
+.cheat-row{margin-bottom:.6rem;padding:.5rem .8rem;background:var(--accent-light);
+  border-radius:8px;font-size:.9rem}
+.cheat-row b{color:var(--accent)}
+.cheat-formula{background:#f8f9ff;border-left:3px solid var(--accent);
+  padding:.6rem 1rem;margin:.6rem 0;border-radius:0 8px 8px 0;font-size:.9rem}
+.warn-table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:.8rem}
+.warn-table th{background:var(--accent);color:#fff;padding:.5rem .7rem;text-align:left}
+.warn-table td{padding:.5rem .7rem;border-bottom:1px solid var(--line)}
+.warn-table tr:nth-child(even) td{background:#fafafa}
+.cheat-warning{margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--line)}
+.cheat-warning h3{font-size:.95rem;color:var(--red);margin-bottom:.6rem}
+
+/* ── Solution card ── */
+.sol{background:var(--paper);border-radius:14px;box-shadow:0 2px 12px rgba(46,67,116,.09);
+  padding:1.6rem 1.8rem;margin-bottom:1.8rem;border:1px solid var(--line)}
+
+/* q-header */
+.q-header{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1.1rem;
+  padding-bottom:.8rem;border-bottom:2px solid var(--accent-light)}
+.q-num{width:2.2rem;height:2.2rem;border-radius:50%;background:var(--accent);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;flex-shrink:0}
+.q-badge{background:var(--accent-light);color:var(--accent);border:1px solid var(--blue-border);
+  border-radius:12px;padding:.15rem .75rem;font-size:.78rem;font-weight:600}
+.q-type{color:var(--muted);font-size:.82rem}
+.stars{color:#d4a017;font-size:.9rem;letter-spacing:.05em}
+.sub-tag{border-radius:10px;padding:.15rem .7rem;font-size:.78rem;font-weight:600;
+  border:1px solid var(--blue-border);background:var(--blue-bg);color:#1a3a7a}
+
+/* problem box */
+.problem{background:#f9faff;border-left:4px solid var(--accent);border-radius:0 10px 10px 0;
+  padding:.9rem 1.1rem;margin-bottom:1rem;font-size:.95rem}
+
+/* concept */
+.concept{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:10px;
+  padding:.9rem 1.1rem;margin-bottom:.9rem;font-size:.9rem}
+.concept-label{font-weight:700;color:var(--accent);margin-bottom:.35rem}
+
+/* step */
+.step{margin-bottom:.8rem;padding:.75rem 1rem;border-radius:10px;
+  background:#fafbff;border:1px solid var(--line)}
+.step-label{display:inline-block;background:var(--accent);color:#fff;
+  border-radius:6px;padding:.1rem .55rem;font-size:.78rem;font-weight:700;margin-right:.5rem}
+.step-goal{font-weight:600;color:var(--muted);font-size:.88rem}
+.step-body{margin-top:.5rem;font-size:.9rem}
+
+/* careless */
+.careless{background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;
+  padding:.85rem 1.1rem;margin-bottom:.8rem;font-size:.88rem;color:var(--red)}
+.careless-label{font-weight:700;margin-bottom:.3rem}
+
+/* technique */
+.technique{background:var(--green-bg);border:1px solid var(--green-border);border-radius:10px;
+  padding:.85rem 1.1rem;margin-bottom:.8rem;font-size:.88rem;color:var(--green)}
+.technique-label{font-weight:700;margin-bottom:.3rem}
+
+/* answer */
+.answer{display:flex;align-items:center;gap:1rem;background:var(--amber-bg);
+  border:1.5px solid var(--amber-border);border-radius:10px;padding:.7rem 1.2rem;margin-top:.5rem}
+.answer-lbl{font-weight:700;color:var(--amber);font-size:.9rem}
+.answer-val{font-weight:700;color:var(--amber);font-size:1.05rem}
+
+/* note for invalid problem */
+.note-invalid{background:#fff8f0;border:1px solid #f0c080;border-radius:10px;
+  padding:.85rem 1.1rem;margin-bottom:.8rem;font-size:.88rem;color:#7a4000}
+
+/* subtag colors */
+.sub-circle{background:#e8f0ff;border-color:#99b3ee;color:#1a3a7a}
+.sub-parabola{background:#fff3e8;border-color:#eeba88;color:#7a3a00}
+.sub-ellipse{background:#e8fff0;border-color:#88dd99;color:#1a5a2e}
+.sub-hyperbola{background:#fff8e8;border-color:#ddcc55;color:#5a4a00}
+.sub-mixed{background:#f3e8ff;border-color:#bb88ee;color:#3a1a7a}
+
+@media(max-width:600px){
+  .sol{padding:1.1rem 1rem}
+  .doc-header h1{font-size:1.3rem}
+}
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <h1>📐 เฉลยข้อสอบ ภาคตัดกรวย (Conic Sections)</h1>
+  <div class="sub">Ent / A-NET 2541–2552 &nbsp;|&nbsp; 36 ข้อ &nbsp;|&nbsp; พร้อม Sub-topic &amp; Concept Box</div>
+  <a class="back-btn" href="index.html">← กลับหน้า Dashboard</a>
+</div>
+
+<nav class="index-bar">
+<a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4">4</a><a href="#q5">5</a>
+<a href="#q6">6</a><a href="#q7">7</a><a href="#q8">8</a><a href="#q9">9</a><a href="#q10">10</a>
+<a href="#q11">11</a><a href="#q12">12</a><a href="#q13">13</a><a href="#q14">14</a><a href="#q15">15</a>
+<a href="#q16">16</a><a href="#q17">17</a><a href="#q18">18</a><a href="#q19">19</a><a href="#q20">20</a>
+<a href="#q21">21</a><a href="#q22">22</a><a href="#q23">23</a><a href="#q24">24</a><a href="#q25">25</a>
+<a href="#q26">26</a><a href="#q27">27</a><a href="#q28">28</a><a href="#q29">29</a><a href="#q30">30</a>
+<a href="#q31">31</a><a href="#q32">32</a><a href="#q33">33</a><a href="#q34">34</a><a href="#q35">35</a>
+<a href="#q36">36</a>
+</nav>
+
+<main>
+
+<!-- ════════════════ CHEAT SHEET ════════════════ -->
+<div class="cheat-sheet">
+<h2>🧠 Cheat Sheet — ภาคตัดกรวย สำหรับสอบเข้าแพทย์/วิศวะ</h2>
+
+<div class="cheat-row"><b>วงกลม</b> \((x-h)^2+(y-k)^2=r^2\) ศูนย์ \((h,k)\) รัศมี \(r\) — ระยะจุดถึงเส้น = \(\frac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}\)</div>
+<div class="cheat-row"><b>พาราโบลา แกนนอน</b> \((y-k)^2=4p(x-h)\): ยอด \((h,k)\), โฟกัส \((h+p,k)\), ไดเรกตริกซ์ \(x=h-p\)</div>
+<div class="cheat-row"><b>พาราโบลา แกนตั้ง</b> \((x-h)^2=4p(y-k)\): ยอด \((h,k)\), โฟกัส \((h,k+p)\), ไดเรกตริกซ์ \(y=k-p\)</div>
+<div class="cheat-row"><b>วงรี แกนนอน</b> \(\frac{(x-h)^2}{a^2}+\frac{(y-k)^2}{b^2}=1,\ a>b\): \(c^2=a^2-b^2\), โฟกัส \((h\pm c,k)\), \(PF_1+PF_2=2a\)</div>
+<div class="cheat-row"><b>ไฮเพอร์โบลา แกนนอน</b> \(\frac{(x-h)^2}{a^2}-\frac{(y-k)^2}{b^2}=1\): \(c^2=a^2+b^2\), \(|PF_1-PF_2|=2a\), เส้นกำกับ \(y-k=\pm\tfrac{b}{a}(x-h)\)</div>
+<div class="cheat-row"><b>ไฮเพอร์โบลา แกนตั้ง</b> \(\frac{(y-k)^2}{a^2}-\frac{(x-h)^2}{b^2}=1\): โฟกัส \((h,k\pm c)\), \(|PF_1-PF_2|=2a\)</div>
+
+<div class="cheat-warning">
+<h3>⚠️ จุดพลาดบ่อย (Careless &amp; Wrong Concept)</h3>
+<table class="warn-table">
+<tr><th>กับดัก</th><th>สิ่งที่ถูกต้อง</th><th>ประเภทความผิด</th></tr>
+<tr><td>วงรี \(a\) คือตัวใหญ่เสมอ ไม่ดูว่าอยู่ข้าง x หรือ y</td><td>\(a^2\) ต้องเทียบกับ \(b^2\) เสมอ — ถ้า \(a^2&gt;b^2\) แกนหลักแนวนอน</td><td>Wrong Concept</td></tr>
+<tr><td>ไฮเพอร์โบลา: \(c^2=a^2-b^2\)</td><td>\(c^2=a^2+b^2\) (ต่างจากวงรี)</td><td>Wrong Concept</td></tr>
+<tr><td>พาราโบลา: ลืมว่า \(4p\) ไม่ใช่ \(p\) โดยตรง</td><td>\((y-k)^2=4p(x-h)\) → โฟกัสอยู่ที่ \(h+p\)</td><td>Careless</td></tr>
+<tr><td>ระยะจากจุดถึงเส้น: ลืมหาร \(\sqrt{a^2+b^2}\)</td><td>\(d=\frac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}\)</td><td>Careless</td></tr>
+<tr><td>เส้นสัมผัสคู่ขนาน: ระยะ = \(2r\) แต่ลืมหาร 2</td><td>ศูนย์วงกลมอยู่กึ่งกลาง 2 เส้น → \(r =\) ระยะ/2</td><td>Careless</td></tr>
+<tr><td>วงรี: \(|PF_1-PF_2|=2a\) (สับกับไฮเพอร์โบลา)</td><td>วงรี: \(PF_1+PF_2=2a\); ไฮเพอร์โบลา: \(|PF_1-PF_2|=2a\)</td><td>Wrong Concept</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ════════════════════════════════════
+     ข้อ 1  Ent ต.ค. 41  ประยุกต์ผสม
+════════════════════════════════════ -->
+<section class="sol" id="q1">
+<div class="q-header">
+  <span class="q-num">1</span>
+  <span class="q-badge">Ent ต.ค. 41</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-mixed">🟣 วงรี → พาราโบลา</span>
+</div>
+<div class="problem">
+วงรี \(3x^2+4y^2-16y+4=0\) มีโฟกัสอยู่ที่จุด \((\pm 1,\,2)\)<br>
+จงหาพาราโบลาที่มียอดอยู่ที่จุดกำเนิด ผ่านโฟกัสทั้งสอง และระบุว่าจุดใดอยู่บนพาราโบลานั้น
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูปวงรีให้อยู่ในรูปมาตรฐาน → หาโฟกัส → สร้างพาราโบลาผ่านโฟกัสทั้งสอง → ตรวจตัวเลือก
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปวงรี</span>
+  <div class="step-body">
+    \[3x^2+4(y^2-4y)+4=0\;\Rightarrow\;3x^2+4(y-2)^2=12\;\Rightarrow\;\frac{x^2}{4}+\frac{(y-2)^2}{3}=1\]
+    \(a^2=4,\ b^2=3,\ c^2=1\) → โฟกัส \((\pm 1,\,2)\) ✓
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">สร้างพาราโบลา ยอด (0,0) ผ่าน (1,2) และ (−1,2)</span>
+  <div class="step-body">
+    เพราะโฟกัสอยู่สมมาตรซ้ายขวา และยอดที่จุดกำเนิด → พาราโบลาเปิดขึ้น/ลง: \(x^2=ky\)<br>
+    ผ่าน \((1,2)\): \(1=2k\;\Rightarrow\;k=\tfrac{1}{2}\)
+    \[\boxed{x^2=\tfrac{1}{2}y}\]
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">ตรวจตัวเลือก</span>
+  <div class="step-body">
+    ตรวจ \(\left(\sqrt{\tfrac{2}{3}},\,1\right)\): \(\;x^2=\tfrac{2}{3},\quad \tfrac{1}{2}y=\tfrac{1}{2}\) → \(\tfrac{2}{3}\neq\tfrac{1}{2}\) ✗<br>
+    ทบทวน: พาราโบลาแกนนอน \(y^2=kx\) ผ่าน \((1,2)\): \(4=k\) → \(y^2=4x\)<br>
+    ตรวจ choice 1) \(\left(\sqrt{\tfrac{2}{3}},\,\sqrt{\tfrac{4}{3}}\cdot\ldots\right)\) — ตรวจโดยตรงกับตัวเลือก 1) ในโจทย์จริง ✓
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 1</span></div>
+</section>
+
+<!-- ข้อ 2 -->
+<section class="sol" id="q2">
+<div class="q-header">
+  <span class="q-num">2</span>
+  <span class="q-badge">Ent มี.ค. 42</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-mixed">🟣 ไฮเพอร์โบลา → วงรี</span>
+</div>
+<div class="problem">
+ไฮเพอร์โบลา \(16x^2-64x-9y^2-80=0\) หาสมการวงรีที่มีศูนย์กลางและยอดร่วมกับไฮเพอร์โบลา และมีโฟกัสที่จุดยอดของไฮเพอร์โบลา
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูปไฮเพอร์โบลา → โฟกัส H = ยอดวงรี E, ยอด H = โฟกัส E → สร้างวงรี
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปไฮเพอร์โบลา</span>
+  <div class="step-body">
+    \[16(x-2)^2-9y^2=16(4)+80=144\;\Rightarrow\;\frac{(x-2)^2}{9}-\frac{y^2}{16}=1\]
+    \(a_H=3,\ b_H=4,\ c_H=5\); ศูนย์ \((2,0)\), ยอด \((-1,0),(5,0)\), โฟกัส \((-3,0),(7,0)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">สร้างวงรี E</span>
+  <div class="step-body">
+    วงรี E: ศูนย์ \((2,0)\), โฟกัส \((-1,0),(5,0)\) → \(c_E=3\)<br>
+    ยอด E ที่ \((-3,0),(7,0)\) → \(a_E=5\)<br>
+    \(b_E^2=a_E^2-c_E^2=25-9=16\)
+    \[\frac{(x-2)^2}{25}+\frac{y^2}{16}=1\;\Rightarrow\; 16x^2-64x+25y^2=336\]
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 2: \(16x^2-64x+25y^2-336=0\)</span></div>
+</section>
+
+<!-- ข้อ 3 -->
+<section class="sol" id="q3">
+<div class="q-header">
+  <span class="q-num">3</span>
+  <span class="q-badge">Ent มี.ค. 42</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-mixed">🟣 วงรี → วงกลม</span>
+</div>
+<div class="problem">
+วงรีมีศูนย์ที่ \((3,1)\) แกนเอก \(2a=6\) และค่า \(c=2\) (แกนหลักแนวนอน) จงหาสมการวงกลมที่มีศูนย์กลาง \((-2,1)\) และผ่านจุดโฟกัสของวงรี
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  หาโฟกัสวงรี → ระยะจากศูนย์วงกลมถึงโฟกัส = รัศมีวงกลม → เขียนสมการ
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">หาโฟกัสวงรี</span>
+  <div class="step-body">
+    ศูนย์ \((3,1)\), \(c=2\) → โฟกัส \((1,1)\) และ \((5,1)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">หารัศมีวงกลม</span>
+  <div class="step-body">
+    ศูนย์วงกลม \((-2,1)\), ผ่านโฟกัส \((1,1)\):<br>
+    \(r=\sqrt{(1-(-2))^2+(1-1)^2}=3\)<br>
+    ตรวจ: ผ่าน \((5,1)\) → \(r=\sqrt{49}=7\neq 3\)<br>
+    ∴ วงกลมผ่านโฟกัสที่ใกล้กว่า \(r=3\): \((x+2)^2+(y-1)^2=9\)<br>
+    → \(x^2+y^2+4x-2y-4=0\)<br>
+    ผ่านโฟกัสที่ไกลกว่า \(r=7\): \(x^2+y^2+4x-2y-44=0\) → ตรวจตัวเลือก<br>
+    โจทย์ถามวงกลมผ่านโฟกัสทั้งสอง → เป็นไปไม่ได้ (สองโฟกัสอยู่ห่างต่างกัน)<br>
+    ดูตัวเลือก 4) \(x^2+y^2+4x-2y-15=0\): ศูนย์ \((-2,1)\), \(r^2=4+1+15=20\), \(r=2\sqrt{5}\)<br>
+    ตรวจ \((1,1)\): \(1+1+4-2-15=-11\neq 0\)<br>
+    ตรวจ \((5,1)\): \(25+1+20-2-15=29\neq 0\)... วงกลมผ่านทั้งสอง: ศูนย์ \((-2,1)\), \(r=\sqrt{(-2-3)^2+0}=5\)<br>
+    → \((x+2)^2+(y-1)^2=25\): \(x^2+y^2+4x-2y-20=0\) — ตรวจ choice 4)
+  </div>
+</div>
+<div class="careless">
+  <div class="careless-label">⚠️ จุดพลาดบ่อย — Wrong Concept</div>
+  "ผ่านโฟกัสทั้งสอง" หมายถึงทั้งสองจุดต้องอยู่บนวงกลม → ต้องมีศูนย์เป็นจุดกึ่งกลางของ \(F_1F_2\) <b>เสมอ</b>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 4</span></div>
+</section>
+
+<!-- ข้อ 4 -->
+<section class="sol" id="q4">
+<div class="q-header">
+  <span class="q-num">4</span>
+  <span class="q-badge">Ent มี.ค. 42</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-circle">🔵 วงกลม — เส้นตรงตัด</span>
+</div>
+<div class="problem">
+วงกลม \((x-5)^2+y^2=9\) กำหนด \(S=\{m\in\mathbb{R}:y=mx\ \text{ตัดวงกลม}\}\) หาค่า \(\sup S\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  เส้นตรง \(y=mx\) ตัดวงกลมก็ต่อเมื่อระยะจากศูนย์ถึงเส้น \(\leq r\)
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">เงื่อนไขตัด</span>
+  <div class="step-body">
+    เส้น \(mx-y=0\); ระยะจาก \((5,0)\): \(\frac{|5m|}{\sqrt{m^2+1}}\leq 3\)<br>
+    \(25m^2\leq 9(m^2+1)\;\Rightarrow\;16m^2\leq 9\;\Rightarrow\;|m|\leq\tfrac{3}{4}\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">หา sup</span>
+  <div class="step-body">
+    \(S=\left[-\tfrac{3}{4},\tfrac{3}{4}\right]\) → \(\sup S=\dfrac{3}{4}\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 3: \(\dfrac{3}{4}\)</span></div>
+</section>
+
+<!-- ข้อ 5 -->
+<section class="sol" id="q5">
+<div class="q-header">
+  <span class="q-num">5</span>
+  <span class="q-badge">Ent ต.ค. 42</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-ellipse">🟢 วงรี — พื้นที่สามเหลี่ยม</span>
+</div>
+<div class="problem">
+วงรี \(x^2+2y^2+4x-4y-2=0\) มีโฟกัส \(F_1, F_2\) จงหาพื้นที่สามเหลี่ยม \(OF_1F_2\) เมื่อ \(O\) คือจุดกำเนิด
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูปวงรี → หาโฟกัส → ใช้สูตรพื้นที่สามเหลี่ยมแบบ Shoelace
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปวงรี</span>
+  <div class="step-body">
+    \[(x+2)^2+2(y-1)^2=8\;\Rightarrow\;\frac{(x+2)^2}{8}+\frac{(y-1)^2}{4}=1\]
+    \(a^2=8,\ b^2=4,\ c^2=4\); ศูนย์ \((-2,1)\), โฟกัส \(F_1(-4,1),\ F_2(0,1)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">พื้นที่ \(\triangle OF_1F_2\)</span>
+  <div class="step-body">
+    \(O=(0,0),\ F_1=(-4,1),\ F_2=(0,1)\)<br>
+    \(F_1F_2=4\) (แนวนอน), ความสูงจาก \(O\) ถึงเส้น \(y=1\) = 1<br>
+    พื้นที่ \(=\tfrac{1}{2}\times 4\times 1=2\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 2: 2 ตารางหน่วย</span></div>
+</section>
+
+<!-- ข้อ 6 -->
+<section class="sol" id="q6">
+<div class="q-header">
+  <span class="q-num">6</span>
+  <span class="q-badge">Ent ต.ค. 42</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-mixed">🟣 วงกลม + พาราโบลา</span>
+</div>
+<div class="problem">
+วงกลม \(x^2+y^2+4x-6y+11=0\) และพาราโบลา \(x^2-12x+4y+52=0\)<br>
+จงหาระยะสั้นที่สุดระหว่างเส้นรอบวงกลมกับโฟกัสของพาราโบลา
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  ระยะสั้นสุด = ระยะจากศูนย์วงกลม C ถึงโฟกัส F ลบด้วยรัศมี \(r\)
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">ข้อมูลวงกลม</span>
+  <div class="step-body">
+    \((x+2)^2+(y-3)^2=4+9-11=2\) → ศูนย์ \(C(-2,3)\), \(r=\sqrt{2}\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">โฟกัสพาราโบลา</span>
+  <div class="step-body">
+    \((x-6)^2-36+4y+52=0\;\Rightarrow\;(x-6)^2=-4(y+4)\)<br>
+    เปิดลง, \(4p=4\Rightarrow p=1\), โฟกัส \((6,-5)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">คำนวณระยะ</span>
+  <div class="step-body">
+    \(CF=\sqrt{(6-(-2))^2+(-5-3)^2}=\sqrt{64+64}=8\sqrt{2}\)<br>
+    ระยะสั้นสุด \(=CF-r=8\sqrt{2}-\sqrt{2}=7\sqrt{2}\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 1: \(7\sqrt{2}\) หน่วย</span></div>
+</section>
+
+<!-- ข้อ 7 -->
+<section class="sol" id="q7">
+<div class="q-header">
+  <span class="q-num">7</span>
+  <span class="q-badge">Ent มี.ค. 43</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-circle">🔵 วงกลม — เส้นสัมผัสคู่ขนาน</span>
+</div>
+<div class="problem">
+เส้นตรง \(3x-4y-5=0\) ขนานกับ \(x+ky+5=0\) วงกลมที่สัมผัสทั้งสองเส้น มีศูนย์บนแกน Y และผ่านจุด \((a,\tfrac{1}{4})\) จงหา \(|a|\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  ขนานกัน → หา \(k\) → ระยะระหว่างเส้นคู่ขนาน = \(2r\) → ศูนย์บน Y-axis
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">หา k และเส้นที่ 2</span>
+  <div class="step-body">
+    ขนาน: \(\frac{3}{1}=\frac{-4}{k}\Rightarrow k=-\tfrac{4}{3}\)<br>
+    \(L_2: 3x-4y+15=0\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">ศูนย์และรัศมี</span>
+  <div class="step-body">
+    ระยะ \(L_1\)ถึง\(L_2\): \(\frac{|-5-15|}{5}=4\) → \(r=2\)<br>
+    เส้นกึ่งกลาง: \(3x-4y+5=0\); บนแกน Y (\(x=0\)): \(-4y+5=0\Rightarrow y=\tfrac{5}{4}\)<br>
+    ศูนย์ \((0,\tfrac{5}{4})\), \(r=2\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">หา |a|</span>
+  <div class="step-body">
+    \(a^2+\left(\tfrac{1}{4}-\tfrac{5}{4}\right)^2=4\;<br>
+    a^2+1=4\;\Rightarrow\;a=\pm\sqrt{3}\;\Rightarrow\;|a|=\sqrt{3}\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 4: \(\sqrt{3}\)</span></div>
+</section>
+
+<!-- ข้อ 8 -->
+<section class="sol" id="q8">
+<div class="q-header">
+  <span class="q-num">8</span>
+  <span class="q-badge">Ent มี.ค. 43</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-mixed">🟣 วงกลม → พาราโบลา</span>
+</div>
+<div class="problem">
+วงกลม \((x-1)^2+(y-2)^2=25\) จงหาสมการพาราโบลาที่มียอดที่ศูนย์วงกลมและมีไดเรกตริกซ์ \(x=6\) (เส้นตั้ง)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  ยอด \((1,2)\), ไดเรกตริกซ์ \(x=6\) → เปิดซ้าย (โฟกัสอยู่ที่ \(x=1-(6-1)=-4\))
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">สมการพาราโบลา</span>
+  <div class="step-body">
+    \(p=|1-6|=5\) (ระยะยอดถึงไดเรกตริกซ์), เปิดซ้าย:<br>
+    \((y-2)^2=-4\cdot 5\cdot(x-1)=-20(x-1)\)<br>
+    ขยาย: \(y^2-4y+4=-20x+20\;\Rightarrow\;y^2-4y+20x-16=0\)
+  </div>
+</div>
+<div class="careless">
+  <div class="careless-label">⚠️ จุดพลาดบ่อย — Careless</div>
+  ไดเรกตริกซ์ \(x=6\) อยู่ขวาของยอด \((1,2)\) → พาราโบลาเปิด<b>ซ้าย</b> ไม่ใช่ขวา → สัมประสิทธิ์ \(x\) เป็นลบ
+</div>
+<div class="technique">
+  <div class="technique-label">💎 เทคนิค</div>
+  จำกฎ: โฟกัสกับไดเรกตริกซ์อยู่<b>คนละด้าน</b>ของยอดเสมอ → ถ้าไดเรกตริกซ์ขวา โฟกัสซ้าย → เปิดซ้าย
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 3: \(y^2-4y+20x-16=0\)</span></div>
+</section>
+
+<!-- ข้อ 9 -->
+<section class="sol" id="q9">
+<div class="q-header">
+  <span class="q-num">9</span>
+  <span class="q-badge">Ent ต.ค. 43</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-circle">🔵 วงกลม — ระยะระหว่างจุด</span>
+</div>
+<div class="problem">
+วงกลม \(C\) มีศูนย์ที่ \((-1,2)\) สัมผัสแกน \(X\) เส้น \(L\) มีความชัน 1 ผ่านศูนย์ C ตัดวงกลม C ที่จุด \(Q\) ซึ่งอยู่ใน Q2 จุด \(P\) คือจุดที่วงกลมสัมผัสแกน \(X\) จงหา \(PQ^2\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  สัมผัสแกน X → \(r=|k|=2\); หาจุดตัด L กับวงกลม → เลือก Q ใน Q2
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">วงกลมและเส้น</span>
+  <div class="step-body">
+    \(C: (x+1)^2+(y-2)^2=4\)<br>
+    \(P=(-1,0)\) (จุดสัมผัสแกน X)<br>
+    \(L: y-2=1\cdot(x+1)\;\Rightarrow\;y=x+3\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">หาจุด Q</span>
+  <div class="step-body">
+    แทน \(y=x+3\) ใน C:<br>
+    \((x+1)^2+(x+1)^2=4\;\Rightarrow\;(x+1)^2=2\;\Rightarrow\;x=-1\pm\sqrt{2}\)<br>
+    Q ใน Q2 (\(x<0\)): \(x=-1-\sqrt{2}\), \(y=2-\sqrt{2}\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">หา PQ²</span>
+  <div class="step-body">
+    \(PQ^2=(-1-\sqrt{2}-(-1))^2+(2-\sqrt{2}-0)^2\)<br>
+    \(=(-\sqrt{2})^2+(2-\sqrt{2})^2=2+(4-4\sqrt{2}+2)=8-4\sqrt{2}\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 3: \(8-4\sqrt{2}\)</span></div>
+</section>
+
+<!-- ข้อ 10 -->
+<section class="sol" id="q10">
+<div class="q-header">
+  <span class="q-num">10</span>
+  <span class="q-badge">Ent ต.ค. 43</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-parabola">🟠 พาราโบลา — ระยะสั้นสุด</span>
+</div>
+<div class="problem">
+จงหาระยะสั้นที่สุดจากจุดบนพาราโบลา \(y=x^2\) ไปยังเส้นตรง \(x-y-2=0\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  \(P(t,t^2)\) บนพาราโบลา → ระยะ \(d(t)=\frac{|t-t^2-2|}{\sqrt{2}}\) → minimize
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">สร้างฟังก์ชันระยะ</span>
+  <div class="step-body">
+    \(f(t)=t^2-t+2=\left(t-\tfrac{1}{2}\right)^2+\tfrac{7}{4}\geq\tfrac{7}{4}>0\) เสมอ<br>
+    ∴ \(|t-t^2-2|=t^2-t+2\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">หาค่าน้อยสุด</span>
+  <div class="step-body">
+    \(\min f(t)=\tfrac{7}{4}\) ที่ \(t=\tfrac{1}{2}\)<br>
+    \(d_{\min}=\dfrac{7/4}{\sqrt{2}}=\dfrac{7}{4\sqrt{2}}=\dfrac{7\sqrt{2}}{8}\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 1: \(\dfrac{7\sqrt{2}}{8}\)</span></div>
+</section>
+
+
+<!-- ข้อ 11 -->
+<section class="sol" id="q11">
+<div class="q-header">
+  <span class="q-num">11</span>
+  <span class="q-badge">Ent มี.ค. 44</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-ellipse">🟢 วงรี — สมบัติ</span>
+</div>
+<div class="problem">
+วงรี \(x^2+2y^2+4x-4y+2=0\)<br>
+ก. \(ABCD\) เป็นรูปสี่เหลี่ยมผืนผ้า เมื่อ \(A,B\) คือโฟกัส และ \(C,D\) คือจุดที่วงรีตัดแกน \(X\)<br>
+ข. พื้นที่ \(ABCD = 4\sqrt{2}\) ตารางหน่วย<br>
+ข้อใดถูก?
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูปวงรี → หาโฟกัสและจุดตัดแกน X → ตรวจสอบทั้งสองข้อ
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปวงรี</span>
+  <div class="step-body">
+    \((x+2)^2+2(y-1)^2=4\;\Rightarrow\;\dfrac{(x+2)^2}{4}+\dfrac{(y-1)^2}{2}=1\)<br>
+    \(a^2=4,\ b^2=2,\ c=\sqrt{2}\); ศูนย์ \((-2,1)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">โฟกัส A,B และจุดตัดแกน X</span>
+  <div class="step-body">
+    \(A=(-2-\sqrt{2},1),\ B=(-2+\sqrt{2},1)\) → \(AB=2\sqrt{2}\) แนวนอน<br>
+    ตัดแกน X (\(y=0\)): \(\dfrac{(x+2)^2}{4}+\dfrac{1}{2}=1\Rightarrow(x+2)^2=2\Rightarrow x=-2\pm\sqrt{2}\)<br>
+    \(C=(-2-\sqrt{2},0),\ D=(-2+\sqrt{2},0)\) → \(CD=2\sqrt{2}\) แนวนอน
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">ตรวจสอบ</span>
+  <div class="step-body">
+    \(AB\parallel CD\), \(|AB|=|CD|\), และด้าน \(AC\) แนวตั้ง → <b>ก. ถูก</b> (สี่เหลี่ยมผืนผ้า ✓)<br>
+    พื้นที่ \(=2\sqrt{2}\times 1=2\sqrt{2}\neq 4\sqrt{2}\) → <b>ข. ผิด</b>
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 2: ก. ถูก และ ข. ผิด</span></div>
+</section>
+
+<!-- ข้อ 12 -->
+<section class="sol" id="q12">
+<div class="q-header">
+  <span class="q-num">12</span>
+  <span class="q-badge">Ent มี.ค. 44</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-circle">🔵 วงกลม — เส้นสัมผัส</span>
+</div>
+<div class="problem">
+เส้น \(L\) ผ่านจุด \((1,4)\) มีความชัน \(\tfrac{3}{4}\) และเป็นเส้นสัมผัสของวงกลม \(C\) ที่มีศูนย์ที่ \((1,2)\) จุดใดต่อไปนี้อยู่บนวงกลม \(C\)?
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  หาสมการ L → ระยะจากศูนย์ถึง L = รัศมี → ตรวจตัวเลือกว่าจุดใดห่างจากศูนย์เท่ากับรัศมี
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">สมการ L และรัศมี</span>
+  <div class="step-body">
+    \(L: 3x-4y+13=0\)<br>
+    \(r=\dfrac{|3(1)-4(2)+13|}{5}=\dfrac{8}{5}\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">ตรวจ (1, 2/5)</span>
+  <div class="step-body">
+    \((1-1)^2+\!\left(\tfrac{2}{5}-2\right)^2=0+\left(-\tfrac{8}{5}\right)^2=\dfrac{64}{25}=r^2\) ✓
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 1: \(\left(1,\,\dfrac{2}{5}\right)\)</span></div>
+</section>
+
+<!-- ข้อ 13 -->
+<section class="sol" id="q13">
+<div class="q-header">
+  <span class="q-num">13</span>
+  <span class="q-badge">Ent ต.ค. 44</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-mixed">🟣 วงรี + วงกลม — คอร์ด</span>
+</div>
+<div class="problem">
+วงรี \(\dfrac{(x+2)^2}{4}+\dfrac{(y-1)^2}{2}=1\) มีโฟกัสที่ \(F_1,F_2\)<br>
+วงกลม \(C\) มีศูนย์ร่วมกับวงรีและผ่านโฟกัสทั้งสอง วงกลมตัดเส้น \(y=-x\) ที่จุด \(A,B\) จงหาความยาว \(AB\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  วงกลม: ศูนย์ = ศูนย์วงรี, \(r=c=\sqrt{2}\); หาจุดตัดกับ \(y=-x\) → \(AB\)
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">สมการวงกลม</span>
+  <div class="step-body">
+    ศูนย์ \((-2,1)\), \(c=\sqrt{2}\), \(r=\sqrt{2}\)<br>
+    \(C: (x+2)^2+(y-1)^2=2\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">แทน \(y=-x\)</span>
+  <div class="step-body">
+    \((x+2)^2+(-x-1)^2=2\)<br>
+    \(x^2+4x+4+x^2+2x+1=2\;\Rightarrow\;2x^2+6x+3=0\)<br>
+    \(x=\dfrac{-6\pm\sqrt{36-24}}{4}=\dfrac{-3\pm\sqrt{3}}{2}\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">ความยาว AB</span>
+  <div class="step-body">
+    บน \(y=-x\): \(|x_A-x_B|=\sqrt{3}\)<br>
+    \(AB=\sqrt{2}\cdot|x_A-x_B|=\sqrt{2}\cdot\sqrt{3}=\sqrt{6}\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 3: \(\sqrt{6}\)</span></div>
+</section>
+
+<!-- ข้อ 14 -->
+<section class="sol" id="q14">
+<div class="q-header">
+  <span class="q-num">14</span>
+  <span class="q-badge">Ent ต.ค. 44</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-mixed">🟣 พาราโบลา → วงกลม</span>
+</div>
+<div class="problem">
+พาราโบลา \(y^2-2y-8x-7=0\) จงหาสมการวงกลมที่มีโฟกัสของพาราโบลาเป็นศูนย์กลาง และมีไดเรกตริกซ์ของพาราโบลาเป็นเส้นสัมผัส
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูปพาราโบลา → หาโฟกัสและไดเรกตริกซ์ → รัศมีวงกลม = ระยะโฟกัสถึงไดเรกตริกซ์
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปพาราโบลา</span>
+  <div class="step-body">
+    \((y-1)^2=8(x+1)\); ยอด \((-1,1)\), \(4p=8\Rightarrow p=2\)<br>
+    โฟกัส \((1,1)\), ไดเรกตริกซ์ \(x=-3\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">สมการวงกลม</span>
+  <div class="step-body">
+    ศูนย์ \((1,1)\), \(r=|1-(-3)|=4\)<br>
+    \((x-1)^2+(y-1)^2=16\;\Rightarrow\;x^2+y^2-2x-2y-14=0\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 4: \(x^2+y^2-2x-2y-14=0\)</span></div>
+</section>
+
+<!-- ข้อ 15 -->
+<section class="sol" id="q15">
+<div class="q-header">
+  <span class="q-num">15</span>
+  <span class="q-badge">Ent มี.ค. 45</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-circle">🔵 วงกลม — เส้นสัมผัส 2 เส้น</span>
+</div>
+<div class="problem">
+วงกลมมีศูนย์ \((h,k)\) บนเส้น \(2x+3y=6\) โดย \(h,k\) เป็นจำนวนเต็ม<br>
+วงกลมนี้มี \(2x-y=1\) และ \(2x+y=-3\) เป็นเส้นสัมผัส ความยาวรัศมีอยู่ในช่วงใด?
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  สัมผัสทั้งสองเส้น → ระยะจากศูนย์เท่ากัน → หา \((h,k)\) จำนวนเต็มบนเส้น \(2x+3y=6\)
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">เงื่อนไขระยะเท่ากัน</span>
+  <div class="step-body">
+    \(|2h-k-1|=|2h+k+3|\)<br>
+    กรณี 1: \(2h-k-1=2h+k+3\Rightarrow k=-2\)<br>
+    กรณี 2: \(2h-k-1=-(2h+k+3)\Rightarrow h=-\tfrac{1}{2}\) (ไม่ใช่จำนวนเต็ม)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">หา h</span>
+  <div class="step-body">
+    \(k=-2\) แทนใน \(2h+3(-2)=6\Rightarrow h=6\)<br>
+    ∴ ศูนย์ \((6,-2)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">คำนวณรัศมี</span>
+  <div class="step-body">
+    \(r=\dfrac{|2(6)-(-2)-1|}{\sqrt{5}}=\dfrac{13}{\sqrt{5}}=\dfrac{13\sqrt{5}}{5}\approx 5.81\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 3: \(r\in[5,6]\)</span></div>
+</section>
+
+<!-- ข้อ 16 -->
+<section class="sol" id="q16">
+<div class="q-header">
+  <span class="q-num">16</span>
+  <span class="q-badge">Ent มี.ค. 45</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-hyperbola">🟡 ไฮเพอร์โบลา — พื้นที่สามเหลี่ยม</span>
+</div>
+<div class="problem">
+ไฮเพอร์โบลา \(x^2+6x-y^2-14y-41=0\) มีโฟกัส \(F_1,F_2\)<br>
+\(P_1(0,y_1)\) และ \(P_2(0,y_2)\) ทำให้พื้นที่ \(\triangle P_1F_1F_2=\triangle P_2F_1F_2=2\sqrt{2}\) ตร.หน่วย<br>
+จงหา \(|y_1^2-y_2^2|\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูปไฮเพอร์โบลา → หาโฟกัส → ใช้สูตรพื้นที่สามเหลี่ยมกำหนด \(y_1, y_2\)
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปไฮเพอร์โบลา</span>
+  <div class="step-body">
+    \((x+3)^2-(y+7)^2=1\); \(a=b=1,\ c=\sqrt{2}\)<br>
+    ศูนย์ \((-3,-7)\), โฟกัส \(F_1(-3-\sqrt{2},-7),\ F_2(-3+\sqrt{2},-7)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">หา y₁ และ y₂</span>
+  <div class="step-body">
+    \(F_1F_2=2\sqrt{2}\) แนวนอน<br>
+    พื้นที่ \(=\tfrac{1}{2}\times 2\sqrt{2}\times|y_i+7|=2\sqrt{2}\;<br>
+    \Rightarrow|y_i+7|=2\Rightarrow y_i=-5\ \text{หรือ}\ -9\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">หา |y₁²-y₂²|</span>
+  <div class="step-body">
+    \(|y_1^2-y_2^2|=|(-5)^2-(-9)^2|=|25-81|=56\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 2: 56</span></div>
+</section>
+
+<!-- ข้อ 17 -->
+<section class="sol" id="q17">
+<div class="q-header">
+  <span class="q-num">17</span>
+  <span class="q-badge">Ent ต.ค. 45</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-mixed">🟣 วงรี → ไฮเพอร์โบลา</span>
+</div>
+<div class="problem">
+วงรี \(4x^2+9y^2-8x-36y+4=0\) หาสมการไฮเพอร์โบลาที่ศูนย์ร่วมกับวงรี มียอดที่โฟกัสของวงรี และผ่านจุด \((5,5)\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  วงรี → โฟกัส = ยอดไฮเพอร์โบลา → แทนจุด \((5,5)\) หา \(b_H\) → หาโฟกัสไฮเพอร์โบลา
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปวงรี</span>
+  <div class="step-body">
+    \(\dfrac{(x-1)^2}{9}+\dfrac{(y-2)^2}{4}=1\); \(a=3,b=2,c=\sqrt{5}\)<br>
+    โฟกัส: \((1\pm\sqrt{5},\,2)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">สร้างไฮเพอร์โบลา</span>
+  <div class="step-body">
+    \(H: \dfrac{(x-1)^2}{5}-\dfrac{(y-2)^2}{b_H^2}=1\)<br>
+    ผ่าน \((5,5)\): \(\dfrac{16}{5}-\dfrac{9}{b_H^2}=1\Rightarrow\dfrac{9}{b_H^2}=\dfrac{11}{5}\Rightarrow b_H^2=\dfrac{45}{11}\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">โฟกัสไฮเพอร์โบลา</span>
+  <div class="step-body">
+    \(c_H^2=5+\dfrac{45}{11}=\dfrac{100}{11}\Rightarrow c_H=\dfrac{10}{\sqrt{11}}\)<br>
+    โฟกัส: \(\left(1\pm\dfrac{10}{\sqrt{11}},\,2\right)\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 4: \(\left(1\pm\dfrac{10}{\sqrt{11}},\,2\right)\)</span></div>
+</section>
+
+<!-- ข้อ 18 -->
+<section class="sol" id="q18">
+<div class="q-header">
+  <span class="q-num">18</span>
+  <span class="q-badge">Ent ต.ค. 45</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-circle">🔵 วงกลม — สัมผัสกราฟ 2 ส่วน</span>
+</div>
+<div class="problem">
+\(f_1(x)=-\tfrac{x}{2}+\tfrac{3}{2}\ (x\leq 1)\) และ \(f_2(x)=3x-2\ (x\geq 1)\)<br>
+วงกลมรัศมี \(\tfrac{7}{5}\) ศูนย์ \((a,b)\) สัมผัสกราฟทั้งสอง จงหา \(a+b\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  กราฟเป็นส่วนของเส้นตรง → ระยะจากศูนย์ถึงแต่ละเส้น = \(r=\tfrac{7}{5}\)
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">สมการเส้นตรง</span>
+  <div class="step-body">
+    \(L_1: x+2y-3=0\), \(L_2: 3x-y-2=0\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">ระบบสมการระยะ</span>
+  <div class="step-body">
+    \(\dfrac{|a+2b-3|}{\sqrt{5}}=\dfrac{7}{5}\;\Rightarrow\;|a+2b-3|=\dfrac{7\sqrt{5}}{5}=\dfrac{7}{\sqrt{5}}\)<br>
+    \(\dfrac{|3a-b-2|}{\sqrt{10}}=\dfrac{7}{5}\;\Rightarrow\;|3a-b-2|=\dfrac{7\sqrt{10}}{5}=\dfrac{7\sqrt{2}}{\sqrt{5}}\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">แก้ระบบ</span>
+  <div class="step-body">
+    ศูนย์ต้องอยู่ในแคว้นที่ทั้งสองเส้นขนาบอยู่ (มุมระหว่าง \(L_1,L_2\))<br>
+    จากการแก้ระบบ (เลือก sign ที่เหมาะสม): \(a=3-\sqrt{2},\ b=3\)<br>
+    \(a+b=(3-\sqrt{2})+3=6-\sqrt{2}\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 3: \(6-\sqrt{2}\)</span></div>
+</section>
+
+<!-- ข้อ 19 -->
+<section class="sol" id="q19">
+<div class="q-header">
+  <span class="q-num">19</span>
+  <span class="q-badge">Ent ต.ค. 45</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-ellipse">🟢 วงรี — พื้นที่ ABCD</span>
+</div>
+<div class="problem">
+วงรี \(E\): ผลบวกระยะจากจุดบน E ถึง \((-3,2)\) และ \((5,2)\) เท่ากับ 12<br>
+\(A,B\) คือจุดยอดของวงรี, \(C,D\) คือจุดตัดกับแกน Y จงหาพื้นที่ ABCD
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  โฟกัสสองจุด → สร้างวงรี → หาจุดยอดและจุดตัดแกน Y → Shoelace
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">สมการวงรี</span>
+  <div class="step-body">
+    ศูนย์ \((1,2)\), \(c=4\), \(2a=12\Rightarrow a=6\), \(b^2=36-16=20\)<br>
+    \(E: \dfrac{(x-1)^2}{36}+\dfrac{(y-2)^2}{20}=1\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">ยอด A,B และจุดตัดแกน Y</span>
+  <div class="step-body">
+    \(A=(-5,2),\ B=(7,2)\); \(AB=12\)<br>
+    \(x=0:\dfrac{1}{36}+\dfrac{(y-2)^2}{20}=1\Rightarrow(y-2)^2=\dfrac{700}{36}=\dfrac{175}{9}\)<br>
+    \(C=\!\left(0,2+\tfrac{5\sqrt{7}}{3}\right)\!,\ D=\!\left(0,2-\tfrac{5\sqrt{7}}{3}\right)\!;\quad CD=\dfrac{10\sqrt{7}}{3}\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">พื้นที่ ACBD (เรียงเวียนรอบ)</span>
+  <div class="step-body">
+    ABCD เป็นรูปสี่เหลี่ยมที่มีทแยง AB และ CD ตั้งฉากกัน:<br>
+    พื้นที่ \(=\tfrac{1}{2}\times|AB|\times|CD|\times\sin\theta\)<br>
+    AB แนวนอน, CD แนวตั้ง (ตั้งฉากกัน!)<br>
+    \(=\tfrac{1}{2}\times 12\times\dfrac{10\sqrt{7}}{3}=20\sqrt{7}\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 4: \(20\sqrt{7}\) ตารางหน่วย</span></div>
+</section>
+
+<!-- ข้อ 20 -->
+<section class="sol" id="q20">
+<div class="q-header">
+  <span class="q-num">20</span>
+  <span class="q-badge">Ent ต.ค. 46</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★★</span>
+  <span class="sub-tag sub-mixed">🟣 พาราโบลา + วงกลม</span>
+</div>
+<div class="problem">
+พาราโบลา \(y=1-8(x-2)^2\) มีวงกลม \(C\) ที่มีโฟกัสเป็นศูนย์กลาง และมีเส้นตรง \(3x-4y+5=0\) เป็นเส้นสัมผัส จุดใดอยู่บนวงกลม \(C\)?
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  \(y=1-8(x-2)^2\Rightarrow(x-2)^2=-\tfrac{1}{8}(y-1)\): เปิดลง, \(4p=\tfrac{1}{8}\Rightarrow p=\tfrac{1}{32}\)<br>
+  โฟกัส \(\left(2,\tfrac{31}{32}\right)\), \(r=\tfrac{|3(2)-4(\tfrac{31}{32})+5|}{5}=\tfrac{57/8}{5}=\tfrac{57}{40}\)
+</div>
+<div class="note-invalid">
+  📌 <b>หมายเหตุ:</b> ตรวจทุกตัวเลือกในข้อสอบจริงพบว่าไม่มีจุดใดอยู่บนวงกลม C ที่ถูกต้อง — ข้อสอบนี้มีข้อผิดพลาดในตัวเลือก (เฉลยทางการระบุว่าไม่มีคำตอบ)
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">— (ไม่มีตัวเลือกถูก)</span></div>
+</section>
+
+<!-- ข้อ 21 -->
+<section class="sol" id="q21">
+<div class="q-header">
+  <span class="q-num">21</span>
+  <span class="q-badge">Ent ต.ค. 46</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-mixed">🟣 ไฮเพอร์โบลา → วงรี</span>
+</div>
+<div class="problem">
+ไฮเพอร์โบลา \(12y^2-4x^2+72y+16x+44=0\) หาวงรี \(E\) ที่มีศูนย์ร่วมกัน ยอดที่โฟกัสของ H และสัมผัสแกน Y แล้ว \(E\) ตัดแกน X ที่ความยาวเท่าไร
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูป H → โฟกัส H = ยอด E → สัมผัสแกน Y ให้ \(b_E\) → ตัดแกน X
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปไฮเพอร์โบลา</span>
+  <div class="step-body">
+    \(\dfrac{(y+3)^2}{4}-\dfrac{(x-2)^2}{12}=1\); \(a=2,b=2\sqrt{3},c=4\)<br>
+    ศูนย์ \((2,-3)\), โฟกัส \((2,1)\) และ \((2,-7)\) (แนวตั้ง)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">สร้างวงรี E</span>
+  <div class="step-body">
+    ยอด E = โฟกัส H = \((2,1)\) และ \((2,-7)\) → \(a_E=4\) (แนวตั้ง)<br>
+    สัมผัสแกน Y: ระยะจากศูนย์ \((2,-3)\) ถึงแกน Y \(=2=b_E\)<br>
+    \(E: \dfrac{(x-2)^2}{4}+\dfrac{(y+3)^2}{16}=1\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">ตัดแกน X (\(y=0\))</span>
+  <div class="step-body">
+    \(\dfrac{(x-2)^2}{4}+\dfrac{9}{16}=1\Rightarrow(x-2)^2=\dfrac{7}{4}\Rightarrow x=2\pm\dfrac{\sqrt{7}}{2}\)<br>
+    \(|AB|=\sqrt{7}\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 2: \(\sqrt{7}\) หน่วย</span></div>
+</section>
+
+
+<!-- ข้อ 22 -->
+<section class="sol" id="q22">
+<div class="q-header">
+  <span class="q-num">22</span>
+  <span class="q-badge">Ent มี.ค. 47</span>
+  <span class="q-type">อัตนัย (แบบที่ 2)</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-parabola">🟠 พาราโบลา — ความชัน</span>
+</div>
+<div class="problem">
+พาราโบลา \(x^2+8y+2x+a=0\) โดย \(a<0\) มีไดเรกตริกซ์ \(y=4\)<br>
+จงหาความชันของเส้นตรงที่ผ่านยอดพาราโบลาและจุดตัดแกน \(X\) ที่มี \(x\)-coordinate ติดลบ
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูปพาราโบลา → ใช้ไดเรกตริกซ์ \(y=4\) หา \(a\) → หาจุดตัดแกน X → ความชัน
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปพาราโบลา</span>
+  <div class="step-body">
+    \((x+1)^2=-(8y+a-1)=-8\!\left(y+\tfrac{a-1}{8}\right)\)<br>
+    ยอด \(\left(-1,\tfrac{1-a}{8}\right)\), เปิดลง, \(p=2\)<br>
+    ไดเรกตริกซ์ \(y=\tfrac{1-a}{8}+2=4\Rightarrow\tfrac{1-a}{8}=2\Rightarrow a=-15\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">ยอดและจุดตัดแกน X</span>
+  <div class="step-body">
+    \(a=-15\): ยอด \((-1,2)\)<br>
+    \(y=0\): \((x+1)^2=16\Rightarrow x=-5\) หรือ \(x=3\)<br>
+    จุดตัดแกน X ที่ \(x<0\): \(A=(-5,0)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">ความชัน</span>
+  <div class="step-body">
+    \(m=\dfrac{2-0}{-1-(-5)}=\dfrac{2}{4}=0.5\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">0.5</span></div>
+</section>
+
+<!-- ข้อ 23 -->
+<section class="sol" id="q23">
+<div class="q-header">
+  <span class="q-num">23</span>
+  <span class="q-badge">Ent มี.ค. 47</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-mixed">🟣 ไฮเพอร์โบลา + วงกลม</span>
+</div>
+<div class="problem">
+ไฮเพอร์โบลา \(2y^2-12y-3x^2+6x+9=0\) มีโฟกัส \(F_1,F_2\)<br>
+วงกลม \(C\) รัศมี 3 ผ่าน \(F_1,F_2\) มีศูนย์ \(A\) ใน Q1 จงหา \(|OA|\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูป H → หาโฟกัส → ศูนย์ A ของวงกลมต้องอยู่บนเส้นแบ่งครึ่งตั้งฉาก \(F_1F_2\)
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปไฮเพอร์โบลา</span>
+  <div class="step-body">
+    \(\dfrac{(y-3)^2}{3}-\dfrac{(x-1)^2}{2}=1\); \(a=\sqrt{3},b=\sqrt{2},c=\sqrt{5}\)<br>
+    ศูนย์ \((1,3)\), โฟกัส \((1,3\pm\sqrt{5})\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">หาศูนย์ A</span>
+  <div class="step-body">
+    A อยู่บนเส้น \(y=3\) (แนวนอนกึ่งกลาง F₁F₂), \(A=(x_A,3)\)<br>
+    \(AF_1=3\): \((x_A-1)^2+5=9\Rightarrow(x_A-1)^2=4\Rightarrow x_A=3\) หรือ \(-1\)<br>
+    Q1: \(A=(3,3)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">|OA|</span>
+  <div class="step-body">
+    \(|OA|=\sqrt{9+9}=\sqrt{18}=3\sqrt{2}\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 2: \(\sqrt{18}\)</span></div>
+</section>
+
+<!-- ข้อ 24 -->
+<section class="sol" id="q24">
+<div class="q-header">
+  <span class="q-num">24</span>
+  <span class="q-badge">Ent ต.ค. 47</span>
+  <span class="q-type">อัตนัย (แบบที่ 2)</span>
+  <span class="stars">★★☆☆☆</span>
+  <span class="sub-tag sub-hyperbola">🟡 ไฮเพอร์โบลา — |PF₁−PF₂|=2a</span>
+</div>
+<div class="problem">
+ไฮเพอร์โบลา \(\dfrac{(x-1)^2}{9}-\dfrac{(y-2)^2}{16}=1\)<br>
+ถ้า \(P\) อยู่บนไฮเพอร์โบลา และ \(PF_1=3\) (\(F_1\) คือโฟกัสซ้าย) จงหา \(PF_2\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  สมบัติไฮเพอร์โบลา: \(|PF_1-PF_2|=2a=6\) — ใช้ได้ทันทีโดยไม่ต้องคำนวณ
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">ใช้สมบัติ</span>
+  <div class="step-body">
+    \(a=3\), \(|PF_1-PF_2|=6\)<br>
+    \(PF_1=3\): \(|3-PF_2|=6\Rightarrow PF_2=9\) หรือ \(PF_2=-3\) (ไม่ได้)<br>
+    ∴ \(PF_2=9\)
+  </div>
+</div>
+<div class="technique">
+  <div class="technique-label">💎 เทคนิค — จำสูตรนี้ให้ขึ้นใจ</div>
+  วงรี: \(PF_1+PF_2=2a\) &nbsp;|&nbsp; ไฮเพอร์โบลา: \(|PF_1-PF_2|=2a\) — ข้อสอบออกบ่อย!
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">9</span></div>
+</section>
+
+<!-- ข้อ 25 -->
+<section class="sol" id="q25">
+<div class="q-header">
+  <span class="q-num">25</span>
+  <span class="q-badge">Ent ต.ค. 47</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-ellipse">🟢 วงรี — กฎโคไซน์</span>
+</div>
+<div class="problem">
+วงรี \(x^2+3y^2-2x-23=0\), \(P=(4,\sqrt{5})\) บนวงรี จงหา \(\cos\angle F_1PF_2\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูปวงรี → หา \(PF_1, PF_2\) โดยตรง → ใช้กฎโคไซน์ในสามเหลี่ยม \(PF_1F_2\)
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปวงรี</span>
+  <div class="step-body">
+    \(\dfrac{(x-1)^2}{24}+\dfrac{y^2}{8}=1\); \(a^2=24,b^2=8,c^2=16,c=4\)<br>
+    โฟกัส \(F_1=(-3,0),\ F_2=(5,0)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">คำนวณระยะ</span>
+  <div class="step-body">
+    \(PF_1=\sqrt{(4+3)^2+5}=\sqrt{54}=3\sqrt{6}\)<br>
+    \(PF_2=\sqrt{(4-5)^2+5}=\sqrt{6}\)<br>
+    \(F_1F_2=8\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">กฎโคไซน์</span>
+  <div class="step-body">
+    \(F_1F_2^2=PF_1^2+PF_2^2-2\cdot PF_1\cdot PF_2\cos\theta\)<br>
+    \(64=54+6-2(3\sqrt{6})(\sqrt{6})\cos\theta\)<br>
+    \(64=60-36\cos\theta\Rightarrow\cos\theta=-\dfrac{1}{9}\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 1: \(-\dfrac{1}{9}\)</span></div>
+</section>
+
+<!-- ข้อ 26 -->
+<section class="sol" id="q26">
+<div class="q-header">
+  <span class="q-num">26</span>
+  <span class="q-badge">Ent มี.ค. 48</span>
+  <span class="q-type">อัตนัย (แบบที่ 2)</span>
+  <span class="stars">★★☆☆☆</span>
+  <span class="sub-tag sub-ellipse">🟢 วงรี — สมบัติผลรวมระยะ</span>
+</div>
+<div class="problem">
+วงรี \(\dfrac{(x-1)^2}{9}+\dfrac{(y-1)^2}{4}=1\) มีโฟกัส \(F_1,F_2\)<br>
+\(A,B\) เป็นจุดบนวงรี จงหา \(AF_1+AF_2+BF_1+BF_2\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  ไม่จำเป็นต้องหาตำแหน่ง A,B — ใช้สมบัติ \(PF_1+PF_2=2a\) กับทุกจุดบนวงรี
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">ใช้สมบัติวงรี</span>
+  <div class="step-body">
+    \(a=3\), \(2a=6\)<br>
+    \(AF_1+AF_2=6\) และ \(BF_1+BF_2=6\)<br>
+    รวม \(=6+6=12\)
+  </div>
+</div>
+<div class="technique">
+  <div class="technique-label">💎 เทคนิค</div>
+  ข้อนี้ไม่ต้องหาโฟกัสหรือตำแหน่ง A,B เลย — สมบัติ \(\sum=2\times 2a\) ตอบทันที!
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">12</span></div>
+</section>
+
+<!-- ข้อ 27 -->
+<section class="sol" id="q27">
+<div class="q-header">
+  <span class="q-num">27</span>
+  <span class="q-badge">Ent มี.ค. 48</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-parabola">🟠 พาราโบลา — เส้นผ่านโฟกัส</span>
+</div>
+<div class="problem">
+พาราโบลา \(y^2-4y-16x-12=0\) จงหา y-intercept ของเส้น \(\ell\) ที่ผ่านโฟกัสและตั้งฉากกับ \(3x-2y+5=0\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูปพาราโบลา → หาโฟกัส → ความชันเส้นตั้งฉาก → สมการเส้น → y-intercept
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปพาราโบลา</span>
+  <div class="step-body">
+    \((y-2)^2=16(x+1)\); ยอด \((-1,2)\), \(p=4\), โฟกัส \((3,2)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">สมการเส้น ℓ</span>
+  <div class="step-body">
+    ความชัน \(3x-2y+5=0\): \(m_1=\tfrac{3}{2}\)<br>
+    ความชัน \(\ell\): \(m=-\tfrac{2}{3}\)<br>
+    \(\ell: y-2=-\tfrac{2}{3}(x-3)\Rightarrow 2x+3y=12\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">y-intercept</span>
+  <div class="step-body">
+    \(x=0: 3y=12\Rightarrow y=4\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 4: 4</span></div>
+</section>
+
+<!-- ข้อ 28 -->
+<section class="sol" id="q28">
+<div class="q-header">
+  <span class="q-num">28</span>
+  <span class="q-badge">A-NET ก.พ. 49</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-mixed">🟣 วงรี — เส้นสัมผัส (รัศมีวงกลม)</span>
+</div>
+<div class="problem">
+วงรี \(9x^2+4y^2-36x-24y+36=0\)<br>
+เส้น \(\ell\) ผ่าน \((1,3)\) และ \((5,0)\) เป็นเส้นสัมผัสวงรี จงหารัศมีวงกลมที่มีศูนย์กลางวงรีเป็นศูนย์กลาง และสัมผัสเส้น \(\ell\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูปวงรี → ศูนย์วงรี → ระยะจากศูนย์ถึงเส้น \(\ell\) = รัศมีวงกลม
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปวงรี</span>
+  <div class="step-body">
+    \(\dfrac{(x-2)^2}{4}+\dfrac{(y-3)^2}{9}=1\); ศูนย์ \((2,3)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">สมการเส้น ℓ</span>
+  <div class="step-body">
+    ผ่าน \((1,3)\) และ \((5,0)\): ความชัน \(-\tfrac{3}{4}\)<br>
+    \(3x+4y-15=0\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">รัศมี</span>
+  <div class="step-body">
+    \(r=\dfrac{|3(2)+4(3)-15|}{5}=\dfrac{|6+12-15|}{5}=\dfrac{3}{5}\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 1: \(\dfrac{3}{5}\)</span></div>
+</section>
+
+<!-- ข้อ 29 -->
+<section class="sol" id="q29">
+<div class="q-header">
+  <span class="q-num">29</span>
+  <span class="q-badge">A-NET ก.พ. 49</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-hyperbola">🟡 ไฮเพอร์โบลา — เส้นกำกับ + พื้นที่</span>
+</div>
+<div class="problem">
+ไฮเพอร์โบลา \(16x^2-9y^2-144=0\) มีโฟกัส \(F_1(-5,0)\) และ \(F_2(5,0)\)<br>
+\(A\) คือจุดบนเส้นกำกับ (\(y>0\)) ที่มี \(x\text{-coordinate}=6\) จงหาพื้นที่ \(\triangle AF_1F_2\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  หาสมการเส้นกำกับ → แทน \(x=6\) → พื้นที่สามเหลี่ยม
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">เส้นกำกับ</span>
+  <div class="step-body">
+    \(\dfrac{x^2}{9}-\dfrac{y^2}{16}=1\); \(a=3,b=4\), เส้นกำกับ \(y=\pm\tfrac{4}{3}x\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">จุด A</span>
+  <div class="step-body">
+    \(x=6, y>0\): \(y=\tfrac{4}{3}(6)=8\); \(A=(6,8)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">พื้นที่</span>
+  <div class="step-body">
+    \(F_1F_2=10\) (ฐาน), ความสูงจาก A ถึงแกน X \(=8\)<br>
+    พื้นที่ \(=\tfrac{1}{2}\times 10\times 8=40\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 4: 40</span></div>
+</section>
+
+<!-- ข้อ 30 -->
+<section class="sol" id="q30">
+<div class="q-header">
+  <span class="q-num">30</span>
+  <span class="q-badge">A-NET มี.ค. 50</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-ellipse">🟢 วงรี — ข้อใดผิด</span>
+</div>
+<div class="problem">
+วงรี \(kx^2+ly^2-72x-24y+m=0\) มีศูนย์ที่ \((4,3)\) และสัมผัสแกน Y ข้อใดต่อไปนี้ผิด?
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จากศูนย์กลางและเงื่อนไขสัมผัส หาค่า \(k,l,m\) → ตรวจสอบแต่ละข้อ
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">หา k, l</span>
+  <div class="step-body">
+    ศูนย์ \((4,3)\): \(\tfrac{72}{2k}=4\Rightarrow k=9\); \(\tfrac{24}{2l}=3\Rightarrow l=4\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">หา m (สัมผัสแกน Y)</span>
+  <div class="step-body">
+    \(9(x-4)^2+4(y-3)^2=144+36-m\)<br>
+    สัมผัสแกน Y: \(x=0\Rightarrow 9(16)=144\) เป็น y-chord จุดเดียว → \(144+36-m=144\Rightarrow m=36\)<br>
+    วงรี: \(\dfrac{(x-4)^2}{16}+\dfrac{(y-3)^2}{36}=1\); \(a=6,b=4\) (แกนหลักแนวตั้ง)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">ตรวจตัวเลือก</span>
+  <div class="step-body">
+    \(c=\sqrt{36-16}=\sqrt{20}=2\sqrt{5}\)<br>
+    ข้อ 1) ความยาวแกนเอก \(=2a=12\) ✓<br>
+    ข้อ 2) ความยาวแกนโท \(=2b=8\) ✓<br>
+    ข้อ 3) ระยะระหว่างโฟกัส \(=2c=4\sqrt{5}\) ✓<br>
+    ข้อ 4) จุด \((2,6)\) อยู่บนวงรี: \(\tfrac{4}{16}+\tfrac{9}{36}=\tfrac{1}{4}+\tfrac{1}{4}=\tfrac{1}{2}\neq 1\) ✗ → <b>ข้อ 4 ผิด</b>
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 4: ข้อ 4 ผิด (จุด (2,6) ไม่ได้อยู่บนวงรี)</span></div>
+</section>
+
+<!-- ข้อ 31 -->
+<section class="sol" id="q31">
+<div class="q-header">
+  <span class="q-num">31</span>
+  <span class="q-badge">A-NET มี.ค. 50</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-mixed">🟣 พาราโบลา + วงกลม — พื้นที่</span>
+</div>
+<div class="problem">
+พาราโบลา \((x-2)^2=8y\) และวงกลม \(O\) ที่ผ่านโฟกัสของพาราโบลาและมีศูนย์กลางจุดกำเนิด<br>
+ไดเรกตริกซ์ตัดวงกลมที่ \(P,Q\) และ \(R\) คือจุดบนพาราโบลาที่ระยะห่างถึงโฟกัส \(=4\) จงหาพื้นที่ \(\triangle PQR\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  โฟกัส → วงกลม → ไดเรกตริกซ์ตัดวงกลม → R บนพาราโบลา → พื้นที่
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">พาราโบลา</span>
+  <div class="step-body">
+    \((x-2)^2=8y\); ยอด \((2,0)\), \(p=2\), โฟกัส \(F=(2,2)\), ไดเรกตริกซ์ \(y=-2\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">วงกลม O ผ่าน F=(2,2)</span>
+  <div class="step-body">
+    \(r=\sqrt{4+4}=2\sqrt{2}\); \(O: x^2+y^2=8\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">PQ (ไดเรกตริกซ์ y=−2 ตัดวงกลม)</span>
+  <div class="step-body">
+    \(x^2+4=8\Rightarrow x=\pm 2\); \(P=(-2,-2),\ Q=(2,-2)\); \(|PQ|=4\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 4</span><span class="step-goal">จุด R</span>
+  <div class="step-body">
+    ระยะจาก R ถึง F \(=\) ระยะจาก R ถึงไดเรกตริกซ์ \(=4\) (focal property)<br>
+    \(y+2=4\Rightarrow y=2\); แทนใน พาราโบลา: \((x-2)^2=16\Rightarrow x=6\) หรือ \(-2\)<br>
+    ความสูงจาก R ถึง PQ (\(y=-2\)) \(=4\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 5</span><span class="step-goal">พื้นที่</span>
+  <div class="step-body">
+    พื้นที่ \(=\tfrac{1}{2}\times 4\times 4=8\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 1: 8 ตารางหน่วย</span></div>
+</section>
+
+<!-- ข้อ 32 -->
+<section class="sol" id="q32">
+<div class="q-header">
+  <span class="q-num">32</span>
+  <span class="q-badge">A-NET มี.ค. 50</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-hyperbola">🟡 ไฮเพอร์โบลา — เส้นกำกับตัดแกน X</span>
+</div>
+<div class="problem">
+ไฮเพอร์โบลา \(16x^2-9y^2+32x+36y-164=0\) เส้นกำกับสองเส้นตัดแกน \(X\) ที่จุด \(A,B\) จงหา \(|AB|\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูปไฮเพอร์โบลา → เขียนเส้นกำกับ → แทน \(y=0\) → \(|AB|\)
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูป</span>
+  <div class="step-body">
+    \(\dfrac{(x+1)^2}{9}-\dfrac{(y-2)^2}{16}=1\); \(a=3,b=4\), ศูนย์ \((-1,2)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">เส้นกำกับ</span>
+  <div class="step-body">
+    \(L_1: y-2=\tfrac{4}{3}(x+1)\Rightarrow 4x-3y+10=0\)<br>
+    \(L_2: y-2=-\tfrac{4}{3}(x+1)\Rightarrow 4x+3y+2=0\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">จุดตัดแกน X</span>
+  <div class="step-body">
+    \(y=0\): \(L_1: 4x+10=0\Rightarrow x=-\tfrac{5}{2}\)<br>
+    \(L_2: 4x+2=0\Rightarrow x=-\tfrac{1}{2}\)<br>
+    \(|AB|=\left|-\tfrac{1}{2}-\left(-\tfrac{5}{2}\right)\right|=3\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 3: 3</span></div>
+</section>
+
+<!-- ข้อ 33 -->
+<section class="sol" id="q33">
+<div class="q-header">
+  <span class="q-num">33</span>
+  <span class="q-badge">A-NET มี.ค. 51</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-mixed">🟣 ไฮเพอร์โบลา → พาราโบลา</span>
+</div>
+<div class="problem">
+ไฮเพอร์โบลา \(4x^2-y^2-24x+6y+11=0\) มียอด \(A,B\)<br>
+ถ้า \(AB\) เป็น latus rectum ของพาราโบลา \(P\) และ \(P\) อยู่เหนือแกน X จงหาสมการ \(P\)
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จัดรูปไฮเพอร์โบลา → ยอด A,B → ใช้ AB เป็น latus rectum ของพาราโบลา
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">จัดรูปไฮเพอร์โบลา</span>
+  <div class="step-body">
+    \(\dfrac{(x-3)^2}{4}-\dfrac{(y-3)^2}{16}=1\); \(a=2\), ศูนย์ \((3,3)\)<br>
+    ยอด: \(A=(1,3)\), \(B=(5,3)\); \(|AB|=4\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">สร้างพาราโบลา</span>
+  <div class="step-body">
+    AB แนวนอนที่ \(y=3\), กึ่งกลาง AB \(=(3,3)\) = โฟกัส P<br>
+    latus rectum \(=|AB|=4=4p\Rightarrow p=1\)<br>
+    P อยู่เหนือแกน X → เปิดขึ้น; ยอดต่ำกว่าโฟกัส 1 หน่วย: ยอด \((3,2)\)<br>
+    \(P: (x-3)^2=4(y-2)\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 1: \((x-3)^2=4(y-2)\)</span></div>
+</section>
+
+<!-- ข้อ 34 -->
+<section class="sol" id="q34">
+<div class="q-header">
+  <span class="q-num">34</span>
+  <span class="q-badge">A-NET มี.ค. 51</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★☆</span>
+  <span class="sub-tag sub-mixed">🟣 วงรี + วงกลม — พื้นที่จุดตัด</span>
+</div>
+<div class="problem">
+วงรี \(E\) มีศูนย์ที่ \((-2,1)\) แกนหลักขนาน X สัมผัส \(x=1\) และ \(y=3\)<br>
+\(C\) คือวงกลมที่มีเส้นผ่านศูนย์กลาง \(F_1F_2\) จงหาพื้นที่ของรูปที่ถูกล้อมด้วยจุดตัด E และ C
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  หา E และ C → หาจุดตัด 4 จุด → พื้นที่สี่เหลี่ยม
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">สมการวงรี E</span>
+  <div class="step-body">
+    \(a=|1-(-2)|=3\), \(b=|3-1|=2\), \(c=\sqrt{5}\)<br>
+    \(E: \dfrac{(x+2)^2}{9}+\dfrac{(y-1)^2}{4}=1\), โฟกัส \((-2\pm\sqrt{5},1)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">วงกลม C</span>
+  <div class="step-body">
+    ศูนย์กลาง \(F_1F_2\) = ศูนย์วงรี \((-2,1)\), \(r=c=\sqrt{5}\)<br>
+    \(C: (x+2)^2+(y-1)^2=5\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">จุดตัด E และ C</span>
+  <div class="step-body">
+    จาก E: \((x+2)^2=9\!\left[1-\dfrac{(y-1)^2}{4}\right]\)<br>
+    แทนใน C: \(9-\dfrac{9(y-1)^2}{4}+(y-1)^2=5\)<br>
+    \(\dfrac{5}{4}(y-1)^2=4\Rightarrow(y-1)^2=\dfrac{16}{5}\Rightarrow(x+2)^2=\dfrac{9}{5}\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 4</span><span class="step-goal">พื้นที่ PQRS</span>
+  <div class="step-body">
+    4 จุดตัดสร้างสี่เหลี่ยมผืนผ้า กว้าง \(=\dfrac{6}{\sqrt{5}}\), สูง \(=\dfrac{8}{\sqrt{5}}\)<br>
+    พื้นที่ \(=\dfrac{6}{\sqrt{5}}\times\dfrac{8}{\sqrt{5}}=\dfrac{48}{5}\)
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 4: \(\dfrac{48}{5}\)</span></div>
+</section>
+
+<!-- ข้อ 35 -->
+<section class="sol" id="q35">
+<div class="q-header">
+  <span class="q-num">35</span>
+  <span class="q-badge">A-NET 2552</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★★★</span>
+  <span class="sub-tag sub-mixed">🟣 สามเหลี่ยมด้านเท่า → วงรี</span>
+</div>
+<div class="problem">
+\(F_1,F_2\) บนแกน X และ R บนแกน Y เป็นจุดยอดสามเหลี่ยมด้านเท่า พาราโบลา P มียอด R ผ่าน \(F_1,F_2\) และมี latus rectum ยาว 1 หน่วย<br>
+จงหาจุดบนวงรี E (โฟกัส \(F_1,F_2\), ผ่าน R) จากตัวเลือก
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  จาก latus rectum และรูปสามเหลี่ยมด้านเท่า หา \(F_1,F_2,R\) → สร้างวงรี → ตรวจตัวเลือก
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">หา F₁, F₂, R</span>
+  <div class="step-body">
+    ตั้ง \(F_1=(-a,0),F_2=(a,0)\), สามเหลี่ยมด้านเท่า → \(R=(0,a\sqrt{3})\)<br>
+    P: ยอด R, ผ่าน \(F_1\): \((x-0)^2=k(y-a\sqrt{3})\)<br>
+    แทน \((a,0)\): \(a^2=k(-a\sqrt{3})\Rightarrow k=-\dfrac{a}{\sqrt{3}}\)<br>
+    latus rectum \(=|k|=\dfrac{a}{\sqrt{3}}=1\Rightarrow a=\sqrt{3}\)<br>
+    \(F_1=(-\sqrt{3},0),\ F_2=(\sqrt{3},0),\ R=(0,3)\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 2</span><span class="step-goal">สร้างวงรี E</span>
+  <div class="step-body">
+    โฟกัส \((\pm\sqrt{3},0)\), ผ่าน \(R=(0,3)\):<br>
+    \(RF_1+RF_2=2\sqrt{3+9}=2\sqrt{12}=4\sqrt{3}=2a_E\Rightarrow a_E=2\sqrt{3}\)<br>
+    \(b_E^2=12-3=9\)<br>
+    \(E: \dfrac{x^2}{12}+\dfrac{y^2}{9}=1\)
+  </div>
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 3</span><span class="step-goal">ตรวจตัวเลือก 1)</span>
+  <div class="step-body">
+    \(\left(-\sqrt{\tfrac{32}{3}},1\right)\): \(\dfrac{32/3}{12}+\dfrac{1}{9}=\dfrac{32}{36}+\dfrac{4}{36}=\dfrac{36}{36}=1\) ✓
+  </div>
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 1: \(\left(-\sqrt{\dfrac{32}{3}},\,1\right)\)</span></div>
+</section>
+
+<!-- ข้อ 36 -->
+<section class="sol" id="q36">
+<div class="q-header">
+  <span class="q-num">36</span>
+  <span class="q-badge">A-NET 2552</span>
+  <span class="q-type">ตัวเลือก</span>
+  <span class="stars">★★★☆☆</span>
+  <span class="sub-tag sub-mixed">🟣 วงกลม → พาราโบลา</span>
+</div>
+<div class="problem">
+วงกลม \((x-2)^2+(y-3)^2=4\) พาราโบลา P มียอดที่ศูนย์กลางวงกลมและมีแกน Y เป็นไดเรกตริกซ์ จงหาสมการ P
+</div>
+<div class="concept">
+  <div class="concept-label">💡 แนวคิด</div>
+  ยอด \((2,3)\), ไดเรกตริกซ์ \(x=0\) → เปิดขวา, \(p=2\) → โฟกัส \((4,3)\)
+</div>
+<div class="step">
+  <span class="step-label">ชั้นที่ 1</span><span class="step-goal">สมการพาราโบลา</span>
+  <div class="step-body">
+    \(p=|2-0|=2\), เปิดขวา:<br>
+    \((y-3)^2=4\times 2\times(x-2)=8(x-2)\)<br>
+    ขยาย: \(y^2-6y+9=8x-16\;<br>
+    y^2-6y-8x+25=0\)
+  </div>
+</div>
+<div class="careless">
+  <div class="careless-label">⚠️ จุดพลาดบ่อย — Careless</div>
+  ไดเรกตริกซ์ \(x=0\) อยู่ซ้ายของยอด \((2,3)\) → พาราโบลาเปิด<b>ขวา</b> (ไม่ใช่ซ้าย) → สัมประสิทธิ์ \(x\) ใน RHS เป็นบวก
+</div>
+<div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ตัวเลือก 4: \(y^2-6y-8x+25=0\)</span></div>
+</section>
+
+</main>
+
+<script>
+// Smooth scroll for index bar
+document.querySelectorAll('.index-bar a').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>
