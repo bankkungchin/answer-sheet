@@ -17,3 +17,10 @@ const PLAYLISTS = {
    "ความสัมพันธ์": "PLc4ncgz2CJ7NY9jKCP5fV5ooYxI7-VzWS",
 "ฟังก์ชัน":     "PLc4ncgz2CJ7Nnlb-DevGFB977eEkdWCwA",
 };
+// ============================================================
+//  PATCH — เพิ่ม playlist "จำนวนเชิงซ้อน" ใน config.js
+//  วิธีใช้: เปิด config.js บน GitHub แล้ววางต่อท้ายไฟล์เดิมทั้งหมด
+//  (PLAYLISTS เป็น const แต่เพิ่ม key ใหม่ด้วย bracket notation ได้ปกติ)
+// ============================================================
+
+PLAYLISTS["จำนวนเชิงซ้อน"] = "PLc4ncgz2CJ7N8O-4pbXPYeLgWqt8HO_VM";
