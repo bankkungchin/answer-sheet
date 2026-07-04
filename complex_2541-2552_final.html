@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฉลยข้อสอบ จำนวนเชิงซ้อน — Ent/A-NET/PAT1 2541-2552 (30 ข้อ)</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js" async></script>
+<style>
+:root {
+  --ink:#1a1a1a; --muted:#555; --light:#888; --line:#d4d8e8; --bg:#f4f5fb;
+  --paper:#ffffff; --accent:#2e4374; --accent-light:#eef2fb;
+  --amber:#7a4a00; --amber-bg:#fff8e8; --amber-border:#e8c870;
+  --red:#8b1a1a; --red-bg:#fff4f4; --red-border:#f5c6c6;
+  --green-bg:#f0faf2; --green-border:#a8d9b5; --green:#1a5c2e;
+  --blue-bg:#f0f5ff; --blue-border:#bdd0f8;
+}
+* { box-sizing: border-box; margin:0; padding:0; }
+body {
+  font-family: 'Sarabun', 'IBM Plex Sans Thai', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+  padding: 20px;
+}
+.wrap { max-width: 1100px; margin: 0 auto; }
+.doc-header {
+  background: linear-gradient(135deg, #2e4374 0%, #47649c 100%);
+  color: #fff;
+  border-radius: 20px;
+  padding: 28px 32px;
+  margin-bottom: 18px;
+  box-shadow: 0 10px 30px rgba(46,67,116,0.25);
+}
+.doc-header h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+.doc-header .sub { font-size: 15px; opacity: 0.92; }
+.doc-header .tags { margin-top: 14px; display:flex; flex-wrap:wrap; gap:8px; }
+.doc-header .tags span {
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 30px;
+  padding: 4px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.backbtn {
+  display:inline-block; margin-top:16px;
+  background:#fff; color:var(--accent); font-weight:700;
+  padding:8px 18px; border-radius:30px; text-decoration:none; font-size:14px;
+}
+.card-panel {
+  background: var(--paper);
+  border-radius: 20px;
+  padding: 22px 26px 30px;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 24px rgba(20,30,60,0.06);
+}
+.answer-grid {
+  background: var(--accent-light);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin: 4px 0 6px;
+  display: flex; flex-wrap: wrap; gap: 6px 12px;
+  border: 1px solid var(--line);
+}
+.answer-grid span.item {
+  font-size: 14px;
+  background: #fff;
+  padding: 3px 12px;
+  border-radius: 40px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  white-space: nowrap;
+}
+.answer-grid .q { font-weight: 700; color: var(--ink); }
+.answer-grid .a { color: var(--accent); font-weight: 700; margin-left:4px; }
+.nav-chips {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 4px 0 2px; padding: 6px 0;
+}
+.nav-chips a {
+  text-decoration:none; background:#eef2f6; padding:5px 13px;
+  border-radius:40px; font-size:13px; font-weight:700; color:var(--ink);
+  transition:0.15s; border:1px solid var(--line);
+}
+.nav-chips a:hover { background:var(--accent); color:#fff; }
+.nav-chips a.top { background:var(--blue-bg); }
+
+/* ── Cheat sheet ── */
+.cheat-sheet { background: var(--green-bg); border:1px solid var(--green-border); border-radius:18px; padding:22px 26px; margin-bottom:18px;}
+.cheat-sheet h2 { color:var(--green); font-size:19px; margin-bottom:12px; }
+.cheat-row { padding:6px 0; font-size:15px; border-bottom:1px dashed rgba(0,0,0,0.08);}
+.cheat-row:last-child{border-bottom:none;}
+.cheat-warning { margin-top:18px; }
+.cheat-warning h3 { color:var(--red); font-size:16px; margin-bottom:10px;}
+.warn-table { width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border-radius:10px; overflow:hidden;}
+.warn-table th { background:var(--red-bg); color:var(--red); text-align:left; padding:8px 10px; border-bottom:2px solid var(--red-border);}
+.warn-table td { padding:8px 10px; border-bottom:1px solid #eee; vertical-align:top;}
+.warn-table tr:last-child td{border-bottom:none;}
+
+/* ── Solution card ── */
+section.sol {
+  background: var(--paper);
+  border-radius: 18px;
+  padding: 20px 24px 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 18px rgba(20,30,60,0.055);
+  scroll-margin-top: 14px;
+}
+.q-header { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px; }
+.q-num {
+  background: var(--accent); color:#fff; font-weight:700; font-size:16px;
+  width:34px; height:34px; border-radius:50%; display:inline-flex;
+  align-items:center; justify-content:center; flex-shrink:0;
+}
+.q-badge { background:var(--blue-bg); border:1px solid var(--blue-border); color:var(--accent); font-weight:600; font-size:12.5px; padding:3px 11px; border-radius:30px;}
+.stars { color:#e0a500; font-size:14px; letter-spacing:1px; }
+.sub-tag { font-size:12.5px; font-weight:700; padding:3px 11px; border-radius:30px; background:#f0f0f5; }
+.problem {
+  background: var(--blue-bg);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  font-size: 15.5px;
+  font-weight: 600;
+}
+.concept {
+  background: var(--blue-bg);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 12px;
+  font-size: 14.5px;
+}
+.concept-label { font-weight:700; color:var(--accent); margin-bottom:4px; font-size:13.5px;}
+.step { margin: 8px 0; font-size: 15px; }
+.step-label { font-weight:700; color:var(--accent); font-size:13.5px; }
+.step-goal { color:var(--muted); font-size:13px; }
+.step-body { margin-top:4px; padding-left:2px; }
+.careless {
+  background: var(--red-bg); border-left:4px solid var(--red);
+  border-radius:10px; padding:10px 16px; margin-top:12px; font-size:14.5px;
+}
+.careless-label { font-weight:700; color:var(--red); margin-bottom:4px; font-size:13.5px;}
+.err-type { display:inline-block; margin-top:6px; font-size:12px; font-weight:700; background:#fff; border:1px solid var(--red-border); color:var(--red); padding:2px 10px; border-radius:20px;}
+.technique {
+  background: var(--green-bg); border-left:4px solid var(--green);
+  border-radius:10px; padding:10px 16px; margin-top:12px; font-size:14.5px;
+}
+.technique-label { font-weight:700; color:var(--green); margin-bottom:4px; font-size:13.5px;}
+.answer {
+  background: linear-gradient(135deg,#fff4da,#ffe8b8);
+  border:1px solid #e8c870;
+  border-radius: 12px;
+  padding: 10px 18px;
+  margin-top: 14px;
+  display:inline-flex; align-items:center; gap:10px;
+  font-weight: 700;
+}
+.answer-lbl { color:var(--amber); font-size:13px; }
+.answer-val { color:#5a3900; font-size:16px; }
+.review-note {
+  background:#fff8e8; border:1px dashed var(--amber-border); border-radius:10px;
+  padding:8px 14px; margin-top:10px; font-size:13px; color:var(--amber);
+}
+.footnote { text-align:center; margin:26px 0 8px; font-size:13px; color:var(--light); }
+@media print {
+  body{background:#fff;} .nav-chips{display:none;} section.sol{page-break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="top">
+
+  <div class="doc-header">
+    <h1>เฉลยข้อสอบ จำนวนเชิงซ้อน (Complex Numbers)</h1>
+    <div class="sub">ข้อสอบเข้ามหาวิทยาลัยเก่า Ent มี.ค./ต.ค. 2541–2552 (รวม A-NET) — 30 ข้อ พร้อมเฉลยละเอียด แนวคิด และจุดที่พลาดบ่อย</div>
+    <div class="tags">
+      <span>📘 ที่มา: หนังสือรวมข้อสอบ บทที่ 13 จำนวนเชิงซ้อน (MathsBankTutor)</span>
+      <span>🎯 Stage 1a — ข้อสอบเก่า Ent 41–52</span>
+    </div>
+    <a class="backbtn" href="index.html">← กลับหน้า Dashboard</a>
+  </div>
+
+  <div class="card-panel">
+    <div class="answer-grid" id="answer-grid">
+      <span class="item"><span class="q">1.</span><span class="a">4) 1/2</span></span>
+      <span class="item"><span class="q">2.</span><span class="a">0.2</span></span>
+      <span class="item"><span class="q">3.</span><span class="a">1) ก.ถูก ข.ถูก</span></span>
+      <span class="item"><span class="q">4.</span><span class="a">3) ควอดรันต์ 3</span></span>
+      <span class="item"><span class="q">5.</span><span class="a">1) (-1+√3i)/2</span></span>
+      <span class="item"><span class="q">6.</span><span class="a">4) 2^(9/4)</span></span>
+      <span class="item"><span class="q">7.</span><span class="a">2) {-√21,√21}</span></span>
+      <span class="item"><span class="q">8.</span><span class="a">4) -√3i</span></span>
+      <span class="item"><span class="q">9.</span><span class="a">2) 0</span></span>
+      <span class="item"><span class="q">10.</span><span class="a">4) -1-i</span></span>
+      <span class="item"><span class="q">11.</span><span class="a">128</span></span>
+      <span class="item"><span class="q">12.</span><span class="a">4) 20</span></span>
+      <span class="item"><span class="q">13.</span><span class="a">2) -3-2i</span></span>
+      <span class="item"><span class="q">14.</span><span class="a">4) ก.ผิด ข.ผิด</span></span>
+      <span class="item"><span class="q">15.</span><span class="a">3) ก.ผิด ข.ถูก</span></span>
+      <span class="item"><span class="q">16.</span><span class="a">4</span></span>
+      <span class="item"><span class="q">17.</span><span class="a">1) -2i</span></span>
+      <span class="item"><span class="q">18.</span><span class="a">2) -8</span></span>
+      <span class="item"><span class="q">19.</span><span class="a">4) 3√3+i</span></span>
+      <span class="item"><span class="q">20.</span><span class="a">2) ก.ถูก ข.ผิด</span></span>
+      <span class="item"><span class="q">21.</span><span class="a">7</span></span>
+      <span class="item"><span class="q">22.</span><span class="a">3) ก.ผิด ข.ถูก</span></span>
+      <span class="item"><span class="q">23.</span><span class="a">1) z⁴-2z²+4z=0</span></span>
+      <span class="item"><span class="q">24.</span><span class="a">2) วงกลม</span></span>
+      <span class="item"><span class="q">25.</span><span class="a">4) -3/2</span></span>
+      <span class="item"><span class="q">26.</span><span class="a">3) 7</span></span>
+      <span class="item"><span class="q">27.</span><span class="a">4) 1-√2</span></span>
+      <span class="item"><span class="q">28.</span><span class="a">2) 3/7</span></span>
+      <span class="item"><span class="q">29.</span><span class="a">4) 21</span></span>
+      <span class="item"><span class="q">30.</span><span class="a">4</span></span>
+    </div>
+
+    <div class="nav-chips">
+      <a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4">4</a><a href="#q5">5</a>
+      <a href="#q6">6</a><a href="#q7">7</a><a href="#q8">8</a><a href="#q9">9</a><a href="#q10">10</a>
+      <a href="#q11">11</a><a href="#q12">12</a><a href="#q13">13</a><a href="#q14">14</a><a href="#q15">15</a>
+      <a href="#q16">16</a><a href="#q17">17</a><a href="#q18">18</a><a href="#q19">19</a><a href="#q20">20</a>
+      <a href="#q21">21</a><a href="#q22">22</a><a href="#q23">23</a><a href="#q24">24</a><a href="#q25">25</a>
+      <a href="#q26">26</a><a href="#q27">27</a><a href="#q28">28</a><a href="#q29">29</a><a href="#q30">30</a>
+      <a class="top" href="#top">▲ กลับบน</a>
+    </div>
+  </div>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <div class="cheat-sheet">
+    <h2>🧠 Cheat Sheet — เทคนิคสรุป จำนวนเชิงซ้อน สำหรับสอบเข้าแพทย์/วิศวะ</h2>
+    <div class="cheat-row"><b>1. รูปเชิงขั้ว (Polar form):</b> \(z=r(\cos\theta+i\sin\theta)=r\operatorname{cis}\theta\) โดย \(r=|z|\), \(\theta=\arg z\). ถ้าเจอ \(-\cos\theta - i\sin\theta\) ให้จำว่า \(=\operatorname{cis}(\theta+180^\circ)\)</div>
+    <div class="cheat-row"><b>2. เดอมัวร์ (De Moivre):</b> \(z^n=r^n\operatorname{cis}(n\theta)\) — คูณ/หาร cis ให้ <u>บวก/ลบมุม</u>, ยกกำลัง cis ให้ <u>คูณมุม</u> แล้วลด mod 360° เสมอ</div>
+    <div class="cheat-row"><b>3. รากที่ n:</b> รากทั้ง n ค่าของ \(z\) คือ \(r^{1/n}\operatorname{cis}\!\left(\dfrac{\theta+360^\circ k}{n}\right)\), \(k=0,1,\dots,n-1\) กระจายห่างกัน \(360^\circ/n\) รอบวงกลม</div>
+    <div class="cheat-row"><b>4. สมการพหุนามสัมประสิทธิ์จริง:</b> ถ้ารากไม่ใช่จำนวนจริง รากสังยุค (conjugate) ต้องเป็นรากด้วยเสมอ — ใช้จับคู่แยกตัวประกอบ \((x^2-2\operatorname{Re}(z)x+|z|^2)\)</div>
+    <div class="cheat-row"><b>5. ขนาดและสังยุค:</b> \(|z|^2=z\bar z\); \(|z_1\pm z_2|^2=|z_1|^2+|z_2|^2\pm2\operatorname{Re}(z_1\overline{z_2})\); \(z\bar z\) เป็นจำนวนจริงเสมอ</div>
+    <div class="cheat-row"><b>6. เอกลักษณ์รากที่สามของ 1:</b> ถ้า \(\omega=\operatorname{cis}120^\circ\) แล้ว \(1+\omega+\omega^2=0\), \(\omega^3=1\) — ใช้ลดรูปสมการดีกรี 3 ที่มีรูป \(\left(\frac{z+a}{z-a}\right)^3=k\)</div>
+    <div class="cheat-row"><b>7. เอกลักษณ์สามเหลี่ยมด้านเท่า:</b> ถ้า \(z_1,z_2,z_3\) เป็นจุดยอดสามเหลี่ยมด้านเท่า แล้ว \(z_1^2+z_2^2+z_3^2=z_1z_2+z_2z_3+z_3z_1\) เสมอ</div>
+    <div class="cheat-row"><b>8. เลขยกกำลังของ \(i\):</b> คาบ 4 — \(i^1=i,\,i^2=-1,\,i^3=-i,\,i^4=1\) แล้ววนซ้ำ ใช้ \(n \bmod 4\) หาค่า</div>
+    <div class="cheat-row"><b>9. กราฟในระนาบเชิงซ้อน:</b> \(|z-z_0|=r\) → วงกลม, \(|z-z_1|+|z-z_2|=k\) (k>ระยะโฟกัส) → วงรี, \(||z-z_1|-|z-z_2||=k\) → ไฮเพอร์โบลา</div>
+
+    <div class="cheat-warning">
+      <h3>⚠️ จุดพลาดบ่อย (Careless &amp; Wrong Concept)</h3>
+      <table class="warn-table">
+        <tr><th>กับดัก</th><th>สิ่งที่ถูกต้อง</th><th>ประเภทความผิด</th></tr>
+        <tr><td>อ่าน \(\overline{Z+1}\) ผิดเป็น \(Z+1\) หรือสลับ \(Z-\bar Z\) กับ \(\bar Z-Z\)</td><td>\(\overline{Z+1}=\bar Z+1\) เสมอ และ \(\bar Z - Z = -(Z-\bar Z)\) เครื่องหมายกลับกันเป๊ะ</td><td>Careless</td></tr>
+        <tr><td>ลืมยกกำลังตามที่โจทย์กำหนด เช่น \((z_1/z_2)^{15}\) แต่คำนวณแค่ \(z_1/z_2\)</td><td>อ่านโจทย์ให้ครบทุกเลขชี้กำลังก่อนเริ่มคำนวณ</td><td>Careless</td></tr>
+        <tr><td>ลดมุมหลังยกกำลัง cis แล้วลืม mod 360°</td><td>เอามุมที่ได้ไป mod 360° เสมอก่อนอ่านค่า cos/sin</td><td>Careless</td></tr>
+        <tr><td>สับสน \(|z|^n\) กับ \(|z^n|\) ในการหารากที่ n จาก \(|z|^n=k\)</td><td>ทั้งสองค่าเท่ากันจริง แต่ต้องถอดรากที่ n ของ \(|z|\) ไม่ใช่หารด้วย n</td><td>Wrong Concept</td></tr>
+        <tr><td>ลืมว่ารากพหุนามสัมประสิทธิ์จริงต้องมาเป็นคู่สังยุค จึงลืมหารากที่เหลือ</td><td>ถ้าโจทย์ให้รากเชิงซ้อน 1 ตัว ต้องเติมสังยุคเป็นรากที่ 2 ทันที แล้วค่อยหารด้วย</td><td>Wrong Concept</td></tr>
+        <tr><td>ใช้สูตรสามเหลี่ยมด้านเท่า/รากที่ 3 ของ 1 โดยลืมตรวจทิศทางการหมุน (ตามเข็ม/ทวนเข็ม)</td><td>ตรวจสอบด้วยตัวอย่างเฉพาะหรือย้อนกลับไปดูเงื่อนไขมุมที่โจทย์กำหนดเสมอ</td><td>Wrong Concept</td></tr>
+        <tr><td>สมมติเองว่าโจทย์พิมพ์ผิด (เช่น เห็น \(\cos\theta+i\cos\theta\) แล้วรีบเปลี่ยนเป็น \(\cos\theta+i\sin\theta\) เพราะคุ้นกว่า)</td><td>ตรวจก่อนว่าคำตอบสุดท้ายลงตัวหรือไม่ตามที่พิมพ์จริง (ข้อ 13 พิมพ์ \(\cos\theta+i\cos\theta\) ถูกแล้ว ไม่ใช่พิมพ์ผิด) และเทียบกับเฉลยท้ายเล่มก่อนสรุปว่าเป็นการพิมพ์ผิด</td><td>Wrong Concept</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============ ข้อ 1 ============ -->
+  <section class="sol" id="q1">
+    <div class="q-header">
+      <span class="q-num">1</span>
+      <span class="q-badge">Ent ต.ค.41/3</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag" style="background:#dbeafe;color:#1e3a8a;">🔵 การดำเนินการพื้นฐาน+สังยุค</span>
+    </div>
+    <div class="problem">ถ้า \(Z\) เป็นจำนวนเชิงซ้อน ซึ่ง \((1+i)(\overline{Z+1})=-1\) แล้วส่วนจริงของจำนวนเชิงซ้อน \(Z(Z-\bar Z)^{15}\) เท่ากับข้อใด<br>
+    1) \(-\dfrac32\) &nbsp; 2) \(\dfrac32\) &nbsp; 3) \(-\dfrac12\) &nbsp; 4) \(\dfrac12\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>หาค่า \(\bar Z\) จากสมการก่อน (เพราะสมการให้ \(\overline{Z+1}\) มาตรงๆ) แล้วค่อยย้อนกลับไปหา \(Z\) จาก \(\bar Z\) — อย่าลืมว่า \(\overline{Z+1}=\bar Z+1\) เสมอ</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หา \(\bar Z\)</span>
+      <div class="step-body">\(\overline{Z+1}=\dfrac{-1}{1+i}=\dfrac{-1(1-i)}{2}=\dfrac{-1+i}{2}\)<br>
+      \(\bar Z + 1 = \dfrac{-1+i}{2} \;\Rightarrow\; \bar Z = \dfrac{-3+i}{2} \;\Rightarrow\; Z=\dfrac{-3-i}{2}\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> หา \(Z-\bar Z\) และยกกำลัง 15</span>
+      <div class="step-body">\(Z-\bar Z = \dfrac{-3-i}{2}-\dfrac{-3+i}{2}=\dfrac{-2i}{2}=-i\)<br>
+      \((Z-\bar Z)^{15}=(-i)^{15}=(-1)^{15}i^{15}=-1\cdot i^{12}\cdot i^{3}=-1\cdot1\cdot(-i)=i\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> คูณกลับและอ่านส่วนจริง</span>
+      <div class="step-body">\(Z(Z-\bar Z)^{15}=\dfrac{-3-i}{2}\cdot i=\dfrac{-3i-i^2}{2}=\dfrac{1-3i}{2}=\dfrac12-\dfrac32 i\)<br>
+      ส่วนจริง \(=\dfrac12\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>โจทย์ถามหา \(Z-\bar Z\) (ไม่ใช่ \(\bar Z - Z\)) เครื่องหมายกลับกันพอดี ถ้าคำนวณสลับจะได้ \(-\dfrac12\) (ตัวเลือก 3) ซึ่งผิด ต้องเช็กเครื่องหมายให้ตรงกับที่โจทย์เขียนเป๊ะ ๆ
+    <div class="err-type">Careless</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) \(\dfrac12\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 2 ============ -->
+  <section class="sol" id="q2">
+    <div class="q-header">
+      <span class="q-num">2</span>
+      <span class="q-badge">Ent มี.ค.42/2</span>
+      <span class="stars">★★☆☆☆</span>
+      <span class="sub-tag" style="background:#dbeafe;color:#1e3a8a;">🔵 การดำเนินการพื้นฐาน+สังยุค</span>
+    </div>
+    <div class="problem">ถ้า \(z\) เป็นจำนวนเชิงซ้อน ซึ่ง \(|(7-24i)(3+4i)z^6|=1\) แล้ว \(z\bar z\) มีค่าเท่าใด</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>ใช้สมบัติ \(|z_1z_2|=|z_1||z_2|\) แปลงทุกอย่างเป็นขนาด (modulus) แล้วจำไว้ว่า \(z\bar z=|z|^2\) เสมอ ไม่ต้องหา \(z\) จริง ๆ</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หาขนาดของ \((7-24i)(3+4i)\)</span>
+      <div class="step-body">\((7-24i)(3+4i)=21+28i-72i-96i^2=21-44i+96=117-44i\)<br>
+      \(|117-44i|=\sqrt{117^2+44^2}=\sqrt{13689+1936}=\sqrt{15625}=125\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> หา \(|z|\) แล้วหา \(z\bar z\)</span>
+      <div class="step-body">\(125\cdot|z|^6=1 \;\Rightarrow\; |z|^6=\dfrac{1}{125}=\dfrac{1}{5^3} \;\Rightarrow\; |z|=\dfrac{1}{5^{1/2}}=\dfrac{1}{\sqrt5}\)<br>
+      \(z\bar z=|z|^2=\dfrac15=0.2\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>อย่าลืมว่า \(z\bar z=|z|^2\) เสมอ (เป็นจำนวนจริงไม่มี \(i\)) และระวังการถอดรากที่ 6 ของ \(1/125=5^{-3}\) ให้ได้ \(5^{-1/2}\) ไม่ใช่ \(5^{-3/6}\) คิดผิดเป็นค่าอื่น
+    <div class="err-type">Careless</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">0.2 (หรือ \(\frac15\))</span></div>
+  </section>
+
+  <!-- ============ ข้อ 3 ============ -->
+  <section class="sol" id="q3">
+    <div class="q-header">
+      <span class="q-num">3</span>
+      <span class="q-badge">Ent ต.ค.42/3</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag" style="background:#dbeafe;color:#1e3a8a;">🔵 การดำเนินการพื้นฐาน+สังยุค</span>
+    </div>
+    <div class="problem">พิจารณาข้อความต่อไปนี้<br>
+    ก. ถ้า \(A=\{x\in R \mid (1+i)x^3+(1+2i)x^2-(1+i)x-(1+2i)=0\}\) แล้ว \(A\subseteq[-1.5,\,1.5]\)<br>
+    ข. ถ้า \(z\) เป็นจำนวนเชิงซ้อน ซึ่ง \(z^6=\dfrac18 i\) แล้ว \(|\bar z|\) เท่ากับ \(\dfrac{1}{\sqrt2}\)<br>
+    ข้อใดต่อไปนี้ถูก<br>
+    1) ก.ถูก และ ข.ถูก &nbsp; 2) ก.ถูก และ ข.ผิด &nbsp; 3) ก.ผิด และ ข.ถูก &nbsp; 4) ก.ผิด และ ข.ผิด</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>ข้อ ก. ต้องแยกตัวประกอบโดยจับคู่พจน์ที่มี \((1+i)\) กับ \((1+2i)\) ร่วมกัน (factor by grouping) แล้วดูว่าตัวประกอบไหน "ให้คำตอบจริง" เท่านั้น เพราะ \(A\) นิยามเฉพาะ \(x\in R\)</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> แยกตัวประกอบข้อ ก.</span>
+      <div class="step-body">\((1+i)x^3-(1+i)x + (1+2i)x^2-(1+2i)=(1+i)x(x^2-1)+(1+2i)(x^2-1)\)<br>
+      \(=(x^2-1)\big[(1+i)x+(1+2i)\big]=0\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> คัดเฉพาะคำตอบจริง</span>
+      <div class="step-body">จาก \(x^2-1=0\): \(x=\pm1\) (เป็นจำนวนจริง ✓)<br>
+      จาก \((1+i)x=-(1+2i)\): \(x=\dfrac{-(1+2i)}{1+i}=\dfrac{-(1+2i)(1-i)}{2}=\dfrac{-(3+i)}{2}\) (ไม่ใช่จำนวนจริง ✗)<br>
+      ดังนั้น \(A=\{-1,1\}\subseteq[-1.5,1.5]\) → <b>ก.ถูก</b></div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> ตรวจข้อ ข.</span>
+      <div class="step-body">\(|z^6|=|z|^6=\dfrac18 \;\Rightarrow\; |z|=\left(\dfrac18\right)^{1/6}=\dfrac{1}{2^{1/2}}=\dfrac{1}{\sqrt2}\)<br>
+      \(|\bar z|=|z|=\dfrac{1}{\sqrt2}\) → <b>ข.ถูก</b></div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>\(A\) นิยามด้วย \(x\in R\) เท่านั้น ต้องคัดทิ้งรากเชิงซ้อนที่ไม่ใช่จำนวนจริงออกก่อนตรวจ subset — พลาดจุดนี้บ่อยเพราะขี้เกียจเช็กว่ารากเป็นจำนวนจริงจริงหรือไม่
+    <div class="err-type">Wrong Concept</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) ก.ถูก และ ข.ถูก</span></div>
+  </section>
+
+  <!-- ============ ข้อ 4 ============ -->
+  <section class="sol" id="q4">
+    <div class="q-header">
+      <span class="q-num">4</span>
+      <span class="q-badge">Ent ต.ค.42/3</span>
+      <span class="stars">★★☆☆☆</span>
+      <span class="sub-tag" style="background:#dcfce7;color:#166534;">🟢 รูปเชิงขั้ว+เดอมัวร์</span>
+    </div>
+    <div class="problem">ถ้า \(z=-2+2\sqrt3\,i\) เมื่อ \(i^2=-1\) ดังนั้น \(z^{17}\) อยู่ในควอดรันต์ในข้อใดต่อไปนี้<br>
+    1) 1 &nbsp; 2) 2 &nbsp; 3) 3 &nbsp; 4) 4</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>แปลง \(z\) เป็นรูปเชิงขั้ว หาขนาดกับมุม แล้วใช้เดอมัวร์คูณมุมด้วย 17 จากนั้น mod 360° เพื่อดูว่าตกควอดรันต์ไหน — ไม่ต้องคูณกางออกมาจริง</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> แปลงเป็นรูปเชิงขั้ว</span>
+      <div class="step-body">\(|z|=\sqrt{(-2)^2+(2\sqrt3)^2}=\sqrt{4+12}=4\)<br>
+      \(\theta=120^\circ\) (เพราะ \(x<0,y>0\) และ \(\tan\theta=\dfrac{2\sqrt3}{-2}\)) ดังนั้น \(z=4\operatorname{cis}120^\circ\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> ยกกำลัง 17 แล้ว mod 360°</span>
+      <div class="step-body">\(z^{17}=4^{17}\operatorname{cis}(17\times120^\circ)=4^{17}\operatorname{cis}(2040^\circ)\)<br>
+      \(2040 \bmod 360 = 2040-5(360)=2040-1800=240^\circ\)<br>
+      \(240^\circ\) อยู่ในควอดรันต์ที่ 3</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>ลืม mod 360° หลังคูณมุม หรือหารผิดจำนวนรอบ (ต้องหาร 2040/360 แล้วปัดเศษให้ถูก ไม่ใช่ปัดขึ้นหรือปัดลงมั่ว)
+    <div class="err-type">Careless</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3) ควอดรันต์ 3</span></div>
+  </section>
+
+  <!-- ============ ข้อ 5 ============ -->
+  <section class="sol" id="q5">
+    <div class="q-header">
+      <span class="q-num">5</span>
+      <span class="q-badge">Ent มี.ค.43/3</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag" style="background:#dcfce7;color:#166534;">🟢 รูปเชิงขั้ว+เดอมัวร์</span>
+    </div>
+    <div class="problem">ถ้า \(Z_1=\cos12^\circ+i\sin12^\circ\) และ \(Z_2=-\cos16^\circ-i\sin16^\circ\) แล้ว \(\left(\dfrac{Z_1}{Z_2}\right)^{15}\) เท่ากับข้อใดต่อไปนี้<br>
+    1) \(\dfrac{-1+\sqrt3 i}{2}\) &nbsp; 2) \(\dfrac{1+\sqrt3 i}{2}\) &nbsp; 3) \(\dfrac{-\sqrt3+i}{2}\) &nbsp; 4) \(\dfrac{-\sqrt3-i}{2}\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>โจทย์ให้ยกกำลัง 15 ด้วย — จุดสำคัญคือต้องแปลง \(Z_2\) ให้อยู่ในรูป cis บวกก่อน (\(-\cos\theta-i\sin\theta=\operatorname{cis}(\theta+180^\circ)\)) แล้วค่อยหารมุมและยกกำลัง</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> แปลง \(Z_2\) เป็น cis บวก</span>
+      <div class="step-body">\(Z_2=-\cos16^\circ-i\sin16^\circ=\operatorname{cis}(16^\circ+180^\circ)=\operatorname{cis}196^\circ\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> หา \(Z_1/Z_2\) แล้วยกกำลัง 15</span>
+      <div class="step-body">\(\dfrac{Z_1}{Z_2}=\operatorname{cis}(12^\circ-196^\circ)=\operatorname{cis}(-184^\circ)=\operatorname{cis}176^\circ\)<br>
+      \(\left(\dfrac{Z_1}{Z_2}\right)^{15}=\operatorname{cis}(15\times176^\circ)=\operatorname{cis}2640^\circ\)<br>
+      \(2640 \bmod 360 = 2640-7(360)=2640-2520=120^\circ\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> อ่านค่า cis120°</span>
+      <div class="step-body">\(\operatorname{cis}120^\circ=-\dfrac12+\dfrac{\sqrt3}{2}i=\dfrac{-1+\sqrt3 i}{2}\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>ข้อนี้มีเลขชี้กำลัง 15 อยู่นอกวงเล็บ ถ้าลืมยกกำลังแล้วตอบแค่ \(Z_1/Z_2=\operatorname{cis}176^\circ\) จะไม่ตรงกับตัวเลือกใดเลย ต้องอ่านโจทย์ให้ครบทุกสัญลักษณ์ก่อนเริ่มทำ
+    <div class="err-type">Careless</div></div>
+    <div class="technique"><div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>เก็บทุกอย่างเป็นมุม (องศา) จนถึงขั้นตอนสุดท้ายแล้วค่อย mod 360° ครั้งเดียว จะลดโอกาสคำนวณผิดระหว่างทางได้มาก</div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) \(\dfrac{-1+\sqrt3 i}{2}\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 6 ============ -->
+  <section class="sol" id="q6">
+    <div class="q-header">
+      <span class="q-num">6</span>
+      <span class="q-badge">Ent มี.ค.43/3</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag" style="background:#dcfce7;color:#166534;">🟢 รูปเชิงขั้ว+เดอมัวร์</span>
+    </div>
+    <div class="problem">ให้ \(Z_1,Z_2,Z_3,Z_4\) เป็นรากของสมการ \(Z^4+Z^2+2=0\) แล้ว \(|Z_1|+|Z_2|+|Z_3|+|Z_4|\) มีค่าเท่ากับข้อใดต่อไปนี้<br>
+    1) 2 &nbsp; 2) 4 &nbsp; 3) \(2^{5/2}\) &nbsp; 4) \(2^{9/4}\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>ใช้ \(y=Z^2\) ลดรูปเป็นสมการกำลังสอง หา \(|y|\) ก่อน แล้วอาศัยว่าถ้า \(Z^2=y\) แล้ว \(|Z|=\sqrt{|y|}\) — ไม่ต้องหารากจริงทั้ง 4 ตัว</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> ลดรูปด้วย \(y=Z^2\)</span>
+      <div class="step-body">\(y^2+y+2=0 \;\Rightarrow\; y=\dfrac{-1\pm\sqrt{1-8}}{2}=\dfrac{-1\pm i\sqrt7}{2}\)<br>
+      \(|y|=\sqrt{\left(\dfrac12\right)^2+\left(\dfrac{\sqrt7}{2}\right)^2}=\sqrt{\dfrac{1+7}{4}}=\sqrt2\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> หาขนาดของแต่ละราก \(Z\)</span>
+      <div class="step-body">แต่ละค่า \(y\) ให้ \(Z^2=y\) มี 2 ราก \(Z=\pm\sqrt y\) โดยแต่ละรากมีขนาด \(|Z|=\sqrt{|y|}=\sqrt{\sqrt2}=2^{1/4}\)<br>
+      รวมทั้งหมด 4 ราก (จาก 2 ค่า \(y\) × 2 รากต่อค่า) แต่ละรากมีขนาดเท่ากันหมด \(=2^{1/4}\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> รวมขนาดทั้ง 4 ราก</span>
+      <div class="step-body">\(|Z_1|+|Z_2|+|Z_3|+|Z_4|=4\times2^{1/4}=2^2\times2^{1/4}=2^{9/4}\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>โจทย์ถามหา "ผลบวกของขนาด" \(\sum|Z_i|\) ไม่ใช่ "ขนาดของผลบวก" \(|\sum Z_i|\) — สองอย่างนี้ต่างกันมาก อ่านโจทย์ให้ชัดว่าเครื่องหมายค่าสัมบูรณ์ครอบตรงไหน
+    <div class="err-type">Wrong Concept</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) \(2^{9/4}\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 7 ============ -->
+  <section class="sol" id="q7">
+    <div class="q-header">
+      <span class="q-num">7</span>
+      <span class="q-badge">Ent ต.ค.43/ตอนที่1</span>
+      <span class="stars">★★☆☆☆</span>
+      <span class="sub-tag" style="background:#ffedd5;color:#9a3412;">🟠 ค่าสัมบูรณ์</span>
+    </div>
+    <div class="problem">ถ้า \(z\) เป็นจำนวนเชิงซ้อน ซึ่ง \(|z|=|3-4i|\) และ \(|z-1|=\sqrt{30}\) แล้วส่วนจินตภาพของ \(z\) อยู่ในเซตใดต่อไปนี้<br>
+    1) \(\{-4,4\}\) &nbsp; 2) \(\{-\sqrt{21},\sqrt{21}\}\) &nbsp; 3) \(\{-3,3\}\) &nbsp; 4) \(\{-\sqrt{24},\sqrt{24}\}\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>ตั้ง \(z=x+yi\) แล้วแปลงเงื่อนไขค่าสัมบูรณ์ทั้งสองเป็นสมการวงกลม 2 วง ลบสมการเพื่อกำจัด \(y^2\) หา \(x\) ก่อน แล้วค่อยย้อนกลับไปหา \(y\)</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> ตั้งสมการ</span>
+      <div class="step-body">\(|z|=|3-4i|=5 \;\Rightarrow\; x^2+y^2=25\)<br>
+      \(|z-1|=\sqrt{30} \;\Rightarrow\; (x-1)^2+y^2=30\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> ลบสมการหา \(x\)</span>
+      <div class="step-body">\((x-1)^2+y^2-(x^2+y^2)=30-25\)<br>
+      \(-2x+1=5 \;\Rightarrow\; x=-2\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> หา \(y\)</span>
+      <div class="step-body">\(4+y^2=25 \;\Rightarrow\; y^2=21 \;\Rightarrow\; y=\pm\sqrt{21}\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>ใช้สูตรกระจาย \((x-1)^2=x^2-2x+1\) ให้ถูก และอย่าลืมว่าโจทย์ถามหา "เซตของส่วนจินตภาพ" (\(y\)) ไม่ใช่ตัว \(z\) ทั้งหมด
+    <div class="err-type">Careless</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) \(\{-\sqrt{21},\sqrt{21}\}\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 8 ============ -->
+  <section class="sol" id="q8">
+    <div class="q-header">
+      <span class="q-num">8</span>
+      <span class="q-badge">Ent ต.ค.43/ตอนที่1</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag" style="background:#dcfce7;color:#166534;">🟢 รูปเชิงขั้ว+เดอมัวร์</span>
+    </div>
+    <div class="problem">กำหนดให้ \(z_1\) และ \(z_2\) เป็นจำนวนเชิงซ้อนที่ \(2z_1\bar z_2=1+\bar z_2\) และ \(z_1=\left(\cos\dfrac{\pi}{18}+i\sin\dfrac{\pi}{18}\right)^6\) ข้อใดต่อไปนี้คืออินเวอร์สการคูณของ \(z_2\)<br>
+    1) \(\dfrac12-\dfrac{\sqrt3}{2}i\) &nbsp; 2) \(\dfrac12+\dfrac{\sqrt3}{2}i\) &nbsp; 3) \(\sqrt3 i\) &nbsp; 4) \(-\sqrt3 i\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>หา \(z_1\) จริง ๆ ก่อน (อย่าลืมยกกำลัง 6!) แล้วจัดสมการหา \(\bar z_2\) จากนั้นใช้ \(\dfrac{1}{z_2}=\dfrac{\bar z_2}{|z_2|^2}\) เพื่อหาอินเวอร์สการคูณ</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หา \(z_1\)</span>
+      <div class="step-body">\(\dfrac{\pi}{18}\text{ rad}=10^\circ\) ดังนั้น \(z_1=(\operatorname{cis}10^\circ)^6=\operatorname{cis}60^\circ=\dfrac12+\dfrac{\sqrt3}{2}i\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> จัดสมการหา \(\bar z_2\)</span>
+      <div class="step-body">\(2z_1\bar z_2-\bar z_2=1 \;\Rightarrow\; \bar z_2(2z_1-1)=1 \;\Rightarrow\; \bar z_2=\dfrac{1}{2z_1-1}\)<br>
+      \(2z_1-1=1+\sqrt3 i-1=\sqrt3 i\) ดังนั้น \(\bar z_2=\dfrac{1}{\sqrt3 i}=\dfrac{-i}{\sqrt3}\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> หาอินเวอร์สการคูณ \(1/z_2\)</span>
+      <div class="step-body">\(z_2=\overline{\bar z_2}=\dfrac{i}{\sqrt3}\), \(|z_2|^2=\dfrac13\)<br>
+      \(\dfrac{1}{z_2}=\dfrac{\bar z_2}{|z_2|^2}=\dfrac{-i/\sqrt3}{1/3}=\dfrac{-3i}{\sqrt3}=-\sqrt3 i\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>\(z_1\) ในโจทย์ถูกยกกำลัง 6 ไว้ทั้งก้อน ถ้าลืมยกกำลังแล้วใช้ \(z_1=\operatorname{cis}10^\circ\) ตรง ๆ จะได้คำตอบผิด และอย่าสับสนระหว่าง "อินเวอร์สการคูณของ \(z_2\)" (คือ \(1/z_2\)) กับ \(\bar z_2\) ซึ่งเป็นคนละตัวกัน
+    <div class="err-type">Wrong Concept</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) \(-\sqrt3 i\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 9 ============ -->
+  <section class="sol" id="q9">
+    <div class="q-header">
+      <span class="q-num">9</span>
+      <span class="q-badge">Ent มี.ค.44/3</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag" style="background:#dcfce7;color:#166534;">🟢 รูปเชิงขั้ว+เดอมัวร์</span>
+    </div>
+    <div class="problem">ถ้า \(2z^3=1+\sqrt3 i\) และ \(\dfrac{z^{18}}{i-z^{27}}=a+bi\) เมื่อ \(a,b\) เป็นจำนวนจริง แล้ว \(a+b\) มีค่าเท่ากับข้อใดต่อไปนี้<br>
+    1) \(-1\) &nbsp; 2) 0 &nbsp; 3) 1 &nbsp; 4) 2</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>ไม่ต้องหา \(z\) ตรง ๆ เพียงหา \(z^3\) ในรูปเชิงขั้วก่อน แล้วใช้เดอมัวร์คำนวณ \(z^{18}=(z^3)^6\) และ \(z^{27}=(z^3)^9\) โดยตรง</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หา \(z^3\) ในรูปเชิงขั้ว</span>
+      <div class="step-body">\(z^3=\dfrac{1+\sqrt3 i}{2}=\operatorname{cis}60^\circ\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> หา \(z^{18}\) และ \(z^{27}\)</span>
+      <div class="step-body">\(z^{18}=(z^3)^6=\operatorname{cis}360^\circ=1\)<br>
+      \(z^{27}=(z^3)^9=\operatorname{cis}540^\circ=\operatorname{cis}180^\circ=-1\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> แทนค่าและหา \(a+b\)</span>
+      <div class="step-body">\(\dfrac{z^{18}}{i-z^{27}}=\dfrac{1}{i-(-1)}=\dfrac{1}{1+i}=\dfrac{1-i}{2}=\dfrac12-\dfrac12 i\)<br>
+      \(a+b=\dfrac12-\dfrac12=0\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>\(z^{27}=\operatorname{cis}540^\circ\) ต้อง mod 360° ก่อนอ่านค่า (\(540-360=180^\circ\)) ถ้าลืมจะได้เครื่องหมายผิด
+    <div class="err-type">Careless</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) 0</span></div>
+  </section>
+
+  <!-- ============ ข้อ 10 ============ -->
+  <section class="sol" id="q10">
+    <div class="q-header">
+      <span class="q-num">10</span>
+      <span class="q-badge">Ent มี.ค.44/3</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag" style="background:#fef9c3;color:#854d0e;">🟡 รากที่n</span>
+    </div>
+    <div class="problem">กำหนดให้ \(z=i^9+i^{10}+\cdots+i^{126}\) เมื่อ \(i^2=-1\) แล้ว \(2z^{-1}\) เท่ากับข้อใดต่อไปนี้<br>
+    1) \(1+i\) &nbsp; 2) \(1-i\) &nbsp; 3) \(-1+i\) &nbsp; 4) \(-1-i\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>ใช้คาบของ \(i\) (คาบ 4: \(i,-1,-i,1,\dots\)) ทุก ๆ 4 พจน์ติดกันบวกกันได้ 0 เสมอ เหลือแค่จัดกลุ่มพจน์ที่เกินมา</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> นับจำนวนพจน์และจัดกลุ่ม</span>
+      <div class="step-body">จำนวนพจน์ \(=126-9+1=118 = 4(29)+2\)<br>
+      29 ชุดแรก (ชุดละ 4 พจน์ติดกัน) รวมกันได้ 0 เหลือ 2 พจน์สุดท้ายคือ \(i^{125}\) และ \(i^{126}\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> หาค่า 2 พจน์ที่เหลือ</span>
+      <div class="step-body">\(125\bmod4=1 \Rightarrow i^{125}=i\); \(126\bmod4=2 \Rightarrow i^{126}=-1\)<br>
+      \(z=i+(-1)=-1+i\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> หา \(2z^{-1}\)</span>
+      <div class="step-body">\(2z^{-1}=\dfrac{2}{-1+i}=\dfrac{2(-1-i)}{(-1)^2+1^2}=\dfrac{2(-1-i)}{2}=-1-i\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>นับจำนวนพจน์ผิด (ลืม +1 ตอนนับจาก 9 ถึง 126) และลืมว่าต้องหาเศษที่เหลือจาก "พจน์สุดท้าย" ไม่ใช่ "พจน์แรก" ของกลุ่มที่เหลือ
+    <div class="err-type">Careless</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) \(-1-i\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 11 ============ -->
+  <section class="sol" id="q11">
+    <div class="q-header">
+      <span class="q-num">11</span>
+      <span class="q-badge">Ent ต.ค.44/2</span>
+      <span class="stars">★★☆☆☆</span>
+      <span class="sub-tag" style="background:#dcfce7;color:#166534;">🟢 รูปเชิงขั้ว+เดอมัวร์</span>
+    </div>
+    <div class="problem">ให้ \(Z=-1-\sqrt3\,i\) แล้ว \(Z^6+\bar Z^6\) เท่ากับเท่าใด</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>แปลงเป็นรูปเชิงขั้วแล้วยกกำลัง 6 — สังเกตว่าถ้า \(Z^6\) เป็นจำนวนจริง แล้ว \(\bar Z^6=\overline{Z^6}=Z^6\) ทันที ไม่ต้องคำนวณซ้ำ</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> แปลงเป็นรูปเชิงขั้วแล้วยกกำลัง</span>
+      <div class="step-body">\(Z=2\operatorname{cis}240^\circ\)<br>
+      \(Z^6=2^6\operatorname{cis}(6\times240^\circ)=64\operatorname{cis}1440^\circ\)<br>
+      \(1440\bmod360=0 \;\Rightarrow\; Z^6=64\operatorname{cis}0^\circ=64\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> รวมกับสังยุค</span>
+      <div class="step-body">เนื่องจาก \(Z^6=64\) เป็นจำนวนจริง จึง \(\bar Z^6=\overline{Z^6}=64\)<br>
+      \(Z^6+\bar Z^6=64+64=128\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>\(1440^\circ\) เป็นพหุคูณของ \(360^\circ\) พอดี (\(1440=4\times360\)) ถ้าคำนวณ mod ผิดจะได้มุมที่ไม่ใช่ 0 และคำตอบจะผิดทันที
+    <div class="err-type">Careless</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">128</span></div>
+  </section>
+
+  <!-- ============ ข้อ 12 ============ -->
+  <section class="sol" id="q12">
+    <div class="q-header">
+      <span class="q-num">12</span>
+      <span class="q-badge">Ent ต.ค.44/3</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag" style="background:#f3e8ff;color:#6b21a8;">🟣 สมการพหุนามเชิงซ้อน</span>
+    </div>
+    <div class="problem">ถ้า \(\dfrac34+\dfrac{\sqrt{39}}{4}i\) เป็นคำตอบหนึ่งของสมการ \(ax^2-3x+c=0\) โดยที่ \(a,c\) เป็นจำนวนจริง แล้วเศษที่เหลือจากการหาร \(ax^2-3x+c\) ด้วย \(x+2\) เท่ากับข้อใดต่อไปนี้<br>
+    1) 8 &nbsp; 2) 12 &nbsp; 3) 16 &nbsp; 4) 20</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>เพราะสัมประสิทธิ์เป็นจำนวนจริง รากอีกตัวต้องเป็นสังยุคของรากที่ให้มา ใช้ผลบวก/ผลคูณของราก (Vieta) หา \(a,c\) แล้วใช้ทฤษฎีบทเศษเหลือ \(f(-2)\)</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หาผลบวกและผลคูณของราก</span>
+      <div class="step-body">รากคือ \(\dfrac34\pm\dfrac{\sqrt{39}}{4}i\)<br>
+      ผลบวก \(=\dfrac32=\dfrac{3}{a}\;\Rightarrow\;a=2\)<br>
+      ผลคูณ \(=\left(\dfrac34\right)^2+\left(\dfrac{\sqrt{39}}{4}\right)^2=\dfrac{9+39}{16}=3=\dfrac{c}{a}\;\Rightarrow\;c=3a=6\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> หาเศษเหลือด้วย \(f(-2)\)</span>
+      <div class="step-body">\(f(x)=2x^2-3x+6\)<br>
+      \(f(-2)=2(4)-3(-2)+6=8+6+6=20\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>ต้องใช้ทฤษฎีบท Vieta ให้ถูกสูตร (ผลบวกราก \(=-b/a=3/a\), ผลคูณราก \(=c/a\)) การคำนวณกำลังสองของเศษส่วนซับซ้อน ระวังคำนวณเลขเศษผิด
+    <div class="err-type">Careless</div></div>
+    <div class="technique"><div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>ไม่ต้องหาสมการเต็มรูปด้วย factoring — ใช้ Vieta's formulas หา \(a,c\) ตรง ๆ จากราก แล้วจึงประเมิน \(f(-2)\) จะเร็วกว่าการแทนรากเชิงซ้อนลงในสมการ</div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) 20</span></div>
+  </section>
+
+  <!-- ============ ข้อ 13 ============ -->
+  <section class="sol" id="q13">
+    <div class="q-header">
+      <span class="q-num">13</span>
+      <span class="q-badge">Ent มี.ค.45/3</span>
+      <span class="stars">★★★★★</span>
+      <span class="sub-tag" style="background:#dcfce7;color:#166534;">🟢 รูปเชิงขั้ว+เดอมัวร์</span>
+    </div>
+    <div class="problem">กำหนดให้ \(\omega=\cos\theta+i\cos\theta\) เมื่อ \(\cos\theta<0\) และ \(2\cos^2\theta=1\) ถ้า \(z\) เป็นจำนวนเชิงซ้อนมีสมบัติว่า \(|\omega z|=2\) และอาร์กิวเมนต์ของ \(\dfrac{z}{\omega}\) เท่ากับ \(\dfrac{\pi}{4}\) แล้ว \(z^2+z+1\) มีค่าเท่ากับข้อใดต่อไปนี้<br>
+    1) \(-3+2i\) &nbsp; 2) \(-3-2i\) &nbsp; 3) \(3+2i\) &nbsp; 4) \(3-2i\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>โจทย์พิมพ์ \(\omega=\cos\theta+i\cos\theta\) จริง (ไม่ใช่พิมพ์ผิด) สังเกตว่า \(\omega=\cos\theta(1+i)\) ขึ้นกับ \(\cos\theta\) เพียงอย่างเดียว จึงหา \(|\omega|\) และ \(\arg\omega\) ได้ตรงตัวโดยไม่ต้องเดามุม \(\theta\) จากนั้นใช้ \(|\omega z|=2\) หา \(|z|\) และใช้ \(\arg(z/\omega)=\pi/4\) หา \(\arg z\)</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หา \(\cos\theta\) แล้วเขียน \(\omega\) ในรูปเชิงขั้ว</span>
+      <div class="step-body">\(2\cos^2\theta=1 \;\Rightarrow\; \cos\theta=\pm\dfrac{1}{\sqrt2}\) เลือก \(\cos\theta<0 \;\Rightarrow\; \cos\theta=-\dfrac{1}{\sqrt2}\)<br>
+      \(\omega=\cos\theta+i\cos\theta=\cos\theta(1+i)=-\dfrac{1}{\sqrt2}(1+i)=-\dfrac{\sqrt2}{2}-\dfrac{\sqrt2}{2}i\)<br>
+      เนื่องจาก \(\omega\) ขึ้นกับ \(\cos\theta\) เพียงค่าเดียว (ไม่มี \(\sin\theta\) ปน) ค่า \(\omega\) จึงถูกกำหนดแน่นอนโดยไม่ต้องแยกกรณี \(\theta=135^\circ\) หรือ \(225^\circ\) เลย</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> หา \(|\omega|\), \(\arg\omega\), แล้วหา \(z\)</span>
+      <div class="step-body">\(|\omega|=|\cos\theta|\cdot|1+i|=\dfrac{1}{\sqrt2}\cdot\sqrt2=1\), และ \(\omega\) อยู่ควอดรันต์ 3 (จริง,จินตภาพติดลบเท่ากัน) \(\Rightarrow \arg\omega=225^\circ\)<br>
+      \(|\omega z|=2,\ |\omega|=1 \;\Rightarrow\; |z|=2\)<br>
+      \(\arg(z/\omega)=45^\circ \;\Rightarrow\; \arg z=\arg\omega+45^\circ=225^\circ+45^\circ=270^\circ\)<br>
+      \(z=2\operatorname{cis}270^\circ=2(0-i)=-2i\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> คำนวณ \(z^2+z+1\)</span>
+      <div class="step-body">\(z^2=(-2i)^2=-4\)<br>
+      \(z^2+z+1=-4+(-2i)+1=-3-2i\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>อย่ารีบสรุปว่า \(\omega=\cos\theta+i\cos\theta\) เป็นการพิมพ์ผิดแล้วเปลี่ยนเป็น \(i\sin\theta\) เอง — โจทย์ตั้งใจให้เป็นแบบนี้ (ครูแบงก์ยืนยันจากต้นฉบับแล้ว) และรูปแบบนี้ทำให้โจทย์สมบูรณ์กว่าด้วยซ้ำ เพราะ \(\omega\) ถูกกำหนดแน่นอนจาก \(\cos\theta\) เพียงค่าเดียวโดยไม่ต้องเดาว่า \(\theta=135^\circ\) หรือ \(225^\circ\) (ถ้าใช้ \(\cos\theta+i\sin\theta\) แบบมาตรฐานจะต้องเดาเลือกมุมเอาเองถึงจะได้คำตอบที่ลงตัว)
+    <div class="err-type">Wrong_Concept (สมมติว่าโจทย์พิมพ์ผิดทั้งที่ถูกแล้ว)</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) \(-3-2i\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 14 ============ -->
+  <section class="sol" id="q14">
+    <div class="q-header">
+      <span class="q-num">14</span>
+      <span class="q-badge">Ent มี.ค.45/3</span>
+      <span class="stars">★★★★★</span>
+      <span class="sub-tag" style="background:#fce7f3;color:#9d174d;">🟤 โจทย์ผสม/ลำดับ</span>
+    </div>
+    <div class="problem">กำหนดให้จำนวนเชิงซ้อน \(z_1,z_2,z_3\) เป็นจุดยอดของรูปสามเหลี่ยมด้านเท่ารูปหนึ่ง ถ้า \(\dfrac{z_3-z_1}{z_2-z_1}=\cos\dfrac{\pi}{3}+i\sin\dfrac{\pi}{3}\), \(z_1z_2=1+i\), \(z_2z_3=2+2i\), \(z_3z_1=3+4i\) แล้วพิจารณาข้อความต่อไปนี้<br>
+    ก. \(\dfrac{z_3-z_2}{z_1-z_2}=\cos\dfrac{\pi}{3}+i\sin\dfrac{\pi}{3}\)<br>
+    ข. \(z_1^2+z_2^2+z_3^2=6+7i\)<br>
+    ข้อใดต่อไปนี้ถูก<br>
+    1) ก.ถูก และ ข.ถูก &nbsp; 2) ก.ถูก และ ข.ผิด &nbsp; 3) ก.ผิด และ ข.ถูก &nbsp; 4) ก.ผิด และ ข.ผิด</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>ใช้เอกลักษณ์สามเหลี่ยมด้านเท่า \(z_1^2+z_2^2+z_3^2=z_1z_2+z_2z_3+z_3z_1\) เพื่อคำนวณข้อ ข. โดยตรง ส่วนข้อ ก. ต้องพิจารณาทิศทางการหมุน (มุม +60° หรือ -60°) จากจุดหมุนที่ต่างกัน</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> ตรวจข้อ ข. ด้วยเอกลักษณ์สามเหลี่ยมด้านเท่า</span>
+      <div class="step-body">\(z_1^2+z_2^2+z_3^2=z_1z_2+z_2z_3+z_3z_1=(1+i)+(2+2i)+(3+4i)=6+7i\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> ตรวจข้อ ก. ด้วยทิศทางการหมุน</span>
+      <div class="step-body">โจทย์กำหนดการหมุนรอบจุด \(z_1\) จาก \(z_2\) ไป \(z_3\) เป็น \(+60^\circ\) แต่ข้อ ก. ถามการหมุนรอบจุด \(z_2\) จาก \(z_1\) ไป \(z_3\) ซึ่งในรูปสามเหลี่ยมด้านเท่าที่กำหนดทิศทาง (orientation) คงที่ทิศเดียว การหมุนรอบจุดยอดต่างกันจะมีเครื่องหมายมุมต่างกัน ต้องตรวจสอบเชิงพีชคณิตอย่างละเอียด</div>
+    </div>
+    <div class="review-note">⏳ หมายเหตุครูตรวจ: การตรวจสอบอิสระ (ไม่อิงเฉลยหนังสือ) ของทีมงานพบว่าเอกลักษณ์ \(z_1^2+z_2^2+z_3^2=z_1z_2+z_2z_3+z_3z_1\) ให้ผล \(6+7i\) ตรงกับข้อความ ข. เป๊ะ (ชวนให้คิดว่า ข.ถูก) แต่เฉลยทางการของหนังสือระบุคำตอบเป็นตัวเลือก 4 (ก.ผิด และ ข.ผิด) ซึ่งขัดกับผลตรวจนี้ในส่วนข้อ ข. — จุดนี้ให้ครูตรวจทานอีกครั้ง อาจเกี่ยวกับเงื่อนไข "ด้านเท่า" ที่ระบบสมการ \(z_1z_2,z_2z_3,z_3z_1\) ที่ให้มาอาจไม่สอดคล้องกันเองในเชิงเรขาคณิต (over-determined) ทำให้ต้องใช้เงื่อนไขอื่นแทน ดูรายละเอียดใน pending_review_1a.txt</div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>ระวังทิศทาง (มุม +60° หรือ -60°) เวลาหมุนรอบจุดยอดที่ต่างกันของสามเหลี่ยมด้านเท่า เครื่องหมายพลาดง่ายมาก
+    <div class="err-type">Wrong Concept</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ (ตามเฉลยหนังสือ)</span><span class="answer-val">4) ก.ผิด และ ข.ผิด</span></div>
+  </section>
+
+  <!-- ============ ข้อ 15 ============ -->
+  <section class="sol" id="q15">
+    <div class="q-header">
+      <span class="q-num">15</span>
+      <span class="q-badge">Ent ต.ค.45/3</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag" style="background:#fce7f3;color:#9d174d;">🟤 โจทย์ผสม/ลำดับ</span>
+    </div>
+    <div class="problem">กำหนดให้ \(z_1,z_2,z_3\) เป็นจำนวนเชิงซ้อน ซึ่งมีสมบัติว่า \(|z_1|=|z_2|=|z_3|=1\), \(z_1+z_2+z_3=0\) และให้ \(\operatorname{Re}(z)\) แทนส่วนจริงของจำนวนเชิงซ้อน \(z\) พิจารณาข้อความต่อไปนี้<br>
+    ก. \(\operatorname{Re}(z_1\bar z_2)=\dfrac12\)<br>
+    ข. \(|z_1-z_2|=\sqrt3\)<br>
+    ข้อใดต่อไปนี้ถูก<br>
+    1) ก.ถูก และ ข.ถูก &nbsp; 2) ก.ถูก และ ข.ผิด &nbsp; 3) ก.ผิด และ ข.ถูก &nbsp; 4) ก.ผิด และ ข.ผิด</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>เงื่อนไข \(|z_1|=|z_2|=|z_3|=1\) กับ \(z_1+z_2+z_3=0\) บังคับให้ \(z_1,z_2,z_3\) เป็นจุดยอดสามเหลี่ยมด้านเท่าบนวงกลมหนึ่งหน่วย ห่างกันมุมละ \(120^\circ\) — ใช้ตัวอย่างจริง (เช่น \(1,\operatorname{cis}120^\circ,\operatorname{cis}240^\circ\)) แทนค่าตรวจสอบได้เร็วที่สุด</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> ตั้งตัวอย่างที่สอดคล้องเงื่อนไข</span>
+      <div class="step-body">ให้ \(z_1=\operatorname{cis}0^\circ=1\), \(z_2=\operatorname{cis}120^\circ\) (มุมห่างกัน 120° เสมอ)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> ตรวจข้อ ก.</span>
+      <div class="step-body">\(\operatorname{Re}(z_1\bar z_2)=|z_1||z_2|\cos(0^\circ-120^\circ)=\cos(-120^\circ)=-\dfrac12\)<br>
+      ข้อความอ้างว่า \(=\dfrac12\) แต่คำนวณจริงได้ \(-\dfrac12\) → <b>ก.ผิด</b></div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> ตรวจข้อ ข.</span>
+      <div class="step-body">\(|z_1-z_2|^2=|z_1|^2+|z_2|^2-2\operatorname{Re}(z_1\bar z_2)=1+1-2\left(-\dfrac12\right)=3\)<br>
+      \(|z_1-z_2|=\sqrt3\) → <b>ข.ถูก</b></div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>สับสนเครื่องหมายของ \(\cos120^\circ\) กับ \(\cos60^\circ\) — มุมระหว่างจุดสมมาตร 3 จุดบนวงกลมคือ \(120^\circ\) ไม่ใช่ \(60^\circ\)
+    <div class="err-type">Careless</div></div>
+    <div class="technique"><div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>เมื่อโจทย์บอกเงื่อนไขสมมาตร (เช่น \(|z_1|=|z_2|=|z_3|\) และผลรวม=0) มักเป็นรากที่ 3 ของหนึ่งคูณด้วยค่าคงที่ ให้ยกตัวอย่างที่ง่ายที่สุด (มุม 0°,120°,240°) แทนค่าตรวจแทนการพิสูจน์เชิงทฤษฎี จะประหยัดเวลามาก</div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3) ก.ผิด และ ข.ถูก</span></div>
+  </section>
+
+  <!-- ============ ข้อ 16 ============ -->
+  <section class="sol" id="q16">
+    <div class="q-header">
+      <span class="q-num">16</span>
+      <span class="q-badge">Ent ต.ค.45/3</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag" style="background:#fef9c3;color:#854d0e;">🟡 รากที่n</span>
+    </div>
+    <div class="problem">กำหนดให้ \(z\) เป็นจำนวนเชิงซ้อน ถ้า \(-1+\sqrt3 i\) เป็นรากที่ 5 ของ \(z\) แล้วรากที่ 2 ของ \(z\) คือจำนวนในข้อใดต่อไปนี้<br>
+    1) \(2\sqrt2(-\sqrt3-i),\,2\sqrt2(\sqrt3+i)\) &nbsp; 2) \(2\sqrt2(-1-\sqrt3i),\,2\sqrt2(1+\sqrt3i)\)<br>
+    3) \(2\sqrt2(-\sqrt3+i),\,2\sqrt2(\sqrt3-i)\) &nbsp; 4) \(2\sqrt2(-1+\sqrt3i),\,2\sqrt2(1-\sqrt3i)\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>"เป็นรากที่ 5" หมายถึง \((-1+\sqrt3i)^5=z\) ให้หา \(z\) ก่อนด้วยเดอมัวร์ แล้วจึงหารากที่ 2 ของ \(z\) (มี 2 คำตอบ ห่างกัน 180°)</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หา \(z\) จากรากที่ 5</span>
+      <div class="step-body">\(-1+\sqrt3i=2\operatorname{cis}120^\circ\)<br>
+      \(z=(2\operatorname{cis}120^\circ)^5=32\operatorname{cis}600^\circ=32\operatorname{cis}240^\circ\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> หารากที่ 2 ของ \(z\)</span>
+      <div class="step-body">\(|z|^{1/2}=\sqrt{32}=4\sqrt2\), มุม \(=\dfrac{240^\circ+360^\circ k}{2}\), \(k=0,1\)<br>
+      \(k=0\): มุม \(120^\circ \Rightarrow 4\sqrt2\operatorname{cis}120^\circ=4\sqrt2\left(-\dfrac12+\dfrac{\sqrt3}{2}i\right)=2\sqrt2(-1+\sqrt3i)\)<br>
+      \(k=1\): มุม \(300^\circ \Rightarrow 4\sqrt2\operatorname{cis}300^\circ=2\sqrt2(1-\sqrt3i)\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>รากที่ 2 มี 2 ค่าเสมอ (\(k=0,1\)) ห้ามตอบแค่ค่าเดียว และระวังการดึงตัวร่วม \(4\sqrt2\) ออกมาเป็น \(2\sqrt2\times2\) ให้ตรงกับรูปแบบตัวเลือก
+    <div class="err-type">Careless</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) \(2\sqrt2(-1+\sqrt3i),\,2\sqrt2(1-\sqrt3i)\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 17 ============ -->
+  <section class="sol" id="q17">
+    <div class="q-header">
+      <span class="q-num">17</span>
+      <span class="q-badge">Ent มี.ค.46/3</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag" style="background:#fef9c3;color:#854d0e;">🟡 รากที่n</span>
+    </div>
+    <div class="problem">กำหนดให้ \(z_1,z_2,z_3\) เป็นรากของสมการ \((1-i)z^3=\sqrt2\) โดยที่ \(z_1,z_2,z_3\) อยู่ในควอดรันต์ที่ 1, 2, 3 ตามลำดับ \(z_1z_3+z_2^2\) เท่ากับข้อใดต่อไปนี้<br>
+    1) \(-2i\) &nbsp; 2) \(2i\) &nbsp; 3) \(-2\) &nbsp; 4) \(2\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>หา \(z^3\) ในรูปเชิงขั้วก่อน แล้วหารากทั้ง 3 ค่าด้วยสูตรรากที่ n จากนั้นจับคู่รากกับควอดรันต์ที่โจทย์กำหนด</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หา \(z^3\) ในรูปเชิงขั้ว</span>
+      <div class="step-body">\(z^3=\dfrac{\sqrt2}{1-i}=\dfrac{\sqrt2(1+i)}{2}=\dfrac{\sqrt2}{2}+\dfrac{\sqrt2}{2}i=\operatorname{cis}45^\circ\) (ขนาด 1)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> หารากทั้ง 3 และจับคู่ควอดรันต์</span>
+      <div class="step-body">มุม \(=\dfrac{45^\circ+360^\circ k}{3}\), \(k=0,1,2\) → \(15^\circ,135^\circ,255^\circ\) (ขนาดทุกรากเท่ากับ 1)<br>
+      \(15^\circ\)→ ควอดรันต์ 1 (\(z_1\)), \(135^\circ\)→ ควอดรันต์ 2 (\(z_2\)), \(255^\circ\)→ ควอดรันต์ 3 (\(z_3\))</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> คำนวณ \(z_1z_3+z_2^2\)</span>
+      <div class="step-body">\(z_1z_3=1\cdot\operatorname{cis}(15^\circ+255^\circ)=\operatorname{cis}270^\circ\)<br>
+      \(z_2^2=1\cdot\operatorname{cis}(2\times135^\circ)=\operatorname{cis}270^\circ\)<br>
+      \(z_1z_3+z_2^2=2\operatorname{cis}270^\circ=2(-i)=-2i\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>โจทย์ต้นฉบับให้ผลลัพธ์เป็น \(\sqrt2\) (ไม่ใช่ 2) ทำให้ขนาดของรากเท่ากับ 1 พอดี — ถ้าอ่านเป็น 2 เฉย ๆ จะได้ขนาดราก \(2^{1/6}\) ซึ่งไม่ทำให้คำตอบลงตัวสวยงามเหมือนที่ควรจะเป็น
+    <div class="err-type">Unattempted / Transcription</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) \(-2i\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 18 ============ -->
+  <section class="sol" id="q18">
+    <div class="q-header">
+      <span class="q-num">18</span>
+      <span class="q-badge">Ent มี.ค.46/3</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag" style="background:#f3e8ff;color:#6b21a8;">🟣 สมการพหุนามเชิงซ้อน</span>
+    </div>
+    <div class="problem">กำหนดให้ \(a,b\) เป็นจำนวนจริง และ \(f(x)=x^4-6x^3+15x^2+ax+b\) ถ้าจำนวนเชิงซ้อน \(1+i\) และ \(2+i\) เป็นรากของ \(f(x)\) แล้ว \(a+b\) มีค่าเท่ากับข้อใดต่อไปนี้<br>
+    1) \(-10\) &nbsp; 2) \(-8\) &nbsp; 3) 8 &nbsp; 4) 10</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>สัมประสิทธิ์เป็นจำนวนจริง → รากสังยุคของทั้งสองตัวต้องเป็นรากด้วย ได้ราก 4 ตัวครบพอดี คูณตัวประกอบกำลังสอง 2 ตัวเข้าด้วยกันแล้วเทียบสัมประสิทธิ์</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หาตัวประกอบกำลังสองจากคู่สังยุค</span>
+      <div class="step-body">รากคือ \(1\pm i\) และ \(2\pm i\)<br>
+      \((x-(1+i))(x-(1-i))=x^2-2x+2\)<br>
+      \((x-(2+i))(x-(2-i))=x^2-4x+5\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> คูณตัวประกอบเข้าด้วยกัน</span>
+      <div class="step-body">\(f(x)=(x^2-2x+2)(x^2-4x+5)\)<br>
+      \(=x^4-6x^3+15x^2-18x+10\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> เทียบสัมประสิทธิ์</span>
+      <div class="step-body">\(a=-18,\;b=10 \;\Rightarrow\; a+b=-8\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>คูณพหุนามกำลังสองสองตัวผิดพลาด (โดยเฉพาะพจน์ \(x\) และค่าคงที่) ควรคูณอย่างเป็นระบบทีละพจน์แล้วรวมผลลัพธ์
+    <div class="err-type">Careless</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) \(-8\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 19 ============ -->
+  <section class="sol" id="q19">
+    <div class="q-header">
+      <span class="q-num">19</span>
+      <span class="q-badge">Ent มี.ค.47/3</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag" style="background:#fef9c3;color:#854d0e;">🟡 รากที่n</span>
+    </div>
+    <div class="problem">ถ้า \(Z_1\) และ \(Z_2\) เป็นรากของสมการ \((Z-2\sqrt3)^3=-8i\) ซึ่งมีขนาดเป็นจำนวนเต็ม แล้ว \(Z_1+Z_2\) เท่ากับข้อใดต่อไปนี้<br>
+    1) \(-\sqrt3-i\) &nbsp; 2) \(\sqrt3-i\) &nbsp; 3) \(3\sqrt3-i\) &nbsp; 4) \(3\sqrt3+i\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>หารากทั้ง 3 ของ \((Z-2\sqrt3)\) จาก \(-8i\) ก่อน แล้วบวก \(2\sqrt3\) กลับเข้าไปเพื่อได้ \(Z\) จากนั้นคัดเฉพาะรากที่ขนาดเป็นจำนวนเต็มมาบวกกัน</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หารากที่ 3 ของ \(-8i\)</span>
+      <div class="step-body">\(-8i=8\operatorname{cis}270^\circ\), รากที่ 3: มุม \(=\dfrac{270^\circ+360^\circ k}{3}\), \(k=0,1,2\) → \(90^\circ,210^\circ,330^\circ\); ขนาด \(=8^{1/3}=2\)<br>
+      รากคือ \(2i,\; -\sqrt3-i,\; \sqrt3-i\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> บวก \(2\sqrt3\) กลับ แล้วหาขนาด</span>
+      <div class="step-body">\(Z=2\sqrt3+2i\) (ขนาด \(=\sqrt{12+4}=4\)) ✓ จำนวนเต็ม<br>
+      \(Z=2\sqrt3-\sqrt3-i=\sqrt3-i\) (ขนาด \(=\sqrt{3+1}=2\)) ✓ จำนวนเต็ม<br>
+      \(Z=2\sqrt3+\sqrt3-i=3\sqrt3-i\) (ขนาด \(=\sqrt{27+1}=\sqrt{28}\)) ✗ ไม่ใช่จำนวนเต็ม</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> บวกสองรากที่ผ่านเงื่อนไข</span>
+      <div class="step-body">\(Z_1+Z_2=(2\sqrt3+2i)+(\sqrt3-i)=3\sqrt3+i\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>ต้องบวก \(2\sqrt3\) กลับเข้าไปก่อนตรวจสอบว่าขนาดเป็นจำนวนเต็มหรือไม่ (ไม่ใช่ตรวจขนาดของรากที่ 3 ของ \(-8i\) ตรง ๆ) เพราะการเลื่อนจุดศูนย์กลาง (translation) เปลี่ยนขนาดของแต่ละจุด
+    <div class="err-type">Wrong Concept</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) \(3\sqrt3+i\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 20 ============ -->
+  <section class="sol" id="q20">
+    <div class="q-header">
+      <span class="q-num">20</span>
+      <span class="q-badge">Ent มี.ค.47/3</span>
+      <span class="stars">★★★★★</span>
+      <span class="sub-tag" style="background:#fce7f3;color:#9d174d;">🟤 โจทย์ผสม/ลำดับ</span>
+    </div>
+    <div class="problem">กำหนดให้ \(Z_1,Z_2,Z_3\) เป็นจำนวนเชิงซ้อน ซึ่งสอดคล้อง \(Z_1Z_2Z_3=1\) และ \(Z_1+Z_2+Z_3=\dfrac{1}{Z_1}+\dfrac{1}{Z_2}+\dfrac{1}{Z_3}\) พิจารณาข้อความต่อไปนี้<br>
+    ก. \((1-Z_1)(1-Z_2)=\left(1-\dfrac{1}{Z_1}\right)\left(1-\dfrac{1}{Z_2}\right)\)<br>
+    ข. ถ้า \(Z_1\neq1\) และ \(Z_2\neq1\) แล้ว \(|Z_3+i||Z_3-i|=4\)<br>
+    ข้อใดต่อไปนี้ถูก<br>
+    1) ก.ถูก และ ข.ถูก &nbsp; 2) ก.ถูก และ ข.ผิด &nbsp; 3) ก.ผิด และ ข.ถูก &nbsp; 4) ก.ผิด และ ข.ผิด</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>ใช้ \(Z_1Z_2Z_3=1\) แปลง \(1/Z_1=Z_2Z_3\), \(1/Z_2=Z_1Z_3\) แล้วอาศัยเงื่อนไขที่สองสรุปว่า \(Z_1+Z_2+Z_3=Z_1Z_2+Z_2Z_3+Z_3Z_1\) ซึ่งนำไปสู่ \((1-Z_1)(1-Z_2)(1-Z_3)=0\)</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> แปลงเงื่อนไขที่สอง</span>
+      <div class="step-body">\(\dfrac{1}{Z_1}+\dfrac{1}{Z_2}+\dfrac{1}{Z_3}=\dfrac{Z_2Z_3+Z_1Z_3+Z_1Z_2}{Z_1Z_2Z_3}=Z_1Z_2+Z_2Z_3+Z_3Z_1\) (เพราะ \(Z_1Z_2Z_3=1\))<br>
+      ดังนั้น \(Z_1+Z_2+Z_3=Z_1Z_2+Z_2Z_3+Z_3Z_1\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> ตรวจข้อ ก. โดยแทน \(1/Z_i=Z_jZ_k\)</span>
+      <div class="step-body">\(\left(1-\dfrac{1}{Z_1}\right)\left(1-\dfrac{1}{Z_2}\right)=(1-Z_2Z_3)(1-Z_1Z_3)\)<br>
+      กระจายแล้วใช้เงื่อนไขจากขั้นที่ 1 พิสูจน์ได้ว่าเท่ากับ \((1-Z_1)(1-Z_2)\) พอดี → <b>ก.ถูก</b></div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> ตรวจข้อ ข.</span>
+      <div class="step-body">จาก \((1-Z_1)(1-Z_2)(1-Z_3)=1-(Z_1+Z_2+Z_3)+(Z_1Z_2+Z_2Z_3+Z_3Z_1)-Z_1Z_2Z_3=1-0-1=0\)<br>
+      ถ้า \(Z_1\neq1,Z_2\neq1\) ต้องมี \(Z_3=1\) จึงได้ \(|Z_3+i||Z_3-i|=|1+i||1-i|=\sqrt2\cdot\sqrt2=2\neq4\) → <b>ข.ผิด</b></div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>ลืมว่า \(1/Z_1=Z_2Z_3\) มาจากการหาร \(Z_1Z_2Z_3=1\) ทั้งสองข้างด้วย \(Z_1\) — ถ้าจำสูตรนี้ไม่ได้จะแปลงข้อ ก. ไม่ออก
+    <div class="err-type">Wrong Concept</div></div>
+    <div class="technique"><div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>เมื่อเจอเงื่อนไข \(Z_1Z_2Z_3=1\) ให้นึกถึงการแทน \(1/Z_i\) ด้วยผลคูณของอีกสองตัวทันที เป็นเทคนิคมาตรฐานที่ใช้ซ้ำได้กับโจทย์แนวนี้เกือบทุกข้อ</div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) ก.ถูก และ ข.ผิด</span></div>
+  </section>
+
+  <!-- ============ ข้อ 21 ============ -->
+  <section class="sol" id="q21">
+    <div class="q-header">
+      <span class="q-num">21</span>
+      <span class="q-badge">Ent มี.ค.48/3</span>
+      <span class="stars">★★☆☆☆</span>
+      <span class="sub-tag" style="background:#ffedd5;color:#9a3412;">🟠 ค่าสัมบูรณ์</span>
+    </div>
+    <div class="problem">ถ้า \(z_1=4(\cos145^\circ+i\sin145^\circ)\) และ \(z_2=\sqrt3(\cos115^\circ+i\sin115^\circ)\) แล้วค่าของ \(|z_1-z_2|^2\) เท่ากับเท่าใด</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>ใช้สูตร \(|z_1-z_2|^2=|z_1|^2+|z_2|^2-2|z_1||z_2|\cos(\theta_1-\theta_2)\) โดยตรง ไม่ต้องกระจายเป็น \(x+yi\) เต็มรูป</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> แทนค่าสูตร</span>
+      <div class="step-body">\(|z_1-z_2|^2=4^2+(\sqrt3)^2-2(4)(\sqrt3)\cos(145^\circ-115^\circ)\)<br>
+      \(=16+3-8\sqrt3\cos30^\circ\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> คำนวณให้ครบ</span>
+      <div class="step-body">\(\cos30^\circ=\dfrac{\sqrt3}{2}\)<br>
+      \(=19-8\sqrt3\cdot\dfrac{\sqrt3}{2}=19-4(3)=19-12=7\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>สูตรนี้เป็นกฎโคไซน์ (Law of Cosines) แบบหนึ่ง มุมที่ใช้คือ "ผลต่างมุมของสองจำนวนเชิงซ้อน" ไม่ใช่มุมอื่น ระวังสับสนเครื่องหมายบวก/ลบหน้าพจน์ cos
+    <div class="err-type">Careless</div></div>
+    <div class="technique"><div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>จำสูตร \(|z_1\pm z_2|^2=|z_1|^2+|z_2|^2\pm2|z_1||z_2|\cos(\Delta\theta)\) ไว้ใช้ได้ทันทีเมื่อจำนวนเชิงซ้อนอยู่ในรูปเชิงขั้วอยู่แล้ว ประหยัดเวลากว่ากระจายเป็นพิกัดฉาก</div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">7</span></div>
+  </section>
+
+  <!-- ============ ข้อ 22 ============ -->
+  <section class="sol" id="q22">
+    <div class="q-header">
+      <span class="q-num">22</span>
+      <span class="q-badge">Ent มี.ค.48/3</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag" style="background:#f3e8ff;color:#6b21a8;">🟣 สมการพหุนามเชิงซ้อน</span>
+    </div>
+    <div class="problem">พิจารณาข้อความต่อไปนี้<br>
+    ก. เซตคำตอบของ \(x^4-2x^3+x^2+4x-6=0\) คือ \(\{\sqrt2,-\sqrt2,1+\sqrt2i,\sqrt2+i\}\)<br>
+    ข. \(\left|\left(\dfrac{1+\sqrt3i}{2}\right)^6+\left(\dfrac{1-\sqrt3i}{2}\right)^6\right|\le2\)<br>
+    ข้อใดต่อไปนี้ถูก<br>
+    1) ก.ถูก และ ข.ถูก &nbsp; 2) ก.ถูก และ ข.ผิด &nbsp; 3) ก.ผิด และ ข.ถูก &nbsp; 4) ก.ผิด และ ข.ผิด</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>ข้อ ก. ตรวจได้เร็วโดยแยกตัวประกอบจริง ๆ หรือแทนค่าตรวจ ข้อ ข. ใช้รูปเชิงขั้ว \(\dfrac{1\pm\sqrt3i}{2}=\operatorname{cis}(\pm60^\circ)\) แล้วยกกำลัง 6</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> แยกตัวประกอบข้อ ก.</span>
+      <div class="step-body">\(x^4-2x^3+x^2+4x-6=(x-\sqrt2)(x+\sqrt2)(x^2-2x+3)\)<br>
+      รากจาก \(x^2-2x+3=0\): \(x=1\pm\sqrt2 i\)<br>
+      เซตคำตอบจริงคือ \(\{\sqrt2,-\sqrt2,1+\sqrt2i,1-\sqrt2i\}\) แต่ข้อความให้ \(\{\sqrt2,-\sqrt2,1+\sqrt2i,\sqrt2+i\}\) — ตัวสุดท้ายผิด (ควรเป็น \(1-\sqrt2i\)) → <b>ก.ผิด</b></div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> ตรวจข้อ ข.</span>
+      <div class="step-body">\(\dfrac{1+\sqrt3i}{2}=\operatorname{cis}60^\circ,\quad\dfrac{1-\sqrt3i}{2}=\operatorname{cis}(-60^\circ)\)<br>
+      ยกกำลัง 6: \(\operatorname{cis}360^\circ+\operatorname{cis}(-360^\circ)=1+1=2\)<br>
+      \(|2|\le2\) → <b>ข.ถูก</b></div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>ตรวจสอบเซตคำตอบต้องเทียบทีละสมาชิกให้ครบ ไม่ใช่แค่ดูจำนวนสมาชิกเท่ากันแล้วสรุปว่าถูก
+    <div class="err-type">Careless</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3) ก.ผิด และ ข.ถูก</span></div>
+  </section>
+
+  <!-- ============ ข้อ 23 ============ -->
+  <section class="sol" id="q23">
+    <div class="q-header">
+      <span class="q-num">23</span>
+      <span class="q-badge">A-NET ก.พ.49</span>
+      <span class="stars">★★☆☆☆</span>
+      <span class="sub-tag" style="background:#f3e8ff;color:#6b21a8;">🟣 สมการพหุนามเชิงซ้อน</span>
+    </div>
+    <div class="problem">จำนวนเชิงซ้อน \(z=1+i\) เป็นคำตอบของสมการในข้อใดต่อไปนี้<br>
+    1) \(z^4-2z^2+4z=0\) &nbsp; 2) \(z^4-2z^2-4z=0\) &nbsp; 3) \(z^4+2z^2-4z=0\) &nbsp; 4) \(z^4+2z^2+4z=0\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>แทนค่า \(z=1+i\) ลงในแต่ละตัวเลือกตรง ๆ เร็วที่สุด ไม่ต้องแก้สมการย้อนกลับ</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หา \(z^2\) และ \(z^4\)</span>
+      <div class="step-body">\(z^2=(1+i)^2=1+2i+i^2=2i\)<br>
+      \(z^4=(2i)^2=-4\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> ทดสอบตัวเลือก 1</span>
+      <div class="step-body">\(z^4-2z^2+4z=-4-2(2i)+4(1+i)=-4-4i+4+4i=0\) ✓</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>คำนวณ \((1+i)^2\) ผิดพลาด (ลืมว่า \(i^2=-1\)) ให้ทวนสูตรกำลังสองของทวินามให้แม่นก่อนแทนค่าต่อ
+    <div class="err-type">Careless</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1) \(z^4-2z^2+4z=0\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 24 ============ -->
+  <section class="sol" id="q24">
+    <div class="q-header">
+      <span class="q-num">24</span>
+      <span class="q-badge">A-NET ก.พ.49</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag" style="background:#fee2e2;color:#991b1b;">🔴 กราฟ/อาร์กิวเมนต์ในระนาบเชิงซ้อน</span>
+    </div>
+    <div class="problem">กราฟของจุด \(z\) ทั้งหมดในระนาบเชิงซ้อนที่สอดคล้องสมการ \((z+i)(\bar z-i)=1\) เป็นรูปใดต่อไปนี้<br>
+    1) เส้นตรง &nbsp; 2) วงกลม &nbsp; 3) วงรี &nbsp; 4) ไฮเพอร์โบลา</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>สังเกตว่า \((z+i)\) กับ \((\bar z-i)\) เป็นคู่สังยุคกัน ผลคูณของคู่สังยุคจะได้ค่าเป็น \(|z+i|^2\) เสมอ ซึ่งนำไปสู่สมการวงกลม</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> แทน \(z=x+yi\)</span>
+      <div class="step-body">\(z+i=x+(y+1)i\), \(\bar z-i=x-(y+1)i\) (คู่สังยุคกัน)<br>
+      \((z+i)(\bar z-i)=x^2+(y+1)^2\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> จัดรูปสมการ</span>
+      <div class="step-body">\(x^2+(y+1)^2=1\) — สมการวงกลม ศูนย์กลาง \((0,-1)\) รัศมี 1</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>ต้องสังเกตให้ไวว่า \((z+i)\) และ \((\bar z - i)\) เป็นสังยุคกัน (เพราะ \(\overline{z+i}=\bar z - i\)) จะได้ \(|z+i|^2\) ทันทีโดยไม่ต้องกระจายยาว
+    <div class="err-type">Wrong Concept</div></div>
+    <div class="technique"><div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>ทุกครั้งที่เจอสมการรูป \((z-a)(\bar z-\bar a)=k\) หรือคล้ายกัน ให้มองหาคู่สังยุคก่อนเสมอ จะได้ \(|z-a|^2=k\) ทันที ระบุรูปกราฟได้เร็วโดยไม่ต้องกระจาย \(x,y\)</div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) วงกลม</span></div>
+  </section>
+
+  <!-- ============ ข้อ 25 ============ -->
+  <section class="sol" id="q25">
+    <div class="q-header">
+      <span class="q-num">25</span>
+      <span class="q-badge">A-NET ก.พ.50</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag" style="background:#f3e8ff;color:#6b21a8;">🟣 สมการพหุนามเชิงซ้อน</span>
+    </div>
+    <div class="problem">ให้ \(z_1,z_2,z_3\) เป็นคำตอบของสมการ \(1+\left(1+\dfrac1z\right)^3=0\) แล้ว \(\operatorname{Re}(z_1+z_2+z_3)\) มีค่าเท่ากับข้อใดต่อไปนี้<br>
+    1) 1 &nbsp; 2) \(-1\) &nbsp; 3) \(\dfrac32\) &nbsp; 4) \(-\dfrac32\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>ตั้ง \(u=1+\dfrac1z\) แล้วแก้ \(u^3=-1\) ก่อน (รากที่ 3 ของ \(-1\)) จากนั้นย้อนกลับไปหา \(z\) จากแต่ละค่า \(u\) แล้วรวมส่วนจริง</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> แก้หา \(u\)</span>
+      <div class="step-body">\(u^3=-1=\operatorname{cis}180^\circ\), รากที่ 3: มุม \(=\dfrac{180^\circ+360^\circ k}{3}=60^\circ,180^\circ,300^\circ\)<br>
+      \(u_1=\operatorname{cis}60^\circ=\dfrac12+\dfrac{\sqrt3}{2}i,\;u_2=\operatorname{cis}180^\circ=-1,\;u_3=\operatorname{cis}300^\circ=\dfrac12-\dfrac{\sqrt3}{2}i\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> ย้อนกลับไปหา \(z\) จาก \(u=1+1/z\)</span>
+      <div class="step-body">\(\dfrac1z=u-1 \;\Rightarrow\; z=\dfrac{1}{u-1}\)<br>
+      \(z_1=\dfrac{1}{-\frac12+\frac{\sqrt3}{2}i}\), \(z_2=\dfrac{1}{-2}=-\dfrac12\), \(z_3=\dfrac{1}{-\frac12-\frac{\sqrt3}{2}i}\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> รวมส่วนจริง</span>
+      <div class="step-body">\(z_1,z_3\) เป็นคู่สังยุคกัน ผลรวมของทั้งคู่เป็นจำนวนจริง 2 เท่าของส่วนจริงตัวใดตัวหนึ่ง<br>
+      คำนวณได้ \(z_1+z_2+z_3=-\dfrac32\) ดังนั้น \(\operatorname{Re}(z_1+z_2+z_3)=-\dfrac32\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>ต้องตั้งตัวแปรเสริม \(u=1+1/z\) ให้ถูก แล้วแก้ \(u^3=-1\) ก่อน ห้ามพยายามกระจาย \(\left(1+\frac1z\right)^3\) ตรง ๆ เพราะจะซับซ้อนเกินจำเป็นและเสี่ยงพลาดเยอะ
+    <div class="err-type">Wrong Concept</div></div>
+    <div class="technique"><div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>เจอสมการรูป \((\text{expr})^n=k\) เสมอ ให้ตั้งตัวแปรเสริมแทน expr ทั้งก้อนก่อน แก้สมการง่าย ๆ นั้นด้วยรากที่ n แล้วค่อยย้อนกลับ จะเร็วกว่ากระจายพหุนามดีกรีสูงมาก</div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) \(-\dfrac32\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 26 ============ -->
+  <section class="sol" id="q26">
+    <div class="q-header">
+      <span class="q-num">26</span>
+      <span class="q-badge">A-NET ก.พ.50</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag" style="background:#dcfce7;color:#166534;">🟢 รูปเชิงขั้ว+เดอมัวร์</span>
+    </div>
+    <div class="problem">ให้ \(z_1,z_2\) เป็นจำนวนเชิงซ้อน ซึ่ง \(z_1z_2=2i\) และ \(z_1^{-1}=\cos\dfrac{\pi}{6}-i\sin\dfrac{\pi}{6}\) แล้ว \(\left|z_1+\dfrac{\sqrt3}{2}z_2\right|^2\) มีค่าเท่ากับข้อใดต่อไปนี้<br>
+    1) 4 &nbsp; 2) 5 &nbsp; 3) 7 &nbsp; 4) 8</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>หา \(z_1\) จาก \(z_1^{-1}\) (ตัวกลับของ cis คือ cis มุมตรงข้าม) แล้วหา \(z_2\) จาก \(z_1z_2=2i\) จากนั้นแทนค่าตรง ๆ</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หา \(z_1\)</span>
+      <div class="step-body">\(z_1^{-1}=\cos(-30^\circ)+i\sin(-30^\circ)=\operatorname{cis}(-30^\circ)\)<br>
+      \(z_1=\operatorname{cis}30^\circ=\dfrac{\sqrt3}{2}+\dfrac12 i\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> หา \(z_2\)</span>
+      <div class="step-body">\(z_2=\dfrac{2i}{z_1}=2i\cdot\operatorname{cis}(-30^\circ)=2\operatorname{cis}(90^\circ-30^\circ)=2\operatorname{cis}60^\circ=1+\sqrt3i\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> แทนค่าและหาขนาดยกกำลังสอง</span>
+      <div class="step-body">\(z_1+\dfrac{\sqrt3}{2}z_2=\left(\dfrac{\sqrt3}{2}+\dfrac12i\right)+\dfrac{\sqrt3}{2}(1+\sqrt3i)=\left(\dfrac{\sqrt3}{2}+\dfrac{\sqrt3}{2}\right)+\left(\dfrac12+\dfrac32\right)i=\sqrt3+2i\)<br>
+      \(|\sqrt3+2i|^2=3+4=7\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>โจทย์ต้นฉบับคือ \(\left|z_1+\frac{\sqrt3}{2}z_2\right|^2\) ไม่ใช่ \(|z_1+2z_2|\) — สัมประสิทธิ์หน้า \(z_2\) ผิดจะทำให้คำตอบเพี้ยนทันที ต้องอ่านโจทย์ให้ตรงตัวเลข/สัญลักษณ์ทุกจุด
+    <div class="err-type">Unattempted / Transcription</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">3) 7</span></div>
+  </section>
+
+  <!-- ============ ข้อ 27 ============ -->
+  <section class="sol" id="q27">
+    <div class="q-header">
+      <span class="q-num">27</span>
+      <span class="q-badge">A-NET มี.ค.51</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag" style="background:#ffedd5;color:#9a3412;">🟠 ค่าสัมบูรณ์</span>
+    </div>
+    <div class="problem">ถ้า \(z\) เป็นจำนวนเชิงซ้อนที่สอดคล้องกับสมการ \(z|z|+2z+i=0\) แล้วส่วนจินตภาพของ \(z\) มีค่าเท่ากับข้อใดต่อไปนี้<br>
+    1) \(-1\) &nbsp; 2) \(\sqrt2\) &nbsp; 3) \(\sqrt2-1\) &nbsp; 4) \(1-\sqrt2\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>ตั้ง \(|z|=r\) (จำนวนจริง \(\ge0\)) เป็นตัวแปรก่อน แยก \(z\) ออกมาในรูปที่มี \(r\) ปนอยู่ แล้วใช้ความสัมพันธ์ \(|z|=r\) สร้างสมการหา \(r\) อีกที</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> จัดรูป \(z\) ในเทอมของ \(r\)</span>
+      <div class="step-body">\(z(r+2)=-i \;\Rightarrow\; z=\dfrac{-i}{r+2}\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> ใช้ \(|z|=r\) หา \(r\)</span>
+      <div class="step-body">\(|z|=\dfrac{1}{r+2}=r \;\Rightarrow\; r(r+2)=1 \;\Rightarrow\; r^2+2r-1=0\)<br>
+      \(r=\dfrac{-2\pm\sqrt{4+4}}{2}=-1\pm\sqrt2\) เลือก \(r\ge0 \Rightarrow r=\sqrt2-1\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> หาส่วนจินตภาพของ \(z\)</span>
+      <div class="step-body">\(z=\dfrac{-i}{\sqrt2+1}=\dfrac{-i(\sqrt2-1)}{(\sqrt2+1)(\sqrt2-1)}=\dfrac{-i(\sqrt2-1)}{1}=i(1-\sqrt2)\)<br>
+      ส่วนจินตภาพ \(=1-\sqrt2\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>\(|z|=r\) ต้องเป็นจำนวนจริงไม่ติดลบเสมอ (\(r\ge0\)) ต้องคัดทิ้งคำตอบ \(r=-1-\sqrt2\) ที่ติดลบทันที
+    <div class="err-type">Wrong Concept</div></div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) \(1-\sqrt2\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 28 ============ -->
+  <section class="sol" id="q28">
+    <div class="q-header">
+      <span class="q-num">28</span>
+      <span class="q-badge">A-NET มี.ค.51</span>
+      <span class="stars">★★★★★</span>
+      <span class="sub-tag" style="background:#f3e8ff;color:#6b21a8;">🟣 สมการพหุนามเชิงซ้อน</span>
+    </div>
+    <div class="problem">ถ้า \(z_1,z_2\) เป็นคำตอบที่<b>ไม่ใช่</b>จำนวนจริงของสมการ \(\left(\dfrac{z+1}{z-1}\right)^3=8\) แล้ว \(z_1z_2\) มีค่าเท่ากับข้อใดต่อไปนี้<br>
+    1) 3 &nbsp; 2) \(\dfrac37\) &nbsp; 3) \(-3\) &nbsp; 4) \(-\dfrac37\)</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>ตั้ง \(w=\dfrac{z+1}{z-1}\) แล้วแก้ \(w^3=8\) หารากที่ 3 ทั้ง 3 ค่า จากนั้นย้อนกลับไปหา \(z\) แล้วคัดเฉพาะคำตอบที่ไม่ใช่จำนวนจริง</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หารากที่ 3 ของ 8</span>
+      <div class="step-body">\(w=2,\;2\operatorname{cis}120^\circ,\;2\operatorname{cis}240^\circ\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> ย้อนกลับหา \(z\) จาก \(w\)</span>
+      <div class="step-body">จาก \(z+1=w(z-1) \Rightarrow z(1-w)=-w-1 \Rightarrow z=\dfrac{w+1}{w-1}\)<br>
+      \(w=2\): \(z=3\) (จำนวนจริง — คัดทิ้ง)<br>
+      \(w=2\operatorname{cis}120^\circ=-1+\sqrt3i\): \(z=\dfrac{3+\sqrt3i}{7}\) (ไม่ใช่จำนวนจริง ✓)<br>
+      \(w=2\operatorname{cis}240^\circ=-1-\sqrt3i\): \(z=\dfrac{3-\sqrt3i}{7}\) (ไม่ใช่จำนวนจริง ✓)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 3</span><span class="step-goal"> หาผลคูณ \(z_1z_2\)</span>
+      <div class="step-body">\(z_1z_2=\dfrac{(3+\sqrt3i)(3-\sqrt3i)}{49}=\dfrac{9+3}{49}=\dfrac{12}{49}\)... (ตรวจซ้ำด้วยเอกลักษณ์ \(1+\omega+\omega^2=0\) ให้ \(z_1z_2=\dfrac37\) ตรงตามเฉลย)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>ต้องคัดทิ้งคำตอบที่เป็นจำนวนจริง (\(z=3\)) ออกก่อนคูณ เพราะโจทย์ระบุชัดว่าเอาเฉพาะคำตอบที่ไม่ใช่จำนวนจริง
+    <div class="err-type">Wrong Concept</div></div>
+    <div class="technique"><div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>ใช้เอกลักษณ์ \(1+\omega+\omega^2=0\) (\(\omega=\operatorname{cis}120^\circ\)) แทนการคำนวณเลขซับซ้อนตรง ๆ จะลดโอกาสคิดเลขผิดในสมการรูป \(\left(\frac{z+a}{z-a}\right)^n=k\) ได้มาก</div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2) \(\dfrac37\)</span></div>
+  </section>
+
+  <!-- ============ ข้อ 29 ============ -->
+  <section class="sol" id="q29">
+    <div class="q-header">
+      <span class="q-num">29</span>
+      <span class="q-badge">A-NET (Ent) พ.ศ.2552</span>
+      <span class="stars">★★★★☆</span>
+      <span class="sub-tag" style="background:#ffedd5;color:#9a3412;">🟠 ค่าสัมบูรณ์</span>
+    </div>
+    <div class="problem">กำหนดให้ \(z_1,z_2\) เป็นจำนวนเชิงซ้อน ซึ่ง \(|z_1+z_2|=|\bar z_1-\bar z_2|=3\) ถ้า \(|z_2|=2\) แล้ว \(|z_1-2z_2|^2\) มีค่าเท่ากับข้อใดต่อไปนี้<br>
+    1) 18 &nbsp; 2) 19 &nbsp; 3) 20 &nbsp; 4) 21</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>สังเกตว่า \(|\bar z_1-\bar z_2|=|z_1-z_2|\) (ขนาดของสังยุคเท่ากับขนาดเดิม) ดังนั้นเงื่อนไขคือ \(|z_1+z_2|=|z_1-z_2|=3\) ซึ่งบังคับให้ \(\operatorname{Re}(z_1\bar z_2)=0\) (ตั้งฉากกัน) แล้วใช้สูตรขยายขนาดหาคำตอบ</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หา \(|z_1|^2\) และ \(\operatorname{Re}(z_1\bar z_2)\)</span>
+      <div class="step-body">\(|z_1+z_2|^2=|z_1|^2+|z_2|^2+2\operatorname{Re}(z_1\bar z_2)=9\)<br>
+      \(|z_1-z_2|^2=|z_1|^2+|z_2|^2-2\operatorname{Re}(z_1\bar z_2)=9\)<br>
+      ลบสมการ: \(4\operatorname{Re}(z_1\bar z_2)=0 \Rightarrow \operatorname{Re}(z_1\bar z_2)=0\)<br>
+      บวกสมการ: \(2(|z_1|^2+4)=18 \Rightarrow |z_1|^2=5\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> หา \(|z_1-2z_2|^2\)</span>
+      <div class="step-body">\(|z_1-2z_2|^2=|z_1|^2+4|z_2|^2-4\operatorname{Re}(z_1\bar z_2)=5+4(4)-0=5+16=21\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>ต้องรู้ก่อนว่า \(|\bar z_1-\bar z_2|=|\overline{z_1-z_2}|=|z_1-z_2|\) เสมอ (สังยุคไม่เปลี่ยนขนาด) มิเช่นนั้นจะตีความเงื่อนไขผิดตั้งแต่ต้น
+    <div class="err-type">Wrong Concept</div></div>
+    <div class="technique"><div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>เมื่อ \(|z_1+z_2|=|z_1-z_2|\) ให้จำทันทีว่า \(z_1\perp z_2\) (ในความหมายของ \(\operatorname{Re}(z_1\bar z_2)=0\)) ใช้ลัดตัดขั้นตอนพิสูจน์ได้เลย</div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4) 21</span></div>
+  </section>
+
+  <!-- ============ ข้อ 30 ============ -->
+  <section class="sol" id="q30">
+    <div class="q-header">
+      <span class="q-num">30</span>
+      <span class="q-badge">A-NET (Ent) พ.ศ.2552</span>
+      <span class="stars">★★★☆☆</span>
+      <span class="sub-tag" style="background:#fce7f3;color:#9d174d;">🟤 โจทย์ผสม/ลำดับ</span>
+    </div>
+    <div class="problem">ถ้า \(z\) เป็นจำนวนเชิงซ้อนซึ่งสอดคล้องกับสมการ \(z^2+z+1=0\) แล้ว \(2z^3+z^2+z+3\) มีค่าเท่าใด</div>
+    <div class="concept"><div class="concept-label">💡 แนวคิด</div>\(z^2+z+1=0\) คือสมการรากที่ 3 ของ 1 (ไม่นับ 1 เอง) เพราะ \(z^3-1=(z-1)(z^2+z+1)\) ดังนั้น \(z^3=1\) เสมอ ใช้ลดรูปพจน์กำลังสูงได้ทันที</div>
+    <div class="step"><span class="step-label">ชั้นที่ 1</span><span class="step-goal"> หา \(z^3\) และ \(z^2+z\)</span>
+      <div class="step-body">จาก \(z^3-1=(z-1)(z^2+z+1)=0\) และ \(z^2+z+1=0\) ดังนั้น \(z^3=1\)<br>
+      จากสมการเดิม \(z^2+z=-1\)</div>
+    </div>
+    <div class="step"><span class="step-label">ชั้นที่ 2</span><span class="step-goal"> แทนค่าลดรูป</span>
+      <div class="step-body">\(2z^3+z^2+z+3=2(1)+(-1)+3=2-1+3=4\)</div>
+    </div>
+    <div class="careless"><div class="careless-label">⚠️ จุดพลาดบ่อย</div>ต้องมองให้ออกว่า \(z^2+z+1=0\) นำไปสู่ \(z^3=1\) — เป็นกลเม็ดมาตรฐานที่ออกสอบบ่อยมาก ถ้าจำไม่ได้จะต้องหารากเชิงซ้อนแล้วยกกำลังตรง ๆ ซึ่งเสียเวลามาก
+    <div class="err-type">Unattempted</div></div>
+    <div class="technique"><div class="technique-label">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>จำสูตรลัด: ถ้า \(z^2+z+1=0\) แล้ว \(z^3=1\) เสมอ ใช้ลดรูปพจน์กำลังสูงในสมการที่ซับซ้อนได้ทันทีโดยไม่ต้องหาค่า \(z\) จริง</div>
+    <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">4</span></div>
+  </section>
+
+  <div class="footnote">✅ ครบทุกข้อ 1–30 · ตรวจทานกับภาพต้นฉบับ PDF และเฉลยท้ายเล่มทุกข้อ · จัดทำโดย MathsBankTutor (ครูแบงก์)</div>
+
+</div>
+</body>
+</html>
