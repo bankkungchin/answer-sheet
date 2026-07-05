@@ -416,9 +416,11 @@ function renderStudentDash(d){
   const avg=d.groupMembers.length?Math.round(d.groupMembers.reduce((s,m)=>s+m.score,0)/d.groupMembers.length):0;
   document.getElementById('s-score').innerHTML=d.score+' <span style="font-size:13px;color:var(--text3);font-weight:400">/ 30</span>';
   document.getElementById('s-scorepct').textContent=Math.round(d.score/30*100)+'% · เฉลี่ยกลุ่ม '+Math.round(avg/30*100)+'%'+(d.allMembers.length>d.groupMembers.length?' · เฉลี่ยรวม '+Math.round(d.allAvg/30*100)+'%':'');
+  
   document.getElementById('s-wrong').innerHTML=(d.wrong+d.care+d.concept+d.blank)+' <span style="font-size:13px;color:var(--text3);font-weight:400">ข้อ</span>';
-document.getElementById('s-wrongsub').textContent=d.blank+' ไม่ทำ · '+d.care+' สะเพร่า · '+d.concept+' คอนเซปต์ · '+d.wrong+' ทำไม่ได้';  // ข้อความให้กำลังใจ — เน้นสิ่งที่ควบคุมได้
-  const encEl=document.getElementById('s-encourage');
+document.getElementById('s-wrongsub').textContent=d.blank+' ไม่ทำ · '+d.care+' สะเพร่า · '+d.concept+' คอนเซปต์ · '+d.wrong+' ทำไม่ได้';
+   
+   const encEl=document.getElementById('s-encourage');
   if(encEl){
     let msg='';
     if(d.care>=3){msg=`💡 มี ${d.care} ข้อที่ทำเป็นแล้วแต่พลาดจากความรีบ — ถ้าตรวจทานให้ดีอีกนิด คะแนนขึ้นได้อีก ${d.care} ข้อเลย!`;}
