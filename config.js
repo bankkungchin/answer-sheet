@@ -26,3 +26,6 @@ const PLAYLISTS = {
 PLAYLISTS["จำนวนเชิงซ้อน"] = "PLc4ncgz2CJ7N8O-4pbXPYeLgWqt8HO_VM";
 // ═══ PLAYLISTS["เวกเตอร์"] — วางต่อท้ายไฟล์ config.js ═══
 PLAYLISTS["เวกเตอร์"] = "PLc4ncgz2CJ7Or-3xHTxmhDg3BKrqUND-L";
+// ═══ PLAYLISTS["เรขาคณิตวิเคราะห์"] และ ["ภาคตัดกรวย"] ═══
+PLAYLISTS["เรขาคณิตวิเคราะห์"] = "TBD_ANALYTIC_PLAYLIST";
+PLAYLISTS["ภาคตัดกรวย"] = "PLc4ncgz2CJ7OXjl9Xww2mUZZR9vedES8Z";
