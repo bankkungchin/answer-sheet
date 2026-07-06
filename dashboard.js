@@ -1,10 +1,14 @@
 /* ============================================================
    dashboard.js — logic ทั้งหมด (render / fetch / combobox / ฝึก / พิมพ์)
    โหลดหลัง config.js และ questionbank.js
+   ── v2.0 ──
+   เพิ่ม: การ์ดพัฒนาการ + trend รายครั้ง, checkbox แผนทบทวน (จำใน localStorage),
+   จุดอ่อนเรื้อรัง, รายงานผู้ปกครอง 5 สไตล์ (🦅🐬🐘🦉🐝),
+   แก้บั๊กกล่อง "จุดต้องแก้" ไม่รวมคอนเซปต์, เลิก hardcode "129 ข้อ"
    ============================================================ */
 let pinBuffer='', pinAttempts=0, currentStudent='';
 let dashData = null;let dashErr='';let selectedGroups=null;
-let diffChartInst=null, groupChartInst=null, distChartInst=null, trendChartInst=null;
+let diffChartInst=null, groupChartInst=null, distChartInst=null;
 
 function goTo(id){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
 function resetAll(){ pinBuffer=''; pinAttempts=0; updatePinDots(); document.getElementById('attemptsMsg').textContent=''; document.getElementById('p2status').textContent=''; }
@@ -132,7 +136,7 @@ function ytBtn(query,label){
 function emojiOf(cat){
   cat=cat||'';
   if(/^[\u{1F534}\u{1F535}\u{1F7E0}\u{1F7E1}\u{1F7E2}\u{1F7E3}\u{1F7E4}\u{26AB}\u{26AA}]/u.test(cat)) return '';
-  return (typeof CAT_EMOJI!=='undefined' && CAT_EMOJI[cat]) || '•';
+  return (typeof CAT_EMOJI!=='undefined' && CAT_EMOJI[cat]) || '\u2022';
 }
 // ── หมวดหมู่: แปลงชื่อ sub-topic ของข้อสอบ → หมวดของคลังฝึก ──
 // บทแบบใหม่ (ตรีโกณ ฯลฯ): sub = ชื่อหมวดพร้อม emoji อยู่แล้ว → คืนค่าตรงๆ
@@ -162,7 +166,7 @@ function printPracticeSet(){
     let rows='';
     c.picks.forEach(q=>{
       const stars='★'.repeat(q.l)+'☆'.repeat(5-q.l);
-      rows+=`<tr><td class="chk">☐</td><td class="qn">${sourceLabel(q)}ข้อ ${displayN(q)}</td><td class="src">${esc(q.s)}</td><td class="lvl">ระดับ ${q.l} ${stars}</td><td class="yt"><a href="${q.yt}">▶ ดูเฉลย</a><div class="url">${esc(q.yt)}</div></td></tr>`;
+      rows+=`<tr><td class="chk">☐</td><td class="qn">ข้อ ${q.n}</td><td class="src">${esc(q.s)}</td><td class="lvl">ระดับ ${q.l} ${stars}</td><td class="yt"><a href="${q.yt}">▶ ดูเฉลย</a><div class="url">${esc(q.yt)}</div></td></tr>`;
     });
     body+=`<div class="cat"><div class="cat-h"><span>${c.emoji} ${esc(c.cat)}</span><span class="pct">พลาด ${c.pct}% · ฝึก ${c.picks.length} ข้อ</span></div><table>${rows}</table></div>`;
   });
@@ -189,7 +193,7 @@ td{padding:7px 8px;border-bottom:1px solid #e5e5e5;vertical-align:top}
 .ft{margin-top:20px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#888;line-height:1.6}
 @media print{body{padding:0}@page{margin:1.4cm}}
 </style></head><body>
-<div class="hd"><h1>🎯 ชุดฝึกเพิ่ม — ${esc(p.name)}</h1><div class="meta">บท ${esc(p.topic)} · จากผลสอบวันที่ ${esc(p.date)}</div><div class="sum">รวม ${p.grand} ข้อ · เลือกจากคลังข้อสอบจริง 129 ข้อ ตามสัดส่วนที่ยังไม่แม่น</div></div>
+<div class="hd"><h1>🎯 ชุดฝึกเพิ่ม — ${esc(p.name)}</h1><div class="meta">บท ${esc(p.topic)} · จากผลสอบวันที่ ${esc(p.date)}</div><div class="sum">รวม ${p.grand} ข้อ · เลือกจากคลังข้อสอบจริง ${p.bankCount||''} ข้อ ตามสัดส่วนที่ยังไม่แม่น</div></div>
 ${body}
 <div class="ft">วิธีใช้: ทำโจทย์แต่ละข้อก่อน (เปิดหนังสือรวมข้อสอบบท Expo+Log ตาม "ข้อ N") แล้วเช็กกล่อง ☐ เมื่อทำเสร็จ จากนั้นดูเฉลยวิดีโอตามลิงก์เพื่อทบทวนวิธีคิด · MathsBankTutor</div>
 </body></html>`;
@@ -200,26 +204,8 @@ ${body}
   const go=()=>{ try{f.contentWindow.focus();f.contentWindow.print();}catch(e){} setTimeout(()=>{document.body.removeChild(f);},1500); };
   setTimeout(go,600);
 }
-function displayN(q){
-  if(!q||!q.yt) return q?q.n:0;
-  const mh = q.yt.match(/#q(\d+)/);
-  if(mh) return +mh[1];
-  const my = q.yt.match(/[?&]index=(\d+)/);
-  if(my) return +my[1];
-  return q.n;
-}
-// เพิ่มต่อเลย:
-function sourceLabel(q){
-  if(!q||!q.yt) return '';
-  if(q.yt.includes('relation')) return 'ความสัมพันธ์ ';
-  if(q.yt.includes('function_')) return 'ฟังก์ชัน ';
-  if(q.yt.includes('PLc4ncgz2CJ7NY9jKCP5fV5ooYxI7-VzWS')) return 'ความสัมพันธ์ ';
-  if(q.yt.includes('PLc4ncgz2CJ7Nnlb-DevGFB977eEkdWCwA')) return 'ฟังก์ชัน ';
-  return '';
-}
+
 // ── แผนฝึกเพิ่ม: เลือกข้อจากคลัง 129 ข้อ ตามสัดส่วนที่พลาดในแต่ละหัวข้อ ──
-
-
 function renderPracticePlan(d){
   const el=document.getElementById('s-practice'); if(!el)return;
   // หาคลังฝึก: ลองชื่อบทตรงๆ ก่อน ถ้าไม่เจอ ตัด "ชุดที่ N" ออกแล้วลองใหม่
@@ -228,11 +214,9 @@ function renderPracticePlan(d){
   const _nTopic=_normT(d.topic);
   let bank=PRACTICE_BANK[_nTopic];
   if(!bank){ const baseTopic=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); bank=PRACTICE_BANK[baseTopic]; }
-  // รวมบทที่เชื่อมด้วย "และ" เช่น "เรขาคณิตวิเคราะห์และภาคตัดกรวย" → รวม 2 คลัง
-  if(!bank){ const baseTopic=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); if(baseTopic.includes('และ')){ const parts=baseTopic.split('และ').map(p=>p.trim()); const banks=parts.map(p=>PRACTICE_BANK[p]).filter(Boolean); if(banks.length) bank=banks.flat(); } }
   // รวมคลัง Ent เข้ากับคลังหลัก (เช่น ตรีโกณมิติ + ตรีโกณมิติ Ent)
   if(bank){ const _base=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); const _ent=PRACTICE_BANK[_base+' Ent']; if(_ent) bank=[...bank,..._ent]; }
-  if(!bank){ el.innerHTML='<div class="d-card"><div style="font-size:13px;color:var(--text2);line-height:1.6;padding:4px 0">ยังไม่มีคลังฝึกพร้อมเฉลยวิดีโอสำหรับบท <b>'+d.topic+'</b> ครับ — ตอนนี้คลังฝึกสำหรับบทนี้ยังอยู่ระหว่างจัดทำ</div></div>'; return; }
+  if(!bank){ el.innerHTML='<div class="d-card"><div style="font-size:13px;color:var(--text2);line-height:1.6;padding:4px 0">ยังไม่มีคลังฝึกพร้อมเฉลยวิดีโอสำหรับบท <b>'+d.topic+'</b> ครับ — ตอนนี้พร้อมบท: <b>'+Object.keys(PRACTICE_BANK).filter(k=>!/ Ent$/.test(k)).join(', ')+'</b></div></div>'; return; }
   // รวมยอดพลาดตามหมวด (จาก d.subtopics)
   const catMap={};
   d.subtopics.forEach(st=>{ const c=catOf(st.name); if(!catMap[c])catMap[c]={cat:c,ok:0,total:0}; catMap[c].ok+=st.ok; catMap[c].total+=st.total; });
@@ -242,7 +226,7 @@ function renderPracticePlan(d){
   cats.forEach(c=>{
     const pct=Math.round(c.rate*100);
     let need=Math.min(8,Math.max(2,Math.round(c.rate*16)));   // พลาด 25% → ~4 ข้อ
-    let pool=bank.filter(q=>q.c===c.cat).sort((a,b)=>a.n-b.n);
+    let pool=_shuffle(bank.filter(q=>q.c===c.cat)).sort((a,b)=>a.l-b.l);
     need=Math.min(need,pool.length);   // ไม่เกินจำนวนข้อที่มีจริงในหัวข้อนั้น (ไม่ยืมข้ามหัวข้อ)
     let pick=[];
     if(pool.length<=need){ pick=pool.slice(); }
@@ -252,12 +236,12 @@ function renderPracticePlan(d){
     const emoji=emojiOf(c.cat);
     let rows='';
     pick.forEach(q=>{ const stars='★'.repeat(q.l)+'☆'.repeat(5-q.l);
-      rows+=`<div class="rev-row"><div style="flex:1"><div style="font-size:12px;color:var(--text1);font-weight:500">${sourceLabel(q)}ข้อ ${displayN(q)} <span style="color:var(--text3);font-weight:400">· ${q.s}</span></div><div style="font-size:10px;color:var(--text3)">ระดับ ${q.l} <span style="color:#BA7517">${stars}</span></div></div><a href="${q.yt}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surf,#FAF9F5);color:#B3261E;border:1px solid #E4C7C5;font-size:11px;font-weight:500;padding:5px 12px;border-radius:12px;text-decoration:none;white-space:nowrap">▶ เฉลย</a></div>`; });
+      rows+=`<div class="rev-row"><div style="flex:1"><div style="font-size:12px;color:var(--text1);font-weight:500">ข้อ ${q.n} <span style="color:var(--text3);font-weight:400">· ${q.s}</span></div><div style="font-size:10px;color:var(--text3)">ระดับ ${q.l} <span style="color:#BA7517">${stars}</span></div></div><a href="${q.yt}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surf,#FAF9F5);color:#B3261E;border:1px solid #E4C7C5;font-size:11px;font-weight:500;padding:5px 12px;border-radius:12px;text-decoration:none;white-space:nowrap">▶ เฉลย</a></div>`; });
     cards.push(`<div class="d-card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"><div style="font-size:14px;font-weight:500;color:var(--text1)">${emoji} ${c.cat}</div><div class="diff-badge ${pct>=50?'diff-bad':'diff-warn'}">พลาด ${pct}%</div></div><div style="font-size:11px;color:var(--text2);margin-bottom:8px">ทำได้ ${c.ok}/${c.total} ข้อในหัวข้อนี้ → แนะนำฝึก <b>${pick.length} ข้อ</b> จากคลังข้อสอบจริง</div>${rows}</div>`);
   });
   // เก็บแผนไว้สำหรับพิมพ์
-  window.__practicePlan={name:d.shortName,topic:d.topic,date:d.date,grand,cats:planForPrint};
-  const head=`<div class="d-card"><div class="slabel">🎯 ฝึกเพิ่มตามจุดที่พลาด — ${grand} ข้อ</div><div style="font-size:12px;color:var(--text2);line-height:1.6">เลือกโจทย์จากคลังข้อสอบจริง <b>129 ข้อ (PAT/A-Level ปี 52–68)</b> ให้ตามสัดส่วนที่ยังไม่แม่นในแต่ละหัวข้อ — ยิ่งพลาดมาก ยิ่งได้ฝึกหัวข้อนั้นเยอะ แต่ละข้อมีลิงก์เฉลยวิดีโอให้ศึกษาเองต่อได้เลย ✨</div><button class="pr-print-btn" onclick="printPracticeSet()">🖨️ พิมพ์ชุดฝึก (PDF)</button></div>`;
+  window.__practicePlan={name:d.shortName,topic:d.topic,date:d.date,grand,bankCount:bank.length,cats:planForPrint};
+  const head=`<div class="d-card"><div class="slabel">🎯 ฝึกเพิ่มตามจุดที่พลาด — ${grand} ข้อ</div><div style="font-size:12px;color:var(--text2);line-height:1.6">เลือกโจทย์จากคลังข้อสอบจริง <b>${bank.length} ข้อ</b> ให้ตามสัดส่วนที่ยังไม่แม่นในแต่ละหัวข้อ — ยิ่งพลาดมาก ยิ่งได้ฝึกหัวข้อนั้นเยอะ แต่ละข้อมีลิงก์เฉลยวิดีโอให้ศึกษาเองต่อได้เลย ✨</div><button class="pr-print-btn" onclick="printPracticeSet()">🖨️ พิมพ์ชุดฝึก (PDF)</button></div>`;
   el.innerHTML=head+cards.join('');
 }
 
@@ -393,8 +377,15 @@ async function fetchDashData(){
   const grpHi=grpScores.length?Math.max(...grpScores):0;
   const grpLo=grpScores.length?Math.min(...grpScores):0;
   const grpStats={avg:grpAvg,careAvg:grpCareAvg,hi:grpHi,lo:grpLo,count:groupMembers.length};
-  const allExams=allMine.map(r=>({topic:r[4]||'',date:r[3]||'',score:parseInt(r[36])||0,care:parseInt(r[37])||0})).sort((a,b)=>a.date.localeCompare(b.date)||a.topic.localeCompare(b.topic));
-  dashData={group,date,topic,score,care,concept,cant,timeout,wrong,blank,qResults,groupMembers,rank,allMembers,allRank,allAvg,groupsInTopic,subtopics,diffMap,myAna,grpSubtopics,grpStats,allExams,shortName:currentStudent.replace(/\s*\(.*\)/,'')};
+  // ── v2: ประวัติการสอบทุกครั้งของนักเรียนคนนี้ (ตาม topicFilter) สำหรับ trend ──
+  const history=myRows.map(r=>({date:r[3]||'',topic:r[4]||'',score:parseInt(r[36])||0,care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0}));
+  const prev=history.length>1?history[history.length-2]:null;
+  const delta=prev?score-prev.score:null;
+  let streak=0; for(let i=history.length-1;i>0;i--){ if(history[i].score>history[i-1].score)streak++; else break; }
+  const isBest=history.length>1&&score>=Math.max(...history.map(h=>h.score));
+  // results_long ทุกแถวของนักเรียนคนนี้ (ทุกการสอบ) — ใช้หา "จุดอ่อนเรื้อรัง"
+  const myLongAll=longRows.filter(r=>r[0]===currentStudent);
+  dashData={group,date,topic,score,care,concept,cant,timeout,wrong,blank,qResults,groupMembers,rank,allMembers,allRank,allAvg,groupsInTopic,subtopics,diffMap,myAna,grpSubtopics,grpStats,history,prev,delta,streak,isBest,myLongAll,shortName:currentStudent.replace(/\s*\(.*\)/,'')};
 }
 
 async function showDashboard(mode){
@@ -411,6 +402,59 @@ async function showDashboard(mode){
   }
 }
 
+// ═══════ v2: การ์ดพัฒนาการ + trend ═══════
+function _sparkSvg(scores,w,h){
+  if(!scores||scores.length<2)return'';
+  const n=scores.length,max=30,pad=7;
+  const pts=scores.map((v,i)=>[
+    Math.round((pad+i*(w-2*pad)/(n-1))*10)/10,
+    Math.round((h-pad-(v/max)*(h-2*pad))*10)/10
+  ]);
+  const line=pts.map(p=>p.join(',')).join(' ');
+  const last=pts[pts.length-1];
+  const ty=Math.round((h-pad-(25/max)*(h-2*pad))*10)/10;
+  return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;max-width:${w}px;height:${h}px;display:block"><line x1="${pad}" y1="${ty}" x2="${w-pad}" y2="${ty}" stroke="#A32D2D" stroke-width="1" stroke-dasharray="4 3" opacity=".5"/><polyline points="${line}" fill="none" stroke="#185FA5" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${last[0]}" cy="${last[1]}" r="4" fill="#C77E1A"/></svg>`;
+}
+function renderTrendCard(d){
+  const anchor=document.getElementById('s-encourage');
+  let card=document.getElementById('s-trendCard');
+  if(!card){ if(!anchor)return; anchor.insertAdjacentHTML('afterend','<div id="s-trendCard"></div>'); card=document.getElementById('s-trendCard'); }
+  const hist=d.history||[];
+  if(hist.length<2){ card.innerHTML=''; return; }
+  const scores=hist.map(h=>h.score);
+  const deltaTxt=d.delta==null?'':(d.delta>0?'▲ +'+d.delta:(d.delta<0?'▼ '+d.delta:'▬ เท่าเดิม'));
+  const deltaColor=d.delta>0?'#3B7D2A':(d.delta<0?'#C77E1A':'var(--text3,#948F86)');
+  const chip=(t,bg,c)=>`<span style="display:inline-block;background:${bg};color:${c};font-size:11px;font-weight:600;padding:2px 9px;border-radius:99px;margin-right:4px">${t}</span>`;
+  let chips='';
+  if(d.isBest)chips+=chip('🏆 สูงสุดตั้งแต่เริ่มเรียน','#EAF5E6','#3B7D2A');
+  if(d.streak>=2)chips+=chip('🔥 ดีขึ้น '+d.streak+' ครั้งติด','#FFF1E0','#B45309');
+  if(d.delta!=null&&d.delta<0)chips+=chip('อยู่ในช่วงผันผวนปกติ — โฟกัสที่แผนทบทวนต่อได้เลย','#F0F4F8','#57534E');
+  // error-mix รายครั้ง (สูงสุด 8 ครั้งล่าสุด)
+  let mixHtml='';
+  const mh=hist.slice(-8);
+  if(mh.length>=2){
+    const cols=mh.map(h=>{
+      const seg=(v,c)=>v>0?`<div style="height:${Math.max(2,Math.round(v/30*66))}px;background:${c}"></div>`:'';
+      return `<div style="text-align:center"><div style="display:flex;flex-direction:column-reverse;width:20px;border-radius:4px;overflow:hidden;margin:0 auto">${seg(h.score,'#8FBF7F')}${seg(h.care,'#F2C94C')}${seg(h.concept,'#C9A6F0')}${seg(h.cant,'#E89090')}${seg(h.timeout,'#B8C2CC')}</div><div style="font-size:9px;color:var(--text3,#948F86);margin-top:2px">${h.score}</div></div>`;
+    }).join('');
+    mixHtml=`<div style="margin-top:10px;border-top:1px dashed var(--border,#E7E4DC);padding-top:8px"><div style="font-size:11px;color:var(--text3,#948F86);margin-bottom:6px">ส่วนผสมผลรายครั้ง — 🟩 ถูก · 🟨 สะเพร่า · 🟪 คอนเซปต์ · 🟥 ทำไม่ได้ · ⬜ ไม่ทัน <span style="color:var(--text2,#57534E)">(คะแนนเท่าเดิมแต่สีข้างบนหด = กำลังพัฒนา)</span></div><div style="display:flex;gap:9px;align-items:flex-end">${cols}</div></div>`;
+  }
+  card.innerHTML=`<div style="background:#fff;border:1px solid var(--border,#E7E4DC);border-radius:14px;padding:14px 16px;margin:10px 0">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
+      <div>
+        <div style="font-size:11px;color:var(--text3,#948F86)">📈 พัฒนาการของคุณ · ${hist.length} ครั้ง · เทียบกับตัวเองเท่านั้น</div>
+        <div style="font-size:24px;font-weight:700;color:${deltaColor}">${deltaTxt} <span style="font-size:12px;color:var(--text3,#948F86);font-weight:400">จากครั้งก่อน (${d.prev.score} → ${d.score})</span></div>
+        <div style="margin-top:5px">${chips}</div>
+      </div>
+      <div style="flex:1;min-width:170px;max-width:250px">
+        ${_sparkSvg(scores,250,62)}
+        <div style="font-size:10px;color:var(--text3,#948F86);text-align:right">เส้นประแดง = เป้า 25/30 · ${scores.join(' → ')}</div>
+      </div>
+    </div>
+    ${mixHtml}
+  </div>`;
+}
+
 function renderStudentDash(d){
   document.getElementById('s-avatar').textContent=d.shortName.substring(0,3);
   document.getElementById('s-name').textContent=d.shortName;
@@ -420,11 +464,10 @@ function renderStudentDash(d){
   const avg=d.groupMembers.length?Math.round(d.groupMembers.reduce((s,m)=>s+m.score,0)/d.groupMembers.length):0;
   document.getElementById('s-score').innerHTML=d.score+' <span style="font-size:13px;color:var(--text3);font-weight:400">/ 30</span>';
   document.getElementById('s-scorepct').textContent=Math.round(d.score/30*100)+'% · เฉลี่ยกลุ่ม '+Math.round(avg/30*100)+'%'+(d.allMembers.length>d.groupMembers.length?' · เฉลี่ยรวม '+Math.round(d.allAvg/30*100)+'%':'');
-  
   document.getElementById('s-wrong').innerHTML=(d.wrong+d.care+d.concept+d.blank)+' <span style="font-size:13px;color:var(--text3);font-weight:400">ข้อ</span>';
-document.getElementById('s-wrongsub').textContent=d.blank+' ไม่ทำ · '+d.care+' สะเพร่า · '+d.concept+' คอนเซปต์ · '+d.wrong+' ทำไม่ได้';
-   
-   const encEl=document.getElementById('s-encourage');
+  document.getElementById('s-wrongsub').textContent=d.blank+' ไม่ทำ · '+d.care+' สะเพร่า · '+d.concept+' คอนเซปต์ · '+d.wrong+' ทำไม่ได้';
+  // ข้อความให้กำลังใจ — เน้นสิ่งที่ควบคุมได้
+  const encEl=document.getElementById('s-encourage');
   if(encEl){
     let msg='';
     if(d.care>=3){msg=`💡 มี ${d.care} ข้อที่ทำเป็นแล้วแต่พลาดจากความรีบ — ถ้าตรวจทานให้ดีอีกนิด คะแนนขึ้นได้อีก ${d.care} ข้อเลย!`;}
@@ -434,6 +477,7 @@ document.getElementById('s-wrongsub').textContent=d.blank+' ไม่ทำ · '
     encEl.innerHTML=msg;
     encEl.style.display='block';
   }
+  try{renderTrendCard(d);}catch(e){console.error('trend',e);}
   const qClass={ok:'q-ok',care:'q-care',concept:'q-concept',cant:'q-cant',timeout:'q-timeout',wrong:'q-wrong',blank:'q-blank'};
   ['qgrid1','qgrid2'].forEach(id=>document.getElementById(id).innerHTML='');
   for(let i=1;i<=30;i++){const g=document.getElementById(i<=15?'qgrid1':'qgrid2');const el=document.createElement('div');el.className='q-cell '+qClass[d.qResults[i]];el.textContent=i;g.appendChild(el);}
@@ -491,9 +535,33 @@ document.getElementById('s-wrongsub').textContent=d.blank+' ไม่ทำ · '
     if(hardOnes.length)steps.push({n:steps.length+1,icon:'🏔️',color:'#A32D2D',title:`ท้าทายข้อยาก (${hardOnes.length} ข้อ)`,
       desc:`ข้อ ${hardOnes.map(c=>c.q).join(', ')} — ระดับ 4-5 ทำทีหลังสุดเมื่อพื้นฐานแน่นแล้ว ศึกษาจากคลิปติวในช่อง MathsBankTutor`,
       yt:[...new Set(hardOnes.map(c=>c.sub))].slice(0,3)});
-    if(!steps.length){planEl.innerHTML='<div style="font-size:13px;color:var(--green);padding:8px 0">ทำถูกครบทุกข้อ ไม่มีอะไรต้องทบทวน 🎉</div>'; return;}
-    else steps.forEach(s=>{
-      planEl.innerHTML+=`<div style="display:flex;gap:12px;padding:12px 0;border-bottom:0.5px solid var(--border)">
+    // ── v2: จุดอ่อนเรื้อรัง — sub-topic ที่พลาดซ้ำมากกว่า 1 การสอบ ──
+    let chronicHtml='';
+    try{
+      const missBySub={};
+      (d.myLongAll||[]).forEach(r=>{
+        const sub=(r[6]&&r[6]!=='—')?r[6]:''; if(!sub)return;
+        const st=parseStatus(r[5]||''); if(st==='ok'||st==='blank')return;
+        if(!missBySub[sub])missBySub[sub]=new Set();
+        missBySub[sub].add((r[2]||'')+'|'+(r[3]||''));
+      });
+      const chronic=Object.entries(missBySub).filter(([,set])=>set.size>=2).map(([sub,set])=>({sub,times:set.size})).sort((a,b)=>b.times-a.times).slice(0,4);
+      if(chronic.length){
+        chronicHtml='<div style="background:#FDF3E3;border:1px solid #F0D9AE;border-radius:10px;padding:10px 12px;margin:2px 0 10px"><div style="font-size:12px;font-weight:600;color:#8A5A10;margin-bottom:4px">🔁 จุดอ่อนเรื้อรัง — พลาดซ้ำมากกว่า 1 การสอบ</div>'
+          +chronic.map(c=>`<div style="font-size:12px;color:var(--text2);padding:3px 0">• ${c.sub} <span style="color:var(--text3)">(พลาดใน ${c.times} การสอบ)</span><br>${ytBtn(c.sub,'ทบทวนคลิปหัวข้อนี้')}</div>`).join('')
+          +'<div style="font-size:11px;color:#8A5A10;margin-top:6px">หัวข้อที่พลาดซ้ำแบบนี้ ควรกลับไปทำความเข้าใจแนวคิดใหม่กับครู ไม่ใช่แค่ฝึกโจทย์เพิ่มครับ (พลาดครั้งแรกในหัวข้ออื่นเป็นเรื่องปกติ ไม่ต้องกังวล)</div></div>';
+      }
+    }catch(e){console.error('chronic',e);}
+    if(!steps.length){planEl.innerHTML=chronicHtml+'<div style="font-size:13px;color:var(--green);padding:8px 0">ทำถูกครบทุกข้อ ไม่มีอะไรต้องทบทวน 🎉</div>';}
+    else{
+      // ── v2: checkbox + progress (จำสถานะใน localStorage รายการสอบ) ──
+      const spKey=n=>'sp:'+currentStudent+':'+d.topic+':'+d.date+':'+n;
+      let done0=0; steps.forEach(s=>{try{if(localStorage.getItem(spKey(s.n))==='1')done0++;}catch(e){}});
+      let html=chronicHtml+`<div style="margin-bottom:8px"><div style="background:var(--blue-l,#E8F1FA);height:9px;border-radius:99px;overflow:hidden"><div id="sp-fill" style="height:100%;background:#185FA5;border-radius:99px;transition:width .3s;width:${Math.round(done0/steps.length*100)}%"></div></div><div id="sp-text" style="font-size:11px;color:var(--text3);margin-top:4px">ทำแล้ว ${done0} จาก ${steps.length} ขั้น${done0===steps.length?' — ครบแล้ว เก่งมาก! 🎉':''}</div></div>`;
+      steps.forEach(s=>{
+        let isDone=false; try{isDone=localStorage.getItem(spKey(s.n))==='1';}catch(e){}
+        html+=`<div class="sp-row" style="display:flex;gap:12px;padding:12px 0;border-bottom:0.5px solid var(--border);opacity:${isDone?'0.55':'1'}">
+        <input type="checkbox" data-spkey="${spKey(s.n)}" onchange="spTick(this)" ${isDone?'checked':''} style="width:19px;height:19px;accent-color:#185FA5;margin-top:6px;cursor:pointer;flex-shrink:0">
         <div style="width:32px;height:32px;border-radius:50%;background:${s.color};color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;flex-shrink:0">${s.n}</div>
         <div style="flex:1">
           <div style="font-size:13px;font-weight:600;color:var(--text1);margin-bottom:3px">${s.icon} ${s.title}</div>
@@ -501,9 +569,10 @@ document.getElementById('s-wrongsub').textContent=d.blank+' ไม่ทำ · '
           ${s.yt?`<div style="display:flex;gap:6px;flex-wrap:wrap">${s.yt.map(t=>`<a href="${ytLink(t)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:#FF0000;color:#fff;font-size:10px;font-weight:500;padding:3px 10px;border-radius:20px;text-decoration:none">🎬 ${t}</a>`).join('')}</div>`:''}
         </div>
       </div>`;
-    });
+      });
+      planEl.innerHTML=html;
+    }
   }
-  renderProgressTrend(d);
   if(diffChartInst){diffChartInst.destroy();diffChartInst=null;}
   const diffLevels=Object.keys(d.diffMap).sort((a,b)=>a-b);
   diffChartInst=new Chart(document.getElementById('s-diffChart'),{type:'bar',data:{labels:diffLevels.map(l=>'ระดับ '+l),datasets:[{label:'% ถูก',data:diffLevels.map(lv=>Math.round(d.diffMap[lv].ok/d.diffMap[lv].total*100)),backgroundColor:['#B5D4F4','#85B7EB','#378ADD','#185FA5','#0C447C'],borderRadius:4,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+'%'}}},scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%',stepSize:25},grid:{color:'rgba(128,128,128,0.1)'}},x:{grid:{display:false}}}}});
@@ -647,7 +716,48 @@ function renderAllComparison(d){
   }
 }
 
+// ═══════ v2: รายงานผู้ปกครอง 5 สไตล์ (🦅🐬🐘🦉🐝) ═══════
+// ผู้ปกครองเลือกสไตล์เอง → จำใน localStorage ของเครื่องนั้น (ไม่ต้องแก้ Sheet)
+const PARENT_TYPES={
+  eagle:   {em:'🦅',nm:'นกอินทรี',tag:'เป้าหมายชัด เห็นแผน'},
+  dolphin: {em:'🐬',nm:'โลมา',tag:'ข้อมูลเต็มทุกมิติ'},
+  elephant:{em:'🐘',nm:'ช้าง',tag:'อบอุ่น ข่าวดีมาก่อน'},
+  owl:     {em:'🦉',nm:'นกฮูก',tag:'สรุปสั้น เชื่อมั่น'},
+  bee:     {em:'🐝',nm:'ผึ้ง',tag:'การ์ดเดียวจบ'}
+};
+function _getPType(){ try{return localStorage.getItem('ptype:'+currentStudent)||'dolphin';}catch(e){return 'dolphin';} }
+function setPType(k){ try{localStorage.setItem('ptype:'+currentStudent,k);}catch(e){} if(dashData)renderParentDash(dashData); }
+function _fillParentQGrid(d){
+  const qClass={ok:'q-ok',care:'q-care',concept:'q-concept',cant:'q-cant',timeout:'q-timeout',wrong:'q-wrong',blank:'q-blank'};
+  ['p-qgrid1','p-qgrid2'].forEach(id=>{const g=document.getElementById(id);if(g)g.innerHTML='';});
+  for(let i=1;i<=30;i++){const g=document.getElementById(i<=15?'p-qgrid1':'p-qgrid2');if(!g)continue;const el=document.createElement('div');el.className='q-cell '+qClass[d.qResults[i]];el.textContent=i;g.appendChild(el);}
+}
 function renderParentDash(d){
+  const name=d.shortName;
+  (function(){const el=document.getElementById('p-avatar');el.textContent=name;el.style.fontSize=name.length>5?'9px':name.length>3?'11px':'13px';el.style.lineHeight='1.2';el.style.textAlign='center';}());
+  document.getElementById('p-topic').textContent=d.topic+' · '+d.date;
+  const _pHeader=document.querySelector('#p5 .container [style*="font-size:15px"]');
+  if(_pHeader) _pHeader.textContent='รายงานผลการเรียน — '+name;
+  // แถบเลือกสไตล์ (แทรกเหนือ summary ครั้งแรกครั้งเดียว)
+  let bar=document.getElementById('p-animalBar');
+  if(!bar){ const ps=document.getElementById('p-summary'); if(ps){ps.insertAdjacentHTML('beforebegin','<div id="p-animalBar"></div>'); bar=document.getElementById('p-animalBar');} }
+  const cur=_getPType();
+  if(bar){
+    bar.innerHTML='<div style="font-size:11px;color:var(--text3,#948F86);margin-bottom:6px">สไตล์การรายงาน — เลือกแบบที่ใกล้เคียง "สไตล์การเชียร์ลูก" ของคุณ (ระบบจะจำไว้ในเครื่องนี้)</div>'
+      +'<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">'
+      +Object.entries(PARENT_TYPES).map(([k,a])=>`<button onclick="setPType('${k}')" style="flex:1 1 100px;min-width:96px;border:1.5px solid ${k===cur?'#185FA5':'var(--border,#E7E4DC)'};background:${k===cur?'var(--blue-l,#E8F1FA)':'#fff'};border-radius:10px;padding:7px 4px;cursor:pointer;text-align:center;font-family:inherit"><span style="font-size:20px;display:block">${a.em}</span><b style="font-size:12px">${a.nm}</b><span style="display:block;font-size:9.5px;color:var(--text3,#948F86)">${a.tag}</span></button>`).join('')
+      +'</div>';
+  }
+  const wc=document.getElementById('p-weakcard');
+  if(cur==='eagle'){if(wc)wc.style.display='none';_parentEagle(d);return;}
+  if(cur==='elephant'){if(wc)wc.style.display='none';_parentElephant(d);return;}
+  if(cur==='owl'){if(wc)wc.style.display='none';_parentOwl(d);return;}
+  if(cur==='bee'){if(wc)wc.style.display='none';_parentBee(d);return;}
+  _parentDolphin(d);
+}
+
+// ── 🐬 โลมา: รายงานฉบับเต็ม (โค้ดเดิมทั้งหมด) ──
+function _parentDolphin(d){
   const name=d.shortName;
   const pct=Math.round(d.score/30*100);
   const avg=d.groupMembers.length?Math.round(d.groupMembers.reduce((s,m)=>s+m.score,0)/d.groupMembers.length):0;
@@ -662,12 +772,7 @@ function renderParentDash(d){
 
   const aboveAvg=d.score>=avg;
 
-  (function(){const el=document.getElementById('p-avatar');el.textContent=name;el.style.fontSize=name.length>5?'9px':name.length>3?'11px':'13px';el.style.lineHeight='1.2';el.style.textAlign='center';}());
-  document.getElementById('p-topic').textContent=d.topic+' · '+d.date;
-  // แสดงชื่อนักเรียนใน header parent view
-  const _pHeader=document.querySelector('#p5 .container [style*="font-size:15px"]');
-  if(_pHeader) _pHeader.textContent='รายงานผลการเรียน — '+name;
-
+  // (header/avatar ถูกย้ายไปทำใน renderParentDash แล้ว)
   // summary
   document.getElementById('p-summary').innerHTML=`
     <div style="font-size:13px;color:var(--blue);font-weight:500;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">ภาพรวมการสอบครั้งนี้</div>
@@ -756,55 +861,111 @@ function renderParentDash(d){
   for(let i=1;i<=30;i++){const g=document.getElementById(i<=15?'p-qgrid1':'p-qgrid2');const el=document.createElement('div');el.className='q-cell '+qClass[d.qResults[i]];el.textContent=i;g.appendChild(el);}
 }
 
-function renderProgressTrend(d){
-  if(trendChartInst){trendChartInst.destroy();trendChartInst=null;}
-  const wrap=document.getElementById('pane-progress');
-  if(!wrap)return;
-  if(!d.allExams||d.allExams.length<2){
-    wrap.innerHTML='<div class="d-card"><div style="font-size:13px;color:var(--text2);padding:8px 0;line-height:1.6">สอบแค่ครั้งเดียว — เมื่อสอบเพิ่มอีกบท แผนภูมิแนวโน้มจะแสดงที่นี่ครับ 📈</div></div>';
-    return;
-  }
-  const shorten=t=>{let s=t.replace(/^Exponential logarithm/i,'Expo').replace(/\s*ชุดที่\s*(\d+)$/,' ชุด$1');[['ความสัมพันธ์และฟังก์ชัน','ฟังก์ชัน'],['เรขาคณิตวิเคราะห์และภาคตัดกรวย','เรขาฯ'],['เรียงลำดับและจัดหมู่','เรียงฯ'],['ลำดับและอนุกรม','ลำดับฯ'],['ตรีโกณมิติ','ตรีโกณฯ']].forEach(([k,v])=>{s=s.replace(k,v);});return s;};
-  const exams=d.allExams;
-  const labels=exams.map(e=>shorten(e.topic));
-  const scores=exams.map(e=>e.score);
-  // linear regression
-  const n=scores.length, xm=(n-1)/2;
-  const ym=scores.reduce((a,b)=>a+b,0)/n;
-  let num=0,den=0;
-  scores.forEach((s,i)=>{num+=(i-xm)*(s-ym);den+=(i-xm)*(i-xm);});
-  const slope=den?num/den:0;
-  const trendData=scores.map((_,i)=>+(ym+slope*(i-xm)).toFixed(2));
-  const ptColors=scores.map(s=>s>=24?'#3B7D2A':s>=18?'#185FA5':s>=12?'#BA7517':'#A32D2D');
-  wrap.innerHTML=`<div class="d-card" style="padding:1rem">
-    <div class="slabel" style="margin-bottom:8px">📈 แนวโน้มคะแนน — ${exams.length} ครั้งที่สอบแล้ว</div>
-    <div style="position:relative;width:100%;height:200px"><canvas id="s-trendChart"></canvas></div>
-    <div style="display:flex;gap:14px;margin-top:10px;font-size:11px;color:var(--text2)">
-      <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#185FA5;margin-right:4px;vertical-align:middle"></span>คะแนน</span>
-      <span><span style="display:inline-block;width:20px;height:2px;background:#F5A623;margin-right:4px;vertical-align:middle"></span>แนวโน้ม</span>
-    </div>
-  </div>
-  <div class="d-card" style="padding:1rem;margin-top:0">
-    <div class="slabel" style="margin-bottom:8px">ตารางสรุป</div>
-    ${exams.map((e,i)=>{const pct=Math.round(e.score/30*100);const cls=pct>=80?'diff-ok':pct>=60?'diff-warn':'diff-bad';return`<div class="st-row"><div style="flex:1"><div style="font-size:13px;color:var(--text1)">${shorten(e.topic)}</div><div style="font-size:11px;color:var(--text3)">${e.date}</div></div><div class="diff-badge ${cls}">${e.score}/30</div></div>`;}).join('')}
-  </div>`;
-  const ctx=document.getElementById('s-trendChart');
-  if(!ctx)return;
-  trendChartInst=new Chart(ctx,{
-    type:'line',
-    data:{labels,datasets:[
-      {label:'คะแนน',data:scores,borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,0.08)',pointBackgroundColor:ptColors,pointBorderColor:ptColors,pointRadius:7,pointHoverRadius:9,tension:0.3,fill:true,order:1},
-      {label:'แนวโน้ม',data:trendData,borderColor:'#F5A623',borderDash:[5,3],borderWidth:2,pointRadius:0,tension:0,fill:false,order:2}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{title:i=>d.allExams[i[0].dataIndex].date+' · '+labels[i[0].dataIndex],label:c=>c.dataset.label+': '+(c.datasetIndex===0?c.raw+'/30 ('+Math.round(c.raw/30*100)+'%)':c.raw)}}},
-      scales:{y:{min:0,max:30,ticks:{stepSize:5,callback:v=>v+'/30'},grid:{color:'rgba(128,128,128,0.1)'}},x:{grid:{display:false},ticks:{font:{size:10},maxRotation:35,minRotation:15}}}
-    }
-  });
+// ── 🦅 นกอินทรี: เทียบกับตัวเองเท่านั้น + ตารางแผนที่ครูดำเนินการแล้ว + ประโยคแนะนำ ──
+function _parentEagle(d){
+  const name=d.shortName,hist=d.history||[];
+  const deltaTxt=d.delta==null?'':(d.delta>0?'+'+d.delta:''+d.delta);
+  document.getElementById('p-summary').innerHTML=`
+    <div style="font-size:13px;color:var(--blue);font-weight:500;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">🦅 รายงานความก้าวหน้า — เทียบกับตัวเองเท่านั้น</div>
+    <div class="summary-headline"><span class="summary-highlight">${name}</span> ได้ <span class="summary-highlight">${d.score}/30</span>${d.delta!=null?` (${deltaTxt} จากครั้งก่อน)`:''}${d.isBest?' · 🏆 สูงสุดตั้งแต่เริ่มเรียน':''}${d.streak>=2?` · 🔥 ดีขึ้น ${d.streak} ครั้งติด`:''}</div>
+    ${hist.length>=2?`<div style="max-width:280px;margin-top:6px">${_sparkSvg(hist.map(h=>h.score),280,60)}<div style="font-size:10px;color:var(--text3)">เส้นประแดง = เป้า 25/30 · ${hist.map(h=>h.score).join(' → ')}</div></div>`:''}`;
+  const rows=[];
+  if(d.care>0)rows.push(['⚠️ สะเพร่า',d.care,'ฝึก checklist ตรวจทานก่อนตอบ ใช้ในคาบเรียนถัดไป']);
+  if(d.concept>0)rows.push(['🧠 คอนเซปต์',d.concept,'มอบคลิปเฉลย + แบบฝึกหัวข้อที่พลาด พร้อมกำหนดส่ง']);
+  if(d.cant>0)rows.push(['❌ ทำไม่ได้',d.cant,'ครูอธิบายเพิ่มรายบุคคล แล้วให้ลองทำซ้ำ']);
+  if(d.timeout>0)rows.push(['⏰ ไม่ทัน',d.timeout,'ฝึกจับเวลารายข้อ (2.5 นาที/ข้อ) เก็บข้อง่ายก่อน']);
+  const td='padding:7px 8px;border-bottom:1px solid var(--border,#E7E4DC)';
+  const th='text-align:left;padding:6px 8px;background:var(--surf,#FAF9F5);font-size:11.5px;color:var(--text3)';
+  document.getElementById('p-problems').innerHTML=rows.length?
+    `<table style="width:100%;border-collapse:collapse;font-size:13px"><tr><th style="${th}">ประเด็น</th><th style="${th}">จำนวน</th><th style="${th}">ติวเตอร์ดำเนินการแล้ว</th></tr>`
+    +rows.map(r=>`<tr><td style="${td}">${r[0]}</td><td style="${td}">${r[1]} ข้อ</td><td style="${td}">${r[2]}</td></tr>`).join('')+'</table>'
+    :'<div style="font-size:14px;color:var(--green);padding:8px 0">ครั้งนี้ไม่มีจุดต้องแก้ — ทำได้ครบทุกข้อ 🎉</div>';
+  document.getElementById('p-actions').innerHTML=`
+    <div style="border-left:4px solid #3B7D2A;background:#EAF5E6;padding:11px 13px;border-radius:0 10px 10px 0;margin-bottom:8px;font-size:13px"><b style="display:block;font-size:12px;margin-bottom:3px">✅ ประโยคที่ช่วยลูกได้มากสัปดาห์นี้</b>"ครูบอกว่า${d.streak>=2?'ลูกพัฒนาขึ้น '+d.streak+' ครั้งติด':'ทุกจุดที่ลูกพลาดมีแผนแก้ชัดเจนแล้ว'} เก่งมากที่ไม่หยุดพยายาม"</div>
+    <div style="border-left:4px solid #A32D2D;background:#FBEAEA;padding:11px 13px;border-radius:0 10px 10px 0;font-size:13px"><b style="display:block;font-size:12px;margin-bottom:3px">⛔ ประโยคที่งานวิจัยพบว่าทำให้คะแนนครั้งหน้าแย่ลง</b>"ทำไมยังไม่เต็ม 30" / "เพื่อนได้เท่าไหร่" — การเทียบกับผู้อื่นช่วงเตรียมสอบเพิ่มความกังวล และทำให้เด็กเริ่มปิดบังคะแนน</div>`;
+  const talkEl=document.getElementById('p-talkList');
+  if(talkEl)talkEl.innerHTML='<div style="font-size:13px;color:var(--text1);line-height:1.9">• "เป้าครั้งหน้าลูกอยากได้เท่าไหร่ ให้พ่อแม่ช่วยอะไรได้บ้าง?" — ให้ลูกเป็นเจ้าของเป้าหมายเอง<br>• "ข้อไหนที่ภูมิใจว่าแก้ได้แล้ว?" — เริ่มจากความก้าวหน้าก่อนเสมอ</div>';
+  _fillParentQGrid(d);
+}
+
+// ── 🐘 ช้าง: ข่าวดีมาก่อน ไม่มีสีแดง มี context และคำสัญญาจากครู ──
+function _parentElephant(d){
+  const name=d.shortName;
+  const goods=[];
+  if(d.isBest)goods.push(`คะแนนสูงสุดตั้งแต่เริ่มเรียน — ${d.score}/30`);
+  if(d.streak>=2)goods.push(`พัฒนาดีขึ้นต่อเนื่อง ${d.streak} ครั้งติด`);
+  else if(d.delta!=null&&d.delta>0)goods.push(`คะแนนเพิ่มขึ้น ${d.delta} ข้อจากครั้งก่อน`);
+  if(d.care>0)goods.push(`มี ${d.care} ข้อที่น้องรู้วิธีทำอยู่แล้ว เพียงฝึกความรอบคอบอีกนิดก็ได้คะแนนคืน`);
+  if(d.grpStats&&d.score>=d.grpStats.avg)goods.push(`คะแนนอยู่เหนือค่าเฉลี่ยของกลุ่ม (${d.grpStats.avg}/30)`);
+  if(!goods.length)goods.push('น้องมาเรียนสม่ำเสมอและตั้งใจทำครบทุกขั้นตอน — ความต่อเนื่องแบบนี้คือรากฐานที่ดีที่สุดครับ');
+  document.getElementById('p-summary').innerHTML=`
+    <div style="font-size:13px;color:#3B7D2A;font-weight:600;margin-bottom:8px">🐘 ข่าวดีของ${name}ประจำรายงานนี้ 🌱</div>
+    ${goods.slice(0,3).map((g,i)=>`<div class="summary-headline" style="margin-bottom:4px">${i+1}. ${g}</div>`).join('')}`;
+  const below=d.grpStats&&d.score<d.grpStats.avg;
+  document.getElementById('p-problems').innerHTML=`
+    <div style="font-size:13px;color:var(--text2);line-height:1.9">
+    <b>บริบทที่อยากให้ทราบ:</b> ค่าเฉลี่ยของกลุ่มครั้งนี้อยู่ที่ ${d.grpStats?d.grpStats.avg:'—'}/30 ${below?'— ชุดนี้ท้าทายทั้งกลุ่ม คะแนนของน้องอยู่ในจังหวะการเรียนรู้ที่เหมาะสมครับ':'— น้องทำได้ดีมากครับ'}<br>
+    <b>สิ่งที่ครูดูแลอยู่:</b> จุดเล็กๆ ที่ยังพลาด ครูมีแผนฝึกในคาบเรียนครบทุกจุดแล้ว ไม่ต้องเพิ่มอะไรที่บ้าน<br>
+    <b>ข้อตกลงใจ:</b> หากมีสัญญาณที่ต้องช่วยกันดูแล ครูจะติดต่อคุณผู้ปกครองก่อนเสมอ — ถ้าไม่มีข้อความจากครู แปลว่าทุกอย่างอยู่ในแผนครับ</div>`;
+  document.getElementById('p-actions').innerHTML='<div class="action-card" style="border-left-color:#3B7D2A"><div class="action-title" style="color:#3B7D2A">สิ่งเดียวที่ช่วยได้มากที่สุด</div><div class="action-text">บรรยากาศผ่อนคลายที่บ้าน — เด็กที่ผู้ปกครองกังวลน้อย ทำข้อสอบได้ดีกว่าอย่างมีนัยสำคัญ ความห่วงใยของคุณส่งถึงน้องอยู่แล้วครับ</div></div>';
+  const talkEl=document.getElementById('p-talkList');
+  if(talkEl)talkEl.innerHTML='<div style="font-size:13px;color:var(--text1);line-height:1.9">• "วันนี้เรียนอะไรสนุกที่สุด?" — คำถามที่ไม่มีคะแนนเป็นคำตอบ<br>• "อยากกินอะไรพิเศษหลังสอบเสร็จ?" — ให้การสอบจบด้วยความรู้สึกดี</div>';
+  _fillParentQGrid(d);
+}
+
+// ── 🦉 นกฮูก: ไฟจราจร + 3 บรรทัดจบ + กติกาว่าครูจะติดต่อเมื่อไหร่ ──
+function _parentOwl(d){
+  const hist=d.history||[];
+  let st='🟢',color='#3B7D2A',head='เป็นไปตามแผน — ไม่ต้องดำเนินการใดๆ';
+  const drop2=hist.length>=3&&hist[hist.length-1].score<hist[hist.length-2].score&&hist[hist.length-2].score<hist[hist.length-3].score;
+  if(d.score<15||drop2){st='🔴';color='#A32D2D';head='ครูกำลังดูแลใกล้ชิด และจะติดต่อคุณผู้ปกครองโดยตรงครับ';}
+  else if(d.delta!=null&&d.delta<0){st='🟡';color='#C77E1A';head='คะแนนย่อลงเล็กน้อย — อยู่ในช่วงผันผวนปกติ ครูติดตามอยู่';}
+  document.getElementById('p-summary').innerHTML=`
+    <div style="display:flex;align-items:center;gap:14px">
+      <div style="font-size:40px">${st}</div>
+      <div><div style="font-size:16px;font-weight:700;color:${color}">${head}</div>
+      <div style="font-size:13.5px;color:var(--text2);margin-top:4px">${d.shortName} · ${d.topic} · ได้ <b>${d.score}/30</b>${d.delta!=null?(d.delta>=0?' (▲ +'+d.delta+')':' (▼ '+d.delta+')'):''}${d.isBest?' · สูงสุดตั้งแต่เริ่มเรียน':''}<br>${(d.care+d.concept+d.cant+d.timeout)>0?'จุดที่ต้องเก็บ ครูจัดแผนฝึกให้แล้ว':'ไม่มีจุดต้องเก็บเพิ่ม'}</div></div>
+    </div>`;
+  const td='padding:6px 8px;border-bottom:1px solid var(--border,#E7E4DC)';
+  document.getElementById('p-problems').innerHTML=`
+    <div style="font-size:12px;color:var(--text3);margin-bottom:6px">คุณผู้ปกครองจะได้รับข้อความจากครู เฉพาะเมื่อ:</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <tr><td style="${td}">🔴</td><td style="${td}">คะแนนลดลง 2 ครั้งติด หรือต่ำกว่า 15/30</td><td style="${td}">ครูติดต่อภายใน 24 ชม.</td></tr>
+    <tr><td style="${td}">🟡</td><td style="${td}">ขาดเรียน/ไม่ส่งงานต่อเนื่อง หรือข้อไม่ทันเวลาพุ่งผิดปกติ</td><td style="${td}">ครูส่งข้อความแจ้ง</td></tr>
+    <tr><td style="padding:6px 8px">🟢</td><td style="padding:6px 8px">นอกเหนือจากนั้น = ทุกอย่างอยู่ในแผน</td><td style="padding:6px 8px">รายงานสั้นแบบนี้ตามรอบสอบ</td></tr></table>`;
+  document.getElementById('p-actions').innerHTML='';
+  const talkEl=document.getElementById('p-talkList');
+  if(talkEl)talkEl.innerHTML='<div style="font-size:13px;color:var(--text1)">• "ช่วงนี้เป็นยังไงบ้าง?" — แค่ให้ลูกรู้ว่าคุณพร้อมฟัง เท่านี้พอครับ</div>';
+  _fillParentQGrid(d);
+}
+
+// ── 🐝 ผึ้ง: การ์ดเดียวจบ + สิ่งเดียวที่อยากให้ทำ ──
+function _parentBee(d){
+  const name=d.shortName;
+  let praise='ตั้งใจเรียนสม่ำเสมอ';
+  if(d.isBest)praise='ทำคะแนนสูงสุดตั้งแต่เริ่มเรียน';
+  else if(d.streak>=2)praise='พัฒนาขึ้น '+d.streak+' ครั้งติด';
+  else if(d.delta!=null&&d.delta>0)praise='คะแนนดีขึ้นจากครั้งก่อน';
+  document.getElementById('p-summary').innerHTML=`
+    <div style="max-width:340px;margin:0 auto;border:1px solid var(--border,#E7E4DC);border-radius:14px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.08)">
+      <div style="background:#185FA5;color:#fff;padding:10px 14px;font-size:13px">📊 MathsBankTutor · รายงาน${name}</div>
+      <div style="padding:14px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="font-size:28px">${d.score>=15?'🟢':'🟡'}</div>
+          <div><b style="font-size:18px">${d.score}/30</b> <span style="font-size:11px;color:var(--text3)">· ${d.topic}</span><br><span style="font-size:12.5px">${praise} กำลังไปได้ดีครับ</span></div>
+        </div>
+        <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:10px 12px;margin-top:10px;font-size:12.5px">💬 <b style="color:#C2410C">สิ่งเดียวที่อยากรบกวน:</b><br>คืนนี้บอกน้องสั้นๆ ว่า <i>"พ่อ/แม่ได้ข่าวจากครูแบงก์ว่าลูก${praise} ภูมิใจนะ"</i><br><span style="font-size:11px;color:var(--text3)">10 วินาที แต่ผลต่อความมุ่งมั่นของลูกมากกว่าที่คิดครับ</span></div>
+      </div>
+    </div>`;
+  document.getElementById('p-problems').innerHTML='<div style="font-size:12px;color:var(--text3)">อยากเห็นรายละเอียดเต็ม สลับสไตล์เป็น 🐬 โลมา ด้านบนได้ทุกเมื่อ — หรือทักครูแบงก์ได้เลยครับ</div>';
+  document.getElementById('p-actions').innerHTML='';
+  const talkEl=document.getElementById('p-talkList');
+  if(talkEl)talkEl.innerHTML='';
+  _fillParentQGrid(d);
 }
 
 function switchTab(name){
-  const names=['questions','subtopic','plan','practice','compare','progress'];
+  const names=['questions','subtopic','plan','practice','compare'];
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',names[i]===name));
   document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('active',p.id==='pane-'+name));
   // ถ้ากด tab กลุ่ม → resize chart เพื่อแก้กรณี canvas วาดตอน pane ซ่อนอยู่
@@ -814,8 +975,15 @@ function switchTab(name){
       try{if(distChartInst)  distChartInst.resize();}catch(e){}
     }, 50);
   }
-  if(name==='progress'){
-    setTimeout(()=>{try{if(trendChartInst) trendChartInst.resize();}catch(e){}},50);
-  }
+}
+
+// ── v2: ติ๊กแผนทบทวน — บันทึกใน localStorage + อัปเดต progress bar ──
+function spTick(cb){
+  try{localStorage.setItem(cb.getAttribute('data-spkey'),cb.checked?'1':'0');}catch(e){}
+  const row=cb.closest('.sp-row'); if(row)row.style.opacity=cb.checked?'0.55':'1';
+  const boxes=[...document.querySelectorAll('#s-studyPlan input[type=checkbox]')];
+  const n=boxes.filter(b=>b.checked).length;
+  const f=document.getElementById('sp-fill'); if(f)f.style.width=(boxes.length?Math.round(n/boxes.length*100):0)+'%';
+  const t=document.getElementById('sp-text'); if(t)t.textContent='ทำแล้ว '+n+' จาก '+boxes.length+' ขั้น'+(n===boxes.length?' — ครบแล้ว เก่งมาก! 🎉':'');
 }
 document.addEventListener('DOMContentLoaded',()=>{try{loadStudents();}catch(e){}});
