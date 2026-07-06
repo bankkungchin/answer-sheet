@@ -5,10 +5,16 @@
    เพิ่ม: การ์ดพัฒนาการ + trend รายครั้ง, checkbox แผนทบทวน (จำใน localStorage),
    จุดอ่อนเรื้อรัง, รายงานผู้ปกครอง 5 สไตล์ (🦅🐬🐘🦉🐝),
    แก้บั๊กกล่อง "จุดต้องแก้" ไม่รวมคอนเซปต์, เลิก hardcode "129 ข้อ"
+   ── v2.1 ──
+   เพิ่ม renderProgressTrend() สำหรับแท็บ 📈 พัฒนาการ (pane-progress),
+   แก้ dropdown รายชื่อโชว์ครบทุกคน (เดิมตัดที่ 80 ชื่อ ทำให้กลุ่มวันจันทร์หาย),
+   switchTab รองรับจำนวนแท็บไม่จำกัด, ปุ่มสลับธีม สว่าง/มืด/ตามระบบ,
+   ปรับข้อความ 🦉/🐘 ไม่ผูกมัดว่าครูจะติดต่อผู้ปกครอง
    ============================================================ */
 let pinBuffer='', pinAttempts=0, currentStudent='';
 let dashData = null;let dashErr='';let selectedGroups=null;
 let diffChartInst=null, groupChartInst=null, distChartInst=null;
+let trendChartInst=null, mixChartInst=null;
 
 function goTo(id){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
 function resetAll(){ pinBuffer=''; pinAttempts=0; updatePinDots(); document.getElementById('attemptsMsg').textContent=''; document.getElementById('p2status').textContent=''; }
@@ -18,7 +24,7 @@ async function loadStudents(){
   document.getElementById('p1status').className='status';
   document.getElementById('p1status').textContent='กำลังโหลดรายชื่อ...';
   try{
-    const res=await fetch(`${BASE}/${SHEET_ID}/values/students!B2:B200?key=${API_KEY}`);
+    const res=await fetch(`${BASE}/${SHEET_ID}/values/students!B2:B500?key=${API_KEY}`);
     const data=await res.json();
     if(data.error){document.getElementById('p1status').className='status err';document.getElementById('p1status').textContent='Error: '+data.error.message;return;}
     const seen=new Set(); studentList=[];
@@ -38,7 +44,7 @@ function filterStudents(){
   let matches = q ? studentList.filter(n=>n.toLowerCase().includes(q)) : studentList.slice();
   comboIdx=-1;
   if(!matches.length){ box.innerHTML='<div class="combo-empty">ไม่พบชื่อที่ตรงกับ "'+_esc(inp.value)+'"</div>'; box.classList.add('open'); return; }
-  box.innerHTML = matches.slice(0,80).map((n,i)=>{
+  box.innerHTML = matches.map((n,i)=>{
     let disp=_esc(n);
     if(q){ const idx=n.toLowerCase().indexOf(q); if(idx>=0){ disp=_esc(n.slice(0,idx))+'<span class="hl">'+_esc(n.slice(idx,idx+q.length))+'</span>'+_esc(n.slice(idx+q.length)); } }
     return `<div class="combo-opt" data-name="${_esc(n)}" onclick="pickStudent(this.getAttribute('data-name'))">${disp}</div>`;
@@ -385,7 +391,9 @@ async function fetchDashData(){
   const isBest=history.length>1&&score>=Math.max(...history.map(h=>h.score));
   // results_long ทุกแถวของนักเรียนคนนี้ (ทุกการสอบ) — ใช้หา "จุดอ่อนเรื้อรัง"
   const myLongAll=longRows.filter(r=>r[0]===currentStudent);
-  dashData={group,date,topic,score,care,concept,cant,timeout,wrong,blank,qResults,groupMembers,rank,allMembers,allRank,allAvg,groupsInTopic,subtopics,diffMap,myAna,grpSubtopics,grpStats,history,prev,delta,streak,isBest,myLongAll,shortName:currentStudent.replace(/\s*\(.*\)/,'')};
+  // v2.1: ประวัติทุกบท (ไม่สน topicFilter) — fallback ของแท็บพัฒนาการเมื่อบทที่กรองมีสอบครั้งเดียว
+  const allHistory=allMine.map(r=>({date:r[3]||'',topic:r[4]||'',score:parseInt(r[36])||0,care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0}));
+  dashData={group,date,topic,score,care,concept,cant,timeout,wrong,blank,qResults,groupMembers,rank,allMembers,allRank,allAvg,groupsInTopic,subtopics,diffMap,myAna,grpSubtopics,grpStats,history,prev,delta,streak,isBest,myLongAll,allHistory,shortName:currentStudent.replace(/\s*\(.*\)/,'')};
 }
 
 async function showDashboard(mode){
@@ -455,6 +463,67 @@ function renderTrendCard(d){
   </div>`;
 }
 
+// ═══════ v2.1: แท็บ 📈 พัฒนาการ (pane-progress) — Chart.js เต็มรูปแบบ ═══════
+function renderProgressTrend(d){
+  const pane=document.getElementById('pane-progress'); if(!pane)return;
+  let hist=d.history||[]; let note='';
+  if(hist.length<2&&(d.allHistory||[]).length>=2){ hist=d.allHistory; note='บทที่กรองอยู่มีการสอบครั้งเดียว — กราฟนี้จึงรวมทุกบท เพื่อให้เห็นภาพรวมพัฒนาการ'; }
+  if(hist.length<2){
+    pane.innerHTML='<div class="d-card"><div class="slabel">📈 พัฒนาการ</div><div style="font-size:13px;color:var(--text2);line-height:1.7">ยังมีผลสอบครั้งเดียว — กราฟพัฒนาการจะเริ่มแสดงตั้งแต่การสอบครั้งที่ 2 เป็นต้นไปครับ 💪<br>ระหว่างนี้ดูจุดที่ต้องเก็บได้ที่แท็บ "แผนทบทวน" เลย</div></div>';
+    return;
+  }
+  pane.innerHTML=`
+    <div class="d-card" style="padding:1rem">
+      <div class="slabel">📈 คะแนนรายครั้ง — เทียบกับตัวเองเท่านั้น</div>
+      ${note?'<div style="font-size:11.5px;color:var(--amber);margin-bottom:8px">'+note+'</div>':''}
+      <div style="position:relative;width:100%;height:220px"><canvas id="s-trendChart"></canvas></div>
+      <div style="font-size:11px;color:var(--text3);margin-top:6px">เส้นประแดง = เป้าหมาย 25/30 (เกณฑ์คณะแข่งขันสูง)</div>
+    </div>
+    <div class="d-card" style="padding:1rem">
+      <div class="slabel">ส่วนผสมผลรายครั้ง</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:8px">คะแนนรวมเท่าเดิมแต่แถบด้านบนหดลง = กำลังพัฒนา (เช่น ❌ กลายเป็น ⚠️)</div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="s-mixChart"></canvas></div>
+    </div>
+    <div class="d-card">
+      <div class="slabel">สรุปรายครั้ง</div>
+      <div id="s-trendTable"></div>
+    </div>`;
+  const labels=hist.map((h,i)=>h.date||('ครั้ง '+(i+1)));
+  if(trendChartInst){trendChartInst.destroy();trendChartInst=null;}
+  trendChartInst=new Chart(document.getElementById('s-trendChart'),{
+    type:'line',
+    data:{labels,datasets:[
+      {label:'คะแนน',data:hist.map(h=>h.score),borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,.12)',fill:true,tension:.25,pointRadius:4,pointBackgroundColor:'#185FA5'},
+      {label:'เป้า 25',data:hist.map(()=>25),borderColor:'#A32D2D',borderDash:[6,4],pointRadius:0,fill:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw}}},
+      scales:{y:{min:0,max:30,ticks:{stepSize:5},grid:{color:'rgba(128,128,128,0.1)'}},x:{grid:{display:false},ticks:{font:{size:10}}}}}
+  });
+  if(mixChartInst){mixChartInst.destroy();mixChartInst=null;}
+  mixChartInst=new Chart(document.getElementById('s-mixChart'),{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'✅ ถูก',data:hist.map(h=>h.score),backgroundColor:'#4C9A2A'},
+      {label:'⚠️ สะเพร่า',data:hist.map(h=>h.care),backgroundColor:'#FDE910'},
+      {label:'C คอนเซปต์',data:hist.map(h=>h.concept),backgroundColor:'#F5A623'},
+      {label:'❌ ทำไม่ได้',data:hist.map(h=>h.cant),backgroundColor:'#ef4444'},
+      {label:'⏰ ไม่ทัน',data:hist.map(h=>h.timeout),backgroundColor:'#a855f7'}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:10},boxWidth:12}}},
+      scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:10}}},y:{stacked:true,min:0,max:30,ticks:{stepSize:5},grid:{color:'rgba(128,128,128,0.1)'}}}}
+  });
+  const tbl=document.getElementById('s-trendTable');
+  if(tbl){
+    let rowsH='';
+    hist.forEach((h,i)=>{
+      const dlt=i>0?h.score-hist[i-1].score:null;
+      const dtxt=dlt==null?'<span style="color:var(--text3)">—</span>':(dlt>0?'<span style="color:#3B7D2A;font-weight:600">▲ +'+dlt+'</span>':(dlt<0?'<span style="color:#C77E1A;font-weight:600">▼ '+dlt+'</span>':'▬ 0'));
+      rowsH+=`<div class="rev-row"><div style="min-width:24px;font-size:12px;color:var(--text3)">${i+1}</div><div style="flex:1"><div style="font-size:12.5px;color:var(--text1)">${h.topic||'—'}</div><div style="font-size:10.5px;color:var(--text3)">${h.date||''}</div></div><div style="font-size:13px;font-weight:600;min-width:48px;text-align:right">${h.score}/30</div><div style="min-width:56px;text-align:right;font-size:12px">${dtxt}</div></div>`;
+    });
+    tbl.innerHTML=rowsH;
+  }
+}
+
 function renderStudentDash(d){
   document.getElementById('s-avatar').textContent=d.shortName.substring(0,3);
   document.getElementById('s-name').textContent=d.shortName;
@@ -478,6 +547,7 @@ function renderStudentDash(d){
     encEl.style.display='block';
   }
   try{renderTrendCard(d);}catch(e){console.error('trend',e);}
+  try{renderProgressTrend(d);}catch(e){console.error('progress',e);}
   const qClass={ok:'q-ok',care:'q-care',concept:'q-concept',cant:'q-cant',timeout:'q-timeout',wrong:'q-wrong',blank:'q-blank'};
   ['qgrid1','qgrid2'].forEach(id=>document.getElementById(id).innerHTML='');
   for(let i=1;i<=30;i++){const g=document.getElementById(i<=15?'qgrid1':'qgrid2');const el=document.createElement('div');el.className='q-cell '+qClass[d.qResults[i]];el.textContent=i;g.appendChild(el);}
@@ -906,7 +976,7 @@ function _parentElephant(d){
     <div style="font-size:13px;color:var(--text2);line-height:1.9">
     <b>บริบทที่อยากให้ทราบ:</b> ค่าเฉลี่ยของกลุ่มครั้งนี้อยู่ที่ ${d.grpStats?d.grpStats.avg:'—'}/30 ${below?'— ชุดนี้ท้าทายทั้งกลุ่ม คะแนนของน้องอยู่ในจังหวะการเรียนรู้ที่เหมาะสมครับ':'— น้องทำได้ดีมากครับ'}<br>
     <b>สิ่งที่ครูดูแลอยู่:</b> จุดเล็กๆ ที่ยังพลาด ครูมีแผนฝึกในคาบเรียนครบทุกจุดแล้ว ไม่ต้องเพิ่มอะไรที่บ้าน<br>
-    <b>ข้อตกลงใจ:</b> หากมีสัญญาณที่ต้องช่วยกันดูแล ครูจะติดต่อคุณผู้ปกครองก่อนเสมอ — ถ้าไม่มีข้อความจากครู แปลว่าทุกอย่างอยู่ในแผนครับ</div>`;
+    <b>จังหวะการเรียนรู้:</b> คะแนนขึ้นๆ ลงๆ ระหว่างเตรียมสอบเป็นเรื่องปกติมาก สิ่งที่ครูโฟกัสคือแนวโน้มระยะยาวของน้อง ซึ่งดูได้ที่แท็บพัฒนาการในมุมมองนักเรียนครับ</div>`;
   document.getElementById('p-actions').innerHTML='<div class="action-card" style="border-left-color:#3B7D2A"><div class="action-title" style="color:#3B7D2A">สิ่งเดียวที่ช่วยได้มากที่สุด</div><div class="action-text">บรรยากาศผ่อนคลายที่บ้าน — เด็กที่ผู้ปกครองกังวลน้อย ทำข้อสอบได้ดีกว่าอย่างมีนัยสำคัญ ความห่วงใยของคุณส่งถึงน้องอยู่แล้วครับ</div></div>';
   const talkEl=document.getElementById('p-talkList');
   if(talkEl)talkEl.innerHTML='<div style="font-size:13px;color:var(--text1);line-height:1.9">• "วันนี้เรียนอะไรสนุกที่สุด?" — คำถามที่ไม่มีคะแนนเป็นคำตอบ<br>• "อยากกินอะไรพิเศษหลังสอบเสร็จ?" — ให้การสอบจบด้วยความรู้สึกดี</div>';
@@ -918,8 +988,8 @@ function _parentOwl(d){
   const hist=d.history||[];
   let st='🟢',color='#3B7D2A',head='เป็นไปตามแผน — ไม่ต้องดำเนินการใดๆ';
   const drop2=hist.length>=3&&hist[hist.length-1].score<hist[hist.length-2].score&&hist[hist.length-2].score<hist[hist.length-3].score;
-  if(d.score<15||drop2){st='🔴';color='#A32D2D';head='ครูกำลังดูแลใกล้ชิด และจะติดต่อคุณผู้ปกครองโดยตรงครับ';}
-  else if(d.delta!=null&&d.delta<0){st='🟡';color='#C77E1A';head='คะแนนย่อลงเล็กน้อย — อยู่ในช่วงผันผวนปกติ ครูติดตามอยู่';}
+  if(d.score<15||drop2){st='🔴';color='#A32D2D';head='ชุดนี้ท้าทายสำหรับน้อง — ครูปรับแผนฝึกเฉพาะจุดให้แล้ว กำลังใจจากบ้านช่วยได้มากครับ';}
+  else if(d.delta!=null&&d.delta<0){st='🟡';color='#C77E1A';head='คะแนนย่อลงเล็กน้อย — อยู่ในช่วงผันผวนปกติของการเตรียมสอบ';}
   document.getElementById('p-summary').innerHTML=`
     <div style="display:flex;align-items:center;gap:14px">
       <div style="font-size:40px">${st}</div>
@@ -928,11 +998,11 @@ function _parentOwl(d){
     </div>`;
   const td='padding:6px 8px;border-bottom:1px solid var(--border,#E7E4DC)';
   document.getElementById('p-problems').innerHTML=`
-    <div style="font-size:12px;color:var(--text3);margin-bottom:6px">คุณผู้ปกครองจะได้รับข้อความจากครู เฉพาะเมื่อ:</div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:6px">ความหมายของสัญญาณไฟ:</div>
     <table style="width:100%;border-collapse:collapse;font-size:13px">
-    <tr><td style="${td}">🔴</td><td style="${td}">คะแนนลดลง 2 ครั้งติด หรือต่ำกว่า 15/30</td><td style="${td}">ครูติดต่อภายใน 24 ชม.</td></tr>
-    <tr><td style="${td}">🟡</td><td style="${td}">ขาดเรียน/ไม่ส่งงานต่อเนื่อง หรือข้อไม่ทันเวลาพุ่งผิดปกติ</td><td style="${td}">ครูส่งข้อความแจ้ง</td></tr>
-    <tr><td style="padding:6px 8px">🟢</td><td style="padding:6px 8px">นอกเหนือจากนั้น = ทุกอย่างอยู่ในแผน</td><td style="padding:6px 8px">รายงานสั้นแบบนี้ตามรอบสอบ</td></tr></table>`;
+    <tr><td style="${td}">🔴</td><td style="${td}">ชุดนี้ท้าทาย หรือคะแนนย่อต่อเนื่อง</td><td style="${td}">ลองชวนลูกคุยเบาๆ และดูรายละเอียดได้ในสไตล์ 🐬 โลมา</td></tr>
+    <tr><td style="${td}">🟡</td><td style="${td}">กำลังปรับตัว คะแนนแกว่งเล็กน้อย</td><td style="${td}">ติดตามผลครั้งถัดไป ยังไม่ต้องทำอะไรเพิ่ม</td></tr>
+    <tr><td style="padding:6px 8px">🟢</td><td style="padding:6px 8px">ทุกอย่างอยู่ในแผน</td><td style="padding:6px 8px">ให้กำลังใจตามปกติ เท่านี้พอครับ</td></tr></table>`;
   document.getElementById('p-actions').innerHTML='';
   const talkEl=document.getElementById('p-talkList');
   if(talkEl)talkEl.innerHTML='<div style="font-size:13px;color:var(--text1)">• "ช่วงนี้เป็นยังไงบ้าง?" — แค่ให้ลูกรู้ว่าคุณพร้อมฟัง เท่านี้พอครับ</div>';
@@ -965,14 +1035,23 @@ function _parentBee(d){
 }
 
 function switchTab(name){
-  const names=['questions','subtopic','plan','practice','compare'];
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',names[i]===name));
-  document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('active',p.id==='pane-'+name));
-  // ถ้ากด tab กลุ่ม → resize chart เพื่อแก้กรณี canvas วาดตอน pane ซ่อนอยู่
+  // v2.1: จับคู่ปุ่ม↔ชื่อจาก onclick โดยตรง — รองรับจำนวนแท็บไม่จำกัด และไม่ชนกับแท็บของคลังทบทวน
+  document.querySelectorAll('#p4 .tab-row .tab').forEach(t=>{
+    const m=(t.getAttribute('onclick')||'').match(/switchTab\('([^']+)'\)/);
+    t.classList.toggle('active',!!m&&m[1]===name);
+  });
+  document.querySelectorAll('#p4 .pane').forEach(p=>p.classList.toggle('active',p.id==='pane-'+name));
+  // resize chart เมื่อ pane ที่มี canvas เพิ่งโผล่ (canvas วาดตอนซ่อนจะขนาด 0)
   if(name==='compare'){
     setTimeout(()=>{
       try{if(groupChartInst) groupChartInst.resize();}catch(e){}
       try{if(distChartInst)  distChartInst.resize();}catch(e){}
+    }, 50);
+  }
+  if(name==='progress'){
+    setTimeout(()=>{
+      try{if(trendChartInst) trendChartInst.resize();}catch(e){}
+      try{if(mixChartInst)   mixChartInst.resize();}catch(e){}
     }, 50);
   }
 }
@@ -986,4 +1065,32 @@ function spTick(cb){
   const f=document.getElementById('sp-fill'); if(f)f.style.width=(boxes.length?Math.round(n/boxes.length*100):0)+'%';
   const t=document.getElementById('sp-text'); if(t)t.textContent='ทำแล้ว '+n+' จาก '+boxes.length+' ขั้น'+(n===boxes.length?' — ครบแล้ว เก่งมาก! 🎉':'');
 }
-document.addEventListener('DOMContentLoaded',()=>{try{loadStudents();}catch(e){}});
+// ── v2.1: สลับธีม สว่าง/มืด/ตามระบบ (จำค่าใน localStorage) ──
+const _DARK_CSS=`html.force-dark{--bg:#1C1C1A;--card:#252523;--border:rgba(255,255,255,0.08);--border-md:rgba(255,255,255,0.15);--text1:#F0EEE9;--text2:#A8A8A0;--text3:#666660;--surf:#2C2C2A;--blue-l:#042C53;--amber-l:#412402;--red-l:#501313;--green-l:#173404}
+html.force-dark .q-blank{background:repeating-linear-gradient(45deg,#333,#333 4px,#444 4px,#444 8px);color:#999;border:1px dashed #555}
+html.force-light{--bg:#F5F4F1;--card:#FFFFFF;--border:rgba(0,0,0,0.08);--border-md:rgba(0,0,0,0.14);--text1:#1A1A1A;--text2:#666660;--text3:#999993;--surf:#F0EEE9;--blue-l:#E6F1FB;--amber-l:#FAEEDA;--red-l:#FCEBEB;--green-l:#EAF3DE}
+html.force-light .q-blank{background:repeating-linear-gradient(45deg,#E8E6E0,#E8E6E0 4px,#D8D5CC 4px,#D8D5CC 8px);color:#777;border:1px dashed #AAA}`;
+function _applyTheme(mode){
+  document.documentElement.classList.remove('force-dark','force-light');
+  if(mode==='dark')document.documentElement.classList.add('force-dark');
+  else if(mode==='light')document.documentElement.classList.add('force-light');
+  const b=document.getElementById('themeToggle');
+  if(b){b.textContent=mode==='dark'?'🌙':(mode==='light'?'☀️':'🌓');
+       b.title='ธีม: '+(mode==='dark'?'มืด':(mode==='light'?'สว่าง':'ตามระบบ'))+' — กดเพื่อสลับ';}
+}
+function toggleTheme(){
+  const order=['auto','dark','light'];
+  let cur='auto'; try{cur=localStorage.getItem('themeMode')||'auto';}catch(e){}
+  const next=order[(order.indexOf(cur)+1)%order.length];
+  try{localStorage.setItem('themeMode',next);}catch(e){}
+  _applyTheme(next);
+}
+function _initTheme(){
+  const st=document.createElement('style'); st.textContent=_DARK_CSS; document.head.appendChild(st);
+  const b=document.createElement('button'); b.id='themeToggle'; b.onclick=toggleTheme;
+  b.style.cssText='position:fixed;right:14px;bottom:14px;z-index:99;width:44px;height:44px;border-radius:50%;border:1px solid var(--border-md);background:var(--card);font-size:19px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.18);line-height:1';
+  document.body.appendChild(b);
+  let cur='auto'; try{cur=localStorage.getItem('themeMode')||'auto';}catch(e){}
+  _applyTheme(cur);
+}
+document.addEventListener('DOMContentLoaded',()=>{try{loadStudents();}catch(e){} try{_initTheme();}catch(e){}});
