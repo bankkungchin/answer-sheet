@@ -228,9 +228,11 @@ function renderPracticePlan(d){
   const _nTopic=_normT(d.topic);
   let bank=PRACTICE_BANK[_nTopic];
   if(!bank){ const baseTopic=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); bank=PRACTICE_BANK[baseTopic]; }
+  // รวมบทที่เชื่อมด้วย "และ" เช่น "เรขาคณิตวิเคราะห์และภาคตัดกรวย" → รวม 2 คลัง
+  if(!bank){ const baseTopic=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); if(baseTopic.includes('และ')){ const parts=baseTopic.split('และ').map(p=>p.trim()); const banks=parts.map(p=>PRACTICE_BANK[p]).filter(Boolean); if(banks.length) bank=banks.flat(); } }
   // รวมคลัง Ent เข้ากับคลังหลัก (เช่น ตรีโกณมิติ + ตรีโกณมิติ Ent)
   if(bank){ const _base=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); const _ent=PRACTICE_BANK[_base+' Ent']; if(_ent) bank=[...bank,..._ent]; }
-  if(!bank){ el.innerHTML='<div class="d-card"><div style="font-size:13px;color:var(--text2);line-height:1.6;padding:4px 0">ยังไม่มีคลังฝึกพร้อมเฉลยวิดีโอสำหรับบท <b>'+d.topic+'</b> ครับ — ตอนนี้พร้อมเฉพาะบท <b>Expo Logarithm</b></div></div>'; return; }
+  if(!bank){ el.innerHTML='<div class="d-card"><div style="font-size:13px;color:var(--text2);line-height:1.6;padding:4px 0">ยังไม่มีคลังฝึกพร้อมเฉลยวิดีโอสำหรับบท <b>'+d.topic+'</b> ครับ — ตอนนี้คลังฝึกสำหรับบทนี้ยังอยู่ระหว่างจัดทำ</div></div>'; return; }
   // รวมยอดพลาดตามหมวด (จาก d.subtopics)
   const catMap={};
   d.subtopics.forEach(st=>{ const c=catOf(st.name); if(!catMap[c])catMap[c]={cat:c,ok:0,total:0}; catMap[c].ok+=st.ok; catMap[c].total+=st.total; });
