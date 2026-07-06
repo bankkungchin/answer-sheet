@@ -218,6 +218,8 @@ function sourceLabel(q){
   return '';
 }
 // ── แผนฝึกเพิ่ม: เลือกข้อจากคลัง 129 ข้อ ตามสัดส่วนที่พลาดในแต่ละหัวข้อ ──
+
+
 function renderPracticePlan(d){
   const el=document.getElementById('s-practice'); if(!el)return;
   // หาคลังฝึก: ลองชื่อบทตรงๆ ก่อน ถ้าไม่เจอ ตัด "ชุดที่ N" ออกแล้วลองใหม่
