@@ -2291,53 +2291,11 @@ PRACTICE_BANK["ลำดับและอนุกรม"] = [
 ];
 // PRACTICE_BANK รวม 181 ข้อ (156 YouTube + 25 HTML) | yt YouTube filled: 156/156
 
-// ===== CAT_EMOJI (หมวดใหม่บทเรียงลำดับจัดหมู่) =====
-  "กฎการนับเบื้องต้น":"🔵",
-  "การเรียงสับเปลี่ยนเชิงเส้น":"🟠",
-  "การเรียงสับเปลี่ยนเชิงวงกลม":"🟢",
-  "การจัดหมู่":"🟡",
-  "การนับฟังก์ชัน":"🟣",
-  "ทฤษฎีบททวินาม":"🔴",
-  "การนับแบบมีเงื่อนไข/Inclusion-Exclusion":"🟤",
+// ═══════════════════════════════════════════════════════════════
+// บทใหม่: การเรียงลำดับและการจัดหมู่ (prefix PC) — วางไว้ "ท้ายไฟล์สุด"
+// ═══════════════════════════════════════════════════════════════
 
-// ===== EMBEDDED_QB — Test Gamm เรียงลำดับจัดหมู่ (30 ข้อ) =====
-"การเรียงลำดับและการจัดหมู่": {
-    1:{sub:"การเรียงสับเปลี่ยนเชิงวงกลม",level:4},
-    2:{sub:"การจัดหมู่",level:4},
-    3:{sub:"การนับแบบมีเงื่อนไข/Inclusion-Exclusion",level:4},
-    4:{sub:"การจัดหมู่",level:4},
-    5:{sub:"การนับแบบมีเงื่อนไข/Inclusion-Exclusion",level:4},
-    6:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:4},
-    7:{sub:"การนับแบบมีเงื่อนไข/Inclusion-Exclusion",level:4},
-    8:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:4},
-    9:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:3},
-    10:{sub:"การจัดหมู่",level:4},
-    11:{sub:"กฎการนับเบื้องต้น",level:4},
-    12:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:4},
-    13:{sub:"การเรียงสับเปลี่ยนเชิงวงกลม",level:3},
-    14:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:3},
-    15:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:5},
-    16:{sub:"การนับฟังก์ชัน",level:4},
-    17:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:4},
-    18:{sub:"กฎการนับเบื้องต้น",level:3},
-    19:{sub:"การเรียงสับเปลี่ยนเชิงวงกลม",level:4},
-    20:{sub:"การจัดหมู่",level:4},
-    21:{sub:"การจัดหมู่",level:3},
-    22:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:3},
-    23:{sub:"การจัดหมู่",level:4},
-    24:{sub:"กฎการนับเบื้องต้น",level:3},
-    25:{sub:"การนับแบบมีเงื่อนไข/Inclusion-Exclusion",level:3},
-    26:{sub:"กฎการนับเบื้องต้น",level:3},
-    27:{sub:"การนับแบบมีเงื่อนไข/Inclusion-Exclusion",level:4},
-    28:{sub:"การนับฟังก์ชัน",level:2},
-    29:{sub:"การเรียงสับเปลี่ยนเชิงวงกลม",level:4},
-    30:{sub:"การจัดหมู่",level:2}
-},
-
-
-// ══════════ PRACTICE_BANK["การเรียงลำดับและการจัดหมู่"] ══════════
-"การเรียงลำดับและการจัดหมู่": [
-  // ── n:1-70 คลัง PAT1/9วิชา/A-Level 2552-2568 (yt=คลิป playlist) ──
+PRACTICE_BANK["การเรียงลำดับและการจัดหมู่"] = [
   { n:1, c:"การนับฟังก์ชัน", l:3, s:"PAT1 มี.ค.52", y:"2552", yt:"https://www.youtube.com/watch?v=OY49rh1nFhg&list=PLc4ncgz2CJ7MqVda7oTYgX5wlZj9l6MuO" },
   { n:2, c:"การเรียงสับเปลี่ยนเชิงวงกลม", l:4, s:"PAT1 มี.ค.52", y:"2552", yt:"https://www.youtube.com/watch?v=n5yCAHDMSRE&list=PLc4ncgz2CJ7MqVda7oTYgX5wlZj9l6MuO" },
   { n:3, c:"กฎการนับเบื้องต้น", l:3, s:"PAT1 ก.ค.52", y:"2552", yt:"https://www.youtube.com/watch?v=X6fvklFxx8s&list=PLc4ncgz2CJ7MqVda7oTYgX5wlZj9l6MuO" },
@@ -2408,7 +2366,6 @@ PRACTICE_BANK["ลำดับและอนุกรม"] = [
   { n:68, c:"กฎการนับเบื้องต้น", l:3, s:"A-Level 67", y:"2567", yt:"https://www.youtube.com/watch?v=kJZX5robOmo&list=PLc4ncgz2CJ7MqVda7oTYgX5wlZj9l6MuO" },
   { n:69, c:"กฎการนับเบื้องต้น", l:3, s:"A-Level 68", y:"2568", yt:"https://www.youtube.com/watch?v=aFtmD5sM2Co&list=PLc4ncgz2CJ7MqVda7oTYgX5wlZj9l6MuO" },
   { n:70, c:"กฎการนับเบื้องต้น", l:4, s:"A-Level 68", y:"2568", yt:"https://www.youtube.com/watch?v=k4GktbDlNCQ&list=PLc4ncgz2CJ7MqVda7oTYgX5wlZj9l6MuO" },
-  // ── n:71-101 Ent/A-NET 2541-2552 (yt=หน้าเฉลย HTML #qN, มี ans:) ──
   { n:71, c:"กฎการนับเบื้องต้น", l:2, s:"Ent ต.ค.41", y:"2541", yt:"https://bankkungchin.github.io/answer-sheet/permutation_2541-2552_final.html#q1", ans:"16" },
   { n:72, c:"การเรียงสับเปลี่ยนเชิงวงกลม", l:4, s:"Ent ต.ค.41", y:"2541", yt:"https://bankkungchin.github.io/answer-sheet/permutation_2541-2552_final.html#q2", ans:"216" },
   { n:73, c:"การนับฟังก์ชัน", l:2, s:"Ent ต.ค.41", y:"2541", yt:"https://bankkungchin.github.io/answer-sheet/permutation_2541-2552_final.html#q3", ans:"40" },
@@ -2440,6 +2397,47 @@ PRACTICE_BANK["ลำดับและอนุกรม"] = [
   { n:99, c:"การเรียงสับเปลี่ยนเชิงเส้น", l:3, s:"A-NET มี.ค.50", y:"2550", yt:"https://bankkungchin.github.io/answer-sheet/permutation_2541-2552_final.html#q29", ans:"1440" },
   { n:100, c:"การนับฟังก์ชัน", l:2, s:"A-NET 2552", y:"2552", yt:"https://bankkungchin.github.io/answer-sheet/permutation_2541-2552_final.html#q30", ans:"7" },
   { n:101, c:"การเรียงสับเปลี่ยนเชิงวงกลม", l:4, s:"A-NET 2552", y:"2552", yt:"https://bankkungchin.github.io/answer-sheet/permutation_2541-2552_final.html#q31", ans:"544" },
-],
+];
 
+EMBEDDED_QB["การเรียงลำดับและการจัดหมู่"] = {
+    1:{sub:"การเรียงสับเปลี่ยนเชิงวงกลม",level:4},
+    2:{sub:"การจัดหมู่",level:4},
+    3:{sub:"การนับแบบมีเงื่อนไข/Inclusion-Exclusion",level:4},
+    4:{sub:"การจัดหมู่",level:4},
+    5:{sub:"การนับแบบมีเงื่อนไข/Inclusion-Exclusion",level:4},
+    6:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:4},
+    7:{sub:"การนับแบบมีเงื่อนไข/Inclusion-Exclusion",level:4},
+    8:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:4},
+    9:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:3},
+    10:{sub:"การจัดหมู่",level:4},
+    11:{sub:"กฎการนับเบื้องต้น",level:4},
+    12:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:4},
+    13:{sub:"การเรียงสับเปลี่ยนเชิงวงกลม",level:3},
+    14:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:3},
+    15:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:5},
+    16:{sub:"การนับฟังก์ชัน",level:4},
+    17:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:4},
+    18:{sub:"กฎการนับเบื้องต้น",level:3},
+    19:{sub:"การเรียงสับเปลี่ยนเชิงวงกลม",level:4},
+    20:{sub:"การจัดหมู่",level:4},
+    21:{sub:"การจัดหมู่",level:3},
+    22:{sub:"การเรียงสับเปลี่ยนเชิงเส้น",level:3},
+    23:{sub:"การจัดหมู่",level:4},
+    24:{sub:"กฎการนับเบื้องต้น",level:3},
+    25:{sub:"การนับแบบมีเงื่อนไข/Inclusion-Exclusion",level:3},
+    26:{sub:"กฎการนับเบื้องต้น",level:3},
+    27:{sub:"การนับแบบมีเงื่อนไข/Inclusion-Exclusion",level:4},
+    28:{sub:"การนับฟังก์ชัน",level:2},
+    29:{sub:"การเรียงสับเปลี่ยนเชิงวงกลม",level:4},
+    30:{sub:"การจัดหมู่",level:2}
+};
 
+Object.assign(CAT_EMOJI, {
+  "กฎการนับเบื้องต้น":"🔵",
+  "การเรียงสับเปลี่ยนเชิงเส้น":"🟠",
+  "การเรียงสับเปลี่ยนเชิงวงกลม":"🟢",
+  "การจัดหมู่":"🟡",
+  "การนับฟังก์ชัน":"🟣",
+  "ทฤษฎีบททวินาม":"🔴",
+  "การนับแบบมีเงื่อนไข/Inclusion-Exclusion":"🟤"
+});
