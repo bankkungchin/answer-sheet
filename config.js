@@ -30,5 +30,5 @@ PLAYLISTS["เวกเตอร์"] = "PLc4ncgz2CJ7Or-3xHTxmhDg3BKrqUND-L";
 PLAYLISTS["เรขาคณิตวิเคราะห์"] = "TBD_ANALYTIC_PLAYLIST";
 PLAYLISTS["ภาคตัดกรวย"] = "PLc4ncgz2CJ7OXjl9Xww2mUZZR9vedES8Z";
 // ── config.js : เพิ่มใน PLAYLISTS ──
-//   "ลำดับและอนุกรม": "PLc4ncgz2CJ7OkZZpEy6AWsRCaeS-q-eyl",
-PLAYLISTS["ลำดับและอนุกรม"] = "PLc4ncgz2CJ7OkZZpEy6AWsRCaeS-q-eyl";
+//   "ลำดับและอนุกรม": "PLc4ncgz2CJ7OkZZpEy6AWsRCaeS-q-eyI",
+PLAYLISTS["ลำดับและอนุกรม"] = "PLc4ncgz2CJ7OkZZpEy6AWsRCaeS-q-eyI";
