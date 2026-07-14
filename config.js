@@ -33,4 +33,5 @@ PLAYLISTS["ภาคตัดกรวย"] = "PLc4ncgz2CJ7OXjl9Xww2mUZZR9vedES8
 
 // ═══ ไฟล์ 1/2 : config.js — วางต่อท้ายไฟล์ ═══
 PLAYLISTS["ลำดับและอนุกรม"] = "PLc4ncgz2CJ7OkZZpEy6AWsRCaeS-q-eyI";
- 
+
+PLAYLISTS["การเรียงลำดับและการจัดหมู่"]= "PLc4ncgz2CJ7MqVda7oTYgX5wlZj9l6MuO";
