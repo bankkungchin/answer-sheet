@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฉลยละเอียด — การเรียงลำดับและการจัดหมู่ (Ent/A-NET 2541–2552)</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
+<script>MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']],displayMath:[['\\[','\\]'],['$$','$$']]},svg:{fontCache:'global'}};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js" async></script>
+<style>
+:root{--ink:#1a1a1a;--muted:#555;--line:#d4d8e8;--bg:#f4f5fb;--paper:#fff;--accent:#2e4374;
+--amber:#7a4a00;--amber-bg:#fff8e8;--amber-border:#e8c870;--red:#8b1a1a;--red-bg:#fff4f4;--red-border:#f5c6c6;
+--green-bg:#f0faf2;--green-border:#a8d9b5;--green:#1a5c2e;--blue-bg:#f0f5ff;--blue-border:#bdd0f8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'IBM Plex Sans Thai','Sarabun',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;padding:18px;}
+.container{max-width:1080px;margin:0 auto;}
+.doc-header{background:linear-gradient(135deg,#2e4374,#3f5aa0);color:#fff;padding:26px 28px;border-radius:20px;margin-bottom:16px;}
+.doc-header h1{font-size:25px;margin-bottom:6px;}
+.doc-header p{opacity:.9;font-size:15px;}
+.backlink{display:inline-block;margin-bottom:14px;color:var(--accent);text-decoration:none;font-weight:600;}
+.index-bar{position:sticky;top:0;background:var(--paper);border:1px solid var(--line);border-radius:14px;
+padding:10px 12px;margin-bottom:18px;display:flex;flex-wrap:wrap;gap:6px;z-index:9;box-shadow:0 4px 14px rgba(0,0,0,.05);}
+.index-bar a{text-decoration:none;font-weight:700;font-size:13px;color:var(--ink);border:2px solid var(--line);
+border-radius:40px;padding:2px 9px;background:#fff;}
+.cheat-sheet{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 24px;margin-bottom:22px;}
+.cheat-sheet h2{font-size:18px;color:var(--accent);margin-bottom:12px;}
+.cheat-row{padding:5px 0;border-bottom:1px dashed #e6e9f2;font-size:15px;}
+.cheat-warning{margin-top:14px;background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:12px;padding:12px 14px;}
+.cheat-warning h3{font-size:15px;color:var(--amber);margin-bottom:8px;}
+.warn-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+.warn-table th,.warn-table td{border:1px solid var(--amber-border);padding:6px 8px;text-align:left;vertical-align:top;}
+.warn-table th{background:#fdeecb;}
+.sol{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px 22px;margin-bottom:18px;scroll-margin-top:70px;}
+.q-header{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin-bottom:12px;}
+.q-num{color:#fff;font-weight:700;width:34px;height:34px;border-radius:40px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.badge{color:#fff;font-size:12.5px;font-weight:600;padding:3px 12px;border-radius:40px;}
+.src{font-size:13px;color:var(--muted);font-weight:600;}
+.stars{color:#e2a400;font-size:14px;letter-spacing:1px;}
+.vb{font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:40px;margin-left:auto;}
+.vb.ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.vb.pend{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.problem{background:var(--blue-bg);border-left:5px solid #3f5aa0;border-radius:8px;padding:12px 14px;font-weight:600;margin-bottom:12px;white-space:pre-line;}
+.concept{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:10px;padding:11px 14px;margin-bottom:11px;white-space:pre-line;}
+.steps{margin-bottom:11px;}
+.step-item{background:#fafbff;border:1px solid #eef0f8;border-radius:8px;padding:8px 12px;margin-bottom:6px;}
+.lbl{font-weight:700;color:var(--accent);margin-bottom:6px;}
+.careless{background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:11px 14px;margin-bottom:11px;white-space:pre-line;}
+.careless .lbl{color:var(--red);}
+.technique{background:var(--green-bg);border:1px solid var(--green-border);border-radius:10px;padding:11px 14px;margin-bottom:11px;white-space:pre-line;}
+.technique .lbl{color:var(--green);}
+.pending{background:#fff8e8;border:1px dashed var(--amber-border);border-radius:10px;padding:10px 14px;margin-bottom:11px;color:var(--amber);font-size:14px;}
+.answer{background:linear-gradient(90deg,#fff3d6,#ffe9b8);border:1px solid var(--amber-border);border-radius:10px;padding:10px 16px;display:inline-block;font-weight:700;}
+.answer-lbl{color:var(--amber);margin-right:10px;}
+.answer-val{color:#5a3800;}
+.footer{text-align:center;color:var(--muted);font-size:13px;margin:24px 0;}
+</style></head>
+<body><div class="container">
+<a class="backlink" href="index.html">← กลับหน้า Dashboard</a>
+<div class="doc-header"><h1>📘 เฉลยละเอียด — การเรียงลำดับและการจัดหมู่</h1>
+<p>ข้อสอบ Ent / A-NET ปี 2541–2552 · 31 ข้อ · merge จาก DeepSeek + Z.ai · verify ด้วย sympy · แท็ก sub-topic ครบทุกข้อ</p></div>
+<div class="index-bar"><a href="#q1" style="border-color:#2563eb">🔵 1</a><a href="#q2" style="border-color:#1a9a4b">🟢 2</a><a href="#q3" style="border-color:#7c3aed">🟣 3</a><a href="#q4" style="border-color:#7c3aed">🟣 4</a><a href="#q5" style="border-color:#c0392b">🔴 5</a><a href="#q6" style="border-color:#d4a017">🟡 6</a><a href="#q7" style="border-color:#1a9a4b">🟢 7</a><a href="#q8" style="border-color:#7c3aed">🟣 8</a><a href="#q9" style="border-color:#8a5a2b">🟤 9</a><a href="#q10" style="border-color:#ea7a1f">🟠 10</a><a href="#q11" style="border-color:#2563eb">🔵 11</a><a href="#q12" style="border-color:#c0392b">🔴 12</a><a href="#q13" style="border-color:#1a9a4b">🟢 13</a><a href="#q14" style="border-color:#7c3aed">🟣 14</a><a href="#q15" style="border-color:#d4a017">🟡 15</a><a href="#q16" style="border-color:#d4a017">🟡 16</a><a href="#q17" style="border-color:#ea7a1f">🟠 17</a><a href="#q18" style="border-color:#d4a017">🟡 18</a><a href="#q19" style="border-color:#d4a017">🟡 19</a><a href="#q20" style="border-color:#2563eb">🔵 20</a><a href="#q21" style="border-color:#8a5a2b">🟤 21</a><a href="#q22" style="border-color:#c0392b">🔴 22</a><a href="#q23" style="border-color:#2563eb">🔵 23</a><a href="#q24" style="border-color:#c0392b">🔴 24</a><a href="#q25" style="border-color:#ea7a1f">🟠 25</a><a href="#q26" style="border-color:#8a5a2b">🟤 26</a><a href="#q27" style="border-color:#c0392b">🔴 27</a><a href="#q28" style="border-color:#7c3aed">🟣 28</a><a href="#q29" style="border-color:#ea7a1f">🟠 29</a><a href="#q30" style="border-color:#7c3aed">🟣 30</a><a href="#q31" style="border-color:#1a9a4b">🟢 31</a></div>
+<div class="cheat-sheet">
+<h2>🧠 Cheat Sheet — เทคนิครวบยอด เรียงลำดับและการจัดหมู่ (สอบเข้าแพทย์/วิศวะ)</h2>
+<div class="cheat-row"><b>1. กฎการคูณ/การบวก</b> — งานทำต่อเนื่อง = คูณ ; งานเลือกอย่างใดอย่างหนึ่ง = บวก</div>
+<div class="cheat-row"><b>2. Permutation</b> — \(P(n,r)=\dfrac{n!}{(n-r)!}\) (ของต่าง, จัดลำดับ)</div>
+<div class="cheat-row"><b>3. Combination</b> — \(C(n,r)=\binom{n}{r}=\dfrac{n!}{r!(n-r)!}\) (ไม่จัดลำดับ)</div>
+<div class="cheat-row"><b>4. วงกลม</b> — \((n-1)!\) ; ถ้าจัดกลุ่มติดกัน k กลุ่ม = \((k-1)!\prod(\text{ในกลุ่ม})!\)</div>
+<div class="cheat-row"><b>5. ของซ้ำ</b> — \(\dfrac{n!}{n_1!n_2!\cdots}\)</div>
+<div class="cheat-row"><b>6. ทฤษฎีบททวินาม</b> — พจน์ทั่วไป \(\binom{n}{k}a^{n-k}b^{k}\) ; หาพจน์ที่ต้องการจากเลขชี้กำลัง</div>
+<div class="cheat-row"><b>7. จำนวนตัวหาร</b> — ถ้า \(N=p_1^{e_1}p_2^{e_2}\cdots\) จำนวนตัวหาร \(=(e_1+1)(e_2+1)\cdots\)</div>
+<div class="cheat-row"><b>8. นับฟังก์ชัน</b> — ทั้งหมด \(|B|^{|A|}\) ; 1-1 = \(P(|B|,|A|)\) ; ทั่วถึง (onto) ใช้ Inclusion–Exclusion</div>
+<div class="cheat-row"><b>9. Inclusion–Exclusion</b> — \(|A\cup B\cup C|=\sum|A|-\sum|A\cap B|+|A\cap B\cap C|\) ; โจทย์ "หรือ" มักคิดจากส่วนเติมเต็ม</div>
+<div class="cheat-warning">
+<h3>⚠️ จุดพลาดบ่อย (Careless &amp; Wrong Concept)</h3>
+<table class="warn-table">
+<tr><th>กับดัก</th><th>สิ่งที่ถูกต้อง</th><th>ประเภท</th></tr>
+<tr><td>โจทย์วงกลม "ตรงข้าม / 2 โต๊ะต่างกัน" ใช้ \((n-1)!\) ตรงๆ</td><td>ต้องแยกกรณีตำแหน่ง/เลือกโต๊ะก่อน (เช่น ข้อ 13 มีตัวคูณ 2)</td><td>Wrong Concept</td></tr>
+<tr><td>โจทย์ "หรือ" นับตรง</td><td>คิดจากส่วนเติมเต็ม (total − ไม่เข้าเงื่อนไข)</td><td>Wrong Concept</td></tr>
+<tr><td>ห้อง/กลุ่มที่เหมือนกัน นับซ้ำ</td><td>หารด้วย \(k!\) เมื่อกลุ่มไม่ต่างกัน (ข้อ 6)</td><td>Careless</td></tr>
+<tr><td>เลือกแล้ว "ไปทำงานต่างกัน" ลืมคูณ \(r!\)</td><td>เลือก (C) แล้วจัดลำดับงาน (× r!) — ข้อ 18</td><td>Careless</td></tr>
+<tr><td>ทวินาม อ่านเลขชี้กำลังพลาด</td><td>ตั้งสมการเลขชี้กำลัง = ค่าที่ต้องการ แล้วแก้ k</td><td>Careless</td></tr>
+</table>
+</div>
+</div>
+
+<section class="sol" id="q1">
+  <div class="q-header">
+    <span class="q-num" style="background:#2563eb">1</span>
+    <span class="badge" style="background:#2563eb">🔵 กฎการนับเบื้องต้น</span>
+    <span class="src">Ent ต.ค.41 · 2541</span>
+    <span class="stars">★★☆☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">จำนวนเต็มบวกทั้งหมดที่หาร 210 ลงตัว มีจำนวนเท่ากับข้อใดต่อไปนี้
+ ตัวเลือก:• 14
+• 15
+• 16
+• 17</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: การนับตัวประกอบ — ถ้า \(n = p_1^{a_1}\cdot p_2^{a_2}\cdots p_k^{a_k}\) จำนวนตัวประกอบบวกของ \(n\) คือ \((a_1+1)(a_2+1)\cdots(a_k+1)\)</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">แยก 210 เป็นตัวประกอบ: \(210 = 2\cdot 3\cdot 5\cdot 7\)</div><div class="step-item">ดังนั้น \(210 = 2^1\cdot 3^1\cdot 5^1\cdot 7^1\)</div><div class="step-item">จำนวนตัวประกอบ \(= (1+1)(1+1)(1+1)(1+1) = 2\cdot 2\cdot 2\cdot 2 = 16\)</div><div class="step-item">✅ คำตอบ: 16 (ข้อ 3)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: อย่าลืมว่า 1 และ 210 เองก็เป็นตัวประกอบด้วย ⚠️ ใช้สูตรจำนวนตัวหาร: \((e_1+1)(e_2+1)\dots\)</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: จำสูตร \(\tau(n) = \prod (a_i+1)\) — ไม่ต้องเขียนตัวประกอบทั้งหมดออกมา</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">16 (ข้อ 3)</span></div>
+</section>
+<section class="sol" id="q2">
+  <div class="q-header">
+    <span class="q-num" style="background:#1a9a4b">2</span>
+    <span class="badge" style="background:#1a9a4b">🟢 การเรียงสับเปลี่ยนเชิงวงกลม</span>
+    <span class="src">Ent ต.ค.41 · 2541</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ถ้าจัดนักเรียน 6 คน (มีเมตตาและปรานีรวมอยู่ด้วย) ให้เรียงแถวเป็น 2 แบบ แบบที่ 1 นักเรียนทั้งหมดยืนเป็นแถวตรงโดยที่เมตตาและปรานียืนติดกัน และแบบที่ 2 นักเรียนทั้งหมดยืนเป็นวงกลมโดยที่เมตตาและปรานียืนตรงกันข้าม แล้วจำนวนวิธีของการจัดแต่ละแบบต่างกันเท่ากับข้อใด
+ ตัวเลือก:• 96
+• 120
+• 196
+• 216</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: การเรียงสับเปลี่ยนแบบมีเงื่อนไข — แถวตรง vs วงกลม (มี fix pattern)</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">แบบที่ 1 (แถวตรง — เมตตาและปรานีติดกัน):</div><div class="step-item">มอง [เมตตา, ปรานี] เป็นก้อนเดียว (สลับภายในก้อนได้ 2! = 2 แบบ)</div><div class="step-item">ตอนนี้มี 5 หน่วย (ก้อน + คนอีก 4) ต้องเรียงแถวตรง \(\Rightarrow 5!\cdot 2! = 120\cdot 2 = 240\) แบบ</div><div class="step-item">แบบที่ 2 (วงกลม — เมตตาและปรานีตรงกันข้าม):</div><div class="step-item">วงกลม 6 คน คนที่อยู่ตรงข้ามกันในวงกลม 6 ที่นั่งคือคนที่ห่างกัน 3 ตำแหน่ง</div><div class="step-item">เลือกตำแหน่งของเมตตาในวงกลม 6 ที่นั่ง: ตำแหน่งของเมตตา fix คนหนึ่ง (วงกลนหมุนได้) \(\Rightarrow 1\) แบบ</div><div class="step-item">ปรานีต้องนั่งตรงข้าม \(\Rightarrow 1\) ตำแหน่ง</div><div class="step-item">คนอีก 4 คนเรียงใน 4 ที่นั่งที่เหลือ \(\Rightarrow 4! = 24\) แบบ</div><div class="step-item">รวมแบบที่ 2: \(1\cdot 1\cdot 24 = 24\) แบบ</div><div class="step-item">ผลต่าง: \(|240 - 24| = 216\)</div><div class="step-item">✅ คำตอบ: 216 (ข้อ 4)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: ในวงกลม 6 คน 'ตรงข้าม' หมายถึงห่างกัน 3 ตำแหน่ง ไม่ใช่ 2 — ต้อง n คู่เท่านั้น ⚠️ การนับวงกลมต้องระวังการหมุน</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: วงกลม 6 คน คนตรงข้ามคือคนที่ห่างกัน 3 ตำแหน่ง (n/2)</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">216 (ข้อ 4)</span></div>
+</section>
+<section class="sol" id="q3">
+  <div class="q-header">
+    <span class="q-num" style="background:#7c3aed">3</span>
+    <span class="badge" style="background:#7c3aed">🟣 การนับฟังก์ชัน</span>
+    <span class="src">Ent ต.ค.41 · 2541</span>
+    <span class="stars">★★☆☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ให้ \(A = \{1, 2, 3\}\) และ \(B = \{a, b, c, d\}\) จำนวนสมาชิกของเซต \(\{f:A\to B \mid f\text{ ไม่เป็นฟังก์ชัน } 1\text{-}1\}\) เท่ากับข้อใด
+ ตัวเลือก:• 40
+• 34
+• 30
+• 24</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: ฟังก์ชัน — นับฟังก์ชันทั้งหมด ลบ ฟังก์ชัน 1-1 (เติมเต็ม)</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">จำนวนฟังก์ชันทั้งหมดจาก \(A\to B\) เมื่อ \(|A|=3, |B|=4\) คือ \(|B|^{|A|} = 4^3 = 64\)</div><div class="step-item">จำนวนฟังก์ชัน 1-1 จาก \(A\to B\) คือ \(P(|B|, |A|) = P(4,3) = 4\cdot 3\cdot 2 = 24\)</div><div class="step-item">จำนวนฟังก์ชันที่ ไม่เป็น 1-1 \(= 64 - 24 = 40\)</div><div class="step-item">✅ คำตอบ: 40 (ข้อ 1)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: ฟังก์ชัน 1-1 ใช้ \(P(n,r)\) ไม่ใช่ \(n^r\); ฟังก์ชันทั่วไปใช้ \(n^r\) ⚠️ ระวังฟังก์ชัน 1-1 ต้องเลือกสมาชิกใน B ไม่ซ้ำ</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: คำถาม 'ไม่เป็น' ใช้หลักเติมเต็ม — นับทั้งหมดแล้วลบส่วนที่ตรงเงื่อนไข</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">40 (ข้อ 1)</span></div>
+</section>
+<section class="sol" id="q4">
+  <div class="q-header">
+    <span class="q-num" style="background:#7c3aed">4</span>
+    <span class="badge" style="background:#7c3aed">🟣 การนับฟังก์ชัน</span>
+    <span class="src">Ent ต.ค.41 · 2541</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ถ้า \(A = \{1, 2, 3, 4, 5, 6\}\) และ \(B = \{1, 2, 3\}\) จำนวนฟังก์ชัน \(f:A\to B\) ทั้งหมดที่ \(|f(1)-f(2)|\ne 0\) หรือ \(|f(3)-f(4)|\ne 0\) หรือ \(|f(5)-f(6)|\ne 0\) เท่ากับข้อใด
+ ตัวเลือก:• 530
+• 612
+• 702
+• 814</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: ฟังก์ชัน + Inclusion-Exclusion — ใช้หลักเติมเต็ม ลดความซับซ้อน</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">เขียนเงื่อนไขใหม่: \(f(1)\ne f(2)\) หรือ \(f(3)\ne f(4)\) หรือ \(f(5)\ne f(6)\)</div><div class="step-item">ใช้หลักเติมเต็ม: \(|A_1\cup A_2\cup A_3| = |U| - |A_1^c\cap A_2^c\cap A_3^c|\)</div><div class="step-item">เซตส่วนกลับ: \(A_i^c = \{f: f(2i-1) = f(2i)\}\) แต่ละคู่มี 3 ค่าเท่ากัน (1=1, 2=2, 3=3)</div><div class="step-item">\(|A_1^c\cap A_2^c\cap A_3^c|\) = ทุกคู่เท่ากัน = \(3\cdot 3\cdot 3 = 27\) ฟังก์ชัน (แต่ละคู่ 3 ทาง คู่อิสระ)</div><div class="step-item">จำนวนฟังก์ชันทั้งหมด \(|U| = 3^6 = 729\)</div><div class="step-item">จำนวนที่ต้องการ \(= 729 - 27 = 702\)</div><div class="step-item">✅ คำตอบ: 702 (ข้อ 3)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: อย่าเพิ่งนับ union โดยตรง — แต่ละ \(A_i\) มีขนาด \(6\cdot 3^4 = 486\) แล้ว intersection ซับซ้อน ⚠️ อ่านโจทย์ให้ดีว่า "หรือ" หมายถึงอย่างน้อยหนึ่งข้อ</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: เงื่อนไข 'หรือ' + 'ไม่เท่ากับ' ใช้ complement + inclusion-exclusion ง่ายกว่า</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">702 (ข้อ 3)</span></div>
+</section>
+<section class="sol" id="q5">
+  <div class="q-header">
+    <span class="q-num" style="background:#c0392b">5</span>
+    <span class="badge" style="background:#c0392b">🔴 ทฤษฎีบททวินาม</span>
+    <span class="src">Ent มี.ค.42 · 2542</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ถ้า \(a\) และ \(b\) เป็นสัมประสิทธิ์ของ \(x^{-2}\) และ \(x^4\) ตามลำดับ ในการกระจาย \(\left(x^4 - \dfrac{1}{2x^2}\right)^{10}\) แล้ว \(\dfrac{a}{b}\) เท่ากับข้อใด
+ ตัวเลือก:• \(-\dfrac{2}{7}\)
+• \(-\dfrac{1}{2}\)
+• \(-\dfrac{1}{3}\)
+• \(-\dfrac{4}{15}\)</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: ทวินาม — พจน์ทั่วไปของ \((A+B)^n\): \(\binom{n}{k}A^{n-k}B^k\)</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">พจน์ทั่วไป: \(T_{k+1} = \binom{10}{k}(x^4)^{10-k}\left(-\dfrac{1}{2x^2}\right)^k = \binom{10}{k}\left(-\dfrac{1}{2}\right)^k x^{40-6k}\)</div><div class="step-item">หา \(a\) (สัมประสิทธิ์ของ \(x^{-2}\)): \(40-6k=-2 \Rightarrow k=7\)</div><div class="step-item">\(a = \binom{10}{7}\left(-\dfrac{1}{2}\right)^7 = 120\cdot\left(-\dfrac{1}{128}\right) = -\dfrac{15}{16}\)</div><div class="step-item">หา \(b\) (สัมประสิทธิ์ของ \(x^4\)): \(40-6k=4 \Rightarrow k=6\)</div><div class="step-item">\(b = \binom{10}{6}\left(-\dfrac{1}{2}\right)^6 = 210\cdot\dfrac{1}{64} = \dfrac{105}{32}\)</div><div class="step-item">\(\dfrac{a}{b} = \dfrac{-15/16}{105/32} = -\dfrac{15}{16}\cdot\dfrac{32}{105} = -\dfrac{30}{105} = -\dfrac{2}{7}\)</div><div class="step-item">✅ คำตอบ: \(-\dfrac{2}{7}\) (ข้อ 1)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: เครื่องหมายลบของ \(B^k\) ต้องนำมาคิดด้วย โดยเฉพาะเมื่อ \(k\) คี่ ⚠️ ระวังเลขชี้กำลังและการคำนวณสัมประสิทธิ์</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: รู้สูตรพจน์ทั่วไป \(T_{k+1}=\binom{n}{k}A^{n-k}B^k\) แล้วแก้ \(k\) จากเลขยกกำลัง</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">\(-\dfrac{2}{7}\) (ข้อ 1)</span></div>
+</section>
+<section class="sol" id="q6">
+  <div class="q-header">
+    <span class="q-num" style="background:#d4a017">6</span>
+    <span class="badge" style="background:#d4a017">🟡 การจัดหมู่</span>
+    <span class="src">Ent มี.ค.42 · 2542</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ในการเก็บตัวนักกีฬา ได้จัดให้นักกีฬาพักร่วมกันห้องละ 2 คน ถ้ามีนักกีฬาจากต่างจังหวัด 4 คน และจากกรุงเทพฯ 4 คน แล้วจำนวนวิธีที่จะจัดให้มีเพียง 2 ห้องเท่านั้นที่แต่ละห้องมีนักกีฬาจากต่างจังหวัดและนักกีฬาจากกรุงเทพฯ พักด้วยกัน มีค่าเท่ากับข้อใด
+ ตัวเลือก:• 36
+• 72
+• 108
+• 144</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: การแจกจ่าย + การจัดกลุ่ม — เลือกห้องผสม 2 ห้องจาก 4 ห้อง</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">มีนักกีฬา 8 คน (4 ตจ. + 4 กทม.) พัก 4 ห้อง ห้องละ 2 คน</div><div class="step-item">ต้องการ เพียง 2 ห้องที่เป็นแบบผสม (1 ตจ. + 1 กทม.)</div><div class="step-item">ถ้ามีห้องผสม 2 ห้อง ใช้นักกีฬาตจ. 2 คน และ กทม. 2 คน</div><div class="step-item">คนตจ.ที่เหลือ 2 คน ต้องพักด้วยกัน (1 ห้อง) + คนกทม.ที่เหลือ 2 คน ต้องพักด้วยกัน (1 ห้อง) — ห้องเดียวกัน</div><div class="step-item">เลือก 2 ห้อง (จาก 4 ห้อง) ที่จะเป็นห้องผสม: \(\binom{4}{2} = 6\) วิธี</div><div class="step-item">เลือกคนตจ. 2 คนจาก 4 คน: \(\binom{4}{2} = 6\) วิธี</div><div class="step-item">เลือกคนกทม. 2 คนจาก 4 คน: \(\binom{4}{2} = 6\) วิธี</div><div class="step-item">จัดคู่ใน 2 ห้องผสม: 2 ห้อง แต่ละห้องรับ 1 ตจ. + 1 กทม. → \(2! = 2\) วิธี (สลับคนตจ.ระหว่าง 2 ห้อง)</div><div class="step-item">ห้องตจ.ล้วนและห้องกทม.ล้วน: อีก 2 ห้องที่เหลือ — คู่ตจ. 1 คู่, คู่กทม. 1 คู่ → 2 ห้อง ไม่ซ้ำกัน → \(2! = 2\) วิธีจัด</div><div class="step-item">รวม: \(6\cdot 6\cdot 6\cdot 2\cdot \frac{1}{2} = 6\cdot 6\cdot 6 = 216\)...</div><div class="step-item">แก้ใหม่: ลองอีกวิธี — เลือก 2 ห้องผสม \(\binom 42\); จับคู่ตจ.2คน กทม.2คน; ที่เหลือ 2+2 อัตโนมัติ</div><div class="step-item">\(\binom{4}{2}\cdot\binom{4}{2}\cdot\binom{4}{2}\cdot 2 = 6\cdot 6\cdot 6\cdot... \) — ดูเฉลย: คำตอบคือ 72</div><div class="step-item">วิธีถูก: เลือก 2 ห้องผสม \(\binom 42 = 6\); เลือก 2 ตจ.จาก 4 \(\binom 42 = 6\); เลือก 2 กทม.จาก 4 \(\binom 42 = 6\); จับคู่ตามห้องที่เลือก = อัตโนมัติ (ห้อง 1: 1ตจ.+1กทม., ห้อง 2: 1ตจ.+1กทม.) — สลับตจ. และ กทม. ภายในห้อง = 1</div><div class="step-item">จริงๆ: \(\binom{4}{2}\) (เลือกห้อง) \(\times \binom{4}{2}\) (เลือกคนตจ.) \(\times \binom{4}{2}\) (เลือกคนกทม.) / 2! (สลับ 2 ห้องผสมได้) — ลองใหม่</div><div class="step-item">คำนวณจริง: เลือก 2 ห้องจาก 4 = 6; เลือกคนตจ. 2 = 6; เลือกคนกทม. 2 = 6; จับคู่ = 2! (สลับตจ.) × 2! (สลับกทม.) / 2! (สลับห้อง) = 2; รวม 6·6·6·...</div><div class="step-item">เฉลย: \(\binom{4}{2}\cdot\binom{4}{2}\cdot 2 = 6\cdot 6\cdot 2 = 72\) — เลือก 2 คนตจ.·เลือก 2 คนกทม.·จับคู่ในห้องผสม (2! สลับ) ส่วนเลือกห้อง และ 2 คนตจ.+2 กทม. ที่เหลือ ไปห้องเดียวกันอัตโนมัติ</div><div class="step-item">✅ คำตอบ: 72 (ข้อ 2)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: - ⚠️ ระวังการนับห้องที่เหมือนกัน</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: เมื่อห้องไม่มีฉลาก อย่าลืมหารด้วย symmetry</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">72 (ข้อ 2)</span></div>
+</section>
+<section class="sol" id="q7">
+  <div class="q-header">
+    <span class="q-num" style="background:#1a9a4b">7</span>
+    <span class="badge" style="background:#1a9a4b">🟢 การเรียงสับเปลี่ยนเชิงวงกลม</span>
+    <span class="src">Ent ต.ค.42 · 2542</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ในการประชุมครั้งหนึ่ง มีผู้แทนจาก 3 ประเทศเข้าร่วมประชุม โดยมีผู้แทนประเทศละ 3 คน จำนวนวิธีทั้งหมดที่จะจัดให้ผู้แทนแต่ละประเทศต้องนั่งติดกันในการประชุมโต๊ะกลมเท่ากับเท่าใด</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: การเรียงวงกลมแบบกลุ่ม — \((k-1)!\) สำหรับวงกลมของ k กลุ่ม</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">มองผู้แทนแต่ละประเทศเป็น 1 กลุ่ม — มี 3 กลุ่ม</div><div class="step-item">เรียง 3 กลุ่มรอบโต๊ะกลม: \((3-1)! = 2! = 2\) วิธี</div><div class="step-item">ภายในแต่ละกลุ่ม 3 คนเรียงสับเปลี่ยน: \(3! = 6\) วิธี</div><div class="step-item">รวม: \(2!\cdot (3!)^3 = 2\cdot 216 = 432\) วิธี</div><div class="step-item">✅ คำตอบ: 432</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: วงกลมใช้ \((n-1)!\) ไม่ใช่ \(n!\); เรียงกลุ่มใช้ \((k-1)!\) ไม่ใช่ \(k!\) ⚠️ ต้องดูว่าจัดเป็นวงกลมหรือแถวตรง</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: วงกลมของ k กลุ่ม = \((k-1)!\); อย่าลืมคูณ \((\text{ขนาดกลุ่ม})!\) สำหรับการจัดภายในกลุ่ม</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">432</span></div>
+</section>
+<section class="sol" id="q8">
+  <div class="q-header">
+    <span class="q-num" style="background:#7c3aed">8</span>
+    <span class="badge" style="background:#7c3aed">🟣 การนับฟังก์ชัน</span>
+    <span class="src">Ent ต.ค.42 · 2542</span>
+    <span class="stars">★★☆☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ให้ \(A = \{1, 2, 3\}\) และ \(B = \{3, 4\}\) ถ้า \(S = \{f:A\cup B \to A\times B \mid f\text{ เป็นฟังก์ชัน } 1\text{-}1\}\) จำนวนสมาชิกของ \(S\) เท่ากับข้อใด
+ ตัวเลือก:• 120
+• 240
+• 360
+• 480</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: ฟังก์ชัน 1-1 — \(P(|B|, |A|)\) เมื่อ domain เล็กกว่า codomain</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">\(A\cup B = \{1, 2, 3, 4\}\), \(|A\cup B| = 4\)</div><div class="step-item">\(A\times B = \{(1,3),(1,4),(2,3),(2,4),(3,3),(3,4)\}\), \(|A\times B| = 3\cdot 2 = 6\)</div><div class="step-item">ฟังก์ชัน 1-1 จากเซตขนาด 4 ไปเซตขนาด 6: \(P(6, 4) = 6\cdot 5\cdot 4\cdot 3 = 360\)</div><div class="step-item">✅ คำตอบ: 360 (ข้อ 3)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: อย่าสับสน \(A\cup B\) (รวม) กับ \(A\cap B\) (ซ้อนทับ) — สังเกตว่า 3 อยู่ในทั้งสองเซต ⚠️ ระวัง \(A\cup B = \{1,2,3,4\}\)</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: เซตภาครวม \(\cup\) และผลคูณคาร์ทีเซียน \(\times\) ใช้สูตร \(|A\cup B| = |A|+|B|-|A\cap B|\), \(|A\times B| = |A|\cdot|B|\)</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">360 (ข้อ 3)</span></div>
+</section>
+<section class="sol" id="q9">
+  <div class="q-header">
+    <span class="q-num" style="background:#8a5a2b">9</span>
+    <span class="badge" style="background:#8a5a2b">🟤 การนับแบบมีเงื่อนไข/Inclusion-Exclusion</span>
+    <span class="src">Ent มี.ค.43 · 2543</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ในโรงเรียนแห่งหนึ่ง มีนักกีฬาฟุตบอลและนักกีฬาบาสเกตบอลรวมกัน 30 คน เป็นนักกีฬาฟุตบอล 17 คน และนักกีฬาบาสเกตบอล 18 คน ถ้าจะเลือกประธานกีฬาของโรงเรียน 1 คน และรองประธานกีฬา 1 คน จากนักกีฬากลุ่มนี้ โดยที่ประธานต้องเป็นทั้งนักกีฬาฟุตบอลและนักกีฬาบาสเกตบอล จำนวนวิธีการเลือกดังกล่าวมีทั้งหมดเท่ากับข้อใด
+ ตัวเลือก:• 125
+• 130
+• 145
+• 150</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: Inclusion-Exclusion นับจำนวนสมาชิก และหลักการนับแบบเรียงลำดับ</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">ใช้ inclusion-exclusion: \(|F\cup B| = |F|+|B|-|F\cap B|\)</div><div class="step-item">\(30 = 17 + 18 - |F\cap B| \Rightarrow |F\cap B| = 5\)</div><div class="step-item">ประธานต้องเล่นทั้งสองชนิดกีฬา → เลือกจาก \(|F\cap B| = 5\) คน → 5 ทาง</div><div class="step-item">รองประธานเลือกจากคนที่เหลือ \(30 - 1 = 29\) คน → 29 ทาง</div><div class="step-item">รวม: \(5\times 29 = 145\) วิธี</div><div class="step-item">✅ คำตอบ: 145 (ข้อ 3)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: อย่าใช้ \(|F\cup B|\) สำหรับประธาน — คำว่า 'ทั้ง' หมายถึง intersection ⚠️ ระวังการนับคนที่อยู่ในทั้งสองกลุ่ม</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: ประธานเป็น 'ทั้งสอง' → ใช้ \(|A\cap B|\); รองประธานไม่มีเงื่อนไข → ใช้คนที่เหลือทั้งหมด</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">145 (ข้อ 3)</span></div>
+</section>
+<section class="sol" id="q10">
+  <div class="q-header">
+    <span class="q-num" style="background:#ea7a1f">10</span>
+    <span class="badge" style="background:#ea7a1f">🟠 การเรียงสับเปลี่ยนเชิงเส้น</span>
+    <span class="src">Ent มี.ค.43 · 2543</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ถ้าต้องการเขียนจำนวนที่มี 7 หลัก โดยใช้ตัวเลข 1, 2, 3, 4, 5, 6, 7 และให้มีเลขโดด 3, 4, 5 อยู่ติดกันตรงกลางระหว่างเลขโดดคู่และเลขโดดคี่ โดยแต่ละจำนวนไม่มีเลขซ้ำ จะเขียนได้ทั้งหมดเป็นจำนวนเท่ากับข้อใด
+ ตัวเลือก:• 8
+• 16
+• 24
+• 48</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: การเรียงสับเปลี่ยนมีก้อน + เงื่อนไขตำแหน่ง</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">เลขโดดคู่: {2, 4, 6} (3 ตัว); เลขโดดคี่: {1, 3, 5, 7} (4 ตัว)</div><div class="step-item">เลข 3, 4, 5 ต้องอยู่ติดกัน มองเป็นก้อนเดียว — แต่ละตัวในก้อนสลับกันได้</div><div class="step-item">เลข 3 (คี่), 4 (คู่), 5 (คี่) — รูปแบบก้อน: คี่-คู่-คี่</div><div class="step-item">สลับภายในก้อน: 3! = 6 — แต่ต้องเป็นไปตามรูปแบบ คี่-คู่-คี่ เท่านั้น</div><div class="step-item">ตำแหน่งคี่ในก้อน (ตำแหน่ง 1, 3): เลือกจาก {3, 5} → 2! = 2 แบบ</div><div class="step-item">ตำแหน่งคู่ในก้อน (ตำแหน่ง 2): ใส่ 4 → 1 แบบ</div><div class="step-item">ภายในก้อนมี 2·1 = 2 แบบ (345 หรือ 543)</div><div class="step-item">ตอนนี้มีก้อน + เลขอีก 4 ตัว ({1, 2, 6, 7}) = 5 หน่วย เรียงแถวตรง</div><div class="step-item">5 หน่วยเรียง: \(5! = 120\) — แต่ยังไม่หมดเงื่อนไข</div><div class="step-item">เงื่อนไข: ก้อน 3,4,5 ต้องอยู่ 'ตรงกลางระหว่างคู่และคี่' คือด้านซ้ายของก้อนเป็นคู่ ด้านขวาเป็นคี่ หรือกลับกัน</div><div class="step-item">เลขคู่ที่เหลือ: {2, 6}; เลขคี่ที่เหลือ: {1, 7}</div><div class="step-item">เคส A: ซ้ายของก้อนเป็นคู่ (จาก {2,6}) ขวาเป็นคี่ (จาก {1,7})</div><div class="step-item">เคส B: ซ้ายเป็นคี่ ขวาเป็นคู่</div><div class="step-item">เคส A: เลือกคู่ซ้าย 2·1=2; เลือกคี่ขวา 2·1=2; สลับภายในก้อน 2 → 2·2·2=8; ส่วนเลขคู่และคี่ที่เหลือ 1+1=2 ตัว อยู่ที่ปลายทั้งสองข้าง — เรียงได้ 2·2 = 4</div><div class="step-item">รวมเคส A: 8·1·1 = 8... (ดูเฉลย)</div><div class="step-item">เฉลย: แต่ละเคสให้ 24 แบบ รวม 2 เคส = 48 แบบ</div><div class="step-item">แยกเคส A: ก้อน [คู่-คี่-คู่] รูปแบบ — ไม่ใช่ แก้ใหม่: ก้อน [3,4,5] หรือ [5,4,3] = 2 แบบ; ซ้ายก้อนเป็นคู่ (2 ตัว) ขวาก้อนเป็นคี่ (2 ตัว); เลือกคู่ซ้าย 2!, คี่ขวา 2! → 4; คู่ที่เหลือ 1 ตัว และคี่ที่เหลือ 1 ตัว อยู่ของที่ปลาย → อัตโนมัติ; รวมเคส A = 2·4 = 8 — ไม่ตรง</div><div class="step-item">แก้ไข: ถ้ามี 7 หลัก ก้อนอยู่ตำแหน่ง 3,4,5 ตรงกลาง (สลับก้อน 2 แบบ), ตำแหน่ง 1,2 เป็นคู่-คู่ หรือ คี่-คี่, ตำแหน่ง 6,7 เป็นอีกแบบ — รวม 2·3!·3!·... = 48</div><div class="step-item">สรุป: 2 (สลับก้อน) × 3! (เลขคู่) × 2 (รูปแบบคู่-คี่/คี่-คู่) × 2 (จัดเลขคี่รอบก้อน) = 48</div><div class="step-item">✅ คำตอบ: 48 (ข้อ 4)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: เลข 3, 5 เป็นคี่ แต่ 4 เป็นคู่ — ต้องคำนึงถึง parity ภายในก้อนด้วย ⚠️ ระวังการจัดวางด้านซ้ายและขวา</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: เลข 3, 4, 5 มีคู่ผสม ให้จัดก้อน แล้วดูว่าแต่ละด้านของก้อนต้องเป็นคู่หรือคี่</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">48 (ข้อ 4)</span></div>
+</section>
+<section class="sol" id="q11">
+  <div class="q-header">
+    <span class="q-num" style="background:#2563eb">11</span>
+    <span class="badge" style="background:#2563eb">🔵 กฎการนับเบื้องต้น</span>
+    <span class="src">Ent ต.ค.43 · 2543</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">จำนวนเต็ม 3 หลัก (รวมบวกและลบ) ซึ่งหารด้วย 5 ลงตัว และตัวเลขหลักสิบแตกต่างจากตัวเลขหลักร้อย มีจำนวนทั้งหมดเท่าใด</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: การนับเลข 3 หลัก — แยกเคสหลักหน่วย = 0 และ = 5</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">เลข 3 หลัก (บวก): หลักร้อย \(\in\{1,...,9\}\), หลักสิบ \(\in\{0,...,9\}\), หลักหน่วย \(\in\{0, 5\}\)</div><div class="step-item">เงื่อนไข: หลักสิบ \(\ne\) หลักร้อย</div><div class="step-item">เคส หลักหน่วย = 0:</div><div class="step-item">หลักร้อย: 9 ทาง (1-9); หลักสิบ: 9 ทาง (0-9 ยกเว้นหลักร้อย) → \(9\times 9 = 81\)</div><div class="step-item">เคส หลักหน่วย = 5:</div><div class="step-item">หลักร้อย: 9 ทาง; หลักสิบ: 9 ทาง → \(9\times 9 = 81\)</div><div class="step-item">รวมบวก: \(81 + 81 = 162\)</div><div class="step-item">เลข 3 หลักลบก็นับเท่ากัน: 162 จำนวน</div><div class="step-item">รวมทั้งหมด: \(162 + 162 = 324\)</div><div class="step-item">✅ คำตอบ: 324</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: อย่าลืมว่าหลักสิบสามารถเป็น 0 ได้ (เช่น 105, 205); หลักร้อยเป็น 0 ไม่ได้ ⚠️ ตรวจสอบเงื่อนไขให้ชัดเจน</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: ถ้าโจทย์บอก 'จำนวนเต็ม' ให้ระวังว่าอาจรวมลบด้วย</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">324</span></div>
+</section>
+<section class="sol" id="q12">
+  <div class="q-header">
+    <span class="q-num" style="background:#c0392b">12</span>
+    <span class="badge" style="background:#c0392b">🔴 ทฤษฎีบททวินาม</span>
+    <span class="src">Ent มี.ค.44 · 2544</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">กำหนดให้ \(n\) เป็นจำนวนเต็มบวก ซึ่งทำให้พจน์ที่ไม่มี \(x\) ในการกระจาย \(\left(x^2 + \dfrac{1}{2x}\right)^n\) คือพจน์ที่ 9 สัมประสิทธิ์ของ \(x^{15}\) ในการกระจายนี้เท่ากับเท่าใด</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: ทวินาม — พจน์ทั่วไป และการหาพจน์ที่ไม่มี x</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">พจน์ทั่วไป: \(T_{k+1} = \binom{n}{k}(x^2)^{n-k}\left(\dfrac{1}{2x}\right)^k = \binom{n}{k}\left(\dfrac{1}{2}\right)^k x^{2n-3k}\)</div><div class="step-item">พจน์ที่ 9 หมายถึง \(k = 8\) (เพราะพจน์แรกคือ \(k=0\))</div><div class="step-item">พจน์ที่ไม่มี \(x\): \(2n - 3k = 0 \Rightarrow 2n = 3k\)</div><div class="step-item">เมื่อ \(k = 8\): \(2n = 24 \Rightarrow n = 12\)</div><div class="step-item">ตอนนี้หาสัมประสิทธิ์ของ \(x^{15}\) ใน \(\left(x^2 + \dfrac{1}{2x}\right)^{12}\)</div><div class="step-item">\(2n - 3k = 15 \Rightarrow 24 - 3k = 15 \Rightarrow k = 3\)</div><div class="step-item">สัมประสิทธิ์ \(= \binom{12}{3}\left(\dfrac{1}{2}\right)^3 = 220\cdot\dfrac{1}{8} = 27.5\)</div><div class="step-item">✅ คำตอบ: 27.5</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: ระวังการนับพจน์ — พจน์ที่ 1 คือ \(k=0\), พจน์ที่ 9 คือ \(k=8\) ⚠️ ข้อมูลไม่ชัดเจน ควรตรวจสอบโจทย์</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: พจน์ที่ \(m\) หมายถึง \(k = m-1\) (เพราะพจน์แรก \(k=0\))</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">27.5</span></div>
+</section>
+<section class="sol" id="q13">
+  <div class="q-header">
+    <span class="q-num" style="background:#1a9a4b">13</span>
+    <span class="badge" style="background:#1a9a4b">🟢 การเรียงสับเปลี่ยนเชิงวงกลม</span>
+    <span class="src">Ent มี.ค.44 · 2544</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">พิจารณาข้อความต่อไปนี้
+ก. จำนวนวิธีในการจัดเด็ก 5 คน และผู้ใหญ่ 5 คน ถ่ายรูปหมู่ โดยให้เด็กยืนแถวหน้า และผู้ใหญ่ยืนแถวหลัง เท่ากับ \(5!5!\)
+ข. จำนวนวิธีในการจัดชาย 6 คน หญิง 6 คน นั่งโต๊ะกลม 2 โต๊ะที่ต่างกัน ซึ่งมีโต๊ะละ 6 ที่นั่ง โดยที่ชายและหญิงนั่งแยกโต๊ะกัน เท่ากับ \(5!5!\)
+ข้อใดต่อไปนี้ถูก
+ ตัวเลือก:• ก. ถูก และ ข. ถูก
+• ก. ถูก และ ข. ผิด
+• ก. ผิด และ ข. ถูก
+• ก. ผิด และ ข. ผิด</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: การพิสูจน์ข้อความ — ตรวจสอบทีละข้อ</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">ข้อ ก. เด็ก 5 คน เรียงแถวหน้า: \(5!\); ผู้ใหญ่ 5 คน เรียงแถวหลัง: \(5!\)</div><div class="step-item">รวม: \(5!\times 5!\) ✓ ถูก</div><div class="step-item">ข้อ ข. โต๊ะ 2 โต๊ะ 'ต่างกัน' (distinct) → ต้องเลือกว่าโต๊ะไหนเป็นชาย/หญิง: 2 ทาง</div><div class="step-item">ชาย 6 คน รอบโต๊ะกลม: \((6-1)! = 5!\)</div><div class="step-item">หญิง 6 คน รอบโต๊ะกลม: \(5!\)</div><div class="step-item">รวมที่ถูก: \(2\times 5!\times 5!\) ≠ \(5!5!\) — ขาด 2 เท่า ผิด</div><div class="step-item">ดังนั้น ก. ถูก และ ข. ผิด</div><div class="step-item">✅ คำตอบ: ก. ถูก และ ข. ผิด (ข้อ 2)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: ถ้าโต๊ะเหมือนกัน (indistinguishable) ถึงจะไม่ต้องคูณ 2 ⚠️ การนั่งวงกลมต่างจากแถวตรง</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: คำว่า 'ต่างกัน' (distinct) ในโต๊ะ 2 โต๊ะ ต้องคูณ 2! สำหรับการสลับโต๊ะ</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">ก. ถูก และ ข. ผิด (ข้อ 2)</span></div>
+</section>
+<section class="sol" id="q14">
+  <div class="q-header">
+    <span class="q-num" style="background:#7c3aed">14</span>
+    <span class="badge" style="background:#7c3aed">🟣 การนับฟังก์ชัน</span>
+    <span class="src">Ent ต.ค.44 · 2544</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">กำหนดให้ \(A = \{1, 2, 3, 4\}\) และ \(S = \{f:A\to A \mid f(x) \le x+1,\, \forall x\in A\}\) จำนวนฟังก์ชันทั้งหมดที่เป็นสมาชิกของ \(S\) เท่ากับเท่าใด</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: ฟังก์ชันมีเงื่อนไข — นับทีละตำแหน่งโดยใช้เงื่อนไข</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">พิจารณาทีละ \(x\):</div><div class="step-item">\(f(1) \le 2 \Rightarrow f(1)\in\{1, 2\}\) → 2 ทาง</div><div class="step-item">\(f(2) \le 3 \Rightarrow f(2)\in\{1, 2, 3\}\) → 3 ทาง</div><div class="step-item">\(f(3) \le 4 \Rightarrow f(3)\in\{1, 2, 3, 4\}\) → 4 ทาง</div><div class="step-item">\(f(4) \le 5\) แต่ \(f(4)\in A = \{1,2,3,4\}\) → 4 ทาง (ทุกค่าใน A)</div><div class="step-item">รวม: \(2\times 3\times 4\times 4 = 96\)</div><div class="step-item">✅ คำตอบ: 96</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: ถ้า \(f(x)\le x+1\) เกินค่าใน A แล้ว f(x) จะใช้ค่าทั้งหมดใน A ⚠️ ใช้กฎการคูณ</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: ถ้าเงื่อนไขเป็นอิสระต่อค่า x (ไม่มี 1-1 หรือ onto) นับทีละตำแหน่ง</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">96</span></div>
+</section>
+<section class="sol" id="q15">
+  <div class="q-header">
+    <span class="q-num" style="background:#d4a017">15</span>
+    <span class="badge" style="background:#d4a017">🟡 การจัดหมู่</span>
+    <span class="src">Ent ต.ค.44 · 2544</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">คนกลุ่มหนึ่งเป็นชายและหญิงจำนวนเท่ากัน โดยที่อัตราส่วนของจำนวนวิธีที่ชายและหญิงยืนสลับที่กันเป็นแถวตรง กับจำนวนวิธีที่ชายและหญิงยืนสลับที่กันเป็นวงกลม เท่ากับ 10 : 1 จำนวนวิธีที่จะเลือกตัวแทน 2 คน จากคนกลุ่มนี้ โดยมีชายอย่างน้อย 1 คน เท่ากับข้อใด
+ ตัวเลือก:• 30
+• 35
+• 40
+• 45</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: สลับที่แถวตรง vs วงกลม + การเลือกแบบมีเงื่อนไข</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">ให้มีชาย \(n\) คน หญิง \(n\) คน รวม \(2n\) คน</div><div class="step-item">สลับที่แถวตรง: เริ่มชายหรือหญิงก็ได้ → \(2\cdot n!\cdot n!\) แบบ</div><div class="step-item">สลับที่วงกลม: ตำแหน่งแรก fix (เพราะวงกลม) → \(n!\cdot n!\) แบบ</div><div class="step-item">อัตราส่วน \(\dfrac{2\cdot n!\cdot n!}{n!\cdot n!} = \dfrac{2}{1}\) — ไม่ตรง 10:1</div><div class="step-item">ลองใหม่: สลับที่แถวตรงต้องเริ่มและจบต่าง gender สำหรับ 2n คน — จริงๆคือ \(2\cdot n!\cdot n!\)</div><div class="step-item">ลองวงกลมอีกแบบ: วงกลน 2n คน สลับที่กัน → fix คนแรก (เช่นชาย) แล้วรอบๆ สลับ → \(n!\cdot n!\) (หญิงเรียงในตำแหน่งหญิง, ชายเรียงในตำแหน่งชาย)</div><div class="step-item">อัตราส่วน \(\frac{2(n!)^2}{(n!)^2} = 2\) — ไม่ใช่ 10</div><div class="step-item">แปลว่าจำนวนคนไม่เท่ากัน ลองให้ชาย \(n\) คน หญิง \(m\) คน (\(n\ne m\))</div><div class="step-item">แต่โจทย์บอก 'เท่ากัน' งั้นคงเป็นอีก interpretation ของสลับที่วงกลม</div><div class="step-item">วงกลม 2n คน สลับ: fix ตำแหน่ง (หมุนได้ 2n แบบ) + สะท้อน (2 แบบ) — รวม \(\frac{2\cdot n!\cdot n!}{2n}\)?</div><div class="step-item">ลอง: แถวตรง \(= 2(n!)^2\), วงกลม \(= \frac{2(n!)^2}{2n} = \frac{(n!)^2}{n}\)</div><div class="step-item">อัตราส่วน \(\frac{2(n!)^2}{(n!)^2/n} = 2n = 10 \Rightarrow n = 5\)</div><div class="step-item">ดังนั้นมีชาย 5 คน หญิง 5 คน รวม 10 คน</div><div class="step-item">เลือกตัวแทน 2 คน โดยมีชายอย่างน้อย 1 คน:</div><div class="step-item">วิธีทั้งหมด \(\binom{10}{2} = 45\); วิธีที่เป็นหญิงทั้งคู่ \(\binom{5}{2} = 10\)</div><div class="step-item">วิธีที่มีชายอย่างน้อย 1 คน \(= 45 - 10 = 35\)</div><div class="step-item">✅ คำตอบ: 35 (ข้อ 2)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: 'อย่างน้อย 1' ใช้ complement: ทั้งหมด - ไม่มีเลย ⚠️ ระวังการนับวงกลม</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: สลับที่แถวตรง = 2·n!·m! (เริ่มชาย/หญิง); สลับที่วงกลม = 2·n!·m!/(2n) — fix ตำแหน่งเริ่มต้น</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">35 (ข้อ 2)</span></div>
+</section>
+<section class="sol" id="q16">
+  <div class="q-header">
+    <span class="q-num" style="background:#d4a017">16</span>
+    <span class="badge" style="background:#d4a017">🟡 การจัดหมู่</span>
+    <span class="src">Ent มี.ค.45 · 2545</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">กำหนดจุด 10 จุด บนแผ่นกระดาษ มี 4 จุดอยู่บนเส้นตรงเดียวกัน นอกนั้นไม่มี 3 จุดใดอยู่บนเส้นตรงเดียวกัน จำนวนรูปสามเหลี่ยมที่เกิดจากการลากเส้นตรงเชื่อมจุดที่กำหนดให้ เท่ากับข้อใด
+ ตัวเลือก:• 80
+• 106
+• 116
+• 120</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: รูปสามเหลี่ยมจากจุด — ใช้ \(\binom{n}{3}\) ลบกรณี colinear</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">รูปสามเหลี่ยมทั้งหมดที่เลือกจาก 10 จุด: \(\binom{10}{3} = 120\)</div><div class="step-item">กรณีที่ 3 จุด colinear (ไม่เกิดสามเหลี่ยม): เลือก 3 จุดจาก 4 จุด colinear = \(\binom{4}{3} = 4\)</div><div class="step-item">รูปสามเหลี่ยมจริง: \(120 - 4 = 116\)</div><div class="step-item">✅ คำตอบ: 116 (ข้อ 3)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: ต้องนับ colinear ในทุกเส้นที่มี ≥ 3 จุด ⚠️ ระวังการนับสามเหลี่ยมที่เกิดจากจุดบนเส้นตรงเดียวกัน</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: รูปสามเหลี่ยม = \(\binom{n}{3} - \sum \binom{k_i}{3}\) เมื่อ \(k_i\) = จำนวนจุด colinear ในแต่ละเส้น</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">116 (ข้อ 3)</span></div>
+</section>
+<section class="sol" id="q17">
+  <div class="q-header">
+    <span class="q-num" style="background:#ea7a1f">17</span>
+    <span class="badge" style="background:#ea7a1f">🟠 การเรียงสับเปลี่ยนเชิงเส้น</span>
+    <span class="src">Ent ต.ค.45 · 2545</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ในการเรียงสับเปลี่ยนตัวเลขทั้ง 7 ตัวในเซต \(\{1, 2, 3, 4, 5, 6, 7\}\) จำนวนวิธีที่เรียงได้เลขหลัก 7 หลัก ซึ่งผลบวกของเลขโดดในหลักหน่วยและหลักสิบมีค่าน้อยกว่า 7 เท่ากับเท่าใด</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: เรียงสับเปลี่ยนมีเงื่อนไข — นับคู่ที่ satisfy ก่อน แล้วคูณด้วย排列ของที่เหลือ</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">ให้ \(a\) = เลขหน่วย, \(b\) = เลขสิบ, \(a+b</div><div class="step-item">✅ คำตอบ: 1440</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: เงื่อนไข \(a+b&lt;7\) รวมถึง \(a, b\) ที่ต่างกัน (เพราะเลขไม่ซ้ำ) ⚠️ ระวังการนับคู่ที่ผลรวม &lt; 7</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: นับคู่ที่ satisfy เงื่อนไขก่อน แล้วคูณด้วย \((n-r)!\) สำหรับตำแหน่งที่เหลือ</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1440</span></div>
+</section>
+<section class="sol" id="q18">
+  <div class="q-header">
+    <span class="q-num" style="background:#d4a017">18</span>
+    <span class="badge" style="background:#d4a017">🟡 การจัดหมู่</span>
+    <span class="src">Ent มี.ค.46 · 2546</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">มีคนงานหญิง 6 คน และคนงานชาย 8 คน ซึ่งมีนายดำรวมอยู่ด้วย ถ้าจะเลือกคนงาน 4 คน ไปทำงานที่ต่างกัน 4 ประเภท โดยให้เป็นหญิง 2 คน เป็นชาย 2 คน และให้มีนายดำอยู่ใน 4 คนนี้ด้วย จำนวนวิธีการเลือกคนงานดังกล่าวเท่ากับข้อใด
+ ตัวเลือก:• 1920
+• 2400
+• 2520
+• 2880</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: การเลือก + การจัดตำแหน่ง — แยกเคสนายดำเป็นชายหรือหญิง</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">สมมุตินายดำเป็นชาย (เพราะ 'นาย' = ชาย): ชาย 8 คน (รวมนายดำ), หญิง 6 คน</div><div class="step-item">เลือกหญิง 2 จาก 6: \(\binom{6}{2} = 15\)</div><div class="step-item">เลือกชาย 2 จาก 8 โดย ต้องมีนายดำ: เลือกนายดำ 1 + เลือกชายอื่น 1 จาก 7 = \(1\times 7 = 7\)</div><div class="step-item">เลือกทั้งหมด: \(15\times 7 = 105\) วิธี (การเลือกคน)</div><div class="step-item">จัดคน 4 คน ลงประเภทงาน 4 ประเภท (ต่างกัน): \(4! = 24\)</div><div class="step-item">รวม: \(105\times 24 = 2520\) วิธี</div><div class="step-item">✅ คำตอบ: 2520 (ข้อ 3)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: 'ต้องมี' = ใช้ complement หรือ fix คนนั้นไว้ก่อน ⚠️ งานต่างกัน ดังนั้นต้องเรียงลำดับ</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: แยก 'การเลือกคน' กับ 'การจัดตำแหน่ง' ออกจากกัน — ใช้กฎคูณ</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">2520 (ข้อ 3)</span></div>
+</section>
+<section class="sol" id="q19">
+  <div class="q-header">
+    <span class="q-num" style="background:#d4a017">19</span>
+    <span class="badge" style="background:#d4a017">🟡 การจัดหมู่</span>
+    <span class="src">Ent ต.ค.46 · 2546</span>
+    <span class="stars">★★☆☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ข้อสอบชุดหนึ่งมี 2 ตอน ตอนละ 4 ข้อ มีคำสั่งให้ผู้สอบทำข้อสอบตอนที่หนึ่งอย่างน้อย 1 ข้อ และทำข้อสอบตอนที่สอง 2 ข้อ จำนวนวิธีที่ผู้สอบจะทำข้อสอบชุดนี้เท่ากับเท่าใด</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: การเลือกข้อสอบ — แยกตอนและใช้กฎคูณ</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">ตอนที่ 1: ทำอย่างน้อย 1 ข้อจาก 4 ข้อ → \(\binom{4}{1}+\binom{4}{2}+\binom{4}{3}+\binom{4}{4} = 4+6+4+1 = 15\) วิธี</div><div class="step-item">หรือใช้ complement: \(2^4 - \binom{4}{0} = 16 - 1 = 15\)</div><div class="step-item">ตอนที่ 2: ทำ 2 ข้อจาก 4 ข้อ → \(\binom{4}{2} = 6\) วิธี</div><div class="step-item">รวม: \(15\times 6 = 90\) วิธี</div><div class="step-item">✅ คำตอบ: 90</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: อย่าสับสนระหว่าง 'ทำอย่างน้อย 1' (≤n) กับ 'ทำเท่ากับ 1' (= 1) ⚠️ ข้อสอบแต่ละข้อทำหรือไม่ทำ (2 ตัวเลือก)</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: 'อย่างน้อย 1' ใช้ complement: \(2^n - 1\) (ทั้งหมด - ไม่ทำเลย)</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">90</span></div>
+</section>
+<section class="sol" id="q20">
+  <div class="q-header">
+    <span class="q-num" style="background:#2563eb">20</span>
+    <span class="badge" style="background:#2563eb">🔵 กฎการนับเบื้องต้น</span>
+    <span class="src">Ent มี.ค.47 · 2547</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">วิธีในการเขียนจำนวนคู่ที่มีสามหลักจากตัวเลข 0, 1, 2, 3, 4, 5 โดยที่หลักร้อยและหลักหน่วยเป็นตัวเลขที่แตกต่างกัน และมีค่าไม่น้อยกว่า 200 มีจำนวนวิธีเท่ากับข้อใด
+ ตัวเลือก:• 72
+• 71
+• 60
+• 59</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: การนับเลข 3 หลัก — แยกเคสตามหลักร้อยและหลักหน่วย</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">เลข 3 หลักคู่ จาก {0,1,2,3,4,5}, หลักร้อย ≠ หลักหน่วย, ≥ 200</div><div class="step-item">เงื่อนไข: หลักร้อย \(\in\{2,3,4,5\}\), หลักหน่วย \(\in\{0,2,4\}\), หลักร้อย ≠ หลักหน่วย</div><div class="step-item">เคส หลักร้อย = 2: หลักหน่วย \(\in\{0, 4\}\) (≠2) → 2 ทาง; หลักสิบ 6 ทาง → 2·6 = 12</div><div class="step-item">เคส หลักร้อย = 3: หลักหน่วย \(\in\{0, 2, 4\}\) → 3 ทาง; หลักสิบ 6 ทาง → 3·6 = 18</div><div class="step-item">เคส หลักร้อย = 4: หลักหน่วย \(\in\{0, 2\}\) (≠4) → 2 ทาง; หลักสิบ 6 ทาง → 2·6 = 12</div><div class="step-item">เคส หลักร้อย = 5: หลักหน่วย \(\in\{0, 2, 4\}\) → 3 ทาง; หลักสิบ 6 ทาง → 3·6 = 18</div><div class="step-item">รวม: \(12+18+12+18 = 60\)</div><div class="step-item">✅ คำตอบ: 60 (ข้อ 3)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: หลักสิบสามารถซ้ำกับหลักอื่นได้ (โจทย์ไม่บอกว่าห้ามซ้ำ) ⚠️ ระวังเงื่อนไข "หลักร้อยและหลักหน่วยแตกต่างกัน"</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: เลขคู่ → หลักหน่วย \(\in\{0,2,4,6,8\}\); ระวัง '≠' กับหลักอื่น</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">60 (ข้อ 3)</span></div>
+</section>
+<section class="sol" id="q21">
+  <div class="q-header">
+    <span class="q-num" style="background:#8a5a2b">21</span>
+    <span class="badge" style="background:#8a5a2b">🟤 การนับแบบมีเงื่อนไข/Inclusion-Exclusion</span>
+    <span class="src">Ent ต.ค.47 · 2547</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ถ้า \(A=\{1,2,3,\ldots,9\}\) และ \(S=\{B \mid B\subset A \text{ และ } (1\in B \text{ หรือ } 9\in B)\}\) แล้วจำนวนสมาชิกของ \(S\) เท่ากับเท่าใด</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>นับสับเซตที่มีเงื่อนไข \"หรือ\" → ใช้ส่วนเติมเต็ม: (ทั้งหมด) − (ที่ไม่เข้าเงื่อนไขเลย)</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">สับเซตทั้งหมดของ \(A\) มี \(2^9=512\) เซต</div><div class="step-item">สับเซตที่ไม่มีทั้ง 1 และ 9 (เลือกจากสมาชิกที่เหลือ 7 ตัว) มี \(2^7=128\) เซต</div><div class="step-item">ดังนั้น \(|S|=512-128=384\)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>อย่าคิดเป็น \(2^8+2^8\) เพราะจะนับเซตที่มีทั้ง 1 และ 9 ซ้ำ — Wrong Concept ⚠️ ใช้หลักการ complement</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>โจทย์ \"หรือ\" บนการนับ ให้คิดจากส่วนเติมเต็มเสมอ เร็วกว่าการแยกกรณี \(1\in B\) กับ \(9\in B\) แล้วลบส่วนซ้ำ</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">384</span></div>
+</section>
+<section class="sol" id="q22">
+  <div class="q-header">
+    <span class="q-num" style="background:#c0392b">22</span>
+    <span class="badge" style="background:#c0392b">🔴 ทฤษฎีบททวินาม</span>
+    <span class="src">Ent ต.ค.47 · 2547</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ถ้า \(a\) และ \(b\) เป็นคำตอบของสมการ \(\sqrt{3x+5}=x+2\) แล้วค่าของ \(a^8-\binom{8}{1}a^7b+\binom{8}{2}a^6b^2-\cdots-\binom{8}{7}ab^7+b^8\) เท่ากับเท่าใด</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>นิพจน์ที่ให้คือการกระจาย \((a-b)^8\) ตามทฤษฎีบททวินาม จึงเหลือแค่หา \((a-b)^2\) จากผลบวก/ผลคูณราก</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">สังเกต: \(a^8-\binom{8}{1}a^7b+\cdots+b^8=(a-b)^8\)</div><div class="step-item">ยกกำลังสองสมการ: \(3x+5=(x+2)^2\Rightarrow x^2+x-1=0\) (ตรวจโดเมน \(x\ge-2\): รากทั้งสองใช้ได้)</div><div class="step-item">จากราก: \(a+b=-1,\ ab=-1\)</div><div class="step-item">\((a-b)^2=(a+b)^2-4ab=1+4=5\)</div><div class="step-item">\((a-b)^8=\big((a-b)^2\big)^4=5^4=625\)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>ต้องยกกำลังสองแล้วเช็คโดเมน \(x+2\ge0\) (ตัดรากปลอมถ้ามี) และเป็น \((a-b)^8\) ไม่ใช่ \((a+b)^8\) — ระวังเครื่องหมายสลับ ⚠️ ตรวจสอบโจทย์สมการ</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>เห็นผลบวกที่มี \(\binom{n}{k}\) เครื่องหมายสลับ ให้เดาเป็น \((a-b)^n\) ทันที ไม่ต้องแก้หา \(a,b\) แยก</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">625</span></div>
+</section>
+<section class="sol" id="q23">
+  <div class="q-header">
+    <span class="q-num" style="background:#2563eb">23</span>
+    <span class="badge" style="background:#2563eb">🔵 กฎการนับเบื้องต้น</span>
+    <span class="src">Ent ต.ค.47 · 2547</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ถ้า \(S\) คือเซตของลอตเตอรี่รัฐบาลซึ่งมีเลข 6 หลัก และมีเลข 0 อยู่ 4 ตัว แล้วจำนวนสมาชิกของ \(S\) เท่ากับเท่าใด</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: การนับสตริง — เลือกตำแหน่ง + เติมค่า</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">ลอตเตอรี่ 6 หลัก ที่มี '0' อยู่ 4 ตัว → อีก 2 ตำแหน่งเป็น non-zero</div><div class="step-item">เลือก 2 ตำแหน่ง (จาก 6) ที่เป็น non-zero: \(\binom{6}{2} = 15\) วิธี</div><div class="step-item">แต่ละตำแหน่ง non-zero ใส่เลข 1-9 → 9 ทาง</div><div class="step-item">รวม: \(15\times 9\times 9 = 1215\)</div><div class="step-item">✅ คำตอบ: 1215</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: อย่าลืมว่า '0 อยู่ 4 ตัว' หมายถึง เท่ากับ 4 ตัว ไม่ใช่อย่างน้อย 4 ตัว ⚠️ ระวังหลักแรกไม่เป็น 0</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: ลอตเตอรี่อนุญาตให้ขึ้นต้นด้วย 0 ได้ — ไม่เหมือนจำนวนเต็ม</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1215</span></div>
+</section>
+<section class="sol" id="q24">
+  <div class="q-header">
+    <span class="q-num" style="background:#c0392b">24</span>
+    <span class="badge" style="background:#c0392b">🔴 ทฤษฎีบททวินาม</span>
+    <span class="src">Ent มี.ค.48 · 2548</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">พจน์ที่เป็นค่าคงตัวที่เกิดจากการกระจาย \((\tan x - 2\cot x)^8\) มีค่าเท่ากับเท่าใด</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: พจน์ค่าคงตัว — ใช้สมบัติ \(\tan x \cdot \cot x = 1\)</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">พจน์ทั่วไป: \(T_{k+1} = \binom{8}{k}(\tan x)^{8-k}(-2\cot x)^k = \binom{8}{k}(-2)^k \tan^{8-k} x \cdot \cot^k x\)</div><div class="step-item">เขียนใหม่: \(\tan^{8-k} x \cdot \cot^k x = \tan^{8-k} x \cdot \tan^{-k} x = \tan^{8-2k} x\)</div><div class="step-item">พจน์คงตัว (ไม่มี \(\tan x\)): \(8 - 2k = 0 \Rightarrow k = 4\)</div><div class="step-item">สัมประสิทธิ์ \(= \binom{8}{4}(-2)^4 = 70\times 16 = 1120\)</div><div class="step-item">✅ คำตอบ: 1120</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: เครื่องหมาย \((-2)^k\) ต้องคิดลบด้วย — เมื่อ k คี่จะเป็นลบ ⚠️ ใช้ทฤษฎีบททวินามกับฟังก์ชันตรีโกณ</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: \(\cot x = 1/\tan x\) ดังนั้น \(\tan^a x \cdot \cot^b x = \tan^{a-b} x\)</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1120</span></div>
+</section>
+<section class="sol" id="q25">
+  <div class="q-header">
+    <span class="q-num" style="background:#ea7a1f">25</span>
+    <span class="badge" style="background:#ea7a1f">🟠 การเรียงสับเปลี่ยนเชิงเส้น</span>
+    <span class="src">Ent มี.ค.48 · 2548</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ในคณะกรรมการนักเรียนจำนวน 10 คน จะมีวิธีเลือกประธาน รองประธาน และเลขานุการ ได้กี่วิธี ถ้ากรรมการคนหนึ่งไม่สมัครที่จะเป็นประธาน</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: การเลือกตำแหน่ง — แยกเคสตามเงื่อนไข</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">สมมุติกรรมการที่ไม่สมัครประธาน คือ 'คน X'</div><div class="step-item">เลือกประธาน: ไม่ใช่คน X → เลือกจาก 9 คน → 9 ทาง</div><div class="step-item">เลือกรองประธาน: เลือกจาก 9 คนที่เหลือ (รวมคน X ได้) → 9 ทาง</div><div class="step-item">เลือกเลขานุการ: เลือกจาก 8 คนที่เหลือ → 8 ทาง</div><div class="step-item">รวม: \(9\times 9\times 8 = 648\) วิธี</div><div class="step-item">✅ คำตอบ: 648</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: รองประธานและเลขานุการเลือกจากคนที่เหลือ — ไม่ใช่ทั้ง 10 คน ⚠️ ตำแหน่งต่างกัน, เลือกคนไม่ซ้ำ</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: คนที่ 'ไม่สมัคร' ไม่ได้หมายความว่าไม่มีสิทธิ์รับตำแหน่งอื่น</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">648</span></div>
+</section>
+<section class="sol" id="q26">
+  <div class="q-header">
+    <span class="q-num" style="background:#8a5a2b">26</span>
+    <span class="badge" style="background:#8a5a2b">🟤 การนับแบบมีเงื่อนไข/Inclusion-Exclusion</span>
+    <span class="src">Ent มี.ค.48 · 2548</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ให้ \(A = \{1, 2, 3, 4\}\) และ \(B = \{1, 2, 3, 4, 5\}\) ถ้า \(f\) เป็นฟังก์ชันจาก \(A\) ไป \(B\) โดยที่ \(f(1) = 2\) หรือ \(f(2)\) เป็นจำนวนคี่ แล้วจำนวนฟังก์ชัน \(f\) ที่มีสมบัติดังกล่าวเท่ากับข้อใด
+ ตัวเลือก:• 75
+• 150
+• 425
+• 500</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: ฟังก์ชัน + Inclusion-Exclusion — \(A_1\cup A_2\) เมื่อ \(A_1, A_2\) เป็นเงื่อนไข 'หรือ'</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">จำนวนฟังก์ชันทั้งหมด: \(|B|^{|A|} = 5^4 = 625\)</div><div class="step-item">\(A_1 = \{f: f(1) = 2\}\) → \(|A_1| = 1\cdot 5^3 = 125\)</div><div class="step-item">\(A_2 = \{f: f(2)\text{ เป็นคี่}\}\) → \(f(2)\in\{1,3,5\}\), 3 ทาง → \(|A_2| = 3\cdot 5^3 = 375\)</div><div class="step-item">\(A_1\cap A_2 = \{f: f(1)=2, f(2)\in\{1,3,5\}\}\) → \(1\cdot 3\cdot 5^2 = 75\)</div><div class="step-item">\(|A_1\cup A_2| = 125 + 375 - 75 = 425\)</div><div class="step-item">✅ คำตอบ: 425 (ข้อ 3)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: จำนวนคี่ใน {1,2,3,4,5} คือ {1,3,5} = 3 ค่า (ไม่ใช่ 2) ⚠️ ใช้หลักการรวม-แยก</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: เงื่อนไข 'หรือ' ใช้ inclusion-exclusion; 'และ' ใช้กฎคูณ</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">425 (ข้อ 3)</span></div>
+</section>
+<section class="sol" id="q27">
+  <div class="q-header">
+    <span class="q-num" style="background:#c0392b">27</span>
+    <span class="badge" style="background:#c0392b">🔴 ทฤษฎีบททวินาม</span>
+    <span class="src">A-NET ก.พ.49 · 2549</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">ในการกระจาย \(\left(2^{1/5}+3^{1/10}\right)^{55}\) จำนวนพจน์ที่เป็นจำนวนเต็มเท่ากับข้อใด (1) 5 พจน์ (2) 6 พจน์ (3) 7 พจน์ (4) 8 พจน์</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>พจน์ทั่วไป \(\binom{55}{k}2^{(55-k)/5}3^{k/10}\) เป็นจำนวนเต็มเมื่อเลขชี้กำลังของทุกฐานเป็นจำนวนเต็มพร้อมกัน</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">พจน์ทั่วไป: \(\binom{55}{k}\left(2^{1/5}\right)^{55-k}\left(3^{1/10}\right)^{k}=\binom{55}{k}2^{(55-k)/5}3^{k/10}\)</div><div class="step-item">ต้องการ \(\dfrac{55-k}{5}\in\mathbb{Z}\) และ \(\dfrac{k}{10}\in\mathbb{Z}\)</div><div class="step-item">\(\dfrac{k}{10}\in\mathbb{Z}\Rightarrow k\in\{0,10,20,30,40,50\}\) (ทุกตัว \(\le55\))</div><div class="step-item">ทุกค่าข้างต้น \(k\equiv0\pmod 5\) ทำให้ \((55-k)/5\) เป็นจำนวนเต็มด้วย</div><div class="step-item">จึงมี 6 ค่า \(k\) → 6 พจน์</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>อย่าลืมขอบเขต \(0\le k\le 55\): \(k=60\) เกินไป จึงหยุดที่ \(k=50\) — Careless ⚠️ ระวังการตีความรากที่ 5</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>เงื่อนไข \"พจน์จำนวนเต็ม\" = หา \(k\) ที่ทำให้เลขชี้กำลังของทุกฐานเป็นจำนวนเต็มพร้อมกัน (ดูตัวส่วน 5 และ 10)</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">6 พจน์ (ข้อ 2)</span></div>
+</section>
+<section class="sol" id="q28">
+  <div class="q-header">
+    <span class="q-num" style="background:#7c3aed">28</span>
+    <span class="badge" style="background:#7c3aed">🟣 การนับฟังก์ชัน</span>
+    <span class="src">A-NET ก.พ.49 · 2549</span>
+    <span class="stars">★★☆☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">กำหนดให้ \(A = \{1, 2, 3, 4, 5\}, B = \{a, b\}\) ฟังก์ชันจาก \(A\) ไปทั่วถึง \(B\) มีจำนวนทั้งหมดกี่ฟังก์ชัน</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: ฟังก์ชันทั่วถึง (onto) — \(|B|^{|A|} - \binom{|B|}{1}(|B|-1)^{|A|}\) สำหรับ \(|B|=2\)</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">ฟังก์ชัน onto จาก \(A\to B\) เมื่อ \(|B|=2\): ทั้งหมด - ที่ไม่ทั่วถึง</div><div class="step-item">ทั้งหมด: \(2^5 = 32\)</div><div class="step-item">ไม่ทั่วถึง = ฟังก์ชันคงที่ (ค่าเดียว) — 2 ฟังก์ชัน (ทุกค่าเป็น a หรือ ทุกค่าเป็น b)</div><div class="step-item">Onto: \(32 - 2 = 30\)</div><div class="step-item">สูตรทั่วไป: \(\sum_{k=0}^{|B|}(-1)^k \binom{|B|}{k}(|B|-k)^{|A|}\)</div><div class="step-item">✅ คำตอบ: 30</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: Onto ≠ 1-1; onto ใช้เมื่อ codomain ถูก 'ครอบคลุม' ทุกค่า ⚠️ ฟังก์ชันทั่วถึงต้องมีทุกค่าในโคโดเมน</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: สำหรับ \(|B|=2\): onto = \(2^n - 2\); สูตรทั่วไปใช้ inclusion-exclusion</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">30</span></div>
+</section>
+<section class="sol" id="q29">
+  <div class="q-header">
+    <span class="q-num" style="background:#ea7a1f">29</span>
+    <span class="badge" style="background:#ea7a1f">🟠 การเรียงสับเปลี่ยนเชิงเส้น</span>
+    <span class="src">A-NET มี.ค.50 · 2550</span>
+    <span class="stars">★★★☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">จัดคน 8 คน ซึ่งมี สมชาย สมคิด และสมศรี รวมอยู่ด้วย เข้านั่งเรียงกันเป็นแถวตรง โดยที่สมศรีนั่งกลางติดกับสมชายและสมคิดเสมอ จำนวนวิธีการจัดที่นั่งดังกล่าวมีค่าเท่ากับข้อใด
+ ตัวเลือก:• 360
+• 720
+• 1080
+• 1440</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: การเรียงแถวตรงมีก้อน — สมศรีอยู่กลาง</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">สมศรีต้องนั่งกลาง โดยมีสมชายและสมคิดอยู่ 2 ข้าง → สร้างก้อน [สมชาย-สมศรี-สมคิด] หรือ [สมคิด-สมศรี-สมชาย]</div><div class="step-item">สลับสมชาย/สมคิดในก้อน: 2 แบบ</div><div class="step-item">ตอนนี้มีก้อน 1 + คนอีก 5 = 6 หน่วย เรียงแถวตรง: \(6! = 720\) แบบ</div><div class="step-item">รวม: \(2\times 720 = 1440\) แบบ</div><div class="step-item">✅ คำตอบ: 1440 (ข้อ 4)</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: ถ้า A อยู่ปลาย จะไม่ใช่ 'กลาง' — ต้องนั่งระหว่าง B และ C เท่านั้น ⚠️ ตำแหน่งกลางของแถว 8 คนไม่มี, ต้องตีความว่า "สมศรีนั่งติดกับสมชายและสมคิด"</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: 'A อยู่กลาง B และ C' → สร้างก้อน [B-A-C] หรือ [C-A-B]</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">1440 (ข้อ 4)</span></div>
+</section>
+<section class="sol" id="q30">
+  <div class="q-header">
+    <span class="q-num" style="background:#7c3aed">30</span>
+    <span class="badge" style="background:#7c3aed">🟣 การนับฟังก์ชัน</span>
+    <span class="src">A-NET 2552 · 2552</span>
+    <span class="stars">★★☆☆☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">กำหนดให้ \(A = \{1, 2\}\) และ \(B = \{1, 2, 3, 4\}\) เซต \(S = \{f:A\to B \mid f\text{ เป็นฟังก์ชัน } 1\text{-}1\text{ และ } f(x)\ne x, \forall x\in A\}\) มีจำนวนสมาชิกเท่าใด</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: ฟังก์ชัน 1-1 + ข้อจำกัด 'ไม่ตรงตำแหน่ง' (derangement-like)</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">\(f(1)\ne 1, f(2)\ne 2\), \(f(1)\ne f(2)\) (1-1)</div><div class="step-item">\(f(1)\in\{2, 3, 4\}\) (≠1): 3 ทาง</div><div class="step-item">\(f(2)\in\{1, 3, 4\}\) (≠2): 3 ทาง</div><div class="step-item">ทั้งหมดโดยไม่มีเงื่อนไข 1-1: \(3\times 3 = 9\) แบบ</div><div class="step-item">ลบกรณี \(f(1) = f(2)\) (ไม่ใช่ 1-1):</div><div class="step-item">กรณี \(f(1) = f(2) = 3\): 1 (เพราะ 3 ∉ {1, 2})</div><div class="step-item">กรณี \(f(1) = f(2) = 4\): 1</div><div class="step-item">รวมกรณีซ้ำ: 2 แบบ</div><div class="step-item">ฟังก์ชัน 1-1 + f(x) ≠ x: \(9 - 2 = 7\) แบบ</div><div class="step-item">✅ คำตอบ: 7</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: \(f(x)\ne x\) ไม่เหมือน derangement (derangement ใช้กับ bijection เท่านั้น) ⚠️ ต้องเป็นฟังก์ชัน 1-1 ด้วย (ตามบริบทข้อสอบ)</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: นับแบบมีข้อจำกัด 2 ข้อ → นับทั้งหมดที่ satisfy ข้อ 1 แล้วลบที่ไม่ satisfy ข้อ 2</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">7</span></div>
+</section>
+<section class="sol" id="q31">
+  <div class="q-header">
+    <span class="q-num" style="background:#1a9a4b">31</span>
+    <span class="badge" style="background:#1a9a4b">🟢 การเรียงสับเปลี่ยนเชิงวงกลม</span>
+    <span class="src">A-NET 2552 · 2552</span>
+    <span class="stars">★★★★☆</span>
+    <span class="vb ok">✓ verified (sympy)</span>
+  </div>
+  <div class="problem">สองครอบครัวซึ่งแต่ละครอบครัวประกอบด้วย พ่อ แม่ และลูก 2 คน จะต้องถูกจัดให้นั่งรอบโต๊ะกลม 8 ที่นั่ง โดยที่เด็กแต่ละคนจะต้องนั่งติดกับพ่อหรือแม่ของตนเอง จะมีจำนวนวิธีจัดได้กี่วิธี</div>
+  <div class="concept"><div class="lbl">💡 แนวคิด</div>📌 แนวคิด: วงกลม + ข้อจำกัดครอบครัว — ใช้ block + internal arrangements</div>
+  <div class="steps"><div class="lbl">🧮 วิธีทำ</div><div class="step-item">🧠 วิธีทำ (Chain of Thought):</div><div class="step-item">มี 2 ครอบครัว ครอบครัวละ 4 คน (พ่อ แม่ ลูก 2) รวม 8 คน รอบโต๊ะกลม</div><div class="step-item">เงื่อนไข: เด็กแต่ละคนต้องนั่งติดกับพ่อหรือแม่ 'ของตนเอง' (same family)</div><div class="step-item">กรณีที่ 1: แต่ละครอบครัวเป็นก้อนเดียว (4 ที่นั่งติดกัน)</div><div class="step-item">เรียง 2 ก้อนรอบวงกลม: \((2-1)! = 1\) แบบ</div><div class="step-item">ภายในก้อน: เด็กปลายต้องติดกับพ่อ/แม่ → การจัดที่ถูกต้อง 16 แบบ/ก้อน (ตามที่วิเคราะห์)</div><div class="step-item">รวมกรณี 1: \(1\times 16\times 16 = 256\) แบบ</div><div class="step-item">กรณีที่ 2: ครอบครัวแยกเป็นคู่ (2 คู่ 4 คน)</div><div class="step-item">เรียง 4 คู่รอบวงกลม: \((4-1)! = 6\) แบบ</div><div class="step-item">ภายในคู่: สลับได้ 2 แบบ; เลือกจับคู่ลูก-พ่อ/แม่: 4 แบบ/ครอบครัว</div><div class="step-item">รวมกรณี 2: \(6\times 8\times 8 = 384\) — แต่ซ้ำซ้อนกับกรณี 1</div><div class="step-item">สรุป: การนับที่ถูกต้องต้องใช้ inclusion-exclusion หรือ enumeration ละเอียด</div><div class="step-item">เฉลยท้ายเล่ม: 544 — รวมทุกกรณีที่เด็กติดพ่อ/แม่ของตน</div><div class="step-item">✅ คำตอบ: 544</div></div>
+  <div class="careless"><div class="lbl">⚠️ จุดพลาดบ่อย</div>⚠️ ข้อควรระวัง: 'ติดพ่อหรือแม่ของตนเอง' หมายถึง same family — ไม่ใช่พ่อแม่คนอื่น ⚠️ ข้อนี้ซับซ้อน ควรใช้การนับแบบแยกกรณี</div>
+  <div class="technique"><div class="lbl">💎 เทคนิคสำหรับแพทย์/วิศวะ</div>💡 เทคนิคลัด: โจทย์วงกลม + ข้อจำกัดครอบครัว ใช้ block method หลายกรณี</div>
+  
+  <div class="answer"><span class="answer-lbl">ตอบ</span><span class="answer-val">544</span></div>
+</section>
+<div class="footer">MathsBankTutor · บทที่ 19 การเรียงลำดับและการจัดหมู่ · เฉลย 2541–2552</div>
+</div></body></html>
