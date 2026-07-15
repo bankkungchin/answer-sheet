@@ -318,8 +318,7 @@ function rvrRenderResult(){
   if(!RV.queue.length){ wrap.innerHTML=''; return; }
   var seen = RV_SEEN[RV.chapter]||{};
   var doneCount = RV.queue.filter(function(q){return !!seen['n'+q.n];}).length;
-  var isEnt = (q.yt||'').includes('.html#');
-  var btnLabel = isEnt ? '📄 ดูเฉลย' : '▶ ดูคลิป';
+ 
   var html = '<div class="d-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+
     '<span style="font-size:13px;color:var(--text2)">'+RV.queue.length+' ข้อ · ดูแล้ว '+doneCount+'/'+RV.queue.length+'</span>'+
     '<button class="addmore-btn" id="rvr-addmore" onclick="rvrAddMore()">＋ ขอเพิ่มอีก</button></div>';
