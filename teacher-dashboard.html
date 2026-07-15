@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Teacher Dashboard — Maths Bank Tutor</title>
+<meta name="description" content="แดชบอร์ดครู — จัดการกลุ่มเรียน นักเรียน ตารางคาบ">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===========================================================
+   DESIGN SYSTEM — Maths Bank Tutor (ห้ามเปลี่ยน)
+   =========================================================== */
+:root {
+  --bg:           #FCFBF9;
+  --bg-soft:      #F5F3EF;
+  --bg-canvas:    #ECEAE6;
+  --black:        #17150F;
+  --orange:       #E8571F;
+  --gray-dark:    #6B675E;
+  --gray-soft:    #A8A49B;
+  --line:         #D8D4CC;
+  --line-strong:  #17150F;
+  --danger:       #B83C0A;
+  --danger-bg:    #FFF1E8;
+  --success:      #2D6A4F;
+  --success-bg:   #E8F3EE;
+
+  --radius-pill:  999px;
+  --radius-card:  18px;
+  --radius-sm:    10px;
+
+  --shadow-card:  0 1px 0 rgba(23,21,15,.04), 0 12px 28px -16px rgba(23,21,15,.18);
+  --shadow-pop:   0 24px 60px -20px rgba(23,21,15,.40);
+
+  --font-thai:    'Anuphan', system-ui, sans-serif;
+  --font-num:     'Space Grotesk', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg-canvas); color: var(--black); font-family: var(--font-thai); -webkit-font-smoothing: antialiased; }
+body { font-size: 14px; line-height: 1.55; min-height: 100vh; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: 0; background: transparent; color: inherit; }
+input, select { font-family: inherit; font-size: 14px; color: var(--black); }
+.num { font-family: var(--font-num); font-feature-settings: 'tnum' 1, 'lnum' 1; }
+
+/* ===========================================================
+   LOGIN SCREEN
+   =========================================================== */
+.login-wrap {
+  min-height: 100vh; display: grid; place-items: center;
+  padding: 24px;
+}
+.login-card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 40px 36px;
+  max-width: 420px; width: 100%;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+.login-logo {
+  width: 64px; height: 64px;
+  background: var(--black); color: var(--bg);
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-num); font-weight: 700; font-size: 26px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin: 0 auto 16px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.login-logo span { color: var(--orange); }
+.login-title { font-size: 22px; font-weight: 700; }
+.login-sub { color: var(--gray-dark); font-size: 13px; margin-top: 4px; }
+.login-eyebrow {
+  font-family: var(--font-num); font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--orange); font-weight: 600;
+  margin-bottom: 8px; display: block;
+}
+
+.pin-display {
+  display: flex; gap: 8px; justify-content: center;
+  margin: 24px 0 16px;
+}
+.pin-dot {
+  width: 44px; height: 56px;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  display: grid; place-items: center;
+  font-family: var(--font-num); font-size: 22px; font-weight: 600;
+  background: var(--bg);
+  transition: all .15s;
+}
+.pin-dot.filled { border-color: var(--black); }
+.pin-dot.error { border-color: var(--danger); background: var(--danger-bg); animation: shake .3s; }
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* keypad */
+.keypad {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; max-width: 280px; margin: 0 auto;
+}
+.keypad button {
+  background: var(--bg-soft); border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 0; font-size: 20px; font-weight: 600;
+  font-family: var(--font-num);
+  transition: all .12s;
+}
+.keypad button:hover { background: var(--bg-canvas); border-color: var(--line-strong); }
+.keypad button:active { transform: scale(.96); }
+.keypad button.clear { color: var(--danger); }
+.keypad button.back { color: var(--gray-dark); }
+
+.login-warn {
+  margin-top: 16px; padding: 10px 14px;
+  background: var(--danger-bg); border-radius: 10px;
+  font-size: 13px; color: var(--danger);
+  display: none;
+}
+.login-warn.show { display: block; }
+
+.login-hint {
+  margin-top: 20px; padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 12px; color: var(--gray-dark);
+}
+.login-hint code {
+  background: var(--bg-soft); padding: 2px 8px;
+  border-radius: 4px; font-family: var(--font-num);
+  color: var(--orange); font-weight: 600;
+}
+
+/* ===========================================================
+   APP LAYOUT
+   =========================================================== */
+.app {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: 100vh;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  background: var(--bg);
+  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column;
+  position: sticky; top: 0; height: 100vh;
+}
+.sidebar__head {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line-strong);
+  display: flex; align-items: center; gap: 10px;
+}
+.sidebar__logo {
+  width: 32px; height: 32px;
+  background: var(--black); color: var(--bg);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-num); font-weight: 700; font-size: 13px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.sidebar__logo span { color: var(--orange); }
+.sidebar__title { font-size: 14px; font-weight: 600; line-height: 1.2; }
+.sidebar__title small { display: block; font-size: 10px; color: var(--gray-dark); letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500; margin-top: 2px; }
+
+.sidebar__actions {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  display: flex; gap: 6px;
+}
+.sidebar__actions .btn { flex: 1; }
+
+.sidebar__section-label {
+  padding: 14px 20px 6px;
+  font-family: var(--font-num); font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gray-dark); font-weight: 600;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.group-list { flex: 1; overflow-y: auto; padding: 0 12px 16px; }
+.group-item {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer; transition: all .12s;
+  margin-bottom: 2px;
+  border: 1px solid transparent;
+}
+.group-item:hover { background: var(--bg-soft); }
+.group-item.is-active {
+  background: var(--black); color: var(--bg);
+  border-color: var(--black);
+}
+.group-item.is-active .group-item__meta { color: var(--gray-soft); }
+.group-item__dot {
+  width: 8px; height: 8px; border-radius: 50%; flex: 0 0 8px;
+}
+.group-item__dot.done { background: var(--black); }
+.group-item.is-active .group-item__dot.done { background: var(--bg); }
+.group-item__dot.current { background: var(--orange); }
+.group-item__dot.upcoming { background: transparent; border: 1.5px solid var(--line); }
+.group-item.is-active .group-item__dot.upcoming { border-color: var(--gray-soft); }
+.group-item__name { font-size: 13px; font-weight: 500; line-height: 1.25; flex: 1; }
+.group-item__meta { font-size: 11px; color: var(--gray-dark); margin-top: 2px; }
+
+.sidebar__foot {
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+  display: flex; gap: 6px;
+}
+
+/* ===== Main panel ===== */
+.main {
+  display: flex; flex-direction: column;
+  min-width: 0;
+}
+.main__head {
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 28px;
+  display: flex; align-items: center; gap: 12px;
+  position: sticky; top: 0; z-index: 10;
+}
+.main__head h1 { font-size: 18px; font-weight: 700; flex: 1; }
+.main__head .eyebrow {
+  font-family: var(--font-num); font-size: 10px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--orange); font-weight: 600;
+  display: block;
+}
+
+.mode-badge {
+  padding: 4px 10px; border-radius: var(--radius-pill);
+  background: var(--black); color: var(--bg);
+  font-size: 11px; font-weight: 600;
+  font-family: var(--font-num); letter-spacing: 0.08em;
+}
+
+.main__body { padding: 24px 28px 80px; flex: 1; }
+
+/* ===========================================================
+   CARDS / SECTIONS
+   =========================================================== */
+.card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 22px;
+  margin-bottom: 18px;
+}
+.card__head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px; gap: 12px;
+}
+.card__title {
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  font-family: var(--font-num); color: var(--gray-dark); font-weight: 600;
+}
+.card__title b { color: var(--black); }
+.card__count {
+  font-family: var(--font-num); font-size: 12px;
+  padding: 3px 10px; border-radius: var(--radius-pill);
+  background: var(--bg-soft); color: var(--gray-dark);
+}
+
+/* group header card */
+.group-header {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 20px; align-items: start;
+}
+.group-header__name {
+  font-size: 24px; font-weight: 700;
+  border: 0; background: transparent;
+  padding: 4px 0; outline: none;
+  border-bottom: 2px dashed transparent;
+  width: 100%;
+}
+.group-header__name:focus { border-bottom-color: var(--orange); }
+.group-header__name.editing { border-bottom-color: var(--orange); }
+.group-header__meta { color: var(--gray-dark); font-size: 13px; margin-top: 4px; }
+
+.level-badge {
+  padding: 6px 14px; border-radius: var(--radius-pill);
+  font-family: var(--font-num); font-size: 12px; font-weight: 600;
+  background: var(--bg-soft); color: var(--black);
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+.level-badge.lv-4 { background: #FFF1E8; border-color: #FFD2B8; color: #B83C0A; }
+.level-badge.lv-5 { background: #EFEFE0; border-color: #D8D4CC; color: #4A463C; }
+.level-badge.lv-6 { background: #17150F; border-color: #17150F; color: var(--bg); }
+
+/* form rows */
+.form-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+.form-field { display: flex; flex-direction: column; gap: 4px; }
+.form-field label {
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gray-dark); font-weight: 600;
+  font-family: var(--font-num);
+}
+.form-field input, .form-field select {
+  padding: 8px 12px;
+  border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg);
+  outline: none; transition: border-color .15s;
+}
+.form-field input:focus, .form-field select:focus { border-color: var(--black); }
+.form-field .hint { font-size: 11px; color: var(--gray-dark); }
+
+/* buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 9px 14px; border-radius: var(--radius-pill);
+  font-size: 13px; font-weight: 600;
+  transition: all .15s;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.btn--primary { background: var(--black); color: var(--bg); }
+.btn--primary:hover { background: var(--orange); }
+.btn--ghost { background: var(--bg); color: var(--black); border-color: var(--line-strong); }
+.btn--ghost:hover { background: var(--bg-soft); }
+.btn--danger { background: var(--danger-bg); color: var(--danger); border-color: transparent; }
+.btn--danger:hover { background: var(--danger); color: var(--bg); }
+.btn--sm { padding: 6px 10px; font-size: 12px; }
+.btn--xs { padding: 4px 8px; font-size: 11px; }
+.btn--block { width: 100%; }
+.btn--icon { padding: 8px; width: 32px; height: 32px; }
+
+/* progress bar */
+.progress {
+  height: 8px; background: var(--bg-canvas); border-radius: var(--radius-pill);
+  overflow: hidden; border: 1px solid var(--line);
+}
+.progress__fill { height: 100%; background: var(--orange); border-radius: var(--radius-pill); }
+
+/* ===========================================================
+   STUDENT LIST
+   =========================================================== */
+.student-add-row {
+  display: flex; gap: 8px; margin-bottom: 14px;
+}
+.student-add-row input {
+  flex: 1; padding: 9px 14px;
+  border: 1px solid var(--line); border-radius: var(--radius-pill);
+  outline: none;
+}
+.student-add-row input:focus { border-color: var(--black); }
+
+.student-list {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 6px;
+}
+.student-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px;
+  background: var(--bg-soft); border-radius: var(--radius-pill);
+  font-size: 13px;
+}
+.student-row__num {
+  font-family: var(--font-num); font-size: 11px; color: var(--gray-soft);
+  width: 22px;
+}
+.student-row__name { flex: 1; font-weight: 500; }
+.student-row__del {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: transparent; color: var(--gray-soft);
+  display: grid; place-items: center; font-size: 14px;
+  transition: all .15s;
+}
+.student-row__del:hover { background: var(--danger); color: var(--bg); }
+
+/* ===========================================================
+   SESSION TABLE
+   =========================================================== */
+.session-tools {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;
+}
+.session-table-wrap {
+  border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+}
+.session-table { width: 100%; border-collapse: collapse; }
+.session-table th {
+  background: var(--bg-soft);
+  text-align: left;
+  font-family: var(--font-num); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gray-dark); font-weight: 600;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.session-table td { padding: 10px 12px; border-bottom: 1px solid var(--line); font-size: 13px; vertical-align: middle; }
+.session-table tr:last-child td { border-bottom: 0; }
+.session-table tr.is-holiday td { background: var(--danger-bg); }
+.session-table tr.is-current td { background: #FFF6F0; }
+
+.session-no-print {
+  font-family: var(--font-num); font-weight: 600;
+  display: inline-block; width: 24px; text-align: center;
+}
+
+.session-input {
+  padding: 5px 8px;
+  border: 1px solid transparent; border-radius: 6px;
+  background: transparent;
+  font-family: var(--font-num); font-size: 13px;
+  outline: none; width: 100%;
+  min-width: 90px;
+}
+.session-input:hover { border-color: var(--line); }
+.session-input:focus { border-color: var(--orange); background: var(--bg); }
+
+.status-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 8px; border-radius: var(--radius-pill);
+  font-size: 11px; font-weight: 500;
+}
+.status-pill.done { background: var(--black); color: var(--bg); }
+.status-pill.current { background: var(--orange); color: var(--bg); }
+.status-pill.upcoming { background: var(--bg-canvas); color: var(--gray-dark); }
+.status-pill.holiday { background: var(--danger); color: var(--bg); }
+
+.row-actions { display: flex; gap: 4px; justify-content: flex-end; }
+.row-actions button {
+  width: 28px; height: 28px; border-radius: 6px;
+  display: grid; place-items: center;
+  background: var(--bg-soft); color: var(--gray-dark);
+  font-size: 13px; transition: all .12s;
+}
+.row-actions button:hover { background: var(--black); color: var(--bg); }
+.row-actions button.danger:hover { background: var(--danger); }
+
+/* ===========================================================
+   OVERVIEW MODE (read-only summary)
+   =========================================================== */
+.overview-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+.overview-card {
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: var(--radius-card); padding: 20px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.overview-card__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.overview-card__name { font-size: 17px; font-weight: 700; }
+.overview-card__meta { font-size: 12px; color: var(--gray-dark); margin-top: 2px; }
+.overview-card__progress { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; color: var(--gray-dark); }
+.overview-card__progress b { font-family: var(--font-num); font-size: 15px; color: var(--black); }
+.overview-card__progress .pct { font-family: var(--font-num); color: var(--orange); font-weight: 600; }
+
+/* ===========================================================
+   MODAL (confirm / form)
+   =========================================================== */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(23,21,15,.55); backdrop-filter: blur(4px);
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.modal-backdrop.is-open { display: flex; }
+.modal {
+  background: var(--bg); border-radius: var(--radius-card);
+  max-width: 440px; width: 100%; padding: 24px;
+  box-shadow: var(--shadow-pop);
+  animation: pop .18s ease-out;
+}
+@keyframes pop { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+.modal__title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.modal__body { color: var(--gray-dark); font-size: 14px; margin-bottom: 20px; }
+.modal__actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+/* ===========================================================
+   TOAST
+   =========================================================== */
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--black); color: var(--bg);
+  padding: 12px 20px; border-radius: var(--radius-pill);
+  font-size: 13px; font-weight: 500;
+  z-index: 200; opacity: 0; transition: all .3s;
+  box-shadow: var(--shadow-pop);
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+.toast.success { background: var(--success); }
+.toast.error { background: var(--danger); }
+
+/* ===========================================================
+   EMPTY STATE
+   =========================================================== */
+.empty {
+  text-align: center; padding: 60px 24px;
+  color: var(--gray-dark);
+}
+.empty h3 { font-size: 18px; color: var(--black); margin-bottom: 6px; }
+.empty p { font-size: 14px; margin-bottom: 16px; }
+
+/* ===========================================================
+   RESPONSIVE
+   =========================================================== */
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar {
+    position: relative; height: auto;
+    border-right: 0; border-bottom: 1px solid var(--line-strong);
+  }
+  .group-list { max-height: 240px; }
+  .main__body { padding: 16px; }
+  .main__head { padding: 12px 16px; }
+  .group-header { grid-template-columns: 1fr; }
+  .session-table th:nth-child(4),
+  .session-table td:nth-child(4) { display: none; }
+}
+@media (max-width: 480px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .student-list { grid-template-columns: 1fr; }
+  .session-table th:nth-child(3),
+  .session-table td:nth-child(3) { display: none; }
+}
+
+/* ===========================================================
+   PRINT
+   =========================================================== */
+@media screen {
+  .print-only { display: none !important; }
+}
+@media print {
+  @page { size: A4; margin: 12mm 14mm; }
+  body { background: white !important; font-size: 11pt; }
+  .app, .login-wrap { display: none !important; }
+  .print-only { display: block !important; }
+  .print-report { color: #000; font-family: var(--font-thai); }
+  .print-report__head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    border-bottom: 2px solid #000; padding-bottom: 12px; margin-bottom: 14px;
+  }
+  .print-brand { display: flex; align-items: center; gap: 10px; }
+  .print-brand__logo {
+    width: 36px; height: 36px; background: #000; color: #fff;
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-num); font-weight: 700; font-size: 15px;
+    letter-spacing: -0.04em; line-height: 1; overflow: hidden; white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .print-brand__logo span { color: var(--orange); }
+  .print-brand__name b { font-size: 13pt; }
+  .print-brand__name small { font-size: 9pt; color: #555; display: block; margin-top: 2px; }
+  .print-report__meta { text-align: right; font-size: 9pt; color: #555; }
+  .print-report__meta b { display: block; color: #000; font-size: 10pt; }
+  .print-report__title { font-size: 16pt; font-weight: 700; margin: 14px 0 4px; }
+  .print-report__sub { color: #444; font-size: 10pt; margin-bottom: 14px; }
+  .print-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid #000; border-radius: 8px; overflow: hidden; margin-bottom: 14px;
+  }
+  .print-stats__cell { padding: 8px 10px; border-right: 1px solid #000; }
+  .print-stats__cell:last-child { border-right: 0; }
+  .print-stats__label { font-size: 8pt; color: #666; letter-spacing: 0.08em; text-transform: uppercase; }
+  .print-stats__value { font-family: var(--font-num); font-size: 13pt; font-weight: 600; margin-top: 2px; }
+  .print-stats__value span { color: var(--orange); }
+  .print-section-title {
+    font-size: 10pt; letter-spacing: 0.16em; text-transform: uppercase;
+    font-family: var(--font-num); font-weight: 600;
+    border-bottom: 1px solid #000; padding-bottom: 4px; margin: 14px 0 8px;
+  }
+  .print-table { width: 100%; border-collapse: collapse; font-size: 10pt; }
+  .print-table th {
+    background: #f0eeea; text-align: left;
+    padding: 6px 8px; border: 1px solid #000; font-weight: 600; font-size: 9pt;
+  }
+  .print-table td { padding: 6px 8px; border: 1px solid #999; }
+  .print-table tr.is-holiday td { background: #ffeae0; }
+  .print-table tr.is-current td { background: #fff4ec; }
+  .print-students {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px 12px; font-size: 10pt;
+  }
+  .print-student {
+    padding: 3px 0; border-bottom: 1px dotted #ccc;
+    display: flex; align-items: baseline; gap: 6px;
+  }
+  .print-student__n { font-family: var(--font-num); font-size: 8pt; color: #999; min-width: 16px; }
+  .print-footer {
+    margin-top: 18px; padding-top: 10px; border-top: 1px solid #000;
+    display: flex; justify-content: space-between; font-size: 9pt; color: #555;
+  }
+  .print-footer b { color: #000; }
+  .print-signature {
+    margin-top: 24px; display: flex; justify-content: space-between; gap: 24px;
+  }
+  .print-signature__cell { text-align: center; flex: 1; }
+  .print-signature__line { border-top: 1px solid #000; margin-top: 40px; padding-top: 4px; font-size: 9pt; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============== LOGIN VIEW ============== -->
+<div class="login-wrap" id="loginView">
+  <div class="login-card">
+    <div class="login-logo">M<span>B</span></div>
+    <span class="login-eyebrow">Teacher Access</span>
+    <h1 class="login-title">Teacher Dashboard</h1>
+    <p class="login-sub">กรอกรหัส PIN 6 หลักเพื่อเข้าใช้งาน</p>
+
+    <div class="pin-display" id="pinDisplay">
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+    </div>
+
+    <div class="keypad" id="keypad">
+      <button data-key="1">1</button>
+      <button data-key="2">2</button>
+      <button data-key="3">3</button>
+      <button data-key="4">4</button>
+      <button data-key="5">5</button>
+      <button data-key="6">6</button>
+      <button data-key="7">7</button>
+      <button data-key="8">8</button>
+      <button data-key="9">9</button>
+      <button class="clear" data-key="clear">ล้าง</button>
+      <button data-key="0">0</button>
+      <button class="back" data-key="back">←</button>
+    </div>
+
+    <div class="login-warn" id="loginWarn"></div>
+
+    <div class="login-hint">
+      PIN เริ่มต้น: <code>123456</code> · เปลี่ยนได้ในเมนูหลังเข้าสู่ระบบ<br>
+      กรอกผิด 5 ครั้ง → ล็อค 10 นาที
+    </div>
+  </div>
+</div>
+
+<!-- ============== APP VIEW ============== -->
+<div class="app" id="appView" style="display:none;">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="sidebar__head">
+      <div class="sidebar__logo">M<span>B</span></div>
+      <div class="sidebar__title">
+        Maths Bank Tutor
+        <small>Teacher Mode</small>
+      </div>
+    </div>
+
+    <div class="sidebar__actions">
+      <button class="btn btn--ghost btn--sm" id="btnOverview" style="flex:1;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        ภาพรวม
+      </button>
+      <button class="btn btn--primary btn--sm" id="btnAddGroup" style="flex:1;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        กลุ่มใหม่
+      </button>
+    </div>
+
+    <div class="sidebar__section-label">
+      กลุ่มเรียน <span class="num" id="sidebarGroupCount">0</span>
+    </div>
+
+    <div class="group-list" id="groupList"></div>
+
+    <div class="sidebar__foot">
+      <button class="btn btn--ghost btn--sm" id="btnSync" style="flex:1;" title="อัปโหลดขึ้น Google Sheet">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Sync
+      </button>
+      <button class="btn btn--ghost btn--sm" id="btnSettings" title="ตั้งค่า">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+      <button class="btn btn--ghost btn--sm btn--danger" id="btnLogout" title="ออกจากระบบ">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN PANEL ===== -->
+  <main class="main">
+    <header class="main__head">
+      <div>
+        <span class="eyebrow" id="mainEyebrow">Group Detail</span>
+        <h1 id="mainTitle">เลือกกลุ่มจากแถบซ้าย</h1>
+      </div>
+      <span class="mode-badge">TEACHER</span>
+    </header>
+
+    <div class="main__body" id="mainBody">
+      <!-- Dynamic content injected here -->
+    </div>
+  </main>
+
+</div>
+
+<!-- ============== MODAL ============== -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<!-- ============== TOAST ============== -->
+<div class="toast" id="toast"></div>
+
+<!-- ============== PRINT REPORT ============== -->
+<div class="print-only" id="printReport"></div>
+
+<script>
+/* ===========================================================
+   CONFIG
+   =========================================================== */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyoIHCKry3-JfsHrGuZlvhX2_Z3yml_FHzeAAQ6CeDpw4e0VIJri-8dSlBUKxdzR982BA/exec';  // ← ใส่ URL ของ Google Apps Script ที่นี่ (เว้นว่าง = ไม่ sync)
+const DEFAULT_PIN = '123456';
+const STORAGE_KEY = 'mathsBankTeacherData';
+const PIN_KEY = 'mathsBankTeacherPin';
+const LOCK_KEY = 'mathsBankTeacherLock';
+const SESSION_KEY = 'mathsBankTeacherAuth';
+const MAX_ATTEMPTS = 5;
+const LOCK_MINUTES = 10;
+
+/* ===========================================================
+   DEFAULT DATA — ใช้เมื่อ localStorage ไม่มีข้อมูล
+   =========================================================== */
+const DEFAULT_DATA = {
+  groups: [
+    {
+      id: 'm4-wed-1630',
+      name: 'ม.4 วันพุธ 16.30',
+      level: 'ม.4',
+      dayOfWeek: 'พุธ',
+      startTime: '16.30',
+      endTime: '19.00',
+      sessionsTotal: 10,
+      startDate: '2026-06-10',
+      students: [
+        {id: 's1', name: 'เต้'},
+        {id: 's2', name: 'ปราง'},
+        {id: 's3', name: 'กวิน'},
+        {id: 's4', name: 'เอิร์ธ'},
+        {id: 's5', name: 'นัน'},
+        {id: 's6', name: 'พลอย'},
+        {id: 's7', name: 'ฟ้า'},
+        {id: 's8', name: 'เมญา'},
+        {id: 's9', name: 'ภูมิ'},
+        {id: 's10', name: 'ใบหมึก'},
+        {id: 's11', name: 'เจน'},
+        {id: 's12', name: 'หยดน้ำ'},
+        {id: 's13', name: 'บอมบ์'},
+        {id: 's14', name: 'มิ้นต์'},
+        {id: 's15', name: 'แฮปปี้'}
+      ],
+      sessions: [] // จะสร้างอัตโนมัติ
+    },
+    {
+      id: 'm6-sun-1000',
+      name: 'ม.6 วันอาทิตย์ 10.00',
+      level: 'ม.6',
+      dayOfWeek: 'อาทิตย์',
+      startTime: '10.00',
+      endTime: '12.30',
+      sessionsTotal: 20,
+      startDate: '2026-02-01',
+      students: [
+        {id: 's1', name: 'เต้'}, {id: 's2', name: 'ปราง'}, {id: 's3', name: 'กวิน'},
+        {id: 's4', name: 'เอิร์ธ'}, {id: 's5', name: 'นัน'}, {id: 's6', name: 'พลอย'},
+        {id: 's7', name: 'ฟ้า'}, {id: 's8', name: 'เมญา'}, {id: 's9', name: 'ภูมิ'},
+        {id: 's10', name: 'ใบหมึก'}, {id: 's11', name: 'เจน'}, {id: 's12', name: 'หยดน้ำ'},
+        {id: 's13', name: 'บอมบ์'}, {id: 's14', name: 'มิ้นต์'}, {id: 's15', name: 'แฮปปี้'}
+      ],
+      sessions: []
+    }
+  ]
+};
+
+/* ===========================================================
+   STATE
+   =========================================================== */
+const state = {
+  data: { groups: [] },
+  selectedGroupId: null,
+  view: 'detail', // 'detail' | 'overview'
+  pin: '',
+  today: new Date()
+};
+
+/* ===========================================================
+   HELPERS — Date formatting (Thai Buddhist calendar)
+   =========================================================== */
+const THAI_MONTHS = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const THAI_DAYS = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'];
+
+function parseDate(s) {
+  if (!s) return new Date();
+  const [y,m,d] = s.split('-').map(Number);
+  return new Date(y, m-1, d);
+}
+function dateToStr(dt) {
+  const y = dt.getFullYear();
+  const m = String(dt.getMonth()+1).padStart(2,'0');
+  const d = String(dt.getDate()).padStart(2,'0');
+  return `${y}-${m}-${d}`;
+}
+function thDate(s) {
+  const dt = parseDate(s);
+  const y = (dt.getFullYear() + 543) % 100;
+  return `${dt.getDate()} ${THAI_MONTHS[dt.getMonth()]} ${String(y).padStart(2,'0')}`;
+}
+function thDateFull(s) {
+  const dt = parseDate(s);
+  const y = dt.getFullYear() + 543;
+  return `${dt.getDate()} ${THAI_MONTHS[dt.getMonth()]} ${y}`;
+}
+function thDayName(s) {
+  return THAI_DAYS[parseDate(s).getDay()];
+}
+function todayStr() {
+  return dateToStr(state.today);
+}
+function addDays(dateStr, n) {
+  const dt = parseDate(dateStr);
+  dt.setDate(dt.getDate() + n);
+  return dateToStr(dt);
+}
+function uid(prefix) {
+  return (prefix || 'id') + '-' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+}
+
+/* ===========================================================
+   STORAGE — localStorage
+   =========================================================== */
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return JSON.parse(JSON.stringify(DEFAULT_DATA));
+    const data = JSON.parse(raw);
+    if (!data.groups) data.groups = [];
+    return data;
+  } catch(e) {
+    console.error('loadData error:', e);
+    return JSON.parse(JSON.stringify(DEFAULT_DATA));
+  }
+}
+
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
+    return true;
+  } catch(e) {
+    console.error('saveData error:', e);
+    toast('ไม่สามารถบันทึกข้อมูลได้', 'error');
+    return false;
+  }
+}
+
+/* ===========================================================
+   SESSION SCHEDULER — สร้าง/อัปเดตคาบเรียน
+   =========================================================== */
+function ensureSessions(group) {
+  if (!group.sessions) group.sessions = [];
+  if (group.sessions.length === 0 && group.sessionsTotal > 0) {
+    for (let i = 0; i < group.sessionsTotal; i++) {
+      const dateStr = addDays(group.startDate, i * 7);
+      group.sessions.push({
+        no: i + 1,
+        date: dateStr,
+        customTime: null, // null = ใช้เวลาของกลุ่ม
+        status: 'upcoming', // done | current | upcoming | holiday
+        note: ''
+      });
+    }
+  }
+  // ตัด/เพิ่มให้ตรง sessionsTotal
+  while (group.sessions.length < group.sessionsTotal) {
+    const last = group.sessions[group.sessions.length - 1];
+    const newDate = last ? addDays(last.date, 7) : group.startDate;
+    group.sessions.push({
+      no: group.sessions.length + 1,
+      date: newDate,
+      customTime: null,
+      status: 'upcoming',
+      note: ''
+    });
+  }
+  while (group.sessions.length > group.sessionsTotal) {
+    group.sessions.pop();
+  }
+  // renumber
+  group.sessions.forEach((s, i) => s.no = i + 1);
+  // คำนวณ endDate
+  if (group.sessions.length > 0) {
+    group.endDate = group.sessions[group.sessions.length - 1].date;
+  }
+}
+
+function getGroupStatus(group) {
+  const today = todayStr();
+  ensureSessions(group);
+  const start = group.startDate;
+  const end = group.endDate || start;
+  if (today < start) return 'upcoming';
+  if (today > end) {
+    // ตรวจดูว่ายังมีคาบ upcoming อยู่ไหม (กรณีเลื่อนวันหยุด)
+    const hasUpcoming = group.sessions.some(s => s.status !== 'holiday' && s.status !== 'done' && s.date >= today);
+    return hasUpcoming ? 'current' : 'done';
+  }
+  return 'current';
+}
+
+function getSessionTime(session, group) {
+  if (session.customTime) return session.customTime;
+  return `${group.startTime}–${group.endTime} น.`;
+}
+
+/* ===========================================================
+   HOLIDAY LOGIC — เลื่อนคาบถัดไป +7 วันอัตโนมัติ
+   =========================================================== */
+function markHoliday(groupId, sessionNo, note) {
+  const g = state.data.groups.find(x => x.id === groupId);
+  if (!g) return;
+  ensureSessions(g);
+  const idx = g.sessions.findIndex(s => s.no === sessionNo);
+  if (idx === -1) return;
+
+  // ทำเครื่องหมายคาบนี้เป็น holiday
+  g.sessions[idx].status = 'holiday';
+  g.sessions[idx].note = note || 'หยุด';
+
+  // เลื่อนคาบถัดไปทั้งหมด +7 วัน (ยกเว้นคาบที่เป็น holiday อยู่แล้ว)
+  for (let i = idx + 1; i < g.sessions.length; i++) {
+    if (g.sessions[i].status !== 'holiday') {
+      g.sessions[i].date = addDays(g.sessions[i].date, 7);
+    }
+  }
+  // อัปเดต endDate
+  g.endDate = g.sessions[g.sessions.length - 1].date;
+  saveData();
+  toast(`บันทึกวันหยุด คาบที่ ${sessionNo} · เลื่อนคาบถัดไป +7 วัน`, 'success');
+}
+
+function unmarkHoliday(groupId, sessionNo) {
+  const g = state.data.groups.find(x => x.id === groupId);
+  if (!g) return;
+  ensureSessions(g);
+  const idx = g.sessions.findIndex(s => s.no === sessionNo);
+  if (idx === -1) return;
+
+  // ยกเลิก holiday
+  g.sessions[idx].status = 'upcoming';
+  g.sessions[idx].note = '';
+
+  // เลื่อนคาบถัดไปกลับ -7 วัน (ยกเว้นคาบที่เป็น holiday อยู่)
+  for (let i = idx + 1; i < g.sessions.length; i++) {
+    if (g.sessions[i].status !== 'holiday') {
+      g.sessions[i].date = addDays(g.sessions[i].date, -7);
+    }
+  }
+  g.endDate = g.sessions[g.sessions.length - 1].date;
+  saveData();
+  toast(`ยกเลิกวันหยุด คาบที่ ${sessionNo} · เลื่อนคาบถัดไปกลับ -7 วัน`, 'success');
+}
+
+/* ===========================================================
+   LOGIN — PIN + ล็อค 5 ครั้งผิด
+   =========================================================== */
+function getLock() {
+  try {
+    const raw = localStorage.getItem(LOCK_KEY);
+    return raw ? JSON.parse(raw) : { attempts: 0, lockedUntil: 0 };
+  } catch(e) {
+    return { attempts: 0, lockedUntil: 0 };
+  }
+}
+function setLock(lock) {
+  localStorage.setItem(LOCK_KEY, JSON.stringify(lock));
+}
+function getPin() {
+  return localStorage.getItem(PIN_KEY) || DEFAULT_PIN;
+}
+function setPin(pin) {
+  localStorage.setItem(PIN_KEY, pin);
+}
+
+function tryLogin(pin) {
+  const lock = getLock();
+  const now = Date.now();
+  if (lock.lockedUntil > now) {
+    const mins = Math.ceil((lock.lockedUntil - now) / 60000);
+    showLoginWarn(`ระบบล็อค กรุณารอ ${mins} นาที`);
+    return false;
+  }
+  if (pin === getPin()) {
+    setLock({ attempts: 0, lockedUntil: 0 });
+    sessionStorage.setItem(SESSION_KEY, '1');
+    showApp();
+    return true;
+  } else {
+    lock.attempts++;
+    if (lock.attempts >= MAX_ATTEMPTS) {
+      lock.lockedUntil = now + LOCK_MINUTES * 60000;
+      lock.attempts = 0;
+      setLock(lock);
+      showLoginWarn(`กรอกผิด 5 ครั้ง → ล็อค ${LOCK_MINUTES} นาที`);
+      shakePin();
+    } else {
+      setLock(lock);
+      const left = MAX_ATTEMPTS - lock.attempts;
+      showLoginWarn(`PIN ไม่ถูกต้อง · เหลือ ${left} ครั้ง`);
+      shakePin();
+    }
+    return false;
+  }
+}
+
+function showLoginWarn(msg) {
+  const el = document.getElementById('loginWarn');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+function shakePin() {
+  document.querySelectorAll('.pin-dot').forEach(d => {
+    d.classList.add('error');
+    setTimeout(() => d.classList.remove('error'), 400);
+  });
+}
+
+function renderPinDisplay() {
+  const dots = document.querySelectorAll('.pin-dot');
+  dots.forEach((d, i) => {
+    if (i < state.pin.length) {
+      d.textContent = state.pin[i];
+      d.classList.add('filled');
+    } else {
+      d.textContent = '';
+      d.classList.remove('filled');
+    }
+  });
+}
+
+function handleKeypad(key) {
+  if (key === 'clear') {
+    state.pin = '';
+  } else if (key === 'back') {
+    state.pin = state.pin.slice(0, -1);
+  } else if (state.pin.length < 6) {
+    state.pin += key;
+    if (state.pin.length === 6) {
+      setTimeout(() => {
+        const ok = tryLogin(state.pin);
+        if (!ok) state.pin = '';
+        renderPinDisplay();
+      }, 150);
+    }
+  }
+  renderPinDisplay();
+}
+
+function showApp() {
+  document.getElementById('loginView').style.display = 'none';
+  document.getElementById('appView').style.display = 'grid';
+  state.data = loadData();
+  // สร้าง sessions ให้ครบทุกกลุ่ม
+  state.data.groups.forEach(g => ensureSessions(g));
+  saveData();
+  // เลือกกลุ่มแรกอัตโนมัติ
+  if (state.data.groups.length > 0) {
+    state.selectedGroupId = state.data.groups[0].id;
+  }
+  renderAll();
+}
+
+function logout() {
+  sessionStorage.removeItem(SESSION_KEY);
+  state.pin = '';
+  renderPinDisplay();
+  document.getElementById('loginWarn').classList.remove('show');
+  document.getElementById('appView').style.display = 'none';
+  document.getElementById('loginView').style.display = 'grid';
+}
+
+/* ===========================================================
+   RENDER — SIDEBAR (group list)
+   =========================================================== */
+function renderSidebar() {
+  const list = document.getElementById('groupList');
+  document.getElementById('sidebarGroupCount').textContent = state.data.groups.length;
+  list.innerHTML = '';
+
+  if (state.data.groups.length === 0) {
+    list.innerHTML = '<div style="padding:24px; text-align:center; color:var(--gray-dark); font-size:13px;">ยังไม่มีกลุ่ม<br>กด "กลุ่มใหม่" เพื่อเพิ่ม</div>';
+    return;
+  }
+
+  state.data.groups.forEach(g => {
+    const status = getGroupStatus(g);
+    const sessions = g.sessions || [];
+    const done = sessions.filter(s => s.status === 'done' || s.status === 'current').length;
+    const total = sessions.length;
+    const item = document.createElement('div');
+    item.className = 'group-item' + (g.id === state.selectedGroupId ? ' is-active' : '');
+    item.innerHTML = `
+      <span class="group-item__dot ${status}"></span>
+      <div style="flex:1; min-width:0;">
+        <div class="group-item__name">${g.name}</div>
+        <div class="group-item__meta">${g.level} · ${done}/${total} คาบ · ${g.startTime}–${g.endTime}</div>
+      </div>
+    `;
+    item.addEventListener('click', () => {
+      state.selectedGroupId = g.id;
+      state.view = 'detail';
+      renderAll();
+    });
+    list.appendChild(item);
+  });
+}
+
+/* ===========================================================
+   RENDER — MAIN PANEL (detail)
+   =========================================================== */
+function renderMain() {
+  const body = document.getElementById('mainBody');
+  const title = document.getElementById('mainTitle');
+  const eyebrow = document.getElementById('mainEyebrow');
+
+  if (state.view === 'overview') {
+    eyebrow.textContent = 'Overview';
+    title.textContent = 'ภาพรวมทุกกลุ่ม';
+    renderOverview(body);
+    return;
+  }
+
+  const g = state.data.groups.find(x => x.id === state.selectedGroupId);
+  if (!g) {
+    eyebrow.textContent = 'Group Detail';
+    title.textContent = 'เลือกกลุ่มจากแถบซ้าย';
+    body.innerHTML = `
+      <div class="empty">
+        <h3>ยังไม่ได้เลือกกลุ่ม</h3>
+        <p>คลิกกลุ่มในแถบซ้ายเพื่อดูรายละเอียด หรือกด "กลุ่มใหม่" เพื่อเพิ่ม</p>
+        <button class="btn btn--primary" onclick="addGroup()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          เพิ่มกลุ่มแรก
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  ensureSessions(g);
+  const status = getGroupStatus(g);
+  const done = (g.sessions || []).filter(s => s.status === 'done' || s.status === 'current').length;
+  const total = (g.sessions || []).length;
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+  const levelKey = 'lv-' + g.level.replace('ม.', '').replace('M', '').replace('m', '').trim();
+
+  eyebrow.textContent = 'Group Detail';
+  title.textContent = g.name;
+
+  body.innerHTML = `
+    <!-- GROUP HEADER CARD -->
+    <div class="card">
+      <div class="group-header">
+        <div>
+          <input class="group-header__name" id="groupName" value="${g.name}" placeholder="ชื่อกลุ่ม">
+          <div class="group-header__meta">
+            ${g.dayOfWeek} · ${g.startTime}–${g.endTime} น. · ${done}/${total} คาบ · ${g.students.length} คน
+          </div>
+          <div class="progress" style="margin-top:8px; max-width:280px;">
+            <div class="progress__fill" style="width: ${pct}%"></div>
+          </div>
+        </div>
+        <span class="level-badge ${levelKey}">${g.level}</span>
+      </div>
+    </div>
+
+    <!-- GROUP SETTINGS -->
+    <div class="card">
+      <div class="card__head">
+        <span class="card__title">ตั้งค่ากลุ่ม · <b>Group Settings</b></span>
+        <span class="card__count">${status === 'done' ? 'จบคอร์ส' : status === 'current' ? 'กำลังเรียน' : 'ยังไม่เริ่ม'}</span>
+      </div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label>ระดับชั้น</label>
+          <select id="groupLevel">
+            <option value="ม.4" ${g.level === 'ม.4' ? 'selected' : ''}>ม.4</option>
+            <option value="ม.5" ${g.level === 'ม.5' ? 'selected' : ''}>ม.5</option>
+            <option value="ม.6" ${g.level === 'ม.6' ? 'selected' : ''}>ม.6</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>วันในสัปดาห์</label>
+          <select id="groupDay">
+            ${THAI_DAYS.map(d => `<option value="${d}" ${g.dayOfWeek === d ? 'selected' : ''}>${d}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-field">
+          <label>เวลาเริ่ม</label>
+          <input type="text" id="groupStart" value="${g.startTime}" placeholder="16.30">
+        </div>
+        <div class="form-field">
+          <label>เวลาเลิก</label>
+          <input type="text" id="groupEnd" value="${g.endTime}" placeholder="19.00">
+        </div>
+        <div class="form-field">
+          <label>จำนวนคาบ/คอร์ส</label>
+          <input type="number" id="groupTotal" value="${g.sessionsTotal}" min="1" max="100">
+        </div>
+        <div class="form-field">
+          <label>วันเริ่มคอร์ส</label>
+          <input type="date" id="groupStartDate" value="${g.startDate}">
+        </div>
+      </div>
+      <div style="margin-top: 14px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn btn--primary btn--sm" onclick="saveGroupSettings('${g.id}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          บันทึกการตั้งค่า
+        </button>
+        <button class="btn btn--ghost btn--sm" onclick="regenerateSessions('${g.id}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          สร้างตารางคาบใหม่
+        </button>
+        <button class="btn btn--danger btn--sm" onclick="confirmDeleteGroup('${g.id}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          ลบกลุ่ม
+        </button>
+      </div>
+    </div>
+
+    <!-- STUDENTS -->
+    <div class="card">
+      <div class="card__head">
+        <span class="card__title">รายชื่อนักเรียน · <b>Students (${g.students.length})</b></span>
+        <span class="card__count">${g.students.length} คน</span>
+      </div>
+      <div class="student-add-row">
+        <input type="text" id="newStudentName" placeholder="พิมพ์ชื่อนักเรียน แล้วกด Enter" onkeypress="if(event.key==='Enter') addStudent('${g.id}')">
+        <button class="btn btn--primary btn--sm" onclick="addStudent('${g.id}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          เพิ่ม
+        </button>
+      </div>
+      <div class="student-list" id="studentList"></div>
+    </div>
+
+    <!-- SESSIONS -->
+    <div class="card">
+      <div class="card__head">
+        <span class="card__title">ตารางคาบเรียน · <b>Sessions (${total})</b></span>
+        <div style="display:flex; gap:6px;">
+          <button class="btn btn--ghost btn--xs" onclick="addSession('${g.id}')">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            เพิ่มคาบ
+          </button>
+          <button class="btn btn--ghost btn--xs" onclick="printGroupReport('${g.id}')">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            ปริ้นรายงาน
+          </button>
+        </div>
+      </div>
+      <div class="session-tools">
+        <span style="font-size:12px; color:var(--gray-dark);">คำแนะนำ: แก้วันที่/เวลาได้โดยตรงในตาราง · กด "หยุด" เพื่อบันทึกวันหยุด (ระบบเลื่อนคาบถัดไปอัตโนมัติ)</span>
+      </div>
+      <div class="session-table-wrap">
+        <table class="session-table">
+          <thead>
+            <tr>
+              <th style="width:36px;">ที่</th>
+              <th>วันที่</th>
+              <th>เวลา</th>
+              <th>สถานะ</th>
+              <th>หมายเหตุ</th>
+              <th style="text-align:right;">การจัดการ</th>
+            </tr>
+          </thead>
+          <tbody id="sessionTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  `;
+
+  // ผูกชื่อกลุ่ม — บันทึกเมื่อพิมพ์เสร็จ
+  const nameInput = document.getElementById('groupName');
+  nameInput.addEventListener('change', () => {
+    g.name = nameInput.value.trim() || g.name;
+    nameInput.value = g.name;
+    saveData();
+    renderSidebar();
+    document.getElementById('mainTitle').textContent = g.name;
+  });
+
+  renderStudentList(g);
+  renderSessionTable(g);
+}
+
+function renderStudentList(g) {
+  const list = document.getElementById('studentList');
+  if (!list) return;
+  list.innerHTML = '';
+  if (g.students.length === 0) {
+    list.innerHTML = '<div style="grid-column:1/-1; padding:20px; text-align:center; color:var(--gray-dark); font-size:13px;">ยังไม่มีนักเรียนในกลุ่มนี้</div>';
+    return;
+  }
+  g.students.forEach((s, i) => {
+    const row = document.createElement('div');
+    row.className = 'student-row';
+    row.innerHTML = `
+      <span class="student-row__num">${String(i+1).padStart(2,'0')}</span>
+      <span class="student-row__name">${s.name}</span>
+      <button class="student-row__del" onclick="removeStudent('${g.id}', '${s.id}')" title="ลบ">×</button>
+    `;
+    list.appendChild(row);
+  });
+}
+
+function renderSessionTable(g) {
+  const tbody = document.getElementById('sessionTableBody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  const today = todayStr();
+  (g.sessions || []).forEach(s => {
+    // auto-detect status based on date if not holiday
+    let status = s.status;
+    if (status !== 'holiday') {
+      if (s.date < today) status = 'done';
+      else if (s.date === today) status = 'current';
+      else status = 'upcoming';
+      s.status = status;
+    }
+
+    const tr = document.createElement('tr');
+    tr.className = s.status === 'holiday' ? 'is-holiday' : (s.status === 'current' ? 'is-current' : '');
+    tr.innerHTML = `
+      <td><span class="session-no-print">${s.no}</span></td>
+      <td>
+        <input type="date" class="session-input" value="${s.date}" onchange="updateSession('${g.id}', ${s.no}, 'date', this.value)">
+        <div style="font-size:11px; color:var(--gray-dark); margin-top:2px;">${thDayName(s.date)}</div>
+      </td>
+      <td>
+        <input type="text" class="session-input" value="${getSessionTime(s, g)}" placeholder="${g.startTime}–${g.endTime} น." onchange="updateSession('${g.id}', ${s.no}, 'time', this.value)">
+      </td>
+      <td><span class="status-pill ${s.status}">${s.status === 'done' ? 'เรียนแล้ว' : s.status === 'current' ? 'วันนี้' : s.status === 'holiday' ? 'หยุด' : 'ยังไม่ถึง'}</span></td>
+      <td>
+        <input type="text" class="session-input" value="${s.note || ''}" placeholder="หมายเหตุ" onchange="updateSession('${g.id}', ${s.no}, 'note', this.value)">
+      </td>
+      <td>
+        <div class="row-actions">
+          ${s.status === 'holiday'
+            ? `<button class="" onclick="unmarkHoliday('${g.id}', ${s.no})" title="ยกเลิกวันหยุด"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></button>`
+            : `<button onclick="markHolidayPrompt('${g.id}', ${s.no})" title="บันทึกวันหยุด"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button>`
+          }
+          <button class="danger" onclick="deleteSession('${g.id}', ${s.no})" title="ลบคาบ"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ===========================================================
+   RENDER — OVERVIEW MODE
+   =========================================================== */
+function renderOverview(body) {
+  if (state.data.groups.length === 0) {
+    body.innerHTML = `
+      <div class="empty">
+        <h3>ยังไม่มีกลุ่ม</h3>
+        <p>เพิ่มกลุ่มแรกเพื่อเริ่มต้น</p>
+        <button class="btn btn--primary" onclick="addGroup()">เพิ่มกลุ่มใหม่</button>
+      </div>
+    `;
+    return;
+  }
+  let html = '<div class="overview-grid">';
+  state.data.groups.forEach(g => {
+    ensureSessions(g);
+    const status = getGroupStatus(g);
+    const done = (g.sessions || []).filter(s => s.status === 'done' || s.status === 'current').length;
+    const total = (g.sessions || []).length;
+    const pct = total > 0 ? Math.round(done / total * 100) : 0;
+    const statusLabel = status === 'done' ? 'จบคอร์ส' : status === 'current' ? 'กำลังเรียน' : 'ยังไม่เริ่ม';
+    const levelKey = 'lv-' + g.level.replace('ม.', '').replace('M', '').replace('m', '').trim();
+    html += `
+      <div class="overview-card">
+        <div class="overview-card__top">
+          <div>
+            <div class="overview-card__name">${g.name}</div>
+            <div class="overview-card__meta">${g.dayOfWeek} · ${g.startTime}–${g.endTime} น.</div>
+          </div>
+          <span class="level-badge ${levelKey}">${g.level}</span>
+        </div>
+        <div>
+          <div class="progress" style="margin-bottom:6px;">
+            <div class="progress__fill" style="width:${pct}%"></div>
+          </div>
+          <div class="overview-card__progress">
+            <span><b>${done}</b> / ${total} คาบ · ${statusLabel}</span>
+            <span class="pct">${pct}%</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:6px; margin-top:4px;">
+          <button class="btn btn--ghost btn--sm" style="flex:1;" onclick="selectGroup('${g.id}')">แก้ไข</button>
+          <button class="btn btn--primary btn--sm" style="flex:1;" onclick="printGroupReport('${g.id}')">ปริ้นรายงาน</button>
+        </div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  body.innerHTML = html;
+}
+
+function selectGroup(id) {
+  state.selectedGroupId = id;
+  state.view = 'detail';
+  renderAll();
+}
+
+/* ===========================================================
+   CRUD — GROUPS
+   =========================================================== */
+function addGroup() {
+  const id = uid('grp');
+  const newGroup = {
+    id: id,
+    name: 'กลุ่มใหม่',
+    level: 'ม.4',
+    dayOfWeek: 'จันทร์',
+    startTime: '16.30',
+    endTime: '19.00',
+    sessionsTotal: 10,
+    startDate: todayStr(),
+    students: [],
+    sessions: []
+  };
+  ensureSessions(newGroup);
+  state.data.groups.push(newGroup);
+  state.selectedGroupId = id;
+  state.view = 'detail';
+  saveData();
+  renderAll();
+  toast('เพิ่มกลุ่มใหม่แล้ว · แก้ชื่อและตั้งค่าด้านขวา', 'success');
+  // focus name input
+  setTimeout(() => {
+    const input = document.getElementById('groupName');
+    if (input) { input.focus(); input.select(); }
+  }, 100);
+}
+
+function saveGroupSettings(id) {
+  const g = state.data.groups.find(x => x.id === id);
+  if (!g) return;
+  const oldTotal = g.sessionsTotal;
+  g.name = document.getElementById('groupName').value.trim() || g.name;
+  g.level = document.getElementById('groupLevel').value;
+  g.dayOfWeek = document.getElementById('groupDay').value;
+  g.startTime = document.getElementById('groupStart').value.trim() || g.startTime;
+  g.endTime = document.getElementById('groupEnd').value.trim() || g.endTime;
+  g.sessionsTotal = parseInt(document.getElementById('groupTotal').value) || g.sessionsTotal;
+  g.startDate = document.getElementById('groupStartDate').value || g.startDate;
+  ensureSessions(g);
+  saveData();
+  renderAll();
+  toast('บันทึกการตั้งค่ากลุ่มแล้ว', 'success');
+}
+
+function regenerateSessions(id) {
+  const g = state.data.groups.find(x => x.id === id);
+  if (!g) return;
+  showModal({
+    title: 'สร้างตารางคาบใหม่?',
+    body: 'ระบบจะลบตารางคาบเดิมทั้งหมดและสร้างใหม่จากวันเริ่มต้น + จำนวนคาบ (เรียนสัปดาห์ละครั้ง) · ข้อมูลวันหยุดและหมายเหตุเดิมจะหายไป',
+    actions: [
+      { label: 'ยกเลิก', class: 'btn--ghost', onClick: closeModal },
+      { label: 'สร้างใหม่', class: 'btn--primary', onClick: () => {
+        g.sessions = [];
+        ensureSessions(g);
+        saveData();
+        renderAll();
+        closeModal();
+        toast('สร้างตารางคาบใหม่แล้ว', 'success');
+      }}
+    ]
+  });
+}
+
+function confirmDeleteGroup(id) {
+  const g = state.data.groups.find(x => x.id === id);
+  if (!g) return;
+  showModal({
+    title: `ลบกลุ่ม "${g.name}"?`,
+    body: 'จะลบกลุ่มพร้อมรายชื่อนักเรียนและตารางคาบทั้งหมด · ไม่สามารถย้อนกลับได้',
+    actions: [
+      { label: 'ยกเลิก', class: 'btn--ghost', onClick: closeModal },
+      { label: 'ลบกลุ่ม', class: 'btn--danger', onClick: () => {
+        state.data.groups = state.data.groups.filter(x => x.id !== id);
+        if (state.selectedGroupId === id) {
+          state.selectedGroupId = state.data.groups[0]?.id || null;
+        }
+        saveData();
+        renderAll();
+        closeModal();
+        toast('ลบกลุ่มแล้ว', 'success');
+      }}
+    ]
+  });
+}
+
+/* ===========================================================
+   CRUD — STUDENTS
+   =========================================================== */
+function addStudent(groupId) {
+  const g = state.data.groups.find(x => x.id === groupId);
+  if (!g) return;
+  const input = document.getElementById('newStudentName');
+  const name = input.value.trim();
+  if (!name) { toast('กรุณาพิมพ์ชื่อนักเรียน', 'error'); return; }
+  g.students.push({ id: uid('std'), name: name });
+  input.value = '';
+  saveData();
+  renderStudentList(g);
+  renderSidebar();
+  // อัปเดต meta ในหัวการ์ด
+  const meta = document.querySelector('.group-header__meta');
+  if (meta) {
+    const done = (g.sessions || []).filter(s => s.status === 'done' || s.status === 'current').length;
+    meta.textContent = `${g.dayOfWeek} · ${g.startTime}–${g.endTime} น. · ${done}/${g.sessions.length} คาบ · ${g.students.length} คน`;
+  }
+  toast(`เพิ่ม "${name}" แล้ว`, 'success');
+}
+
+function removeStudent(groupId, studentId) {
+  const g = state.data.groups.find(x => x.id === groupId);
+  if (!g) return;
+  const s = g.students.find(x => x.id === studentId);
+  if (!s) return;
+  showModal({
+    title: `ลบ "${s.name}"?`,
+    body: 'นักเรียนคนนี้จะถูกลบออกจากกลุ่ม · ไม่สามารถย้อนกลับได้',
+    actions: [
+      { label: 'ยกเลิก', class: 'btn--ghost', onClick: closeModal },
+      { label: 'ลบ', class: 'btn--danger', onClick: () => {
+        g.students = g.students.filter(x => x.id !== studentId);
+        saveData();
+        renderStudentList(g);
+        renderSidebar();
+        closeModal();
+        toast(`ลบ "${s.name}" แล้ว`, 'success');
+      }}
+    ]
+  });
+}
+
+/* ===========================================================
+   CRUD — SESSIONS
+   =========================================================== */
+function updateSession(groupId, sessionNo, field, value) {
+  const g = state.data.groups.find(x => x.id === groupId);
+  if (!g) return;
+  const s = (g.sessions || []).find(x => x.no === sessionNo);
+  if (!s) return;
+  if (field === 'date') s.date = value;
+  else if (field === 'time') s.customTime = value || null;
+  else if (field === 'note') s.note = value;
+  saveData();
+  // อัปเดต endDate ถ้าแก้คาบสุดท้าย
+  if (s.no === g.sessions.length) g.endDate = s.date;
+  toast('บันทึกแล้ว', 'success');
+}
+
+function addSession(groupId) {
+  const g = state.data.groups.find(x => x.id === groupId);
+  if (!g) return;
+  ensureSessions(g);
+  const last = g.sessions[g.sessions.length - 1];
+  const newDate = last ? addDays(last.date, 7) : g.startDate;
+  g.sessions.push({
+    no: g.sessions.length + 1,
+    date: newDate,
+    customTime: null,
+    status: 'upcoming',
+    note: ''
+  });
+  g.sessionsTotal = g.sessions.length;
+  g.endDate = g.sessions[g.sessions.length - 1].date;
+  saveData();
+  renderAll();
+  toast(`เพิ่มคาบที่ ${g.sessions.length} แล้ว`, 'success');
+}
+
+function deleteSession(groupId, sessionNo) {
+  const g = state.data.groups.find(x => x.id === groupId);
+  if (!g) return;
+  showModal({
+    title: `ลบคาบที่ ${sessionNo}?`,
+    body: 'คาบนี้จะถูกลบ · คาบถัดไปจะถูกเลื่อนลำดับขึ้น',
+    actions: [
+      { label: 'ยกเลิก', class: 'btn--ghost', onClick: closeModal },
+      { label: 'ลบคาบ', class: 'btn--danger', onClick: () => {
+        g.sessions = g.sessions.filter(s => s.no !== sessionNo);
+        g.sessions.forEach((s, i) => s.no = i + 1);
+        g.sessionsTotal = g.sessions.length;
+        if (g.sessions.length > 0) g.endDate = g.sessions[g.sessions.length - 1].date;
+        saveData();
+        renderAll();
+        closeModal();
+        toast(`ลบคาบที่ ${sessionNo} แล้ว`, 'success');
+      }}
+    ]
+  });
+}
+
+function markHolidayPrompt(groupId, sessionNo) {
+  const g = state.data.groups.find(x => x.id === groupId);
+  if (!g) return;
+  const s = (g.sessions || []).find(x => x.no === sessionNo);
+  if (!s) return;
+  showModal({
+    title: `บันทึกวันหยุด — คาบที่ ${sessionNo}`,
+    body: `<p style="margin-bottom:12px;">วันที่ ${thDateFull(s.date)} · ${thDayName(s.date)}</p>
+           <input type="text" id="holidayNote" placeholder="เหตุผล เช่น หยุดเทศกาลสงกรานต์" value="${s.note || ''}"
+                  style="width:100%; padding:10px 14px; border:1px solid var(--line); border-radius:8px; outline:none;"
+                  onfocus="this.style.borderColor='var(--black)'" onblur="this.style.borderColor='var(--line)'">
+           <p style="margin-top:12px; font-size:12px; color:var(--gray-dark);">ระบบจะเลื่อนคาบถัดไปทั้งหมด +7 วันอัตโนมัติ</p>`,
+    actions: [
+      { label: 'ยกเลิก', class: 'btn--ghost', onClick: closeModal },
+      { label: 'บันทึกวันหยุด', class: 'btn--primary', onClick: () => {
+        const note = document.getElementById('holidayNote').value.trim();
+        markHoliday(groupId, sessionNo, note);
+        closeModal();
+        renderAll();
+      }}
+    ]
+  });
+}
+
+/* ===========================================================
+   PRINT — รายงานผู้ปกครอง A4
+   =========================================================== */
+function printGroupReport(id) {
+  const g = state.data.groups.find(x => x.id === id);
+  if (!g) return;
+  ensureSessions(g);
+  const today = todayStr();
+  const done = (g.sessions || []).filter(s => s.status === 'done' || s.status === 'current').length;
+  const total = (g.sessions || []).length;
+  const levelKey = 'lv-' + g.level.replace('ม.', '').replace('M', '').replace('m', '').trim();
+
+  const rows = (g.sessions || []).map(s => {
+    let cls = s.status === 'holiday' ? 'is-holiday' : s.status === 'current' ? 'is-current' : '';
+    const label = s.status === 'done' ? 'เรียนแล้ว' : s.status === 'current' ? 'วันนี้' : s.status === 'holiday' ? 'หยุด' : 'ยังไม่ถึง';
+    return `
+      <tr class="${cls}">
+        <td style="text-align:center;">${s.no}</td>
+        <td>${thDateFull(s.date)}</td>
+        <td>วัน${thDayName(s.date)}</td>
+        <td>${getSessionTime(s, g)}</td>
+        <td>${label}${s.note ? ' · ' + s.note : ''}</td>
+      </tr>
+    `;
+  }).join('');
+
+  const students = g.students.map((s, i) => `
+    <div class="print-student">
+      <span class="print-student__n">${String(i+1).padStart(2,'0')}.</span>
+      <span>${s.name}</span>
+    </div>
+  `).join('');
+
+  const html = `
+    <div class="print-report">
+      <div class="print-report__head">
+        <div class="print-brand">
+          <div class="print-brand__logo">M<span>B</span></div>
+          <div class="print-brand__name">
+            <b>Maths Bank Tutor</b>
+            <small>ครูแบงค์ · ติวเตอร์คณิตศาสตร์ ม.4–ม.6 · LINE: mathsbanktutor · 081-907-0255</small>
+          </div>
+        </div>
+        <div class="print-report__meta">
+          <b>รายงานตารางเรียนรายกลุ่ม</b>
+          พิมพ์เมื่อ ${thDateFull(today)}
+        </div>
+      </div>
+
+      <div class="print-report__title">${g.name}</div>
+      <div class="print-report__sub">วัน${g.dayOfWeek} ${g.startTime}–${g.endTime} น. · ระดับชั้น${g.level}</div>
+
+      <div class="print-stats">
+        <div class="print-stats__cell">
+          <div class="print-stats__label">วันเริ่มเรียน</div>
+          <div class="print-stats__value num">${thDate(g.startDate)}</div>
+        </div>
+        <div class="print-stats__cell">
+          <div class="print-stats__label">วันจบคอร์ส</div>
+          <div class="print-stats__value num">${thDate(g.endDate || g.startDate)}</div>
+        </div>
+        <div class="print-stats__cell">
+          <div class="print-stats__label">คาบที่เรียน / ทั้งหมด</div>
+          <div class="print-stats__value num"><span>${done}</span> / ${total}</div>
+        </div>
+        <div class="print-stats__cell">
+          <div class="print-stats__label">จำนวนนักเรียน</div>
+          <div class="print-stats__value num">${g.students.length} <span style="font-size:9pt; color:#666;">คน</span></div>
+        </div>
+      </div>
+
+      <div class="print-section-title">ตารางคาบเรียนทั้งคอร์ส (${total} คาบ)</div>
+      <table class="print-table">
+        <thead>
+          <tr>
+            <th style="width:36px; text-align:center;">ที่</th>
+            <th style="width:130px;">วันที่</th>
+            <th style="width:90px;">วันในสัปดาห์</th>
+            <th style="width:130px;">เวลา</th>
+            <th>สถานะ / หมายเหตุ</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+
+      <div class="print-section-title">รายชื่อนักเรียนในกลุ่ม (${g.students.length} คน)</div>
+      <div class="print-students">${students}</div>
+
+      <div class="print-signature">
+        <div class="print-signature__cell">
+          <div class="print-signature__line">ลงชื่อผู้สอน</div>
+          <div style="font-size:9pt; margin-top:2px;">(ครูแบงค์)</div>
+        </div>
+        <div class="print-signature__cell">
+          <div class="print-signature__line">ลงชื่อผู้ปกครอง</div>
+          <div style="font-size:9pt; margin-top:2px;">(...................................)</div>
+        </div>
+      </div>
+
+      <div class="print-footer">
+        <div>Maths Bank Tutor · ครูแบงค์</div>
+        <div>LINE: <b>mathsbanktutor</b> · โทร <b>081-907-0255</b></div>
+      </div>
+    </div>
+  `;
+  document.getElementById('printReport').innerHTML = html;
+  window.scrollTo(0, 0);
+  setTimeout(() => window.print(), 100);
+}
+
+/* ===========================================================
+   SYNC — อัปโหลดขึ้น Google Sheet (POST)
+   =========================================================== */
+async function syncToSheet() {
+  if (!SCRIPT_URL) {
+    showModal({
+      title: 'ยังไม่ได้เชื่อม Google Sheet',
+      body: 'ต้องใส่ SCRIPT_URL ในไฟล์ teacher-dashboard.html ก่อน (บรรทัดที่เขียนว่า <code>const SCRIPT_URL = \'\';</code>)<br><br>ดูวิธีได้ใน README-group-dashboard.md',
+      actions: [{ label: 'รับทราบ', class: 'btn--primary', onClick: closeModal }]
+    });
+    return;
+  }
+  toast('กำลังอัปโหลดข้อมูล...', 'success');
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'syncData', data: state.data })
+    });
+    const result = await res.json();
+    if (result.ok) {
+      toast(`อัปโหลดสำเร็จ · ${state.data.groups.length} กลุ่ม`, 'success');
+    } else {
+      toast('อัปโหลดไม่สำเร็จ: ' + (result.error || 'unknown'), 'error');
+    }
+  } catch(e) {
+    toast('เชื่อมต่อไม่ได้: ' + e.message, 'error');
+  }
+}
+
+async function loadFromSheet() {
+  if (!SCRIPT_URL) {
+    toast('ยังไม่ได้เชื่อม Google Sheet', 'error');
+    return;
+  }
+  toast('กำลังดาวน์โหลด...', 'success');
+  try {
+    const url = `${SCRIPT_URL}?action=loadData&t=${Date.now()}`;
+    const res = await fetch(url);
+    const result = await res.json();
+    if (result.ok && result.data) {
+      state.data = result.data;
+      state.data.groups.forEach(g => ensureSessions(g));
+      saveData();
+      if (state.data.groups.length > 0 && !state.selectedGroupId) {
+        state.selectedGroupId = state.data.groups[0].id;
+      }
+      renderAll();
+      toast(`ดาวน์โหลดสำเร็จ · ${state.data.groups.length} กลุ่ม`, 'success');
+    } else {
+      toast('ดาวน์โหลดไม่สำเร็จ: ' + (result.error || 'unknown'), 'error');
+    }
+  } catch(e) {
+    toast('เชื่อมต่อไม่ได้: ' + e.message, 'error');
+  }
+}
+
+/* ===========================================================
+   SETTINGS — เปลี่ยน PIN
+   =========================================================== */
+function showSettings() {
+  showModal({
+    title: 'ตั้งค่า',
+    body: `
+      <div style="margin-bottom:16px;">
+        <label style="font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray-dark); font-weight:600; font-family:var(--font-num);">เปลี่ยน PIN 6 หลัก</label>
+        <input type="text" id="newPin" maxlength="6" pattern="[0-9]*" placeholder="PIN ใหม่"
+               style="width:100%; padding:10px 14px; margin-top:6px; border:1px solid var(--line); border-radius:8px; outline:none; font-family:var(--font-num); letter-spacing:0.3em; text-align:center; font-size:18px;"
+               oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray-dark); font-weight:600; font-family:var(--font-num);">ยืนยัน PIN</label>
+        <input type="text" id="confirmPin" maxlength="6" pattern="[0-9]*" placeholder="ยืนยัน PIN ใหม่"
+               style="width:100%; padding:10px 14px; margin-top:6px; border:1px solid var(--line); border-radius:8px; outline:none; font-family:var(--font-num); letter-spacing:0.3em; text-align:center; font-size:18px;"
+               oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+      </div>
+      <div style="padding-top:12px; border-top:1px solid var(--line); display:flex; gap:6px;">
+        <button class="btn btn--ghost btn--sm" onclick="loadFromSheet()" style="flex:1;">ดาวน์โหลดจาก Sheet</button>
+        <button class="btn btn--ghost btn--sm" onclick="exportData()" style="flex:1;">Export JSON</button>
+      </div>
+    `,
+    actions: [
+      { label: 'ยกเลิก', class: 'btn--ghost', onClick: closeModal },
+      { label: 'บันทึก PIN', class: 'btn--primary', onClick: () => {
+        const p1 = document.getElementById('newPin').value;
+        const p2 = document.getElementById('confirmPin').value;
+        if (p1.length !== 6) { toast('PIN ต้องเป็น 6 หลัก', 'error'); return; }
+        if (p1 !== p2) { toast('PIN ไม่ตรงกัน', 'error'); return; }
+        setPin(p1);
+        closeModal();
+        toast('เปลี่ยน PIN แล้ว', 'success');
+      }}
+    ]
+  });
+}
+
+function exportData() {
+  const blob = new Blob([JSON.stringify(state.data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `maths-bank-data-${todayStr()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Export ข้อมูลแล้ว', 'success');
+}
+
+/* ===========================================================
+   MODAL + TOAST
+   =========================================================== */
+function showModal({ title, body, actions }) {
+  const modal = document.getElementById('modalContent');
+  modal.innerHTML = `
+    <div class="modal__title">${title}</div>
+    <div class="modal__body">${body}</div>
+    <div class="modal__actions" id="modalActions"></div>
+  `;
+  const actionsEl = document.getElementById('modalActions');
+  actions.forEach(a => {
+    const btn = document.createElement('button');
+    btn.className = 'btn ' + a.class;
+    btn.textContent = a.label;
+    btn.addEventListener('click', a.onClick);
+    actionsEl.appendChild(btn);
+  });
+  document.getElementById('modalBackdrop').classList.add('is-open');
+}
+function closeModal() {
+  document.getElementById('modalBackdrop').classList.remove('is-open');
+}
+document.getElementById('modalBackdrop').addEventListener('click', (e) => {
+  if (e.target.id === 'modalBackdrop') closeModal();
+});
+
+function toast(msg, type) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (type ? ' ' + type : '');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => el.classList.remove('show'), 2400);
+}
+
+/* ===========================================================
+   RENDER ALL
+   =========================================================== */
+function renderAll() {
+  renderSidebar();
+  renderMain();
+}
+
+/* ===========================================================
+   INIT
+   =========================================================== */
+function init() {
+  // ตรวจ session ว่า login แล้วหรือยัง
+  if (sessionStorage.getItem(SESSION_KEY) === '1') {
+    showApp();
+  } else {
+    // ตรวจ lock ก่อน
+    const lock = getLock();
+    if (lock.lockedUntil > Date.now()) {
+      const mins = Math.ceil((lock.lockedUntil - Date.now()) / 60000);
+      showLoginWarn(`ระบบล็อค กรุณารอ ${mins} นาที`);
+    }
+  }
+
+  // keypad
+  document.querySelectorAll('#keypad button').forEach(b => {
+    b.addEventListener('click', () => handleKeypad(b.dataset.key));
+  });
+
+  // keyboard support
+  document.addEventListener('keydown', (e) => {
+    // ถ้าอยู่ในหน้า login
+    if (document.getElementById('loginView').style.display !== 'none') {
+      if (e.key >= '0' && e.key <= '9') handleKeypad(e.key);
+      else if (e.key === 'Backspace') handleKeypad('back');
+      else if (e.key === 'Escape') { state.pin = ''; renderPinDisplay(); }
+    } else {
+      // ในหน้า app
+      if (e.key === 'Escape') closeModal();
+    }
+  });
+
+  // buttons
+  document.getElementById('btnOverview').addEventListener('click', () => {
+    state.view = 'overview';
+    renderAll();
+  });
+  document.getElementById('btnAddGroup').addEventListener('click', addGroup);
+  document.getElementById('btnSync').addEventListener('click', syncToSheet);
+  document.getElementById('btnSettings').addEventListener('click', showSettings);
+  document.getElementById('btnLogout').addEventListener('click', logout);
+}
+
+init();
+</script>
+</body>
+</html>
