@@ -59,10 +59,10 @@ function openReviewLibrary(){
     var seenYt = RV_SEEN[base] ? Object.keys(RV_SEEN[base]).length : 0;
     var seenEnt = RV_SEEN[base+' Ent'] ? Object.keys(RV_SEEN[base+' Ent']).length : 0;
     var seenTotal = seenYt + seenEnt;
-    var subParts = [];
-    if(ch.yt.length) subParts.push(ch.yt.length+' ข้อมีคลิป');
-    if(ch.ent.length) subParts.push(ch.ent.length+' ข้อเฉลย HTML');
-    var sub = subParts.join(' + ');
+    var all = ch.yt.concat(ch.ent);
+    var clipN = 0, htmlN = 0;
+    all.forEach(function(q){ if((q.yt||'').includes('.html#')) htmlN++; else clipN++; });
+    var sub = clipN+' ข้อมีคลิป + '+htmlN+' ข้อเฉลย HTML';
     if(seenTotal>0) sub += ' · ดูแล้ว '+seenTotal;
     html += '<div class="chap-card" style="cursor:pointer" data-base="'+base+'" onclick="rvOpenChapterMerged(this.dataset.base)">'+
       '<div class="chap-icon">'+icon+'</div>'+
@@ -291,11 +291,19 @@ function rvrPool(){
 }
 function rvShuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
 
+function rvSortQueue(){
+  RV.queue.sort(function(a,b){
+    var ae=(a.yt||'').includes('.html#')?1:0, be=(b.yt||'').includes('.html#')?1:0;
+    return (ae-be) || (Number(displayN(a))-Number(displayN(b)));
+  });
+}
+
 function rvrGenerate(){
   var cnt = parseInt(document.getElementById('rvr-slider').value)||5;
   var pool = rvrPool();
   if(!pool.length){ alert('ไม่มีข้อที่ตรงเงื่อนไขครับ'); return; }
   RV.queue = rvShuffle(pool).slice(0,cnt);
+  rvSortQueue();
   rvrRenderResult();
 }
 function rvrAddMore(){
@@ -310,6 +318,7 @@ function rvrAddMore(){
     return;
   }
   RV.queue = RV.queue.concat(rvShuffle(avail).slice(0,cnt));
+  rvSortQueue();
   rvrRenderResult();
 }
 

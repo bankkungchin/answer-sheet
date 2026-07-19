@@ -237,6 +237,7 @@ function renderPracticePlan(d){
     let pick=[];
     if(pool.length<=need){ pick=pool.slice(); }
     else { const step=pool.length/need; for(let i=0;i<need;i++) pick.push(pool[Math.floor(i*step)]); }
+    pick.sort(function(a,b){var ae=(a.yt||'').includes('.html#')?1:0,be=(b.yt||'').includes('.html#')?1:0;return (ae-be)||(a.n-b.n);});
     grand+=pick.length;
     planForPrint.push({cat:c.cat,emoji:emojiOf(c.cat),pct:pct,ok:c.ok,total:c.total,picks:pick.map(q=>({n:q.n,s:q.s,l:q.l,yt:q.yt}))});
     const emoji=emojiOf(c.cat);
