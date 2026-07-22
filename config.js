@@ -35,3 +35,7 @@ PLAYLISTS["ภาคตัดกรวย"] = "PLc4ncgz2CJ7OXjl9Xww2mUZZR9vedES8
 PLAYLISTS["ลำดับและอนุกรม"] = "PLc4ncgz2CJ7OkZZpEy6AWsRCaeS-q-eyI";
 
 PLAYLISTS["การเรียงลำดับและการจัดหมู่"]= "PLc4ncgz2CJ7MqVda7oTYgX5wlZj9l6MuO";
+
+// config.js — เพิ่มใน PLAYLISTS
+PLAYLISTS["ความน่าจะเป็น"] = "PLc4ncgz2CJ7PUzCaq0lqTb89Hg91_cwjm";
+
