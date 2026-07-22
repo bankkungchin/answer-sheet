@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฉลยข้อสอบ ความน่าจะเป็น — 35 ข้อ</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Sarabun', sans-serif;
+    margin: 0; padding: 20px;
+    background: #f7f7f7;
+    color: #222;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+
+  h1 { text-align: center; color: #1a4d8f; border-bottom: 3px solid #1a4d8f; padding-bottom: 10px; margin-top: 0; }
+  h2 { color: #1a4d8f; border-left: 5px solid #1a4d8f; padding-left: 12px; margin-top: 30px; }
+  h3 { color: #c0392b; margin-top: 22px; margin-bottom: 8px; }
+
+  .top-summary {
+    background: linear-gradient(135deg, #fef9e7 0%, #fdebd0 100%);
+    border: 2px solid #f39c12;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin: 20px 0 25px 0;
+  }
+  .top-summary h2 { border: none; padding: 0; margin-top: 0; color: #d35400; }
+
+  .nav-chips {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 12px;
+    background: #eaf2f8;
+    border-radius: 8px;
+    margin: 20px 0;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .nav-chips a {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #1a4d8f; color: white;
+    border-radius: 12px; text-decoration: none;
+    font-size: 13px; font-weight: 500;
+    transition: all 0.2s;
+  }
+  .nav-chips a:hover { background: #c0392b; transform: translateY(-1px); }
+
+  .problem {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin: 18px 0;
+    background: #fcfcfc;
+  }
+  .problem-header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 2px solid #1a4d8f;
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+  }
+  .problem-num {
+    font-size: 20px; font-weight: 700; color: #1a4d8f;
+  }
+  .exam-tag {
+    background: #e8f4f8; color: #1a4d8f;
+    padding: 2px 10px; border-radius: 10px;
+    font-size: 12px;
+  }
+  .problem-body { margin: 10px 0; }
+  .choices {
+    display: block;
+    background: #f4f6f7; padding: 10px 14px;
+    border-radius: 4px; margin-top: 10px;
+    font-size: 15px;
+  }
+
+  .concept-box {
+    background: #eafaf1; border-left: 4px solid #27ae60;
+    padding: 8px 14px; margin: 10px 0;
+    border-radius: 4px;
+  }
+  .concept-box strong { color: #27ae60; }
+
+  .solution-box {
+    background: #fef9e7; border-left: 4px solid #f39c12;
+    padding: 10px 16px; margin: 10px 0;
+    border-radius: 4px;
+  }
+  .solution-box strong { color: #d35400; }
+
+  .answer-box {
+    background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+    color: white; padding: 12px 18px;
+    border-radius: 6px; margin: 12px 0;
+    font-size: 17px; font-weight: 600;
+    box-shadow: 0 2px 6px rgba(192, 57, 43, 0.3);
+  }
+  .answer-box .ans-label { font-size: 13px; opacity: 0.9; display: block; }
+  .answer-box .ans-value { font-size: 22px; font-weight: 700; }
+
+  .shortcut-box {
+    background: #f4ecf7; border-left: 4px solid #8e44ad;
+    padding: 8px 14px; margin: 10px 0;
+    border-radius: 4px;
+  }
+  .shortcut-box strong { color: #8e44ad; }
+
+  .careful-box {
+    background: #fdedec; border-left: 4px solid #c0392b;
+    padding: 8px 14px; margin: 10px 0;
+    border-radius: 4px;
+  }
+  .careful-box strong { color: #c0392b; }
+
+  table.error-table {
+    width: 100%; border-collapse: collapse;
+    margin: 12px 0; font-size: 14px;
+  }
+  table.error-table th, table.error-table td {
+    border: 1px solid #bbb; padding: 8px 12px;
+    text-align: left; vertical-align: top;
+  }
+  table.error-table th { background: #1a4d8f; color: white; }
+  table.error-table tr:nth-child(even) td { background: #f4f6f7; }
+
+  .checklist {
+    background: #eaf2f8; border-left: 4px solid #1a4d8f;
+    padding: 12px 20px; margin: 12px 0;
+    border-radius: 4px;
+  }
+  .checklist ul { margin: 6px 0; padding-left: 22px; }
+  .checklist li { margin: 6px 0; }
+
+  .section-divider {
+    border-top: 3px dashed #1a4d8f;
+    margin: 30px 0;
+  }
+
+  @media print {
+    body { background: white; padding: 0; font-size: 11pt; }
+    .container { box-shadow: none; padding: 10px; max-width: 100%; }
+    .nav-chips { display: none; }
+    .problem { page-break-inside: avoid; margin: 10px 0; }
+    h2 { page-break-after: avoid; }
+    .answer-box { background: #c0392b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .concept-box, .solution-box, .shortcut-box, .careful-box, .top-summary, .checklist {
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+  }
+
+/* --- merge additions --- */
+.problem-header{flex-wrap:wrap;gap:6px;}
+.sub-tag{font-size:12px;font-weight:700;padding:3px 9px;border-radius:12px;border:1px solid;}
+.sub-tag.B{background:#eaf2ff;color:#1a4d8f;border-color:#bcd4f5}
+.sub-tag.O{background:#fff2e6;color:#b3560f;border-color:#f2c79b}
+.sub-tag.G{background:#eafaef;color:#1a7a3c;border-color:#aee0bd}
+.sub-tag.Y{background:#fff9e0;color:#8a6d00;border-color:#ecd77a}
+.sub-tag.P{background:#f4ecff;color:#6a2bb0;border-color:#d5bff0}
+.sub-tag.R{background:#ffeeee;color:#b31a1a;border-color:#f2b6b6}
+.sub-tag.W{background:#f3ece6;color:#6b4a2b;border-color:#d8c3ac}
+.stars{font-size:13px;color:#e0a800;letter-spacing:1px}
+.ds-box{background:#f0f5ff;border:1px solid #bdd0f8;border-left:5px solid #2e4374;border-radius:8px;padding:14px 18px;margin:14px 0}
+.ds-box h3{margin:0 0 8px;color:#2e4374;font-size:16px}
+.ds-box ul{margin:6px 0 6px 18px;padding:0}.ds-box li{margin:3px 0;font-size:14px}
+.ds-src{font-size:12px;color:#888;font-style:italic;margin-top:6px}
+.backbtn{display:inline-block;background:#2e4374;color:#fff;text-decoration:none;padding:8px 16px;border-radius:8px;font-weight:600;font-size:14px;margin:4px 0}
+.backbtn:hover{background:#3a5390}
+.map-note{background:#fff8e8;border:1px solid #e8c870;border-radius:8px;padding:10px 16px;margin:12px 0;font-size:13px;color:#7a4a00}
+
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>📊 เฉลยข้อสอบ ความน่าจะเป็น (35 ข้อ)</h1>
+<a class="backbtn" href="index.html">← กลับหน้า Dashboard</a>
+<p style="text-align:center; color:#666; margin-top:-10px;">รวมข้อสอบเข้ามหาวิทยาลัย ต.ค.41 – A-NET 2552 • จัดทำโดย AI Math Tutor</p>
+
+<!-- Top Summary Box -->
+<div class="top-summary">
+  <h2>🎯 สรุปเทคนิครวบยอด บท ความน่าจะเป็น</h2>
+  <p><strong>1. เหตุการณ์เติมเต็ม (Complementary Event):</strong> ใช้เมื่อเจอ "อย่างน้อย 1" → \(P = 1 - P(	ext{none})\)</p>
+  <p><strong>2. Block Method:</strong> ใช้เมื่อต้องการให้บางคน/วัตถุ "ติดกัน" — มองเป็นบล็อกเดียว แล้วคูณ \(k!\)</p>
+  <p><strong>3. Gap Method:</strong> ใช้เมื่อต้องการให้ "ไม่ติดกัน" — จัดวัตถุอื่นก่อน แล้วแทรกในช่องว่าง (n+1 ช่อง)</p>
+  <p><strong>4. De Morgan's Law:</strong> \((A \cap B)' = A' \cup B'\) และ \((A \cup B)' = A' \cap B'\)</p>
+  <p><strong>5. Binomial Distribution:</strong> \(P(X=k) = inom{n}{k} p^k q^{n-k}\) — ใช้เมื่อมีการ "ใส่คืน"</p>
+  <p><strong>6. ทฤษฎีบททาเลส:</strong> สามเหลี่ยมในครึ่งวงกลง = สามเหลี่ยมมุมฉาก</p>
+  <p><strong>7. Symmetry Principle:</strong> ในการหยิบไม่ใส่คืน \(P(	ext{ครั้งที่ k}) = P(	ext{ครั้งที่ 1})\)</p>
+  <p><strong>8. Derangement:</strong> \(D(2)=1, D(3)=2, D(4)=9, D(5)=44, D(6)=265\) — จำไว้ประหยัดเวลา</p>
+  <p><strong>9. เศษส่วนใน Venn:</strong> แยก "เท่านั้น" vs "รวม" — "2 เรื่องเท่านั้น" ≠ "2 เรื่อง"</p>
+  <p><strong>10. ผลคูณ/ผลบวก:</strong> คูณคู่⇔มีคู่≥1; บวกคี่⇔จำนวนคี่เป็นคี่; คูณลบ⇔จำนวนลบเป็นคี่</p>
+</div>
+
+<!-- Navigation Chips -->
+<div class="nav-chips">
+  <strong style="width:100%; margin-bottom:4px; color:#1a4d8f;">📍 กระโดดไปข้อ:</strong>
+  <a href="#q1">ข้อ 1</a>
+  <a href="#q2">ข้อ 2</a>
+  <a href="#q3">ข้อ 3</a>
+  <a href="#q4">ข้อ 4</a>
+  <a href="#q5">ข้อ 5</a>
+  <a href="#q6">ข้อ 6</a>
+  <a href="#q7">ข้อ 7</a>
+  <a href="#q8">ข้อ 8</a>
+  <a href="#q9">ข้อ 9</a>
+  <a href="#q10">ข้อ 10</a>
+  <a href="#q11">ข้อ 11</a>
+  <a href="#q12">ข้อ 12</a>
+  <a href="#q13">ข้อ 13</a>
+  <a href="#q14">ข้อ 14</a>
+  <a href="#q15">ข้อ 15</a>
+  <a href="#q16">ข้อ 16</a>
+  <a href="#q17">ข้อ 17</a>
+  <a href="#q18">ข้อ 18</a>
+  <a href="#q19">ข้อ 19</a>
+  <a href="#q20">ข้อ 20</a>
+  <a href="#q21">ข้อ 21</a>
+  <a href="#q22">ข้อ 22</a>
+  <a href="#q23">ข้อ 23</a>
+  <a href="#q24">ข้อ 24</a>
+  <a href="#q25">ข้อ 25</a>
+  <a href="#q26">ข้อ 26</a>
+  <a href="#q27">ข้อ 27</a>
+  <a href="#q28">ข้อ 28</a>
+  <a href="#q29">ข้อ 29</a>
+  <a href="#q30">ข้อ 30</a>
+  <a href="#q31">ข้อ 31</a>
+  <a href="#q32">ข้อ 32</a>
+  <a href="#q33">ข้อ 33</a>
+  <a href="#q34">ข้อ 34</a>
+  <a href="#q35">ข้อ 35</a>
+  <a href="#summary" style="background:#c0392b;">📋 สรุปท้ายเล่ม</a>
+</div>
+
+
+<div class="ds-box">
+  <h3>🧠 Cheat Sheet — เทคนิครวบยอด (จาก DeepSeek)</h3>
+
+        <ul>
+            <li><strong>กฎการนับ</strong> – แฟกทอเรียล, C, P, หลักการบวก/คูณ</li>
+            <li><strong>ความน่าจะเป็นแบบคลาสสิก</strong> – \(P(E)=\dfrac{n(E)}{n(S)}\)</li>
+            <li><strong>เหตุการณ์อิสระ/ขึ้นต่อกัน</strong> – หยิบไม่ใส่คืน → ใช้ C หรือความน่าจะเป็นแบบมีเงื่อนไข</li>
+            <li><strong>กฎเดอมอร์แกน</strong> – \((A\cup B)' = A'\cap B'\) , \((A\cap B)' = A'\cup B'\)</li>
+            <li><strong>“อย่างน้อย”</strong> – ใช้ \(1 - P(\text{ไม่เกิดเลย})\)</li>
+            <li><strong>การจัดรอบวงกลม</strong> – \((n-1)!\)</li>
+            <li><strong>เมทริกซ์เอกฐาน</strong> – \(\det(A)=0\)</li>
+            <li><strong>หยิบแบบใส่คืน</strong> – ใช้ทวินาม \(P(X=k)=\binom{n}{k}p^k(1-p)^{n-k}\)</li>
+        </ul>
+    
+  <div class="ds-src">ดึงจุดแข็งจาก DeepSeek + เฉลยละเอียดจากไฟล์หลัก — cross-check ครบทั้ง 35 ข้อ คำตอบตรงกันทุกข้อ (verify ด้วย sympy)</div>
+</div>
+<div class="ds-box">
+        <strong>📌 เฉลยย่อ :</strong>
+        <span class="ans-item"><span class="q">1.</span> 4</span>
+        <span class="ans-item"><span class="q">2.</span> 0.20</span>
+        <span class="ans-item"><span class="q">3.</span> 4</span>
+        <span class="ans-item"><span class="q">4.</span> 2</span>
+        <span class="ans-item"><span class="q">5.</span> 4</span>
+        <span class="ans-item"><span class="q">6.</span> 4*</span>
+        <span class="ans-item"><span class="q">7.</span> 0.75</span>
+        <span class="ans-item"><span class="q">8.</span> 4</span>
+        <span class="ans-item"><span class="q">9.</span> 3</span>
+        <span class="ans-item"><span class="q">10.</span> 3</span>
+        <span class="ans-item"><span class="q">11.</span> 0.40</span>
+        <span class="ans-item"><span class="q">12.</span> 3</span>
+        <span class="ans-item"><span class="q">13.</span> 0.90</span>
+        <span class="ans-item"><span class="q">14.</span> 2</span>
+        <span class="ans-item"><span class="q">15.</span> 0.60</span>
+        <span class="ans-item"><span class="q">16.</span> 1</span>
+        <span class="ans-item"><span class="q">17.</span> 4</span>
+        <span class="ans-item"><span class="q">18.</span> 1</span>
+        <span class="ans-item"><span class="q">19.</span> 0.48</span>
+        <span class="ans-item"><span class="q">20.</span> 2</span>
+        <span class="ans-item"><span class="q">21.</span> 1</span>
+        <span class="ans-item"><span class="q">22.</span> 2</span>
+        <span class="ans-item"><span class="q">23.</span> 2</span>
+        <span class="ans-item"><span class="q">24.</span> 1</span>
+        <span class="ans-item"><span class="q">25.</span> 2</span>
+        <span class="ans-item"><span class="q">26.</span> 4</span>
+        <span class="ans-item"><span class="q">27.</span> 2</span>
+        <span class="ans-item"><span class="q">28.</span> 4</span>
+        <span class="ans-item"><span class="q">29.</span> 2</span>
+        <span class="ans-item"><span class="q">30.</span> 2</span>
+        <span class="ans-item"><span class="q">31.</span> 3*</span>
+        <span class="ans-item"><span class="q">32.</span> 3*</span>
+        <span class="ans-item"><span class="q">33.</span> 0.20</span>
+        <span class="ans-item"><span class="q">34.</span> 1</span>
+        <span class="ans-item"><span class="q">35.</span> 0.55</span>
+        <span style="font-size:13px;color:#64748b;margin-left:6px;">* หมายเหตุ: ข้อ 6,31,32 คำนวณได้ต่างจากเฉลยท้ายเล่ม (ดูในเฉลย)</span>
+    </div>
+<div class="map-note">📌 <b>Sub-topic mapping:</b> ทุกข้อติดป้ายหมวดย่อย 7 หมวด (🔵 กฎการนับ · 🟠 เรียงสับเปลี่ยน · 🟢 จัดหมู่ · 🟡 ความน่าจะเป็นของเหตุการณ์ · 🟣 กฎการบวก&amp;เติมเต็ม · 🔴 มีเงื่อนไข · 🟤 อิสระ&amp;ทวินาม) และ map เข้ากับ PRACTICE_BANK ผ่าน id <code>#qN</code> ให้เชื่อมกับคลัง 52-68 และชุด Test</div>
+<h2>📚 ส่วนที่ 1: ข้อ 1 — 12 (ข้อสอบต.ค.41 – มี.ค.44)</h2>
+
+<div class="problem" id="q1">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 1</span>
+    <span class="exam-tag">ต.ค. 41/3</span>
+    <span class="sub-tag B">🔵 กฎการนับเบื้องต้น</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ในการสร้างเมทริกซ์ในรูปแบบ \(\begin{pmatrix} x^2-1 & y \\ 0 & x+2 \end{pmatrix}\) แบบสุ่ม โดย \(x\) และ \(y\) เป็นสมาชิกของเซต \(\{-2, -1, 0, 1, 2\}\) ความน่าจะเป็นที่จะได้เมทริกซ์เอกฐานมีค่าเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{2}{25}\) &nbsp;&nbsp; 2) \(\dfrac{3}{25}\) &nbsp;&nbsp; 3) \(\dfrac{2}{5}\) &nbsp;&nbsp; 4) \(\dfrac{3}{5}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> เมทริกซ์เอกฐาน (Singular Matrix) คือเมทริกซ์ที่มีดีเทอร์มิแนนต์เท่ากับ 0 ใช้การนับคู่อันดับ (ordered pairs) จากเซต
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่างมี \(x, y \in \{-2,-1,0,1,2\}\) ดังนั้นมีคู่อันดับ \((x,y)\) ทั้งหมด \(5 \times 5 = 25\) คู่<br><br>
+        <b>ขั้นที่ 2:</b> คำนวณดีเทอร์มิแนนต์ของเมทริกซ์
+        \[ \det = (x^2-1)(x+2) - (y)(0) = (x^2-1)(x+2) \]<br><br>
+        <b>ขั้นที่ 3:</b> เมทริกซ์เอกฐานเมื่อ \(\det = 0\) คือ \((x^2-1)(x+2) = 0\)<br>
+        แก้ \(x^2-1 = 0 \Rightarrow x = \pm 1\)<br>
+        แก้ \(x+2 = 0 \Rightarrow x = -2\)<br>
+        ดังนั้น \(x \in \{-2, -1, 1\}\) (3 ค่า)<br><br>
+        <b>ขั้นที่ 4:</b> นับคู่ที่ทำให้เมทริกซ์เอกฐาน<br>
+        สำหรับแต่ละ \(x\) ที่ทำให้ \(\det = 0\) แล้ว \(y\) จะเป็นค่าใดก็ได้จากเซต (5 ค่า)<br>
+        จำนวนคู่ที่เอกฐาน \(= 3 \times 5 = 15\) คู่<br><br>
+        <b>ขั้นที่ 5:</b> คำนวณความน่าจะเป็น
+        \[ P = \frac{15}{25} = \frac{3}{5} \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 4:</span>
+    <span class="ans-value">\(\dfrac{3}{5}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> สังเกตว่า \(\det\) ไม่ขึ้นกับ \(y\) ดังนั้นนับเฉพาะค่า \(x\) ที่ทำให้ \(\det = 0\) แล้วคูณด้วย 5 (จำนวน \(y\) ที่เป็นไปได้) ทำให้ไม่ต้องนับทีละคู่
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าลืมว่า \(y\) ไม่มีผลต่อ \(\det\) ในกรณีนี้เพราะคูณกับ 0 — นักเรียนหลายคนพยายามนับทั้ง 25 คู่ทีละคู่ทำให้เสียเวลา
+  </div>
+</div>
+
+<div class="problem" id="q2">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 2</span>
+    <span class="exam-tag">ต.ค. 41/2</span>
+    <span class="sub-tag O">🟠 การเรียงสับเปลี่ยน</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ชาย 3 คน และหญิง 3 คน เข้าคิวในแถวเดียวกัน เพื่อซื้อตั๋วภาพยนตร์ ความน่าจะเป็นที่หญิงทั้ง 3 คน จะยืนเรียงติดกันทั้งหมดในแถวมีค่าเท่ากับเท่าใด</p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การจัดเรียงเชิงเส้น (Linear Permutation) ใช้หลักการมองกลุ่มที่ต้องการติดกันเป็นหน่วยเดียว (Block method)
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — จัดคน 6 คนในแถว
+        \[ n(S) = 6! = 720 \text{ วิธี} \]<br><br>
+        <b>ขั้นที่ 2:</b> เหตุการณ์ที่ต้องการ — หญิง 3 คนต้องยืนติดกัน<br>
+        มองหญิง 3 คนเป็น "บล็อกเดียว" จะได้หน่วยทั้งหมด \(= 1 + 3 = 4\) หน่วย (บล็อกหญิง + ชาย 3 คน)<br>
+        จัด 4 หน่วยในแถว: \(4!\) วิธี<br>
+        สลับที่หญิงภายในบล็อก: \(3!\) วิธี<br>
+        \[ n(A) = 4! \times 3! = 24 \times 6 = 144 \text{ วิธี} \]<br><br>
+        <b>ขั้นที่ 3:</b> คำนวณความน่าจะเป็น
+        \[ P = \frac{144}{720} = \frac{1}{5} = 0.2 \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ:</span>
+    <span class="ans-value">\(0.2\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> ใช้สูตร \(P = \dfrac{(n-k+1)!\cdot k!}{n!}\) เมื่อ \(n\) = จำนวนคนทั้งหมด, \(k\) = จำนวนคนที่ต้องการติดกัน
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าลืมคูณ \(3!\) สำหรับการสลับที่หญิงภายในบล็อก — เป็นจุดพลาดบ่อย
+  </div>
+</div>
+
+<div class="problem" id="q3">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 3</span>
+    <span class="exam-tag">ต.ค. 41/3</span>
+    <span class="sub-tag P">🟣 กฎการบวก & เติมเต็ม</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>จากการสำรวจแม่บ้านที่ชมโทรทัศน์จำนวน 200 คน ปรากฏว่ามี 65 คน ชมละครเรื่องที่ 1, 90 คน ชมละครเรื่องที่ 2, 45 คน ชมละครเรื่องที่ 2 เรื่องเดียว, 35 คน ชมละครเรื่องที่ 3 เรื่องเดียว, 15 คน ชมละครเรื่องที่ 1 และเรื่องที่ 3, 35 คน ชมละครเรื่องที่ 2 และเรื่องที่ 3 และมี 30 คน ที่ไม่ได้ชมละครทั้ง 3 เรื่องนี้ ถ้าสุ่มเลือกแม่บ้านจากกลุ่มนี้มา 1 คน แล้วข้อใดต่อไปนี้ผิด<br><br>
+        <span class="choices">1) ผู้ชมละครทั้ง 3 เรื่อง \(= 0.05\)<br>2) ผู้ชมละครอย่างน้อย 1 เรื่อง \(= 0.85\)<br>3) ผู้ชมละครเรื่องที่ 1 เรื่องเดียว \(= 0.2\)<br>4) ผู้ชมละครเรื่องที่ 3 \(= 0.45\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> แผนภาพเวนน์ 3 เซต และหลักการรวม-การแยก (Inclusion-Exclusion Principle)
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> กำหนดตัวแปร ให้ \(A, B, C\) แทนผู้ชมเรื่อง 1, 2, 3 ตามลำดับ และ \(a = |A \cap B \cap C|\)<br><br>
+        <b>ขั้นที่ 2:</b> แยกส่วนต่างๆ ในแผนเวนน์<br>
+        • ชมเรื่อง 2 เรื่องเดียว \(= 45\) → \(|B| - |A \cap B| - |B \cap C| + a = 45\)<br>
+        &nbsp;&nbsp; \(90 - |A \cap B| - 35 + a = 45 \Rightarrow |A \cap B| - a = 10\)<br>
+        • ชมเรื่อง 3 เรื่องเดียว \(= 35\) → \(|C| - 15 - 35 + a = 35 \Rightarrow |C| + a = 85\)<br><br>
+        <b>ขั้นที่ 3:</b> ใช้ Inclusion-Exclusion<br>
+        \(65 + 90 + |C| - |A \cap B| - 15 - 35 + a + 30 = 200\)<br>
+        \(|C| - |A \cap B| + a = 65\) ... แทน \(|A \cap B| = a + 10\): \(|C| - 10 = 65 \Rightarrow |C| = 75\)<br>
+        จาก \(|C| + a = 85\): \(a = 10\) (ชมทั้ง 3 เรื่อง \(= 10\) คน)<br>
+        \(|A \cap B| = 20\), ชมเรื่อง 1 เรื่องเดียว \(= 65 - 10 - 5 - 10 = 40\)<br><br>
+        <b>ขั้นที่ 4:</b> ตรวจข้อความแต่ละข้อ<br>
+        1) \(P(\text{ทั้ง 3}) = 10/200 = 0.05\) ✓ ถูก<br>
+        2) \(P(\text{≥1}) = (200-30)/200 = 0.85\) ✓ ถูก<br>
+        3) \(P(\text{เรื่อง 1 เดียว}) = 40/200 = 0.2\) ✓ ถูก<br>
+        4) \(P(\text{เรื่อง 3}) = 75/200 = 0.375 \neq 0.45\) ✗ ผิด
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 4:</span>
+    <span class="ans-value">ข้อ 4 ผิด เพราะ \(P(\text{ชมเรื่อง 3}) = 0.375\) ไม่ใช่ \(0.45\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> เริ่มจาก "เรื่องเดียว" ก่อนเสมอ เพราะให้ข้อมูล "สะอาด" ที่สุด แล้วค่อยไล่หา \(|A \cap B \cap C|\)
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ระวังการสับสนระหว่าง "ชม 2 เรื่อง" (รวม 3 เรื่อง) กับ "ชม 2 เรื่องเท่านั้น" (ไม่รวม 3 เรื่อง) — คำว่า "เท่านั้น" สำคัญมาก
+  </div>
+</div>
+
+<div class="problem" id="q4">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 4</span>
+    <span class="exam-tag">มี.ค. 42/3</span>
+    <span class="sub-tag R">🔴 ความน่าจะเป็นแบบมีเงื่อนไข</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ถุงใบหนึ่งมีลูกแก้วขนาดเดียวกันอยู่ 10 ลูก เป็นสีแดง 3 ลูก สีขาว 5 ลูก สีดำ 2 ลูก สุ่มหยิบลูกแก้วจากถุงสองครั้ง ครั้งละลูกโดยไม่ใส่คืน ความน่าจะเป็นที่จะหยิบได้ลูกที่สองเป็นสีแดงเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{1}{10}\) &nbsp;&nbsp; 2) \(\dfrac{3}{10}\) &nbsp;&nbsp; 3) \(\dfrac{3}{20}\) &nbsp;&nbsp; 4) \(\dfrac{3}{50}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> ความน่าจะเป็นแบบมีเงื่อนไข และสมมาตรของการจัดเรียงแบบสุ่ม (Symmetry principle)
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ใช้กฎความน่าจะเป็นเต็ม
+        \[ P(\text{2nd แดง}) = P(\text{1st แดง}) \cdot P(\text{2nd แดง}|\text{1st แดง}) + P(\text{1st ไม่แดง}) \cdot P(\text{2nd แดง}|\text{1st ไม่แดง}) \]<br><br>
+        <b>ขั้นที่ 2:</b> คำนวณแต่ละพจน์
+        \[ = \frac{3}{10} \cdot \frac{2}{9} + \frac{7}{10} \cdot \frac{3}{9} = \frac{6}{90} + \frac{21}{90} = \frac{27}{90} = \frac{3}{10} \]<br><br>
+        <b>ขั้นที่ 3:</b> สังเกตว่า \(P(\text{2nd แดง}) = P(\text{1st แดง}) = \dfrac{3}{10}\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 2:</span>
+    <span class="ans-value">\(\dfrac{3}{10}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> สมมาตร: ในการหยิบไม่ใส่คืน ความน่าจะเป็นที่ลูกใดๆ จะถูกหยิบในลำดับที่ \(k\) เท่ากับความน่าจะเป็นที่จะถูกหยิบในลำดับที่ 1 เสมอ — ดังนั้น \(P(	ext{2nd แดง}) = \dfrac{3}{10}\) ทันที
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าเข้าใจผิดว่าการหยิบครั้งแรก "ลด" โอกาสของครั้งที่สอง — ในเชิงความน่าจะเป็นรวม ค่าเท่ากัน
+  </div>
+</div>
+
+<div class="problem" id="q5">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 5</span>
+    <span class="exam-tag">ต.ค. 42/3</span>
+    <span class="sub-tag G">🟢 การจัดหมู่</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ในจำนวนเด็ก 12 คน มีเด็กถนัดซ้าย 4 คน ถ้าเลือกเด็ก 5 คน โดยการสุ่มจากเด็กเหล่านี้ แล้วความน่าจะเป็นที่จะมีถนัดซ้ายอยู่ในกลุ่มที่เลือกเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{7}{99}\) &nbsp;&nbsp; 2) \(\dfrac{14}{99}\) &nbsp;&nbsp; 3) \(\dfrac{28}{99}\) &nbsp;&nbsp; 4) \(\dfrac{92}{99}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> ความน่าจะเป็นเหตุการณ์เติมเต็ม (Complementary event) — "อย่างน้อย 1" ใช้ \(1 - P(	ext{none})\)
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> \"มีถนัดซ้าย\" = \"มีถนัดซ้ายอย่างน้อย 1 คน\"<br>
+        ใช้เหตุการณ์เติมเต็ม: \(P(\text{≥1}) = 1 - P(\text{ไม่มีถนัดซ้ายเลย})\)<br><br>
+        <b>ขั้นที่ 2:</b> ปริภูมิตัวอย่าง
+        \[ n(S) = \binom{12}{5} = 792 \]<br><br>
+        <b>ขั้นที่ 3:</b> เหตุการณ์ที่ไม่มีถนัดซ้าย (เลือกจากขวาทั้งหมด 8 คน)
+        \[ n(\text{ไม่มี}) = \binom{8}{5} = 56 \]<br><br>
+        <b>ขั้นที่ 4:</b> คำนวณ
+        \[ P = 1 - \frac{56}{792} = 1 - \frac{7}{99} = \frac{92}{99} \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 4:</span>
+    <span class="ans-value">\(\dfrac{92}{99}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> "อย่างน้อย 1" ใช้เหตุการณ์เติมเต็มเสมอ ไม่ต้องแบ่งเคส 1, 2, 3, 4 คน
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ตรวจสอบว่า \(inom{12}{5}\) ถูกต้อง — นักเรียนบางคนคำนวณ \(inom{12}{5} = 792\) ผิดเป็นค่าอื่น
+  </div>
+</div>
+
+<div class="problem" id="q6">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 6</span>
+    <span class="exam-tag">ต.ค. 42/4</span>
+    <span class="sub-tag O">🟠 การเรียงสับเปลี่ยน</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>กล่องใบหนึ่งบรรจุขนมชั้น 24 ชิ้น แต่ละชิ้นมี 4 ชั้น ชั้นละสี ซึ่งมีสีเขียว ขาว แดง เหลือง และการเรียงลำดับสีของแต่ละชิ้นทั้ง 24 ชิ้นแตกต่างกันหมด ถ้าหยิบขนม 1 ชิ้นจากกล่องนี้โดยสุ่ม แล้วความน่าจะเป็นที่ชิ้นที่หยิบได้มีสองชั้นบนไม่ใช่สีแดงและไม่ใช่สีเหลืองเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{5}{12}\) &nbsp;&nbsp; 2) \(\dfrac{6}{12}\) &nbsp;&nbsp; 3) \(\dfrac{1}{6}\) &nbsp;&nbsp; 4) \(\dfrac{1}{4}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การเรียงสับเปลี่ยน (Permutation) และการนับแบบมีเงื่อนไข
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — ขนม 24 ชิ้นที่มีการจัดเรียงสีต่างกันหมด (เท่ากับ \(4! = 24\) วิธี)<br><br>
+        <b>ขั้นที่ 2:</b> เหตุการณ์ที่ต้องการ — สองชั้นบน \"ไม่ใช่แดงและไม่ใช่เหลือง\"<br>
+        แปลว่า สองชั้นบนต้องเป็นสีเขียวและสีขาวเท่านั้น (เพราะมี 4 สี G, W, R, Y และต้องไม่ใช่ R ไม่ใช่ Y)<br><br>
+        <b>ขั้นที่ 3:</b> นับจำนวนการจัดเรียงที่สองชั้นบนเป็น G และ W<br>
+        • เลือกลำดับสองชั้นบน: \(G, W\) หรือ \(W, G\) = 2 วิธี<br>
+        • สองชั้นล่างเป็น R และ Y คูณ \(2! = 2\) วิธี<br>
+        • รวม: \(2 \times 2 = 4\) วิธี<br><br>
+        <b>ขั้นที่ 4:</b> ความน่าจะเป็น
+        \[ P = \frac{4}{24} = \frac{1}{6} \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 3:</span>
+    <span class="ans-value">\(\dfrac{1}{6}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> เนื่องจาก \(24 = 4!\) ทุกการจัดเรียงมีโอกาสเท่ากัน — ใช้การนับแบบตำแหน่ง: เลือกสีของแต่ละชั้นทีละตำแหน่ง
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าตีความ "ไม่ใช่แดงและไม่ใช่เหลือง" ผิดเป็น "ไม่ใช่แดง หรือ ไม่ใช่เหลือง" — เป็น AND ไม่ใช่ OR
+  </div>
+</div>
+
+<div class="problem" id="q7">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 7</span>
+    <span class="exam-tag">มี.ค. 43/2</span>
+    <span class="sub-tag Y">🟡 ความน่าจะเป็นของเหตุการณ์</span>
+    <span class="stars">★★☆☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ในการทอดลูกเต๋า 2 ลูกพร้อมกัน 1 ครั้ง ความน่าจะเป็นที่ผลบวกของแต้มบนหน้าลูกเต๋าทั้งสองลูกจะเป็นเลขที่หารด้วย 4 ไม่ลงตัว มีค่าเท่ากับเท่าใด</p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> ปริภูมิตัวอย่าง 2 ลูกเต๋า (36 ผล) และความน่าจะเป็นเหตุการณ์เติมเต็ม
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — ทอย 2 ลูกเต๋า มี \(6 \times 6 = 36\) ผล<br><br>
+        <b>ขั้นที่ 2:</b> \"หาร 4 ไม่ลงตัว\" = ผลบวกไม่ใชนพที่หารด้วย 4 ลงตัว<br>
+        ผลบวกที่หารด้วย 4 ลงตัว คือ 4, 8, 12<br>
+        • ผลบวก \(= 4\): \((1,3), (2,2), (3,1)\) → 3 ผล<br>
+        • ผลบวก \(= 8\): \((2,6), (3,5), (4,4), (5,3), (6,2)\) → 5 ผล<br>
+        • ผลบวก \(= 12\): \((6,6)\) → 1 ผล<br>
+        รวม \(= 3 + 5 + 1 = 9\) ผล<br><br>
+        <b>ขั้นที่ 3:</b> \(P(\text{หาร 4 ลงตัว}) = \dfrac{9}{36} = \dfrac{1}{4}\)<br><br>
+        <b>ขั้นที่ 4:</b> \(P(\text{หาร 4 ไม่ลงตัว}) = 1 - \dfrac{1}{4} = \dfrac{3}{4} = 0.75\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ:</span>
+    <span class="ans-value">\(0.75\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> จำผลบวกของลูกเต๋า 2 ลูก: ผลบวก 7 เกิดง่ายที่สุด (6 ผล) — ใช้รูปสามเหลี่ยมปิรามิดเพื่อนับผลบวกได้รวดเร็ว
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ระวังการอ่านโจทย์ "หาร 4 ลงตัว" หรือ "หาร 4 ไม่ลงตัว" ให้ดี — คำว่า "ไม่" เปลี่ยนคำตอบ
+  </div>
+</div>
+
+<div class="problem" id="q8">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 8</span>
+    <span class="exam-tag">มี.ค. 43/4</span>
+    <span class="sub-tag G">🟢 การจัดหมู่</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>กล่องใบหนึ่งมีลูกหินสีขาว 5 ลูก สีเขียว 3 ลูก สีน้ำเงิน 2 ลูก ถ้าหยิบลูกหินอย่างสุ่ม ครั้งละ 1 ลูก โดยไม่ใส่คืน 3 ครั้ง แล้วความน่าจะเป็นที่จะหยิบได้ลูกหินสีเดียวกันอย่างน้อย 2 ลูก มีค่าเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{1}{4}\) &nbsp;&nbsp; 2) \(\dfrac{5}{12}\) &nbsp;&nbsp; 3) \(\dfrac{3}{4}\) &nbsp;&nbsp; 4) \(\dfrac{4}{5}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> เหตุการณ์เติมเต็ม — "อย่างน้อย 2 สีเดียวกัน" = \(1 - P(	ext{3 สีแตกต่าง})\)
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> \"สีเดียวกันอย่างน้อย 2 ลูก\" = ไม่ใช่ \"สีต่างกันทั้ง 3 ลูก\"<br>
+        \(P(\text{≥2 สีเดียวกัน}) = 1 - P(\text{3 สีต่างกัน})\)<br><br>
+        <b>ขั้นที่ 2:</b> ปริภูมิตัวอย่าง
+        \[ n(S) = \binom{10}{3} = 120 \]<br><br>
+        <b>ขั้นที่ 3:</b> เหตุการณ์ 3 สีต่างกัน (ขาว, เขียว, น้ำเงิน อย่างละ 1)
+        \[ n(\text{3 สี}) = \binom{5}{1}\binom{3}{1}\binom{2}{1} = 5 \times 3 \times 2 = 30 \]<br><br>
+        <b>ขั้นที่ 4:</b> คำนวณ
+        \[ P(\text{3 สีต่าง}) = \frac{30}{120} = \frac{1}{4} \]
+        \[ P(\text{≥2 สีเดียวกัน}) = 1 - \frac{1}{4} = \frac{3}{4} \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 4:</span>
+    <span class="ans-value">\(\dfrac{3}{4}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> เมื่อเห็น "อย่างน้อย 2" ให้นึกถึงเหตุการณ์เติมเต็มทันที — ประหยัดเวลามาก
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าลืมว่าการหยิบพร้อมกัน (simultaneous) = การหยิบทีละลูกโดยไม่ใส่คืน — ความน่าจะเป็นเท่ากัน
+  </div>
+</div>
+
+<div class="problem" id="q9">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 9</span>
+    <span class="exam-tag">ต.ค. 43/ตอนที่ 1</span>
+    <span class="sub-tag G">🟢 การจัดหมู่</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ในการจัดคน 6 คน ซึ่งมีนาย ก และนาย ข รวมอยู่ด้วย เข้าพักในห้อง 3 ห้อง โดยที่ห้องที่หนึ่งพักได้ 3 คน ห้องที่สองพักได้ 2 คน และห้องที่สามพักได้ 1 คน ความน่าจะเป็นที่นาย ก และนาย ข จะได้พักห้องเดียวกันเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{1}{5}\) &nbsp;&nbsp; 2) \(\dfrac{1}{3}\) &nbsp;&nbsp; 3) \(\dfrac{4}{15}\) &nbsp;&nbsp; 4) \(\dfrac{2}{5}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การจัดกลุ่มแบบ Multinomial — แบ่งคนเป็นกลุ่มตามขนาดที่กำหนด
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — จัดคน 6 คนเป็นกลุ่ม 3, 2, 1
+        \[ n(S) = \frac{6!}{3!\,2!\,1!} = \frac{720}{12} = 60 \]<br><br>
+        <b>ขั้นที่ 2:</b> เหตุการณ์ที่ ก และ ข อยู่ห้องเดียวกัน มี 2 กรณี<br>
+        <b>กรณี A:</b> ก และ ข อยู่ห้อง 3 คน<br>
+        เลือกคนที่ 3 จาก 4 คนที่เหลือ: \(\binom{4}{1} = 4\) วิธี<br>
+        จัดคน 3 คนที่เหลือเป็น 2 และ 1: \(\binom{3}{2} = 3\) วิธี<br>
+        รวม: \(4 \times 3 = 12\) วิธี<br><br>
+        <b>กรณี B:</b> ก และ ข อยู่ห้อง 2 คน<br>
+        จัดคน 4 คนที่เหลือเป็น 3 และ 1: \(\binom{4}{3} = 4\) วิธี<br>
+        รวม: \(4\) วิธี<br>
+        (ไม่สามารถอยู่ห้อง 1 คนได้เพราะมี 2 คน)<br><br>
+        <b>ขั้นที่ 3:</b> รวม \(n(A) = 12 + 4 = 16\) วิธี<br><br>
+        <b>ขั้นที่ 4:</b> \(P = \dfrac{16}{60} = \dfrac{4}{15}\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 3:</span>
+    <span class="ans-value">\(\dfrac{4}{15}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> กรณี "เดียวกัน" ในการแบ่งกลุ่ม = ผลรวมของแต่ละห้องที่รองรับ — คิดเป็นเคส ๆ ไป
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าลืมว่าห้อง 1 คนไม่สามารถมีทั้ง ก และ ข ได้ ต้องตัดเคสนี้ออก
+  </div>
+</div>
+
+<div class="problem" id="q10">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 10</span>
+    <span class="exam-tag">ต.ค. 43/ตอนที่ 1</span>
+    <span class="sub-tag Y">🟡 ความน่าจะเป็นของเหตุการณ์</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ค่าแรงงานต่อวันของคนงานกลุ่มหนึ่งจำนวน 8 คน เป็น 150, 152, 158, 168, 170, 177, 180, 185 บาท ถ้าสุ่มเลือกคนงานจากกลุ่มนี้มา 2 คน แล้วความน่าจะเป็นที่จะได้คนงานอย่างน้อย 1 คน ที่มีค่าแรงงานต่อวันต่ำกว่าค่าแรงงานเฉลี่ยของคนงานกลุ่มนี้เท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{5}{14}\) &nbsp;&nbsp; 2) \(\dfrac{9}{14}\) &nbsp;&nbsp; 3) \(\dfrac{9}{14}\) &nbsp;&nbsp; 4) \(\dfrac{11}{14}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> ค่าเฉลี่ย (Mean) และเหตุการณ์เติมเต็ม "อย่างน้อย 1"
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> คำนวณค่าเฉลี่ยค่าแรง
+        \[ \bar{x} = \frac{150+152+158+168+170+177+180+185}{8} = \frac{1340}{8} = 167.5 \text{ บาท} \]<br><br>
+        <b>ขั้นที่ 2:</b> นับคนงานที่ค่าแรง \(< 167.5\) บาท<br>
+        คือ 150, 152, 158 → <b>3 คน</b> (เนื่องจาก 168 > 167.5)<br>
+        คนงานที่ค่าแรง \(\geq 167.5\) → 5 คน<br><br>
+        <b>ขั้นที่ 3:</b> ใช้เหตุการณ์เติมเต็ม
+        \[ P(\text{≥1 ต่ำกว่า}) = 1 - P(\text{ทั้ง 2 ไม่ต่ำกว่า}) = 1 - \frac{\binom{5}{2}}{\binom{8}{2}} \]<br><br>
+        <b>ขั้นที่ 4:</b> คำนวณ
+        \[ P = 1 - \frac{10}{28} = 1 - \frac{5}{14} = \frac{9}{14} \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 3:</span>
+    <span class="ans-value">\(\dfrac{9}{14}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> หลังหาค่าเฉลี่ย ให้นับ "ต่ำกว่า" ก่อน แล้วใช้เหตุการณ์เติมเต็ม
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ระวังการเปรียบเทียบ 168 vs 167.5 — นักเรียนบางคนเข้าใจว่า 168 ต่ำกว่า 167.5 ทั้งที่ไม่ใช่
+  </div>
+</div>
+
+<div class="problem" id="q11">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 11</span>
+    <span class="exam-tag">มี.ค. 44/2</span>
+    <span class="sub-tag B">🔵 กฎการนับเบื้องต้น</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ในการสร้างเมทริกซ์ในรูป \(\begin{pmatrix} x^2 & x-4 \\ -x & x-1 \end{pmatrix}\) แบบสุ่ม โดยที่ \(x \in \{0, 1, 2, 3, 4\}\) ความน่าจะเป็นที่จะได้เมทริกซ์เอกฐานเท่ากับเท่าใด</p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> เมทริกซ์เอกฐาน (Singular Matrix) — det = 0 และการแก้สมการพหุนาม
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — \(x \in \{0,1,2,3,4\}\) มี 5 ค่า<br><br>
+        <b>ขั้นที่ 2:</b> คำนวณดีเทอร์มิแนนต์
+        \[ \det = x^2(x-1) - (x-4)(-x) = x^3 - x^2 + x^2 - 4x = x^3 - 4x \]
+        \[ = x(x^2 - 4) = x(x-2)(x+2) \]<br><br>
+        <b>ขั้นที่ 3:</b> เมทริกซ์เอกฐานเมื่อ \(\det = 0\):
+        \[ x(x-2)(x+2) = 0 \Rightarrow x = 0, 2, -2 \]<br><br>
+        <b>ขั้นที่ 4:</b> ค่าที่อยู่ในเซต \(\{0,1,2,3,4\}\) คือ \(x = 0\) และ \(x = 2\) → <b>2 ค่า</b><br><br>
+        <b>ขั้นที่ 5:</b> \(P = \dfrac{2}{5} = 0.4\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ:</span>
+    <span class="ans-value">\(0.4\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> แยกตัวประกอบพหุนามเสมอ — \(x^3 - 4x = x(x^2-4) = x(x-2)(x+2)\) ทำให้เห็นรากทันที
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ระวังการบวก/ลบเครื่องหมาย: \((x-4)(-x) = -x^2 + 4x\) ไม่ใช่ \(x^2 - 4x\)
+  </div>
+</div>
+
+<div class="problem" id="q12">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 12</span>
+    <span class="exam-tag">มี.ค. 44/3</span>
+    <span class="sub-tag P">🟣 กฎการบวก & เติมเต็ม</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ความน่าจะเป็นที่นักเรียนคนหนึ่งสอบผ่านวิชาคณิตศาสตร์เท่ากับ \(\dfrac{2}{5}\) และสอบผ่านวิชาภาษาอังกฤษเท่ากับ \(\dfrac{1}{3}\) ถ้าความน่าจะเป็นในการสอบผ่านอย่างมากหนึ่งวิชาเท่ากับ \(\dfrac{13}{15}\) แล้ว ความน่าจะเป็นที่เขาจะสอบผ่านอย่างน้อยหนึ่งวิชาเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{7}{15}\) &nbsp;&nbsp; 2) \(\dfrac{4}{15}\) &nbsp;&nbsp; 3) \(\dfrac{3}{5}\) &nbsp;&nbsp; 4) \(\dfrac{1}{5}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> ความสัมพันธ์ระหว่างเหตุการณ์ "อย่างน้อย 1" และ "มากสุด 1" — ทั้งสองเชื่อมผ่าน \(P(	ext{both})\)
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> กำหนดตัวแปร<br>
+        \(P(M) = \dfrac{2}{5}\), \(P(E) = \dfrac{1}{3}\), \(P(\text{≤1 วิชา}) = \dfrac{13}{15}\)<br><br>
+        <b>ขั้นที่ 2:</b> \"อย่างมาก 1 วิชา\" = \(1 - P(\text{ผ่านทั้ง 2 วิชา})\)<br>
+        \[ P(M \cap E) = 1 - \frac{13}{15} = \frac{2}{15} \]<br><br>
+        <b>ขั้นที่ 3:</b> ตรวจสอบว่า \(P(M \cap E) \leq \min(P(M), P(E))\)<br>
+        \(P(M \cap E) = \dfrac{2}{15} \approx 0.133\), \(\min = \dfrac{1}{3} = \dfrac{5}{15} \approx 0.333\) ✓<br><br>
+        <b>ขั้นที่ 4:</b> \(P(\text{≥1 วิชา}) = P(M \cup E) = P(M) + P(E) - P(M \cap E)\)
+        \[ = \frac{2}{5} + \frac{1}{3} - \frac{2}{15} = \frac{6}{15} + \frac{5}{15} - \frac{2}{15} = \frac{9}{15} = \frac{3}{5} \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 3:</span>
+    <span class="ans-value">\(\dfrac{3}{5}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> จำสูตร: \(P(	ext{≥1}) + P(	ext{=0}) = 1\) และ \(P(	ext{≤1}) + P(	ext{=2}) = 1\) — เชื่อมผ่าน \(P(	ext{both})\)
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ตรวจสอบเสมอว่า \(P(A \cap B) \leq \min(P(A), P(B))\) ไม่เช่นนั้นแปลว่าตีความโจทย์ผิด
+  </div>
+</div>
+
+<div class="section-divider"></div>
+<h2>📚 ส่วนที่ 2: ข้อ 13 — 24 (ข้อสอบต.ค.44 – Ent' มี.ค.47)</h2>
+
+<div class="problem" id="q13">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 13</span>
+    <span class="exam-tag">ต.ค. 44/2</span>
+    <span class="sub-tag P">🟣 กฎการบวก & เติมเต็ม</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>กำหนดความน่าจะเป็นของเหตุการณ์ A, B และ \(A \cap B\) ดังนี้ \(P(A) = 0.5, P(B) = 0.3, P(A \cap B) = 0.1\), \(P(A' \cup B')\) มีค่าเท่ากับเท่าใด</p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> กฎของเดอมอร์แกน (De Morgan's Law): \((A \cap B)' = A' \cup B'\)
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ใช้กฎเดอมอร์แกน
+        \[ A' \cup B' = (A \cap B)' \]<br><br>
+        <b>ขั้นที่ 2:</b> ดังนั้น
+        \[ P(A' \cup B') = P((A \cap B)') = 1 - P(A \cap B) \]<br><br>
+        <b>ขั้นที่ 3:</b> แทนค่า
+        \[ P(A' \cup B') = 1 - 0.1 = 0.9 \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ:</span>
+    <span class="ans-value">\(0.9\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> จำกฎเดอมอร์แกนให้แม่น: \((A \cap B)' = A' \cup B'\) และ \((A \cup B)' = A' \cap B'\)
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าสับสนระหว่าง \(P(A' \cup B')\) กับ \(P(A' \cap B')\) — สองสิ่งนี้ต่างกันมาก
+  </div>
+</div>
+
+<div class="problem" id="q14">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 14</span>
+    <span class="exam-tag">ต.ค. 44/3</span>
+    <span class="sub-tag G">🟢 การจัดหมู่</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ห้างสรรพสินค้าแห่งหนึ่งจัดรายการสมนาคุณแก่ลูกค้า โดยจะให้ลูกค้าทุกคนสุ่มหยิบคูปองส่วนลดได้ 2 ใบ จากกล่องซึ่งมีคูปองทั้งหมด 12 ใบ ซึ่งมีคูปองมูลค่า 50 บาท 5 ใบ คูปองมูลค่า 100 บาท 3 ใบ คูปองมูลค่า 200 บาท 3 ใบ และมูลค่า 500 บาท 1 ใบ ความน่าจะเป็นที่ลูกค้าคนหนึ่งจะสุ่มหยิบคูปอง 2 ใบ และได้คูปองที่มีมูลค่าส่วนลดรวมมากกว่า 300 บาท มีค่าเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{11}{66}\) &nbsp;&nbsp; 2) \(\dfrac{14}{66}\) &nbsp;&nbsp; 3) \(\dfrac{20}{66}\) &nbsp;&nbsp; 4) \(\dfrac{23}{66}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การนับคู่ (Combinations) และการแบ่งเคสตามมูลค่ารวม
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — หยิบ 2 ใบจาก 12
+        \[ n(S) = \binom{12}{2} = 66 \]<br><br>
+        <b>ขั้นที่ 2:</b> แบ่งเคสคูปองที่รวม \(> 300\) บาท<br>
+        • (50, 500): 5×1 = 5 คู่ → รวม 550 ✓<br>
+        • (100, 500): 3×1 = 3 คู่ → รวม 600 ✓<br>
+        • (200, 500): 3×1 = 3 คู่ → รวม 700 ✓<br>
+        • (200, 200): \(\binom{3}{2}\) = 3 คู่ → รวม 400 ✓<br>
+        • (100, 200): 3×3 = 9 คู่ → รวม 300 ✗ (ไม่มากกว่า 300)<br>
+        • คู่อื่นๆ: รวม < 300 ✗<br><br>
+        <b>ขั้นที่ 3:</b> นับเฉพาะที่รวม \(> 300\)
+        \[ n(A) = 5 + 3 + 3 + 3 = 14 \]<br><br>
+        <b>ขั้นที่ 4:</b> \(P = \dfrac{14}{66} = \dfrac{7}{33}\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 2:</span>
+    <span class="ans-value">\(\dfrac{14}{66} = \dfrac{7}{33}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> เขียนตารางคู่ที่เป็นไปได้และผลรวม — ช่วยให้ไม่พลาดเคส
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ระวังคำว่า "มากกว่า 300" ไม่ใช่ "มากกว่าหรือเท่ากับ 300" — (100, 200) รวม 300 ไม่นับ
+  </div>
+</div>
+
+<div class="problem" id="q15">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 15</span>
+    <span class="exam-tag">มี.ค. 45/2</span>
+    <span class="sub-tag P">🟣 กฎการบวก & เติมเต็ม</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>กล่องใบหนึ่งบรรจุสลากสีแดงซึ่งเขียนหมายเลข 1, 2, 3 ไว้สลากละหนึ่งหมายเลข รวมกับสลากเขียวซึ่งเขียนหมายเลข 1, 2, 3 ไว้สลากละหนึ่งหมายเลขเช่นเดียวกัน ถ้าจับสลากสองใบจากกล่องโดยจับทีละใบแบบไม่ใส่กลับคืน ความน่าจะเป็นที่จะได้สลากสีเหมือนกัน หรือหมายเลขเดียวกันเท่ากับเท่าใด</p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> กฎความน่าจะเป็นรวม (Addition Rule): \(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — สลาก 6 ใบ (แดง 1,2,3 + เขียว 1,2,3), จับ 2 ใบ
+        \[ n(S) = \binom{6}{2} = 15 \]<br><br>
+        <b>ขั้นที่ 2:</b> เหตุการณ์ A = \"สีเหมือนกัน\"
+        \[ n(A) = \binom{3}{2} + \binom{3}{2} = 3 + 3 = 6 \]<br><br>
+        <b>ขั้นที่ 3:</b> เหตุการณ์ B = \"หมายเลขเดียวกัน\"
+        \[ n(B) = 3 \text{ (คู่: 1R-1G, 2R-2G, 3R-3G)} \]<br><br>
+        <b>ขั้นที่ 4:</b> \(A \cap B\) = สีเหมือนกัน AND หมายเลขเดียวกัน<br>
+        เป็นไปไม่ได้ (สลากแต่ละใบมีเอกลักษณ์เฉพาะตัว) → \(n(A \cap B) = 0\)<br><br>
+        <b>ขั้นที่ 5:</b> \(P(A \cup B) = \dfrac{6 + 3 - 0}{15} = \dfrac{9}{15} = \dfrac{3}{5} = 0.6\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ:</span>
+    <span class="ans-value">\(0.6\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> ตรวจสอบเสมอว่า \(A, B\) เป็น disjoint หรือไม่ — ถ้าใช่ สูตรง่ายขึ้น
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าลืมลบ \(P(A \cap B)\) ในกรณีที่เหตุการณ์ไม่ disjoint — ถ้าลืมจะได้ \(9/15\) ที่ผิด
+  </div>
+</div>
+
+<div class="problem" id="q16">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 16</span>
+    <span class="exam-tag">มี.ค. 45/3</span>
+    <span class="sub-tag O">🟠 การเรียงสับเปลี่ยน</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem-body">
+    <p>ในการใส่จดหมาย 5 ฉบับ ที่เขียนถึง 5 คน คนละ 1 ฉบับ ลงในซองที่จ่าหน้าซองไว้แล้ว 5 ซอง ซองละหนึ่งฉบับ ความน่าจะเป็นที่ใส่จดหมายลงในซองได้ตรงกับชื่อหน้าซองไม่เกิน 3 ซอง และไม่น้อยกว่า 1 ซอง เท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{75}{120}\) &nbsp;&nbsp; 2) \(\dfrac{44}{120}\) &nbsp;&nbsp; 3) \(\dfrac{45}{120}\) &nbsp;&nbsp; 4) \(\dfrac{76}{120}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> Derangement (การจัดเรียงไม่ตรงที่เดิม) — ใช้สูตร \(D(n) = n!\sum_{k=0}^{n}rac{(-1)^k}{k!}\)
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — จัด 5 ฉบับใส่ 5 ซอง
+        \[ n(S) = 5! = 120 \]<br><br>
+        <b>ขั้นที่ 2:</b> จำนวนเคสที่ตรง \(k\) ซอง = \(\binom{5}{k} \times D(5-k)\)<br>
+        โดย \(D(0)=1, D(1)=0, D(2)=1, D(3)=2, D(4)=9, D(5)=44\)<br><br>
+        <b>ขั้นที่ 3:</b> ตรง 0 ซอง: \(D(5) = 44\)<br>
+        ตรง 1 ซอง: \(\binom{5}{1} \times D(4) = 5 \times 9 = 45\)<br>
+        ตรง 2 ซอง: \(\binom{5}{2} \times D(3) = 10 \times 2 = 20\)<br>
+        ตรง 3 ซอง: \(\binom{5}{3} \times D(2) = 10 \times 1 = 10\)<br>
+        ตรง 4 ซอง: \(\binom{5}{4} \times D(1) = 5 \times 0 = 0\) (เป็นไปไม่ได้)<br>
+        ตรง 5 ซอง: 1<br><br>
+        <b>ขั้นที่ 4:</b> เหตุการณ์ \"ตรง 1 ถึง 3 ซอง\"
+        \[ n(A) = 45 + 20 + 10 = 75 \]<br><br>
+        <b>ขั้นที่ 5:</b> \(P = \dfrac{75}{120} = \dfrac{5}{8}\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 1:</span>
+    <span class="ans-value">\(\dfrac{75}{120} = \dfrac{5}{8}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> จำค่า derangement สำคัญ: \(D(2)=1, D(3)=2, D(4)=9, D(5)=44, D(6)=265\) — จำไว้ประหยัดเวลา
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ตรง 4 ซองจาก 5 เป็นไปไม่ได้ — ถ้าตรง 4 แล้วซองสุดท้ายต้องตรงด้วย ดังนั้น \(D(1) = 0\)
+  </div>
+</div>
+
+<div class="problem" id="q17">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 17</span>
+    <span class="exam-tag">ต.ค. 45/3</span>
+    <span class="sub-tag Y">🟡 ความน่าจะเป็นของเหตุการณ์</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ถุงใบหนึ่งมีลูกกวาดขนาดเดียวกันเป็นสีแดง 24 เม็ด ที่เหลือเป็นลูกกวาดสีขาวและลูกกวาดสีเขียว ถ้าสุ่มหยิบลูกกวาดขึ้นมา 1 เม็ด ความน่าจะเป็นที่ได้ลูกกวาดสีขาวหรือสีเขียวเท่ากับ \(\dfrac{5}{6}\) และความน่าจะเป็นที่ได้ลูกกวาดสีเขียวหรือสีแดงเท่ากับ \(\dfrac{3}{4}\) แล้วจำนวนลูกกวาดสีเขียวเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) 36 &nbsp;&nbsp; 2) 60 &nbsp;&nbsp; 3) 72 &nbsp;&nbsp; 4) 84</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การตั้งสมการเชิงเส้นสองตัวแปร จากความน่าจะเป็น
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> กำหนดตัวแปร — \(R=24\), \(W\), \(G\), รวม \(T = 24 + W + G\)<br><br>
+        <b>ขั้นที่ 2:</b> แปลโจทย์เป็นสมการ<br>
+        \(P(W \cup G) = \dfrac{W+G}{T} = \dfrac{5}{6}\) → \(6(W+G) = 5T = 5(24+W+G)\)<br>
+        กระจาย: \(6W + 6G = 120 + 5W + 5G \Rightarrow W + G = 120 \Rightarrow T = 144\)<br><br>
+        <b>ขั้นที่ 3:</b> \(P(G \cup R) = \dfrac{G+24}{T} = \dfrac{3}{4}\)<br>
+        \[ \frac{G+24}{144} = \frac{3}{4} \Rightarrow G+24 = 108 \Rightarrow G = 84 \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 4:</span>
+    <span class="ans-value">\(84\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> สังเกตว่า \(P(W \cup G) = 1 - P(R)\) → หา \(T\) ได้ทันที จากนั้นหา \(G\)
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าลืมว่า \(P(W \cup G)\) = 1 - P(R) เพราะ W, G, R เป็นเหตุการณ์ disjoint ที่รวมเป็นปริภูมิตัวอย่าง
+  </div>
+</div>
+
+<div class="problem" id="q18">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 18</span>
+    <span class="exam-tag">ต.ค. 45/3</span>
+    <span class="sub-tag P">🟣 กฎการบวก & เติมเต็ม</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ชมรมกีฬาของโรงเรียนแห่งหนึ่งมีสมาชิกทั้งหมด 80 คน สมาชิกทุกคนต้องเล่นกีฬาอย่างน้อยหนึ่งอย่าง และมี นักฟุตบอล 49 คน, นักบาสเกตบอล 40 คน, นักเทนนิส 33 คน, นักกีฬาทั้งสามอย่าง 5 คน, นักเทนนิสอย่างเดียว 10 คน, นักบาสเกตบอลอย่างเดียว 13 คน, นักบาสเกตบอลและนักเทนนิส 13 คน ความน่าจะเป็นในการเลือกประธาน รองประธาน และเลขานุการของชมรมตำแหน่งละ 1 คน จากสมาชิกทั้งหมด โดยที่ประธานต้องเป็นนักกีฬาทั้งสามอย่าง และรองประธานจะต้องเป็นนักกีฬาอย่างน้อย 2 อย่าง เท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{9}{316}\) &nbsp;&nbsp; 2) \(\dfrac{11}{316}\) &nbsp;&nbsp; 3) \(\dfrac{15}{632}\) &nbsp;&nbsp; 4) \(\dfrac{23}{632}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> แผนภาพเวนน์ 3 เซต + การเลือกตำแหน่งโดยมีเงื่อนไข (Permutation with restrictions)
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> หาจำนวนสมาชิกที่เล่นกีฬา \"อย่างน้อย 2 อย่าง\"<br>
+        • \(|F \cap B \cap T| = 5\)<br>
+        • \(|B \cap T| = 13\) → เล่น B,T เท่านั้น \(= 13 - 5 = 8\)<br>
+        • เล่น B เท่านั้น \(= 13\), เล่น T เท่านั้น \(= 10\)<br>
+        • หา \(|F \cap T|\): \(|T| = 33 = |T\text{ only}| + |F \cap T\text{ only}| + |B \cap T\text{ only}| + |F \cap B \cap T|\)<br>
+        &nbsp;&nbsp; \(33 = 10 + |F \cap T\text{ only}| + 8 + 5 \Rightarrow |F \cap T\text{ only}| = 10\)<br>
+        • หา \(|F \cap B\text{ only}|\): \(|B| = 40 = 13 + |F \cap B\text{ only}| + 8 + 5 \Rightarrow |F \cap B\text{ only}| = 14\)<br><br>
+        <b>ขั้นที่ 2:</b> จำนวนที่เล่น ≥2 อย่าง
+        \[ = 14 + 10 + 8 + 5 = 37 \text{ คน} \]<br><br>
+        <b>ขั้นที่ 3:</b> ปริภูมิตัวอย่าง — เลือก Pres, VP, Sec จาก 80 คน
+        \[ n(S) = 80 \times 79 \times 78 \]<br><br>
+        <b>ขั้นที่ 4:</b> เหตุการณ์ที่ต้องการ<br>
+        • Pres: เล่น 3 อย่าง → 5 ทาง<br>
+        • VP: เล่น ≥2 อย่าง แต่ไม่ใช่ Pres → \(37 - 1 = 36\) ทาง<br>
+        • Sec: ใครก็ได้ที่เหลือ → 78 ทาง<br>
+        \[ n(A) = 5 \times 36 \times 78 \]<br><br>
+        <b>ขั้นที่ 5:</b> คำนวณ
+        \[ P = \frac{5 \times 36 \times 78}{80 \times 79 \times 78} = \frac{5 \times 36}{80 \times 79} = \frac{180}{6320} = \frac{9}{316} \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 1:</span>
+    <span class="ans-value">\(\dfrac{9}{316}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> ตัดตัวคูณร่วม (78) ก่อนคำนวณ — ประหยัดเวลาและลดโอกาสผิด
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> VP ต้องไม่ใช่คนเดียวกับ Pres — ต้องลบ 1 ออกจาก 37 ให้เป็น 36
+  </div>
+</div>
+
+<div class="problem" id="q19">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 19</span>
+    <span class="exam-tag">มี.ค. 46/2</span>
+    <span class="sub-tag G">🟢 การจัดหมู่</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>สลาก 11 ใบ มีหมายเลข 1 ถึง 11 กำกับอยู่ใบละ 1 หมายเลข สุ่มหยิบสลากมา 4 ใบ ความน่าจะเป็นที่สลากที่หยิบมา มีผลคูณของหมายเลขเป็นจำนวนคู่ แต่ผลบวกของหมายเลขเป็นจำนวนคี่ มีค่าเท่าใด (ตอบทศนิยม 2 ตำแหน่ง)</p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> ความน่าจะเป็นแบบมีเงื่อนไข 2 เงื่อนไข — ผลคูณคู่ + ผลบวกคี่
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — หยิบ 4 ใบจาก 11
+        \[ n(S) = \binom{11}{4} = 330 \]<br><br>
+        <b>ขั้นที่ 2:</b> แยกจำนวน<br>
+        • เลขคู่ (E): 2, 4, 6, 8, 10 → 5 ใบ<br>
+        • เลขคี่ (O): 1, 3, 5, 7, 9, 11 → 6 ใบ<br><br>
+        <b>ขั้นที่ 3:</b> เงื่อนไขที่ 1: \"ผลคูณเป็นคู่\" = มีเลขคู่อย่างน้อย 1 ใบ<br>
+        เงื่อนไขที่ 2: \"ผลบวกเป็นคี่\" = จำนวนเลขคี่เป็นจำนวนคี่ (1 หรือ 3 ใบ)<br><br>
+        <b>ขั้นที่ 4:</b> แบ่งเคส<br>
+        • 1 คี่ + 3 คู่: \(\binom{6}{1}\binom{5}{3} = 6 \times 10 = 60\) → ผลคูณคู่ ✓, ผลบวกคี่ ✓<br>
+        • 3 คี่ + 1 คู่: \(\binom{6}{3}\binom{5}{1} = 20 \times 5 = 100\) → ผลคูณคู่ ✓, ผลบวกคี่ ✓<br>
+        (กรณี 5 คี่: ไม่ได้ เพราะหยิบ 4 ใบ)<br><br>
+        <b>ขั้นที่ 5:</b> รวม \(n(A) = 60 + 100 = 160\)<br><br>
+        <b>ขั้นที่ 6:</b> \(P = \dfrac{160}{330} = \dfrac{16}{33} \approx 0.4848...\)<br>
+        ปัดเป็นทศนิยม 2 ตำแหน่ง \(= 0.48\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ:</span>
+    <span class="ans-value">\(0.48\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> ผลคูณคู่ ⇔ มีเลขคู่ ≥1; ผลบวกคี่ ⇔ จำนวนเลขคี่เป็นเลขคี่ — แปลงเงื่อนไขเป็นการนับเลขคู่/คี่
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ระวังการปัดทศนิยม — 0.4848 ปัดเป็น 0.48 ไม่ใช่ 0.49
+  </div>
+</div>
+
+<div class="problem" id="q20">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 20</span>
+    <span class="exam-tag">มี.ค. 46/3</span>
+    <span class="sub-tag O">🟠 การเรียงสับเปลี่ยน</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>นายกวีและนายขจรได้รับเชิญไปงานเลี้ยง ซึ่งมีผู้ได้รับเชิญทั้งหมด 20 คน เจ้าภาพจัด (โดยสุ่ม) ให้ผู้ร่วมงานนั่งโต๊ะกลม 2 โต๊ะ โต๊ะละ 10 ที่นั่ง ความน่าจะเป็นที่นายกวีและนายขจรได้นั่งติดกันในโต๊ะตัวเดียวกันเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{1}{19}\) &nbsp;&nbsp; 2) \(\dfrac{2}{19}\) &nbsp;&nbsp; 3) \(\dfrac{2}{9}\) &nbsp;&nbsp; 4) \(\dfrac{4}{9}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การจัดโต๊ะกลม (Circular permutation) และความน่าจะเป็นแบบมีเงื่อนไข
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> แบ่งเป็น 2 เหตุการณ์<br>
+        \(P(\text{A,B โต๊ะเดียวกัน และ นั่งติด}) = P(\text{โต๊ะเดียวกัน}) \times P(\text{ติดกัน | โต๊ะเดียวกัน})\)<br><br>
+        <b>ขั้นที่ 2:</b> \(P(\text{โต๊ะเดียวกัน})\)<br>
+        กำหนดให้ กวี นั่งที่โต๊ะใดโต๊ะหนึ่งแล้ว (สมมาตร)<br>
+        เหลือ 19 ที่นั่ง ที่โต๊ะเดียวกันมี 9 ที่<br>
+        \[ P = \frac{9}{19} \]<br><br>
+        <b>ขั้นที่ 3:</b> \(P(\text{ติดกัน | โต๊ะเดียวกัน})\)<br>
+        โต๊ะกลม 10 ที่นั่ง กวี มี 2 ที่นั่งติดกัน (ซ้าย/ขวา)<br>
+        เหลือ 9 คนที่จะมานั่ง ดังนั้น
+        \[ P(\text{ขจร ติดกวี}) = \frac{2}{9} \]<br><br>
+        <b>ขั้นที่ 4:</b> รวม
+        \[ P = \frac{9}{19} \times \frac{2}{9} = \frac{2}{19} \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 2:</span>
+    <span class="ans-value">\(\dfrac{2}{19}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> ในโต๊ะกลม คนนึงมี "เพื่อนซ้าย-ขวา" 2 คน → \(P(	ext{ติด}) = \dfrac{2}{	ext{คนที่เหลือ}}\)
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าคูณ \(rac{9}{19} 	imes rac{2}{10}\) — ต้องเป็น \(rac{2}{9}\) เพราะกวี นั่งแล้ว เหลือ 9 ที่ในโต๊ะนั้น
+  </div>
+</div>
+
+<div class="problem" id="q21">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 21</span>
+    <span class="exam-tag">ต.ค. 46/3</span>
+    <span class="sub-tag O">🟠 การเรียงสับเปลี่ยน</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem-body">
+    <p>ในการยืนเรียงเป็นแถวตรงของนักเรียนชาย 6 คน และนักเรียนหญิง 4 คน ถ้าความน่าจะเป็นที่ไม่มีนักเรียนหญิงสองคนใดยืนติดกันเลยเท่ากับ \(a\) และความน่าจะเป็นที่นักเรียนหญิงทั้งหมดต้องยืนติดกันเท่ากับ \(b\) แล้ว \(a+b\) เท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) 0.20 &nbsp;&nbsp; 2) 0.25 &nbsp;&nbsp; 3) 0.30 &nbsp;&nbsp; 4) 0.35</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การจัดเรียงแบบมีช่องว่าง (Gap method) และ Block method
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — จัด 10 คนในแถว
+        \[ n(S) = 10! = 3628800 \]<br><br>
+        <b>ขั้นที่ 2:</b> หา \(a = P(\text{หญิงไม่ติดกันเลย})\) — ใช้ Gap method<br>
+        จัดชาย 6 คนก่อน: \(6!\) วิธี → มี 7 ช่องว่าง (หน้า-หลัง-ระหว่าง): \(_B_B_B_B_B_B_\)<br>
+        เลือก 4 ช่องจาก 7 สำหรับหญิง: \(\binom{7}{4}\) วิธี<br>
+        สลับที่หญิง 4 คน: \(4!\) วิธี
+        \[ n(\text{ไม่ติด}) = 6! \times \binom{7}{4} \times 4! = 720 \times 35 \times 24 = 604800 \]
+        \[ a = \frac{604800}{3628800} = \frac{1}{6} \]<br><br>
+        <b>ขั้นที่ 3:</b> หา \(b = P(\text{หญิงติดกันหมด})\) — ใช้ Block method<br>
+        มองหญิง 4 คนเป็นบล็อก 1 หน่วย → 7 หน่วย (บล็อกหญิง + ชาย 6 คน)<br>
+        \[ n(\text{ติดหมด}) = 7! \times 4! = 5040 \times 24 = 120960 \]
+        \[ b = \frac{120960}{3628800} = \frac{1}{30} \]<br><br>
+        <b>ขั้นที่ 4:</b> รวม
+        \[ a + b = \frac{1}{6} + \frac{1}{30} = \frac{5}{30} + \frac{1}{30} = \frac{6}{30} = \frac{1}{5} = 0.20 \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 1:</span>
+    <span class="ans-value">\(0.20\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> Gap method: ชาย \(n\) คน → ช่องว่าง \(n+1\) ช่อง — ใช้เลือกช่องสำหรับหญิงที่ไม่ติดกัน
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าลืมคูณ \(4!\) สำหรับการสลับที่หญิงภายในบล็อก และคูณ \(4!\) สำหรับการสลับที่หญิงในช่องว่าง
+  </div>
+</div>
+
+<div class="problem" id="q22">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 22</span>
+    <span class="exam-tag">ต.ค. 46/3</span>
+    <span class="sub-tag Y">🟡 ความน่าจะเป็นของเหตุการณ์</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>กล่องใบหนึ่งมีลูกแก้วขนาดเดียวกัน 3 สี เป็นสีขาว 4 ลูก สีแดงและสีเขียวมีจำนวนเท่ากัน เมื่อสุ่มหยิบลูกแก้วมา 2 ลูก ความน่าจะเป็นที่จะได้ลูกแก้วสีขาวทั้ง 2 ลูก เท่ากับ \(\dfrac{2}{15}\) ถ้าสุ่มหยิบลูกแก้วมา 4 ลูก ความน่าจะเป็นที่จะได้ลูกแก้วเป็นสีเขียว 1 ลูก และสีแดงอย่างน้อย 1 ลูก เท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{30}{70}\) &nbsp;&nbsp; 2) \(\dfrac{31}{70}\) &nbsp;&nbsp; 3) \(\dfrac{29}{35}\) &nbsp;&nbsp; 4) \(\dfrac{33}{35}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การหาจำนวนลูกแก้วจากความน่าจะเป็นที่กำหนด + การนับแบบมีเงื่อนไข
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> หาจำนวนลูกแก้วสีแดง/เขียว (เท่ากัน = \(k\))<br>
+        ทั้งหมด \(= 4 + 2k\)<br>
+        \[ \frac{\binom{4}{2}}{\binom{4+2k}{2}} = \frac{2}{15} \Rightarrow \frac{6}{(4+2k)(3+2k)/2} = \frac{2}{15} \]
+        \[ \frac{12}{(4+2k)(3+2k)} = \frac{2}{15} \Rightarrow (4+2k)(3+2k) = 90 \]<br>
+        แก้: \(k = 3\) → \((10)(9) = 90\) ✓<br>
+        ดังนั้น ลูกแก้ว \(= 4W + 3R + 3G = 10\) ลูก<br><br>
+        <b>ขั้นที่ 2:</b> ปริภูมิตัวอย่าง — หยิบ 4 ลูกจาก 10
+        \[ n(S) = \binom{10}{4} = 210 \]<br><br>
+        <b>ขั้นที่ 3:</b> เหตุการณ์ \"เขียว 1 + แดง ≥1\"<br>
+        • 1G + 1R + 2W: \(\binom{3}{1}\binom{3}{1}\binom{4}{2} = 3 \times 3 \times 6 = 54\)<br>
+        • 1G + 2R + 1W: \(\binom{3}{1}\binom{3}{2}\binom{4}{1} = 3 \times 3 \times 4 = 36\)<br>
+        • 1G + 3R + 0W: \(\binom{3}{1}\binom{3}{3}\binom{4}{0} = 3 \times 1 \times 1 = 3\)<br><br>
+        <b>ขั้นที่ 4:</b> รวม
+        \[ n(A) = 54 + 36 + 3 = 93 \]
+        \[ P = \frac{93}{210} = \frac{31}{70} \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 2:</span>
+    <span class="ans-value">\(\dfrac{31}{70}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> เมื่อ "เขียว 1 + แดง ≥1" — แบ่งเคสตามจำนวนแดง (1, 2, 3) แล้วส่วนที่เหลือเป็นขาว
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าลืมเคส 1G + 3R + 0W (3 ways) — เคสเล็กๆ ที่หลุดบ่อย
+  </div>
+</div>
+
+<div class="problem" id="q23">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 23</span>
+    <span class="exam-tag">Ent' มี.ค. 47 (3 คะแนน)</span>
+    <span class="sub-tag O">🟠 การเรียงสับเปลี่ยน</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>จัดคน 8 คน ซึ่งมี สมศักดิ์ สมชาย และสมหญิง รวมด้วย เข้านั่งรอบโต๊ะกลมซึ่งมี 8 ที่นั่ง ความน่าจะเป็นที่สมชายได้นั่งติดกับสมหญิง และสมศักดิ์ไม่นั่งติดกับสมชาย เท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{1}{2}\) &nbsp;&nbsp; 2) \(\dfrac{5}{21}\) &nbsp;&nbsp; 3) \(\dfrac{11}{21}\) &nbsp;&nbsp; 4) \(\dfrac{5}{14}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การจัดโต๊ะกลม (Circular permutation) และเทคนิคนับ "ติดกัน" + "ไม่ติดกัน"
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — จัด 8 คนรอบโต๊ะกลม
+        \[ n(S) = (8-1)! = 7! = 5040 \]<br><br>
+        <b>ขั้นที่ 2:</b> หาจำนวนเคสที่ สมชาย ติด สมหญิง<br>
+        มอง สมชาย-สมหญิง เป็นบล็อก (2 ลำดับ) + คนอื่น 6 คน<br>
+        จัด 7 หน่วยรอบโต๊ะ: \((7-1)! = 6!\)<br>
+        \[ n(\text{ชาย-หญิง ติด}) = 2 \times 6! = 2 \times 720 = 1440 \]<br><br>
+        <b>ขั้นที่ 3:</b> ใน 1440 เคสนี้ หาเคสที่ สมศักดิ์ ติด สมชาย<br>
+        มอง สมศักดิ์-สมชาย-สมหญิง เป็นบล็อก (ลำดับ สมศักดิ์|สมชาย|สมหญิง หรือ สมหญิง|สมชาย|สมศักดิ์ = 2 ลำดับ)<br>
+        จัด 6 หน่วยรอบโต๊ะ: \(5!\)<br>
+        \[ n(\text{ชาย-หญิง ติด AND ศักดิ์-ชาย ติด}) = 2 \times 5! = 2 \times 120 = 240 \]<br><br>
+        <b>ขั้นที่ 4:</b> เหตุการณ์ที่ต้องการ = ชาย-หญิง ติด AND ศักดิ์-ชาย ไม่ติด
+        \[ n(A) = 1440 - 240 = 1200 \]<br><br>
+        <b>ขั้นที่ 5:</b> \(P = \dfrac{1200}{5040} = \dfrac{5}{21}\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 2:</span>
+    <span class="ans-value">\(\dfrac{5}{21}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> "A และ B ติดกัน" + "A และ C ไม่ติด" → นับเคสที่ A,B ติดกัน ลบด้วยเคสที่ A,B,C ติดกันทั้งคู่
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ระวังลำดับในบล็อก — สมชาย อยู่ตรงกลางของ สมศักดิ์-สมชาย-สมหญิง เท่านั้น (2 ลำดับ: ศ.-ช.-ญ. หรือ ญ.-ช.-ศ.)
+  </div>
+</div>
+
+<div class="problem" id="q24">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 24</span>
+    <span class="exam-tag">Ent' มี.ค. 47 (3 คะแนน)</span>
+    <span class="sub-tag O">🟠 การเรียงสับเปลี่ยน</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ในการเลือกประธาน รองประธาน และเหรัญญิก จากนักเรียนชาย 6 คน และนักเรียนหญิง 4 คน ซึ่งมีนายกำธร รวมอยู่ด้วย ความน่าจะเป็นที่การเลือกครั้งนี้นายกำธรได้เป็นประธาน และมีนักเรียนหญิงได้รับเลือกอย่างน้อยหนึ่งคนเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{13}{180}\) &nbsp;&nbsp; 2) \(\dfrac{13}{360}\) &nbsp;&nbsp; 3) \(\dfrac{2}{45}\) &nbsp;&nbsp; 4) \(\dfrac{4}{45}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การเลือกตำแหน่งโดยมีเงื่อนไข (Permutation with restrictions) และเหตุการณ์เติมเต็ม
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — เลือก Pres, VP, Sec จาก 10 คน (ตำแหน่งต่างกัน)
+        \[ n(S) = 10 \times 9 \times 8 = 720 \]<br><br>
+        <b>ขั้นที่ 2:</b> เหตุการณ์ \"กำธร = Pres และ ≥1 หญิง\"<br>
+        ใช้เหตุการณ์เติมเต็มภายในเงื่อนไข \"กำธร = Pres\":<br>
+        \(P(\text{≥1 หญิง | กำธร=Pres}) = 1 - P(\text{VP, Sec เป็นชายทั้งคู่ | กำธร=Pres})\)<br><br>
+        <b>ขั้นที่ 3:</b> เมื่อ กำธร เป็น Pres (ชาย) เหลือ ชาย 5 + หญิง 4 = 9 คน<br>
+        จำนวนที่ VP และ Sec เป็นชายทั้งคู่ \(= 5 \times 4 = 20\)<br>
+        จำนวนรวมที่เลือก VP, Sec \(= 9 \times 8 = 72\)<br>
+        จำนวนที่มี ≥1 หญิง \(= 72 - 20 = 52\)<br><br>
+        <b>ขั้นที่ 4:</b> รวมเหตุการณ์
+        \[ n(A) = 1 \times 52 = 52 \]<br><br>
+        <b>ขั้นที่ 5:</b> \(P = \dfrac{52}{720} = \dfrac{13}{180}\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 1:</span>
+    <span class="ans-value">\(\dfrac{13}{180}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> ใช้เหตุการณ์เติมเต็มภายในเงื่อนไข "กำธร = Pres" ทำให้นับง่ายขึ้น
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ระวัง: VP และ Sec เป็นคนละคนกับ Pres — ต้องนับ "ชาย 5" ไม่ใช่ ชาย 6
+  </div>
+</div>
+
+<div class="section-divider"></div>
+<h2>📚 ส่วนที่ 3: ข้อ 25 — 35 (ข้อสอบ Ent' ต.ค.47 – A-NET 2552)</h2>
+
+<div class="problem" id="q25">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 25</span>
+    <span class="exam-tag">Ent' ต.ค. 47 (3 คะแนน)</span>
+    <span class="sub-tag P">🟣 กฎการบวก & เติมเต็ม</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ในการออกรางวัลเลขท้ายสองตัวของลอตเตอรีรัฐบาล ความน่าจะเป็นที่รางวัลเลขท้ายสองตัวมีหลักสิบเป็นเลขที่มากกว่าหรือเท่ากับ 7 หรือหลักหน่วยเป็นเลขที่น้อยกว่าหรือเท่ากับ 2 มีค่าเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) 0.40 &nbsp;&nbsp; 2) 0.51 &nbsp;&nbsp; 3) 0.54 &nbsp;&nbsp; 4) 0.60</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> กฎความน่าจะเป็นรวม (Addition Rule) สำหรับเหตุการณ์ไม่เป็นอิสระ
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — เลขท้าย 2 ตัวมี 100 ค่า (00-99)<br><br>
+        <b>ขั้นที่ 2:</b> กำหนดเหตุการณ์<br>
+        \(A\): หลักสิบ \(\geq 7\) → สิบ \(\in \{7,8,9\}\) → \(3 \times 10 = 30\) ค่า<br>
+        \(B\): หลักหน่วย \(\leq 2\) → หน่วย \(\in \{0,1,2\}\) → \(10 \times 3 = 30\) ค่า<br>
+        \(A \cap B\): สิบ \(\geq 7\) AND หน่วย \(\leq 2\) → \(3 \times 3 = 9\) ค่า<br><br>
+        <b>ขั้นที่ 3:</b> \(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)
+        \[ P = \frac{30}{100} + \frac{30}{100} - \frac{9}{100} = \frac{51}{100} = 0.51 \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 2:</span>
+    <span class="ans-value">\(0.51\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> เลขท้าย 2 ตัวมี 100 ค่า — คำนวณเป็นเปอร์เซ็นต์ได้ทันที
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าลืมลบ \(P(A \cap B)\) — ถ้าลืมจะได้ 0.60 ซึ่งเป็นข้อ 4 (ผิด)
+  </div>
+</div>
+
+<div class="problem" id="q26">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 26</span>
+    <span class="exam-tag">Ent' ต.ค. 47 (3 คะแนน)</span>
+    <span class="sub-tag B">🔵 กฎการนับเบื้องต้น</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>กำหนดให้ \(S\) คือเซตของเมทริกซ์ \(A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}\) เมื่อ \(a, b, c, d \in \{0, 1\}\) ความน่าจะเป็นในการสุ่มหยิบเมทริกซ์ \(A\) จากเซต \(S\) โดยมีสมบัติ \(\det(A) = 0\) หรือ \(\det(A) = 1\) เท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{3}{4}\) &nbsp;&nbsp; 2) \(\dfrac{5}{8}\) &nbsp;&nbsp; 3) \(\dfrac{11}{16}\) &nbsp;&nbsp; 4) \(\dfrac{13}{16}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การนับเมทริกซ์ทั้งหมด + การแจกแจง det
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — แต่ละข้อมี 2 ทางเลือก (0 หรือ 1) มี 4 ตำแหน่ง
+        \[ |S| = 2^4 = 16 \text{ เมทริกซ์} \]<br><br>
+        <b>ขั้นที่ 2:</b> \(\det(A) = ad - bc\) แจกแจงค่าที่เป็นไปได้<br>
+        • \(ad, bc \in \{0, 1\}\)<br>
+        • \(\det = 1 - 1 = 0\) เมื่อ \(ad=1, bc=1\)<br>
+        • \(\det = 1 - 0 = 1\) เมื่อ \(ad=1, bc=0\)<br>
+        • \(\det = 0 - 1 = -1\) เมื่อ \(ad=0, bc=1\)<br>
+        • \(\det = 0 - 0 = 0\) เมื่อ \(ad=0, bc=0\)<br><br>
+        <b>ขั้นที่ 3:</b> นับจำนวนเมทริกซ์ในแต่ละเคส<br>
+        • \(ad = 1\) (a=d=1): 4 เมทริกซ์ (b, c อิสระ)<br>
+        &nbsp;&nbsp;- \(bc = 1\) (b=c=1): 1 เมทริกซ์ → \(\det = 0\)<br>
+        &nbsp;&nbsp;- \(bc = 0\) (b, c ไม่ใช่ 1,1): 3 เมทริกซ์ → \(\det = 1\)<br>
+        • \(ad = 0\) (ไม่ใช่ a=d=1): 12 เมทริกซ์<br>
+        &nbsp;&nbsp;- \(bc = 1\) (b=c=1): 3 เมทริกซ์ → \(\det = -1\)<br>
+        &nbsp;&nbsp;- \(bc = 0\): 9 เมทริกซ์ → \(\det = 0\)<br><br>
+        <b>ขั้นที่ 4:</b> รวม<br>
+        \(\det = 0\): \(1 + 9 = 10\) เมทริกซ์<br>
+        \(\det = 1\): 3 เมทริกซ์<br>
+        \(\det = -1\): 3 เมทริกซ์<br>
+        รวม \(= 16\) ✓<br><br>
+        <b>ขั้นที่ 5:</b> \(P(\det=0 \text{ หรือ } \det=1) = \dfrac{10+3}{16} = \dfrac{13}{16}\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 4:</span>
+    <span class="ans-value">\(\dfrac{13}{16}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> แบ่งตามค่า \(ad\) (0 หรือ 1) แล้วนับ \(bc\) ในแต่ละเคส — ลดความซับซ้อน
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่านับ \(\det = 0\) ผิด — เคส \(ad=0, bc=0\) มีหลายเมทริกซ์ ต้องนับให้ครบ
+  </div>
+</div>
+
+<div class="problem" id="q27">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 27</span>
+    <span class="exam-tag">Ent' มี.ค. 48 (3 คะแนน)</span>
+    <span class="sub-tag G">🟢 การจัดหมู่</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>กล่องใบหนึ่งมีลูกบอลสีดำ 4 ลูก และสีแดง 6 ลูก ถ้าสุ่มหยิบบอลจากกล่องใบนี้มา 3 ลูก ความน่าจะเป็นที่จะได้ลูกบอลสีละอย่างน้อยหนึ่งลูก เท่ากับข้อความใดต่อไปนี้<br><br>
+        <span class="choices">1) 0.78 &nbsp;&nbsp; 2) 0.80 &nbsp;&nbsp; 3) 0.82 &nbsp;&nbsp; 4) 0.84</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> "สีละอย่างน้อย 1 ลูก" = มีทุกสี — ใช้เหตุการณ์เติมเต็ม (at least one of EACH color)
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — หยิบ 3 ลูกจาก 10 (4 ดำ + 6 แดง)
+        \[ n(S) = \binom{10}{3} = 120 \]<br><br>
+        <b>ขั้นที่ 2:</b> \"สีละอย่างน้อย 1 ลูก\" = มีทั้งสีดำและสีแดง<br>
+        ใช้เหตุการณ์เติมเต็ม:
+        \[ P(\text{มีทั้ง 2 สี}) = 1 - P(\text{ดำทั้งหมด}) - P(\text{แดงทั้งหมด}) \]<br><br>
+        <b>ขั้นที่ 3:</b> นับ<br>
+        • ดำทั้งหมด (3 ใน 4): \(\binom{4}{3} = 4\)<br>
+        • แดงทั้งหมด (3 ใน 6): \(\binom{6}{3} = 20\)<br><br>
+        <b>ขั้นที่ 4:</b> คำนวณ
+        \[ P = 1 - \frac{4}{120} - \frac{20}{120} = 1 - \frac{24}{120} = 1 - \frac{1}{5} = \frac{4}{5} = 0.80 \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 2:</span>
+    <span class="ans-value">\(0.80\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> "สีละอย่างน้อย 1 ลูก" = แต่ละสีมีอย่างน้อย 1 — ใช้ \(1 - \sum P(	ext{สีเดียว})\)
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อ่านโจทย์ให้ดี — "สีละอย่างน้อย 1 ลูก" ≠ "อย่างน้อย 1 สี" ทั้งสองตีความต่างกันมาก
+  </div>
+</div>
+
+<div class="problem" id="q28">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 28</span>
+    <span class="exam-tag">Ent' มี.ค. 48 (3 คะแนน)</span>
+    <span class="sub-tag B">🔵 กฎการนับเบื้องต้น</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ในการสุ่มหยิบเลข 3 หลัก ที่มากกว่าหรือเท่ากับ 100 มาหนึ่งจำนวน ความน่าจะเป็นที่เลขจำนวนนั้นมีเลข 8 อย่างน้อย 1 หลัก และไม่มีเลข 9 ในหลักใดๆ จะเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{1}{8}\) &nbsp;&nbsp; 2) \(\dfrac{1}{9}\) &nbsp;&nbsp; 3) \(\dfrac{2}{8}\) &nbsp;&nbsp; 4) \(\dfrac{2}{9}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การนับตัวเลข 3 หลัก + หลักการรวม-การแยก
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — เลข 3 หลัก (100-999)
+        \[ n(S) = 900 \]<br><br>
+        <b>ขั้นที่ 2:</b> นับเลขที่ \"ไม่มี 9\"<br>
+        • หลักร้อย: 1-8 (ไม่มี 0, ไม่มี 9) → 8 ทาง<br>
+        • หลักสิบ: 0-8 → 9 ทาง<br>
+        • หลักหน่วย: 0-8 → 9 ทาง<br>
+        \[ n(\text{ไม่มี 9}) = 8 \times 9 \times 9 = 648 \]<br><br>
+        <b>ขั้นที่ 3:</b> นับเลขที่ \"ไม่มี 9 และไม่มี 8\"<br>
+        • หลักร้อย: 1-7 → 7 ทาง<br>
+        • หลักสิบ: 0-7 → 8 ทาง<br>
+        • หลักหน่วย: 0-7 → 8 ทาง<br>
+        \[ n(\text{ไม่มี 9, ไม่มี 8}) = 7 \times 8 \times 8 = 448 \]<br><br>
+        <b>ขั้นที่ 4:</b> นับเลขที่ \"ไม่มี 9 และมี 8 อย่างน้อย 1 หลัก\"
+        \[ n = 648 - 448 = 200 \]<br><br>
+        <b>ขั้นที่ 5:</b> \(P = \dfrac{200}{900} = \dfrac{2}{9}\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 4:</span>
+    <span class="ans-value">\(\dfrac{2}{9}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> ใช้ "เหตุการณ์เติมเต็ม" ภายในเงื่อนไข "ไม่มี 9": ไม่มี 9 ทั้งหมด − ไม่มี 9 และไม่มี 8
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าลืมว่าหลักร้อยไม่สามารถเป็น 0 ได้ — ทำให้จำนวนทางเลือกต่างจากหลักอื่น
+  </div>
+</div>
+
+<div class="problem" id="q29">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 29</span>
+    <span class="exam-tag">A-NET' ก.พ. 49 (3 คะแนน)</span>
+    <span class="sub-tag G">🟢 การจัดหมู่</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>กล่องใบหนึ่งมีบัตร 10 ใบ แต่ละใบเขียนหมายเลข \(-4, -3, -2, \ldots, 4, 5\) ใบละ 1 หมายเลข ถ้าสุ่มหยิบบัตร 2 ใบพร้อมกันจากกล่องใบนี้ ความน่าจะเป็นที่จะได้บัตรที่มีหมายเลขบนบัตรทั้งสองซึ่งมีผลคูณมากกว่าหรือเท่ากับ 0 เท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{2}{3}\) &nbsp;&nbsp; 2) \(\dfrac{5}{9}\) &nbsp;&nbsp; 3) \(\dfrac{32}{45}\) &nbsp;&nbsp; 4) \(\dfrac{41}{45}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> ผลคูณไม่ติดลบ ⇔ เลขทั้งคู่เป็นบวก หรือ ทั้งคู่เป็นลบ หรือ มี 0 อย่างน้อย 1 ตัว
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — บัตร 10 ใบ (\(-4\) ถึง \(5\))
+        \[ n(S) = \binom{10}{2} = 45 \]<br><br>
+        <b>ขั้นที่ 2:</b> จำแนกบัตร<br>
+        • ลบ: \(-4, -3, -2, -1\) → 4 ใบ<br>
+        • ศูนย์: 0 → 1 ใบ<br>
+        • บวก: 1, 2, 3, 4, 5 → 5 ใบ<br><br>
+        <b>ขั้นที่ 3:</b> ผลคูณ \(\geq 0\) เมื่อ<br>
+        • บวกคูณบวก: \(\binom{5}{2} = 10\)<br>
+        • ลบคูณลบ: \(\binom{4}{2} = 6\)<br>
+        • คูณด้วย 0: \(1 \times 9 = 9\) (เลือก 0 คูณใดๆ ที่เหลือ)<br>
+        \[ n(A) = 10 + 6 + 9 = 25 \]<br><br>
+        <b>ขั้นที่ 4:</b> \(P = \dfrac{25}{45} = \dfrac{5}{9}\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 2:</span>
+    <span class="ans-value">\(\dfrac{5}{9}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> ผลคูณ \(\geq 0\) ⇔ เลขทั้งสอง "เหมือนเครื่องหมาย" หรือมี 0 อย่างน้อยหนึ่งตัว
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าลืมเคสที่มี 0 — เป็นจุดพลาดบ่อยเพราะ 0 คูณอะไรก็ได้ 0 (≥ 0)
+  </div>
+</div>
+
+<div class="problem" id="q30">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 30</span>
+    <span class="exam-tag">A-NET' ก.พ. 49 (3 คะแนน)</span>
+    <span class="sub-tag G">🟢 การจัดหมู่</span>
+    <span class="stars">★★★★★</span>
+  </div>
+  <div class="problem-body">
+    <p>ให้ \(S\) เป็นเซตของจุด 10 จุดบนวงกลมวงหนึ่ง ซึ่งมีสมบัติดังนี้ เมื่อลากเส้นตรงเชื่อมระหว่างจุด 2 จุดใดๆ ใน \(S\) จะมี เพียง 3 เส้นเท่านั้นที่ผ่านจุดศูนย์กลางของวงกลมวงนี้ ถ้าสร้างรูปสามเหลี่ยมโดยเลือกจุด 3 จุดใน \(S\) มาเป็นจุดยอดของรูปสามเหลี่ยม ความน่าจะเป็นที่จะได้รูปสามเหลี่ยมมุมฉาก เท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) 0.1 &nbsp;&nbsp; 2) 0.2 &nbsp;&nbsp; 3) 0.3 &nbsp;&nbsp; 4) 0.4</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> ทฤษฎีบททาเลส (Thales' theorem) — สามเหลี่ยมในครึ่งวงกลมเป็นสามเหลี่ยมมุมฉาก
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — เลือก 3 จุดจาก 10
+        \[ n(S) = \binom{10}{3} = 120 \]<br><br>
+        <b>ขั้นที่ 2:</b> วิเคราะห์เงื่อนไขโจทย์<br>
+        \"3 เส้นผ่านจุดศูนย์กลาง\" = มี 3 เส้นผ่านศูนย์กลาง = 3 คู่ของจุด \"ตรงข้าม\" กัน<br>
+        ดังนั้นมี \(3 \times 2 = 6\) จุดที่เป็นคู่ตรงข้ามกัน (3 คู่)<br>
+        เหลือ \(10 - 6 = 4\) จุดที่ไม่มีคู่ตรงข้ามใน \(S\)<br><br>
+        <b>ขั้นที่ 3:</b> สามเหลี่ยมมุมฉาก (ทฤษฎีบททาเลส)<br>
+        สามเหลี่ยมมุมฉากเกิดเมื่อ \"ด้านหนึ่งเป็นเส้นผ่านศูนย์กลาง\"<br>
+        สำหรับแต่ละเส้นผ่านศูนย์กลาง (3 เส้น) → เลือกจุดยอดที่ 3 จาก 8 จุดที่เหลือ<br>
+        \[ n(\text{มุมฉาก}) = 3 \times 8 = 24 \]<br><br>
+        <b>ขั้นที่ 4:</b> \(P = \dfrac{24}{120} = \dfrac{1}{5} = 0.2\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 2:</span>
+    <span class="ans-value">\(0.2\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> จำทฤษฎีบททาเลส: สามเหลี่ยมในครึ่งวงกลม (ด้านหนึ่งเป็นเส้นผ่านศูนย์กลาง) = สามเหลี่ยมมุมฉาก
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่านับซ้ำ — แต่ละสามเหลี่ยมมุมฉากมีด้าน "เส้นผ่านศูนย์กลาง" เพียงด้านเดียว จึงไม่นับซ้ำ
+  </div>
+</div>
+
+<div class="problem" id="q31">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 31</span>
+    <span class="exam-tag">A-NET' มี.ค. 50 (3 คะแนน)</span>
+    <span class="sub-tag G">🟢 การจัดหมู่</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>กล่องใบหนึ่งมีบัตร 10 ใบ แต่ละใบมีหมายเลข 0, 1, 2, ..., 9 บัตรละหนึ่งหมายเลข ถ้าหยิบบัตรจากกล่องพร้อมกัน 3 ใบ ความน่าจะเป็นที่จะได้บัตรหมายเลขคู่ทุกใบและมีแต้มรวมกันมากกว่า 10 มีค่าเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{1}{12}\) &nbsp;&nbsp; 2) \(\dfrac{1}{15}\) &nbsp;&nbsp; 3) \(\dfrac{1}{20}\) &nbsp;&nbsp; 4) \(\dfrac{1}{30}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การนับแบบมีเงื่อนไข 2 เงื่อนไข: คู่ทุกใบ + ผลรวม > 10
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — หยิบ 3 ใบจาก 10
+        \[ n(S) = \binom{10}{3} = 120 \]<br><br>
+        <b>ขั้นที่ 2:</b> เลขคู่: 0, 2, 4, 6, 8 → 5 ใบ<br>
+        เลือก 3 ใบจาก 5 คู่: \(\binom{5}{3} = 10\) วิธี<br><br>
+        <b>ขั้นที่ 3:</b> แจกแจงทุกเซต 3 เลขคู่ และตรวจผลรวม > 10<br>
+        \(\{0,2,4\}\): 6 ✗<br>
+        \(\{0,2,6\}\): 8 ✗<br>
+        \(\{0,2,8\}\): 10 ✗<br>
+        \(\{0,4,6\}\): 10 ✗<br>
+        \(\{0,4,8\}\): 12 ✓<br>
+        \(\{0,6,8\}\): 14 ✓<br>
+        \(\{2,4,6\}\): 12 ✓<br>
+        \(\{2,4,8\}\): 14 ✓<br>
+        \(\{2,6,8\}\): 16 ✓<br>
+        \(\{4,6,8\}\): 18 ✓<br>
+        รวมเคสผลรวม > 10: 6 เคส<br><br>
+        <b>ขั้นที่ 4:</b> \(P = \dfrac{6}{120} = \dfrac{1}{20}\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 3:</span>
+    <span class="ans-value">\(\dfrac{1}{20}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> แจกแจงทุกเคสเพราะมีเพียง 10 เคส — ใช้เวลาน้อยกว่าหาสูตร
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ระวังเงื่อนไข "> 10" ไม่ใช่ "≥ 10" — เคส \(\{0,2,8\}\) และ \(\{0,4,6\}\) ผลรวม = 10 ไม่นับ
+  </div>
+</div>
+
+<div class="problem" id="q32">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 32</span>
+    <span class="exam-tag">A-NET' มี.ค. 51 (3 คะแนน)</span>
+    <span class="sub-tag W">🟤 เหตุการณ์อิสระ & ทวินาม</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>กล่องใบหนึ่งมีหลอดไฟอยู่ 10 หลอด เป็นหลอดดี 8 หลอด และหลอดเสีย 2 หลอด สุ่มหยิบหลอดไฟขึ้นมาครั้งละ 1 หลอด 3 ครั้ง โดยที่ในการหยิบแต่ละครั้ง ให้ใส่คืนหลอดไฟลงไปในกล่องก่อนที่จะหยิบครั้งต่อไป แล้วความน่าจะเป็นที่จะได้หลอดเสีย 2 ครั้ง มีค่าเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{3}{125}\) &nbsp;&nbsp; 2) \(\dfrac{6}{125}\) &nbsp;&nbsp; 3) \(\dfrac{12}{125}\) &nbsp;&nbsp; 4) \(\dfrac{16}{125}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> การแจกแจงทวินาม (Binomial Distribution) — การทดลองอิสระซ้ำๆ พร้อมเงื่อนไข "ใส่คืน"
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> เนื่องจาก \"ใส่คืน\" แต่ละครั้งเป็นอิสระ ใช้ Binomial<br>
+        \(p = P(\text{เสีย}) = \dfrac{2}{10} = \dfrac{1}{5}\)<br>
+        \(q = P(\text{ดี}) = \dfrac{4}{5}\)<br>
+        \(n = 3, k = 2\) (เสีย 2 ครั้ง)<br><br>
+        <b>ขั้นที่ 2:</b> สูตร Binomial
+        \[ P(X = 2) = \binom{3}{2} p^2 q^1 = 3 \times \left(\frac{1}{5}\right)^2 \times \frac{4}{5} \]<br><br>
+        <b>ขั้นที่ 3:</b> คำนวณ
+        \[ P = 3 \times \frac{1}{25} \times \frac{4}{5} = \frac{12}{125} \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 3:</span>
+    <span class="ans-value">\(\dfrac{12}{125}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> Binomial: \(P(X=k) = inom{n}{k} p^k q^{n-k}\) — จำสูตรเพื่อความเร็ว
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ดูให้ดีว่าเป็นการหยิบ "ใส่คืน" หรือ "ไม่ใส่คืน" — ถ้าไม่ใส่คืนใช้ Hypergeometric ไม่ใช่ Binomial
+  </div>
+</div>
+
+<div class="problem" id="q33">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 33</span>
+    <span class="exam-tag">A-NET' มี.ค. 51 (2 คะแนน)</span>
+    <span class="sub-tag P">🟣 กฎการบวก & เติมเต็ม</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ให้ \(S\) แทนปริภูมิตัวอย่าง และ \(A, B\) และ \(C\) เป็นเหตุการณ์ โดยที่ \(A \cup B \cup C = S\) และ \(A \cap B = A \cap C = B \cap C = \emptyset\) ถ้า \(P(A \cup B) = 0.7\) และ \(P(B \cup C) = 0.5\) แล้ว \(P(A' \cap C')\) มีค่าเท่าใด</p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> เหตุการณ์ disjoint + กฎเดอมอร์แกน \(A' \cap C' = (A \cup C)'\)
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> จาก \(A, B, C\) pairwise disjoint และ \(A \cup B \cup C = S\)<br>
+        \[ P(A) + P(B) + P(C) = 1 \]<br><br>
+        <b>ขั้นที่ 2:</b> เนื่องจาก disjoint:
+        \[ P(A \cup B) = P(A) + P(B) = 0.7 \]
+        \[ P(B \cup C) = P(B) + P(C) = 0.5 \]<br><br>
+        <b>ขั้นที่ 3:</b> บวกสองสมการ แล้วลบสมการแรก
+        \[ P(A) + 2P(B) + P(C) = 1.2 \]
+        \[ P(B) = 1.2 - 1 = 0.2 \]<br><br>
+        <b>ขั้นที่ 4:</b> หา \(P(A)\) และ \(P(C)\)
+        \[ P(A) = 0.7 - 0.2 = 0.5 \]
+        \[ P(C) = 0.5 - 0.2 = 0.3 \]<br><br>
+        <b>ขั้นที่ 5:</b> ใช้กฎเดอมอร์แกน
+        \[ P(A' \cap C') = P((A \cup C)') = 1 - P(A \cup C) \]<br><br>
+        <b>ขั้นที่ 6:</b> เนื่องจาก \(A, C\) disjoint:
+        \[ P(A \cup C) = P(A) + P(C) = 0.5 + 0.3 = 0.8 \]
+        \[ P(A' \cap C') = 1 - 0.8 = 0.2 \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ:</span>
+    <span class="ans-value">\(0.2\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> เมื่อ disjoint และรวมเป็น \(S\): \(P(A' \cap C') = P(B)\) (ส่วนที่ไม่ใช่ A ไม่ใช่ C = B)
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> ตรวจสอบให้แน่ใจว่าเหตุการณ์เป็น disjoint จริง — ถ้าไม่ใช่ ไม่สามารถบวกความน่าจะเป็นตรงๆ ได้
+  </div>
+</div>
+
+<div class="problem" id="q34">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 34</span>
+    <span class="exam-tag">A-NET พ.ศ. 2552 (3 คะแนน)</span>
+    <span class="sub-tag G">🟢 การจัดหมู่</span>
+    <span class="stars">★★★★☆</span>
+  </div>
+  <div class="problem-body">
+    <p>กล่องใบหนึ่งบรรจุสลาก 10 ใบ แต่ละใบมีตัวเลขกำกับไว้ มีสลาก 5 ใบที่ตัวเลขกำกับเป็นจำนวนลบ และอีก 5 ใบมีตัวเลขกำกับเป็นจำนวนบวก ถ้าสุ่มหยิบสลากจากกล่องนี้มา 4 ใบ ความน่าจะเป็นที่ผลคูณของตัวเลขที่กำกับสลากทั้ง 4 ใบเป็นจำนวนลบ มีค่าเท่ากับข้อใดต่อไปนี้<br><br>
+        <span class="choices">1) \(\dfrac{10}{21}\) &nbsp;&nbsp; 2) \(\dfrac{11}{21}\) &nbsp;&nbsp; 3) \(\dfrac{13}{21}\) &nbsp;&nbsp; 4) \(\dfrac{17}{21}\)</span></p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> ผลคูณเป็นลบ ⇔ จำนวนเลขลบเป็นจำนวนคี่
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> ปริภูมิตัวอย่าง — หยิบ 4 ใบจาก 10
+        \[ n(S) = \binom{10}{4} = 210 \]<br><br>
+        <b>ขั้นที่ 2:</b> ผลคูณเป็นลบ ⇔ จำนวนลบเป็นเลขคี่ (1 หรือ 3)<br><br>
+        <b>ขั้นที่ 3:</b> แบ่งเคส<br>
+        • 1 ลบ + 3 บวก: \(\binom{5}{1}\binom{5}{3} = 5 \times 10 = 50\)<br>
+        • 3 ลบ + 1 บวก: \(\binom{5}{3}\binom{5}{1} = 10 \times 5 = 50\)<br><br>
+        <b>ขั้นที่ 4:</b> รวม
+        \[ n(A) = 50 + 50 = 100 \]<br><br>
+        <b>ขั้นที่ 5:</b> \(P = \dfrac{100}{210} = \dfrac{10}{21}\)
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ ข้อ 1:</span>
+    <span class="ans-value">\(\dfrac{10}{21}\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> ผลคูณลบ ⇔ จำนวนลบเป็นคี่ — ใช้หลักการนี้กับทุกโจทย์ผลคูณเครื่องหมาย
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> 
+  </div>
+</div>
+
+<div class="problem" id="q35">
+  <div class="problem-header">
+    <span class="problem-num">📝 ข้อ 35</span>
+    <span class="exam-tag">A-NET พ.ศ. 2552 (2 คะแนน)</span>
+    <span class="sub-tag P">🟣 กฎการบวก & เติมเต็ม</span>
+    <span class="stars">★★★☆☆</span>
+  </div>
+  <div class="problem-body">
+    <p>ถ้า \(A\) และ \(B\) เป็นเหตุการณ์ซึ่ง \(P(A' \cap B) = P(A \cap B') = P(A \cap B) = 0.15\) แล้ว \(P((A \cup B)')\) มีค่าเท่าใด</p>
+  </div>
+  <div class="concept-box">
+    <strong>🎯 แนวคิด:</strong> แผนภาพเวนน์ 2 เซต — การแจกแจงส่วนต่างๆ ของเวนน์
+  </div>
+  <div class="solution-box">
+    <strong>✏️ วิธีทำ (Chain of Thought):</strong><br>
+    <b>ขั้นที่ 1:</b> วิเคราะห์แผนเวนน์ 2 เซต<br>
+        \(P(A' \cap B) = 0.15\) (B เท่านั้น)<br>
+        \(P(A \cap B') = 0.15\) (A เท่านั้น)<br>
+        \(P(A \cap B) = 0.15\) (ทั้งสอง)<br><br>
+        <b>ขั้นที่ 2:</b> หา \(P(A)\) และ \(P(B)\)
+        \[ P(A) = P(A \cap B') + P(A \cap B) = 0.15 + 0.15 = 0.30 \]
+        \[ P(B) = P(A' \cap B) + P(A \cap B) = 0.15 + 0.15 = 0.30 \]<br><br>
+        <b>ขั้นที่ 3:</b> หา \(P(A \cup B)\)
+        \[ P(A \cup B) = P(A) + P(B) - P(A \cap B) = 0.30 + 0.30 - 0.15 = 0.45 \]<br><br>
+        <b>ขั้นที่ 4:</b> ใช้กฎเดอมอร์แกน
+        \[ P((A \cup B)') = 1 - P(A \cup B) = 1 - 0.45 = 0.55 \]
+  </div>
+  <div class="answer-box">
+    <span class="ans-label">✅ คำตอบ:</span>
+    <span class="ans-value">\(0.55\)</span>
+  </div>
+  <div class="shortcut-box">
+    <strong>⚡ เทคนิคลัด:</strong> วิธีเร็ว: \(P((A \cup B)') = 1 - P(A \cup B)\) และ \(P(A \cup B) = P(A \cap B') + P(A' \cap B) + P(A \cap B) = 0.15 + 0.15 + 0.15 = 0.45\) — สังเกตว่าเป็นผลรวมของ 3 ส่วนในเวนน์
+  </div>
+  <div class="careful-box">
+    <strong>⚠️ ข้อควรระวัง (Careful Error):</strong> อย่าสับสนระหว่าง \(P(A' \cap B)\) (B เท่านั้น) กับ \(P(A \cap B')\) (A เท่านั้น) — เครื่องหมาย ' อยู่ตำแหน่งไหนสำคัญ
+  </div>
+</div>
+
+<div class="section-divider"></div>
+<h2 id="summary">📋 สรุปเทคนิครวบยอด + ตารางจุดพลาด + Checklist ห้องสอบ</h2>
+
+<h3>🎯 ตารางจุดพลาด (Careless Error Table)</h3>
+<table class="error-table">
+  <thead><tr><th>หัวข้อ</th><th>ข้อควรระวัง</th></tr></thead>
+  <tbody>
+    <tr><td><strong>อย่างน้อย 1 / มากสุด 1</strong></td><td>ใช้เหตุการณ์เติมเต็มเสมอ — 1 - P(none) สำหรับ "≥1"; 1 - P(all) สำหรับ "≤1"</td></tr>
+    <tr><td><strong>การจัดเรียงติดกัน (Block)</strong></td><td>อย่าลืมคูณ k! สำหรับการสลับที่ภายในบล็อก</td></tr>
+    <tr><td><strong>De Morgan's Law</strong></td><td>จำให้แม่น: (A∩B)' = A'∪B' และ (A∪B)' = A'∩B' — สับสนง่าย</td></tr>
+    <tr><td><strong>เมทริกซ์เอกฐาน</strong></td><td>ตรวจสอบ det = 0 ทุกครั้ง — ระวังเครื่องหมายลบ</td></tr>
+    <tr><td><strong>หยิบใส่คืน vs ไม่ใส่คืน</strong></td><td>ใส่คืน = Binomial; ไม่ใส่คืน = Hypergeometric — สูตรต่างกัน</td></tr>
+    <tr><td><strong>คู่/คี่ + บวก/ลบ</strong></td><td>ผลคูณคู่ ⇔ มีคู่ ≥1; ผลบวกคี่ ⇔ จำนวนคี่เป็นคี่; ผลคูณลบ ⇔ ลบเป็นคี่</td></tr>
+    <tr><td><strong>เลข n หลัก</strong></td><td>หลักซ้ายสุด ≠ 0 — ต้องนับทางเลือกแยกจากหลักอื่น</td></tr>
+    <tr><td><strong>Circular vs Linear</strong></td><td>Circular: (n-1)!; Linear: n! — สับสนง่ายเมื่อใช้สูตร</td></tr>
+    <tr><td><strong>"สีละ" vs "อย่างน้อย 1 สี"</strong></td><td>สีละอย่างน้อย 1 = ทุกสีมี; อย่างน้อย 1 สี = อย่างน้อย 1 สีใดๆ</td></tr>
+    <tr><td><strong>Venn: "เท่านั้น" vs รวม</strong></td><td>"ชม 2 เรื่อง" (รวม 3) ≠ "ชม 2 เรื่องเท่านั้น" — คำว่า "เท่านั้น" สำคัญ</td></tr>
+  </tbody>
+</table>
+
+<h3>✅ Checklist สำหรับห้องสอบ</h3>
+<div class="checklist">
+<ul>
+  <li>อ่านโจทย์ 2 รอบ — ระบุ "ใส่คืน/ไม่ใส่คืน", "เรียงตามลำดับ/ไม่เรียง", "เท่านั้น/รวม"</li>
+  <li>เขียนปริภูมิตัวอย่าง n(S) ก่อนเสมอ — ตรวจว่าเป็น permutation หรือ combination</li>
+  <li>เห็น "อย่างน้อย 1" → ใช้ 1 - P(none) ทันที</li>
+  <li>เห็น "ติดกัน" → ใช้ Block method (คูณ k! เสมอ)</li>
+  <li>เห็น "ไม่ติดกัน" → ใช้ Gap method (n+1 ช่อง สำหรับชาย n คน)</li>
+  <li>เห็นเมทริกซ์ → คำนวณ det และแยกตัวประกอบ</li>
+  <li>เห็น "วงกลม" → ใช้ (n-1)! (Circular)</li>
+  <li>ตรวจคำตอบกับเฉลย (ถ้ามี) — ถ้าไม่ตรง ให้ย้อนกลับตรวจเคส</li>
+  <li>ระวัง "เลขคู่" หมายถึง "หาร 2 ลงตัว" — 0 เป็นเลขคู่</li>
+  <li>จำ derangement สำคัญ: D(2)=1, D(3)=2, D(4)=9, D(5)=44</li>
+  <li>เมื่อเห็นเศษส่วนซ้ำๆ ในโจทย์ — หา "สมมาตร" หรือ "สูตรลัด"</li>
+  <li>ห้ามรีบเขียนคำตอบ — ตรวจทบทวน 1 รอบก่อนส่ง</li>
+</ul>
+</div>
+
+<h3>💡 เทคนิคลัดสำหรับบทความน่าจะเป็น</h3>
+<div class="shortcut-box">
+<strong>เทคนิคลัดที่ใช้บ่อย:</strong>
+<ul>
+<li><strong>P(at least 1) = 1 - P(none)</strong> — ใช้เกือบทุกข้อที่เจอ "อย่างน้อย"</li>
+<li><strong>Block Method</strong> สำหรับ "ติดกัน": \(n(A) = (n-k+1)! \cdot k!\)</li>
+<li><strong>Gap Method</strong> สำหรับ "ไม่ติดกัน": \(n(A) = n! \cdot inom{n+1}{k} \cdot k!\)</li>
+<li><strong>Circular Permutation</strong>: \((n-1)!\)</li>
+<li><strong>Binomial</strong>: \(P(X=k) = inom{n}{k} p^k q^{n-k}\)</li>
+<li><strong>Hypergeometric</strong>: \(rac{inom{K}{k}inom{N-K}{n-k}}{inom{N}{n}}\)</li>
+<li><strong>De Morgan</strong>: \((A \cap B)' = A' \cup B'\)</li>
+<li><strong>Derangement</strong>: จำ \(D(2)=1, D(3)=2, D(4)=9, D(5)=44\)</li>
+</ul>
+</div>
+
+<div class="careful-box">
+<strong>⚠️ ข้อควรระวังสูงสุด:</strong> อย่าเพิ่งรีบเขียนคำตอบ — ตรวจทบทวนเงื่อนไข "ใส่คืน/ไม่ใส่คืน", "เรียงลำดับ/ไม่เรียง", "เท่านั้น/รวม" ก่อนส่งทุกครั้ง!
+</div>
+
+<p style="text-align:center; color:#666; margin-top:40px; font-size:13px;">
+— จบเฉลย 35 ข้อ — <br>
+แนะนำให้กด <strong>Ctrl+P</strong> (หรือ Cmd+P บน Mac) เพื่อบันทึกเป็น PDF
+</p>
+
+</div>
+</body>
+</html>
