@@ -1,0 +1,2057 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฉลยข้อสอบอินทิกรัล - รวมข้อสอบเข้ามหาวิทยาลัย</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['\\[', '\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<style>
+  :root {
+    --primary: #1e3a8a;
+    --accent: #dc2626;
+    --bg: #fefefe;
+    --card: #ffffff;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --tip: #ecfdf5;
+    --tip-border: #10b981;
+    --warn: #fef3c7;
+    --warn-border: #f59e0b;
+    --err: #fee2e2;
+    --err-border: #ef4444;
+    --info: #dbeafe;
+    --info-border: #3b82f6;
+    --answer: #fef9c3;
+    --answer-border: #eab308;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Sarabun', 'Noto Sans Thai', sans-serif;
+    line-height: 1.7;
+    color: #1f2937;
+    background: #f3f4f6;
+    margin: 0;
+    padding: 0;
+    font-size: 17px;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  header {
+    background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  header h1 { margin: 0 0 8px 0; font-size: 30px; font-weight: 700; }
+  header .subtitle { font-size: 16px; opacity: 0.9; }
+  .summary-box {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 2px solid #f59e0b;
+    border-radius: 12px;
+    padding: 22px 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .summary-box h2 {
+    margin: 0 0 15px 0;
+    color: #92400e;
+    font-size: 22px;
+    border-bottom: 2px dashed #d97706;
+    padding-bottom: 8px;
+  }
+  .summary-box h3 { color: #92400e; margin: 15px 0 8px 0; font-size: 18px; }
+  .summary-box ul { margin: 5px 0; padding-left: 22px; }
+  .summary-box li { margin: 5px 0; }
+  .nav-chips {
+    background: var(--card);
+    padding: 18px 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-chips h3 { margin: 0 0 10px 0; color: var(--primary); font-size: 17px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    display: inline-block;
+    padding: 5px 12px;
+    background: #e0e7ff;
+    color: var(--primary);
+    border-radius: 18px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+    border: 1px solid #c7d2fe;
+  }
+  .chip:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(30,58,138,0.3);
+  }
+  .section-divider {
+    background: linear-gradient(90deg, var(--primary) 0%, #6366f1 50%, var(--accent) 100%);
+    color: white;
+    padding: 14px 25px;
+    border-radius: 10px;
+    margin: 35px 0 20px 0;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  }
+  .question {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    border-left: 5px solid var(--primary);
+    border-top: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .q-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .q-number {
+    background: var(--primary);
+    color: white;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .q-source {
+    background: #fce7f3;
+    color: #831843;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .q-statement {
+    background: #f9fafb;
+    border-left: 3px solid #d1d5db;
+    padding: 12px 18px;
+    margin: 12px 0;
+    border-radius: 4px;
+    line-height: 1.8;
+  }
+  .concept-box {
+    background: var(--info);
+    border-left: 4px solid var(--info-border);
+    padding: 10px 15px;
+    margin: 12px 0;
+    border-radius: 4px;
+  }
+  .concept-box strong { color: #1e3a8a; }
+  .solution {
+    margin: 15px 0;
+  }
+  .solution-title {
+    color: var(--primary);
+    font-weight: 700;
+    margin: 10px 0 6px 0;
+    font-size: 16px;
+  }
+  .step {
+    margin: 8px 0;
+    padding-left: 18px;
+    border-left: 2px solid #e5e7eb;
+  }
+  .answer-box {
+    background: linear-gradient(135deg, #fef9c3 0%, #fde047 100%);
+    border: 2px solid var(--answer-border);
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin: 15px 0;
+    font-weight: 700;
+    color: #713f12;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .answer-box::before {
+    content: '✓ คำตอบ';
+    background: var(--accent);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .tip-box {
+    background: var(--tip);
+    border-left: 4px solid var(--tip-border);
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-size: 15px;
+  }
+  .tip-box::before {
+    content: '💡 เทคนิคลัด: ';
+    font-weight: 700;
+    color: #047857;
+  }
+  .careful-box {
+    background: var(--err);
+    border-left: 4px solid var(--err-border);
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-size: 15px;
+  }
+  .careful-box::before {
+    content: '⚠️ ข้อควรระวัง: ';
+    font-weight: 700;
+    color: #b91c1c;
+  }
+  .final-section {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin: 30px 0 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 2px solid var(--primary);
+  }
+  .final-section h2 {
+    color: var(--primary);
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 8px;
+    margin-top: 0;
+  }
+  table.error-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 15px;
+  }
+  table.error-table th, table.error-table td {
+    border: 1px solid #d1d5db;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.error-table th {
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+  }
+  table.error-table tr:nth-child(even) td { background: #f9fafb; }
+  .checklist {
+    background: #f0fdf4;
+    border: 2px solid #16a34a;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 15px 0;
+  }
+  .checklist h3 { color: #14532d; margin-top: 0; }
+  .checklist ul { list-style: none; padding-left: 0; }
+  .checklist li {
+    padding: 6px 0;
+    padding-left: 30px;
+    position: relative;
+  }
+  .checklist li::before {
+    content: '☐';
+    position: absolute;
+    left: 5px;
+    font-size: 18px;
+    color: #16a34a;
+  }
+  .choices {
+    margin: 10px 0;
+    padding-left: 10px;
+  }
+  .choice {
+    display: inline-block;
+    margin: 4px 12px 4px 0;
+    padding: 4px 10px;
+    background: #f3f4f6;
+    border-radius: 4px;
+    font-size: 15px;
+  }
+  .choice.correct {
+    background: #d1fae5;
+    color: #065f46;
+    font-weight: 600;
+    border: 1px solid #10b981;
+  }
+  mjx-container { font-size: 1.05em !important; }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 25px 0 15px 0;
+    font-size: 14px;
+  }
+  @media print {
+    body { background: white; font-size: 11pt; }
+    .nav-chips { display: none; }
+    .question { page-break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    .section-divider { page-break-before: auto; }
+    .chip { display: none; }
+    header { box-shadow: none; }
+  }
+
+  .subtag{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:999px;margin-left:8px;vertical-align:middle;border:1px solid}
+  .subtag.c-blue{background:#eff6ff;color:#1e40af;border-color:#bfdbfe}
+  .subtag.c-orange{background:#fff7ed;color:#9a3412;border-color:#fed7aa}
+  .subtag.c-green{background:#f0fdf4;color:#166534;border-color:#bbf7d0}
+  .subtag.c-yellow{background:#fefce8;color:#854d0e;border-color:#fde68a}
+  .subtag.c-purple{background:#faf5ff;color:#6b21a8;border-color:#e9d5ff}
+  .subtag.c-red{background:#fef2f2;color:#991b1b;border-color:#fecaca}
+  .backbtn{display:inline-block;margin:10px 0 0;background:#fff;color:#1e3a8a;border:1px solid #c7d2fe;border-radius:999px;padding:6px 14px;font-weight:700;text-decoration:none;font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <h1>📚 เฉลยข้อสอบอินทิกรัล (Integration)</h1>
+  <div class="subtitle">รวมข้อสอบเข้ามหาวิทยาลัย 36 ข้อ • พร้อมเทคนิคลัด ข้อควรระวัง และ Checklist ห้องสอบ</div>
+<a class="backbtn" href="index.html">← กลับหน้า Dashboard</a>
+</header>
+
+
+<div class="summary-box">
+  <h2>🧠 สรุปเทคนิครวบยอดบทอินทิกรัล</h2>
+  
+  <h3>1. กฎพื้นฐานที่ต้องจำขึ้นใจ</h3>
+  <ul>
+    <li><strong>Power Rule:</strong> \(\int x^n \, dx = \dfrac{x^{n+1}}{n+1} + C\) (เมื่อ \(n \neq -1\))</li>
+    <li><strong> FTC (Fundamental Theorem of Calculus):</strong> \(\int_a^b f(x)\,dx = F(b) - F(a)\) เมื่อ \(F' = f\)</li>
+    <li><strong> สมการเส้นสัมผัส:</strong> \(y - f(a) = f'(a)(x-a)\)</li>
+    <li><strong> ความชัน = อนุพันธ์อันดับ 1:</strong> \(f'(x)\) ให้ความชัน ณ จุด \(x\)</li>
+    <li><strong> จุดวิกฤต:</strong> \(f'(x) = 0\) หรือ \(f'(x)\) ไม่มีอยู่</li>
+    <li><strong> ทดสอบอนุพันธ์อันดับสอง:</strong> \(f''(c) > 0 \Rightarrow\) น้อยสุด, \(f''(c) < 0 \Rightarrow\) มากสุด</li>
+  </ul>
+
+  <h3>2. เทคนิค "ทอดกลับ" (Anti-differentiation) — ข้อสอบยอดฮิต</h3>
+  <ul>
+    <li>โจทย์ให้ <strong>ความชัน</strong> \(f'(x) = g(x)\) → <strong>อินทิเกรต</strong>เพื่อหา \(f(x)\)</li>
+    <li>โจทย์ให้ <strong>\(f''(x)\)</strong> → อินทิเกรตสองครั้ง หา \(f'(x)\) แล้วหา \(f(x)\)</li>
+    <li>ใช้ <strong>เงื่อนไขจุดผ่าน</strong> \((a, f(a))\) เพื่อหาค่าคงตัว \(C\)</li>
+    <li>เงื่อนไข <strong>"พื้นที่สองเท่า"</strong> / <strong>"พื้นที่เท่ากัน"</strong> → ตั้งสมการเปรียบเทียบอินทิกรัล</li>
+  </ul>
+
+  <h3>3. พื้นที่ (Area) vs อินทิกรัล (Integral) — อย่าสับสน!</h3>
+  <ul>
+    <li><strong>อินทิกรัล</strong> \(\int_a^b f(x)\,dx\) = พื้นที่ <em>มีเครื่องหมาย</em> (บวก-ลบ)</li>
+    <li><strong>พื้นที่</strong> \(A = \int_a^b |f(x)|\,dx\) = พื้นที่ <em>จริง</em> (บวกเสมอ)</li>
+    <li>หาก \(f(x)\) เปลี่ยนเครื่องหมายบน \([a,b]\): แบ่งช่วง แล้วหาค่าสัมบูรณ์ในแต่ละช่วง</li>
+    <li><strong>รูปเรขาคณิต:</strong> \(\int_{-r}^{r} \sqrt{r^2-x^2}\,dx = \dfrac{\pi r^2}{2}\) (ครึ่งวงกลม)</li>
+  </ul>
+
+  <h3>4. เทคนิคพิเศษ</h3>
+  <ul>
+    <li><strong>Substitution:</strong> \(\int_a^b f(g(x))g'(x)\,dx = \int_{g(a)}^{g(b)} f(u)\,du\)</li>
+    <li><strong>Integration by Parts:</strong> \(\int u\,dv = uv - \int v\,du\)</li>
+    <li><strong>ฟังก์ชันคู่/คี่:</strong> \(\int_{-a}^{a} f(x)\,dx = 2\int_0^a f(x)\,dx\) (คู่), \(= 0\) (คี่)</li>
+    <li><strong>Chain Rule + Integral:</strong> ถ้า \(F(x) = f(g(x))\) แล้ว \(F'(x) = f'(g(x))g'(x)\)</li>
+    <li><strong>Piecewise:</strong> แบ่งการอินทิเกรตตามช่วงนิยามของแต่ละ piece</li>
+  </ul>
+</div>
+
+
+<div class="nav-chips">
+  <h3>🔖 กระโดดไปยังข้อที่ต้องการ</h3>
+  <div class="chips" id="chips-container"></div>
+  <script>
+    (function() {
+      const chips = [];
+      for (let i = 1; i <= 36; i++) {
+        chips.push(`<a href="#q${i}" class="chip">Q${i}</a>`);
+      }
+      chips.push('<a href="#summary-final" class="chip" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;">📋 สรุปท้าย</a>');
+      document.getElementById('chips-container').innerHTML = chips.join('');
+    })();
+  </script>
+</div>
+
+
+<div class="section-divider">📋 ส่วนที่ 1: ข้อ 1 — 12 (ข้อสอบพื้นฐาน FTC และ Anti-differentiation)</div>
+
+
+<!-- ===== Q1 ===== -->
+<div class="question" id="q1">
+  <div class="q-header">
+    <span class="q-number">Q1</span>
+    <span class="q-source">ต.ค. 41/3</span><span class="subtag c-purple">🟣 หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(f\) เป็นฟังก์ชัน ที่ \(f(2) = -1\), \(f'(1) = -3\) และ \(f''(x) = 3\) ทุกค่า \(x\) แล้ว \(f(0)\) มีค่าเป็นเท่าใด
+    <div class="choices">
+      <span class="choice correct">1) 5</span>
+      <span class="choice">2) 6</span>
+      <span class="choice">3) 12</span>
+      <span class="choice">4) 15</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> Anti-differentiation สองครั้ง (จาก \(f''\) → \(f'\) → \(f\)) พร้อมใช้เงื่อนไขเพื่อหาค่าคงตัว</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ (Chain of Thought):</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> อินทิเกรต \(f''(x) = 3\) เพื่อหา \(f'(x)\)<br>
+    \[f'(x) = \int 3\,dx = 3x + C_1\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ใช้เงื่อนไข \(f'(1) = -3\) หา \(C_1\)<br>
+    \[f'(1) = 3(1) + C_1 = -3 \Rightarrow C_1 = -6\]<br>
+    \[\therefore f'(x) = 3x - 6\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> อินทิเกรต \(f'(x)\) เพื่อหา \(f(x)\)<br>
+    \[f(x) = \int (3x-6)\,dx = \dfrac{3x^2}{2} - 6x + C_2\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> ใช้เงื่อนไข \(f(2) = -1\) หา \(C_2\)<br>
+    \[f(2) = \dfrac{3(4)}{2} - 6(2) + C_2 = 6 - 12 + C_2 = -1\]<br>
+    \[C_2 = 5\]<br>
+    \[\therefore f(x) = \dfrac{3x^2}{2} - 6x + 5\]</div>
+    <div class="step"><strong>ขั้นที่ 5:</strong> หา \(f(0)\)<br>
+    \[f(0) = 0 - 0 + 5 = 5\]</div>
+  </div>
+  
+  <div class="answer-box">\(f(0) = 5\) → ตอบ <strong>ข้อ 1</strong></div>
+  
+  <div class="tip-box">เมื่อโจทย์ให้ \(f''(x)\) และเงื่อนไข 2 จุด ให้อินทิเกรต <strong>ตามลำดับ</strong> แล้วหาค่าคงตัวทีละตัว — ไม่ต้องตั้งระบบสมการ</div>
+  
+  <div class="careful-box">ระวัง! อย่าสลับ \(f'(1) = -3\) กับ \(f(1) = -3\) — เครื่องหมาย \('\) ตัวเดียวเปลี่ยนความหมายโจทย์ทั้งหมด</div>
+</div>
+
+<!-- ===== Q2 ===== -->
+<div class="question" id="q2">
+  <div class="q-header">
+    <span class="q-number">Q2</span>
+    <span class="q-source">ต.ค. 41/3</span><span class="subtag c-yellow">🟡 พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง</span>
+  </div>
+  <div class="q-statement">
+    พื้นที่ปิดล้อมด้วยเส้นโค้ง \(y = x^2 - 3x + 2\) จาก \(x = 0\) ถึง \(x = 2\) <strong>เฉพาะส่วนที่อยู่เหนือแกน \(x\)</strong> เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) \(\frac{3}{2}\) ตารางหน่วย</span>
+      <span class="choice">2) \(\frac{1}{6}\) ตารางหน่วย</span>
+      <span class="choice">3) \(\frac{2}{3}\) ตารางหน่วย</span>
+      <span class="choice correct">4) \(\frac{5}{6}\) ตารางหน่วย</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> พื้นที่ "เฉพาะส่วนเหนือแกน \(x\)" — ต้องหาช่วงที่ \(f(x) \geq 0\) ก่อน แล้วอินทิเกรตเฉพาะช่วงนั้น</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> แยกตัวประกอบ \(y = x^2 - 3x + 2 = (x-1)(x-2)\)<br>
+    ราก: \(x = 1, 2\)</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> วิเคราะห์เครื่องหมายบน \([0, 2]\)<br>
+    • ช่วง \([0, 1)\): \(x-1 < 0, x-2 < 0\)  → ผลคูณบวก → \(y \geq 0\) ✓ <em>(เหนือแกน)</em><br>
+    • ช่วง \((1, 2)\): \(x-1 > 0, x-2 < 0\) → ผลคูณลบ → \(y < 0\) <em>(ใต้แกน)</em></div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> อินทิเกรตเฉพาะส่วนเหนือแกน \(x\) คือ \([0, 1]\)<br>
+    \[A = \int_0^1 (x^2 - 3x + 2)\,dx = \left[\dfrac{x^3}{3} - \dfrac{3x^2}{2} + 2x\right]_0^1\]<br>
+    \[= \left(\dfrac{1}{3} - \dfrac{3}{2} + 2\right) - 0 = \dfrac{2 - 9 + 12}{6} = \dfrac{5}{6}\]</div>
+  </div>
+  
+  <div class="answer-box">พื้นที่ \(= \dfrac{5}{6}\) ตารางหน่วย → ตอบ <strong>ข้อ 4</strong></div>
+  
+  <div class="tip-box">โจทย์ถาม "เฉพาะเหนือแกน \(x\)" → ไม่ใช่พื้นที่รวม ต้องหาช่วงที่ \(f(x) \geq 0\) ก่อนเสมอ</div>
+  
+  <div class="careful-box">อย่าเพิ่งอินทิเกรต \(\int_0^2\) ตรงๆ เพราะจะได้พื้นที่สุทธิ (บวก-ลบหักล้าง) ซึ่งผิดทั้งความหมายและคำตอบ</div>
+</div>
+
+<!-- ===== Q3 ===== -->
+<div class="question" id="q3">
+  <div class="q-header">
+    <span class="q-number">Q3</span>
+    <span class="q-source">มี.ค. 42/3</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    ถ้า \(\theta \in \mathbb{R}\) และ \(\displaystyle\int_{\sin\theta}^{1} (4x - 3)\,dx = 0\) แล้ว \(\cos 2\theta\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) \(0\) หรือ \(\frac{\sqrt{3}}{2}\)</span>
+      <span class="choice">2) \(0\) หรือ \(-\frac{\sqrt{3}}{2}\)</span>
+      <span class="choice correct">3) \(-1\) หรือ \(\frac{1}{2}\)</span>
+      <span class="choice">4) \(-1\) หรือ \(1\)</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> FTC + สมการตรีโกณมิติ ใช้เอกลักษณ์ \(\cos 2\theta = 1 - 2\sin^2\theta\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> คำนวณอินทิกรัล<br>
+    \[\int_{\sin\theta}^{1} (4x-3)\,dx = \left[2x^2 - 3x\right]_{\sin\theta}^{1}\]<br>
+    \[= (2 - 3) - (2\sin^2\theta - 3\sin\theta) = -1 - 2\sin^2\theta + 3\sin\theta = 0\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> จัดรูปเป็นสมการ<br>
+    \[2\sin^2\theta - 3\sin\theta + 1 = 0\]<br>
+    \[(2\sin\theta - 1)(\sin\theta - 1) = 0\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> หาค่า \(\sin\theta\)<br>
+    \[\sin\theta = \dfrac{1}{2} \quad \text{หรือ} \quad \sin\theta = 1\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> ใช้เอกลักษณ์ \(\cos 2\theta = 1 - 2\sin^2\theta\)<br>
+    • กรณี \(\sin\theta = \dfrac{1}{2}\): \(\cos 2\theta = 1 - 2\cdot\dfrac{1}{4} = \dfrac{1}{2}\)<br>
+    • กรณี \(\sin\theta = 1\): \(\cos 2\theta = 1 - 2 = -1\)</div>
+  </div>
+  
+  <div class="answer-box">\(\cos 2\theta = -1\) หรือ \(\dfrac{1}{2}\) → ตอบ <strong>ข้อ 3</strong></div>
+  
+  <div class="tip-box">เมื่อเห็น \(\cos 2\theta\) และมี \(\sin\theta\) ในโจทย์ → ใช้ \(\cos 2\theta = 1 - 2\sin^2\theta\) เปลี่ยนตัวแปรเสมอ</div>
+  
+  <div class="careful-box">อย่าลืมเครื่องหมายลบตอนคำนวณ \((2 - 3) = -1\) — เครื่องหมายนี้บอกวิธีจัดสมการทั้งหมด</div>
+</div>
+
+<!-- ===== Q4 ===== -->
+<div class="question" id="q4">
+  <div class="q-header">
+    <span class="q-number">Q4</span>
+    <span class="q-source">ต.ค. 42/3</span><span class="subtag c-purple">🟣 หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น</span>
+  </div>
+  <div class="q-statement">
+    ถ้า \(f\) เป็นฟังก์ชันซึ่งมีกราฟผ่านจุด \((0, 2)\) และ \(f'(x) = 3x^2 - 12x + 9\) แล้วค่าสูงสุดสัมพัทธ์ของ \(f\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) 2</span>
+      <span class="choice">2) 3</span>
+      <span class="choice correct">3) 6</span>
+      <span class="choice">4) 8</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> อินทิเกรต \(f'\) เพื่อหา \(f\), หาจุดวิกฤตด้วย \(f' = 0\), ตรวจด้วย \(f''\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> อินทิเกรต \(f'\)<br>
+    \[f(x) = \int (3x^2 - 12x + 9)\,dx = x^3 - 6x^2 + 9x + C\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ใช้จุดผ่าน \((0, 2)\) หา \(C\)<br>
+    \[f(0) = C = 2 \Rightarrow f(x) = x^3 - 6x^2 + 9x + 2\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> หาจุดวิกฤต \(f'(x) = 0\)<br>
+    \[3x^2 - 12x + 9 = 0 \Rightarrow 3(x-1)(x-3) = 0 \Rightarrow x = 1 \text{ หรือ } x = 3\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> ทดสอบอนุพันธ์อันดับสอง<br>
+    \[f''(x) = 6x - 12\]<br>
+    • \(f''(1) = -6 < 0\) → สูงสุดสัมพัทธ์ที่ \(x = 1\)<br>
+    • \(f''(3) = 6 > 0\) → ต่ำสุดสัมพัทธ์ที่ \(x = 3\)</div>
+    <div class="step"><strong>ขั้นที่ 5:</strong> หาค่าสูงสุด<br>
+    \[f(1) = 1 - 6 + 9 + 2 = 6\]</div>
+  </div>
+  
+  <div class="answer-box">ค่าสูงสุดสัมพัทธ์ \(= 6\) → ตอบ <strong>ข้อ 3</strong></div>
+  
+  <div class="tip-box">ทดสอบอนุพันธ์อันดับสองเร็ว: \(f'' < 0 \Rightarrow\) max, \(f'' > 0 \Rightarrow\) min — ไม่ต้องตารางเครื่องหมาย</div>
+  
+  <div class="careful-box">อย่าลืมใช้จุดผ่าน \((0, 2)\) หา \(C\) — ถ้าลืบจะได้ \(f(x)\) ไม่สมบูรณ์ และคำตอบจะผิด</div>
+</div>
+
+<!-- ===== Q5 ===== -->
+<div class="question" id="q5">
+  <div class="q-header">
+    <span class="q-number">Q5</span>
+    <span class="q-source">ต.ค. 42/4</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    ให้ \(F(x) = f(g(x))\) ถ้า \(g(x) = x^3 + 2x + 2\) และ \(\int F(x)\,dx = 5x^3 + 2x + c\) แล้ว ค่าของ \(f'(5)\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice correct">1) 6</span>
+      <span class="choice">2) 5</span>
+      <span class="choice">3) 4</span>
+      <span class="choice">4) 3</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> FTC (อินทิเกรตกลับ) + Chain Rule: \(F'(x) = f'(g(x)) \cdot g'(x)\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> อินทิเกรตกลับเพื่อหา \(F(x)\)<br>
+    \[\int F(x)\,dx = 5x^3 + 2x + c \Rightarrow F(x) = 15x^2 + 2\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ดิฟ \(F(x)\) และใช้ Chain Rule<br>
+    \[F'(x) = 30x\]<br>
+    \[F'(x) = f'(g(x)) \cdot g'(x) = 30x\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> หา \(g'(x)\)<br>
+    \[g'(x) = 3x^2 + 2\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> หา \(x\) ที่ทำให้ \(g(x) = 5\) (เพื่อให้ได้ \(f'(5)\))<br>
+    \[g(x) = x^3 + 2x + 2 = 5 \Rightarrow x^3 + 2x - 3 = 0\]<br>
+    \[(x-1)(x^2+x+3) = 0 \Rightarrow x = 1\] (เท่านั้นที่เป็นจริง)</div>
+    <div class="step"><strong>ขั้นที่ 5:</strong> แทนค่า \(x = 1\)<br>
+    \[f'(g(1)) \cdot g'(1) = 30(1)\]<br>
+    \[f'(5) \cdot (3+2) = 30 \Rightarrow f'(5) = \dfrac{30}{5} = 6\]</div>
+  </div>
+  
+  <div class="answer-box">\(f'(5) = 6\) → ตอบ <strong>ข้อ 1</strong></div>
+  
+  <div class="tip-box">เทคนิค: โจทย์ขอ \(f'(a)\) → หา \(x_0\) ที่ทำให้ \(g(x_0) = a\) ก่อน แล้วแทนใน Chain Rule</div>
+  
+  <div class="careful-box">ระวังสับสน \(F(x)\) (ฟังก์ชัน composition) กับ \(\int F(x)\,dx\) (ปฏิยานุพันธ์) — ดิฟเพื่อหา \(F\) จากอินทิกรัล</div>
+</div>
+
+<!-- ===== Q6 ===== -->
+<div class="question" id="q6">
+  <div class="q-header">
+    <span class="q-number">Q6</span>
+    <span class="q-source">มี.ค. 43/3</span><span class="subtag c-blue">🔵 ปฏิยานุพันธ์ & สูตรอินทิเกรตพื้นฐาน</span>
+  </div>
+  <div class="q-statement">
+    ให้ \(F\) เป็นปฏิยานุพันธ์ของ \(f\) โดยที่ \(f(x) = 3x^2 - 6x + 3\) ถ้า \(F(0) = -1\) และ \(F\) มีค่าสูงสุดสัมบูรณ์ในช่วง \([0, 2]\) ที่จุด \(x = c\) แล้ว \(F(c)\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) -1</span>
+      <span class="choice">2) 0</span>
+      <span class="choice correct">3) 1</span>
+      <span class="choice">4) 2</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> \(F' = f \geq 0 \Rightarrow F\) ไม่ลด — สูงสุดสัมบูรณ์อยู่ที่ปลายขวาของช่วง</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> สังเกตว่า \(f(x) = 3(x-1)^2 \geq 0\) ทุก \(x\)<br>
+    ดังนั้น \(F'(x) = f(x) \geq 0\) หมายความว่า \(F\) <em>ไม่ลด</em> บน \([0, 2]\)</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> สูงสุดสัมบูรณ์บน \([0, 2]\) จึงอยู่ที่ปลายขวา \(c = 2\)</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> หา \(F(x)\)<br>
+    \[F(x) = \int (3x^2 - 6x + 3)\,dx = x^3 - 3x^2 + 3x + C\]<br>
+    \[F(0) = C = -1\]<br>
+    \[F(x) = x^3 - 3x^2 + 3x - 1 = (x-1)^3\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> หา \(F(2)\)<br>
+    \[F(2) = (2-1)^3 = 1\]</div>
+  </div>
+  
+  <div class="answer-box">\(F(c) = F(2) = 1\) → ตอบ <strong>ข้อ 3</strong></div>
+  
+  <div class="tip-box">เทคนิคลัด: ถ้า \(f(x) \geq 0\) ทั้งช่วง → \(F\) ไม่ลด → max abs = \(F(\text{ปลายขวา})\), min abs = \(F(\text{ปลายซ้าย})\)</div>
+  
+  <div class="careful-box">อย่าเพิ่งตั้ง \(F' = 0\) — ต้อง <em>วิเคราะห์เครื่องหมายของ \(f\)</em> ก่อน เพราะ \(F' = 0\) อาจไม่ให้สูงสุดสัมบูรณ์</div>
+</div>
+
+<!-- ===== Q7 ===== -->
+<div class="question" id="q7">
+  <div class="q-header">
+    <span class="q-number">Q7</span>
+    <span class="q-source">มี.ค. 43/3</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(f\) เป็นฟังก์ชันที่มีอนุพันธ์ และ \(g(x) = (x+1)f(x)\) ถ้า \(\int g(x)\,dx = x^2 - x + c\) แล้ว \(f'(1)\) มีค่าเท่ากับข้อใด
+    <div class="choices">
+      <span class="choice correct">1) \(\frac{3}{4}\)</span>
+      <span class="choice">2) \(\frac{5}{4}\)</span>
+      <span class="choice">3) \(\frac{3}{2}\)</span>
+      <span class="choice">4) \(\frac{5}{2}\)</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> อินทิเกรตกลับเพื่อหา \(g\), ใช้ Product Rule \(g'(x) = f(x) + (x+1)f'(x)\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> อินทิเกรตกลับหา \(g(x)\)<br>
+    \[\int g(x)\,dx = x^2 - x + c \Rightarrow g(x) = 2x - 1\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> หา \(f(1)\) จาก \(g(1) = (1+1)f(1)\)<br>
+    \[g(1) = 2(1) - 1 = 1 = 2f(1) \Rightarrow f(1) = \dfrac{1}{2}\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> ดิฟ \(g(x) = (x+1)f(x)\) ด้วย Product Rule<br>
+    \[g'(x) = f(x) + (x+1)f'(x)\]<br>
+    \[g'(x) = 2\] (จาก \(g(x) = 2x - 1\))</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> แทน \(x = 1\)<br>
+    \[g'(1) = f(1) + 2f'(1) = 2\]<br>
+    \[\dfrac{1}{2} + 2f'(1) = 2 \Rightarrow 2f'(1) = \dfrac{3}{2} \Rightarrow f'(1) = \dfrac{3}{4}\]</div>
+  </div>
+  
+  <div class="answer-box">\(f'(1) = \dfrac{3}{4}\) → ตอบ <strong>ข้อ 1</strong></div>
+  
+  <div class="tip-box">Product Rule: \((uv)' = u'v + uv'\) — จำรูป \(g(x) = (x+1)f(x) \Rightarrow g'(x) = f(x) + (x+1)f'(x)\)</div>
+  
+  <div class="careful-box">ระวังสับสน \(f(1)\) กับ \(f'(1)\) — โจทย์ถาม \(f'(1)\) ต้องใช้ Product Rule หา ไม่ใช่แค่แทนค่า</div>
+</div>
+
+<!-- ===== Q8 ===== -->
+<div class="question" id="q8">
+  <div class="q-header">
+    <span class="q-number">Q8</span>
+    <span class="q-source">ต.ค. 43/ตอนที่ 1</span><span class="subtag c-purple">🟣 หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น</span>
+  </div>
+  <div class="q-statement">
+    ถ้าเส้นโค้ง \(y = f(x)\) ผ่านจุด \((0, 1)\) และ \((4, c)\) เมื่อ \(c\) เป็นจำนวนจริง และความชันของเส้นโค้งนี้ที่จุด \((x, y)\) ใดๆ มีค่าเท่ากับ \(\sqrt{x} - 1\) แล้ว \(c\) มีค่าเท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) \(\frac{4}{3}\)</span>
+      <span class="choice correct">2) \(\frac{7}{3}\)</span>
+      <span class="choice">3) 8</span>
+      <span class="choice">4) 9</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> ความชัน = \(f'(x)\) → อินทิเกรตเพื่อหา \(f(x)\), ใช้จุดผ่านหา \(C\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> ตั้งสมการ<br>
+    \[f'(x) = \sqrt{x} - 1 = x^{1/2} - 1\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> อินทิเกรต<br>
+    \[f(x) = \dfrac{x^{3/2}}{3/2} - x + C = \dfrac{2x^{3/2}}{3} - x + C\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> ใช้ \(f(0) = 1\)<br>
+    \[f(0) = 0 - 0 + C = 1 \Rightarrow C = 1\]<br>
+    \[f(x) = \dfrac{2x^{3/2}}{3} - x + 1\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> หา \(c = f(4)\)<br>
+    \[f(4) = \dfrac{2 \cdot 4^{3/2}}{3} - 4 + 1 = \dfrac{2 \cdot 8}{3} - 3 = \dfrac{16}{3} - \dfrac{9}{3} = \dfrac{7}{3}\]</div>
+  </div>
+  
+  <div class="answer-box">\(c = \dfrac{7}{3}\) → ตอบ <strong>ข้อ 2</strong></div>
+  
+  <div class="tip-box">จำ \(\int x^{1/2}\,dx = \dfrac{2}{3}x^{3/2}\) — เพิ่มเลขยกกำลังแล้วหาร</div>
+  
+  <div class="careful-box">\(4^{3/2} = (\sqrt{4})^3 = 2^3 = 8\) — อย่าเขียนเป็น \(4 \cdot \sqrt{4} = 8\) หรือ \(\sqrt{4^3} = \sqrt{64} = 8\) ก็ได้ แต่ต้องคำนวณให้ถูก</div>
+</div>
+
+<!-- ===== Q9 ===== -->
+<div class="question" id="q9">
+  <div class="q-header">
+    <span class="q-number">Q9</span>
+    <span class="q-source">ต.ค. 43/ตอนที่ 2</span><span class="subtag c-yellow">🟡 พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง</span>
+  </div>
+  <div class="q-statement">
+    ให้ \(f(x) = x^2 - c\) โดยที่ \(c\) เป็นค่าคงตัวซึ่ง \(c \geq 4\) ถ้าพื้นที่ที่ปิดล้อมด้วยเส้นโค้ง \(y = f(x)\) จาก \(x = -2\) ถึง \(x = 1\) เท่ากับ 24 ตารางหน่วย แล้ว \(c\) มีค่าเท่าใด
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> เงื่อนไข \(c \geq 4\) บอกเครื่องหมายของ \(f\) บนช่วง — ลดความซับซ้อนของพื้นที่</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> วิเคราะห์เครื่องหมาย \(f(x) = x^2 - c\) บน \([-2, 1]\)<br>
+    • บน \([-2, 1]\): \(x^2 \leq 4\) (max ที่ \(x = -2\))<br>
+    • เนื่องจาก \(c \geq 4\): \(x^2 - c \leq 4 - c \leq 0\)<br>
+    ∴ \(f(x) \leq 0\) ทั้งช่วง → พื้นที่ \(= \int_{-2}^{1} |f(x)|\,dx = \int_{-2}^{1} (c - x^2)\,dx\)</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> อินทิเกรต<br>
+    \[\int_{-2}^{1} (c - x^2)\,dx = \left[cx - \dfrac{x^3}{3}\right]_{-2}^{1}\]<br>
+    \[= \left(c - \dfrac{1}{3}\right) - \left(-2c + \dfrac{8}{3}\right) = 3c - 3\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> ตั้ง = 24 แล้วแก้<br>
+    \[3c - 3 = 24 \Rightarrow 3c = 27 \Rightarrow c = 9\]</div>
+    <div class="step"><strong>ตรวจสอบ:</strong> \(c = 9 \geq 4\) ✓</div>
+  </div>
+  
+  <div class="answer-box">\(c = 9\)</div>
+  
+  <div class="tip-box">เงื่อนไข \(c \geq 4\) ช่วยลดกรณี — ไม่ต้องหาจุดตัดแกน \(x\) และแบ่งช่วง</div>
+  
+  <div class="careful-box">ระวังเครื่องหมายตอนแทนขอบเขต: \(\left[cx - \frac{x^3}{3}\right]_{-2}^{1}\) ต้องลบ \(F(-2)\) ไม่ใช่บวก</div>
+</div>
+
+<!-- ===== Q10 ===== -->
+<div class="question" id="q10">
+  <div class="q-header">
+    <span class="q-number">Q10</span>
+    <span class="q-source">มี.ค. 44/3</span><span class="subtag c-blue">🔵 ปฏิยานุพันธ์ & สูตรอินทิเกรตพื้นฐาน</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(f(x) = ax^3 + bx^2 + 2x - 2\) เมื่อ \(a, b\) เป็นจำนวนจริง ถ้า \(f'(1) = 5\) และ \(f''(0) = -12\) แล้ว \(\int (f'(x) + f''(x))\,dx\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice correct">1) \(5x^3 + 9x^2 - 10x + c\)</span>
+      <span class="choice">2) \(5x^3 + 9x^2 + 10x + c\)</span>
+      <span class="choice">3) \(5x^3 - 9x^2 + 10x + c\)</span>
+      <span class="choice">4) \(5x^3 - 9x^2 - 10x + c\)</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> หา \(a, b\) จากเงื่อนไข → หา \(f'\) และ \(f''\) → รวมแล้วอินทิเกรต</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> ดิฟ \(f\)<br>
+    \[f'(x) = 3ax^2 + 2bx + 2\]<br>
+    \[f''(x) = 6ax + 2b\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ใช้เงื่อนไข<br>
+    • \(f''(0) = 2b = -12 \Rightarrow b = -6\)<br>
+    • \(f'(1) = 3a + 2b + 2 = 5 \Rightarrow 3a - 12 + 2 = 5 \Rightarrow 3a = 15 \Rightarrow a = 5\)</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> เขียน \(f\) และ \(f'\), \(f''\)<br>
+    \[f(x) = 5x^3 - 6x^2 + 2x - 2\]<br>
+    \[f'(x) = 15x^2 - 12x + 2\]<br>
+    \[f''(x) = 30x - 12\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> รวม \(f' + f''\) แล้วอินทิเกรต<br>
+    \[f'(x) + f''(x) = 15x^2 - 12x + 2 + 30x - 12 = 15x^2 + 18x - 10\]<br>
+    \[\int (15x^2 + 18x - 10)\,dx = 5x^3 + 9x^2 - 10x + c\]</div>
+  </div>
+  
+  <div class="answer-box">\(5x^3 + 9x^2 - 10x + c\) → ตอบ <strong>ข้อ 1</strong></div>
+  
+  <div class="tip-box">เริ่มจาก \(f''(0) = -12\) ก่อนเพราะได้ \(b\) โดยตรง แล้วค่อยหา \(a\) — ลำดับนี้ง่ายกว่า</div>
+  
+  <div class="careful-box">ระวังการกระจายเครื่องหมายลบ: \(f''(x) = 30x - 12\) (ลบ 12 ไม่ใช่บวก) เวลารวมกับ \(f'\)</div>
+</div>
+
+<!-- ===== Q11 ===== -->
+<div class="question" id="q11">
+  <div class="q-header">
+    <span class="q-number">Q11</span>
+    <span class="q-source">มี.ค. 44/3</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    ให้ \(f\) เป็นฟังก์ชันซึ่งอนุพันธ์อันดับสองเป็นฟังก์ชันต่อเนื่องบนช่วงปิด \([0, 1]\) และ \(g(x) = \dfrac{f(x)}{x^4 + 1}\) ถ้า \(f(1) = f'(1) = 1\) และ \(f(0) = f'(0) = -2\) แล้ว \(\displaystyle\int_0^1 g''(x)\,dx\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) \(-\frac{5}{2}\)</span>
+      <span class="choice">2) \(-\frac{1}{2}\)</span>
+      <span class="choice correct">3) \(\frac{3}{2}\)</span>
+      <span class="choice">4) \(\frac{7}{2}\)</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> FTC: \(\int_0^1 g''(x)\,dx = g'(1) - g'(0)\) ไม่ต้องอินทิเกรตยาก — แค่หา \(g'(1)\) และ \(g'(0)\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> ใช้ FTC<br>
+    \[\int_0^1 g''(x)\,dx = g'(1) - g'(0)\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> หา \(g'(x)\) ด้วย Quotient Rule<br>
+    \[g'(x) = \dfrac{f'(x)(x^4+1) - f(x) \cdot 4x^3}{(x^4+1)^2}\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> หา \(g'(0)\)<br>
+    • \(x = 0\): \(x^4 + 1 = 1\), \(4x^3 = 0\)<br>
+    \[g'(0) = \dfrac{f'(0) \cdot 1 - f(0) \cdot 0}{1} = f'(0) = -2\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> หา \(g'(1)\)<br>
+    • \(x = 1\): \(x^4 + 1 = 2\), \(4x^3 = 4\)<br>
+    \[g'(1) = \dfrac{f'(1) \cdot 2 - f(1) \cdot 4}{4} = \dfrac{2 - 4}{4} = -\dfrac{1}{2}\]</div>
+    <div class="step"><strong>ขั้นที่ 5:</strong> คำนวณ<br>
+    \[\int_0^1 g''(x)\,dx = g'(1) - g'(0) = -\dfrac{1}{2} - (-2) = \dfrac{3}{2}\]</div>
+  </div>
+  
+  <div class="answer-box">\(\dfrac{3}{2}\) → ตอบ <strong>ข้อ 3</strong></div>
+  
+  <div class="tip-box">เทคนิคลัด: \(\int_a^b g''(x)\,dx = g'(b) - g'(a)\) — ไม่ต้องหา \(g''(x)\) ทั้งฟังก์ชัน!</div>
+  
+  <div class="careful-box">Quotient Rule จำ: \(\left(\frac{u}{v}\right)' = \frac{u'v - uv'}{v^2}\) — <em>ลบ</em> ไม่ใช่ บวก</div>
+</div>
+
+<!-- ===== Q12 ===== -->
+<div class="question" id="q12">
+  <div class="q-header">
+    <span class="q-number">Q12</span>
+    <span class="q-source">ต.ค. 44/2</span><span class="subtag c-yellow">🟡 พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง</span>
+  </div>
+  <div class="q-statement">
+    ถ้าเส้นตรง \(x = a\) แบ่งครึ่งพื้นที่ที่ปิดล้อมด้วยเส้นโค้ง \(y = \sqrt{2x}\) จาก \(x = 0\) ถึง \(x = 8\) แล้ว \(a^3\) มีค่าเท่าใด
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> "แบ่งครึ่งพื้นที่" = พื้นที่ \(\int_0^a = \frac{1}{2} \int_0^8\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> หาพื้นที่ทั้งหมด<br>
+    \[A_{\text{total}} = \int_0^8 \sqrt{2x}\,dx = \sqrt{2}\int_0^8 x^{1/2}\,dx = \sqrt{2} \cdot \dfrac{2x^{3/2}}{3}\Big|_0^8 = \sqrt{2} \cdot \dfrac{2 \cdot 8^{3/2}}{3}\]<br>
+    \[= \sqrt{2} \cdot \dfrac{2 \cdot 16\sqrt{2}}{3} = \dfrac{2 \cdot 2 \cdot 16}{3} = \dfrac{64}{3}\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> พื้นที่ครึ่งหนึ่ง<br>
+    \[\dfrac{A_{\text{total}}}{2} = \dfrac{32}{3}\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> ตั้งสมการ<br>
+    \[\int_0^a \sqrt{2x}\,dx = \dfrac{32}{3} \Rightarrow \sqrt{2} \cdot \dfrac{2a^{3/2}}{3} = \dfrac{32}{3}\]<br>
+    \[2\sqrt{2} \cdot a^{3/2} = 32 \Rightarrow a^{3/2} = \dfrac{16}{\sqrt{2}} = 8\sqrt{2}\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> ยกกำลังสอง<br>
+    \[a^3 = (8\sqrt{2})^2 = 64 \cdot 2 = 128\]</div>
+  </div>
+  
+  <div class="answer-box">\(a^3 = 128\)</div>
+  
+  <div class="tip-box">\(8^{3/2} = (\sqrt{8})^3 = (2\sqrt{2})^3 = 16\sqrt{2}\) — จำไว้ลดเวลาคำนวณ</div>
+  
+  <div class="careful-box">โจทย์ถาม \(a^3\) ไม่ใช่ \(a\) — หา \(a^{3/2}\) แล้วยกกำลังสองได้ \(a^3\) โดยตรง</div>
+</div>
+
+
+<div class="section-divider">📋 ส่วนที่ 2: ข้อ 13 — 24 (ข้อสอบ Chain Rule + พื้นที่ + สมการเส้นสัมผัส)</div>
+
+
+<!-- ===== Q13 ===== -->
+<div class="question" id="q13">
+  <div class="q-header">
+    <span class="q-number">Q13</span>
+    <span class="q-source">ต.ค. 44/3</span><span class="subtag c-purple">🟣 หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้เส้นโค้ง \(y = f(x)\) ผ่านจุด \((1, 0)\) และมีความชันที่จุด \((x, y)\) ใดๆ เป็น \(3x^2 - 4x + \dfrac{2}{x^2}\) ถ้า \((a, b)\) เป็นจุดตัดระหว่างเส้นโค้งนี้กับเส้นตรง \(x - 2 = 0\) แล้ว \(a + b\) มีค่าเท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) \(\frac{3}{2}\)</span>
+      <span class="choice">2) 2</span>
+      <span class="choice">3) \(\frac{7}{2}\)</span>
+      <span class="choice correct">4) 4</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> อินทิเกรต \(f'\) หา \(f\) → ใช้จุดผ่านหา \(C\) → แทน \(x = 2\) หา \(b\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> อินทิเกรต<br>
+    \[f(x) = \int \left(3x^2 - 4x + \dfrac{2}{x^2}\right)dx = x^3 - 2x^2 - \dfrac{2}{x} + C\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ใช้ \(f(1) = 0\)<br>
+    \[f(1) = 1 - 2 - 2 + C = 0 \Rightarrow C = 3\]<br>
+    \[f(x) = x^3 - 2x^2 - \dfrac{2}{x} + 3\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> \(x - 2 = 0 \Rightarrow a = 2\)<br>
+    \[b = f(2) = 8 - 8 - 1 + 3 = 2\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> \(a + b = 2 + 2 = 4\)</div>
+  </div>
+  
+  <div class="answer-box">\(a + b = 4\) → ตอบ <strong>ข้อ 4</strong></div>
+  
+  <div class="tip-box">\(\int \dfrac{1}{x^2}\,dx = \int x^{-2}\,dx = -\dfrac{1}{x}\) — อย่าลืมเครื่องหมายลบ</div>
+  
+  <div class="careful-box">\(\int \dfrac{2}{x^2}\,dx = -\dfrac{2}{x}\) (ลบ!) ไม่ใช่ \(\dfrac{2}{x}\)</div>
+</div>
+
+<!-- ===== Q14 ===== -->
+<div class="question" id="q14">
+  <div class="q-header">
+    <span class="q-number">Q14</span>
+    <span class="q-source">มี.ค. 45/2</span><span class="subtag c-yellow">🟡 พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง</span>
+  </div>
+  <div class="q-statement">
+    ถ้า \(a\) คือจำนวนจริงที่ทำให้พื้นที่ที่ปิดล้อมด้วยเส้นโค้ง \(y = a^2x^2 + 4ax + 10\) จาก \(x = 0\) ถึง \(x = 1\) มีค่าน้อยที่สุด แล้วพื้นที่ที่ได้เท่ากับเท่าใด
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> พื้นที่เป็นฟังก์ชันของ \(a\) → ดิฟเทียบกับ \(a\) แล้วหาค่าต่ำสุด</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> เขียนพื้นที่เป็นฟังก์ชันของ \(a\)<br>
+    สังเกต \(y = a^2x^2 + 4ax + 10 \geq 10 > 0\) (เนื่องจาก \(a^2x^2 \geq 0\) และเมื่อ \(a\) กับ \(x\) ตรงข้ามเครื่องหมาย \(4ax\) อาจลบได้ แต่ขั้นต่ำคือที่ \(a = -2x\) ซึ่งทำให้ \(y = 10 - 4x^2 \geq 6\) บน \([0,1]\))<br>
+    \[A(a) = \int_0^1 (a^2x^2 + 4ax + 10)\,dx = \dfrac{a^2}{3} + 2a + 10\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ดิฟเทียบ \(a\) แล้วตั้ง \(= 0\)<br>
+    \[\dfrac{dA}{da} = \dfrac{2a}{3} + 2 = 0 \Rightarrow 2a = -6 \Rightarrow a = -3\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> ตรวจอนุพันธ์อันดับสอง<br>
+    \[\dfrac{d^2A}{da^2} = \dfrac{2}{3} > 0\] → ต่ำสุด ✓</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> หาพื้นที่ต่ำสุด<br>
+    \[A(-3) = \dfrac{9}{3} + 2(-3) + 10 = 3 - 6 + 10 = 7\]</div>
+  </div>
+  
+  <div class="answer-box">พื้นที่ต่ำสุด \(= 7\) ตารางหน่วย</div>
+  
+  <div class="tip-box">Optimization: แสดงปริมาณที่ต้องการเป็นฟังก์ชันของตัวแปรเดียวก่อน แล้วดิฟหาจุดวิกฤต</div>
+  
+  <div class="careful-box">ตรวจด้วย \(\frac{d^2}{da^2}\) เสมอ — จุดวิกฤตอาจเป็น max หรือจุดเปลี่ยนเว้า</div>
+</div>
+
+<!-- ===== Q15 ===== -->
+<div class="question" id="q15">
+  <div class="q-header">
+    <span class="q-number">Q15</span>
+    <span class="q-source">มี.ค. 45/3</span><span class="subtag c-yellow">🟡 พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้กราฟของ \(y = f(x)\) เป็นเส้นโค้งที่อยู่เหนือแกน \(x\) และมีความชันของเส้นสัมผัสเส้นโค้งที่จุด \((x, f(x))\) ใดๆ เท่ากับ \(6x + 2b\) เมื่อ \(b\) เป็นจำนวนจริง ถ้าพื้นที่ที่ปิดล้อมด้วยเส้นโค้งนี้จาก \(x = 0\) ถึง \(x = 2\) เท่ากับสองเท่าของพื้นที่ที่ปิดล้อมด้วยเส้นโค้งนี้จาก \(x = 0\) ถึง \(x = 1\) แล้ว \(f\) มีค่าต่ำสุดสัมพัทธ์ที่จุด \(x\) ในข้อใด
+    <div class="choices">
+      <span class="choice">1) \(x = 2\)</span>
+      <span class="choice correct">2) \(x = 1\)</span>
+      <span class="choice">3) \(x = 0\)</span>
+      <span class="choice">4) \(x = -1\)</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> พื้นที่สองเท่า → \(\int_0^2 = 2\int_0^1\) → แก้หา \(b\) → หาจุดวิกฤตของ \(f\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> หา \(f(x)\)<br>
+    \[f(x) = \int (6x + 2b)\,dx = 3x^2 + 2bx + C\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> คำนวณพื้นที่ทั้งสอง<br>
+    \[\int_0^1 f(x)\,dx = \left[x^3 + bx^2 + Cx\right]_0^1 = 1 + b + C\]<br>
+    \[\int_0^2 f(x)\,dx = \left[x^3 + bx^2 + Cx\right]_0^2 = 8 + 4b + 2C\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> ใช้เงื่อนไข \(\int_0^2 = 2\int_0^1\)<br>
+    \[8 + 4b + 2C = 2(1 + b + C) = 2 + 2b + 2C\]<br>
+    \[8 + 4b = 2 + 2b \Rightarrow 2b = -6 \Rightarrow b = -3\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> หาจุดวิกฤต<br>
+    \[f'(x) = 6x + 2b = 6x - 6 = 0 \Rightarrow x = 1\]<br>
+    \[f''(x) = 6 > 0\] → ต่ำสุดสัมพัทธ์ที่ \(x = 1\)</div>
+  </div>
+  
+  <div class="answer-box">\(x = 1\) → ตอบ <strong>ข้อ 2</strong></div>
+  
+  <div class="tip-box">\(\int_0^2 = 2\int_0^1 \Leftrightarrow \int_1^2 = \int_0^1\) — ลดรูปเพื่อคำนวณง่ายขึ้น</div>
+  
+  <div class="careful-box">\(C\) ตัวเดียวกันใช้ทั้งสองอินทิเกรต — อย่าลบทิ้ง มันจะตัดกันเองในสมการ</div>
+</div>
+
+<!-- ===== Q16 ===== -->
+<div class="question" id="q16">
+  <div class="q-header">
+    <span class="q-number">Q16</span>
+    <span class="q-source">ต.ค. 45/2</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    ให้ \(b\) เป็นจำนวนจริงบวก และกำหนดให้ \[f(x) = \begin{cases} 3x^2 + 1 & , 0 \leq x \leq b \\ 1 & , x < 0 \end{cases}\]
+    ถ้า \(\displaystyle\int_{-2}^{b} f(x)\,dx = 12\) แล้ว \(b\) มีค่าเท่ากับเท่าใด
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> Piecewise integral — แบ่งตามจุดเปลี่ยนนิยาม (ที่นี่คือ \(x = 0\))</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> แบ่งอินทิเกรตเป็นสองช่วง<br>
+    \[\int_{-2}^{b} f(x)\,dx = \int_{-2}^{0} 1\,dx + \int_{0}^{b} (3x^2 + 1)\,dx\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> คำนวณ<br>
+    \[\int_{-2}^{0} 1\,dx = 2\]<br>
+    \[\int_{0}^{b} (3x^2+1)\,dx = \left[x^3 + x\right]_0^b = b^3 + b\]<br>
+    \[\therefore 2 + b^3 + b = 12\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> แก้สมการ<br>
+    \[b^3 + b = 10\]<br>
+    ทดลอง \(b = 2\): \(8 + 2 = 10\) ✓</div>
+  </div>
+  
+  <div class="answer-box">\(b = 2\)</div>
+  
+  <div class="tip-box">สมการ \(b^3 + b = 10\): ทดลองจำนวนเต็มก่อน — \(2^3 + 2 = 10\) ✓ เจอเลย</div>
+  
+  <div class="careful-box">ระวังการแบ่งช่วง piecewise — ต้องดูว่าจุด \(0\) อยู่ในช่วงไหน (ที่นี่ \(x = 0\) อยู่ใน piece แรก \(0 \leq x \leq b\))</div>
+</div>
+
+<!-- ===== Q17 ===== -->
+<div class="question" id="q17">
+  <div class="q-header">
+    <span class="q-number">Q17</span>
+    <span class="q-source">ต.ค. 45/3</span><span class="subtag c-purple">🟣 หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(f''(x) = ax\) เมื่อ \(a\) เป็นค่าคงตัว ถ้าเส้นตรง \(2x + y - 6 = 0\) สัมผัสกราฟของ \(f\) ที่จุด \((1, 4)\) และ \(f(0) = 8\) แล้ว \(\displaystyle\int_0^1 f(x)\,dx\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) \(\frac{22}{4}\)</span>
+      <span class="choice correct">2) \(\frac{23}{4}\)</span>
+      <span class="choice">3) \(\frac{42}{4}\)</span>
+      <span class="choice">4) \(\frac{43}{4}\)</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> อินทิเกรต \(f''\) สองครั้ง → ใช้ 3 เงื่อนไข (\(f(0)=8\), \(f(1)=4\), \(f'(1)=\) ความชันเส้นสัมผัส) หา \(a, C_1, C_2\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> อินทิเกรต \(f''\) สองครั้ง<br>
+    \[f'(x) = \dfrac{a}{2}x^2 + C_1\]<br>
+    \[f(x) = \dfrac{a}{6}x^3 + C_1 x + C_2\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> หาความชันเส้นสัมผัส<br>
+    \(2x + y - 6 = 0 \Rightarrow y = -2x + 6\), ความชัน \(= -2\)<br>
+    ∴ \(f'(1) = -2\)</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> ใช้เงื่อนไข<br>
+    • \(f(0) = C_2 = 8\)<br>
+    • \(f(1) = \dfrac{a}{6} + C_1 + 8 = 4 \Rightarrow \dfrac{a}{6} + C_1 = -4\) ... (i)<br>
+    • \(f'(1) = \dfrac{a}{2} + C_1 = -2\) ... (ii)</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> แก้ระบบ (ii) - (i)<br>
+    \[\dfrac{a}{2} - \dfrac{a}{6} = -2 - (-4) = 2 \Rightarrow \dfrac{a}{3} = 2 \Rightarrow a = 6\]<br>
+    \[C_1 = -2 - \dfrac{6}{2} = -5\]</div>
+    <div class="step"><strong>ขั้นที่ 5:</strong> เขียน \(f(x)\) และอินทิเกรต<br>
+    \[f(x) = x^3 - 5x + 8\]<br>
+    \[\int_0^1 (x^3 - 5x + 8)\,dx = \left[\dfrac{x^4}{4} - \dfrac{5x^2}{2} + 8x\right]_0^1 = \dfrac{1}{4} - \dfrac{5}{2} + 8 = \dfrac{1 - 10 + 32}{4} = \dfrac{23}{4}\]</div>
+  </div>
+  
+  <div class="answer-box">\(\dfrac{23}{4}\) → ตอบ <strong>ข้อ 2</strong></div>
+  
+  <div class="tip-box">เส้นสัมผัส \(Ax + By + C = 0\): ความชัน \(= -A/B\) — จำสูตรนี้</div>
+  
+  <div class="careful-box">จุดสัมผัส \((1, 4)\) ให้ข้อมูล <em>สอง</em> อย่าง: \(f(1) = 4\) (จุดผ่าน) และ \(f'(1) = -2\) (ความชัน) — อย่าใช้แค่อันเดียว</div>
+</div>
+
+<!-- ===== Q18 ===== -->
+<div class="question" id="q18">
+  <div class="q-header">
+    <span class="q-number">Q18</span>
+    <span class="q-source">มี.ค. 46/3</span><span class="subtag c-purple">🟣 หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(f\) เป็นฟังก์ชัน ซึ่ง \(f''(x) = 2x + 1\) ถ้าค่าสูงสุดสัมพัทธ์ของ \(f\) เท่ากับ \(\dfrac{1}{2}\) ที่ \(x = -1\) แล้วค่าต่ำสุดสัมพัทธ์ของ \(f\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) -1</span>
+      <span class="choice">2) \(-\frac{1}{3}\)</span>
+      <span class="choice">3) 0</span>
+      <span class="choice correct">4) \(\frac{1}{3}\)</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> อินทิเกรต \(f''\) สองครั้ง → ใช้เงื่อนไขจุดสูงสุด (\(f(-1) = 1/2\), \(f'(-1) = 0\)) หาค่าคงตัว</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> อินทิเกรต \(f''\)<br>
+    \[f'(x) = x^2 + x + C_1\]<br>
+    \[f(x) = \dfrac{x^3}{3} + \dfrac{x^2}{2} + C_1 x + C_2\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ใช้เงื่อนไขจุดสูงสุด \(x = -1\)<br>
+    • \(f'(-1) = 1 - 1 + C_1 = 0 \Rightarrow C_1 = 0\)<br>
+    ∴ \(f'(x) = x^2 + x = x(x+1)\) → จุดวิกฤต: \(x = 0, -1\)</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> ทดสอบอนุพันธ์อันดับสอง<br>
+    • \(f''(-1) = -2 + 1 = -1 < 0\) → สูงสุด ✓<br>
+    • \(f''(0) = 0 + 1 = 1 > 0\) → ต่ำสุด ที่ \(x = 0\)</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> ใช้ \(f(-1) = \dfrac{1}{2}\) หา \(C_2\)<br>
+    \[f(-1) = -\dfrac{1}{3} + \dfrac{1}{2} + C_2 = \dfrac{1}{6} + C_2 = \dfrac{1}{2} \Rightarrow C_2 = \dfrac{1}{3}\]</div>
+    <div class="step"><strong>ขั้นที่ 5:</strong> หาค่าต่ำสุด<br>
+    \[f(0) = 0 + 0 + 0 + \dfrac{1}{3} = \dfrac{1}{3}\]</div>
+  </div>
+  
+  <div class="answer-box">ค่าต่ำสุดสัมพัทธ์ \(= \dfrac{1}{3}\) → ตอบ <strong>ข้อ 4</strong></div>
+  
+  <div class="tip-box">จุดสูงสุด/ต่ำสุด → ได้ <em>สอง</em> เงื่อนไข: \(f(c) = \) ค่า และ \(f'(c) = 0\)</div>
+  
+  <div class="careful-box">\(f''\) เป็นฟังก์ชันเชิงเส้น \(\Rightarrow\) \(f\) เป็นพหุนามดีกรี 3 — มี max และ min อย่างละจุด</div>
+</div>
+
+<!-- ===== Q19 ===== -->
+<div class="question" id="q19">
+  <div class="q-header">
+    <span class="q-number">Q19</span>
+    <span class="q-source">มี.ค. 46/3</span><span class="subtag c-yellow">🟡 พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(A\) เป็นบริเวณในระนาบ \(XY\) ซึ่งปิดล้อมด้วยพาราโบลา \(y = x^2 - 7\) แกน \(X\) จาก \(x = 0\) ถึง \(x = a\) เมื่อ \(a\) เป็นค่าคงตัว ถ้าพื้นที่ของบริเวณ \(A\) ส่วนที่อยู่เหนือแกน \(X\) มากกว่าพื้นที่ของบริเวณ \(A\) ส่วนที่อยู่ใต้แกน \(X\) เท่ากับ \(2a\) ตารางหน่วย แล้ว \(a\) คือจำนวนในข้อใด
+    <div class="choices">
+      <span class="choice">1) \(2\sqrt{3}\)</span>
+      <span class="choice correct">2) \(3\sqrt{3}\)</span>
+      <span class="choice">3) 5</span>
+      <span class="choice">4) 7</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> แบ่งพื้นที่เป็น "เหนือแกน \(X\)" และ "ใต้แกน \(X\)" แล้วตั้งสมการเปรียบเทียบ</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> หาจุดตัดแกน \(X\)<br>
+    \(y = x^2 - 7 = 0 \Rightarrow x = \pm\sqrt{7}\)<br>
+    • บน \([0, \sqrt{7}]\): \(y \leq 0\) (ใต้แกน \(X\))<br>
+    • บน \([\sqrt{7}, a]\) (\(a > \sqrt{7}\)): \(y \geq 0\) (เหนือแกน \(X\))</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> คำนวณพื้นที่ใต้แกน \(X\)<br>
+    \[A_{\text{ใต้}} = \int_0^{\sqrt{7}} |x^2 - 7|\,dx = \int_0^{\sqrt{7}} (7 - x^2)\,dx = \left[7x - \dfrac{x^3}{3}\right]_0^{\sqrt{7}}\]<br>
+    \[= 7\sqrt{7} - \dfrac{7\sqrt{7}}{3} = \dfrac{14\sqrt{7}}{3}\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> คำนวณพื้นที่เหนือแกน \(X\)<br>
+    \[A_{\text{เหนือ}} = \int_{\sqrt{7}}^{a} (x^2 - 7)\,dx = \left[\dfrac{x^3}{3} - 7x\right]_{\sqrt{7}}^{a}\]<br>
+    \[= \left(\dfrac{a^3}{3} - 7a\right) - \left(\dfrac{7\sqrt{7}}{3} - 7\sqrt{7}\right) = \dfrac{a^3}{3} - 7a + \dfrac{14\sqrt{7}}{3}\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> ตั้งสมการ \(A_{\text{เหนือ}} - A_{\text{ใต้}} = 2a\)<br>
+    \[\left(\dfrac{a^3}{3} - 7a + \dfrac{14\sqrt{7}}{3}\right) - \dfrac{14\sqrt{7}}{3} = 2a\]<br>
+    \[\dfrac{a^3}{3} - 7a = 2a \Rightarrow \dfrac{a^3}{3} = 9a\]<br>
+    \[a\left(\dfrac{a^2}{3} - 9\right) = 0 \Rightarrow a = 0 \text{ หรือ } a^2 = 27 \Rightarrow a = 3\sqrt{3}\]</div>
+  </div>
+  
+  <div class="answer-box">\(a = 3\sqrt{3}\) → ตอบ <strong>ข้อ 2</strong></div>
+  
+  <div class="tip-box">พจน์ \(\dfrac{14\sqrt{7}}{3}\) ตัดกันเอง — ไม่ต้องคำนวณให้ยุ่ง</div>
+  
+  <div class="careful-box">ต้องเช็คว่า \(a > \sqrt{7}\) — ถ้า \(a < \sqrt{7}\) จะไม่มีพื้นที่เหนือแกน \(X\)</div>
+</div>
+
+<!-- ===== Q20 ===== -->
+<div class="question" id="q20">
+  <div class="q-header">
+    <span class="q-number">Q20</span>
+    <span class="q-source">มี.ค. 46/3</span><span class="subtag c-purple">🟣 หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น</span>
+  </div>
+  <div class="q-statement">
+    ถ้าความชันของเส้นโค้ง \(y = f(x)\) ที่จุด \((x, y)\) ใดๆ เท่ากับ \(x^2 - 3x + 2\) และ \(\displaystyle\int_0^2 f(x)\,dx = 4\) แล้ว จุด \((x, y)\) ในข้อใดต่อไปนี้อยู่บนเส้นโค้ง \(y = f(x)\)
+    <div class="choices">
+      <span class="choice correct">1) \(\left(0, \frac{4}{3}\right)\)</span>
+      <span class="choice">2) \(\left(0, -\frac{4}{3}\right)\)</span>
+      <span class="choice">3) \(\left(1, \frac{13}{4}\right)\)</span>
+      <span class="choice">4) \(\left(1, -\frac{13}{4}\right)\)</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> อินทิเกรต \(f'\) หา \(f\) (มี \(C\)) → ใช้ \(\int_0^2 f(x)\,dx = 4\) หา \(C\) → แทนค่าจุด</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> อินทิเกรต<br>
+    \[f(x) = \int (x^2 - 3x + 2)\,dx = \dfrac{x^3}{3} - \dfrac{3x^2}{2} + 2x + C\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ใช้เงื่อนไข \(\int_0^2 f(x)\,dx = 4\)<br>
+    \[\int_0^2 \left(\dfrac{x^3}{3} - \dfrac{3x^2}{2} + 2x + C\right)dx = \left[\dfrac{x^4}{12} - \dfrac{x^3}{2} + x^2 + Cx\right]_0^2\]<br>
+    \[= \dfrac{16}{12} - 4 + 4 + 2C = \dfrac{4}{3} + 2C = 4\]<br>
+    \[2C = \dfrac{8}{3} \Rightarrow C = \dfrac{4}{3}\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> เขียน \(f\) และตรวจจุด<br>
+    \[f(x) = \dfrac{x^3}{3} - \dfrac{3x^2}{2} + 2x + \dfrac{4}{3}\]<br>
+    • \(f(0) = \dfrac{4}{3}\) ✓ (ตรงกับข้อ 1)</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> ตรวจข้ออื่น<br>
+    \[f(1) = \dfrac{1}{3} - \dfrac{3}{2} + 2 + \dfrac{4}{3} = \dfrac{2 - 9 + 12 + 8}{6} = \dfrac{13}{6}\] (ไม่ตรง)</div>
+  </div>
+  
+  <div class="answer-box">จุด \(\left(0, \dfrac{4}{3}\right)\) → ตอบ <strong>ข้อ 1</strong></div>
+  
+  <div class="tip-box">หา \(C\) จากเงื่อนไขอินทิกรัล: แทน \(f\) ในอินทิกรัลแล้วแก้ — \(C\) จะคูณกับ \((b-a)\)</div>
+  
+  <div class="careful-box">ตรวจจุดทุกข้อถ้าเวลาเหลือ — อาจมีหลายจุดที่ดูเหมือนถูก ต้องคำนวณให้แม่นยำ</div>
+</div>
+
+<!-- ===== Q21 ===== -->
+<div class="question" id="q21">
+  <div class="q-header">
+    <span class="q-number">Q21</span>
+    <span class="q-source">ต.ค. 46/3</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(g\) เป็นฟังก์ชันพหุนาม และ \(f(x) = xg(x)\) ถ้า \(f'(x) = 4x^3 + 9x^2\) และ \(f(0) = 0\) แล้ว \(\dfrac{d}{dx}\left[\dfrac{f(x)}{g(x+1)}\right]\) ที่จุด \(x = -2\) มีค่าเท่ากับข้อใด
+    <div class="choices">
+      <span class="choice correct">1) -4</span>
+      <span class="choice">2) -2</span>
+      <span class="choice">3) 2</span>
+      <span class="choice">4) 4</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> อินทิเกรต \(f'\) หา \(f\) → หาร \(x\) หา \(g\) → ดิฟ Quotient</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> หา \(f(x)\)<br>
+    \[f(x) = \int (4x^3 + 9x^2)\,dx = x^4 + 3x^3 + C\]<br>
+    \[f(0) = C = 0 \Rightarrow f(x) = x^4 + 3x^3 = x^3(x+3)\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> หา \(g(x)\)<br>
+    \[g(x) = \dfrac{f(x)}{x} = x^3 + 3x^2 = x^2(x+3)\] (สำหรับ \(x \neq 0\))</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> คำนวณค่าที่ \(x = -2\)<br>
+    • \(f(-2) = (-2)^3 \cdot 1 = -8\)<br>
+    • \(f'(-2) = 4(-8) + 9(4) = -32 + 36 = 4\)<br>
+    • \(g(-1) = (-1)^2 \cdot 2 = 2\)<br>
+    • \(g'(x) = 3x^2 + 6x \Rightarrow g'(-1) = 3 - 6 = -3\)</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> Quotient Rule<br>
+    \[\dfrac{d}{dx}\left[\dfrac{f(x)}{g(x+1)}\right] = \dfrac{f'(x)g(x+1) - f(x)g'(x+1)}{[g(x+1)]^2}\]<br>
+    ที่ \(x = -2\): \(= \dfrac{4 \cdot 2 - (-8) \cdot (-3)}{2^2} = \dfrac{8 - 24}{4} = \dfrac{-16}{4} = -4\]</div>
+  </div>
+  
+  <div class="answer-box">\(-4\) → ตอบ <strong>ข้อ 1</strong></div>
+  
+  <div class="tip-box">\(f(x) = x^4 + 3x^3 = x^3(x+3)\) แยกตัวประกอบเสมอ — ช่วยให้ \(g(x) = x^2(x+3)\) คำนวณง่าย</div>
+  
+  <div class="careful-box">\(g(x+1)\) ไม่ใช่ \(g(x)\) — ต้องแทน \(x = -2\) ลงใน \(g(x+1)\) เป็น \(g(-1)\)</div>
+</div>
+
+<!-- ===== Q22 ===== -->
+<div class="question" id="q22">
+  <div class="q-header">
+    <span class="q-number">Q22</span>
+    <span class="q-source">ต.ค. 46/3</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(a, b\) เป็นจำนวนจริงใดๆ และ \(f(x) = x^3 + ax^2 + bx + 1\) โดยที่ \(f'(1) = 15\) และ \(\displaystyle\int_0^1 f(x)\,dx = \dfrac{55}{12}\) แล้ว \(f(1)\) มีค่าเท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) 9</span>
+      <span class="choice correct">2) 10</span>
+      <span class="choice">3) 11</span>
+      <span class="choice">4) 12</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> ตั้งระบบ 2 สมการ 2 ตัวแปร (\(a, b\)) จากเงื่อนไขทั้งสอง → หา \(f(1)\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> ดิฟ \(f\)<br>
+    \[f'(x) = 3x^2 + 2ax + b\]<br>
+    \[f'(1) = 3 + 2a + b = 15 \Rightarrow 2a + b = 12\] ... (i)</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> อินทิเกรต<br>
+    \[\int_0^1 f(x)\,dx = \left[\dfrac{x^4}{4} + \dfrac{ax^3}{3} + \dfrac{bx^2}{2} + x\right]_0^1 = \dfrac{1}{4} + \dfrac{a}{3} + \dfrac{b}{2} + 1 = \dfrac{5}{4} + \dfrac{a}{3} + \dfrac{b}{2}\]<br>
+    \[= \dfrac{55}{12} \Rightarrow \dfrac{a}{3} + \dfrac{b}{2} = \dfrac{55}{12} - \dfrac{15}{12} = \dfrac{40}{12} = \dfrac{10}{3}\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> คูณ (ii) ด้วย 6<br>
+    \[2a + 3b = 20\] ... (ii')<br>
+    ลบ (i) จาก (ii'): \(2b = 8 \Rightarrow b = 4\)<br>
+    แทนใน (i): \(2a + 4 = 12 \Rightarrow a = 4\)</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> หา \(f(1)\)<br>
+    \[f(1) = 1 + 4 + 4 + 1 = 10\]</div>
+  </div>
+  
+  <div class="answer-box">\(f(1) = 10\) → ตอบ <strong>ข้อ 2</strong></div>
+  
+  <div class="tip-box">Elimination: จัดรูปสมการทั้งสองให้สัมประสิทธิ์ตรงกัน แล้วลบกัน — เร็วกว่า substitution</div>
+  
+  <div class="careful-box">\(\dfrac{a}{3} + \dfrac{b}{2} = \dfrac{10}{3}\) — ระวังการคูณ LCD = 6: ได้ \(2a + 3b = 20\) ไม่ใช่ \(3a + 2b\)</div>
+</div>
+
+<!-- ===== Q23 ===== -->
+<div class="question" id="q23">
+  <div class="q-header">
+    <span class="q-number">Q23</span>
+    <span class="q-source">ต.ค. 46/3</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(f(x) = x^2 - 1\) พิจารณาข้อความต่อไปนี้<br>
+    <strong>ก.</strong> \(\displaystyle\int_{-1}^{1} f(x)\,dx = \dfrac{4}{3}\)<br>
+    <strong>ข.</strong> พื้นที่ปิดล้อมด้วยเส้นโค้ง \(y = f(x)\) จาก \(x = -1\) ถึง \(x = 1\) เท่ากับ \(\dfrac{4}{3}\) ตารางหน่วย<br>
+    ข้อใดต่อไปนี้ถูก
+    <div class="choices">
+      <span class="choice">1) ก. ถูก, ข. ถูก</span>
+      <span class="choice">2) ก. ถูก, ข. ผิด</span>
+      <span class="choice correct">3) ก. ผิด, ข. ถูก</span>
+      <span class="choice">4) ก. ผิด, ข. ผิด</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> <em>อินทิกรัล</em> (มีเครื่องหมาย) ≠ <em>พื้นที่</em> (บวกเสมอ) — ข้อสอบจับจุดนี้</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> ตรวจ ก. — คำนวณอินทิกรัล<br>
+    \[\int_{-1}^{1} (x^2 - 1)\,dx = \left[\dfrac{x^3}{3} - x\right]_{-1}^{1} = \left(\dfrac{1}{3} - 1\right) - \left(-\dfrac{1}{3} + 1\right)\]<br>
+    \[= -\dfrac{2}{3} - \dfrac{2}{3} = -\dfrac{4}{3}\]<br>
+    ข้อ ก. กล่าวว่า \(= \dfrac{4}{3}\) → <strong>ผิด</strong></div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ตรวจ ข. — คำนวณพื้นที่<br>
+    สังเกต \(f(x) = x^2 - 1 \leq 0\) บน \([-1, 1]\) (เนื่องจาก \(x^2 \leq 1\))<br>
+    \[A = \int_{-1}^{1} |x^2 - 1|\,dx = \int_{-1}^{1} (1 - x^2)\,dx = \left[x - \dfrac{x^3}{3}\right]_{-1}^{1}\]<br>
+    \[= \left(1 - \dfrac{1}{3}\right) - \left(-1 + \dfrac{1}{3}\right) = \dfrac{2}{3} + \dfrac{2}{3} = \dfrac{4}{3}\]<br>
+    ข้อ ข. กล่าวว่า \(= \dfrac{4}{3}\) → <strong>ถูก</strong></div>
+  </div>
+  
+  <div class="answer-box">ก. ผิด, ข. ถูก → ตอบ <strong>ข้อ 3</strong></div>
+  
+  <div class="tip-box">เมื่อ \(f(x) \leq 0\) ทั้งช่วง: \(\int_a^b f = -A\) (ลบ) แต่ \(A = -\int_a^b f\) (บวก) — สังเกตเครื่องหมาย</div>
+  
+  <div class="careful-box">ข้อสอบแบบนี้ "จับโรค" จุดสับสนระหว่างอินทิกรัลกับพื้นที่ — ต้องอ่านโจทย์ว่าถามอะไร</div>
+</div>
+
+<!-- ===== Q24 ===== -->
+<div class="question" id="q24">
+  <div class="q-header">
+    <span class="q-number">Q24</span>
+    <span class="q-source">Ent' มี.ค. 47: 2 คะแนน</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(f(x) = 3x + 1\) และ \((f \circ g)'(x) = 3x^2 + 1\) ถ้า \(g(0) = 1\) แล้ว \(\displaystyle\int_0^1 g(x)\,dx\) มีค่าเป็นเท่าใด
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> Chain Rule สำหรับ composition: \((f \circ g)'(x) = f'(g(x)) \cdot g'(x)\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> คำนวณ \((f \circ g)(x)\) และดิฟ<br>
+    \[(f \circ g)(x) = f(g(x)) = 3g(x) + 1\]<br>
+    \[(f \circ g)'(x) = 3g'(x)\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> แทนเงื่อนไข<br>
+    \[3g'(x) = 3x^2 + 1 \Rightarrow g'(x) = x^2 + \dfrac{1}{3}\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> อินทิเกรตหา \(g(x)\)<br>
+    \[g(x) = \dfrac{x^3}{3} + \dfrac{x}{3} + C\]<br>
+    \[g(0) = C = 1\]<br>
+    \[g(x) = \dfrac{x^3}{3} + \dfrac{x}{3} + 1\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> อินทิเกรต<br>
+    \[\int_0^1 g(x)\,dx = \left[\dfrac{x^4}{12} + \dfrac{x^2}{6} + x\right]_0^1 = \dfrac{1}{12} + \dfrac{1}{6} + 1 = \dfrac{1 + 2 + 12}{12} = \dfrac{15}{12} = \dfrac{5}{4} = 1.25\]</div>
+  </div>
+  
+  <div class="answer-box">\(\displaystyle\int_0^1 g(x)\,dx = 1.25\)</div>
+  
+  <div class="tip-box">\(f\) เป็นเส้นตรง \(\Rightarrow (f \circ g)'(x) = f'(g(x)) \cdot g'(x)\) เป็นค่าคงตัวคูณ \(g'\) — ง่าย!</div>
+  
+  <div class="careful-box">\(g(0) = 1\) หา \(C\) — อย่าลืมใช้เงื่อนไขเริ่มต้น</div>
+</div>
+
+
+<div class="section-divider">📋 ส่วนที่ 3: ข้อ 25 — 36 (ข้อสอบ Ent / A-NET ประยุกต์ + พื้นที่ซับซ้อน)</div>
+
+
+<!-- ===== Q25 ===== -->
+<div class="question" id="q25">
+  <div class="q-header">
+    <span class="q-number">Q25</span>
+    <span class="q-source">Ent' มี.ค. 47: 3 คะแนน</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(f\) เป็นฟังก์ชันพหุนามกำลังสาม ซึ่ง \(f(0) = 1 = f(1)\) และ \(f'(0) = 1\) และ \(\displaystyle\int_{-1}^{1} f(x)\,dx = 6\) แล้ว \(f(-1)\) มีค่าเท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) -7</span>
+      <span class="choice">2) -1</span>
+      <span class="choice correct">3) 13</span>
+      <span class="choice">4) 15</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> พหุนามดีกรี 3 มี 4 สัมประสิทธิ์ → ต้องใช้ 4 เงื่อนไข (มีพอดี) → ใช้ความคู่/คี่ของอินทิกรัลลดรูป</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> ตั้ง \(f(x) = ax^3 + bx^2 + cx + d\)<br>
+    • \(f(0) = d = 1\)<br>
+    • \(f(1) = a + b + c + 1 = 1 \Rightarrow a + b + c = 0\) ... (i)<br>
+    • \(f'(x) = 3ax^2 + 2bx + c \Rightarrow f'(0) = c = 1\)<br>
+    แทนใน (i): \(a + b = -1\) ... (i')</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ใช้เงื่อนไขอินทิกรัล (ใช้ความคู่/คี่)<br>
+    \[\int_{-1}^{1} (ax^3 + bx^2 + cx + 1)\,dx = \int_{-1}^{1} (bx^2 + 1)\,dx = 2\int_0^1 (bx^2 + 1)\,dx\]<br>
+    (เนื่องจาก \(ax^3\) และ \(cx\) เป็นฟังก์ชันคี่ อินทิเกรตเป็น 0)<br>
+    \[= 2\left[\dfrac{bx^3}{3} + x\right]_0^1 = 2\left(\dfrac{b}{3} + 1\right) = 6\]<br>
+    \[\dfrac{b}{3} + 1 = 3 \Rightarrow b = 6\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> หา \(a\)<br>
+    \[a + 6 = -1 \Rightarrow a = -7\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> หา \(f(-1)\)<br>
+    \[f(-1) = -7(-1)^3 + 6(-1)^2 + 1(-1) + 1 = 7 + 6 - 1 + 1 = 13\]</div>
+  </div>
+  
+  <div class="answer-box">\(f(-1) = 13\) → ตอบ <strong>ข้อ 3</strong></div>
+  
+  <div class="tip-box">ฟังก์ชันคี่ (\(ax^3, cx\)) อินทิเกรตบนช่วงสมมาตร \([-a, a]\) ได้ 0 — ลดการคำนวณไปครึ่ง</div>
+  
+  <div class="careful-box">พหุนามดีกรี 3 → มี 4 สัมประสิทธิ์ → ต้องมี 4 เงื่อนไขพอดี ถ้าไม่พอ โจทย์อาจผิด</div>
+</div>
+
+<!-- ===== Q26 ===== -->
+<div class="question" id="q26">
+  <div class="q-header">
+    <span class="q-number">Q26</span>
+    <span class="q-source">Ent' ต.ค. 47: 3 คะแนน</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    ถ้า \(f(x)\) และ \(g(x)\) เป็นฟังก์ชันซึ่งหาอนุพันธ์ได้ และมีสมบัติว่า \(f'(g(x)) \cdot g'(x) = 1\) และ \(f(g(0)) = 5\) แล้วค่าของ \(f(g(2))\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) 1</span>
+      <span class="choice">2) 3</span>
+      <span class="choice">3) 5</span>
+      <span class="choice correct">4) 7</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> Chain Rule: \((f \circ g)'(x) = f'(g(x)) \cdot g'(x)\) — เท่ากับ 1 หมายความว่า \(f \circ g\) มีความชัน 1</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> สังเกตว่า \((f \circ g)'(x) = 1\)<br>
+    อินทิเกรต: \(f(g(x)) = x + C\)</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ใช้เงื่อนไข \(f(g(0)) = 5\)<br>
+    \[f(g(0)) = 0 + C = 5 \Rightarrow C = 5\]<br>
+    \[f(g(x)) = x + 5\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> หา \(f(g(2))\)<br>
+    \[f(g(2)) = 2 + 5 = 7\]</div>
+  </div>
+  
+  <div class="answer-box">\(f(g(2)) = 7\) → ตอบ <strong>ข้อ 4</strong></div>
+  
+  <div class="tip-box">\((f \circ g)'(x) = 1 \Rightarrow f \circ g\) เป็นเส้นตรง — ไม่ต้องรู้ \(f\) หรือ \(g\) แยกกัน</div>
+  
+  <div class="careful-box">อย่าพยายามหา \(f\) และ \(g\) แยก — ข้อมูลไม่พอ แต่ composition หาได้</div>
+</div>
+
+<!-- ===== Q27 ===== -->
+<div class="question" id="q27">
+  <div class="q-header">
+    <span class="q-number">Q27</span>
+    <span class="q-source">Ent' ต.ค. 47: 3 คะแนน</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(y = f(x)\) เป็นฟังก์ชันพหุนามซึ่งมีค่าต่ำสุดสัมพัทธ์เท่ากับ 3 ที่จุด \(x = 2\) และมีเส้นตรง \(3x + y - 7 = 0\) เป็นสมการเส้นสัมผัสกราฟที่จุด \((1, 4)\) ถ้า \(g(x) = x^2 f(x)\) แล้วค่าของ \(\displaystyle\int_1^2 g''(x)\,dx\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) 5</span>
+      <span class="choice correct">2) 7</span>
+      <span class="choice">3) 8</span>
+      <span class="choice">4) 10</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> FTC: \(\int_1^2 g''(x)\,dx = g'(2) - g'(1)\) — ไม่ต้องหา \(g''\) ทั้งฟังก์ชัน</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> รวบรวมข้อมูลจากโจทย์<br>
+    • \(f(2) = 3\) (ค่าต่ำสุดสัมพัทธ์), \(f'(2) = 0\) (จุดวิกฤต)<br>
+    • จุดสัมผัส \((1, 4)\): \(f(1) = 4\), ความชัน \(= -3\) (จาก \(3x + y - 7 = 0 \Rightarrow y = -3x + 7\)) → \(f'(1) = -3\)</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> คำนวณ \(g'(x)\)<br>
+    \[g(x) = x^2 f(x) \Rightarrow g'(x) = 2xf(x) + x^2 f'(x)\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> หา \(g'(2)\) และ \(g'(1)\)<br>
+    • \(g'(2) = 2(2)f(2) + 4f'(2) = 4 \cdot 3 + 4 \cdot 0 = 12\)<br>
+    • \(g'(1) = 2(1)f(1) + 1 \cdot f'(1) = 2 \cdot 4 + (-3) = 5\)</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> ใช้ FTC<br>
+    \[\int_1^2 g''(x)\,dx = g'(2) - g'(1) = 12 - 5 = 7\]</div>
+  </div>
+  
+  <div class="answer-box">\(\displaystyle\int_1^2 g''(x)\,dx = 7\) → ตอบ <strong>ข้อ 2</strong></div>
+  
+  <div class="tip-box">FTC ลดรูป: \(\int_a^b g'' = g'(b) - g'(a)\) — ไม่ต้องหา \(g''\) ทั้งฟังก์ชัน ประหยัดเวลามาก</div>
+  
+  <div class="careful-box">เส้นสัมผัส \(Ax + By + C = 0\) ความชัน \(= -A/B = -3/1 = -3\) — อย่าสลับเครื่องหมาย</div>
+</div>
+
+<!-- ===== Q28 ===== -->
+<div class="question" id="q28">
+  <div class="q-header">
+    <span class="q-number">Q28</span>
+    <span class="q-source">Ent' ต.ค. 47: 3 คะแนน</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    ถ้า \[f(x) = \begin{cases} x - n & \text{เมื่อ } 2n < x < 2n+1 \\ n+1 & \text{เมื่อ } 2n+1 < x < 2n+2 \end{cases}\]
+    โดยที่ \(n = 0, 1, 2, \ldots, 9\) แล้วค่าของ \(\displaystyle\int_0^{20} f(x)\,dx\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice correct">1) 105</span>
+      <span class="choice">2) 115</span>
+      <span class="choice">3) 125</span>
+      <span class="choice">4) 135</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> Piecewise ที่เป็น periodic pattern — แบ่งเป็น 10 ช่วง (\(n = 0\) ถึง \(9\)) แล้วหาผลรวม</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> สำหรับแต่ละ \(n\) (\(n = 0, 1, \ldots, 9\)) ช่วง \([2n, 2n+2]\) แบ่งเป็น<br>
+    • \([2n, 2n+1]\): \(f(x) = x - n\)<br>
+    • \([2n+1, 2n+2]\): \(f(x) = n + 1\)</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> คำนวณพื้นที่แต่ละช่วง<br>
+    • \(\int_{2n}^{2n+1} (x-n)\,dx\): ให้ \(u = x - n\), \(du = dx\), \(u\) จาก \(n\) ถึง \(n+1\)<br>
+    \[= \int_n^{n+1} u\,du = \dfrac{(n+1)^2 - n^2}{2} = \dfrac{2n+1}{2}\]<br>
+    • \(\int_{2n+1}^{2n+2} (n+1)\,dx = (n+1) \cdot 1 = n+1\)</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> รวมแต่ละช่วง<br>
+    \[\text{Each} = \dfrac{2n+1}{2} + (n+1) = \dfrac{2n+1 + 2n + 2}{2} = \dfrac{4n+3}{2}\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> ผลรวม<br>
+    \[\int_0^{20} f(x)\,dx = \sum_{n=0}^{9} \dfrac{4n+3}{2} = \dfrac{1}{2}\left(4\sum_{n=0}^{9} n + 3 \cdot 10\right)\]<br>
+    \[= \dfrac{1}{2}\left(4 \cdot \dfrac{9 \cdot 10}{2} + 30\right) = \dfrac{1}{2}(180 + 30) = \dfrac{210}{2} = 105\]</div>
+  </div>
+  
+  <div class="answer-box">\(\displaystyle\int_0^{20} f(x)\,dx = 105\) → ตอบ <strong>ข้อ 1</strong></div>
+  
+  <div class="tip-box">Substitution \(u = x - n\) ลดรูป: \(\int_{2n}^{2n+1}(x-n)dx = \int_n^{n+1} u\,du\)</div>
+  
+  <div class="careful-box">\(\sum_{n=0}^{9} n = 45\) (ไม่ใช่ 55) — ระวังการนับ \(n = 0\) ถึง \(9\) มี 10 พจน์</div>
+</div>
+
+<!-- ===== Q29 ===== -->
+<div class="question" id="q29">
+  <div class="q-header">
+    <span class="q-number">Q29</span>
+    <span class="q-source">Ent' มี.ค. 48: 3 คะแนน</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    ค่าของ \(\displaystyle\int_{-2}^{2} \sqrt{4 - x^2}\,dx\) อยู่ในช่วงใดต่อไปนี้
+    <div class="choices">
+      <span class="choice">1) \((3.1, 3.2)\)</span>
+      <span class="choice">2) \((3.2, 3.3)\)</span>
+      <span class="choice">3) \((6.1, 6.2)\)</span>
+      <span class="choice correct">4) \((6.2, 6.3)\)</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> \(y = \sqrt{r^2 - x^2}\) เป็นครึ่งบนของวงกลมรัศมี \(r\) — พื้นที่ \(= \dfrac{\pi r^2}{2}\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> จำแนกเรขาคณิต<br>
+    \(y = \sqrt{4 - x^2} = \sqrt{2^2 - x^2}\) เป็นครึ่งบนของวงกลมรัศมี \(r = 2\) ที่จุดกำเนิด</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> พื้นที่ครึ่งวงกลม<br>
+    \[\int_{-2}^{2} \sqrt{4 - x^2}\,dx = \dfrac{\pi r^2}{2} = \dfrac{\pi \cdot 4}{2} = 2\pi\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> ประมาณค่า<br>
+    \[2\pi \approx 2 \times 3.14159 = 6.2832\]<br>
+    อยู่ในช่วง \((6.2, 6.3)\)</div>
+  </div>
+  
+  <div class="answer-box">อยู่ในช่วง \((6.2, 6.3)\) → ตอบ <strong>ข้อ 4</strong></div>
+  
+  <div class="tip-box">\(\int_{-r}^{r} \sqrt{r^2 - x^2}\,dx = \dfrac{\pi r^2}{2}\) — จำเป็นนิยามพื้นที่ครึ่งวงกลม</div>
+  
+  <div class="careful-box">\(\pi \approx 3.14159\) → \(2\pi \approx 6.283\) อยู่ใน \((6.2, 6.3)\) <em>ไม่ใช่</em> \((6.1, 6.2)\)</div>
+</div>
+
+<!-- ===== Q30 ===== -->
+<div class="question" id="q30">
+  <div class="q-header">
+    <span class="q-number">Q30</span>
+    <span class="q-source">Ent' มี.ค. 48: 3 คะแนน</span><span class="subtag c-yellow">🟡 พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง</span>
+  </div>
+  <div class="q-statement">
+    ถ้าความชันของเส้นสัมผัสเส้นโค้ง \(y = f(x)\) ที่จุด \((x, y)\) ใดๆ เป็น \(2x - 4\) และ \(f\) มีค่าต่ำสุดสัมพัทธ์เท่ากับ 10 หน่วย แล้วพื้นที่ที่ปิดล้อมด้วยกราฟของ \(y = f(x)\) แกน \(X\) จาก \(x = 0\) ถึง \(x = 3\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice correct">1) 33</span>
+      <span class="choice">2) 36</span>
+      <span class="choice">3) 39</span>
+      <span class="choice">4) 42</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> ความชัน → \(f'\) → อินทิเกรต → \(f\) ใช้ค่าต่ำสุดหา \(C\) → คำนวณพื้นที่</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> อินทิเกรต<br>
+    \[f'(x) = 2x - 4 = 0 \Rightarrow x = 2\] (จุดวิกฤต)<br>
+    \[f''(x) = 2 > 0\] → ต่ำสุดที่ \(x = 2\), \(f(2) = 10\)<br>
+    \[f(x) = x^2 - 4x + C\]<br>
+    \[f(2) = 4 - 8 + C = 10 \Rightarrow C = 14\]<br>
+    \[f(x) = x^2 - 4x + 14\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ตรวจเครื่องหมายบน \([0, 3]\)<br>
+    ค่าต่ำสุด \(= f(2) = 10 > 0\), \(f(0) = 14\), \(f(3) = 11\) → \(f > 0\) ทั้งช่วง</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> อินทิเกรต<br>
+    \[\int_0^3 (x^2 - 4x + 14)\,dx = \left[\dfrac{x^3}{3} - 2x^2 + 14x\right]_0^3\]<br>
+    \[= \dfrac{27}{3} - 18 + 42 = 9 - 18 + 42 = 33\]</div>
+  </div>
+  
+  <div class="answer-box">พื้นที่ \(= 33\) → ตอบ <strong>ข้อ 1</strong></div>
+  
+  <div class="tip-box">ถ้า \(f > 0\) ทั้งช่วง → \(\int f\,dx\) เท่ากับพื้นที่โดยตรง ไม่ต้องหาค่าสัมบูรณ์</div>
+  
+  <div class="careful-box">ต้องเช็คเครื่องหมาย \(f\) ก่อน — ถ้า \(f\) เปลี่ยนเครื่องหมายต้องแบ่งช่วง</div>
+</div>
+
+<!-- ===== Q31 ===== -->
+<div class="question" id="q31">
+  <div class="q-header">
+    <span class="q-number">Q31</span>
+    <span class="q-source">A-NET' ก.พ. 49: 3 คะแนน</span><span class="subtag c-yellow">🟡 พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ กราฟของ \(y = f(x)\) มีความชันที่จุด \((x, y)\) ใดๆ เป็น \(2x + 2\) และ \(f\) มีค่าต่ำสุดสัมพัทธ์เท่ากับ \(-3\) พื้นที่ของอาณาบริเวณที่ปิดล้อมด้วยกราฟของ \(y = f(x)\) แกน \(x\) เส้นตรง \(x = -1\) และเส้นตรง \(x = 0\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) \(\frac{7}{3}\) ตารางหน่วย</span>
+      <span class="choice correct">2) \(\frac{8}{3}\) ตารางหน่วย</span>
+      <span class="choice">3) 9 ตารางหน่วย</span>
+      <span class="choice">4) 12 ตารางหน่วย</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> ความชัน → \(f\) → ตรวจเครื่องหมาย → พื้นที่ \(= \int |f|\,dx\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> หา \(f(x)\)<br>
+    \[f'(x) = 2x + 2 = 0 \Rightarrow x = -1\] (จุดวิกฤต)<br>
+    \[f''(x) = 2 > 0\] → ต่ำสุดที่ \(x = -1\), \(f(-1) = -3\)<br>
+    \[f(x) = x^2 + 2x + C\]<br>
+    \[f(-1) = 1 - 2 + C = -3 \Rightarrow C = -2\]<br>
+    \[f(x) = x^2 + 2x - 2\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ตรวจเครื่องหมายบน \([-1, 0]\)<br>
+    • \(f(-1) = -3\), \(f(0) = -2\) (ทั้งคู่ลบ)<br>
+    • ราก: \(x = \dfrac{-2 \pm \sqrt{4 + 8}}{2} = -1 \pm \sqrt{3} \approx -2.73, 0.73\) → ไม่มีรากใน \([-1, 0]\)<br>
+    ∴ \(f(x) < 0\) ทั้งช่วง → พื้นที่ \(= -\int_{-1}^0 f(x)\,dx\)</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> คำนวณ<br>
+    \[A = -\int_{-1}^{0} (x^2 + 2x - 2)\,dx = -\left[\dfrac{x^3}{3} + x^2 - 2x\right]_{-1}^{0}\]<br>
+    \[= -\left(0 - \left(-\dfrac{1}{3} + 1 + 2\right)\right) = -\left(-\dfrac{8}{3}\right) = \dfrac{8}{3}\]</div>
+  </div>
+  
+  <div class="answer-box">พื้นที่ \(= \dfrac{8}{3}\) ตารางหน่วย → ตอบ <strong>ข้อ 2</strong></div>
+  
+  <div class="tip-box">เช็คราก \(\dfrac{-b \pm \sqrt{b^2-4ac}}{2a}\) — ถ้าไม่มีรากในช่วง แสดงว่า \(f\) ไม่เปลี่ยนเครื่องหมาย</div>
+  
+  <div class="careful-box">\(f(x) < 0\) ทั้งช่วง → พื้นที่ \(= -\int f\,dx\) (ต้องกลับเครื่องหมาย) ไม่ใช่ \(\int f\,dx\)</div>
+</div>
+
+<!-- ===== Q32 ===== -->
+<div class="question" id="q32">
+  <div class="q-header">
+    <span class="q-number">Q32</span>
+    <span class="q-source">A-NET' มี.ค. 50: 3 คะแนน</span><span class="subtag c-yellow">🟡 พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง</span>
+  </div>
+  <div class="q-statement">
+    พื้นที่ของอาณาบริเวณที่อยู่ระหว่างเส้นโค้ง \(y = x^3 - 3x^2 + 2x\) และแกน \(x\) เมื่อ \(x\) อยู่ในช่วง \([-2, 1]\) เท่ากับข้อใด
+    <div class="choices">
+      <span class="choice">1) 16 ตารางหน่วย</span>
+      <span class="choice correct">2) 16.25 ตารางหน่วย</span>
+      <span class="choice">3) 16.5 ตารางหน่วย</span>
+      <span class="choice">4) 17 ตารางหน่วย</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> แยกตัวประกอบพหุนาม → หาช่วงเครื่องหมาย → แบ่งอินทิเกรต</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> แยกตัวประกอบ<br>
+    \[f(x) = x^3 - 3x^2 + 2x = x(x^2 - 3x + 2) = x(x-1)(x-2)\]<br>
+    ราก: \(x = 0, 1, 2\)</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> วิเคราะห์เครื่องหมายบน \([-2, 1]\)<br>
+    • ช่วง \([-2, 0)\): \(x < 0, x-1 < 0, x-2 < 0\) → ผลคูณลบ (3 ตัวลบ) → \(f < 0\)<br>
+    • ช่วง \((0, 1)\): \(x > 0, x-1 < 0, x-2 < 0\) → ผลคูณบวก → \(f > 0\)</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> แบ่งอินทิเกรต<br>
+    \[A = \int_{-2}^{0} |f|\,dx + \int_0^1 |f|\,dx = -\int_{-2}^{0} f\,dx + \int_0^1 f\,dx\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> คำนวณ<br>
+    \[\int f(x)\,dx = \dfrac{x^4}{4} - x^3 + x^2\]<br>
+    • \(\int_{-2}^{0} f\,dx = 0 - \left(\dfrac{16}{4} - (-8) + 4\right) = -(4 + 8 + 4) = -16\)<br>
+    • \(-\int_{-2}^{0} f\,dx = 16\)<br>
+    • \(\int_0^1 f\,dx = \dfrac{1}{4} - 1 + 1 = \dfrac{1}{4}\)<br>
+    \[A = 16 + \dfrac{1}{4} = \dfrac{65}{4} = 16.25\]</div>
+  </div>
+  
+  <div class="answer-box">พื้นที่ \(= 16.25\) ตารางหน่วย → ตอบ <strong>ข้อ 2</strong></div>
+  
+  <div class="tip-box">พหุนามดีกรี 3 ที่มี 3 รากจริง → ใช้ช่วงระหว่างรากเพื่อตัดสินเครื่องหมาย ไม่ต้องทดสอบจุด</div>
+  
+  <div class="careful-box">เครื่องหมายพหุนามดีกรีคี่ เปลี่ยนทุกครั้งที่ข้ามราก — ใช้กฎนี้ลดการทดสอบจุด</div>
+</div>
+
+<!-- ===== Q33 ===== -->
+<div class="question" id="q33">
+  <div class="q-header">
+    <span class="q-number">Q33</span>
+    <span class="q-source">A-NET' มี.ค. 51: 3 คะแนน</span><span class="subtag c-green">🟢 ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(I(a) = \displaystyle\int_{-a}^{a} (x^2 - 1)\,dx\) โดยที่ \(a \in [0, \infty)\) ประโยคในข้อใดต่อไปนี้มีค่าความจริงเป็นจริง เมื่อเอกภพสัมพัทธ์คือช่วง \([0, \infty)\)
+    <div class="choices">
+      <span class="choice">1) \(\forall a\,[I(a) > 0]\)</span>
+      <span class="choice">2) \(\forall a\,[(I(a)=0) \Rightarrow (a=0)]\)</span>
+      <span class="choice">3) \(\exists a\,[(a > 2) \wedge (I(a) < 0)]\)</span>
+      <span class="choice correct">4) \(\exists a\,[(a \neq 0) \wedge (I(a) = 0)]\)</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> ฟังก์ชันคู่ → \(\int_{-a}^a = 2\int_0^a\), วิเคราะห์เครื่องหมาย, ตรวจตรรกะ \(\forall, \exists\)</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> คำนวณ \(I(a)\)<br>
+    \(x^2 - 1\) เป็นฟังก์ชันคู่ → \[I(a) = 2\int_0^a (x^2 - 1)\,dx = 2\left[\dfrac{x^3}{3} - x\right]_0^a = 2\left(\dfrac{a^3}{3} - a\right) = \dfrac{2a(a^2 - 3)}{3}\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ตรวจข้อ 1: \(\forall a\,[I(a) > 0]\)<br>
+    • \(I(0) = 0\) (ไม่มากกว่า 0) → <strong>ผิด</strong></div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> ตรวจข้อ 2: \(\forall a\,[(I(a)=0) \Rightarrow (a=0)]\)<br>
+    • \(I(a) = 0 \Rightarrow a = 0\) หรือ \(a^2 = 3 \Rightarrow a = \sqrt{3}\)<br>
+    • มี \(a = \sqrt{3} \neq 0\) ที่ \(I(a) = 0\) → <strong>ผิด</strong></div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> ตรวจข้อ 3: \(\exists a\,[(a > 2) \wedge (I(a) < 0)]\)<br>
+    • \(a > \sqrt{3}\): \(I(a) > 0\) (เนื่องจาก \(a^2 - 3 > 0\))<br>
+    • \(a > 2 > \sqrt{3}\): \(I(a) > 0\) → ไม่มี \(a > 2\) ที่ \(I(a) < 0\) → <strong>ผิด</strong></div>
+    <div class="step"><strong>ขั้นที่ 5:</strong> ตรวจข้อ 4: \(\exists a\,[(a \neq 0) \wedge (I(a) = 0)]\)<br>
+    • \(a = \sqrt{3} \neq 0\) และ \(I(\sqrt{3}) = 0\) → <strong>ถูก</strong></div>
+  </div>
+  
+  <div class="answer-box">ข้อ 4 → ตอบ <strong>ข้อ 4</strong></div>
+  
+  <div class="tip-box">วิเคราะห์เครื่องหมาย: \(I(a) = \frac{2a(a^2-3)}{3}\) — เครื่องหมายเปลี่ยนที่ \(a = 0, \sqrt{3}\)</div>
+  
+  <div class="careful-box">\(\forall a[P(a) \Rightarrow Q(a)]\) ผิดเมื่อมี \(a\) ที่ \(P\) จริงแต่ \(Q\) เท็จ — ต้องหา counter-example</div>
+</div>
+
+<!-- ===== Q34 ===== -->
+<div class="question" id="q34">
+  <div class="q-header">
+    <span class="q-number">Q34</span>
+    <span class="q-source">A-NET' มี.ค. 51: 3 คะแนน</span><span class="subtag c-purple">🟣 หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \(f\) เป็นฟังก์ชันที่นิยามบนช่วง \((0, \infty)\) โดยที่ \(f(2) = 2f(1)\) และ \(f'(x) = 27x - \dfrac{1}{x^2}\) ถ้า \(L\) เป็นเส้นสัมผัสกราฟของ \(y = f(x)\) ที่จุด \((1, f(1))\) แล้วจุดในข้อใดต่อไปนี้อยู่บน \(L\)
+    <div class="choices">
+      <span class="choice">1) \((2, 64)\)</span>
+      <span class="choice correct">2) \((2, 66)\)</span>
+      <span class="choice">3) \((3, 94)\)</span>
+      <span class="choice">4) \((3, 96)\)</span>
+    </div>
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> อินทิเกรต \(f'\) → ใช้ \(f(2) = 2f(1)\) หา \(C\) → หาเส้นสัมผัส → เช็คจุด</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> อินทิเกรต \(f'\)<br>
+    \[f(x) = \dfrac{27x^2}{2} + \dfrac{1}{x} + C\]</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> ใช้ \(f(2) = 2f(1)\)<br>
+    \[f(1) = \dfrac{27}{2} + 1 + C = \dfrac{29}{2} + C\]<br>
+    \[f(2) = \dfrac{27 \cdot 4}{2} + \dfrac{1}{2} + C = 54 + \dfrac{1}{2} + C = \dfrac{109}{2} + C\]<br>
+    \[\dfrac{109}{2} + C = 2\left(\dfrac{29}{2} + C\right) = 29 + 2C\]<br>
+    \[C = \dfrac{109 - 58}{2} = \dfrac{51}{2}\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> หา \(f(1)\) และ \(f'(1)\)<br>
+    \[f(1) = \dfrac{29}{2} + \dfrac{51}{2} = \dfrac{80}{2} = 40\]<br>
+    \[f'(1) = 27 - 1 = 26\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> เขียนเส้นสัมผัส<br>
+    \[y - 40 = 26(x - 1) \Rightarrow y = 26x + 14\]</div>
+    <div class="step"><strong>ขั้นที่ 5:</strong> ตรวจจุด<br>
+    • \((2, 66)\): \(26(2) + 14 = 52 + 14 = 66\) ✓<br>
+    • \((3, 96)\): \(26(3) + 14 = 78 + 14 = 92 \neq 96\)</div>
+  </div>
+  
+  <div class="answer-box">จุด \((2, 66)\) → ตอบ <strong>ข้อ 2</strong></div>
+  
+  <div class="tip-box">เส้นสัมผัส \(y = f'(a)(x - a) + f(a)\) — จำสูตรนี้ตรงๆ</div>
+  
+  <div class="careful-box">\(\int \dfrac{1}{x^2}\,dx = -\dfrac{1}{x}\) (ลบ!) ไม่ใช่ \(\dfrac{1}{x}\)</div>
+</div>
+
+<!-- ===== Q35 ===== -->
+<div class="question" id="q35">
+  <div class="q-header">
+    <span class="q-number">Q35</span>
+    <span class="q-source">A-NET' มี.ค. 51: 3 คะแนน</span><span class="subtag c-yellow">🟡 พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง</span>
+  </div>
+  <div class="q-statement">
+    กำหนดให้ \[f(x) = \begin{cases} x + 3 & ; x < -1 \\ -2x^3 & ; x \geq -1 \end{cases}\]
+    พื้นที่ปิดล้อมด้วยกราฟของ \(f\) บนช่วง \([-4, 0]\) มีค่าเท่าใด
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> Piecewise + พื้นที่ = ผลรวมของค่าสัมบูรณ์ — ต้องหาจุดที่ \(f\) เปลี่ยนเครื่องหมาย</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> แบ่งช่วงนิยาม<br>
+    • ช่วง \([-4, -1)\): \(f(x) = x + 3\) เปลี่ยนเครื่องหมายที่ \(x = -3\)<br>
+    &nbsp;&nbsp;– \([-4, -3)\): \(f < 0\)<br>
+    &nbsp;&nbsp;– \((-3, -1)\): \(f > 0\)<br>
+    • ช่วง \([-1, 0]\): \(f(x) = -2x^3\). เมื่อ \(x \in [-1, 0]\): \(x^3 \leq 0 \Rightarrow -2x^3 \geq 0\) → \(f \geq 0\)</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> แบ่งอินทิเกรตเป็น 3 ส่วน<br>
+    \[A = \int_{-4}^{-3} |x+3|\,dx + \int_{-3}^{-1} |x+3|\,dx + \int_{-1}^{0} |-2x^3|\,dx\]<br>
+    \[= \int_{-4}^{-3} -(x+3)\,dx + \int_{-3}^{-1} (x+3)\,dx + \int_{-1}^{0} (-2x^3)\,dx\]</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> คำนวณแต่ละส่วน<br>
+    • \(\int_{-4}^{-3} -(x+3)\,dx = \left[-\dfrac{(x+3)^2}{2}\right]_{-4}^{-3} = 0 - \left(-\dfrac{1}{2}\right) = \dfrac{1}{2}\)<br>
+    • \(\int_{-3}^{-1} (x+3)\,dx = \left[\dfrac{(x+3)^2}{2}\right]_{-3}^{-1} = \dfrac{4}{2} - 0 = 2\)<br>
+    • \(\int_{-1}^{0} (-2x^3)\,dx = \left[-\dfrac{x^4}{2}\right]_{-1}^{0} = 0 - \left(-\dfrac{1}{2}\right) = \dfrac{1}{2}\)</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> รวม<br>
+    \[A = \dfrac{1}{2} + 2 + \dfrac{1}{2} = 3\]</div>
+  </div>
+  
+  <div class="answer-box">พื้นที่ \(= 3\) ตารางหน่วย</div>
+  
+  <div class="tip-box">\(\int (x+3)^n\,dx = \dfrac{(x+3)^{n+1}}{n+1}\) — ใช้ substitution \(u = x+3\) ลดรูป</div>
+  
+  <div class="careful-box">อย่าลืมว่า <em>พื้นที่</em> ≠ <em>อินทิกรัล</em> — ถ้าคำนวณเป็นอินทิกรัล (ไม่มีค่าสัมบูรณ์) จะได้ 2 ไม่ใช่ 3</div>
+</div>
+
+<!-- ===== Q36 ===== -->
+<div class="question" id="q36">
+  <div class="q-header">
+    <span class="q-number">Q36</span>
+    <span class="q-source">A-NET พ.ศ. 2552 ข้อ 2 คะแนน</span><span class="subtag c-yellow">🟡 พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง</span>
+  </div>
+  <div class="q-statement">
+    จงหาพื้นที่ใต้กราฟของฟังก์ชันที่มีสมการ \(y = x^3 - 4x\) และแกน \(x\) โดยที่ \(x\) อยู่ในช่วง \([-2, 1]\) เท่ากับเท่าใด
+  </div>
+  
+  <div class="concept-box"><strong>คอนเซปต์:</strong> แยกตัวประกอบ → หาราก → แบ่งช่วงเครื่องหมาย → อินทิเกรต |f|</div>
+  
+  <div class="solution">
+    <div class="solution-title">วิธีทำ:</div>
+    <div class="step"><strong>ขั้นที่ 1:</strong> แยกตัวประกอบ<br>
+    \[f(x) = x^3 - 4x = x(x^2 - 4) = x(x-2)(x+2)\]<br>
+    ราก: \(x = -2, 0, 2\)</div>
+    <div class="step"><strong>ขั้นที่ 2:</strong> วิเคราะห์เครื่องหมายบน \([-2, 1]\)<br>
+    • ช่วง \((-2, 0)\): \(x < 0, x-2 < 0, x+2 > 0\) → ผลคูณบวก → \(f > 0\) (เหนือแกน)<br>
+    • ช่วง \((0, 1)\): \(x > 0, x-2 < 0, x+2 > 0\) → ผลคูณลบ → \(f < 0\) (ใต้แกน)</div>
+    <div class="step"><strong>ขั้นที่ 3:</strong> แบ่งอินทิเกรต<br>
+    \[A = \int_{-2}^{0} (x^3 - 4x)\,dx + \int_0^1 -(x^3 - 4x)\,dx\]</div>
+    <div class="step"><strong>ขั้นที่ 4:</strong> คำนวณ<br>
+    \[\int (x^3 - 4x)\,dx = \dfrac{x^4}{4} - 2x^2\]<br>
+    • \(\int_{-2}^{0} (x^3 - 4x)\,dx = 0 - \left(\dfrac{16}{4} - 2 \cdot 4\right) = 0 - (4 - 8) = 4\)<br>
+    • \(\int_0^1 -(x^3 - 4x)\,dx = -\left[\dfrac{x^4}{4} - 2x^2\right]_0^1 = -\left(\dfrac{1}{4} - 2\right) = -\left(-\dfrac{7}{4}\right) = \dfrac{7}{4}\)<br>
+    \[A = 4 + \dfrac{7}{4} = \dfrac{16 + 7}{4} = \dfrac{23}{4} = 5.75\]</div>
+  </div>
+  
+  <div class="answer-box">พื้นที่ \(= \dfrac{23}{4} = 5.75\) ตารางหน่วย</div>
+  
+  <div class="tip-box">พหุนามดีกรี 3 ที่มี 3 รากจริง → เครื่องหมายสลับทุกครั้งที่ข้ามราก (กฎของพหุนามดีกรีคี่)</div>
+  
+  <div class="careful-box">\([x^4/4 - 2x^2]\) ที่ \(x = -2\): \(\dfrac{16}{4} - 2 \cdot 4 = 4 - 8 = -4\) → ระวังเครื่องหมาย</div>
+</div>
+
+
+<div class="final-section" id="summary-final">
+  <h2>🏆 สรุปเทคนิครวบยอดบทอินทิกรัล (จาก 36 ข้อ)</h2>
+  
+  <h3>📚 กลุ่มเทคนิคสำคัญ</h3>
+  
+  <h4>1. Anti-differentiation (ทอดกลับ) — พบใน Q1, Q4, Q5, Q7, Q8, Q13, Q15, Q17, Q18, Q20, Q21, Q22, Q30, Q31</h4>
+  <ul>
+    <li>โจทย์ให้ \(f'\) หรือ \(f''\) → อินทิเกรตหา \(f\)</li>
+    <li>ใช้เงื่อนไขจุดผ่าน \((a, f(a))\) หรือเงื่อนไขอินทิกรัลเพื่อหา \(C\)</li>
+    <li>ระวังเครื่องหมายของ \(\int x^{-n}\,dx = \dfrac{x^{-n+1}}{-n+1}\) เช่น \(\int x^{-2}\,dx = -\dfrac{1}{x}\)</li>
+  </ul>
+  
+  <h4>2. Chain Rule + Integration — Q5, Q7, Q11, Q21, Q24, Q26, Q27</h4>
+  <ul>
+    <li>\((f \circ g)'(x) = f'(g(x)) \cdot g'(x)\)</li>
+    <li>FTC: \(\int_a^b g''(x)\,dx = g'(b) - g'(a)\) — ไม่ต้องหา \(g''\) ทั้งฟังก์ชัน</li>
+    <li>Quotient Rule: \(\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^2}\)</li>
+    <li>Product Rule: \((uv)' = u'v + uv'\)</li>
+  </ul>
+  
+  <h4>3. Area vs Integral — Q2, Q9, Q14, Q19, Q23, Q32, Q35, Q36</h4>
+  <ul>
+    <li><strong>Integral:</strong> มีเครื่องหมาย (บวก-ลบหักล้าง)</li>
+    <li><strong>Area:</strong> \(\int_a^b |f(x)|\,dx\) (บวกเสมอ) → ต้องแบ่งช่วงเครื่องหมาย</li>
+    <li>เมื่อ \(f(x)\) เปลี่ยนเครื่องหมาย ณ \(x = c\): แยก \(\int_a^c\) และ \(\int_c^b\)</li>
+    <li>เทคนิคพหุนามดีกรีคี่: เครื่องหมายสลับทุกครั้งที่ข้ามราก</li>
+  </ul>
+  
+  <h4>4. Optimization (หาค่าสูงสุด/ต่ำสุด) — Q4, Q6, Q14, Q15, Q18, Q30, Q31</h4>
+  <ul>
+    <li>หาจุดวิกฤต: \(f'(x) = 0\)</li>
+    <li>ทดสอบ: \(f''(c) > 0\) → ต่ำสุด, \(f''(c) < 0\) → สูงสุด</li>
+    <li>ถ้า \(f' \geq 0\) ทั้งช่วง → \(F\) ไม่ลด → max abs ที่ปลายขวา</li>
+    <li>Optimization ของพื้นที่: แสดงพื้นที่เป็นฟังก์ชันตัวแปรเดียว แล้วดิฟ</li>
+  </ul>
+  
+  <h4>5. เส้นสัมผัส (Tangent Line) — Q17, Q27, Q34</h4>
+  <ul>
+    <li>ความชันของ \(Ax + By + C = 0\) คือ \(-A/B\)</li>
+    <li>เส้นสัมผัสที่ \((a, f(a))\): \(y = f'(a)(x - a) + f(a)\)</li>
+    <li>จุดสัมผัสให้ <em>สอง</em> ข้อมูล: \(f(a)\) และ \(f'(a)\)</li>
+  </ul>
+  
+  <h4>6. Piecewise + Periodic — Q16, Q28, Q35</h4>
+  <ul>
+    <li>แบ่งอินทิเกรตตามจุดเปลี่ยนนิยาม</li>
+    <li>Periodic: หาพื้นที่หนึ่งช่วงแล้วคูณด้วยจำนวนช่วง</li>
+    <li>Substitution \(u = x - n\) ลดรูปการคำนวณ</li>
+  </ul>
+  
+  <h4>7. เรขาคณิต — Q29</h4>
+  <ul>
+    <li>\(\int_{-r}^{r} \sqrt{r^2 - x^2}\,dx = \dfrac{\pi r^2}{2}\) (พื้นที่ครึ่งวงกลม)</li>
+    <li>\(\pi \approx 3.14159\)</li>
+  </ul>
+  
+  <h4>8. ตรรกะ \(\forall, \exists\) — Q33</h4>
+  <ul>
+    <li>\(\forall a[P(a)]\) ผิดเมื่อมี counter-example</li>
+    <li>\(\exists a[P(a)]\) ถูกเมื่อมีอย่างน้อยหนึ่งตัวอย่างที่ทำให้ \(P\) จริง</li>
+  </ul>
+  
+  <h3>📊 ตารางเตือนจุดพลาด (Careless Errors)</h3>
+  <table class="error-table">
+    <thead>
+      <tr>
+        <th>จุดพลาด</th>
+        <th>ตัวอย่างข้อสอบ</th>
+        <th>วิธีหลีกเลี่ยง</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>สับสน <strong>พื้นที่</strong> กับ <strong>อินทิกรัล</strong></td>
+        <td>Q2, Q23, Q35, Q36</td>
+        <td>อ่านโจทย์: "พื้นที่" → ใช้ |f|; "อินทิกรัล" → ใช้ f ตรงๆ</td>
+      </tr>
+      <tr>
+        <td>ลืมแบ่งช่วงเครื่องหมาย</td>
+        <td>Q2, Q19, Q32, Q35, Q36</td>
+        <td>หารากของ \(f\) ในช่วงก่อน แล้วแบ่งอินทิเกรต</td>
+      </tr>
+      <tr>
+        <td>เครื่องหมายลบตอนอินทิเกรต \(\int x^{-n}\,dx\)</td>
+        <td>Q13, Q20, Q34</td>
+        <td>\(\int x^{-2}\,dx = -\dfrac{1}{x}\) (เครื่องหมายลบ!)</td>
+      </tr>
+      <tr>
+        <td>Quotient Rule: ใช้ + แทน -</td>
+        <td>Q11, Q21</td>
+        <td>จำ "\(u'v - uv'\)" (ลบเสมอ)</td>
+      </tr>
+      <tr>
+        <td>ลืมหา \(C\) ตัวคงที่การอินทิเกรต</td>
+        <td>Q4, Q8, Q13, Q17, Q18, Q20, Q34</td>
+        <td>ใช้เงื่อนไขจุดผ่าน \((a, f(a))\) เสมอ — อย่าปล่อย \(C\) ค้าง</td>
+      </tr>
+      <tr>
+        <td>สับสน \(f(a)\) กับ \(f'(a)\)</td>
+        <td>Q1, Q7</td>
+        <td>เครื่องหมาย \('\) สำคัญ — อ่านโจทย์ละเอียด</td>
+      </tr>
+      <tr>
+        <td>เครื่องหมายพหุนามดีกรีคี่ผิด</td>
+        <td>Q32, Q36</td>
+        <td>เครื่องหมายสลับทุกครั้งที่ข้ามรากจริงเสมอ</td>
+      </tr>
+      <tr>
+        <td>ความชันเส้น \(Ax + By + C = 0\) ผิด</td>
+        <td>Q17, Q27</td>
+        <td>ความชัน \(= -A/B\) (เครื่องหมายลบข้างหน้า A)</td>
+      </tr>
+      <tr>
+        <td>\(g(x+1)\) แทนเป็น \(g(x)\) ผิด</td>
+        <td>Q21</td>
+        <td>\(g(x+1)\) ที่ \(x = -2\) คือ \(g(-1)\) ไม่ใช่ \(g(-2)\)</td>
+      </tr>
+      <tr>
+        <td>ลืมทดสอบ \(f''\) หลังหาจุดวิกฤต</td>
+        <td>Q4, Q14, Q18, Q30</td>
+        <td>เช็ค \(f''\) เสมอเพื่อยืนยัน max/min</td>
+      </tr>
+      <tr>
+        <td>\(\sum_{n=0}^{9} n\) นับผิด</td>
+        <td>Q28</td>
+        <td>\(\sum_{n=0}^{N} n = \dfrac{N(N+1)}{2}\) — \(n=0\) ถึง \(9\) มี 10 พจน์</td>
+      </tr>
+      <tr>
+        <td>\(\pi\) ประมาณค่าผิด</td>
+        <td>Q29</td>
+        <td>\(\pi \approx 3.14159\), \(2\pi \approx 6.283\) (ไม่ใช่ 6.1x)</td>
+      </tr>
+      <tr>
+        <td>เงื่อนไข \(f(2) = 2f(1)\) แปลผิด</td>
+        <td>Q34</td>
+        <td>"\(2f(1)\)" = 2 คูณ \(f(1)\) ไม่ใช่ \(f\) ประเมินที่ \(x=2\) แล้วคูณ 1</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div class="checklist">
+    <h3>✅ Checklist สำหรับห้องสอบ — อินทิกรัล</h3>
+    <ul>
+      <li>อ่านโจทย์: ถาม "<strong>พื้นที่</strong>" หรือ "<strong>อินทิกรัล</strong>" — ตัดสินใจว่าจะใช้ \(|f|\) หรือ \(f\) ตรงๆ</li>
+      <li>ระบุฟังก์ชันที่โจทย์ให้: \(f\), \(f'\), \(f''\) หรือ \(\int f\,dx\)</li>
+      <li>ถ้ามี Chain Rule: เขียน \((f \circ g)'\) ออกมาก่อน</li>
+      <li>อินทิเกรตแต่ละขั้นตอนให้ชัดเจน — ระวังเครื่องหมายลบของพจน์ \(x^{-n}\)</li>
+      <li>ใช้ทุกเงื่อนไขที่โจทย์ให้ หาค่าคงตัว \(C_1, C_2, \ldots\)</li>
+      <li>หาจุดวิกฤต \(f'(x) = 0\) แล้วทดสอบ \(f''\)</li>
+      <li>ถ้าพื้นที่: หารากของ \(f\) ในช่วง แล้วแบ่งช่วงเครื่องหมาย</li>
+      <li>เส้นสัมผัส: จำ \(y = f'(a)(x - a) + f(a)\)</li>
+      <li>Optimization: แสดงเป็นฟังก์ชันตัวแปรเดียวก่อนดิฟ</li>
+      <li>หากมี Piecewise: แบ่งอินทิเกรตตามจุดเปลี่ยนนิยาม</li>
+      <li>ตรวจคำตอบเทียบกับ choice ทุกตัว — ถ้าไม่ตรง อาจมีข้อผิดพลาด</li>
+      <li>เช็คเครื่องหมายตอนแทนค่าขอบเขต: \(F(b) - F(a)\) (ลบ!)</li>
+      <li>\(\pi \approx 3.14159\) — คำนวณทศนิยมให้แม่นยำ</li>
+      <li>หากเหลือเวลา: ตรวจ Q2, Q23, Q35 ที่เกี่ยวกับ area/integral ก่อน</li>
+      <li>ตรวจเครื่องหมาย "" (prime) ในโจทย์ — \(f' \neq f\)</li>
+    </ul>
+  </div>
+  
+  <h3>🎯 สูตรที่ต้องจำ (Cheat Sheet)</h3>
+  <table class="error-table">
+    <thead>
+      <tr>
+        <th>สูตร</th>
+        <th>เมื่อใช้</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>\(\int x^n\,dx = \dfrac{x^{n+1}}{n+1} + C\) (\(n \neq -1\))</td>
+        <td>Power rule พื้นฐาน</td>
+      </tr>
+      <tr>
+        <td>\(\int \dfrac{1}{x}\,dx = \ln|x| + C\)</td>
+        <td>\(n = -1\)</td>
+      </tr>
+      <tr>
+        <td>\(\int_a^b f(x)\,dx = F(b) - F(a)\)</td>
+        <td>FTC</td>
+      </tr>
+      <tr>
+        <td>\(\int_a^b f''(x)\,dx = f'(b) - f'(a)\)</td>
+        <td>FTC สำหรับอนุพันธ์อันดับสอง</td>
+      </tr>
+      <tr>
+        <td>\((f \circ g)'(x) = f'(g(x)) \cdot g'(x)\)</td>
+        <td>Chain Rule</td>
+      </tr>
+      <tr>
+        <td>\((uv)' = u'v + uv'\)</td>
+        <td>Product Rule</td>
+      </tr>
+      <tr>
+        <td>\(\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^2}\)</td>
+        <td>Quotient Rule</td>
+      </tr>
+      <tr>
+        <td>\(\int_{-r}^{r} \sqrt{r^2 - x^2}\,dx = \dfrac{\pi r^2}{2}\)</td>
+        <td>พื้นที่ครึ่งวงกลม</td>
+      </tr>
+      <tr>
+        <td>\(\int_{-a}^{a} f(x)\,dx = 2\int_0^a f(x)\,dx\) (\(f\) คู่)</td>
+        <td>ฟังก์ชันคู่</td>
+      </tr>
+      <tr>
+        <td>\(\int_{-a}^{a} f(x)\,dx = 0\) (\(f\) คี่)</td>
+        <td>ฟังก์ชันคี่</td>
+      </tr>
+      <tr>
+        <td>\(A = \dfrac{1}{2}|x_1 y_2 - x_2 y_1|\)</td>
+        <td>พื้นที่สามเหลี่ยมจากจุด 2 จุด</td>
+      </tr>
+      <tr>
+        <td>ความชันของ \(Ax + By + C = 0\) คือ \(-A/B\)</td>
+        <td>เส้นตรง</td>
+      </tr>
+      <tr>
+        <td>เส้นสัมผัสที่ \((a, f(a))\): \(y = f'(a)(x-a) + f(a)\)</td>
+        <td>Tangent line</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  📘 เอกสารเฉลยข้อสอบอินทิกรัล — รวม 36 ข้อ จาก ข้อสอบเข้ามหาวิทยาลัย (ต.ค. 41 - A-NET 52) <br>
+  กด <strong>Ctrl + P</strong> เพื่อพิมพ์หรือบันทึกเป็น PDF
+</footer>
+
+</div>
+</body>
+</html>

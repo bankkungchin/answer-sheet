@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฉลยละเอียด: อัตราการเปลี่ยนแปลง (Differential) — รวมข้อสอบเข้ามหาวิทยาลัย</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    svg: { fontCache: 'global' },
+    startup: { typeset: false }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+  :root{
+    --bg:#f6f7fb; --paper:#ffffff; --ink:#1c2433; --muted:#5b6675;
+    --brand:#1e3a8a; --brand2:#2563eb; --accent:#f59e0b; --good:#16a34a;
+    --bad:#dc2626; --warn:#d97706; --chip:#eef2ff; --chip-bd:#c7d2fe;
+    --line:#e5e7eb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"Sarabun",system-ui,sans-serif;line-height:1.7;font-size:16px}
+  body{padding:0 14px 80px}
+  header.hero{
+    background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 55%,#3b82f6 100%);
+    color:#fff;padding:22px 18px;border-radius:0 0 18px 18px;margin:0 -14px 18px;
+    box-shadow:0 6px 18px rgba(30,58,138,.25);
+  }
+  header.hero h1{margin:0 0 4px;font-size:1.5rem;font-weight:700;letter-spacing:.2px}
+  header.hero .sub{opacity:.92;font-size:.95rem}
+  header.hero .meta{margin-top:8px;font-size:.85rem;opacity:.85}
+
+  .summary-box{
+    background:linear-gradient(180deg,#fff7ed 0%,#fffbf5 100%);
+    border:2px solid #fdba74;border-radius:14px;padding:18px 20px;margin:18px 0;
+    box-shadow:0 4px 12px rgba(245,158,11,.08);
+  }
+  .summary-box h2{margin:0 0 10px;color:#9a3412;font-size:1.2rem;display:flex;align-items:center;gap:8px}
+  .summary-box h2::before{content:"🎯";font-size:1.2rem}
+  .summary-box ul{margin:6px 0 0;padding-left:22px}
+  .summary-box li{margin:4px 0}
+  .summary-box .kbd{display:inline-block;background:#fff;border:1px solid #fbbf24;border-radius:6px;padding:1px 8px;font-weight:600;color:#92400e;margin:0 2px}
+
+  nav.chips{
+    position:sticky;top:0;z-index:30;background:rgba(246,247,251,.92);
+    backdrop-filter:blur(6px);padding:10px 4px;margin:0 -4px 14px;border-bottom:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:6px;justify-content:center;
+  }
+  nav.chips a{
+    text-decoration:none;font-size:.82rem;font-weight:600;color:var(--brand);
+    background:var(--chip);border:1px solid var(--chip-bd);border-radius:999px;padding:4px 11px;
+    transition:all .15s;
+  }
+  nav.chips a:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
+  nav.chips a.section{background:#fef3c7;color:#92400e;border-color:#fde68a}
+  nav.chips a.section:hover{background:#92400e;color:#fff}
+
+  .qcard{
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;
+    padding:18px 20px;margin:14px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);
+  }
+  .qcard h3{
+    margin:0 0 10px;color:var(--brand);font-size:1.15rem;font-weight:700;
+    border-left:5px solid var(--brand2);padding-left:10px;
+  }
+  .qcard .src{font-size:.78rem;color:var(--muted);font-weight:400;display:block;margin-top:2px}
+  .qstmt{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:8px;padding:10px 14px;margin:8px 0}
+  .qstmt .opt{margin:3px 0}
+  .qstmt .opt b{color:var(--brand)}
+
+  .block{margin:10px 0;padding:10px 14px;border-radius:8px}
+  .block.concept{background:#eff6ff;border-left:4px solid #3b82f6}
+  .block.concept::before{content:"📚 ทฤษฎี/แนวคิดที่ใช้";display:block;font-weight:700;color:#1e40af;margin-bottom:4px}
+  .block.solve{background:#f0fdf4;border-left:4px solid #16a34a}
+  .block.solve::before{content:"🧮 วิธีทำ (Chain of Thought)";display:block;font-weight:700;color:#166534;margin-bottom:4px}
+  .block.shortcut{background:#fefce8;border-left:4px solid #ca8a04}
+  .block.shortcut::before{content:"⚡ เทคนิคลัด";display:block;font-weight:700;color:#854d0e;margin-bottom:4px}
+  .block.warn{background:#fef2f2;border-left:4px solid #dc2626}
+  .block.warn::before{content:"⚠️ ข้อควรระวัง (Careless Error)";display:block;font-weight:700;color:#991b1b;margin-bottom:4px}
+
+  .step{margin:6px 0;padding-left:8px}
+  .step .lbl{display:inline-block;min-width:38px;font-weight:700;color:var(--brand2)}
+
+  .ansbox{
+    margin:14px 0 6px;padding:12px 16px;border-radius:10px;
+    background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);
+    border:2px solid #16a34a;display:flex;align-items:center;gap:10px;
+  }
+  .ansbox .icon{font-size:1.4rem}
+  .ansbox .txt{font-weight:700;color:#14532d;font-size:1.05rem}
+  .ansbox .official{margin-left:auto;font-size:.85rem;color:#166534;font-weight:600;background:#fff;padding:3px 10px;border-radius:6px;border:1px solid #16a34a}
+
+  section.final{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;margin:18px 0}
+  section.final h2{color:var(--brand);border-bottom:2px solid var(--brand2);padding-bottom:6px;margin-top:24px}
+  section.final h2:first-child{margin-top:0}
+  table.errtab{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.errtab th,table.errtab td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  table.errtab th{background:#1e3a8a;color:#fff;font-weight:600}
+  table.errtab tr:nth-child(even) td{background:#f8fafc}
+  table.errtab td.topic{font-weight:600;color:var(--brand)}
+  ul.checklist{list-style:none;padding-left:0}
+  ul.checklist li{padding:6px 10px;margin:4px 0;background:#f0fdf4;border-left:4px solid #16a34a;border-radius:6px}
+  ul.checklist li::before{content:"☐ ";font-weight:700;color:#16a34a}
+  .tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin:10px 0}
+  .tech-card{background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+  .tech-card h4{margin:0 0 4px;color:var(--brand2);font-size:.98rem}
+  .tech-card p{margin:0;font-size:.9rem;color:var(--ink)}
+
+  mjx-container{font-size:1.02em !important}
+  mjx-container[display="true"]{margin:8px 0 !important}
+  .print-bar{position:fixed;right:14px;bottom:14px;background:var(--brand);color:#fff;padding:10px 16px;border-radius:999px;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(30,58,138,.4);z-index:50;border:none;font-family:inherit;font-size:.9rem}
+  .print-bar:hover{background:var(--brand2)}
+  @media print{
+    body{background:#fff;padding:0}
+    header.hero{background:#1e3a8a !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;border-radius:0}
+    nav.chips{display:none}
+    .print-bar{display:none}
+    .qcard{break-inside:avoid;box-shadow:none}
+    .block,.ansbox,.qstmt{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+  @media(max-width:640px){
+    body{font-size:15px;padding:0 8px 80px}
+    header.hero{padding:16px 12px}
+    .qcard{padding:14px}
+    .ansbox{flex-wrap:wrap}
+  }
+
+  .subtag{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:999px;margin-left:6px;vertical-align:middle;border:1px solid}
+  .subtag.c-blue{background:#eff6ff;color:#1e40af;border-color:#bfdbfe}
+  .subtag.c-orange{background:#fff7ed;color:#9a3412;border-color:#fed7aa}
+  .subtag.c-green{background:#f0fdf4;color:#166534;border-color:#bbf7d0}
+  .subtag.c-yellow{background:#fefce8;color:#854d0e;border-color:#fde68a}
+  .subtag.c-purple{background:#faf5ff;color:#6b21a8;border-color:#e9d5ff}
+  .subtag.c-red{background:#fef2f2;color:#991b1b;border-color:#fecaca}
+  .subtag.c-brown{background:#f5f0eb;color:#78350f;border-color:#e0cdb8}
+  .backbtn{display:inline-block;margin:2px 0 0;background:#fff;color:#1e3a8a;border:1px solid #c7d2fe;border-radius:999px;padding:6px 14px;font-weight:700;text-decoration:none;font-size:.85rem}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>เฉลยละเอียด — อัตราการเปลี่ยนแปลง (Differential)</h1>
+  <div class="sub">รวมข้อสอบเข้ามหาวิทยาลัย (ต.ค.41 – A‑NET 2552) • 31 ข้อ</div>
+  <a class="backbtn" href="index.html">← กลับหน้า Dashboard</a>
+  <div class="meta">ทำโดย ปรมาจารย์คณิตศาสตร์ ม.ปลาย • เน้น A‑Level (คณิตประยุกต์ 1) และ สอวน. • ใช้ MathJax + ฟอนต์ Sarabun</div>
+</header>
+
+<!-- SUMMARY BOX -->
+<div class="summary-box">
+  <h2>สรุปเทคนิครวบยอดประจำบท</h2>
+  <ul>
+    <li><b>กฎอนุพันธ์พื้นฐานที่ต้องจำขึ้นใจ:</b> Power Rule \(\frac{d}{dx}x^n=nx^{n-1}\), Product Rule \((uv)'=u'v+uv'\), Quotient Rule \(\left(\frac{u}{v}\right)'=\frac{u'v-uv'}{v^2}\), Chain Rule \((f\circ g)'(x)=f'(g(x))\cdot g'(x)\)</li>
+    <li><b>ทดสอบ Max/Min ด้วยอนุพันธ์อันดับ 2:</b> ที่จุดวิกฤต \(c\) (เมื่อ \(f'(c)=0\)): \(f''(c)<0\) ⇒ max, \(f''(c)>0\) ⇒ min, \(f''(c)=0\) ⇒ ใช้ไม่ได้ ต้องทดสอบอื่น</li>
+    <li><b>ฟังก์ชันเพิ่ม/ลด:</b> \(f'(x)>0\) ⇒ ฟังก์ชันเพิ่ม, \(f'(x)<0\) ⇒ ฟังก์ชันลด — ใช้กราฟจำนวนช่วยตัดสินใจว่าเครื่องหมายของ \(f'\) เปลี่ยนที่จุดวิกฤต</li>
+    <li><b>จุดเปลี่ยนเข้า/ออก (Inflection):</b> เกิดที่ \(f''(x)=0\) และ \(f''\) เปลี่ยนเครื่องหมาย — "เข้า" = concave up→down (\(f''\) ลด), "ออก" = concave down→up (\(f''\) เพิ่ม)</li>
+    <li><b>เส้นสัมผัสที่จุด \((a, f(a))\):</b> สมการ \(y-f(a)=f'(a)(x-a)\) — ความชัน = \(f'(a)\), ถ้าเส้นสัมผัสผ่านจุด \((x_0,y_0)\) ให้แทนเข้าสมการ</li>
+    <li><b>อนุพันธ์ของฟังก์ชันประกอบ:</b> \((f\circ g)'(x)=f'(g(x))\cdot g'(x)\) — อย่าลืมคูณ \(g'(x)\) ด้วย! นี่คือ careless error อันดับ 1 ของบทนี้</li>
+    <li><b>เทคนิค "แทนค่าแล้วแยกตัวประกอบ":</b> โจทย์ประเภท "หา \(a, b\) จากเงื่อนไขที่จุดวิกฤต" ให้ตั้งสมการจาก \(f(c)=\) ค่าที่โจทย์ให้ และ \(f'(c)=0\) แล้วแก้ระบบ</li>
+    <li><b>สูตร Vieta สำหรับพหุนาม:</b> ราก \(r_1, r_2\) ของ \(ax^2+bx+c\): \(r_1+r_2=-b/a\), \(r_1 r_2 = c/a\) — ใช้บ่อยในโจทย์ที่เกี่ยวข้องกับราก</li>
+    <li><b>ความสัมพันธ์ \(f'(g(x)) = 1/g'(x)\):</b> คูณทั้งสองข้างด้วย \(g'(x)\) จะได้ \(\frac{d}{dx}[f(g(x))] = 1\) ⇒ \(f(g(x)) = x + C\) — เทคนิคดักจับโจทย์แนวนี้</li>
+    <li><b>ลำดับขั้วที่เป็นไปได้:</b> พหุนามดีกรี \(n\) มีจุดวิกฤตได้มาก \(n-1\) จุด และจุดเปลี่ยนเข้า/ออกได้มาก \(n-2\) จุด — ใช้ตรวจความสมเหตุสมผลของคำตอบ</li>
+  </ul>
+</div>
+
+<!-- NAVIGATION -->
+<nav class="chips">
+  <a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4">4</a><a href="#q5">5</a>
+  <a href="#q6">6</a><a href="#q7">7</a><a href="#q8">8</a><a href="#q9">9</a><a href="#q10">10</a>
+  <a href="#q11">11</a><a href="#q12">12</a><a href="#q13">13</a><a href="#q14">14</a><a href="#q15">15</a>
+  <a href="#q16">16</a><a href="#q17">17</a><a href="#q18">18</a><a href="#q19">19</a><a href="#q20">20</a>
+  <a href="#q21">21</a><a href="#q22">22</a><a href="#q23">23</a><a href="#q24">24</a><a href="#q25">25</a>
+  <a href="#q26">26</a><a href="#q27">27</a><a href="#q28">28</a><a href="#q29">29</a><a href="#q30">30</a>
+  <a href="#q31">31</a>
+  <a href="#final" class="section">สรุปท้ายบท</a>
+</nav>
+
+<!-- ====== PART 1: Q1-Q11 ====== -->
+
+<!-- ===== ข้อ 1 ===== -->
+<div class="qcard" id="q1">
+  <h3>ข้อ 1 <span class="src">ต.ค. 41 / 4</span><span class="subtag c-orange">🟠 กฎลูกโซ่ / ผลคูณ-ผลหาร</span></h3>
+  <div class="qstmt">
+    ให้ \(f(x)=x^{8}-x^{6}\) และ \(f'\) คืออนุพันธ์ของ \(f\) ถ้า \(\{a_n\}\) เป็นลำดับที่มี \(\lim_{n\to\infty} a_n=1\) แล้ว \(\lim_{n\to\infty} (f\circ f')(a_n)\) มีค่าเท่าใด
+    <div class="opt"><b>1)</b> 68</div><div class="opt"><b>2)</b> 92</div><div class="opt"><b>3)</b> 150</div><div class="opt"><b>4)</b> 192</div>
+  </div>
+
+  <div class="block concept">
+    ลิมิตของฟังก์ชันประกอบ — ใช้สมบัติความต่อเนื่อง: \(\lim_{n\to\infty} (f\circ f')(a_n) = (f\circ f')(\lim a_n) = (f\circ f')(1)\) และ Chain Rule เพื่อคำนวณ
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> หา \(f'(x)\): \(f'(x)=8x^{7}-6x^{5}\)</div>
+    <div class="step"><span class="lbl">ขั้น 2</span> คำนวณ \(f'(1)=8-6=2\)</div>
+    <div class="step"><span class="lbl">ขั้น 3</span> เนื่องจาก \(a_n\to 1\) และ \(f'\) ต่อเนื่อง ⇒ \(f'(a_n)\to f'(1)=2\)</div>
+    <div class="step"><span class="lbl">ขั้น 4</span> ดังนั้น \((f\circ f')(a_n)=f(f'(a_n))\to f(2)\)</div>
+    <div class="step"><span class="lbl">ขั้น 5</span> คำนวณ \(f(2)=2^{8}-2^{6}=256-64=192\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 4) 192</span>
+    <span class="official">เฉลยท้ายเล่ม: 4 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เมื่อเจอ \(\lim (f\circ g)(a_n)\) และ \(a_n\to c\) ให้คำนวณ \((f\circ g)(c)\) โดยตรงเลย — ไม่ต้องคำนวณ \((f\circ g)'(x)\) เพราะลิมิตไม่ได้ถามอนุพันธ์
+  </div>
+
+  <div class="block warn">
+    ระวัง! อย่าสับสนระหว่าง \((f\circ f')\) กับ \((f\circ f)'\) — ตัวแรกคือ composition \(f(f'(x))\), ตัวหลังคือ derivative ของ composition
+  </div>
+</div>
+
+<!-- ===== ข้อ 2 ===== -->
+<div class="qcard" id="q2">
+  <h3>ข้อ 2 <span class="src">ต.ค. 41 / 3</span><span class="subtag c-orange">🟠 กฎลูกโซ่ / ผลคูณ-ผลหาร</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f\) เป็นฟังก์ชันที่มีอนุพันธ์ และ \(F(x)=\sqrt{(f(x))^{3}+15}\) ถ้า \(F(1)=f'(1)=4\) แล้ว \(F'(1)\) มีค่าเท่าใด
+    <div class="opt"><b>1)</b> \(\frac12\)</div><div class="opt"><b>2)</b> \(\frac32\)</div><div class="opt"><b>3)</b> 8</div><div class="opt"><b>4)</b> 24</div>
+  </div>
+
+  <div class="block concept">
+    Chain Rule สำหรับ \(F(x)=\sqrt{g(x)}\): \(F'(x)=\frac{g'(x)}{2\sqrt{g(x)}}=\frac{g'(x)}{2F(x)}\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ใช้ \(F(1)=4\) หา \(f(1)\):<br>
+      \(\sqrt{(f(1))^{3}+15}=4\Rightarrow (f(1))^{3}+15=16\Rightarrow (f(1))^{3}=1\Rightarrow f(1)=1\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> หา \(F'(x)\) ด้วย Chain Rule<br>
+      \(F'(x)=\frac{3(f(x))^{2}\cdot f'(x)}{2\sqrt{(f(x))^{3}+15}}=\frac{3(f(x))^{2}\cdot f'(x)}{2F(x)}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> แทนค่า \(x=1\)<br>
+      \(F'(1)=\frac{3\cdot 1^{2}\cdot 4}{2\cdot 4}=\frac{12}{8}=\frac{3}{2}\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 2) \(\frac{3}{2}\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 2 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เมื่อเจอ \(F(x)=\sqrt{g(x)}\) และต้องหา \(F'(a)\) ให้ใช้สูตร \(F'(a)=\frac{g'(a)}{2F(a)}\) — ประหยัดเวลากว่าเขียน \(\sqrt{}\) ทุกครั้ง
+  </div>
+
+  <div class="block warn">
+    ระวังการลืม Chain Rule! \(F(x)=\sqrt{(f(x))^{3}+15}\) ไม่ใช่ \(\sqrt{(f(x))^{3}}+\sqrt{15}\) — ต้องหาอนุพันธ์ของ \((f(x))^{3}+15\) ทั้งก้อน
+  </div>
+</div>
+
+<!-- ===== ข้อ 3 ===== -->
+<div class="qcard" id="q3">
+  <h3>ข้อ 3 <span class="src">มี.ค. 42 / 3</span><span class="subtag c-yellow">🟡 ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(a,b,c,d\) เป็นจำนวนจริง และ \(f(x)=ax^{3}+bx^{2}+cx+d\) โดยที่ \(f\) มีค่าสูงสุดสัมพัทธ์เป็น 2 ที่ \(x=1\) และ \(f''(1)=-4\) ถ้า \(f(0)=1\) แล้ว \(f\) มีค่าต่ำสุดสัมพัทธ์ที่ \(x\) เท่าใด
+    <div class="opt"><b>1)</b> \(x=-3\)</div><div class="opt"><b>2)</b> \(x=-\frac13\)</div><div class="opt"><b>3)</b> \(x=\frac13\)</div><div class="opt"><b>4)</b> \(x=3\)</div>
+  </div>
+
+  <div class="block concept">
+    ใช้เงื่อนไขที่จุดสูงสุด: \(f(1)=2\), \(f'(1)=0\), \(f''(1)<0\) (เป็น max) — ตั้ง 3 สมการ 4 ตัวแปร + \(f(0)=1\) ได้ครบ 4 สมการ
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ตั้งสมการจากเงื่อนไข<br>
+      \(f(0)=d=1\)<br>
+      \(f(1)=a+b+c+d=2\Rightarrow a+b+c=1\) &nbsp;(เพราะ \(d=1\))<br>
+      \(f'(1)=3a+2b+c=0\) (จุดวิกฤต)<br>
+      \(f''(1)=6a+2b=-4\Rightarrow 3a+b=-2\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> แก้ระบบ<br>
+      จาก \(3a+b=-2\) และ \(a+b+c=1\): \(b=-2-3a\), \(c=1-a-b=1-a+2+3a=3+2a\)<br>
+      แทนใน \(3a+2b+c=0\): \(3a+2(-2-3a)+(3+2a)=0\)<br>
+      \(3a-4-6a+3+2a=0\Rightarrow -a-1=0\Rightarrow a=-1\)<br>
+      \(b=-2-3(-1)=1\), \(c=3+2(-1)=1\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> สรุป \(f(x)=-x^{3}+x^{2}+x+1\)</div>
+    <div class="step"><span class="lbl">ขั้น 4</span> หาจุดวิกฤตทั้งหมด<br>
+      \(f'(x)=-3x^{2}+2x+1=-(3x^{2}-2x-1)=-(3x+1)(x-1)\)<br>
+      จุดวิกฤต: \(x=1\) (max) และ \(x=-\frac{1}{3}\) (min)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 5</span> ตรวจด้วย \(f''\): \(f''(x)=-6x+2\), \(f''(-1/3)=2+2=4>0\) ⇒ min ที่ \(x=-\frac13\) ✓</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 2) \(x=-\frac{1}{3}\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 2 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: พหุนามดีกรี 3 ที่มีจุดวิกฤต 2 จุด — ถ้ารู้จุดหนึ่ง สามารถหาอีกจุดจากผลรวมของจุดวิกฤต \(=\frac{-2b}{3a}\) ทันที โดยไม่ต้องแยกตัวประกอบ
+  </div>
+
+  <div class="block warn">
+    ระวังเครื่องหมาย! \(f'(x)=-3x^{2}+2x+1\) เมื่อแยกตัวประกอบต้องระวังว่ามี \(-\) นำหน้า — ถ้าลืมจะได้จุดวิกฤตเป็น \(x=1, x=-1/3\) สลับกัน
+  </div>
+</div>
+
+<!-- ===== ข้อ 4 ===== -->
+<div class="qcard" id="q4">
+  <h3>ข้อ 4 <span class="src">มี.ค. 42 / 2</span><span class="subtag c-orange">🟠 กฎลูกโซ่ / ผลคูณ-ผลหาร</span></h3>
+  <div class="qstmt">
+    ให้ \(f\) เป็นฟังก์ชันที่หาอนุพันธ์ได้ และ \(f(3)=-2,\ f'(3)=5\) ถ้า \(g(x)=\dfrac{f(x)}{x^{2}+1}\) แล้ว \(g'(3)\) มีค่าเท่าใด
+  </div>
+
+  <div class="block concept">
+    Quotient Rule: \(\left(\frac{u}{v}\right)'=\frac{u'v-uv'}{v^{2}}\) — ใช้เมื่อทั้งเศษและส่วนเป็นฟังก์ชันของ \(x\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ตั้ง \(u=f(x),\ v=x^{2}+1\)<br>
+      \(u(3)=f(3)=-2,\ u'(3)=f'(3)=5\)<br>
+      \(v(3)=3^{2}+1=10,\ v'(3)=2\cdot 3=6\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> ใช้ Quotient Rule<br>
+      \(g'(3)=\frac{u'(3)v(3)-u(3)v'(3)}{v(3)^{2}}=\frac{5\cdot 10-(-2)\cdot 6}{100}=\frac{50+12}{100}=\frac{62}{100}=0.62\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">\(g'(3)=0.62\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 0.62 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิคจำสูตร: "u dash v ลบ u v dash ส่วน v กำลังสอง" — ท่องเป็นจังหวะช่วยจำลำดับเครื่องหมาย
+  </div>
+
+  <div class="block warn">
+    ระวังเครื่องหมายลบ! \(u(3)=-2\) เมื่อคูณ \(v'(3)=6\) จะได้ \(-12\) แล้วลบออกจาก 50 จะกลายเป็น \(50-(-12)=62\) — อย่าทำเป็น \(50-12=38\)
+  </div>
+</div>
+
+<!-- ===== ข้อ 5 ===== -->
+<div class="qcard" id="q5">
+  <h3>ข้อ 5 <span class="src">ต.ค. 42 / 2</span><span class="subtag c-orange">🟠 กฎลูกโซ่ / ผลคูณ-ผลหาร</span></h3>
+  <div class="qstmt">
+    ให้ \(u\) และ \(v\) เป็นฟังก์ชันของ \(x\) โดยที่ \(v(x)=x^{2}-2x\) ถ้า \(f(x)=\dfrac{u(x)}{v(x)}\) และ \(u(3)=-9,\ u'(3)=3\) แล้ว \(f'(3)\) เท่ากับเท่าใด
+  </div>
+
+  <div class="block concept">
+    Quotient Rule อีกข้อ — แต่ครั้งนี้ต้องคำนวณ \(v(3)\) และ \(v'(3)\) เองจากสูตร \(v(x)=x^{2}-2x\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> คำนวณ \(v(3)=3^{2}-2(3)=9-6=3\)</div>
+    <div class="step"><span class="lbl">ขั้น 2</span> คำนวณ \(v'(x)=2x-2\), \(v'(3)=2(3)-2=4\)</div>
+    <div class="step"><span class="lbl">ขั้น 3</span> แทนใน Quotient Rule<br>
+      \(f'(3)=\frac{u'(3)v(3)-u(3)v'(3)}{v(3)^{2}}=\frac{3\cdot 3-(-9)\cdot 4}{3^{2}}=\frac{9+36}{9}=\frac{45}{9}=5\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">\(f'(3)=5\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 5 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: โจทย์ Quotient Rule มักให้ค่าที่จุดเดียว (\(u(3), u'(3)\) เป็นต้น) — ไม่ต้องหา \(u(x)\) ทั้งฟังก์ชัน แค่แทนค่าตรง ๆ พอ
+  </div>
+
+  <div class="block warn">
+    ระวังเครื่องหมายลบของ \(u(3)=-9\) เมื่อคูณกับ \(v'(3)=4\) — จะได้ \(-36\) แล้ว \(9-(-36)=45\) ไม่ใช่ \(9-36=-27\)
+  </div>
+</div>
+
+<!-- ===== ข้อ 6 ===== -->
+<div class="qcard" id="q6">
+  <h3>ข้อ 6 <span class="src">มี.ค. 43 / 3</span><span class="subtag c-brown">🟤 อนุพันธ์อันดับสูง & ความเว้า</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f(x)=ax^{3}+x^{2}+x+b\) เมื่อ \(a,b\) เป็นจำนวนจริง และ \(f(1)=3,\ f'(1)=0\) ถ้า \(g(x)=f''(x)\) แล้ว \((g\circ f)(-1)\) มีค่าเท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(-16\)</div><div class="opt"><b>2)</b> \(-4\)</div><div class="opt"><b>3)</b> \(4\)</div><div class="opt"><b>4)</b> \(16\)</div>
+  </div>
+
+  <div class="block concept">
+    Composition: \((g\circ f)(x)=g(f(x))=f''(f(x))\) — หา \(f(-1)\) ก่อน แล้วแทนเข้า \(g=f''\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ใช้เงื่อนไขหา \(a, b\)<br>
+      \(f(1)=a+1+1+b=a+b+2=3\Rightarrow a+b=1\)<br>
+      \(f'(x)=3ax^{2}+2x+1\), \(f'(1)=3a+2+1=3a+3=0\Rightarrow a=-1\)<br>
+      ดังนั้น \(b=1-a=2\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> สรุป \(f(x)=-x^{3}+x^{2}+x+2\)</div>
+    <div class="step"><span class="lbl">ขั้น 3</span> หา \(f''(x)\): \(f'(x)=-3x^{2}+2x+1\), \(f''(x)=-6x+2\)<br>
+      ดังนั้น \(g(x)=f''(x)=-6x+2\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> หา \(f(-1)=-(-1)^{3}+(-1)^{2}+(-1)+2=1+1-1+2=3\)</div>
+    <div class="step"><span class="lbl">ขั้น 5</span> \((g\circ f)(-1)=g(f(-1))=g(3)=-6(3)+2=-18+2=-16\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 1) \(-16\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เมื่อเจอ \((g\circ f)(x_0)\) ไม่ต้องหา \((g\circ f)(x)\) ทั้งฟังก์ชัน — คำนวณ \(f(x_0)\) ก่อน แล้วแทนเข้า \(g\) ทีหลังเร็วกว่า
+  </div>
+
+  <div class="block warn">
+    ระวังการคำนวณ \(f(-1)\): \(-(-1)^{3}=+1\) (เครื่องหมายลบนอกคูณกับลบในวงเล็บ = บวก) — ถ้าทำเป็น \(-1\) จะได้คำตอบเปลี่ยนเป็น 4 (ข้อ 3)
+  </div>
+</div>
+
+<!-- ===== ข้อ 7 ===== -->
+<div class="qcard" id="q7">
+  <h3>ข้อ 7 <span class="src">มี.ค. 43 / 3</span><span class="subtag c-yellow">🟡 ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f(x)=x^{3}+cx^{2}-9x\) เมื่อ \(c\) เป็นจำนวนจริง ถ้าค่าวิกฤตค่าหนึ่งของ \(f\) คือ 1 แล้ว \(f\) เป็นฟังก์ชันลดในเซตใด
+    <div class="opt"><b>1)</b> \((-3,1)\)</div><div class="opt"><b>2)</b> \((-\infty,-3)\cup(1,\infty)\)</div><div class="opt"><b>3)</b> \((-1,4)\)</div><div class="opt"><b>4)</b> \((-\infty,-1)\cup(4,\infty)\)</div>
+  </div>
+
+  <div class="block concept">
+    "ค่าวิกฤต" = ค่าที่ \(f'(x)=0\) — ใช้เงื่อนไขนี้หา \(c\), แล้วหาช่วงที่ \(f'(x)<0\) (ฟังก์ชันลด)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> \(f'(x)=3x^{2}+2cx-9\). ใช้ \(f'(1)=0\):<br>
+      \(3+2c-9=0\Rightarrow 2c=6\Rightarrow c=3\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> แทน \(c=3\): \(f'(x)=3x^{2}+6x-9=3(x^{2}+2x-3)=3(x+3)(x-1)\)</div>
+    <div class="step"><span class="lbl">ขั้น 3</span> จุดวิกฤต: \(x=-3\) และ \(x=1\)</div>
+    <div class="step"><span class="lbl">ขั้น 4</span> วาดเครื่องหมาย \(f'\): บวก (ซ้าย -3), ลบ (ระหว่าง -3 ถึง 1), บวก (ขวา 1)<br>
+      ดังนั้น \(f\) ลดเมื่อ \(x\in(-3,1)\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 1) \((-3,1)\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิคทดสอบเครื่องหมาย: สำหรับพหุนามดีกรี 2 ที่แยกตัวประกอบได้ \(a(x-r_1)(x-r_2)\) ที่ \(a>0\) — เครื่องหมายเป็น บวก-ลบ-บวก (จากซ้ายไปขวา)
+  </div>
+
+  <div class="block warn">
+    ระวังสับสน "ฟังก์ชันลด" = \(f'(x)<0\) ไม่ใช่ \(f'(x)>0\) — นักเรียนมักสับสนเครื่องหมาย ทำให้ตอบ choice ตรงข้าม
+  </div>
+</div>
+
+<!-- ===== ข้อ 8 ===== -->
+<div class="qcard" id="q8">
+  <h3>ข้อ 8 <span class="src">ต.ค. 43 / ตอนที่ 1</span><span class="subtag c-blue">🔵 อนุพันธ์โดยนิยาม & สูตรพื้นฐาน</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f(x)=ax^{3}-4x^{2}+1\) เมื่อ \(a\) เป็นค่าคงตัว และ
+    \[ g(x)=\begin{cases} f(x) & ;\ x>1\\ f'(x) & ;\ x<1\\ 0 & ;\ x=1 \end{cases} \]
+    ถ้า \(g(x)\) มีลิมิตที่ \(x=1\) แล้ว \(a\) เท่ากับข้อใด
+    <div class="opt"><b>1)</b> 0</div><div class="opt"><b>2)</b> \(\frac{5}{2}\)</div><div class="opt"><b>3)</b> \(\frac{8}{3}\)</div><div class="opt"><b>4)</b> 3</div>
+  </div>
+
+  <div class="block concept">
+    "ลิมิตที่ \(x=1\) มีอยู่" ⇒ lim ซ้าย = lim ขวา — ใช้สมการเดียวตั้งค่า \(a\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> lim ขวา (\(x\to 1^{+}\)): ใช้ \(g(x)=f(x)\)<br>
+      \(\lim_{x\to 1^{+}} g(x)=f(1)=a-4+1=a-3\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> lim ซ้าย (\(x\to 1^{-}\)): ใช้ \(g(x)=f'(x)\)<br>
+      \(f'(x)=3ax^{2}-8x\), \(\lim_{x\to 1^{-}} g(x)=f'(1)=3a-8\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> ใช้เงื่อนไข lim ซ้าย = ขวา<br>
+      \(a-3=3a-8\Rightarrow 5=2a\Rightarrow a=\frac{5}{2}\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 2) \(\frac{5}{2}\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 2 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: "มีลิมิตที่จุดต่อ" = lim ซ้าย = ขวา เสมอ — สำหรับ piecewise 2 สูตรนี้จะได้สมการเดียวพอแก้
+  </div>
+
+  <div class="block warn">
+    ระวังการใช้สูตรผิดฝั่ง! \(x\to 1^{+}\) ใช้สูตรฝั่ง \(x>1\) และ \(x\to 1^{-}\) ใช้ฝั่ง \(x<1\) — สลับกันได้บ่อย ๆ
+  </div>
+</div>
+
+<!-- ===== ข้อ 9 ===== -->
+<div class="qcard" id="q9">
+  <h3>ข้อ 9 <span class="src">ต.ค. 43 / ตอนที่ 1</span><span class="subtag c-orange">🟠 กฎลูกโซ่ / ผลคูณ-ผลหาร</span></h3>
+  <div class="qstmt">
+    ให้ \(f(x)=x^{3}-x^{2}+g(x)\) และ \(f(2)=f'(2)=2\) แล้ว \(\left(\dfrac{g}{f}\right)'(2)\) มีค่าเท่าใด
+    <div class="opt"><b>1)</b> \(-2\)</div><div class="opt"><b>2)</b> \(\frac12\)</div><div class="opt"><b>3)</b> 0</div><div class="opt"><b>4)</b> 2</div>
+  </div>
+
+  <div class="block concept">
+    Quotient Rule บน \(\left(\frac{g}{f}\right)'\) — ต้องหา \(g(2), g'(2)\) จากเงื่อนไข \(f(2)=f'(2)=2\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> จาก \(f(x)=x^{3}-x^{2}+g(x)\):<br>
+      \(f(2)=8-4+g(2)=4+g(2)=2\Rightarrow g(2)=-2\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> หา \(f'(x)\): \(f'(x)=3x^{2}-2x+g'(x)\)<br>
+      \(f'(2)=12-4+g'(2)=8+g'(2)=2\Rightarrow g'(2)=-6\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> ใช้ Quotient Rule<br>
+      \(\left(\frac{g}{f}\right)'(2)=\frac{g'(2)f(2)-g(2)f'(2)}{f(2)^{2}}=\frac{(-6)(2)-(-2)(2)}{2^{2}}=\frac{-12+4}{4}=\frac{-8}{4}=-2\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 1) \(-2\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: โจทย์แบบนี้มักให้ค่า "รวมก้อน" แล้วถาม Quotient Rule ของส่วนประกอบ — ใช้สมการเชิงเส้นแยกส่วนแทนการแก้พหุนามทั้งฟังก์ชัน
+  </div>
+
+  <div class="block warn">
+    ระวังเครื่องหมาย! \(g(2)=-2\) เมื่อคูณ \(f'(2)=2\) จะได้ \(-4\) แล้ว \(-12-(-4)=-12+4=-8\) — อย่าทำเป็น \(-12-4=-16\)
+  </div>
+</div>
+
+<!-- ===== ข้อ 10 ===== -->
+<div class="qcard" id="q10">
+  <h3>ข้อ 10 <span class="src">มี.ค. 44 / 3</span><span class="subtag c-yellow">🟡 ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f(x)=ax^{3}+bx\) เมื่อ \(a\) และ \(b\) เป็นจำนวนจริง และ \(f\) มีค่าต่ำสุดสัมพัทธ์เท่ากับ \(-2\) ที่ \(x=1\) ถ้า \(g(x)=x^{3}+f'(x)\) แล้ว \(g\) เป็นฟังก์ชันลดในช่วงใด
+    <div class="opt"><b>1)</b> \((0,2)\)</div><div class="opt"><b>2)</b> \((-3,-1)\)</div><div class="opt"><b>3)</b> \((-1,1)\)</div><div class="opt"><b>4)</b> \((-2,0)\)</div>
+  </div>
+
+  <div class="block concept">
+    ใช้เงื่อนไขที่จุดต่ำสุด \(f(1)=-2,\ f'(1)=0\) หา \(a,b\), แล้วหา \(g'(x)<0\) ของ \(g(x)=x^{3}+f'(x)\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> จาก \(f(1)=a+b=-2\) และ \(f'(1)=3a+b=0\) (จุดวิกฤต)<br>
+      แยก: \(2a=2\Rightarrow a=1,\ b=-3\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> \(f(x)=x^{3}-3x,\ f'(x)=3x^{2}-3\)<br>
+      \(g(x)=x^{3}+3x^{2}-3\), \(g'(x)=3x^{2}+6x-3=3(x^{2}+2x-1)\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> หาจุดวิกฤตของ \(g\): \(x^{2}+2x-1=0\)<br>
+      \(x=\frac{-2\pm\sqrt{4+4}}{2}=-1\pm\sqrt{2}\)<br>
+      \(x_{1}=-1-\sqrt{2}\approx -2.41,\ x_{2}=-1+\sqrt{2}\approx 0.41\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> เครื่องหมาย \(g'\): บวก-ลบ-บวก<br>
+      \(g'(x)<0\) เมื่อ \(x\in(-1-\sqrt{2},\ -1+\sqrt{2})\approx (-2.41,\ 0.41)\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 5</span> เปรียบเทียบกับ choice: \((-2,0)\subset(-2.41,\ 0.41)\) ⇒ ข้อ 4</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 4) \((-2,0)\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 4 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เมื่อช่วงที่ต้องตอบไม่ตรงเป๊ะกับจุดวิกฤต ให้ดูว่าช่วงใด "อยู่ใน" ช่วงที่ฟังก์ชันลด — ตอบช่วงนั้น (จาก choice ที่ให้มา)
+  </div>
+
+  <div class="block warn">
+    ระวังการปัดค่า! \(-1-\sqrt{2}\approx -2.414\) ไม่ใช่ \(-2\) และ \(-1+\sqrt{2}\approx 0.414\) ไม่ใช่ 0 — ต้องเช็คว่า choice ใด "อยู่ใน" ช่วยไม่ใช่ "เท่ากับ"
+  </div>
+</div>
+
+<!-- ===== ข้อ 11 ===== -->
+<div class="qcard" id="q11">
+  <h3>ข้อ 11 <span class="src">มี.ค. 44 / 2</span><span class="subtag c-green">🟢 ความชัน & เส้นสัมผัส-เส้นตั้งฉาก</span></h3>
+  <div class="qstmt">
+    เส้นสัมผัสโค้ง \(y=(x-1)^{2}\left(2x-\dfrac{5}{4}\right)\) ที่จุด \(\left(\dfrac{1}{2},-\dfrac{1}{16}\right)\) ทำมุม \(\theta\) กับแกน \(X\) โดยที่ \(0\le\theta\le\dfrac{\pi}{2}\) แล้ว \(\sin^{2}\dfrac{\theta}{2}\) มีค่าเท่าใด
+  </div>
+
+  <div class="block concept">
+    ความชันเส้นสัมผัส = \(f'(x_0)=\tan\theta\), แล้วใช้สูตร \(\sin^{2}\frac{\theta}{2}=\frac{1-\cos\theta}{2}\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> หา \(f'(x)\) ด้วย Product Rule<br>
+      \(f'(x)=2(x-1)\left(2x-\frac{5}{4}\right)+(x-1)^{2}\cdot 2\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> แทน \(x=\frac12\)<br>
+      \(f'\!\left(\frac12\right)=2\left(-\frac12\right)\left(1-\frac{5}{4}\right)+\left(-\frac12\right)^{2}\cdot 2\)<br>
+      \(=2\cdot\left(-\frac12\right)\cdot\left(-\frac14\right)+\frac14\cdot 2=\frac14+\frac12=\frac34\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> \(\tan\theta=\frac34\). สร้างสามเหลี่ยมมุมฉาก: ด้านตรงข้าม = 3, ด้านประชิด = 4, ด้านทแยง = 5<br>
+      \(\sin\theta=\frac{3}{5},\ \cos\theta=\frac{4}{5}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> \(\sin^{2}\frac{\theta}{2}=\frac{1-\cos\theta}{2}=\frac{1-\frac45}{2}=\frac{\frac15}{2}=\frac{1}{10}=0.1\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">\(\sin^{2}\dfrac{\theta}{2}=0.1\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 0.1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิคสามเหลี่ยมมุมฉาก: เมื่อรู้ \(\tan\theta=\frac{p}{q}\) ให้สร้างสามเหลี่ยมที่ด้านตรงข้าม \(=p\), ประชิด \(=q\), ทแยง \(=\sqrt{p^{2}+q^{2}}\) — เร็วกว่าจำสูตร sin/cos
+  </div>
+
+  <div class="block warn">
+    ระวังเครื่องหมายของ \(f'(1/2)\)! คูณลบคูณลบได้บวก แล้วบวกกับพจน์ที่ 2 — ถ้ารวมผิดจะได้ค่าอื่นทำให้คำตอบเปลี่ยน
+  </div>
+</div>
+
+<!-- ====== END PART 1 ====== -->
+
+<!-- ====== PART 2: Q12-Q22 ====== -->
+
+<!-- ===== ข้อ 12 ===== -->
+<div class="qcard" id="q12">
+  <h3>ข้อ 12 <span class="src">ต.ค. 44 / 3</span><span class="subtag c-orange">🟠 กฎลูกโซ่ / ผลคูณ-ผลหาร</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(g\) เป็นฟังก์ชันซึ่งมีอนุพันธ์ที่ทุกจุด \(x>0\) และ \(g'(3)=3\) แล้วจำนวนเต็มบวก \(n\) ที่ทำให้ \(g(x^{n}+2x)=4x^{3}+6x^{2}+31\) คือจำนวนใด
+    <div class="opt"><b>1)</b> 5</div><div class="opt"><b>2)</b> 6</div><div class="opt"><b>3)</b> 7</div><div class="opt"><b>4)</b> 8</div>
+  </div>
+
+  <div class="block concept">
+    ใช้ Chain Rule กับสมการเชิงฟังก์ชัน: \(\frac{d}{dx}[g(x^{n}+2x)]=g'(x^{n}+2x)\cdot(nx^{n-1}+2)\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> หาอนุพันธ์ทั้งสองข้างของสมการ<br>
+      \(g'(x^{n}+2x)\cdot(nx^{n-1}+2)=12x^{2}+12x\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> ใช้เงื่อนไข \(g'(3)=3\): เราต้องหา \(x\) ที่ทำให้ \(x^{n}+2x=3\)<br>
+      สังเกตเมื่อ \(x=1\): \(1^{n}+2(1)=1+2=3\) ✓ (ใช้ได้ทุก \(n\))
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> แทน \(x=1\) ในสมการอนุพันธ์<br>
+      \(g'(3)\cdot(n+2)=12+12=24\)<br>
+      \(3(n+2)=24\Rightarrow n+2=8\Rightarrow n=6\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 2) \(n=6\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 2 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เมื่อเจอสมการเชิงฟังก์ชันและให้ค่าของอนุพันธ์ ให้หา \(x\) ที่ทำให้ argument ของ \(g\) เท่ากับค่าที่โจทย์ให้ — มักได้ \(x=1\) เสมอ
+  </div>
+
+  <div class="block warn">
+    ระวังการลืม Chain Rule! เมื่อกดอนุพันธ์ \(g(x^n+2x)\) ต้องคูณด้วย \((nx^{n-1}+2)\) เสมอ — ถ้าลืมจะไม่สามารถใช้ \(g'(3)=3\) ได้
+  </div>
+</div>
+
+<!-- ===== ข้อ 13 ===== -->
+<div class="qcard" id="q13">
+  <h3>ข้อ 13 <span class="src">ต.ค. 44 / 3</span><span class="subtag c-yellow">🟡 ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์</span></h3>
+  <div class="qstmt">
+    ให้ \(f\) เป็นฟังก์ชันพหุนามกำลังสาม ซึ่งมีค่าสูงสุดสัมพัทธ์เท่ากับสามเท่าของค่าต่ำสุดสัมพัทธ์ และ \(f(0)=2\) ถ้า \(f\) มีค่าสูงสุดสัมพัทธ์ที่ \(x=-1\) และมีค่าต่ำสุดสัมพัทธ์ที่ \(x=1\) แล้ว \(f(4)\) เท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(-28\)</div><div class="opt"><b>2)</b> \(-24\)</div><div class="opt"><b>3)</b> 24</div><div class="opt"><b>4)</b> 28</div>
+  </div>
+
+  <div class="block concept">
+    พหุนามดีกรี 3 ที่มีจุดวิกฤตที่ \(x=\pm 1\) ⇒ \(f'(x)=3a(x-1)(x+1)=3a(x^{2}-1)\) — หา \(a, d\) จากเงื่อนไข
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> รูปทั่วไป: \(f(x)=ax^{3}+bx^{2}+cx+d\), \(f'(x)=3ax^{2}+2bx+c\)<br>
+      ใช้ \(f'(-1)=0\) และ \(f'(1)=0\):<br>
+      \(3a-2b+c=0\) และ \(3a+2b+c=0\)<br>
+      หักลบกัน: \(4b=0\Rightarrow b=0\), แล้ว \(c=-3a\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> สรุป \(f(x)=ax^{3}-3ax+d\)<br>
+      \(f(0)=d=2\)<br>
+      \(f(-1)=-a+3a+2=2a+2\) (max)<br>
+      \(f(1)=a-3a+2=-2a+2\) (min)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> ใช้เงื่อนไข max \(=3\times\)min<br>
+      \(2a+2=3(-2a+2)= -6a+6\)<br>
+      \(8a=4\Rightarrow a=\frac12\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> สรุป \(f(x)=\frac12 x^{3}-\frac32 x+2\)<br>
+      \(f(4)=\frac12(64)-\frac32(4)+2=32-6+2=28\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 4) 28</span>
+    <span class="official">เฉลยท้ายเล่ม: 4 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: พหุนามดีกรี 3 ที่มีจุดวิกฤตสมมาตรรอบ 0 (\(\pm c\)) ⇒ สัมประสิทธิ์พจน์ \(x^2\) เป็น 0 เสมอ — เซฟเวลาคำนวณ
+  </div>
+
+  <div class="block warn">
+    ระวังเครื่องหมาย! max \(=3\times\)min หมายถึง \(f(-1)=3\cdot f(1)\) — ถ้าเขียนสลับจะได้ \(a\) เป็นลบ ทำให้ max/min สลับกัน
+  </div>
+</div>
+
+<!-- ===== ข้อ 14 ===== -->
+<div class="qcard" id="q14">
+  <h3>ข้อ 14 <span class="src">มี.ค. 45 / 3</span><span class="subtag c-orange">🟠 กฎลูกโซ่ / ผลคูณ-ผลหาร</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f(x)=\sqrt{3x+1}\) และ \(g\) เป็นฟังก์ชันที่ \((f\circ g)(x)=x^{2}+1\) ทุก \(x\in\mathbb{R}\) แล้ว \(f'(1)+g'(1)\) มีค่าเท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(\frac{41}{12}\)</div><div class="opt"><b>2)</b> \(\frac{35}{12}\)</div><div class="opt"><b>3)</b> \(\frac{33}{4}\)</div><div class="opt"><b>4)</b> \(\frac{39}{4}\)</div>
+  </div>
+
+  <div class="block concept">
+    ใช้สมบัติ \((f\circ g)(x)=f(g(x))=x^{2}+1\) เพื่อหา \(g(x)\), แล้วหาอนุพันธ์ทั้งสองฟังก์ชันแยกกัน
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> หา \(f'(x)\): \(f'(x)=\frac{3}{2\sqrt{3x+1}}\)<br>
+      \(f'(1)=\frac{3}{2\sqrt{4}}=\frac{3}{4}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> จาก \((f\circ g)(x)=x^{2}+1\): \(\sqrt{3g(x)+1}=x^{2}+1\)<br>
+      ยกกำลังสอง: \(3g(x)+1=(x^{2}+1)^{2}=x^{4}+2x^{2}+1\)<br>
+      \(g(x)=\frac{x^{4}+2x^{2}}{3}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> หา \(g'(x)=\frac{4x^{3}+4x}{3}\)<br>
+      \(g'(1)=\frac{4+4}{3}=\frac{8}{3}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> รวม: \(f'(1)+g'(1)=\frac34+\frac83=\frac{9}{12}+\frac{32}{12}=\frac{41}{12}\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 1) \(\frac{41}{12}\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เมื่อเจอ \((f\circ g)(x)=h(x)\) และรู้ \(f\) — แทน \(y=g(x)\) แล้วแก้สมการ \(f(y)=h(x)\) โดยตรง เร็วกว่าการหา inverse
+  </div>
+
+  <div class="block warn">
+    ระวังการลืมยกกำลังสอง! \(\sqrt{A}=B\Rightarrow A=B^{2}\) ไม่ใช่ \(A=B\) — และอย่าลืมว่าพจน์ \((x^2+1)^2\) กระจายเป็น \(x^4+2x^2+1\) (พจน์คู่)
+  </div>
+</div>
+
+<!-- ===== ข้อ 15 ===== -->
+<div class="qcard" id="q15">
+  <h3>ข้อ 15 <span class="src">มี.ค. 45 / 3</span><span class="subtag c-brown">🟤 อนุพันธ์อันดับสูง & ความเว้า</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(g(x)=x^{2}f(x)\) ถ้า \(f'(x)=2x+3\) และ \(g''(1)=0\) แล้ว \(f(4)\) มีค่าเท่ากับข้อใด
+    <div class="opt"><b>1)</b> 0</div><div class="opt"><b>2)</b> 11</div><div class="opt"><b>3)</b> 13</div><div class="opt"><b>4)</b> 28</div>
+  </div>
+
+  <div class="block concept">
+    ใช้ Product Rule สองครั้งเพื่อหา \(g''(x)\), แล้วแทน \(g''(1)=0\) เพื่อหา \(f(1)\) — สุดท้าย integrate \(f'\) เพื่อหา \(f(x)\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> \(g'(x)=2x\cdot f(x)+x^{2}\cdot f'(x)\) (Product Rule)</div>
+    <div class="step"><span class="lbl">ขั้น 2</span> หา \(g''(x)\) ด้วย Product Rule อีกครั้ง<br>
+      \(g''(x)=2f(x)+2x\cdot f'(x)+2x\cdot f'(x)+x^{2}\cdot f''(x)\)<br>
+      \(=2f(x)+4xf'(x)+x^{2}f''(x)\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> คำนวณค่าที่จุด 1<br>
+      \(f'(1)=2(1)+3=5\), \(f''(x)=2\), \(f''(1)=2\)<br>
+      \(g''(1)=2f(1)+4(1)(5)+1\cdot 2=2f(1)+20+2=2f(1)+22=0\)<br>
+      \(f(1)=-11\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> Integrate \(f'(x)=2x+3\)<br>
+      \(f(x)=x^{2}+3x+C\)<br>
+      แทน \(f(1)=1+3+C=-11\Rightarrow C=-15\)<br>
+      \(f(x)=x^{2}+3x-15\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 5</span> \(f(4)=16+12-15=13\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 3) 13</span>
+    <span class="official">เฉลยท้ายเล่ม: 3 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เมื่อรู้ \(f'(x)\) ให้ integrate หา \(f(x)=\int f'(x)\,dx + C\) แล้วใช้ค่าที่จุดใดจุดหนึ่งเพื่อหา \(C\) — ไม่ต้องคาดเดา
+  </div>
+
+  <div class="block warn">
+    ระวัง Product Rule สองชั้น! \(g''(x)\) ต้อง differentiate ทุกพจน์ของ \(g'(x)\) — พจน์ \(x^2 f'(x)\) เองก็ใช้ Product Rule อีกที
+  </div>
+</div>
+
+<!-- ===== ข้อ 16 ===== -->
+<div class="qcard" id="q16">
+  <h3>ข้อ 16 <span class="src">ต.ค. 45 / 3</span><span class="subtag c-blue">🔵 อนุพันธ์โดยนิยาม & สูตรพื้นฐาน</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f(x)=x^{2}-6x+c\) โดยที่ \(c\) เป็นจำนวนจริง ถ้า \(a\) และ \(b\) เป็นรากของสมการ \(f(x)=0\) และ \(3a+2b=20\) แล้ว \(f'(c)\) มีค่าเท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(-38\)</div><div class="opt"><b>2)</b> \(-26\)</div><div class="opt"><b>3)</b> 26</div><div class="opt"><b>4)</b> 38</div>
+  </div>
+
+  <div class="block concept">
+    ใช้สูตร Vieta: ผลรวมราก \(= 6\), ผลคูณราก \(= c\) — แล้วแก้ระบบ 2 สมการ 2 ตัวแปร
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ใช้ Vieta: \(a+b=6\), \(ab=c\)</div>
+    <div class="step"><span class="lbl">ขั้น 2</span> แก้ระบบ<br>
+      \(a+b=6\Rightarrow 2a+2b=12\)<br>
+      \(3a+2b=20\)<br>
+      หักลบ: \(a=8\), \(b=-2\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> หา \(c=ab=8\cdot(-2)=-16\)</div>
+    <div class="step"><span class="lbl">ขั้น 4</span> \(f'(x)=2x-6\), \(f'(c)=f'(-16)=2(-16)-6=-32-6=-38\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 1) \(-38\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค Vieta: สำหรับพหุนามดีกรี 2 \(ax^2+bx+c\) ที่มีราก \(r_1, r_2\): \(r_1+r_2=-b/a\), \(r_1 r_2=c/a\) — ไม่ต้องแก้สมการตาราง
+  </div>
+
+  <div class="block warn">
+    ระวังเครื่องหมายของ Vieta! ผลรวมราก \(=-b/a\) (มีลบ) แต่ผลคูณราก \(=c/a\) (ไม่มีลบ) — ถ้าสับสนจะได้ \(a+b=-6\) ทำให้คำตอบเปลี่ยน
+  </div>
+</div>
+
+<!-- ===== ข้อ 17 ===== -->
+<div class="qcard" id="q17">
+  <h3>ข้อ 17 <span class="src">ต.ค. 45 / 3</span><span class="subtag c-orange">🟠 กฎลูกโซ่ / ผลคูณ-ผลหาร</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f(x)=x^{2}-2|x|\) และ \(g(x)=x^{2}+1\) แล้ว \((g\circ f)'(-3)+(f\circ g)'(3)\) เท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(-132\)</div><div class="opt"><b>2)</b> \(-84\)</div><div class="opt"><b>3)</b> 84</div><div class="opt"><b>4)</b> 132</div>
+  </div>
+
+  <div class="block concept">
+    ฟังก์ชันค่าสัมบูรณ์ \(|x|\): สำหรับ \(x<0\), \(|x|=-x\); สำหรับ \(x\ge 0\), \(|x|=x\) — ต้อง track เครื่องหมายในแต่ละช่วง
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ที่ \(x=-3\) (ฝั่งลบ): \(|x|=-x\), ดังนั้น \(f(x)=x^{2}-2(-x)=x^{2}+2x\)<br>
+      \(f'(x)=2x+2\), \(f'(-3)=-6+2=-4\)<br>
+      \(f(-3)=9-6=3\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> \((g\circ f)'(x)=g'(f(x))\cdot f'(x)=2f(x)\cdot f'(x)\)<br>
+      \((g\circ f)'(-3)=2\cdot 3\cdot(-4)=-24\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> ที่ \(x=3\): \(g(3)=9+1=10>0\), \(|g(x)|=g(x)\)<br>
+      \((f\circ g)(x)=f(g(x))=(g(x))^{2}-2g(x)=(x^{2}+1)^{2}-2(x^{2}+1)\)<br>
+      \(=x^{4}+2x^{2}+1-2x^{2}-2=x^{4}-1\)<br>
+      \((f\circ g)'(x)=4x^{3}\)<br>
+      \((f\circ g)'(3)=4\cdot 27=108\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> รวม: \(-24+108=84\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 3) 84</span>
+    <span class="official">เฉลยท้ายเล่ม: 3 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: กราฟของ \(g(x)=x^2+1\) อยู่เหนือแกน X เสมอ (เพราะ \(x^2\ge 0\)) ดังนั้น \(|g(x)|=g(x)\) ทุก \(x\) — ลดความซับซ้อนของ \(f\circ g\)
+  </div>
+
+  <div class="block warn">
+    ระวังเครื่องหมายของ absolute! ที่ \(x=-3\), \(|x|=-x\) ไม่ใช่ \(|x|=x\) — ถ้าทำผิดจะได้ \(f(x)=x^2-2x\) ทำให้คำตอบเปลี่ยน
+  </div>
+</div>
+
+<!-- ===== ข้อ 18 ===== -->
+<div class="qcard" id="q18">
+  <h3>ข้อ 18 <span class="src">มี.ค. 46 / 3</span><span class="subtag c-purple">🟣 โจทย์ประยุกต์ค่าสุดขีด (optimization)</span></h3>
+  <div class="qstmt">
+    ในการจัดทัศนศึกษาครั้งหนึ่ง ผู้จัดคิดค่าบริการเป็นเงื่อนไขดังนี้: ถ้ามีผู้ร่วมเดินทาง 50 คน ผู้จัดจะคิดค่าบริการอัตราหนึ่ง ถ้ามีผู้ร่วมเดินทาง 51 คน ค่าบริการจะลดลงคนละ 2 บาท ถ้ามีผู้ร่วมเดินทาง 52 คน ค่าบริการจะลดลงคนละ 4 บาท เป็นเช่นนี้เรื่อยไป ปรากฏว่าถ้ามีผู้ร่วมเดินทาง 90 คน แล้วจะเก็บค่าบริการได้มากที่สุด ถ้ามีผู้ร่วมเดินทาง 100 คน จะเก็บค่าบริการได้ทั้งหมดเป็นเงินเท่ากับข้อใด
+    <div class="opt"><b>1)</b> 16,000 บาท</div><div class="opt"><b>2)</b> 16,200 บาท</div><div class="opt"><b>3)</b> 16,400 บาท</div><div class="opt"><b>4)</b> 16,600 บาท</div>
+  </div>
+
+  <div class="block concept">
+    ตั้งสมการรายได้ \(R(n)=(50+n)(p-2n)\) เมื่อ \(n\) = จำนวนคนที่เพิ่มจาก 50, \(p\) = ราคาเริ่มต้น — ใช้เงื่อนไข max ที่ \(n=40\) หา \(p\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ตั้งสมการ: ถ้ามี \(50+n\) คน ราคาต่อคน = \(p-2n\)<br>
+      รายได้ \(R(n)=(50+n)(p-2n)\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> ใช้เงื่อนไข max ที่ \(n=40\)<br>
+      \(R'(n)=(p-2n)-2(50+n)=p-4n-100=0\)<br>
+      ที่ \(n=40\): \(p-160-100=0\Rightarrow p=260\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> คำนวณสำหรับ 100 คน (\(n=50\))<br>
+      ราคาต่อคน \(= 260-2(50)=260-100=160\) บาท<br>
+      รายได้รวม \(= 100\cdot 160=16000\) บาท
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 1) 16,000 บาท</span>
+    <span class="official">เฉลยท้ายเล่ม: 1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: โจทย์ optimization ที่มี "จำนวน \(\times\) ราคา" ให้ตั้งสมการ \(R=(\text{จำนวน})(\text{ราคา})\) แล้วหา \(R'=0\) — สูตรสากลของข้อสอบแนวนี้
+  </div>
+
+  <div class="block warn">
+    ระวังการตีความ "ลดลงคนละ 2 บาท"! หมายถึง ราคาต่อคนลด 2 บาทเมื่อจำนวนคนเพิ่ม 1 — ไม่ใช่ราคารวมลด 2 บาท
+  </div>
+</div>
+
+<!-- ===== ข้อ 19 ===== -->
+<div class="qcard" id="q19">
+  <h3>ข้อ 19 <span class="src">ต.ค. 46 / 2</span><span class="subtag c-yellow">🟡 ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์</span></h3>
+  <div class="qstmt">
+    กำหนดให้เส้นตรง \(y=-6x-5\) สัมผัสเส้นโค้ง \(y=f(x)\) ที่จุด \(x=-1\) โดยที่ \(f(x)=ax^{3}+bx^{2}-3\) เมื่อ \(a, b\) เป็นจำนวนจริง จงหาค่าสูงสุดสัมพัทธ์ของ \(f\)
+  </div>
+
+  <div class="block concept">
+    เส้นสัมผัสที่ \(x=-1\): ให้ 2 เงื่อนไข — (1) จุดบนเส้นโค้ง = จุดบนเส้นตรง, (2) ความชันเส้นโค้ง = ความชันเส้นตรง
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> เงื่อนไขจุดสัมผัส: ที่ \(x=-1\)<br>
+      เส้นตรง: \(y(-1)=6-5=1\)<br>
+      เส้นโค้ง: \(f(-1)=-a+b-3\)<br>
+      \(−a+b−3=1\Rightarrow b-a=4\Rightarrow b=a+4\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> เงื่อนไขความชัน<br>
+      \(f'(x)=3ax^{2}+2bx\), \(f'(-1)=3a-2b=-6\) (ความชันเส้นตรง)<br>
+      แทน \(b=a+4\): \(3a-2(a+4)=-6\Rightarrow a-8=-6\Rightarrow a=2\)<br>
+      \(b=6\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> \(f(x)=2x^{3}+6x^{2}-3\)<br>
+      \(f'(x)=6x^{2}+12x=6x(x+2)\)<br>
+      จุดวิกฤต: \(x=0, x=-2\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> \(f''(x)=12x+12\)<br>
+      \(f''(0)=12>0\) ⇒ min<br>
+      \(f''(-2)=-24+12=-12<0\) ⇒ max
+    </div>
+    <div class="step"><span class="lbl">ขั้น 5</span> \(f(-2)=2(-8)+6(4)-3=-16+24-3=5\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ค่าสูงสุดสัมพัทธ์ \(= 5\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 5 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เส้นสัมผัส \(y=mx+c\) ที่จุด \(x=a\) ให้ 2 สมการ — (1) \(f(a)=ma+c\), (2) \(f'(a)=m\) — จำไว้เป็นสูตรตรง
+  </div>
+
+  <div class="block warn">
+    ระวังการคำนวณ \(f(-1)=-a+b-3\): เครื่องหมายของ \(a\) และ \(b\) สลับกันเพราะ \(x=-1\) — ถ้าผิดจะได้ \(a, b\) ผิดทั้งคู่
+  </div>
+</div>
+
+<!-- ===== ข้อ 20 ===== -->
+<div class="qcard" id="q20">
+  <h3>ข้อ 20 <span class="src">Ent' มี.ค. 47: 3 คะแนน</span><span class="subtag c-blue">🔵 อนุพันธ์โดยนิยาม & สูตรพื้นฐาน</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(\displaystyle f(x)=\begin{cases}\dfrac{1}{x} & ;\ x\ne 0\\ 1 & ;\ x=0\end{cases}\) และ \(\displaystyle g(x)=\dfrac{1}{x-1}\)<br>
+    พิจารณาข้อความต่อไปนี้<br>
+    <b>ก.</b> \((f\circ g)\) ต่อเนื่องที่ \(x=0\)<br>
+    <b>ข.</b> \(f'\!\left(-\dfrac{1}{2}\right)=g'\!\left(\dfrac{1}{2}\right)\)
+    <div class="opt"><b>1)</b> ก. ถูก และ ข. ถูก</div><div class="opt"><b>2)</b> ก. ถูก และ ข. ผิด</div><div class="opt"><b>3)</b> ก. ผิด และ ข. ถูก</div><div class="opt"><b>4)</b> ก. ผิด และ ข. ผิด</div>
+  </div>
+
+  <div class="block concept">
+    Composition \((f\circ g)(x)=f(g(x))\) — ตรวจนิยามและความต่อเนื่องที่ \(x=0\); Quotient ของ \(1/x\) ให้ \(f'(x)=-1/x^2\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ก.</span> คำนวณ \((f\circ g)(0)\):<br>
+      \(g(0)=\frac{1}{0-1}=-1\) (เนื่องจาก \(-1\ne 0\) จึงใช้สูตร \(f(x)=1/x\))<br>
+      \((f\circ g)(0)=f(-1)=\frac{1}{-1}=-1\)<br>
+      คำนวณ lim: \(\displaystyle\lim_{x\to 0}(f\circ g)(x)=\lim_{x\to 0} f(g(x))=\lim_{x\to 0}\frac{1}{g(x)}=\lim_{x\to 0}(x-1)=-1\)<br>
+      \(\lim = (f\circ g)(0) = -1\) ⇒ <b>\((f\circ g)\) ต่อเนื่องที่ \(x=0\)</b> ⇒ <b>ก. ถูก</b>
+    </div>
+    <div class="step"><span class="lbl">ข.</span> \(f'(x)=-\dfrac{1}{x^{2}}\) (สำหรับ \(x\ne 0\))<br>
+      \(f'\!\left(-\dfrac{1}{2}\right)=-\dfrac{1}{1/4}=-4\)<br>
+      \(g'(x)=-\dfrac{1}{(x-1)^{2}}\), \(g'\!\left(\dfrac{1}{2}\right)=-\dfrac{1}{1/4}=-4\)<br>
+      \(f'(-1/2)=g'(1/2)=-4\) ⇒ <b>ข. ถูก</b>
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 1) ก. ถูก และ ข. ถูก</span>
+    <span class="official">เฉลยท้ายเล่ม: 1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: สำหรับ \(f(x)=1/x^n\), \(f'(x)=-n/x^{n+1}\) — จำสูตรตรงนี้ไว้ ไม่ต้องใช้ Quotient Rule ทุกครั้ง; สำหรับ composition ให้คำนวณค่าก่อน แล้วค่อยตรวจ lim
+  </div>
+
+  <div class="block warn">
+    ระวังการ track จุดที่ฟังก์ชันไม่นิยาม! \(g(x)=1/(x-1)\) ไม่นิยามที่ \(x=1\) แต่ที่ \(x=0\) ใช้ได้ (\(g(0)=-1\)) — อย่าสรุปเร็วว่าไม่นิยามเพราะเห็น \((x-1)\) ในสูตร
+  </div>
+</div>
+
+<!-- ===== ข้อ 21 ===== -->
+<div class="qcard" id="q21">
+  <h3>ข้อ 21 <span class="src">Ent' มี.ค. 47: 3 คะแนน</span><span class="subtag c-yellow">🟡 ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์</span></h3>
+  <div class="qstmt">
+    เมื่อพิจารณากราฟของฟังก์ชัน \(f(x)=\dfrac{1}{4}x^{4}-\dfrac{2}{3}x^{3}-\dfrac{1}{2}x^{2}+2x-\dfrac{1}{3}\) พบว่า กราฟของ \(f\) มีจุดวิกฤต \((c, f(c))\) ซึ่ง \(c>0\) เป็นจำนวน \(a\) จุด และกราฟของ \(f\) ตัดแกน \(X\) เป็นจำนวน \(b\) จุด ข้อใดถูก
+    <div class="opt"><b>1)</b> \(a=1, b=2\)</div><div class="opt"><b>2)</b> \(a=1, b=4\)</div><div class="opt"><b>3)</b> \(a=2, b=2\)</div><div class="opt"><b>4)</b> \(a=2, b=4\)</div>
+  </div>
+
+  <div class="block concept">
+    จำนวนจุดวิกฤต = จำนวนรากของ \(f'(x)=0\) (ที่ \(c>0\)); จำนวนจุดตัดแกน \(X\) = จำนวนรากของ \(f(x)=0\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> หา \(f'(x)\):<br>
+      \(f'(x)=x^{3}-2x^{2}-x+2\)<br>
+      แยกตัวประกอบ (ลอง \(x=1\)): \(1-2-1+2=0\) ✓<br>
+      \(f'(x)=(x-1)(x^{2}-x-2)=(x-1)(x-2)(x+1)\)<br>
+      จุดวิกฤต: \(x=-1, 1, 2\)<br>
+      ที่ \(c>0\): \(c=1, 2\) ⇒ \(a=2\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> ตรวจค่า \(f\) ที่จุดสำคัญ<br>
+      \(f(0)=-\frac13\) (ลบ)<br>
+      \(f(1)=\frac14-\frac23-\frac12+2-\frac13=\frac{3-8-6+24-4}{12}=\frac{9}{12}=\frac34\) (บวก) ⇒ รากใน \((0, 1)\)<br>
+      \(f(2)=4-\frac{16}{3}-2+4-\frac13=6-\frac{17}{3}=\frac{18-17}{3}=\frac13\) (บวก)<br>
+      เมื่อ \(x\to\infty\), \(f\to\infty\); \(f(2)>0\) ⇒ ไม่มีรากเพิ่ม<br>
+      เมื่อ \(x\to-\infty\), \(f\to\infty\); \(f(-1)>0\); \(f(0)<0\) ⇒ รากใน \((-\infty, 0)\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> รวม: มี 2 ราก ⇒ \(b=2\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 3) \(a=2, b=2\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 3 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: ใช้ Intermediate Value Theorem — ถ้า \(f(a)\) และ \(f(b)\) ต่างเครื่องหมาย จะมีรากอย่างน้อยหนึ่งรากใ \((a, b)\)
+  </div>
+
+  <div class="block warn">
+    ระวังการตีความ "จำนวน \(a\) จุด ที่ \(c>0\)"! ต้องกรองเฉพาะจุดที่ \(c\) เป็นบวก — อย่านับรวมจุด \(x=-1\) ด้วย
+  </div>
+</div>
+
+<!-- ===== ข้อ 22 ===== -->
+<div class="qcard" id="q22">
+  <h3>ข้อ 22 <span class="src">Ent' มี.ค. 47: 3 คะแนน</span><span class="subtag c-yellow">🟡 ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f\) เป็นฟังก์ชันที่หาอนุพันธ์ได้ทุกจุด และ \(h(x)=x^{3}+1\) ถ้า \(a\) เป็นจำนวนจริงที่ทำให้ \((h\circ f)(a)=9,\ (h\circ f)'(a)=0,\ (h\circ f)''(a)=-1\) แล้ว \(f\) มีค่าสูงสุด/ต่ำสุดสัมพัทธ์ที่จุด \(a\) และมีค่าเท่าใด
+    <div class="opt"><b>1)</b> มีค่าสูงสุดสัมพัทธ์ที่จุด \(a\) และมีค่าเท่ากับ 1</div>
+    <div class="opt"><b>2)</b> มีค่าสูงสุดสัมพัทธ์ที่จุด \(a\) และมีค่าเท่ากับ 2</div>
+    <div class="opt"><b>3)</b> มีค่าต่ำสุดสัมพัทธ์ที่จุด \(a\) และมีค่าเท่ากับ 1</div>
+    <div class="opt"><b>4)</b> มีค่าต่ำสุดสัมพัทธ์ที่จุด \(a\) และมีค่าเท่ากับ 2</div>
+  </div>
+
+  <div class="block concept">
+    \((h\circ f)(x)=h(f(x))=(f(x))^{3}+1\) — ใช้ Chain Rule หาอนุพันธ์อันดับ 1 และ 2, แล้วเชื่อมโยงกับ \(f'(a)\) และ \(f''(a)\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> จาก \((h\circ f)(a)=9\): \(f(a)^{3}+1=9\Rightarrow f(a)^{3}=8\Rightarrow f(a)=2\)</div>
+    <div class="step"><span class="lbl">ขั้น 2</span> \((h\circ f)'(x)=3(f(x))^{2}\cdot f'(x)\)<br>
+      ที่ \(a\): \(3\cdot 4\cdot f'(a)=0\Rightarrow f'(a)=0\) (จุดวิกฤตของ \(f\))
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> \((h\circ f)''(x)=6f(x)\cdot(f'(x))^{2}+3(f(x))^{2}\cdot f''(x)\)<br>
+      ที่ \(a\): \(6\cdot 2\cdot 0+3\cdot 4\cdot f''(a)=12f''(a)=-1\)<br>
+      \(f''(a)=-\frac{1}{12}<0\) ⇒ <b>max</b>
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> \(f\) มีค่าสูงสุดสัมพัทธ์ที่ \(a\) ค่าเท่ากับ \(f(a)=2\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 2) max ที่จุด \(a\) ค่าเท่ากับ 2</span>
+    <span class="official">เฉลยท้ายเล่ม: 2 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เมื่อ \((h\circ f)(a)=k\) และ \(h\) invertible แล้ว \(f(a)=h^{-1}(k)\) — ไม่ต้องคำนวณ \(f(x)\) ทั้งฟังก์ชัน
+  </div>
+
+  <div class="block warn">
+    ระวัง Chain Rule สองชั้น! \((h\circ f)''\) ต้องใช้ Product Rule บน \((f(x))^{2}\cdot f'(x)\) — ถ้าลืมจะได้เฉพาะพจน์เดียว ทำให้สรุปผิด
+  </div>
+</div>
+
+<!-- ====== END PART 2 ====== -->
+
+<!-- ====== PART 3: Q23-Q31 + FINAL SUMMARY ====== -->
+
+<!-- ===== ข้อ 23 ===== -->
+<div class="qcard" id="q23">
+  <h3>ข้อ 23 <span class="src">Ent' ต.ค. 47: 3 คะแนน</span><span class="subtag c-blue">🔵 อนุพันธ์โดยนิยาม & สูตรพื้นฐาน</span></h3>
+  <div class="qstmt">
+    ให้ \(f(x)=x^{3}+ax^{2}+bx+c\) เมื่อ \(a,b,c\) เป็นจำนวนจริง ถ้า \(x-3\) หาร \(f(x)\) แล้วเหลือเศษ 10 และ \(1+i\) เป็นรากหนึ่งของ \(f'(x)\) แล้วค่าของ \(f(1)\) เท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(-4\)</div><div class="opt"><b>2)</b> \(-2\)</div><div class="opt"><b>3)</b> 0</div><div class="opt"><b>4)</b> 1</div>
+  </div>
+
+  <div class="block concept">
+    เศษเมื่อหาร \(f(x)\) ด้วย \(x-k\) เท่ากับ \(f(k)\) (Remainder Theorem); รากเชิงซ้อนของพหุนามสัมประสิทธิ์จริงจะมาเป็นคู่ conjugate
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ใช้ Remainder Theorem: \(f(3)=10\)<br>
+      \(27+9a+3b+c=10\Rightarrow 9a+3b+c=-17\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> \(f'(x)=3x^{2}+2ax+b\). เนื่องจาก \(1+i\) เป็นราก ⇒ \(1-i\) ก็เป็นราก (สัมประสิทธิ์จริง)<br>
+      ผลรวมราก: \((1+i)+(1-i)=2=-\frac{2a}{3}\Rightarrow a=-3\)<br>
+      ผลคูณราก: \((1+i)(1-i)=1+1=2=\frac{b}{3}\Rightarrow b=6\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> หา \(c\) จาก \(f(3)=10\):<br>
+      \(9(-3)+3(6)+c=-17\Rightarrow -27+18+c=-17\Rightarrow c=-8\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> \(f(x)=x^{3}-3x^{2}+6x-8\)<br>
+      \(f(1)=1-3+6-8=-4\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 1) \(-4\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: รากเชิงซ้อน \(p+qi\) ของพหุนามสัมประสิทธิ์จริง ⇒ \(p-qi\) ก็เป็นราก — ใช้ Vieta หาผลรวมและผลคูณรากได้ทันที
+  </div>
+
+  <div class="block warn">
+    ระวังเครื่องหมาย Vieta! สำหรับ \(ax^2+bx+c=0\), ผลรวมราก \(=-b/a\) — ดังนั้น \(2=-2a/3\Rightarrow a=-3\) (ลบ) ไม่ใช่ \(a=3\)
+  </div>
+</div>
+
+<!-- ===== ข้อ 24 ===== -->
+<div class="qcard" id="q24">
+  <h3>ข้อ 24 <span class="src">Ent' ต.ค. 47: 3 คะแนน</span><span class="subtag c-orange">🟠 กฎลูกโซ่ / ผลคูณ-ผลหาร</span></h3>
+  <div class="qstmt">
+    ถ้า \(f(x)\) และ \(g(x)\) เป็นฟังก์ชันที่หาอนุพันธ์ได้ และมีสมบัติ \(f'(g(x))=\dfrac{1}{g'(x)}\) และ \(f(g(0))=5\) แล้วค่าของ \(f(g(2))\) เท่ากับข้อใด
+    <div class="opt"><b>1)</b> 1</div><div class="opt"><b>2)</b> 3</div><div class="opt"><b>3)</b> 5</div><div class="opt"><b>4)</b> 7</div>
+  </div>
+
+  <div class="block concept">
+    คูณทั้งสองข้างด้วย \(g'(x)\) จะได้ \(\frac{d}{dx}[f(g(x))]=1\) — integrate หา \(f(g(x))\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> คูณทั้งสองข้างด้วย \(g'(x)\)<br>
+      \(f'(g(x))\cdot g'(x)=1\)<br>
+      สังเกตว่าซ้ายเป็น \(\frac{d}{dx}[f(g(x))]\) (Chain Rule กลับ)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> Integrate ทั้งสองข้าง<br>
+      \(f(g(x))=x+C\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> ใช้เงื่อนไข \(f(g(0))=5\)<br>
+      \(0+C=5\Rightarrow C=5\)<br>
+      ดังนั้น \(f(g(x))=x+5\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> \(f(g(2))=2+5=7\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 4) 7</span>
+    <span class="official">เฉลยท้ายเล่ม: 4 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เมื่อเจอ \(f'(g(x))\cdot g'(x)=h(x)\) ให้คิดทันทีว่า \(\frac{d}{dx}[f(g(x))]=h(x)\) — สังเกตโครงสร้าง Chain Rule
+  </div>
+
+  <div class="block warn">
+    ระวังการ integrate ลืม \(+C\)! ถ้าไม่ใส่ \(C\) จะไม่สามารถใช้เงื่อนไข \(f(g(0))=5\) หาค่าได้
+  </div>
+</div>
+
+<!-- ===== ข้อ 25 ===== -->
+<div class="qcard" id="q25">
+  <h3>ข้อ 25 <span class="src">Ent' มี.ค. 48: 3 คะแนน</span><span class="subtag c-blue">🔵 อนุพันธ์โดยนิยาม & สูตรพื้นฐาน</span></h3>
+  <div class="qstmt">
+    พิจารณาข้อความต่อไปนี้<br>
+    <b>ก.</b> ถ้า \(f\) และ \(g\) เป็นฟังก์ชันที่ \(\lim_{h\to 0^{+}}\frac{f(x+h)-f(x)}{h}=\lim_{h\to 0^{-}}\frac{f(x+h)-f(x)}{h}=g(x)\) แล้ว \(g(x)=f'(x)\)<br>
+    <b>ข.</b> ถ้า \(f\) เป็นฟังก์ชันที่ \(f(x)>0\) สำหรับทุก \(x\) และ \(f'(a)\ne 0\) แล้วความชันของเส้นสัมผัสกราฟของ \(y=\dfrac{1}{f(x)}\) ที่จุด \(a\) คือ \(\dfrac{1}{f'(a)}\)
+    <div class="opt"><b>1)</b> ก. ถูก และ ข. ถูก</div><div class="opt"><b>2)</b> ก. ถูก และ ข. ผิด</div><div class="opt"><b>3)</b> ก. ผิด และ ข. ถูก</div><div class="opt"><b>4)</b> ก. ผิด และ ข. ผิด</div>
+  </div>
+
+  <div class="block concept">
+    ก. นิยามอนุพันธ์ผ่าน one-sided limit — ถ้าทั้งสอง lim หาค่าได้และเท่ากัน = \(f'(x)\); ข. Quotient Rule บน \(1/f(x)\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ก.</span> นิยาม \(f'(x)=\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}\). ถ้าทั้ง lim ซ้ายและขวาหาค่าได้และเท่ากับ \(g(x)\)<br>
+      ⇒ lim (สองฝั่ง) หาค่าได้ = \(g(x)\) ⇒ \(f'(x)=g(x)\). <b>ก. ถูก</b>
+    </div>
+    <div class="step"><span class="lbl">ข.</span> ความชันของ \(y=\frac{1}{f(x)}\) ที่ \(a\)<br>
+      \(y'=-\frac{f'(x)}{(f(x))^{2}}\), ที่ \(a\): \(y'(a)=-\frac{f'(a)}{(f(a))^{2}}\)<br>
+      ค่านี้ไม่เท่ากับ \(\frac{1}{f'(a)}\) ในทั่วไป ⇒ <b>ข. ผิด</b>
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 2) ก. ถูก และ ข. ผิด</span>
+    <span class="official">เฉลยท้ายเล่ม: 2 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: ข้อความ "ความชันของ \(1/f(x)\)" มักหลอกให้ตอบ \(\frac{1}{f'(a)}\) — จริง ๆ ต้องใช้ Quotient Rule ที่ให้ \(-\frac{f'(a)}{(f(a))^{2}}\)
+  </div>
+
+  <div class="block warn">
+    ระวังการสรุปเร็ว! "ความชันของ inverse" ≠ "inverse ของความชัน" — เป็นเรื่องคนละอย่างกัน
+  </div>
+</div>
+
+<!-- ===== ข้อ 26 ===== -->
+<div class="qcard" id="q26">
+  <h3>ข้อ 26 <span class="src">A-NET' ก.พ. 49: 3 คะแนน</span><span class="subtag c-blue">🔵 อนุพันธ์โดยนิยาม & สูตรพื้นฐาน</span></h3>
+  <div class="qstmt">
+    ถ้า \(P(x)\) เป็นพหุนามดีกรีสาม ซึ่งมี 1, 2, 3 เป็นคำตอบของสมการ \(P(x)=0\) และ \(P(4)=5\) แล้ว \(P'(1)\) มีค่าเท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(-\frac{6}{7}\)</div><div class="opt"><b>2)</b> \(-\frac{5}{6}\)</div><div class="opt"><b>3)</b> \(\frac{4}{5}\)</div><div class="opt"><b>4)</b> \(\frac{5}{3}\)</div>
+  </div>
+
+  <div class="block concept">
+    พหุนามดีกรี 3 ที่มีราก 1, 2, 3 ⇒ \(P(x)=k(x-1)(x-2)(x-3)\) — หา \(k\) จาก \(P(4)\), แล้วหา \(P'(1)\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ตั้ง \(P(x)=k(x-1)(x-2)(x-3)\)</div>
+    <div class="step"><span class="lbl">ขั้น 2</span> ใช้ \(P(4)=5\):<br>
+      \(P(4)=k\cdot 3\cdot 2\cdot 1=6k=5\Rightarrow k=\frac56\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> หา \(P'(x)\) ด้วย Product Rule<br>
+      \(P'(x)=\frac56\Big[(x-2)(x-3)+(x-1)(x-3)+(x-1)(x-2)\Big]\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> แทน \(x=1\)<br>
+      \(P'(1)=\frac56\Big[(1-2)(1-3)+0+0\Big]=\frac56\Big[(-1)(-2)\Big]=\frac56\cdot 2=\frac53\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 4) \(\frac{5}{3}\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 4 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: ที่ราก \(x=r_i\) ของ \(P(x)=k\prod(x-r_j)\), พจน์ Product Rule ที่ไม่มี \((x-r_i)\) จะเหลือเพียงพจน์เดียว ⇒ \(P'(r_i)=k\prod_{j\ne i}(r_i-r_j)\)
+  </div>
+
+  <div class="block warn">
+    ระวัง! แทน \(x=1\) แล้วพจน์ที่มี \((x-1)\) จะเป็น 0 หมด — เหลือเพียงพจน์ \((x-2)(x-3)\) ที่ไม่มี \((x-1)\)
+  </div>
+</div>
+
+<!-- ===== ข้อ 27 ===== -->
+<div class="qcard" id="q27">
+  <h3>ข้อ 27 <span class="src">A-NET' มี.ค. 50: 3 คะแนน</span><span class="subtag c-orange">🟠 กฎลูกโซ่ / ผลคูณ-ผลหาร</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f(x)=1+\dfrac{a}{x}\) และ \(g(x)=x^{2}+b\) ถ้า \((f\circ g)(0)=\dfrac{1}{2}\) และ \(f''(-1)=2\) แล้ว \(\left(\dfrac{f}{g}\right)'(a+b)\) เท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(-\frac13\)</div><div class="opt"><b>2)</b> \(-\frac14\)</div><div class="opt"><b>3)</b> \(\frac14\)</div><div class="opt"><b>4)</b> \(\frac13\)</div>
+  </div>
+
+  <div class="block concept">
+    ใช้เงื่อนไขที่ให้หา \(a, b\), แล้วคำนวณ \(a+b\) และ Quotient Rule \(\left(\frac{f}{g}\right)'\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ใช้ \((f\circ g)(0)=\frac12\)<br>
+      \(g(0)=0^{2}+b=b\), \(f(b)=1+\frac{a}{b}=\frac12\)<br>
+      \(\frac{a}{b}=-\frac12\Rightarrow a=-\frac{b}{2}\) (สมการที่ 1)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> หา \(f''(x)\)<br>
+      \(f'(x)=-\frac{a}{x^{2}}\), \(f''(x)=\frac{2a}{x^{3}}\)<br>
+      \(f''(-1)=\frac{2a}{-1}=-2a=2\Rightarrow a=-1\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> หา \(b\): \(a=-\frac{b}{2}\Rightarrow b=-2a=2\)<br>
+      \(a+b=-1+2=1\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> คำนวณค่าที่จุด 1<br>
+      \(f(x)=1-\frac1x,\ f(1)=0,\ f'(1)=1\)<br>
+      \(g(x)=x^{2}+2,\ g(1)=3,\ g'(1)=2\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 5</span> \(\left(\frac{f}{g}\right)'(1)=\frac{f'(1)g(1)-f(1)g'(1)}{g(1)^{2}}=\frac{1\cdot 3-0\cdot 2}{9}=\frac{3}{9}=\frac13\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 4) \(\frac{1}{3}\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 4 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เมื่อ \(f(x)=1+\frac{a}{x}\) คำนวณ \(f'\) และ \(f''\) รวดเร็ว — \(f'=-a/x^2\), \(f''=2a/x^3\) — จำสูตรตรง
+  </div>
+
+  <div class="block warn">
+    ระวังเครื่องหมาย \(f''(-1)\)! พจน์ \(x^3\) เมื่อ \(x=-1\) จะเป็น \(-1\), ดังนั้น \(f''(-1)=\frac{2a}{-1}=-2a\) (ลบ)
+  </div>
+</div>
+
+<!-- ===== ข้อ 28 ===== -->
+<div class="qcard" id="q28">
+  <h3>ข้อ 28 <span class="src">A-NET' มี.ค. 51: 3 คะแนน</span><span class="subtag c-yellow">🟡 ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f\) เป็นฟังก์ชันพหุนามกำลังสาม ซึ่งนิยามบนช่วง \([-2,2]\) โดยที่ \(f(0)=1, f(1)=0\) และ \(f\) มีค่าต่ำสุดที่ \(x=1\) มีค่าสูงสุดที่ \(x=-1\) พิจารณาข้อความต่อไปนี้<br>
+    <b>ก.</b> \(f(-2)\le f(x)\) ทุก \(x\in[-2,2]\)<br>
+    <b>ข.</b> \(f(2)\ge f(x)\) ทุก \(x\in[-2,2]\)
+    <div class="opt"><b>1)</b> ก. จริง และ ข. จริง</div><div class="opt"><b>2)</b> ก. จริง และ ข. เท็จ</div><div class="opt"><b>3)</b> ก. เท็จ และ ข. จริง</div><div class="opt"><b>4)</b> ก. เท็จ และ ข. เท็จ</div>
+  </div>
+
+  <div class="block concept">
+    พหุนามดีกรี 3 ที่มี max ที่ \(x=-1\), min ที่ \(x=1\) ⇒ \(f'(x)=3a(x^2-1)\), \(f(x)=ax^3-3ax+d\) — ใช้เงื่อนไข \(f(0)=1, f(1)=0\) หา \(a, d\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> \(f(x)=ax^3-3ax+d\) (สัมประสิทธิ์ \(x^2\) เป็น 0 เพราะ max/min สมมาตร)<br>
+      \(f(0)=d=1\)<br>
+      \(f(1)=a-3a+1=-2a+1=0\Rightarrow a=\frac12\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> \(f(x)=\frac12 x^3-\frac32 x+1\)<br>
+      \(f(-1)=-\frac12+\frac32+1=2\) (max ภายใน)<br>
+      \(f(1)=0\) (min ภายใน)<br>
+      \(f(-2)=-4+3+1=0\) (ค่าที่ปลาย)<br>
+      \(f(2)=4-3+1=2\) (ค่าที่ปลาย)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> เปรียบเทียบค่าทั้งหมดบน \([-2,2]\)<br>
+      max = 2 (ที่ \(x=-1\) และ \(x=2\))<br>
+      min = 0 (ที่ \(x=1\) และ \(x=-2\))
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> ตรวจ<br>
+      <b>ก.</b> \(f(-2)=0\) และค่าต่ำสุดบนช่วง \(=0\) ⇒ \(f(-2)\le f(x)\) ทุก \(x\) ⇒ <b>จริง</b><br>
+      <b>ข.</b> \(f(2)=2\) และค่าสูงสุดบนช่วง \(=2\) ⇒ \(f(2)\ge f(x)\) ทุก \(x\) ⇒ <b>จริง</b>
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 1) ก. จริง และ ข. จริง</span>
+    <span class="official">เฉลยท้ายเล่ม: 1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: บนช่วงปิด \([a, b]\), max/min ของฟังก์ชันต่อเนื่องเกิดที่จุดวิกฤตหรือที่ปลาย — ต้องเปรียบเทียบค่าทุกจุดเหล่านี้
+  </div>
+
+  <div class="block warn">
+    ระวังการสรุปเร็วว่า "max ที่ \(x=-1\) ⇒ \(f(-2)<f(-1)\)" — อาจไม่จริง ต้องคำนวณจริง ๆ ทุกครั้ง
+  </div>
+</div>
+
+<!-- ===== ข้อ 29 ===== -->
+<div class="qcard" id="q29">
+  <h3>ข้อ 29 <span class="src">A-NET' มี.ค. 51: 3 คะแนน</span><span class="subtag c-orange">🟠 กฎลูกโซ่ / ผลคูณ-ผลหาร</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f\) เป็นฟังก์ชันต่อเนื่อง ที่นิยามโดย
+    \[ f(x)=\begin{cases} ax^{2}+b & ;\ x\ge 0\\ x^{3}+1 & ;\ x<0 \end{cases} \]
+    ถ้า \(f'(1)=4\) แล้ว \((f\circ f)\!\left(-\dfrac{1}{\sqrt[3]{2}}\right)\) มีค่าเท่าใด
+  </div>
+
+  <div class="block concept">
+    ความต่อเนื่องที่ \(x=0\) ให้สมการ \(b=1\); \(f'(1)=4\) ให้สมการ \(2a=4\); composition ต้อง track ช่วง
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ความต่อเนื่องที่ \(x=0\):<br>
+      \(\lim_{x\to 0^{+}} f(x)=b\), \(\lim_{x\to 0^{-}} f(x)=0+1=1\)<br>
+      \(b=1\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> \(f'(x)=2ax\) (สำหรับ \(x>0\)), \(f'(1)=2a=4\Rightarrow a=2\)<br>
+      \(f(x)=2x^{2}+1\) สำหรับ \(x\ge 0\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> คำนวณ \(f\!\left(-\frac{1}{\sqrt[3]{2}}\right)\): ฝั่ง \(x<0\) ใช้ \(f(x)=x^{3}+1\)<br>
+      \(f\!\left(-\frac{1}{\sqrt[3]{2}}\right)=\left(-\frac{1}{\sqrt[3]{2}}\right)^{3}+1=-\frac12+1=\frac12\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> คำนวณ \(f\!\left(\frac12\right)\): ฝั่ง \(x\ge 0\) ใช้ \(f(x)=2x^{2}+1\)<br>
+      \(f\!\left(\frac12\right)=2\cdot\frac14+1=\frac12+1=\frac32\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 5</span> \((f\circ f)\!\left(-\frac{1}{\sqrt[3]{2}}\right)=f\!\left(f\!\left(-\frac{1}{\sqrt[3]{2}}\right)\right)=f\!\left(\frac12\right)=\frac32=1.5\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">\((f\circ f)\!\left(-\dfrac{1}{\sqrt[3]{2}}\right)=1.5\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 1.5 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: สำหรับ \((f\circ f)(x_0)\) กับ piecewise — คำนวณ \(f(x_0)\) ก่อน (track ช่วง), แล้วค่อย track ช่วงของผลลัพธ์เพื่อเลือกสูตรในการคำนวณ \(f\) อีกครั้ง
+  </div>
+
+  <div class="block warn">
+    ระวังเครื่องหมาย! \(\left(-\frac{1}{\sqrt[3]{2}}\right)^{3}=-\frac{1}{2}\) (ลบ เพราะกำลังคี่) — ถ้าทำเป็นบวกจะได้คำตอบเปลี่ยน
+  </div>
+</div>
+
+<!-- ===== ข้อ 30 ===== -->
+<div class="qcard" id="q30">
+  <h3>ข้อ 30 <span class="src">A-NET พ.ศ. 2552: 3 คะแนน</span><span class="subtag c-blue">🔵 อนุพันธ์โดยนิยาม & สูตรพื้นฐาน</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(a\) และ \(b\) เป็นจำนวนจริง ถ้า
+    \[ f(x)=\begin{cases} (x-1)^{2} & ;\ x\ge 1\\ ax^{3}+bx^{2}+x & ;\ x<1 \end{cases} \]
+    เป็นฟังก์ชันต่อเนื่องและหาอนุพันธ์ได้ที่จุด \(x=1\) แล้ว \(f(-1)\) มีค่าเท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(-6\)</div><div class="opt"><b>2)</b> \(-4\)</div><div class="opt"><b>3)</b> 0</div><div class="opt"><b>4)</b> 4</div>
+  </div>
+
+  <div class="block concept">
+    ความต่อเนื่องที่ \(x=1\): lim ซ้าย = ขวา = \(f(1)\); ความหาอนุพันธ์ได้: \(f'\) ซ้าย = ขวา — 2 สมการ 2 ตัวแปร
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ความต่อเนื่องที่ \(x=1\)<br>
+      \(f(1)=(1-1)^{2}=0\)<br>
+      \(\lim_{x\to 1^{-}} f(x)=a+b+1=0\) ⇒ สมการ (1): \(a+b=-1\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> ความหาอนุพันธ์ได้ที่ \(x=1\)<br>
+      ฝั่งขวา: \(f'(x)=2(x-1)\), \(f'(1^{+})=0\)<br>
+      ฝั่งซ้าย: \(f'(x)=3ax^{2}+2bx+1\), \(f'(1^{-})=3a+2b+1\)<br>
+      \(3a+2b+1=0\Rightarrow 3a+2b=-1\) ⇒ สมการ (2)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> แก้ระบบ<br>
+      จาก (1): \(a+b=-1\)<br>
+      2 คูณ (1): \(2a+2b=-2\)<br>
+      หักลบ (2): \(a=1\)<br>
+      \(b=-1-a=-2\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> คำนวณ \(f(-1)\) (ฝั่ง \(x<1\)):<br>
+      \(f(-1)=1(-1)^{3}+(-2)(-1)^{2}+(-1)=-1-2-1=-4\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 2) \(-4\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 2 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: ที่จุดต่อ piecewise ต้องเช็คทั้ง "ความต่อเนื่อง" และ "ความหาอนุพันธ์ได้" — ให้สมการ 2 ตัวแปร 2 สมการพอดี
+  </div>
+
+  <div class="block warn">
+    ระวังเครื่องหมายพจน์ \(ax^3\) ที่ \(x=-1\)! \(a(-1)^3=-a=-1\) (ลบ) — ถ้าทำเป็นบวกจะได้คำตอบเปลี่ยน
+  </div>
+</div>
+
+<!-- ===== ข้อ 31 ===== -->
+<div class="qcard" id="q31">
+  <h3>ข้อ 31 <span class="src">A-NET พ.ศ. 2552: 3 คะแนน</span><span class="subtag c-yellow">🟡 ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f(x)=x^{3}-3x+6\) ถ้า \(P\) เป็นจุดบนกราฟของ \(y=f(x)\) ที่ให้ค่าสูงสุดสัมพัทธ์ของ \(f\) แล้วเส้นตรงที่ผ่านจุด \(P\) และจุด \((2,6)\) มีความชันเท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(-1\)</div><div class="opt"><b>2)</b> \(-\dfrac{2}{3}\)</div><div class="opt"><b>3)</b> \(\dfrac{2}{3}\)</div><div class="opt"><b>4)</b> 2</div>
+  </div>
+
+  <div class="block concept">
+    หาจุดสูงสุดสัมพัทธ์ของ \(f\) โดยใช้ \(f'(x)=0\) และ \(f''(x)<0\), แล้วคำนวณความชันจาก \(P\) ไป \((2,6)\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> หาจุดวิกฤต<br>
+      \(f'(x)=3x^{2}-3=3(x^{2}-1)=0\Rightarrow x=\pm 1\)<br>
+      \(f''(x)=6x\)<br>
+      \(f''(1)=6>0\) ⇒ min<br>
+      \(f''(-1)=-6<0\) ⇒ max
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> จุดสูงสุดสัมพัทธ์ \(P=(-1, f(-1))\)<br>
+      \(f(-1)=-1+3+6=8\)<br>
+      \(P=(-1, 8)\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> ความชันจาก \(P=(-1,8)\) ไป \((2,6)\)<br>
+      \(m=\frac{6-8}{2-(-1)}=\frac{-2}{3}=-\frac{2}{3}\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 2) \(-\dfrac{2}{3}\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 2 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: ทดสอบ max/min ด้วย \(f''\): \(f''>0\) ⇒ min, \(f''<0\) ⇒ max — เร็วกว่าการวาดตารางเครื่องหมาย
+  </div>
+
+  <div class="block warn">
+    ระวังการคำนวณ \(f(-1)\)! \((-1)^{3}=-1\) (ลบ), \(-3(-1)=+3\) (บวก), \(-1+3+6=8\) — ถ้าผิดพจน์ใดจะได้คำตอบเปลี่ยน
+  </div>
+</div>
+
+<!-- ====== FINAL SUMMARY ====== -->
+<section class="final" id="final">
+
+<h2>🏆 สรุปเทคนิครวบยอดทั้งบท</h2>
+<p>หลังจากทำข้อสอบ 31 ข้อในบท "อัตราการเปลี่ยนแปลง (Differential)" ครบแล้ว สามารถสรุปเทคนิคสำคัญที่ใช้ซ้ำ ๆ ได้ดังนี้ นักเรียนควรจำให้ขึ้นใจ เพราะจะเจอ pattern เดียวกันในข้อสอบปีต่อ ๆ ไป</p>
+
+<div class="tech-grid">
+  <div class="tech-card">
+    <h4>1. กฎอนุพันธ์พื้นฐาน</h4>
+    <p>Power Rule: \(\frac{d}{dx}x^n=nx^{n-1}\); Product: \((uv)'=u'v+uv'\); Quotient: \(\left(\frac{u}{v}\right)'=\frac{u'v-uv'}{v^2}\); Chain: \((f\circ g)'=f'(g)\cdot g'\)</p>
+  </div>
+  <div class="tech-card">
+    <h4>2. ทดสอบ Max/Min</h4>
+    <p>ที่จุดวิกฤต \(c\) (เมื่อ \(f'(c)=0\)): \(f''(c)<0\) ⇒ max, \(f''(c)>0\) ⇒ min, \(f''(c)=0\) ⇒ ใช้ไม่ได้</p>
+  </div>
+  <div class="tech-card">
+    <h4>3. ฟังก์ชันเพิ่ม/ลด</h4>
+    <p>\(f'(x)>0\) ⇒ เพิ่ม, \(f'(x)<0\) ⇒ ลด — ใช้กราฟจำนวนช่วยตัดสินใจว่าเครื่องหมายของ \(f'\) เปลี่ยนที่จุดวิกฤต</p>
+  </div>
+  <div class="tech-card">
+    <h4>4. จุดเปลี่ยนเข้า/ออก</h4>
+    <p>เกิดที่ \(f''(x)=0\) และ \(f''\) เปลี่ยนเครื่องหมาย — "เข้า" = concave up→down, "ออก" = concave down→up</p>
+  </div>
+  <div class="tech-card">
+    <h4>5. เส้นสัมผัส</h4>
+    <p>ที่จุด \((a, f(a))\): \(y-f(a)=f'(a)(x-a)\). ถ้าเส้นสัมผัสผ่าน \((x_0,y_0)\) ให้แทนเข้าสมการ</p>
+  </div>
+  <div class="tech-card">
+    <h4>6. Chain Rule สองชั้น</h4>
+    <p>\((f\circ g)'(x)=f'(g(x))\cdot g'(x)\) — อย่าลืมคูณ \(g'(x)\) เสมอ! Careless error อันดับ 1 ของบทนี้</p>
+  </div>
+  <div class="tech-card">
+    <h4>7. Vieta's Formulas</h4>
+    <p>พหุนาม \(ax^2+bx+c\) ราก \(r_1,r_2\): \(r_1+r_2=-b/a\), \(r_1 r_2=c/a\). พหุนามดีกรี 3 ที่มีราก \(r_1,r_2,r_3\): ผลรวม \(=-b/a\), ผลคูณคู่ \(=c/a\), ผลคูณทั้งสาม \(=-d/a\)</p>
+  </div>
+  <div class="tech-card">
+    <h4>8. Remainder Theorem</h4>
+    <p>เศษเมื่อหาร \(f(x)\) ด้วย \(x-k\) เท่ากับ \(f(k)\) — ใช้บ่อยในโจทย์ที่ให้เศษแล้วถามค่าฟังก์ชัน</p>
+  </div>
+  <div class="tech-card">
+    <h4>9. รากเชิงซ้อน</h4>
+    <p>พหุนามสัมประสิทธิ์จริง: รากเชิงซ้อนมาเป็นคู่ conjugate — ถ้า \(p+qi\) เป็นราก ⇒ \(p-qi\) ก็เป็นราก</p>
+  </div>
+  <div class="tech-card">
+    <h4>10. ความสัมพันธ์ผกผัน</h4>
+    <p>ถ้า \(f'(g(x))\cdot g'(x)=h(x)\) ⇒ \(\frac{d}{dx}[f(g(x))]=h(x)\) ⇒ integrate หา \(f(g(x))\)</p>
+  </div>
+  <div class="tech-card">
+    <h4>11. Composition \((f\circ g)(x)=h(x)\)</h4>
+    <p>ถ้ารู้ \(f\) และ \((f\circ g)=h\) ให้แทน \(y=g(x)\) แล้วแก้ \(f(y)=h(x)\) — เร็วกว่าหา inverse</p>
+  </div>
+  <div class="tech-card">
+    <h4>12. Optimization ประยุกต์</h4>
+    <p>โจทย์ "จำนวน \(\times\) ราคา" ตั้ง \(R=(\text{จำนวน})(\text{ราคา})\), หา \(R'=0\) — สูตรสากลของข้อสอบ optimization</p>
+  </div>
+</div>
+
+<h2>📊 ตารางเตือนจุดพลาด (Careless Error Hotspot Table)</h2>
+<p>ตารางนี้รวบรวม "จุดพลาดที่นักเรียนทำบ่อยที่สุด" ในบทอัตราการเปลี่ยนแปลง แยกตามหัวข้อ พร้อมวิธีป้องกัน — แนะนำให้อ่านก่อนเข้าห้องสอบทุกครั้ง</p>
+
+<table class="errtab">
+  <thead>
+    <tr>
+      <th style="width:18%">หัวข้อ</th>
+      <th style="width:35%">จุดพลาดที่พบบ่อย</th>
+      <th style="width:47%">วิธีป้องกัน</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="topic">Chain Rule</td>
+      <td>ลืมคูณ \(g'(x)\) ใน \((f\circ g)'\) — careless error อันดับ 1 ของบท</td>
+      <td>เขียนสูตร \((f\circ g)'=f'(g)\cdot g'\) ไว้ที่มุมกระดาษทุกครั้ง — ก่อนเริ่มคำนวณ</td>
+    </tr>
+    <tr>
+      <td class="topic">Quotient Rule</td>
+      <td>สลับลำดับเศษส่วน (\(uv' - u'v\) แทนที่จะเป็น \(u'v - uv'\))</td>
+      <td>ท่อง "u dash v ลบ u v dash" — เป็นจังหวะ 4 พยางค์ จำง่าย</td>
+    </tr>
+    <tr>
+      <td class="topic">Product Rule สองชั้น</td>
+      <td>ลืมว่า \(g''(x)=\frac{d}{dx}[g'(x)]\) ต้องใช้ Product Rule อีกครั้งบนพจน์ที่มี \(f'(x)\)</td>
+      <td>เขียน \(g'(x)\) ให้ชัด แล้ว differentiate ทีละพจน์อย่างระมัดระวัง</td>
+    </tr>
+    <tr>
+      <td class="topic">เครื่องหมายที่ \(x\) ลบ</td>
+      <td>\((-1)^3 = -1\) ทำเป็น \(+1\); \((-1)^2 = 1\) แต่คูณลบนอกเลยเป็น \(-1\)</td>
+      <td>เขียนวงเล็บ \((-1)^3\) ก่อนคำนวณ แล้วแยกเครื่องหมายออกมาข้างนอก</td>
+    </tr>
+    <tr>
+      <td class="topic">ค่าสัมบูรณ์</td>
+      <td>ลืมว่าที่ \(x<0\), \(|x|=-x\) — ทำให้สูตร \(f(x)=x^2-2|x|\) ผิด</td>
+      <td>ก่อนคำนวณ ให้ตัดสินใจก่อนว่า \(x\) อยู่ฝั่งไหน แล้วเลือกสูตร \(|x|=x\) หรือ \(|x|=-x\)</td>
+    </tr>
+    <tr>
+      <td class="topic">Vieta เครื่องหมาย</td>
+      <td>ผลรวมราก \(=-b/a\) มีลบ แต่ผลคูณราก \(=c/a\) ไม่มีลบ</td>
+      <td>จำสูตรเป็นคู่ "ลบ-บวก" — ผลรวมมีลบ, ผลคูณไม่มี</td>
+    </tr>
+    <tr>
+      <td class="topic">ช่วงลด/เพิ่ม</td>
+      <td>สับสน "ฟังก์ชันลด" = \(f'<0\) กับ "ฟังก์ชันเพิ่ม" = \(f'>0\)</td>
+      <td>จำ: "ลด = ลบ" (ทั้งคู่ขึ้นด้วย ล), "เพิ่ม = บวก" — คำเริ่มต้นตรงกัน</td>
+    </tr>
+    <tr>
+      <td class="topic">ตัดช่วง piecewise</td>
+      <td>เลือกสูตรผิดฝั่งเพราะสับสน \(\le\) vs \(<\)</td>
+      <td>เขียนตาราง 3 แถว (left-lim, right-lim, f(a)) และเช็คเครื่องหมาย \(\le\) กับ \(<\)</td>
+    </tr>
+    <tr>
+      <td class="topic">Optimization ประยุกต์</td>
+      <td>ตีความ "ลดลงคนละ 2 บาท" ผิดเป็น "ราคารวมลด 2 บาท"</td>
+      <td>อ่านโจทย์ช้า ๆ และเขียนตัวแปรชัด: ราคาต่อหน่วย vs ราคารวม — คนละตัวแปรกัน</td>
+    </tr>
+    <tr>
+      <td class="topic">Integrate ลืม \(+C\)</td>
+      <td>เมื่อ integrate \(f'(x)\) หา \(f(x)\) แล้วลืมใส่ \(+C\) ทำให้ไม่สามารถหาค่าจริงได้</td>
+      <td>เมื่อ integrate ให้ใส่ \(+C\) เสมอ แล้วใช้ค่าที่จุดใดจุดหนึ่งเพื่อหา \(C\)</td>
+    </tr>
+    <tr>
+      <td class="topic">Max ที่ปลายช่วง</td>
+      <td>สรุปเร็วว่า max ที่จุดวิกฤตเท่านั้น ลืมเช็คค่าที่ปลายช่วง</td>
+      <td>บนช่วงปิด \([a,b]\): เปรียบเทียบค่าที่จุดวิกฤตและที่ปลายทั้งสอง — อย่าลืมปลาย</td>
+    </tr>
+    <tr>
+      <td class="topic">รากเชิงซ้อน</td>
+      <td>ลืมว่า \(p+qi\) ราก ⇒ \(p-qi\) ก็เป็นราก (สัมประสิทธิ์จริง)</td>
+      <td>เมื่อเจอรากเชิงซ้อน ให้เขียนคู่ conjugate ทันที — ไม่ต้องคำนวณใหม่</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>✅ Checklist สำหรับห้องสอบ (Exam Day Checklist)</h2>
+<p>รายการตรวจสอบก่อนและระหว่างทำข้อสอบ — แนะนำให้ท่องจำและปฏิบัติทุกข้อ จะช่วยลด careless error ได้มากกว่า 50%</p>
+
+<ul class="checklist">
+  <li><b>อ่านโจทย์ครบ 2 รอบ</b> — รอบแรกเข้าใจ, รอบสอง highlight ค่าสำคัญ (ฟังก์ชัน, เงื่อนไข, จุดที่ถาม)</li>
+  <li><b>เขียนสูตร Chain/Product/Quotient Rule ไว้ที่มุมกระดาษ</b> — ก่อนเริ่มคำนวณ กันลืม</li>
+  <li><b>ตรวจเครื่องหมายที่ \(x\) ลบทุกครั้ง</b> — \((-1)^n\) ให้ดูว่า \(n\) เลขคู่หรือคี่</li>
+  <li><b>ทดสอบ max/min ด้วย \(f''\)</b> — \(f''(c)<0\) ⇒ max, \(f''(c)>0\) ⇒ min — เร็วกว่าตารางเครื่องหมาย</li>
+  <li><b>บนช่วงปิด \([a,b]\): เปรียบเทียบค่าที่จุดวิกฤต + ปลายทั้งสอง</b> — อย่าลืมปลาย</li>
+  <li><b>เช็คเงื่อนไขที่จุดต่อ piecewise</b> — ทั้งความต่อเนื่อง (lim = f) และความหาอนุพันธ์ได้ (\(f'\) ซ้าย = ขวา)</li>
+  <li><b>Track ช่วงของ absolute value</b> — \(|x|=x\) เมื่อ \(x\ge 0\), \(|x|=-x\) เมื่อ \(x<0\)</li>
+  <li><b>Integrate แล้วอย่าลืม \(+C\)</b> — แล้วใช้ค่าที่จุดหนึ่งเพื่อหา \(C\)</li>
+  <li><b>Vieta: ผลรวมมีลบ, ผลคูณไม่มี</b> — จำคู่ "ลบ-บวก" ไว้ในใจ</li>
+  <li><b>รากเชิงซ้อน: เขียนคู่ conjugate ทันที</b> — สำหรับพหุนามสัมประสิทธิ์จริง</li>
+  <li><b>Optimization ประยุกต์: ตั้งสมการ \(R=(\text{จำนวน})(\text{ราคา})\)</b> — แล้วหา \(R'=0\)</li>
+  <li><b>เส้นสัมผัส: \(y-f(a)=f'(a)(x-a)\)</b> — จำสูตรตรงนี้</li>
+  <li><b>Composition: track argument ทีละขั้น</b> — "x → ? ⇒ g(x) → ? ⇒ f ใช้สูตรไหน"</li>
+  <li><b>ทดสอบคำตอบกลับ</b> — ถ้าเหลือเวลา แทนค่าพารามิเตอร์กลับไปตรวจ</li>
+  <li><b>เวลาจัดสรร</b> — ข้ออนุพันธ์ตรง 2-3 นาที, ข้อ optimization และ piecewise 4-5 นาที, ถ้าเกิน 5 นาทีให้ข้าม</li>
+</ul>
+
+<h2>📈 สรุปเฉลยทั้ง 31 ข้อ (ตารางรวม)</h2>
+<table class="errtab">
+  <thead>
+    <tr>
+      <th style="width:6%">ข้อ</th>
+      <th style="width:12%">ปี/สนาม</th>
+      <th style="width:40%">แนวโจทย์</th>
+      <th style="width:18%">คำตอบ</th>
+      <th style="width:24%">เทคนิคหลัก</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="topic">1</td><td>ต.ค. 41</td><td>lim ของ composition</td><td>4 (192)</td><td>lim + Chain Rule</td></tr>
+    <tr><td class="topic">2</td><td>ต.ค. 41</td><td>Chain Rule บน √</td><td>2 (\(\frac32\))</td><td>\(F'=\frac{g'}{2F}\)</td></tr>
+    <tr><td class="topic">3</td><td>มี.ค. 42</td><td>หาพารามิเตอร์ + min</td><td>2 (\(-\frac13\))</td><td>ระบบสมการ + แยกตัวประกอบ</td></tr>
+    <tr><td class="topic">4</td><td>มี.ค. 42</td><td>Quotient Rule</td><td>0.62</td><td>\((u/v)'=\frac{u'v-uv'}{v^2}\)</td></tr>
+    <tr><td class="topic">5</td><td>ต.ค. 42</td><td>Quotient Rule</td><td>5</td><td>เดียวกับข้อ 4</td></tr>
+    <tr><td class="topic">6</td><td>มี.ค. 43</td><td>Composition \(f''\circ f\)</td><td>1 (\(-16\))</td><td>คำนวณ \(f\) ก่อน แล้วแทน</td></tr>
+    <tr><td class="topic">7</td><td>มี.ค. 43</td><td>ฟังก์ชันลด</td><td>1 (\((-3,1)\))</td><td>หา \(c\) จากค่าวิกฤต</td></tr>
+    <tr><td class="topic">8</td><td>ต.ค. 43</td><td>lim ของ piecewise</td><td>2 (\(\frac52\))</td><td>lim ซ้าย = ขวา</td></tr>
+    <tr><td class="topic">9</td><td>ต.ค. 43</td><td>Quotient Rule + แยก</td><td>1 (\(-2\))</td><td>หา \(g, g'\) จากเงื่อนไข</td></tr>
+    <tr><td class="topic">10</td><td>มี.ค. 44</td><td>ฟังก์ชันลดของ \(g\)</td><td>4 (\((-2,0)\))</td><td>หา \(g'\) แล้วเช็คเครื่องหมาย</td></tr>
+    <tr><td class="topic">11</td><td>มี.ค. 44</td><td>มุมเส้นสัมผัส + trig</td><td>0.1</td><td>\(\sin^2(\theta/2)=\frac{1-\cos\theta}{2}\)</td></tr>
+    <tr><td class="topic">12</td><td>ต.ค. 44</td><td>สมการเชิงฟังก์ชัน</td><td>2 (\(n=6\))</td><td>หาอนุพันธ์ + แทน \(x=1\)</td></tr>
+    <tr><td class="topic">13</td><td>ต.ค. 44</td><td>พหุนามสมมาตร</td><td>4 (28)</td><td>\(b=0\) เมื่อ max/min สมมาตร</td></tr>
+    <tr><td class="topic">14</td><td>มี.ค. 45</td><td>\((f\circ g)=h\) หา \(g\)</td><td>1 (\(\frac{41}{12}\))</td><td>แทน \(y=g(x)\) แล้วแก้</td></tr>
+    <tr><td class="topic">15</td><td>มี.ค. 45</td><td>Product Rule สองชั้น</td><td>3 (13)</td><td>\(g''=0\) หา \(f(1)\), integrate</td></tr>
+    <tr><td class="topic">16</td><td>ต.ค. 45</td><td>Vieta + แก้ระบบ</td><td>1 (\(-38\))</td><td>ผลรวม/ผลคูณราก</td></tr>
+    <tr><td class="topic">17</td><td>ต.ค. 45</td><td>Absolute + composition</td><td>3 (84)</td><td>Track ช่วง \(|x|\)</td></tr>
+    <tr><td class="topic">18</td><td>มี.ค. 46</td><td>Optimization ประยุกต์</td><td>1 (16,000)</td><td>\(R=(\text{จำนวน})(\text{ราคา})\)</td></tr>
+    <tr><td class="topic">19</td><td>ต.ค. 46</td><td>เส้นสัมผัส + max</td><td>5</td><td>\(f(a)=ma+c,\ f'(a)=m\)</td></tr>
+    <tr><td class="topic">20</td><td>Ent มี.ค. 47</td><td>Composition + ความต่อเนื่อง</td><td>1 (ก. ข. ถูก)</td><td>Track จุดที่ไม่นิยาม</td></tr>
+    <tr><td class="topic">21</td><td>Ent มี.ค. 47</td><td>จุดวิกฤต + ราก</td><td>3 (\(a=2, b=2\))</td><td>IVT นับราก</td></tr>
+    <tr><td class="topic">22</td><td>Ent มี.ค. 47</td><td>\((h\circ f)''\) และ max/min</td><td>2 (max=2)</td><td>Chain Rule สองชั้น</td></tr>
+    <tr><td class="topic">23</td><td>Ent ต.ค. 47</td><td>Remainder + รากเชิงซ้อน</td><td>1 (\(-4\))</td><td>Vieta + conjugate</td></tr>
+    <tr><td class="topic">24</td><td>Ent ต.ค. 47</td><td>สมการอนุพันธ์ผกผัน</td><td>4 (7)</td><td>Integrate หา \(f(g(x))\)</td></tr>
+    <tr><td class="topic">25</td><td>Ent มี.ค. 48</td><td>นิยามอนุพันธ์ + Quotient</td><td>2 (ก. ถูก ข. ผิด)</td><td>ตรวจสูตร \((1/f)'\)</td></tr>
+    <tr><td class="topic">26</td><td>A-NET ก.พ. 49</td><td>พหุนามดีกรี 3 + ราก</td><td>4 (\(\frac53\))</td><td>\(P'(r_i)=k\prod_{j\ne i}(r_i-r_j)\)</td></tr>
+    <tr><td class="topic">27</td><td>A-NET มี.ค. 50</td><td>หาพารามิเตอร์ + Quotient</td><td>4 (\(\frac13\))</td><td>ระบบสมการ + แทนค่า</td></tr>
+    <tr><td class="topic">28</td><td>A-NET มี.ค. 51</td><td>max/min บนช่วงปิด</td><td>1 (ก. ข. จริง)</td><td>เปรียบเทียบค่าที่ปลายด้วย</td></tr>
+    <tr><td class="topic">29</td><td>A-NET มี.ค. 51</td><td>Piecewise composition</td><td>1.5</td><td>Track ช่วง 2 ครั้ง</td></tr>
+    <tr><td class="topic">30</td><td>A-NET 2552</td><td>ต่อเนื่อง + อนุพันธ์ได้</td><td>2 (\(-4\))</td><td>2 สมการ 2 ตัวแปร</td></tr>
+    <tr><td class="topic">31</td><td>A-NET 2552</td><td>เส้นสัมผัสผ่านจุด</td><td>2 (\(-\frac23\))</td><td>หา max แล้วคำนวณ slope</td></tr>
+  </tbody>
+</table>
+
+<h2>💡 คำแนะนำเพิ่มเติม</h2>
+<p>หลังจากทบทวนเฉลยทั้ง 31 ข้อแล้ว นักเรียนควรฝึกฝนเพิ่มเติมโดย:</p>
+<ul style="padding-left:22px">
+  <li>ทำข้อสอบซ้ำอีกครั้งโดยไม่ดูเฉลย — ถ้าทำผิดซ้ำ ๆ ข้อเดิม ให้ทบทวนเทคนิคที่เกี่ยวข้อง</li>
+  <li>สรุป "สูตรเด็ด" ลงสมุดฉบับย่อ — โดยเฉพาะ Chain Rule สองชั้น, Product Rule สองชั้น, และ Vieta's Formulas</li>
+  <li>หาข้อสอบ A-Level ปีอื่น ๆ มาทำเพิ่ม — แนวโจทย์ Differential จะซ้ำ ๆ แต่ปลอมรูปแบบใหม่</li>
+  <li>ฝึกความเร็ว — ตั้งเวลา 2-3 นาทีต่อข้อ ถ้าทำเกินเวลา ให้ข้ามไปก่อน</li>
+  <li>สอบวันจริง: ถ้าเจอข้อที่ดูแปลก ให้ใจเย็น ๆ อ่านช้า ๆ และเขียนสูตรที่มุมกระดาษ — ข้อสอบส่วนใหญ่ใช้เทคนิคพื้นฐานเดียวกัน</li>
+</ul>
+
+</section>
+
+<button class="print-bar" onclick="window.print()">🖨️ พิมพ์ / บันทึกเป็น PDF</button>
+
+<script>
+  // Typeset MathJax after page is fully loaded
+  window.addEventListener('load', function() {
+    if (window.MathJax && MathJax.typesetPromise) {
+      MathJax.typesetPromise().catch(function(err){console.warn('MathJax typeset error:', err)});
+    }
+  });
+  // Smooth scroll for nav chips
+  document.querySelectorAll('nav.chips a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var target = document.querySelector(this.getAttribute('href'));
+      if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+</script>
+
+</body>
+</html>
+
+
+

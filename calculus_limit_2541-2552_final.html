@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฉลยละเอียด: ลิมิตและความต่อเนื่อง — รวมข้อสอบเข้ามหาวิทยาลัย</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    svg: { fontCache: 'global' },
+    startup: { typeset: false }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+  :root{
+    --bg:#f6f7fb; --paper:#ffffff; --ink:#1c2433; --muted:#5b6675;
+    --brand:#1e3a8a; --brand2:#2563eb; --accent:#f59e0b; --good:#16a34a;
+    --bad:#dc2626; --warn:#d97706; --chip:#eef2ff; --chip-bd:#c7d2fe;
+    --line:#e5e7eb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"Sarabun",system-ui,sans-serif;line-height:1.7;font-size:16px}
+  body{padding:0 14px 80px}
+  header.hero{
+    background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 55%,#3b82f6 100%);
+    color:#fff;padding:22px 18px;border-radius:0 0 18px 18px;margin:0 -14px 18px;
+    box-shadow:0 6px 18px rgba(30,58,138,.25);
+  }
+  header.hero h1{margin:0 0 4px;font-size:1.5rem;font-weight:700;letter-spacing:.2px}
+  header.hero .sub{opacity:.92;font-size:.95rem}
+  header.hero .meta{margin-top:8px;font-size:.85rem;opacity:.85}
+
+  /* Summary box at top */
+  .summary-box{
+    background:linear-gradient(180deg,#fff7ed 0%,#fffbf5 100%);
+    border:2px solid #fdba74;border-radius:14px;padding:18px 20px;margin:18px 0;
+    box-shadow:0 4px 12px rgba(245,158,11,.08);
+  }
+  .summary-box h2{margin:0 0 10px;color:#9a3412;font-size:1.2rem;display:flex;align-items:center;gap:8px}
+  .summary-box h2::before{content:"🎯";font-size:1.2rem}
+  .summary-box ul{margin:6px 0 0;padding-left:22px}
+  .summary-box li{margin:4px 0}
+  .summary-box .kbd{display:inline-block;background:#fff;border:1px solid #fbbf24;border-radius:6px;padding:1px 8px;font-weight:600;color:#92400e;margin:0 2px}
+
+  /* Navigation chips */
+  nav.chips{
+    position:sticky;top:0;z-index:30;background:rgba(246,247,251,.92);
+    backdrop-filter:blur(6px);padding:10px 4px;margin:0 -4px 14px;border-bottom:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:6px;justify-content:center;
+  }
+  nav.chips a{
+    text-decoration:none;font-size:.82rem;font-weight:600;color:var(--brand);
+    background:var(--chip);border:1px solid var(--chip-bd);border-radius:999px;padding:4px 11px;
+    transition:all .15s;
+  }
+  nav.chips a:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
+  nav.chips a.section{background:#fef3c7;color:#92400e;border-color:#fde68a}
+  nav.chips a.section:hover{background:#92400e;color:#fff}
+
+  /* Question card */
+  .qcard{
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;
+    padding:18px 20px;margin:14px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);
+  }
+  .qcard h3{
+    margin:0 0 10px;color:var(--brand);font-size:1.15rem;font-weight:700;
+    border-left:5px solid var(--brand2);padding-left:10px;
+  }
+  .qcard .src{font-size:.78rem;color:var(--muted);font-weight:400;display:block;margin-top:2px}
+  .qstmt{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:8px;padding:10px 14px;margin:8px 0}
+  .qstmt .opt{margin:3px 0}
+  .qstmt .opt b{color:var(--brand)}
+
+  .block{margin:10px 0;padding:10px 14px;border-radius:8px}
+  .block.concept{background:#eff6ff;border-left:4px solid #3b82f6}
+  .block.concept::before{content:"📚 ทฤษฎี/แนวคิดที่ใช้";display:block;font-weight:700;color:#1e40af;margin-bottom:4px}
+  .block.solve{background:#f0fdf4;border-left:4px solid #16a34a}
+  .block.solve::before{content:"🧮 วิธีทำ (Chain of Thought)";display:block;font-weight:700;color:#166534;margin-bottom:4px}
+  .block.shortcut{background:#fefce8;border-left:4px solid #ca8a04}
+  .block.shortcut::before{content:"⚡ เทคนิคลัด";display:block;font-weight:700;color:#854d0e;margin-bottom:4px}
+  .block.warn{background:#fef2f2;border-left:4px solid #dc2626}
+  .block.warn::before{content:"⚠️ ข้อควรระวัง (Careless Error)";display:block;font-weight:700;color:#991b1b;margin-bottom:4px}
+
+  .step{margin:6px 0;padding-left:8px}
+  .step .lbl{display:inline-block;min-width:38px;font-weight:700;color:var(--brand2)}
+
+  /* Answer box */
+  .ansbox{
+    margin:14px 0 6px;padding:12px 16px;border-radius:10px;
+    background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);
+    border:2px solid #16a34a;display:flex;align-items:center;gap:10px;
+  }
+  .ansbox.defective{
+    background:linear-gradient(135deg,#fee2e2 0%,#fecaca 100%);
+    border-color:#dc2626;
+  }
+  .ansbox .icon{font-size:1.4rem}
+  .ansbox .txt{font-weight:700;color:#14532d;font-size:1.05rem}
+  .ansbox.defective .txt{color:#7f1d1d}
+  .ansbox .official{margin-left:auto;font-size:.85rem;color:#166534;font-weight:600;background:#fff;padding:3px 10px;border-radius:6px;border:1px solid #16a34a}
+  .ansbox.defective .official{color:#7f1d1d;border-color:#dc2626}
+
+  /* Final summary */
+  section.final{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;margin:18px 0}
+  section.final h2{color:var(--brand);border-bottom:2px solid var(--brand2);padding-bottom:6px;margin-top:24px}
+  section.final h2:first-child{margin-top:0}
+  table.errtab{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.errtab th,table.errtab td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  table.errtab th{background:#1e3a8a;color:#fff;font-weight:600}
+  table.errtab tr:nth-child(even) td{background:#f8fafc}
+  table.errtab td.topic{font-weight:600;color:var(--brand)}
+  ul.checklist{list-style:none;padding-left:0}
+  ul.checklist li{padding:6px 10px;margin:4px 0;background:#f0fdf4;border-left:4px solid #16a34a;border-radius:6px}
+  ul.checklist li::before{content:"☐ ";font-weight:700;color:#16a34a}
+  .tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin:10px 0}
+  .tech-card{background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+  .tech-card h4{margin:0 0 4px;color:var(--brand2);font-size:.98rem}
+  .tech-card p{margin:0;font-size:.9rem;color:var(--ink)}
+
+  mjx-container{font-size:1.02em !important}
+  mjx-container[display="true"]{margin:8px 0 !important}
+  .print-bar{position:fixed;right:14px;bottom:14px;background:var(--brand);color:#fff;padding:10px 16px;border-radius:999px;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(30,58,138,.4);z-index:50;border:none;font-family:inherit;font-size:.9rem}
+  .print-bar:hover{background:var(--brand2)}
+  @media print{
+    body{background:#fff;padding:0}
+    header.hero{background:#1e3a8a !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;border-radius:0}
+    nav.chips{display:none}
+    .print-bar{display:none}
+    .qcard{break-inside:avoid;box-shadow:none}
+    .block,.ansbox,.qstmt{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+  @media(max-width:640px){
+    body{font-size:15px;padding:0 8px 80px}
+    header.hero{padding:16px 12px}
+    .qcard{padding:14px}
+    .ansbox{flex-wrap:wrap}
+  }
+
+  /* sub-topic chip (added by pipeline Stage 1a) */
+  .subtag{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:999px;margin-left:6px;vertical-align:middle;border:1px solid}
+  .subtag.c-blue{background:#eff6ff;color:#1e40af;border-color:#bfdbfe}
+  .subtag.c-orange{background:#fff7ed;color:#9a3412;border-color:#fed7aa}
+  .subtag.c-green{background:#f0fdf4;color:#166534;border-color:#bbf7d0}
+  .subtag.c-yellow{background:#fefce8;color:#854d0e;border-color:#fde68a}
+  .subtag.c-purple{background:#faf5ff;color:#6b21a8;border-color:#e9d5ff}
+  .subtag.c-red{background:#fef2f2;color:#991b1b;border-color:#fecaca}
+  .backbtn{display:inline-block;margin:2px 0 0;background:#fff;color:#1e3a8a;border:1px solid #c7d2fe;border-radius:999px;padding:6px 14px;font-weight:700;text-decoration:none;font-size:.85rem}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>เฉลยละเอียด — ลิมิตและความต่อเนื่อง</h1>
+  <div class="sub">รวมข้อสอบเข้ามหาวิทยาลัย (ต.ค.41 – A‑NET มี.ค.50) • 15 ข้อ</div>
+  <a class="backbtn" href="index.html">← กลับหน้า Dashboard</a>
+  <div class="meta">ทำโดย ปรมาจารย์คณิตศาสตร์ ม.ปลาย • เน้น A‑Level (คณิตประยุกต์ 1) และ สอวน. • ใช้ MathJax + ฟอนต์ Sarabun</div>
+</header>
+
+<!-- SUMMARY BOX -->
+<div class="summary-box">
+  <h2>สรุปเทคนิครวบยอดประจำบท</h2>
+  <ul>
+    <li><b>กฎ 3 ข้อของความต่อเนื่องที่จุด \(x=a\):</b> (1) \(f(a)\) นิยามได้ &nbsp; (2) \(\lim_{x\to a} f(x)\) หาได้ &nbsp; (3) \(\lim_{x\to a} f(x)=f(a)\) — ขาดข้อใดข้อหนึ่งถือว่า "ไม่ต่อเนื่อง"</li>
+    <li><b>เทคนิคทำ lim 0/0:</b> อันดับแรกให้ <span class="kbd">แยกตัวประกอบ</span> ก่อนเสมอ ถ้ามี radical ให้ <span class="kbd">คูณด้วยคู่ผัวภรรยา</span> (conjugate) หรือใช้ <span class="kbd">L'Hôpital</span> เป็นทางเลือกสุดท้าย</li>
+    <li><b>สูตรลิมิตทริกโกนอเมตริกพื้นฐาน:</b> \(\lim_{x\to 0}\frac{\sin x}{x}=1\), &nbsp; \(\lim_{x\to 0}\frac{1-\cos x}{x^2}=\frac12\), &nbsp; \(\lim_{x\to 0}\frac{\tan x}{x}=1\)</li>
+    <li><b>ฟังก์ชันต่อเนื่อง + ฟังก์ชันต่อเนื่อง = ต่อเนื่อง</b> (บวก ลบ คูณ หาร ที่ไม่หารด้วย 0) แต่ composition \(f\circ g\) อาจไม่ต่อเนื่องถ้าค่าของ \(g\) ตกที่จุดที่ \(f\) ไม่ต่อเนื่อง</li>
+    <li><b>เทคนิคขยาย Taylor:</b> เมื่อ lim มีรูป \(\frac{0}{0}\) ซับซ้อน ให้ขยาย \(\sqrt{1+t}\approx 1+\frac t2-\frac{t^2}{8}+\frac{t^3}{16}\) แล้วเก็บพจน์พอดีกับ degree ที่ต้องการ</li>
+    <li><b>ตรวจความต่อเนื่องของ piecewise:</b> หา left-limit + right-limit + ค่าฟังก์ชัน 3 ค่านี้ต้องเท่ากัน — ใช้ <span class="kbd">ตาราง 3 แถว</span> ช่วยกันพลาด</li>
+    <li><b>เทคนิคดักจับ "ข้อสอบพัง":</b> ถ้าเงื่อนไขต่อเนื่อง/อนุพันธ์ที่จุดต่าง ๆ ให้ค่าพารามิเตอร์ขัดแย้งกัน แสดงว่าโจทย์ inconsistent — อย่าฝืนตอบ ให้ระบุว่า "โจทย์ไม่สมบูรณ์"</li>
+  </ul>
+</div>
+
+<!-- NAVIGATION -->
+<nav class="chips">
+  <a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4">4</a><a href="#q5">5</a>
+  <a href="#q6">6</a><a href="#q7">7</a><a href="#q8">8</a><a href="#q9">9</a><a href="#q10">10</a>
+  <a href="#q11">11</a><a href="#q12">12</a><a href="#q13">13</a><a href="#q14">14</a><a href="#q15">15</a>
+  <a href="#final" class="section">สรุปท้ายบท</a>
+</nav>
+
+<!-- ====== PART 1: Q1-Q8 ====== -->
+
+<!-- ===== ข้อ 1 ===== -->
+<div class="qcard" id="q1">
+  <h3>ข้อ 1 <span class="src">ต.ค. 41 / 3</span><span class="subtag c-yellow">🟡 ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง</span></h3>
+  <div class="qstmt">
+    กำหนดให้
+    \[ f(x)=\begin{cases} \dfrac{1}{3x+1} & ;\ 0<x<1\\[4pt] 1 & ;\ x=1\\[4pt] \dfrac{2-\sqrt{5-x}}{x-1} & ;\ x>1 \end{cases} \]
+    พิจารณาข้อความต่อไปนี้<br>
+    <b>ก.</b> \(\lim_{x\to 1^{-}} f(x)=\lim_{x\to 1^{+}} f(x)\)<br>
+    <b>ข.</b> \(f\) เป็นฟังก์ชันต่อเนื่องที่ \(x=1\)
+    <div class="opt"><b>1)</b> ก. ถูก และ ข. ถูก</div>
+    <div class="opt"><b>2)</b> ก. ถูก และ ข. ผิด</div>
+    <div class="opt"><b>3)</b> ก. ผิด และ ข. ถูก</div>
+    <div class="opt"><b>4)</b> ก. ผิด และ ข. ผิด</div>
+  </div>
+
+  <div class="block concept">
+    ทดสอบความต่อเนื่องที่จุด \(x=1\) ของฟังก์ชัน piecewise โดยใช้นิยาม 3 ข้อ: left-limit, right-limit, และค่าฟังก์ชัน ต้องเท่ากันทั้งสามค่า เทคนิคสำคัญคือการ rationalize รูป \(\frac{0}{0}\) ที่มี radical
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> หา left-limit (ใช้สูตรแรก \(0<x<1\))<br>
+      \(\displaystyle \lim_{x\to 1^{-}} f(x)=\lim_{x\to 1^{-}} \frac{1}{3x+1}=\frac{1}{3(1)+1}=\frac{1}{4}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> หา right-limit (ใช้สูตรที่สาม \(x>1\)) จะได้รูป \(\frac{0}{0}\)<br>
+      \(\displaystyle \lim_{x\to 1^{+}} \frac{2-\sqrt{5-x}}{x-1} \;\to\; \frac{2-\sqrt4}{1-1}=\frac{0}{0}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> คูณด้วย conjugate \(2+\sqrt{5-x}\)<br>
+      \(\displaystyle \frac{2-\sqrt{5-x}}{x-1}\cdot\frac{2+\sqrt{5-x}}{2+\sqrt{5-x}}=\frac{4-(5-x)}{(x-1)(2+\sqrt{5-x})}=\frac{x-1}{(x-1)(2+\sqrt{5-x})}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> ตัด \(x-1\) แล้วแทน \(x=1\)<br>
+      \(\displaystyle =\frac{1}{2+\sqrt{5-1}}=\frac{1}{2+2}=\frac{1}{4}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 5</span> เปรียบเทียบ<br>
+      \(\lim_{x\to 1^{-}} f(x)=\lim_{x\to 1^{+}} f(x)=\frac14\) ⇒ <b>ก. ถูก</b><br>
+      แต่ \(f(1)=1\neq \frac14\) ⇒ <b>ข. ผิด</b> (เพราะค่าฟังก์ชันไม่ตรงกับลิมิต)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 2) ก. ถูก และ ข. ผิด</span>
+    <span class="official">เฉลยท้ายเล่ม: 2 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เจอ \(\frac{0}{0}\) ที่มี \(\sqrt{}\) ⇒ คูณ conjugate เสมอ สูตรสากลคือ \(\frac{a-\sqrt{b}}{c}\cdot\frac{a+\sqrt{b}}{a+\sqrt{b}}=\frac{a^2-b}{c(a+\sqrt{b})}\)
+  </div>
+
+  <div class="block warn">
+    อย่าลืมเช็คค่า \(f(1)\) หลังจากหา lim ได้แล้ว — นักเรียนมักตอบ "ก. ข. ถูก" เพราะเห็น lim ซ้าย = lim ขวา แล้วลืมว่าค่าฟังก์ชันยังไม่ตรง
+  </div>
+</div>
+
+<!-- ===== ข้อ 2 ===== -->
+<div class="qcard" id="q2">
+  <h3>ข้อ 2 <span class="src">มี.ค. 42 / 3</span><span class="subtag c-purple">🟣 ความต่อเนื่อง</span></h3>
+  <div class="qstmt">
+    กำหนดให้
+    \[ f(x)=\begin{cases} -\dfrac{3}{2} & ;\ x\le -1\\[4pt] \dfrac{2x^{2}+x-1}{2(x+1)} & ;\ -1<x\le 1\\[4pt] \dfrac{1-\sqrt{x}}{1-x} & ;\ x>1 \end{cases} \]
+    <b>ก.</b> \(f\) ต่อเนื่องที่ \(x=-1\)<br>
+    <b>ข.</b> \(f\) ต่อเนื่องที่ \(x=1\)
+    <div class="opt"><b>1)</b> ก. ถูก , ข. ถูก</div>
+    <div class="opt"><b>2)</b> ก. ถูก , ข. ผิด</div>
+    <div class="opt"><b>3)</b> ก. ผิด , ข. ถูก</div>
+    <div class="opt"><b>4)</b> ก. ผิด , ข. ผิด</div>
+  </div>
+
+  <div class="block concept">
+    ทดสอบความต่อเนื่องที่จุดต่อของ piecewise 2 จุด ใช้การแยกตัวประกอบและ rationalize รูป \(\frac{0}{0}\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ที่ \(x=-1\)</span><br>
+      \(\lim_{x\to -1^{-}} f(x)=-\frac{3}{2}\)<br>
+      \(\lim_{x\to -1^{+}} f(x)=\lim \frac{2x^2+x-1}{2(x+1)}\). แยกตัวประกอบ: \(2x^2+x-1=(2x-1)(x+1)\)<br>
+      \(=\lim \frac{(2x-1)(x+1)}{2(x+1)}=\lim \frac{2x-1}{2}=\frac{2(-1)-1}{2}=\frac{-3}{2}\)<br>
+      \(f(-1)=-\frac{3}{2}\) &nbsp;⇒&nbsp; สามค่าเท่ากัน ⇒ <b>ก. ถูก</b>
+    </div>
+    <div class="step"><span class="lbl">ที่ \(x=1\)</span><br>
+      \(\lim_{x\to 1^{-}} f(x)=\frac{2(1)-1}{2}=\frac{1}{2}\)<br>
+      \(\lim_{x\to 1^{+}} f(x)=\lim \frac{1-\sqrt{x}}{1-x}\). แยก: \(1-x=(1-\sqrt{x})(1+\sqrt{x})\)<br>
+      \(=\lim \frac{1-\sqrt{x}}{(1-\sqrt{x})(1+\sqrt{x})}=\lim \frac{1}{1+\sqrt{x}}=\frac{1}{2}\)<br>
+      \(f(1)=\frac{2+1-1}{2(2)}=\frac{2}{4}=\frac{1}{2}\) &nbsp;⇒&nbsp; สามค่าเท่ากัน ⇒ <b>ข. ถูก</b>
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 1) ก. ถูก , ข. ถูก</span>
+    <span class="official">เฉลยท้ายเล่ม: 1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิคจำสูตร \(\frac{1-\sqrt{x}}{1-x}=\frac{1}{1+\sqrt{x}}\) เหมือน \(\frac{1}{1+\sqrt{x}}\) คือ "สูตร rationalize กลับ" — ใช้บ่อยมากในข้อสอบ lim
+  </div>
+
+  <div class="block warn">
+    ระวังเครื่องหมาย! \(2x^2+x-1\) แยกได้ \((2x-1)(x+1)\) ไม่ใช่ \((2x+1)(x-1)\) — ตรวจทุกครั้งด้วยการคูณกลับ
+  </div>
+</div>
+
+<!-- ===== ข้อ 3 ===== -->
+<div class="qcard" id="q3">
+  <h3>ข้อ 3 <span class="src">ต.ค. 42 / 3</span><span class="subtag c-purple">🟣 ความต่อเนื่อง</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f\) เป็นฟังก์ชันต่อเนื่อง โดยที่ \(\displaystyle f(x)=\frac{x^{3}-x^{2}-4x+4}{4-x^{2}}\) เมื่อ \(x\ne \pm 2\) และ \(f(2)=a,\ f(-2)=b\) แล้ว \(a\) และ \(b\) เป็นจริงตามข้อใด
+    <div class="opt"><b>1)</b> \(a=1,\ b=-3</b></div>
+    <div class="opt"><b>2)</b> \(a=1,\ b=3\)</div>
+    <div class="opt"><b>3)</b> \(a=-1,\ b=-3\)</div>
+    <div class="opt"><b>4)</b> \(a=-1,\ b=3\)</div>
+  </div>
+
+  <div class="block concept">
+    ถ้า \(f\) ต่อเนื่องที่ \(x=\pm 2\) แล้วค่า \(f(\pm 2)\) ต้องเท่ากับ \(\lim_{x\to \pm 2} f(x)\) ดังนั้นให้แยกตัวประกอบและตัดตัวประกอบที่ทำให้เป็น 0
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> แยกตัวประกอบตัวเศษด้วย grouping<br>
+      \(x^3-x^2-4x+4=x^2(x-1)-4(x-1)=(x-1)(x^2-4)=(x-1)(x-2)(x+2)\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> แยกตัวส่วน<br>
+      \(4-x^2=-(x^2-4)=-(x-2)(x+2)\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> ตัดรูป<br>
+      \(\displaystyle f(x)=\frac{(x-1)(x-2)(x+2)}{-(x-2)(x+2)}=-(x-1)\) (สำหรับ \(x\ne\pm 2\))
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> คำนวณค่าที่จุดต่อ<br>
+      \(a=f(2)=-(2-1)=-1\)<br>
+      \(b=f(-2)=-(-2-1)=3\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 4) \(a=-1,\ b=3\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 4 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    ถ้าเห็นพหุนามดีกรี 3 + กำลัง 2 ในตัวส่วน ให้คิด grouping ก่อนเสมอ: \(x^3-x^2-4x+4\) มีพจน์คู่ \(x^2(x-1)-4(x-1)\) — ทำให้เห็น \((x-1)\) เป็นตัวประกอบร่วมทันที
+  </div>
+
+  <div class="block warn">
+    อย่าลืมเครื่องหมายลบ! \(4-x^2=-(x^2-4)\) — ถ้าทำเครื่องหมายพลาดจะได้ \(a=1, b=-3\) (ตรงข้อ 1 ที่เป็นตัวลวง)
+  </div>
+</div>
+
+<!-- ===== ข้อ 4 ===== -->
+<div class="qcard" id="q4">
+  <h3>ข้อ 4 <span class="src">มี.ค. 43 / 4</span><span class="subtag c-yellow">🟡 ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง</span></h3>
+  <div class="qstmt">
+    กำหนดให้
+    \[ f(x)=\begin{cases} x^{2} & ;\ x>1\\ x-1 & ;\ 0<x\le 1\\ 0 & ;\ x\le 0 \end{cases} \]
+    แล้ว \(\displaystyle \lim_{x\to 0^{-}} f(x^{2})+\lim_{x\to 1^{+}} \left[\frac{f(x-1)}{x+2}\right]\) เท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(-\dfrac{4}{3}\)</div>
+    <div class="opt"><b>2)</b> \(-1\)</div>
+    <div class="opt"><b>3)</b> \(0\)</div>
+    <div class="opt"><b>4)</b> \(\dfrac{1}{3}\)</div>
+  </div>
+
+  <div class="block concept">
+    ลิมิตของฟังก์ชันประกอบ (composite) — ต้อง track ว่าอาร์กิวเมนต์ของ \(f\) อยู่ในช่วงไหน แล้วเลือกสูตร piecewise ที่ถูกต้อง
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">พจน์ 1</span> \(\lim_{x\to 0^{-}} f(x^{2})\)<br>
+      \(x\to 0^{-}\) ⇒ \(x\) เป็นลบเล็ก ๆ ⇒ \(x^2>0\) และ \(x^2\to 0^{+}\) (เล็กบวก)<br>
+      ดังนั้น \(0<x^2\le 1\) สำหรับ \(x\) ใกล้ 0 ⇒ ใช้สูตร \(f(x^2)=x^2-1\)<br>
+      \(\displaystyle \lim_{x\to 0^{-}} f(x^2)=\lim_{x\to 0^{-}} (x^2-1)=0-1=-1\)
+    </div>
+    <div class="step"><span class="lbl">พจน์ 2</span> \(\lim_{x\to 1^{+}} \frac{f(x-1)}{x+2}\)<br>
+      \(x\to 1^{+}\) ⇒ \(x-1\to 0^{+}\) (เล็กบวก) ⇒ \(0<x-1\le 1\) ⇒ ใช้สูตร \(f(x-1)=(x-1)-1=x-2\)<br>
+      \(\displaystyle \lim_{x\to 1^{+}} \frac{x-2}{x+2}=\frac{1-2}{1+2}=\frac{-1}{3}=-\frac{1}{3}\)
+    </div>
+    <div class="step"><span class="lbl">รวม</span> \(-1+\left(-\frac{1}{3}\right)=-\frac{4}{3}\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 1) \(-\dfrac{4}{3}\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เขียนตารางเล็ก ๆ ข้างใต้ lim — "x → ? ⇒ argument → ? ⇒ ใช้สูตรไหน" สามบรรทัดนี้กันพลาดได้ 90%
+  </div>
+
+  <div class="block warn">
+    อย่าสับสนว่า \(x\to 0^{-}\) ทำให้ \(x^2\to 0^{-}\) — ผิด! เพราะ \(x^2\) เป็นบวกเสมอ ต้อง track เครื่องหมายของ argument ที่ป้อนเข้า \(f\) ไม่ใช่เครื่องหมายของ \(x\)
+  </div>
+</div>
+
+<!-- ===== ข้อ 5 ===== -->
+<div class="qcard" id="q5">
+  <h3>ข้อ 5 <span class="src">มี.ค. 44 / 2</span><span class="subtag c-orange">🟠 ลิมิตรูป 0/0</span></h3>
+  <div class="qstmt">
+    \(\displaystyle \lim_{x\to 1} \frac{\sqrt{x^{2}+3}-2}{x-1}\) มีค่าเท่ากับเท่าใด
+  </div>
+
+  <div class="block concept">
+    ลิมิตรูป \(\frac{0}{0}\) ที่มี radical ในตัวเศษ — ใช้เทคนิคคูณ conjugate
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ตรวจรูป: แทน \(x=1\) ได้ \(\frac{\sqrt{4}-2}{0}=\frac{0}{0}\) ⇒ ใช้ conjugate</div>
+    <div class="step"><span class="lbl">ขั้น 2</span> คูณ \(\sqrt{x^2+3}+2\)<br>
+      \(\displaystyle \frac{\sqrt{x^2+3}-2}{x-1}\cdot\frac{\sqrt{x^2+3}+2}{\sqrt{x^2+3}+2}=\frac{(x^2+3)-4}{(x-1)(\sqrt{x^2+3}+2)}=\frac{x^2-1}{(x-1)(\sqrt{x^2+3}+2)}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> แยก \(x^2-1=(x-1)(x+1)\) แล้วตัด<br>
+      \(\displaystyle =\frac{(x-1)(x+1)}{(x-1)(\sqrt{x^2+3}+2)}=\frac{x+1}{\sqrt{x^2+3}+2}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> แทน \(x=1\)<br>
+      \(\displaystyle =\frac{2}{\sqrt4+2}=\frac{2}{4}=\frac{1}{2}\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">คำตอบ: \(\dfrac{1}{2}\) (= 0.5)</span>
+    <span class="official">เฉลยท้ายเล่ม: 0.5 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    สูตรสากลสำหรับ \(\frac{\sqrt{A}-\sqrt{B}}{C}\): คูณ \(\sqrt{A}+\sqrt{B}\) เสมอ จะได้ \(\frac{A-B}{C(\sqrt{A}+\sqrt{B})}\) — ถ้า \(A-B\) แยกตัวประกอบแล้วมี \(C\) เป็นตัวประกอบ จะตัดได้ทันที
+  </div>
+
+  <div class="block warn">
+    ระวังการแทนค่าผิด — \(\sqrt{1^2+3}=\sqrt{4}=2\) ไม่ใช่ \(\sqrt{3+1}=\sqrt{4}=2\) เหมือนกัน แต่บางคนเห็น \(\sqrt{x^2+3}\) แล้วแทนเป็น \(\sqrt{x+3}\) ทำให้คำนวณพลาดทั้งข้อ
+  </div>
+</div>
+
+<!-- ===== ข้อ 6 ===== -->
+<div class="qcard" id="q6">
+  <h3>ข้อ 6 <span class="src">ต.ค. 44 / 3</span><span class="subtag c-purple">🟣 ความต่อเนื่อง</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(\displaystyle f(x)=\begin{cases} \frac{1}{x-1} & ,x\ne 1\\ 2 & ,x=1 \end{cases}\) และ \(g(x)=x^{3}+x-2\) ถ้า \(h(x)=f(x)g(x)\) แล้ว ข้อใดถูก
+    <div class="opt"><b>1)</b> \(h\) ต่อเนื่องที่ \(x=1\) และ \(\lim_{x\to 1} h(x)=0\)</div>
+    <div class="opt"><b>2)</b> \(h\) ต่อเนื่องที่ \(x=1\) และ \(\lim_{x\to 1} h(x)=4\)</div>
+    <div class="opt"><b>3)</b> \(h\) ไม่ต่อเนื่องที่ \(x=1\) และ \(\lim_{x\to 1} h(x)=0\)</div>
+    <div class="opt"><b>4)</b> \(h\) ไม่ต่อเนื่องที่ \(x=1\) และ \(\lim_{x\to 1} h(x)=4\)</div>
+  </div>
+
+  <div class="block concept">
+    ผลคูณของฟังก์ชันไม่ต่อเนื่องกับฟังก์ชันที่เป็น 0 ณ จุดนั้น อาจ "กลายเป็นต่อเนื่อง" ได้ ต้องเช็ค lim แยกต่างหาก และเปรียบเทียบกับค่าฟังก์ชัน
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> หา \(\lim_{x\to 1} h(x)=\lim_{x\to 1} \frac{g(x)}{x-1}\)<br>
+      แทน \(x=1\): \(g(1)=1+1-2=0\) และ \(x-1=0\) ⇒ รูป \(\frac{0}{0}\) ⇒ แยกตัวประกอบ
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> แยก \(g(x)=x^3+x-2\). ลอง \(x=1\): \(1+1-2=0\) ⇒ หารด้วย \(x-1\)<br>
+      \(x^3+x-2=(x-1)(x^2+x+2)\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> ตัดรูป<br>
+      \(\displaystyle h(x)=\frac{(x-1)(x^2+x+2)}{x-1}=x^2+x+2\) (สำหรับ \(x\ne 1\))<br>
+      \(\displaystyle \lim_{x\to 1} h(x)=1+1+2=4\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> หา \(h(1)=f(1)\cdot g(1)=2\cdot 0=0\)<br>
+      เนื่องจาก \(\lim h(x)=4\ne 0=h(1)\) ⇒ \(h\) <b>ไม่ต่อเนื่อง</b>ที่ \(x=1\) แต่ lim มีค่า 4
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 4) \(h\) ไม่ต่อเนื่อง และ \(\lim_{x\to 1} h(x)=4\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 4 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เห็น \(\frac{1}{x-1}\cdot g(x)\) ให้คิดทันทีว่า "ถ้า \(g(x)\) มี \(x-1\) เป็นตัวประกอบ ⇒ lim จะตัดกันออกหมด" — นี่คือเคล็ดของข้อสอบแนวนี้
+  </div>
+
+  <div class="block warn">
+    อย่าสรุปเร็วเกินไปว่า "lim = 4 แล้ว h ต่อเนื่อง" — ต้องเช็คค่า \(h(1)\) เสมอ! ในข้อนี้ \(h(1)=0\) ไม่ตรง lim เลยไม่ต่อเนื่อง (คำตอบข้อ 4 ไม่ใช่ข้อ 2)
+  </div>
+</div>
+
+<!-- ===== ข้อ 7 ===== -->
+<div class="qcard" id="q7">
+  <h3>ข้อ 7 <span class="src">มี.ค. 45 / 3</span><span class="subtag c-purple">🟣 ความต่อเนื่อง</span></h3>
+  <div class="qstmt">
+    ให้
+    \[ f(x)=\begin{cases} \dfrac{(x-4)(\sqrt{x}+2)\,a}{\sqrt{x}-2} & ;\ x>4\\ 1 & ;\ x=4\\ x^{2}-b & ;\ x<4 \end{cases} \]
+    โดยที่ \(a,b\) เป็นจำนวนจริง ถ้า \(f\) ต่อเนื่องที่ \(x=4\) แล้ว \(\displaystyle f\!\left(a+\frac{b}{16}\right)\) เท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(-16\)</div>
+    <div class="opt"><b>2)</b> \(-14\)</div>
+    <div class="opt"><b>3)</b> \(14\)</div>
+    <div class="opt"><b>4)</b> \(16\)</div>
+  </div>
+
+  <div class="block concept">
+    ใช้สมบัติความต่อเนื่อง: lim ซ้าย = lim ขวา = ค่าฟังก์ชัน ที่ \(x=4\) จะได้ 2 สมการ 2 ตัวแปร (\(a,b\)) แล้วนำไปแทนใน \(f\!)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> หา right-limit: \(\lim_{x\to 4^{+}} f(x)\)<br>
+      สังเกตว่า \(x-4=(\sqrt{x}-2)(\sqrt{x}+2)\) ⇒ ตัด \(\sqrt{x}-2\) ได้<br>
+      \(\displaystyle \lim_{x\to 4^{+}} f(x)=\lim_{x\to 4^{+}} (\sqrt{x}+2)^2\,a=(2+2)^2 a=16a\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> หา left-limit: \(\lim_{x\to 4^{-}} f(x)=4^2-b=16-b\)</div>
+    <div class="step"><span class="lbl">ขั้น 3</span> ใช้ความต่อเนื่อง (3 ค่าเท่ากัน = 1)<br>
+      \(16a=1\) ⇒ \(a=\dfrac{1}{16}\)<br>
+      \(16-b=1\) ⇒ \(b=15\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> คำนวณอาร์กิวเมนต์<br>
+      \(\displaystyle a+\frac{b}{16}=\frac{1}{16}+\frac{15}{16}=\frac{16}{16}=1\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 5</span> หา \(f(1)\). เนื่องจาก \(1<4\) ⇒ ใช้สูตร \(f(1)=1^2-b=1-15=-14\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 2) \(-14\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 2 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    สูตรของพีชคณิตที่จำเป็น: \(x-k=(\sqrt{x}-\sqrt{k})(\sqrt{x}+\sqrt{k})\) — ใช้ตัดทุกครั้งที่เจอ radical ในตัวส่วน ช่วยลดเวลาคำนวณ lim ได้ครึ่งหนึ่ง
+  </div>
+
+  <div class="block warn">
+    ระวังการเลือกสูตรผิดตอนจบ! \(a+b/16=1\) อยู่ในช่วง \(x<4\) ต้องใช้สูตร \(x^2-b\) ไม่ใช่สูตรที่ \(x>4\) หรือ \(x=4\)
+  </div>
+</div>
+
+<!-- ===== ข้อ 8 ===== -->
+<div class="qcard" id="q8">
+  <h3>ข้อ 8 <span class="src">ต.ค. 45 / 3</span><span class="subtag c-yellow">🟡 ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(a>0\)
+    \[ f(x)=\begin{cases} \dfrac{x}{x+2} & ,\ x<a\\ \dfrac{x+1}{x} & ,\ x\ge a \end{cases} \]
+    และ \(g(x)=x^{2}\) ถ้า
+    \[ \lim_{x\to a^{+}} (f\circ g)(\sqrt{x}\,)-\sqrt{\lim_{x\to a^{-}} (g\circ f)(x)}=\frac{11}{a(a+2)} \]
+    แล้ว \(a\) มีค่าเท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(1\)</div>
+    <div class="opt"><b>2)</b> \(3\)</div>
+    <div class="opt"><b>3)</b> \(5\)</div>
+    <div class="opt"><b>4)</b> \(9\)</div>
+  </div>
+
+  <div class="block concept">
+    ทำความเข้าใจ composite \(f\circ g\) และ \(g\circ f\) ก่อน แล้ว track ว่าอาร์กิวเมนต์อยู่ฝั่ง \(<a\) หรือ \(\ge a\) เพื่อเลือกสูตร \(f\) ที่ถูก
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> คำนวณ \((f\circ g)(\sqrt{x}\,)=f(g(\sqrt{x}\,))=f((\sqrt{x})^2)=f(x)\) (เพราะ \(\sqrt{x}\ge 0\))<br>
+      เมื่อ \(x\to a^{+}\) (x เล็กไปทาง \(>a\)) ⇒ ใช้สูตร \(f(x)=\frac{x+1}{x}\)<br>
+      \(\displaystyle \lim_{x\to a^{+}} f(x)=\frac{a+1}{a}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> คำนวณ \((g\circ f)(x)=g(f(x))=(f(x))^2\)<br>
+      เมื่อ \(x\to a^{-}\) ⇒ \(f(x)=\frac{x}{x+2}\to \frac{a}{a+2}\)<br>
+      \(\displaystyle \lim_{x\to a^{-}} (g\circ f)(x)=\left(\frac{a}{a+2}\right)^2\)<br>
+      \(\displaystyle \sqrt{\lim_{x\to a^{-}} (g\circ f)(x)}=\frac{a}{a+2}\) (เพราะ \(a>0\))
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> แทนในสมการโจทย์<br>
+      \(\displaystyle \frac{a+1}{a}-\frac{a}{a+2}=\frac{11}{a(a+2)}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> รวมเป็นพจน์เดียว (ตัวส่วนร่วม \(a(a+2)\))<br>
+      \(\displaystyle \frac{(a+1)(a+2)-a^2}{a(a+2)}=\frac{a^2+3a+2-a^2}{a(a+2)}=\frac{3a+2}{a(a+2)}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 5</span> เทียบตัวเศษ<br>
+      \(3a+2=11\) ⇒ \(3a=9\) ⇒ \(a=3\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 2) \(a=3\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 2 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: แทน choice ทั้ง 4 ค่าลงไปในสมการ (1, 3, 5, 9) จะเร็วกว่าแก้สมการ — ข้อ 2 (\(a=3\)): \(\frac{4}{3}-\frac{3}{5}=\frac{20-9}{15}=\frac{11}{15}\) และ \(\frac{11}{3\cdot 5}=\frac{11}{15}\) ✓
+  </div>
+
+  <div class="block warn">
+    ระวังการ "ผิดฝั่ง" — \(x\to a^{+}\) ใช้สูตรฝั่ง \(x\ge a\), \(x\to a^{-}\) ใช้สูตรฝั่ง \(x<a\) สลับกันได้บ่อยมาก แนะนำเขียนเครื่องหมาย ↑↓ ข้าง ๆ แต่ละพจน์
+  </div>
+</div>
+
+<!-- ====== END PART 1 ====== -->
+
+<!-- ====== PART 2: Q9-Q15 ====== -->
+
+<!-- ===== ข้อ 9 ===== -->
+<div class="qcard" id="q9">
+  <h3>ข้อ 9 <span class="src">มี.ค. 46 / 3</span><span class="subtag c-purple">🟣 ความต่อเนื่อง</span></h3>
+  <div class="qstmt">
+    กำหนดให้ฟังก์ชัน \(f\) และ \(g\) เป็นฟังก์ชันต่อเนื่องที่จุด \(x=4\) โดย
+    \[ g(x)=\begin{cases} f(x)\left(\dfrac{x-4}{\sqrt{x}-2}\right) & ;\ x\ne 4\\ 4-kx^{2} & ;\ x=4 \end{cases} \]
+    โดยที่ \(k\) เป็นค่าคงตัว ถ้ากราฟของ \(f\) ตัดเส้นตรง \(y=x+1\) ที่จุดซึ่ง \(x=4\) แล้ว \(k\) อยู่ในช่วงใด
+    <div class="opt"><b>1)</b> \((-3,-1)\)</div>
+    <div class="opt"><b>2)</b> \((-2,0)\)</div>
+    <div class="opt"><b>3)</b> \((-1,1)\)</div>
+    <div class="opt"><b>4)</b> \((0,2)\)</div>
+  </div>
+
+  <div class="block concept">
+    ใช้สมบัติความต่อเนื่อง: \(\lim_{x\to 4} g(x)=g(4)\) และเงื่อนไข "กราฟ f ตัด \(y=x+1\) ที่ \(x=4\)" หมายถึง \(f(4)=4+1=5\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> แปลเงื่อนไข "กราฟ \(f\) ตัด \(y=x+1\) ที่ \(x=4\)"<br>
+      ⇒ \(f(4)=4+1=5\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> หา \(\lim_{x\to 4} g(x)\). ใช้ \(x-4=(\sqrt{x}-2)(\sqrt{x}+2)\)<br>
+      \(\displaystyle \lim_{x\to 4} g(x)=\lim_{x\to 4} f(x)\cdot\frac{(\sqrt{x}-2)(\sqrt{x}+2)}{\sqrt{x}-2}=\lim_{x\to 4} f(x)\cdot(\sqrt{x}+2)\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> เนื่องจาก \(f\) ต่อเนื่องที่ 4 ⇒ \(\lim_{x\to 4} f(x)=f(4)=5\)<br>
+      \(\displaystyle \lim_{x\to 4} g(x)=5\cdot(2+2)=5\cdot 4=20\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> ใช้ความต่อเนื่องของ \(g\) ที่ 4: \(g(4)=\lim_{x\to 4} g(x)=20\)<br>
+      \(4-k(4)^2=20\) ⇒ \(4-16k=20\) ⇒ \(-16k=16\) ⇒ \(k=-1\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 5</span> ตรวจช่วง: \(k=-1\in(-2,0)\) ⇒ <b>ข้อ 2</b></div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 2) \(k=-1\in(-2,0)\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 2 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิคแปลเงื่อนไขภาษาไทย: "กราฟ \(f\) ตัดเส้นตรง \(y=mx+c\) ที่ \(x=a\)" ⇒ \(f(a)=ma+c\) — จำไว้เป็นสูตรตรง เซฟเวลาแปลประโยค
+  </div>
+
+  <div class="block warn">
+    ระวังการแปลเงื่อนไข "ตัดกัน" ผิดเป็น "ภาคแสดงเท่ากัน" (เช่น \(f(x)=x+1\) ทุก \(x\)) — ตัดกันที่จุด \(x=4\) หมายถึงเฉพาะที่จุดเดียวเท่านั้น
+  </div>
+</div>
+
+<!-- ===== ข้อ 10 ===== -->
+<div class="qcard" id="q10">
+  <h3>ข้อ 10 <span class="src">มี.ค. 46 / 3</span><span class="subtag c-orange">🟠 ลิมิตรูป 0/0</span></h3>
+  <div class="qstmt">
+    \[ \lim_{x\to 0} \frac{1}{x^{3}}\left[\sqrt{1+x}-\sqrt{1-x}-\sqrt{(1+x)(1-x^{2})}+\sqrt{(1-x)(1-x^{2})}\right] \]
+    มีค่าเท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(0\)</div>
+    <div class="opt"><b>2)</b> \(\dfrac{1}{4}\)</div>
+    <div class="opt"><b>3)</b> \(\dfrac{1}{2}\)</div>
+    <div class="opt"><b>4)</b> \(1\)</div>
+  </div>
+
+  <div class="block concept">
+    ลิมิต \(\frac{0}{0}\) ที่มี radical หลายตัว — ใช้เทคนิคแทนตัวแปรเพื่อ factor ร่วม แล้วใช้ rationalize ซ้อนทีละชั้น หรือใช้การแยกตัวประกอบแบบชาญฉลาด
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> ตั้ง \(A=\sqrt{1+x},\ B=\sqrt{1-x}\). สังเกตว่า \(\sqrt{1-x^2}=\sqrt{(1-x)(1+x)}=AB\)<br>
+      ดังนั้น \(\sqrt{(1+x)(1-x^2)}=A\cdot AB=A^{2}B\) และ \(\sqrt{(1-x)(1-x^2)}=B\cdot AB=AB^{2}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> เขียนนิพจน์ใหม่<br>
+      \[ A-B-A^{2}B+AB^{2}=A-B-AB(A-B)=(A-B)(1-AB) \]
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> คำนวณ \(A-B\) โดย rationalize<br>
+      \(\displaystyle A-B=\sqrt{1+x}-\sqrt{1-x}=\frac{(1+x)-(1-x)}{A+B}=\frac{2x}{A+B}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> คำนวณ \(1-AB=1-\sqrt{1-x^2}\) โดย rationalize<br>
+      \(\displaystyle 1-\sqrt{1-x^2}=\frac{(1)^2-(1-x^2)}{1+\sqrt{1-x^2}}=\frac{x^2}{1+\sqrt{1-x^2}}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 5</span> ประกอบเข้าด้วยกัน<br>
+      \(\displaystyle (A-B)(1-AB)=\frac{2x}{A+B}\cdot\frac{x^2}{1+\sqrt{1-x^2}}=\frac{2x^3}{(A+B)(1+\sqrt{1-x^2})}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 6</span> หารด้วย \(x^3\) แล้วหา lim<br>
+      \(\displaystyle \lim_{x\to 0}\frac{2}{(A+B)(1+\sqrt{1-x^2})}=\frac{2}{(1+1)(1+1)}=\frac{2}{4}=\frac{1}{2}\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 3) \(\dfrac{1}{2}\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 3 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค substitution ตั้งชื่อ \(A, B\) ให้กับ radical ยาว ๆ ช่วยให้มองเห็น pattern ของการแยกตัวประกอบได้ง่ายขึ้น — ในข้อนี้เห็น \((A-B)(1-AB)\) ได้ทันที
+  </div>
+
+  <div class="block warn">
+    ห้ามใช้ Taylor แบบขยายแค่พจน์แรก! ถ้าขยาย \(\sqrt{1+x}\approx 1+x/2\) แล้วมาหักกันจะได้ลำดับ \(x^2,x^3\) ซึ่งละเอียดเกินกว่าจะเห็นคำตอบที่ถูก — ต้องขยายถึงพจน์ \(x^3\) อย่างน้อย หรือใช้วิธี substitution ปลอดภัยกว่า
+  </div>
+</div>
+
+<!-- ===== ข้อ 11 ===== -->
+<div class="qcard" id="q11">
+  <h3>ข้อ 11 <span class="src">ต.ค. 46 / 3</span><span class="subtag c-orange">🟠 ลิมิตรูป 0/0</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(f(x)=|x^{2}+4x|\) และ \(g(x)=|x^{2}-16|\) ถ้า \(a,b\) เป็นคำตอบทั้งสองของสมการ \(f(x)=g(x)\) แล้ว
+    \[ \lim_{x\to a}\frac{f(x)}{g(x)}+\lim_{x\to b}\frac{f(x)}{g(x)} \]
+    เท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(\dfrac{3}{2}\)</div>
+    <div class="opt"><b>2)</b> \(\dfrac{5}{6}\)</div>
+    <div class="opt"><b>3)</b> \(\dfrac{1}{2}\)</div>
+    <div class="opt"><b>4)</b> \(\dfrac{1}{3}\)</div>
+  </div>
+
+  <div class="block concept">
+    แก้สมการค่าสัมบูรณ์ \(|A|=|B|\) ได้ 2 กรณี: \(A=B\) หรือ \(A=-B\) แล้วทดสอบ lim ของอัตราส่วน \(f/g\) ที่จุดแต่ละคำตอบ
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> แก้สมการ \(|x^2+4x|=|x^2-16|\)<br>
+      สังเกต \(x^2+4x=x(x+4)\), \(x^2-16=(x-4)(x+4)\)<br>
+      <b>กรณี 1:</b> \(x^2+4x=x^2-16\) ⇒ \(4x=-16\) ⇒ \(x=-4\)<br>
+      <b>กรณี 2:</b> \(x^2+4x=-(x^2-16)\) ⇒ \(2x^2+4x-16=0\) ⇒ \(x^2+2x-8=0\) ⇒ \((x+4)(x-2)=0\) ⇒ \(x=-4\) หรือ \(x=2\)<br>
+      รวมคำตอบ: \(a=-4,\ b=2\) (หรือสลับ)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> หา \(\lim_{x\to -4} \frac{f(x)}{g(x)}\). ทดสอบเครื่องหมายใกล้ \(x=-4\)<br>
+      ใกล้ ๆ \(-4\): \(x<0,\ x+4\) เปลี่ยนเครื่องหมายที่ \(-4\) ⇒ \(x(x+4)\) เปลี่ยนเครื่องหมาย แต่สังเกตว่าทั้งสองฝั่งคิดเหมือนกัน:<br>
+      \(\displaystyle \frac{f(x)}{g(x)}=\frac{|x(x+4)|}{|(x-4)(x+4)|}=\frac{|x|\cdot|x+4|}{|x-4|\cdot|x+4|}=\frac{|x|}{|x-4|}\)<br>
+      \(\displaystyle \lim_{x\to -4}\frac{|x|}{|x-4|}=\frac{|-4|}{|-4-4|}=\frac{4}{8}=\frac{1}{2}\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> หา \(\lim_{x\to 2} \frac{f(x)}{g(x)}\)<br>
+      ใกล้ ๆ 2: \(x>0,\ x+4>0\) ⇒ \(x(x+4)>0\) ⇒ \(|x^2+4x|=x^2+4x\)<br>
+      \(x-4<0\) (ใกล้ 2), \(x+4>0\) ⇒ \(x^2-16<0\) ⇒ \(|x^2-16|=-(x^2-16)=16-x^2\)<br>
+      \(\displaystyle \frac{f(x)}{g(x)}=\frac{x^2+4x}{16-x^2}=\frac{x(x+4)}{(4-x)(4+x)}=\frac{x}{4-x}\)<br>
+      \(\displaystyle \lim_{x\to 2}\frac{x}{4-x}=\frac{2}{2}=1\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> รวม<br>
+      \(\displaystyle \frac{1}{2}+1=\frac{3}{2}\)
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 1) \(\dfrac{3}{2}\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: เมื่อเทียบ \(\frac{|A\cdot B|}{|A\cdot C|}\) ใน lim ที่ \(A\to 0\), สามารถตัด \(|A|\) ออกได้เลยเพราะ \(\frac{|A||B|}{|A||C|}=\frac{|B|}{|C|}\) — ไม่ต้องกังวลเรื่องเครื่องหมายของ \(A\)
+  </div>
+
+  <div class="block warn">
+    อย่าลืมกรณี 2 ของสมการ absolute value \(|A|=|B|\) — มีสองกรณีคือ \(A=B\) และ \(A=-B\) ถ้าทำแค่กรณีเดียวจะได้คำตอบไม่ครบ
+  </div>
+</div>
+
+<!-- ===== ข้อ 12 ===== -->
+<div class="qcard" id="q12">
+  <h3>ข้อ 12 <span class="src">Ent' ต.ค. 47: 3 คะแนน</span><span class="subtag c-purple">🟣 ความต่อเนื่อง</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(\displaystyle f(x)=\begin{cases} x+1 & ;\ x\ge 0\\ x-1 & ;\ x<0 \end{cases}\)<br>
+    ฟังก์ชัน \(g\) ในข้อใดต่อไปนี้ ทำให้ฟังก์ชัน \(g\circ f\) ไม่ต่อเนื่อง
+    <div class="opt"><b>1)</b> \(g(x)=1\) เมื่อ \(x\in(-\infty,-1)\cup[1,\infty)\)</div>
+    <div class="opt"><b>2)</b> \(g(x)=f^{-1}(x)\) เมื่อ \(x\in(-\infty,-1)\cup[1,\infty)\)</div>
+    <div class="opt"><b>3)</b> \(\displaystyle g(x)=\begin{cases} (x-1)^{2} & ;\ x\ge 1\\ (x+1)^{2} & ;\ x<-1 \end{cases}\)</div>
+    <div class="opt"><b>4)</b> \(g(x)=x^{3}\) เมื่อ \(x\in(-\infty,-1)\cup[1,\infty)\)</div>
+  </div>
+
+  <div class="block concept">
+    วิเคราะห์ range ของ \(f\) ก่อน แล้วดูว่า \(g\circ f\) มีค่าหลุดจากกันที่ \(x=0\) หรือไม่ (เพราะที่ \(x=0\) นี่คือจุดต่อของ piecewise ของ \(f\))
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> หา range ของ \(f\)<br>
+      เมื่อ \(x\ge 0\): \(f(x)=x+1\ge 1\) ⇒ range ฝั่งขวา \([1,\infty)\)<br>
+      เมื่อ \(x<0\): \(f(x)=x-1<-1\) ⇒ range ฝั่งซ้าย \((-\infty,-1)\)<br>
+      รวม: range \(f=(-\infty,-1)\cup[1,\infty)\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> เช็คละ choice — คำนวณ \(g\circ f\) ที่ \(x=0\) และ lim<br>
+      <b>ข้อ 1:</b> \(g\equiv 1\) ⇒ \(g\circ f\equiv 1\) (ค่าคงที่) ⇒ ต่อเนื่อง<br>
+      <b>ข้อ 2:</b> \(g=f^{-1}\). คำนวณ \(f^{-1}\):<br>
+      &nbsp;&nbsp; ฝั่ง \(y\ge 1\): \(y=x+1\) ⇒ \(x=y-1\) ⇒ \(f^{-1}(y)=y-1\)<br>
+      &nbsp;&nbsp; ฝั่ง \(y<-1\): \(y=x-1\) ⇒ \(x=y+1\) ⇒ \(f^{-1}(y)=y+1\)<br>
+      &nbsp;&nbsp; \(g(f(x))=f^{-1}(f(x))=x\) ⇒ ต่อเนื่อง<br>
+      <b>ข้อ 3:</b> ฝั่งขวา \(g(f(x))=(f(x)-1)^2=(x+1-1)^2=x^2\) (เพราะ \(f(x)=x+1\) ฝั่ง \(x\ge 0\))<br>
+      &nbsp;&nbsp; ฝั่งซ้าย \(g(f(x))=(f(x)+1)^2=(x-1+1)^2=x^2\) ⇒ \(g\circ f=x^2\) ⇒ ต่อเนื่อง<br>
+      <b>ข้อ 4:</b> \(g(x)=x^3\)<br>
+      &nbsp;&nbsp; \(\lim_{x\to 0^{+}} g(f(x))=\lim (x+1)^3=1\)<br>
+      &nbsp;&nbsp; \(\lim_{x\to 0^{-}} g(f(x))=\lim (x-1)^3=-1\)<br>
+      &nbsp;&nbsp; lim ซ้าย \(\neq\) lim ขวา ⇒ <b>ไม่ต่อเนื่อง</b> ✓
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 4) \(g(x)=x^{3}\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 4 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิคสังเกต: ใน choice 1-3 ฟังก์ชัน \(g\) มีรูปแบบ "ออกแบบมาให้ผลลัพธ์ symmetric" คือเหมือนกันทั้งสองฝั่ง ⇒ มักจะต่อเนื่อง ส่วน choice 4 (\(x^3\)) เป็นฟังก์ชันคี่ เมื่อป้อนค่าบวก/ลบจะได้ผลต่างเครื่องหมาย ⇒ มีโอกาสไม่ต่อเนื่องสูง
+  </div>
+
+  <div class="block warn">
+    อย่าลืมหา range ของ \(f\) ก่อน! ถ้า choice บอกว่า \(g\) นิยามเฉพาะบน \((-\infty,-1)\cup[1,\infty)\) แล้วเราไม่รู้ว่า range ของ \(f\) ตรงนี้ จะไม่สามารถคำนวณ \(g\circ f\) ได้
+  </div>
+</div>
+
+<!-- ===== ข้อ 13 ===== -->
+<div class="qcard" id="q13">
+  <h3>ข้อ 13 <span class="src">Ent' มี.ค. 48: 3 คะแนน</span><span class="subtag c-yellow">🟡 ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(\displaystyle f(x)=\begin{cases} 1 & ;\ x\le 0\\ 0 & ;\ x>0 \end{cases}\)<br>
+    พิจารณาข้อความต่อไปนี้<br>
+    <b>ก.</b> \(\displaystyle \lim_{x\to 0^{-}} (f\circ f)(x)=0\)<br>
+    <b>ข.</b> \(\displaystyle \lim_{x\to 0^{+}} (f\circ f)(x)=1\)
+    <div class="opt"><b>1)</b> ก. ถูก และ ข. ถูก</div>
+    <div class="opt"><b>2)</b> ก. ถูก และ ข. ผิด</div>
+    <div class="opt"><b>3)</b> ก. ผิด และ ข. ถูก</div>
+    <div class="opt"><b>4)</b> ก. ผิด และ ข. ผิด</div>
+  </div>
+
+  <div class="block concept">
+    คำนวณ \(f\circ f\) ทีละชั้น: หาค่า \(f(x)\) ก่อน แล้วนำค่านั้นไปป้อนเข้า \(f\) อีกครั้ง สังเกตว่า \(f\) มีเพียง 2 ค่าคือ 0 และ 1 ดังนั้น \(f\circ f\) จะมีค่าขึ้นอยู่กับว่า \(f(x)\) เป็นบวกหรือไม่กะเบา
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> หาค่า \(f(x)\) ในแต่ละฝั่ง<br>
+      \(x\le 0\) ⇒ \(f(x)=1\)<br>
+      \(x>0\) ⇒ \(f(x)=0\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> คำนวณ \((f\circ f)(x)=f(f(x))\)<br>
+      เมื่อ \(x\le 0\): \(f(x)=1\). เนื่องจาก \(1>0\) ⇒ \(f(1)=0\). ดังนั้น \((f\circ f)(x)=0\)<br>
+      เมื่อ \(x>0\): \(f(x)=0\). เนื่องจาก \(0\le 0\) ⇒ \(f(0)=1\). ดังนั้น \((f\circ f)(x)=1\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> หา lim ทั้งสองฝั่ง<br>
+      \(\displaystyle \lim_{x\to 0^{-}} (f\circ f)(x)=\lim_{x\to 0^{-}} 0=0\) ⇒ <b>ก. ถูก</b><br>
+      \(\displaystyle \lim_{x\to 0^{+}} (f\circ f)(x)=\lim_{x\to 0^{+}} 1=1\) ⇒ <b>ข. ถูก</b>
+    </div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 1) ก. ถูก และ ข. ถูก</span>
+    <span class="official">เฉลยท้ายเล่ม: 1 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิค: สำหรับ piecewise แบบ indicator function (\(f\) มี 2 ค่า 0 และ 1) ให้เขียนตาราง 4 ช่อง — "ถ้าป้อน 0 ได้อะไร / ถ้าป้อน 1 ได้อะไร" แล้วก็อปค่าได้เลย ไม่ต้องคิดซับซ้อน
+  </div>
+
+  <div class="block warn">
+    ระวัง! \(f(0)=1\) (เพราะเงื่อนไข \(x\le 0\) ครอบคลุม \(x=0\)) — นักเรียนมักสับสนว่า \(f(0)=0\) ทำให้คำนวณ \(f\circ f\) ผิดทั้งข้อ
+  </div>
+</div>
+
+<!-- ===== ข้อ 14 ===== -->
+<div class="qcard" id="q14">
+  <h3>ข้อ 14 <span class="src">A-NET' ก.พ. 49: 3 คะแนน</span><span class="subtag c-yellow">🟡 ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง</span></h3>
+  <div class="qstmt">
+    กำหนดให้
+    \[ f(x)=\begin{cases} x^{2} & ;\ x<0\\ 2x-1 & ;\ 0\le x<1\\ 3x & ;\ x\ge 1 \end{cases} \]
+    ค่าของ \(\displaystyle \lim_{x\to 0^{-}} f(x^{2})+\lim_{x\to 0^{-}} f(1-x)\) เท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(0\)</div>
+    <div class="opt"><b>2)</b> \(1\)</div>
+    <div class="opt"><b>3)</b> \(2\)</div>
+    <div class="opt"><b>4)</b> \(3\)</div>
+  </div>
+
+  <div class="block concept">
+    คำนวณอาร์กิวเมนต์ก่อน แล้วเลือกสูตร \(f\) ตามช่วง — ต้อง track ว่า \(x^2\) และ \(1-x\) อยู่ในช่วงไหนเมื่อ \(x\to 0^{-}\)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">พจน์ 1</span> \(\lim_{x\to 0^{-}} f(x^2)\)<br>
+      \(x\to 0^{-}\) ⇒ \(x\) เป็นลบเล็ก ๆ ⇒ \(x^2>0\) และ \(x^2\to 0^{+}\) (เล็กบวก)<br>
+      ดังนั้น \(0\le x^2<1\) ⇒ ใช้สูตร \(f(x^2)=2(x^2)-1=2x^2-1\)<br>
+      \(\displaystyle \lim_{x\to 0^{-}} f(x^2)=\lim_{x\to 0^{-}} (2x^2-1)=0-1=-1\)
+    </div>
+    <div class="step"><span class="lbl">พจน์ 2</span> \(\lim_{x\to 0^{-}} f(1-x)\)<br>
+      \(x\to 0^{-}\) ⇒ \(x\) เป็นลบเล็ก ๆ ⇒ \(1-x>1\) (เล็กเกิน 1)<br>
+      ดังนั้นใช้สูตร \(f(1-x)=3(1-x)=3-3x\)<br>
+      \(\displaystyle \lim_{x\to 0^{-}} f(1-x)=\lim_{x\to 0^{-}} (3-3x)=3-0=3\)
+    </div>
+    <div class="step"><span class="lbl">รวม</span> \(-1+3=2\)</div>
+  </div>
+
+  <div class="ansbox">
+    <span class="icon">✅</span>
+    <span class="txt">ข้อ 3) \(2\)</span>
+    <span class="official">เฉลยท้ายเล่ม: 3 ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิคทำกระดาษทด: วาดแกนจำนวนเล็ก ๆ แล้ววางตำแหน่งของ \(x^2\) และ \(1-x\) เมื่อ \(x\) อยู่ใกล้ 0 ทางซ้าย — เห็นช่วงของ argument ชัดเจน ไม่ต้องคิดเปล่า ๆ
+  </div>
+
+  <div class="block warn">
+    ระวังการตีความวงเล็บ \([1-x]\) เป็น floor function — ในข้อนี้เป็นแค่วงเล็บธรรมดาของอาร์กิวเมนต์ ไม่ใช่ greatest integer! ถ้าตีความผิดจะคำนวณต่างออกไปมาก
+  </div>
+</div>
+
+<!-- ===== ข้อ 15 ===== -->
+<div class="qcard" id="q15">
+  <h3>ข้อ 15 <span class="src">A-NET' มี.ค. 50: 3 คะแนน</span><span class="subtag c-purple">🟣 ความต่อเนื่อง</span></h3>
+  <div class="qstmt">
+    กำหนดให้ \(a, b\) เป็นจำนวนจริง และ \(f\) เป็นฟังก์ชันซึ่งนิยามโดย
+    \[ f(x)=\begin{cases} (x-1)^{2}+1 & ;\ x<0\\ x^{3}+ax+b & ;\ 0\le x\le 1\\ x-b & ;\ x>1 \end{cases} \]
+    ถ้า \(f\) เป็นฟังก์ชันที่มีอนุพันธ์ต่อเนื่องในช่วง \([-2,2]\) แล้ว \(\displaystyle f\!\left(\tfrac{1}{2}\right)\) เท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(0\)</div>
+    <div class="opt"><b>2)</b> \(0.25\)</div>
+    <div class="opt"><b>3)</b> \(0.5\)</div>
+    <div class="opt"><b>4)</b> \(0.75\)</div>
+  </div>
+
+  <div class="block concept">
+    ใช้สมบัติความต่อเนื่องและความหาอนุพันธ์ได้ที่จุดต่อ \(x=0\) และ \(x=1\) — ต้องทั้ง lim เท่ากัน (continuity) และ derivative เท่ากัน (differentiability)
+  </div>
+
+  <div class="block solve">
+    <div class="step"><span class="lbl">ขั้น 1</span> เงื่อนไขที่ \(x=0\)<br>
+      <b>ความต่อเนื่อง:</b> \(\lim_{x\to 0^{-}} f(x)=(0-1)^2+1=2\), \(\lim_{x\to 0^{+}} f(x)=0+0+b=b\) ⇒ \(b=2\)<br>
+      <b>อนุพันธ์:</b> ซ้าย \(f'(x)=2(x-1)\Rightarrow f'(0^{-})=-2\); ขวา \(f'(x)=3x^2+a\Rightarrow f'(0^{+})=a\) ⇒ \(a=-2\)
+    </div>
+    <div class="step"><span class="lbl">ขั้น 2</span> เงื่อนไขที่ \(x=1\)<br>
+      <b>ความต่อเนื่อง:</b> \(\lim_{x\to 1^{-}} f(x)=1+a+b\), \(\lim_{x\to 1^{+}} f(x)=1-b\) ⇒ ต้องมี \(1+a+b=1-b\) ⇒ \(a+2b=0\)<br>
+      <b>อนุพันธ์:</b> ซ้าย \(f'(1^{-})=3+a\), ขวา \(f'(1^{+})=1\) ⇒ ต้องมี \(3+a=1\) ⇒ \(a=-2\) ✓
+    </div>
+    <div class="step"><span class="lbl">ขั้น 3</span> ตรวจสอบความสอดคล้อง<br>
+      จาก \(x=0\): \(a=-2,\ b=2\)<br>
+      จาก \(x=1\) (ความต่อเนื่อง): \(a+2b=0\) ⇒ \(-2+2(2)=2\ne 0\) ❌<br>
+      จาก \(x=1\) (อนุพันธ์): \(a=-2\) ✓ (ตรงกับ \(x=0\))<br>
+      <b>แต่เงื่อนไขความต่อเนื่องที่ \(x=1\) ขัดแย้งกับเงื่อนไขที่ \(x=0\)</b>
+    </div>
+    <div class="step"><span class="lbl">ขั้น 4</span> สรุป: โจทย์กำหนดเงื่อนไขมากเกินไป (overdetermined) และขัดแย้งกันเอง ⇒ <b>ไม่มีค่า \(a,b\) ที่ทำให้ \(f\) มีอนุพันธ์ต่อเนื่องบน \([-2,2]\) ได้</b><br>
+      หากฝืนใช้ \(a=-2,\ b=2\) (จาก \(x=0\)) จะได้ \(f(\tfrac12)=\tfrac18-1+2=\tfrac98=1.125\) ไม่ตรง choice ใด<br>
+      หากฝืนใช้ \(a=-2,\ b=1\) (จาก \(x=1\)) จะได้ \(f(\tfrac12)=\tfrac18-1+1=\tfrac18=0.125\) ไม่ตรง choice ใด<br>
+      ทุกทางพบว่าคำตอบไม่ตรงกับ choice ใด ๆ
+    </div>
+  </div>
+
+  <div class="ansbox defective">
+    <span class="icon">🚫</span>
+    <span class="txt">ไม่มีข้อถูกในตัวเลือก — โจทย์บกพร่อง (ครูแบงก์ยืนยัน 22 ก.ค. 68) : เงื่อนไข overdetermined</span>
+    <span class="official">เฉลยท้ายเล่ม: — (เว้นว่าง) ✓</span>
+  </div>
+
+  <div class="block shortcut">
+    เทคนิคตรวจจับโจทย์พัง: ถ้าเงื่อนไขที่จุดต่อหลายจุดให้ค่าพารามิเตอร์ขัดแย้งกัน ให้ตรวจสอบ "ถ้าฝืนตอบ จะได้ค่าอะไร" — ถ้าไม่ตรง choice ใดเลย ก็รู้ว่าโจทย์มีปัญหา อย่าฝืนเด็ดขาด
+  </div>
+
+  <div class="block warn">
+    ข้อสอบ A-NET มี.ค. 50 ข้อนี้เป็นที่รู้กันว่าเป็น "โจทย์พัง" ทางการไม่มีการประกาศเฉลยอย่างเป็นทางการ — ในห้องสอบจริง ถ้าเจอข้อแบบนี้ ให้ทำข้ออื่นก่อนแล้วกลับมาดูทีหลัง อย่าเสียเวลามากกับข้อเดียว
+  </div>
+</div>
+
+<!-- ====== END PART 2 ====== -->
+
+<!-- ====== FINAL SUMMARY ====== -->
+<section class="final" id="final">
+
+<h2>🏆 สรุปเทคนิครวบยอดทั้งบท</h2>
+<p>หลังจากทำข้อสอบ 15 ข้อในบท "ลิมิตและความต่อเนื่อง" ครบแล้ว สามารถสรุปเทคนิคสำคัญที่ใช้ซ้ำ ๆ ได้ดังนี้ นักเรียนควรจำให้ขึ้นใจ เพราะจะเจอ pattern เดียวกันในข้อสอบปีต่อ ๆ ไป</p>
+
+<div class="tech-grid">
+  <div class="tech-card">
+    <h4>1. ตรวจรูป lim ก่อนทำ</h4>
+    <p>แทนค่า \(x\) ที่เป้าหมายก่อนเสมอ — ถ้าได้ \(\frac{0}{0}\), \(\frac{\infty}{\infty}\), \(0\cdot\infty\) หรือ \(1^{\infty}\) ต้องจัดการต่อ ถ้าแทนแล้วได้ค่าตัวเลขปกติ ให้ตอบทันที</p>
+  </div>
+  <div class="tech-card">
+    <h4>2. ลำดับความสำคัญของเทคนิค</h4>
+    <p>(1) แยกตัวประกอบก่อน เร็วที่สุด &nbsp; (2) คูณ conjugate ถ้ามี radical &nbsp; (3) แทนตัวแปร \(u=\) expression ที่ซับซ้อน &nbsp; (4) L'Hôpital เป็นทางเลือกสุดท้าย</p>
+  </div>
+  <div class="tech-card">
+    <h4>3. สูตร rationalize สากล</h4>
+    <p>\(\frac{a-\sqrt{b}}{c}\cdot\frac{a+\sqrt{b}}{a+\sqrt{b}}=\frac{a^2-b}{c(a+\sqrt{b})}\) — จำสูตรนี้ไว้ ใช้ได้กับทุกข้อที่มี radical ในตัวเศษหรือตัวส่วน</p>
+  </div>
+  <div class="tech-card">
+    <h4>4. สูตรแยกผลต่างกำลังสอง</h4>
+    <p>\(x-k=(\sqrt{x}-\sqrt{k})(\sqrt{x}+\sqrt{k})\) — สำคัญมากในข้อสอบ lim ที่มี \(\sqrt{x}\) และกำลังสอง (เห็นบ่อยใน A‑Level)</p>
+  </div>
+  <div class="tech-card">
+    <h4>5. นิยามความต่อเนื่อง 3 ข้อ</h4>
+    <p>ที่จุด \(x=a\): (1) \(f(a)\) นิยามได้ (2) \(\lim_{x\to a} f(x)\) หาได้ (3) สองค่านี้เท่ากัน — ขาดข้อใดข้อหนึ่งถือว่า "ไม่ต่อเนื่อง"</p>
+  </div>
+  <div class="tech-card">
+    <h4>6. ตาราง 3 แถวตรวจ piecewise</h4>
+    <p>เขียนตาราง: left-limit | right-limit | f(a) — ถ้าสามค่าเท่ากัน ⇒ ต่อเนื่อง ถ้าไม่ ⇒ ระบุประเภทของ discontinuity (removable / jump / infinite)</p>
+  </div>
+  <div class="tech-card">
+    <h4>7. Composite function track argument</h4>
+    <p>\(\lim_{x\to a} f(g(x))\) — อย่าเพิ่งคิดเรื่อง \(f\) ให้คำนวณ \(g(x)\) ก่อน แล้วดูว่าค่านั้นตกในช่วงไหนของ piecewise ของ \(f\) แล้วค่อยเลือกสูตร</p>
+  </div>
+  <div class="tech-card">
+    <h4>8. ค่าสัมบูรณ์ \(\frac{|A|}{|B|}=\frac{|A|}{|B|}\)</h4>
+    <p>ถ้ามีตัวประกอบร่วม \(\frac{|A\cdot C|}{|A\cdot D|}=\frac{|C|}{|D|}\) ตัดได้เลย ไม่ต้องกังวลเครื่องหมายของ \(A\) — กันพลาดจากการ test เครื่องหมายทีละฝั่ง</p>
+  </div>
+  <div class="tech-card">
+    <h4>9. Composite และ inverse</h4>
+    <p>ถ้า \(g=f^{-1}\) แล้ว \(g\circ f = \text{id}\) (ต่อเนื่องเสมอ) — จำไว้เป็น "ตัวลวง" ของข้อสอบ composition</p>
+  </div>
+  <div class="tech-card">
+    <h4>10. ตรวจจับโจทย์พัง</h4>
+    <p>ถ้าเงื่อนไขที่หลายจุดให้ค่าพารามิเตอร์ขัดแย้งกัน หรือคำตอบไม่ตรง choice ใดเลย ⇒ โจทย์ inconsistent อย่าฝืนตอบ — ทำข้ออื่นก่อน</p>
+  </div>
+  <div class="tech-card">
+    <h4>11. เทคนิคแทนค่า choice</h4>
+    <p>ถ้า choice เป็นตัวเลขไม่กี่ค่า ลองแทนกลับไปตรวจสอบ — บางทีเร็วกว่าแก้สมการ โดยเฉพาะเมื่อสมการมีพจน์ซับซ้อน</p>
+  </div>
+  <div class="tech-card">
+    <h4>12. Differentiability สองเงื่อนไข</h4>
+    <p>ที่จุดต่อ piecewise: (1) ค่าฟังก์ชันซ้าย = ขวา (continuity) (2) derivative ซ้าย = ขวา — ต้องเช็คทั้งสองข้อ ขาดข้อใดไม่ได้</p>
+  </div>
+</div>
+
+<h2>📊 ตารางเตือนจุดพลาด (Careless Error Hotspot Table)</h2>
+<p>ตารางนี้รวบรวม "จุดพลาดที่นักเรียนทำบ่อยที่สุด" ในบทลิมิตและความต่อเนื่อง แยกตามหัวข้อ พร้อมวิธีป้องกัน — แนะนำให้อ่านก่อนเข้าห้องสอบทุกครั้ง</p>
+
+<table class="errtab">
+  <thead>
+    <tr>
+      <th style="width:18%">หัวข้อ</th>
+      <th style="width:35%">จุดพลาดที่พบบ่อย</th>
+      <th style="width:47%">วิธีป้องกัน</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="topic">lim รูป \(\frac{0}{0}\)</td>
+      <td>ลืมแยกตัวประกอบ หรือแยกผิดเครื่องหมาย ทำให้ตัดไม่ได้</td>
+      <td>ก่อนใช้ L'Hôpital ให้ลองแยกตัวประกอบก่อนเสมอ ใช้เทคนิค grouping สำหรับพหุนามดีกรี 3 และตรวจคูณกลับทุกครั้ง</td>
+    </tr>
+    <tr>
+      <td class="topic">lim ที่มี radical</td>
+      <td>คูณ conjugate ผิดเครื่องหมาย หรือลืมคูณทั้งเศษและส่วน</td>
+      <td>จำสูตร \((a-\sqrt{b})(a+\sqrt{b})=a^2-b\) และทำคูณทั้งเศษและส่วนเสมอ ไม่งั้นค่าจะเปลี่ยน</td>
+    </tr>
+    <tr>
+      <td class="topic">Piecewise function</td>
+      <td>เลือกสูตรผิดช่วง เพราะสับสน \(x \le a\) กับ \(x < a\)</td>
+      <td>เขียนตาราง 3 แถว (left-lim, right-lim, f(a)) ก่อน และเช็คเครื่องหมาย \(\le\) vs \(<\) ทุกครั้ง</td>
+    </tr>
+    <tr>
+      <td class="topic">Composite \(f(g(x))\)</td>
+      <td>สับสนว่า argument ตกในช่วงไหน โดยเฉพาะเมื่อ \(x\to 0^-\) แต่ \(g(x)\to 0^+\) (เช่น \(x^2\))</td>
+      <td>เขียน "x → ? ⇒ g(x) → ? ⇒ ใช้สูตรไหน" สามบรรทัดข้างใต้ lim ทุกครั้ง</td>
+    </tr>
+    <tr>
+      <td class="topic">ความต่อเนื่องที่จุด</td>
+      <td>หา lim ได้แล้วสรุปเร็วว่าต่อเนื่อง โดยไม่เช็คค่าฟังก์ชัน</td>
+      <td>จำไว้ว่า lim ตรง ≠ ต่อเนื่อง — ต้องเช็คค่า \(f(a)\) เสมอ แม้โจทย์จะดูง่าย</td>
+    </tr>
+    <tr>
+      <td class="topic">ค่าสัมบูรณ์</td>
+      <td>ลืมกรณี \(|A|=|B|\) มี 2 กรณี (A=B และ A=−B) — ทำคำตอบไม่ครบ</td>
+      <td>เขียน "กรณี 1 / กรณี 2" ชัดเจน และรวมคำตอบจากทั้งสองกรณีเสมอ</td>
+    </tr>
+    <tr>
+      <td class="topic">Differentiability</td>
+      <td>เช็คแค่ derivative เท่ากัน แต่ลืมเช็ค continuity ที่ต้องคู่กัน</td>
+      <td>จำไว้ว่า differentiability ⇒ continuity (แต่ไม่จริงในทางกลับกัน) — ถ้าไม่ต่อเนื่อง ไม่ต้องพูดถึงอนุพันธ์</td>
+    </tr>
+    <tr>
+      <td class="topic">แปลเงื่อนไขภาษาไทย</td>
+      <td>"กราฟตัดเส้นตรง" แปลผิดเป็น "f(x) = เส้นตรงทุก x"</td>
+      <td>"ตัดที่ x = a" ⇒ เท่ากันเฉพาะที่จุดเดียว คือ f(a) = ค่าของเส้นตรงที่ a</td>
+    </tr>
+    <tr>
+      <td class="topic">Composite \(g\circ f\)</td>
+      <td>ลืมหา range ของ \(f\) ก่อน ทำให้คำนวณ \(g(f(x))\) ผิด</td>
+      <td>หา range ของ \(f\) ก่อนเสมอ และเช็คว่า choice ของ \(g\) ครอบคลุม range นี้หรือไม่</td>
+    </tr>
+    <tr>
+      <td class="topic">เครื่องหมายตัวส่วน</td>
+      <td>\(4-x^2\) เขียนเป็น \(x^2-4\) แล้วลืมใส่ลบ ทำให้คำตอบเปลี่ยนเครื่องหมาย</td>
+      <td>เวลาแยกตัวประกอบ ให้เขียน \(4-x^2 = -(x^2-4) = -(x-2)(x+2)\) ชัด ๆ อย่าตัดสินใจในใจ</td>
+    </tr>
+    <tr>
+      <td class="topic">โจทย์พัง (inconsistent)</td>
+      <td>ฝืนตอบ choice ที่ใกล้ที่สุด ทั้งที่คำนวณไม่ตรง</td>
+      <td>ถ้าเงื่อนไขขัดแย้งกัน ให้ทิ้งข้อนั้นไปก่อน ทำข้ออื่นแล้วกลับมาดู — อย่าเสียเวลากับข้อเดียวเกิน 5 นาที</td>
+    </tr>
+    <tr>
+      <td class="topic">ตีความวงเล็บ</td>
+      <td>เห็น \([1-x]\) แล้วตีความเป็น floor function (greatest integer)</td>
+      <td>ในข้อสอบ A‑Level มักเป็นแค่วงเล็บธรรมดา ถ้าไม่แน่ใจให้อ่านบริบท — ถ้าโจทย์จะใช้ floor จะบอกชัดเจน</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>✅ Checklist สำหรับห้องสอบ (Exam Day Checklist)</h2>
+<p>รายการตรวจสอบก่อนและระหว่างทำข้อสอบ — แนะนำให้ท่องจำและปฏิบัติทุกข้อ จะช่วยลด careless error ได้มากกว่า 50%</p>
+
+<ul class="checklist">
+  <li><b>อ่านโจทย์ครบ 2 รอบ</b> — รอบแรกเพื่อเข้าใจ รอบสองเพื่อ highlight คำสำคัญ (ค่าตัวแปร, เงื่อนไข, ช่วง)</li>
+  <li><b>เช็คช่วงของ piecewise</b> — ดูว่าจุดที่เราสนใจอยู่ฝั่งไหน และเครื่องหมาย \(\le\) หรือ \(<\) ที่จุดต่อ</li>
+  <li><b>แทนค่า lim ก่อนเสมอ</b> — ดูว่าได้ \(\frac{0}{0}\) หรือค่าปกติ ถ้าปกติให้ตอบทันที ถ้า \(\frac{0}{0}\) ให้เลือกเทคนิคต่อ</li>
+  <li><b>ลำดับการเลือกเทคนิค:</b> แยกตัวประกอบ → คูณ conjugate → แทนตัวแปร → L'Hôpital</li>
+  <li><b>เขียนตาราง 3 แถว</b> (left-lim, right-lim, f(a)) สำหรับทุกข้อที่ตรวจความต่อเนื่อง — อย่าคิดในใจ</li>
+  <li><b>เช็คค่า \(f(a)\) หลังหา lim</b> — แม้ lim ซ้าย = ขวา ก็ยังอาจไม่ต่อเนื่องถ้าค่าฟังก์ชันไม่ตรง</li>
+  <li><b>Track argument ใน composite</b> — "x → ? ⇒ g(x) → ? ⇒ สูตรไหน" สามบรรทัด</li>
+  <li><b>กรณี absolute value 2 กรณี</b> — \(|A|=|B|\) ⇒ ทั้ง A=B และ A=−B ต้องทำครบ</li>
+  <li><b>ตรวจเครื่องหมายตัวส่วน</b> — โดยเฉพาะ \(4-x^2\), \(a-x\), \(1-x^2\) ที่ต้องใส่ลบเมื่อสลับ</li>
+  <li><b>ทดสอบคำตอบกลับ</b> — ถ้าเหลือเวลา ให้แทนค่าพารามิเตอร์กลับไปตรวจในโจทย์</li>
+  <li><b>หากเจอข้อที่คำนวณไม่ตรง choice ใดเลย</b> — ทิ้งไปก่อน ทำข้ออื่น แล้วกลับมาดูใหม่ อย่าฝืนตอบ</li>
+  <li><b>เวลาจัดสรร</b> — ข้อ lim ปกติใช้ 2-3 นาที ข้อ piecewise ใช้ 4-5 นาที ถ้าเกิน 5 นาทีให้ข้ามไปก่อน</li>
+  <li><b>ก่อนส่งกระดาษ</b> — ตรวจอีกครั้ง: เลขข้อตรงไหม, choice ที่ตอบตรงกับที่คำนวณไหม, เครื่องหมายลบหายไปไหน</li>
+</ul>
+
+<h2>📈 สรุปเฉลยทั้ง 15 ข้อ (ตารางรวม)</h2>
+<table class="errtab">
+  <thead>
+    <tr>
+      <th style="width:8%">ข้อ</th>
+      <th style="width:14%">ปี/สนาม</th>
+      <th style="width:35%">แนวโจทย์</th>
+      <th style="width:18%">คำตอบ</th>
+      <th style="width:25%">เทคนิคหลัก</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="topic">1</td><td>ต.ค. 41</td><td>ความต่อเนื่อง piecewise + radical</td><td>2 (ก. ถูก ข. ผิด)</td><td>rationalize conjugate</td></tr>
+    <tr><td class="topic">2</td><td>มี.ค. 42</td><td>ความต่อเนื่อง 2 จุด</td><td>1 (ก. ข. ถูก)</td><td>แยกตัวประกอบ + rationalize</td></tr>
+    <tr><td class="topic">3</td><td>ต.ค. 42</td><td>หาพารามิเตอร์จากความต่อเนื่อง</td><td>4 (\(a=-1, b=3\))</td><td>grouping + ระวังเครื่องหมายลบ</td></tr>
+    <tr><td class="topic">4</td><td>มี.ค. 43</td><td>lim ของ composite piecewise</td><td>1 (\(-4/3\))</td><td>track argument</td></tr>
+    <tr><td class="topic">5</td><td>มี.ค. 44</td><td>lim \(\frac{0}{0}\) กับ radical</td><td>0.5 (\(1/2\))</td><td>rationalize conjugate</td></tr>
+    <tr><td class="topic">6</td><td>ต.ค. 44</td><td>ผลคูณที่ "ดูเหมือน" ต่อเนื่อง</td><td>4 (ไม่ต่อเนื่อง, lim=4)</td><td>เช็คค่าฟังก์ชัน + แยกตัวประกอบ</td></tr>
+    <tr><td class="topic">7</td><td>มี.ค. 45</td><td>หาพารามิเตอร์ + ค่า f ที่จุดอื่น</td><td>2 (\(-14\))</td><td>\(x-k=(\sqrt{x}-\sqrt{k})(\sqrt{x}+\sqrt{k})\)</td></tr>
+    <tr><td class="topic">8</td><td>ต.ค. 45</td><td>lim ของ composite + แก้สมการ</td><td>2 (\(a=3\))</td><td>track ฝั่ง + แทน choice ตรวจ</td></tr>
+    <tr><td class="topic">9</td><td>มี.ค. 46</td><td>เงื่อนไข "กราฟตัดเส้นตรง"</td><td>2 (\(k=-1\in(-2,0)\))</td><td>แปลเงื่อนไข + ใช้สูตร \(x-k\)</td></tr>
+    <tr><td class="topic">10</td><td>มี.ค. 46</td><td>lim ซับซ้อน 4 radical</td><td>3 (\(1/2\))</td><td>substitution + rationalize ซ้อน</td></tr>
+    <tr><td class="topic">11</td><td>ต.ค. 46</td><td>lim ของอัตราส่วน absolute</td><td>1 (\(3/2\))</td><td>ตัดตัวประกอบร่วม + เช็คเครื่องหมาย</td></tr>
+    <tr><td class="topic">12</td><td>ต.ค. 47</td><td>composite \(g\circ f\) ไม่ต่อเนื่อง</td><td>4 (\(g(x)=x^3\))</td><td>หา range + เช็ค lim ที่จุดต่อ</td></tr>
+    <tr><td class="topic">13</td><td>มี.ค. 48</td><td>\(f\circ f\) ของ indicator function</td><td>1 (ก. ข. ถูก)</td><td>ตาราง 4 ช่อง + เช็ค \(f(0)\)</td></tr>
+    <tr><td class="topic">14</td><td>ก.พ. 49</td><td>lim composite + track argument</td><td>3 (\(2\))</td><td>วาดแกนจำนวน + เช็คช่วง</td></tr>
+    <tr><td class="topic">15</td><td>มี.ค. 50</td><td>อนุพันธ์ต่อเนื่อง (โจทย์พัง)</td><td>— (ไม่มีคำตอบ)</td><td>ตรวจจับ inconsistent</td></tr>
+  </tbody>
+</table>
+
+<h2>💡 คำแนะนำเพิ่มเติม</h2>
+<p>หลังจากทบทวนเฉลยทั้ง 15 ข้อแล้ว นักเรียนควรฝึกฝนเพิ่มเติมโดย:</p>
+<ul style="padding-left:22px">
+  <li>ทำข้อสอบซ้ำอีกครั้งโดยไม่ดูเฉลย แล้วเทียบคำตอบ — ถ้าทำผิดซ้ำ ๆ ข้อเดิม ให้กลับไปทบทวนเทคนิคที่เกี่ยวข้อง</li>
+  <li>สรุป "สูตรเด็ด" ของตัวเองลงสมุดฉบับย่อ โดยเฉพาะสูตร rationalize, สูตรแยกผลต่างกำลังสอง, และสูตรแยกตัวประกอบ grouping</li>
+  <li>หาข้อสอบ A-Level ปีอื่น ๆ มาทำเพิ่ม — แนวโจทย์จะซ้ำ ๆ แต่ปลอมรูปแบบใหม่ ถ้าเข้าใจคอนเซปต์แล้วจะทำได้ทุกข้อ</li>
+  <li>ฝึกความเร็ว — ตั้งเวลา 2 นาทีต่อข้อ ถ้าทำเกินเวลา ให้ข้ามไปก่อน แล้วกลับมาดูในภายหลัง</li>
+  <li>สอบวันจริง อย่าตื่นเต้น — ถ้าเจอข้อที่ดูแปลก ให้ใจเย็น ๆ อ่านช้า ๆ และเขียนตาราง 3 แถวช่วย — ข้อสอบส่วนใหญ่ใช้เทคนิคพื้นฐานเดียวกัน</li>
+</ul>
+
+</section>
+
+<button class="print-bar" onclick="window.print()">🖨️ พิมพ์ / บันทึกเป็น PDF</button>
+
+<script>
+  // Typeset MathJax after page is fully loaded
+  window.addEventListener('load', function() {
+    if (window.MathJax && MathJax.typesetPromise) {
+      MathJax.typesetPromise().catch(function(err){console.warn('MathJax typeset error:', err)});
+    }
+  });
+  // Smooth scroll for nav chips
+  document.querySelectorAll('nav.chips a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var target = document.querySelector(this.getAttribute('href'));
+      if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+</script>
+
+</body>
+</html>
+
+
+
