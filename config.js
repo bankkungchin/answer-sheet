@@ -39,3 +39,8 @@ PLAYLISTS["การเรียงลำดับและการจัดห
 // config.js — เพิ่มใน PLAYLISTS
 PLAYLISTS["ความน่าจะเป็น"] = "PLc4ncgz2CJ7PUzCaq0lqTb89Hg91_cwjm";
 
+
+// ── config.js : เพิ่มเข้า object PLAYLISTS เดิม ──
+PLAYLISTS["ลิมิตและความต่อเนื่อง"] = "PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK"; // บท16, 32 คลิป
+PLAYLISTS["อัตราการเปลี่ยนแปลง"]   = "PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl"; // บท17, 60 คลิป
+PLAYLISTS["อินทิกรัล"]             = "PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W"; // บท18, 75 คลิป
