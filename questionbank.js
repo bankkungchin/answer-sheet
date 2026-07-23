@@ -2569,3 +2569,337 @@ EMBEDDED_QB["ความน่าจะเป็น"] = {
     30:{sub:"กฎการบวก & เติมเต็ม",level:4},
 };
 
+
+// ── EMBEDDED_QB บทแคลคูลัส (Test Gamm ชุด 1/2, classify จากภาพ) ──
+ 
+EMBEDDED_QB["แคลคูลัส ชุดที่ 1"] = {
+  1:{sub:"ความต่อเนื่อง", level:4},  // Pat1 ต.ค.53
+  2:{sub:"ลิมิตรูป 0/0", level:4},  // Pat1 มี.ค.54
+  3:{sub:"ความต่อเนื่อง", level:4},  // แนว PAT1 เม.ย.57
+  4:{sub:"ลิมิตรูป 0/0", level:3},  // 9วิชา ธ.ค.58
+  5:{sub:"ลิมิตรูป 0/0", level:5},  // Pat1 ต.ค.59
+  6:{sub:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", level:3},  // มี.ค.43/4
+  7:{sub:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", level:4},  // ต.ค.45/3
+  8:{sub:"กฎลูกโซ่ / ผลคูณ-ผลหาร", level:3},  // Pat1 มี.ค.53
+  9:{sub:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", level:4},  // Pat1 ก.ค.53
+  10:{sub:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", level:4},  // แนว Pat1 ต.ค.54
+  11:{sub:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", level:4},  // แนว 7วิชา 55
+  12:{sub:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", level:3},  // แนว 7วิชา 56
+  13:{sub:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", level:5},  // Pat1 ต.ค.58
+  14:{sub:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", level:4},  // มี.ค.42/3
+  15:{sub:"กฎลูกโซ่ / ผลคูณ-ผลหาร", level:4},  // ต.ค.44/3
+  16:{sub:"โจทย์ประยุกต์ค่าสุดขีด (optimization)", level:4},  // มี.ค.46/3
+  17:{sub:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", level:4},  // Ent มี.ค.47
+  18:{sub:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", level:4},  // A-NET 2552
+  19:{sub:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", level:4},  // Pat1 มี.ค.53
+  20:{sub:"กฎลูกโซ่ / ผลคูณ-ผลหาร", level:5},  // Pat1 ก.ค.53
+  21:{sub:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", level:5},  // แนว Pat1 มี.ค.55
+  22:{sub:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", level:5},  // แนว Pat1 ต.ค.55
+  23:{sub:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", level:4},  // แนว PAT1 มี.ค.57
+  24:{sub:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", level:5},  // Pat1 มี.ค.59
+  25:{sub:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", level:4},  // Pat1 ต.ค.59
+  26:{sub:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", level:4},  // 9วิชา 60
+  27:{sub:"อนุพันธ์อันดับสูง & ความเว้า", level:5},  // Pat1 ก.พ.61
+  28:{sub:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", level:4},  // มี.ค.45/2
+  29:{sub:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", level:4},  // มี.ค.46/3
+  30:{sub:"กฎลูกโซ่ / ผลคูณ-ผลหาร", level:4},  // ต.ค.46/3
+};
+ 
+EMBEDDED_QB["แคลคูลัส ชุดที่ 2"] = {
+  1:{sub:"ลิมิตรูป 0/0", level:5},  // มี.ค.46/3
+  2:{sub:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", level:3},  // A-Level 66
+  3:{sub:"ความต่อเนื่อง", level:5},  // A-NET มี.ค.50
+  4:{sub:"ความต่อเนื่อง", level:4},  // Pat1 ก.ค.53
+  5:{sub:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", level:3},  // 9วิชา1 มี.ค.62
+  6:{sub:"ลิมิตรูป 0/0", level:5},  // แนว Pat1 มี.ค.55
+  7:{sub:"ความต่อเนื่อง", level:5},  // Pat1 มี.ค.58
+  8:{sub:"ลิมิตรูป 0/0", level:5},  // Pat1 มี.ค.60
+  9:{sub:"ลิมิตรูป 0/0", level:5},  // Pat1 ก.พ.62
+  10:{sub:"ความต่อเนื่อง", level:5},  // Pat1 ก.พ.63
+  11:{sub:"โจทย์ประยุกต์ค่าสุดขีด (optimization)", level:5},  // PAT1 มี.ค.52
+  12:{sub:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", level:4},  // 9วิชา1 มี.ค.65
+  13:{sub:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", level:5},  // แนว Pat1 ต.ค.55
+  14:{sub:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", level:4},  // แนว 7วิชา 56
+  15:{sub:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", level:4},  // Pat1 ต.ค.58
+  16:{sub:"กฎลูกโซ่ / ผลคูณ-ผลหาร", level:3},  // 9วิชา1 มี.ค.62
+  17:{sub:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", level:4},  // มี.ค.44/2
+  18:{sub:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", level:4},  // ต.ค.44/3
+  19:{sub:"กฎลูกโซ่ / ผลคูณ-ผลหาร", level:4},  // Ent ต.ค.47
+  20:{sub:"อนุพันธ์อันดับสูง & ความเว้า", level:5},  // Pat1 ก.ค.53
+  21:{sub:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", level:5},  // Pat1 ต.ค.53
+  22:{sub:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", level:5},  // แนว Pat1 ต.ค.55
+  23:{sub:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", level:4},  // แนว 7วิชา 55
+  24:{sub:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", level:5},  // แนว PAT1 มี.ค.56
+  25:{sub:"การเปลี่ยนตัวแปร (substitution)", level:4},  // แนว PAT1 เม.ย.57
+  26:{sub:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", level:4},  // 7วิชา 58
+  27:{sub:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", level:5},  // Pat1 ก.พ.62
+  28:{sub:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", level:4},  // Ent ต.ค.47
+  29:{sub:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", level:3},  // Ent มี.ค.48
+  30:{sub:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", level:4},  // A-NET ก.พ.49
+};
+
+
+PRACTICE_BANK["ลิมิตและความต่อเนื่อง"] = [
+  // ── 52-68 (YouTube playlist) : 32 ข้อ ──
+  { n:1, c:"ความต่อเนื่อง", l:4, s:"Pat1 มี.ค. 53 ข้อ 37", y:"2553", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=1", ans:"53" },
+  { n:2, c:"ความต่อเนื่อง", l:4, s:"Pat1 ก.ค. 53 ข้อ 19", y:"2553", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=2", ans:"4" },
+  { n:3, c:"ความต่อเนื่อง", l:4, s:"Pat1 ต.ค. 53 ข้อ 18", y:"2553", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=3", ans:"4" },
+  { n:4, c:"ลิมิตรูป 0/0", l:4, s:"Pat1 มี.ค. 54 ข้อ 18", y:"2554", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=4", ans:"1" },
+  { n:5, c:"ความต่อเนื่อง", l:4, s:"Pat1 มี.ค. 54 ข้อ 44", y:"2554", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=5", ans:"8" },
+  { n:6, c:"ลิมิตรูป 0/0", l:5, s:"Pat1 ต.ค. 54 ข้อ 40", y:"2554", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=6", ans:"6" },
+  { n:7, c:"ลิมิตรูป 0/0", l:5, s:"Pat1 มี.ค. 55 ข้อ 40", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=7", ans:"3" },
+  { n:8, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:4, s:"Pat1 ต.ค. 55 ข้อ 21", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=8", ans:"3" },
+  { n:9, c:"ความต่อเนื่อง", l:5, s:"Pat1 มี.ค. 56 ข้อ 38", y:"2556", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=9", ans:"24" },
+  { n:10, c:"ลิมิตพื้นฐาน/แทนค่า-พีชคณิต", l:2, s:"7 วิชา มค 57 ข้อ 9", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=10", ans:"7" },
+  { n:11, c:"ความต่อเนื่อง", l:4, s:"Pat1 มี.ค.57 ข้อ 17", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=11", ans:"2" },
+  { n:12, c:"ความต่อเนื่อง", l:4, s:"Pat1 เม.ย.57 ข้อ 17", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=12", ans:"2" },
+  { n:13, c:"ลิมิตรูป 0/0", l:4, s:"Pat1 มี.ค.58 ข้อ 17", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=13", ans:"4" },
+  { n:14, c:"ความต่อเนื่อง", l:5, s:"Pat1 มี.ค.58 ข้อ 41", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=14", ans:"15" },
+  { n:15, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:4, s:"Pat1 ต.ค.58 ข้อ 13", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=15", ans:"1" },
+  { n:16, c:"ลิมิตรูป 0/0", l:3, s:"9 วิชาสามัญ 59 ข้อ 8", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=16", ans:"5" },
+  { n:17, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:5, s:"Pat1 มี.ค.59 ข้อ 42", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=17", ans:"9" },
+  { n:18, c:"ลิมิตรูป 0/0", l:5, s:"Pat1 ตค 59 ข้อ 42", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=18", ans:"12" },
+  { n:19, c:"ลิมิตรูป 0/0", l:5, s:"Pat1 มีค 60 ข้อ 38", y:"2560", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=19", ans:"81" },
+  { n:20, c:"ความต่อเนื่อง", l:5, s:"Pat1 มีค 60 ข้อ 41", y:"2560", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=20", ans:"10" },
+  { n:21, c:"ลิมิตรูป 0/0", l:4, s:"Pat1 ก พ 61 ข้อ 14", y:"2561", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=21", ans:"4" },
+  { n:22, c:"ความต่อเนื่อง", l:5, s:"Pat1 ก พ 61 ข้อ 35", y:"2561", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=22", ans:"0.5" },
+  { n:23, c:"ลิมิตรูป 0/0", l:5, s:"Pat1 ก.พ. 62 ข้อ 39", y:"2562", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=23", ans:"12" },
+  { n:24, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:3, s:"9 วิชาสามัญ 1 62 ข้อ 8", y:"2562", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=24", ans:"2" },
+  { n:25, c:"ลิมิตรูป 0/0", l:4, s:"pat1 กพ 63 ข้อ 28", y:"2563", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=25", ans:"3" },
+  { n:26, c:"ความต่อเนื่อง", l:4, s:"Pat1 กพ 63 ข้อ 34", y:"2563", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=26", ans:"1" },
+  { n:27, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:5, s:"Pat1 มี ค 64 ข้อ 45", y:"2564", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=27", ans:"2" },
+  { n:28, c:"ความต่อเนื่อง", l:3, s:"9 วิชาสามัญ 64 ข้อ 25", y:"2564", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=28", ans:"5" },
+  { n:29, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:4, s:"Pat1 มี.ค. 65 ข้อ 24", y:"2565", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=29", ans:"2" },
+  { n:30, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:3, s:"A Level 66 ข้อ 24", y:"2566", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=30", ans:"5" },
+  { n:31, c:"ความต่อเนื่อง", l:3, s:"A Level 67 ข้อ 10", y:"2567", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=31", ans:"1" },
+  { n:32, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:3, s:"A Level 68 ข้อ 24", y:"2568", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK&index=32", ans:"1" },
+  // ── 41-52 (หน้าเฉลย HTML) : 15 ข้อ ──
+  { n:33, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:3, s:"Ent ต.ค.41", y:"2541", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q1", ans:"2" },
+  { n:34, c:"ความต่อเนื่อง", l:3, s:"Ent มี.ค.42", y:"2542", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q2", ans:"1" },
+  { n:35, c:"ความต่อเนื่อง", l:3, s:"Ent ต.ค.42", y:"2542", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q3", ans:"4 (a=-1,b=3)" },
+  { n:36, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:3, s:"Ent มี.ค.43", y:"2543", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q4", ans:"1 (-4/3)" },
+  { n:37, c:"ลิมิตรูป 0/0", l:2, s:"Ent มี.ค.44", y:"2544", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q5", ans:"1/2" },
+  { n:38, c:"ความต่อเนื่อง", l:3, s:"Ent ต.ค.44", y:"2544", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q6", ans:"4" },
+  { n:39, c:"ความต่อเนื่อง", l:4, s:"Ent มี.ค.45", y:"2545", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q7", ans:"2 (-14)" },
+  { n:40, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:4, s:"Ent ต.ค.45", y:"2545", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q8", ans:"2 (a=3)" },
+  { n:41, c:"ความต่อเนื่อง", l:4, s:"Ent มี.ค.46", y:"2546", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q9", ans:"2 (k=-1)" },
+  { n:42, c:"ลิมิตรูป 0/0", l:5, s:"Ent มี.ค.46", y:"2546", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q10", ans:"3 (1/2)" },
+  { n:43, c:"ลิมิตรูป 0/0", l:4, s:"Ent ต.ค.46", y:"2546", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q11", ans:"1 (3/2)" },
+  { n:44, c:"ความต่อเนื่อง", l:4, s:"Ent ต.ค.47", y:"2547", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q12", ans:"4" },
+  { n:45, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:3, s:"Ent มี.ค.48", y:"2548", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q13", ans:"1" },
+  { n:46, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:3, s:"A-NET ก.พ.49", y:"2549", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q14", ans:"3 (2)" },
+  { n:47, c:"ความต่อเนื่อง", l:5, s:"A-NET มี.ค.50", y:"2550", yt:"https://bankkungchin.github.io/answer-sheet/calculus_limit_2541-2552_final.html#q15", ans:"ไม่มีข้อถูก (โจทย์บกพร่อง — ครูยืนยัน)" },
+];
+ 
+PRACTICE_BANK["อัตราการเปลี่ยนแปลง"] = [
+  // ── 52-68 (YouTube playlist) : 60 ข้อ ──
+  { n:1, c:"โจทย์ประยุกต์ค่าสุดขีด (optimization)", l:4, s:"Pat1 มี.ค. 52 ข้อ 31", y:"2552", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=1", ans:"3" },
+  { n:2, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"Pat1 มี.ค. 52 ข้อ 32", y:"2552", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=2", ans:"3" },
+  { n:3, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:4, s:"Pat1 มี.ค. 52 ข้อ 33", y:"2552", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=3", ans:"2" },
+  { n:4, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:3, s:"Pat1 ก.ค. 52 ข้อ 33", y:"2552", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=4", ans:"4" },
+  { n:5, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:5, s:"Pat1 ก.ค. 52 ข้อ 34", y:"2552", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=5", ans:"4" },
+  { n:6, c:"อนุพันธ์อันดับสูง & ความเว้า", l:4, s:"Pat1 ต.ค. 52 ตอนที่ 2 ข้อ 18", y:"2552", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=6", ans:"12" },
+  { n:7, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"Pat1 มี.ค. 53 ข้อ 7", y:"2553", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=7", ans:"2" },
+  { n:8, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:5, s:"Pat1 มี.ค. 53 ข้อ 39", y:"2553", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=8", ans:"7" },
+  { n:9, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:5, s:"Pat1 ก.ค. 53 ข้อ 18", y:"2553", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=9", ans:"1" },
+  { n:10, c:"โจทย์ประยุกต์ค่าสุดขีด (optimization)", l:5, s:"Pat1 ก.ค. 53 ข้อ 36", y:"2553", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=10", ans:"200" },
+  { n:11, c:"อนุพันธ์อันดับสูง & ความเว้า", l:5, s:"Pat1 ต.ค. 53 ข้อ 47", y:"2553", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=11", ans:"120" },
+  { n:12, c:"อนุพันธ์อันดับสูง & ความเว้า", l:5, s:"Pat1 มี.ค. 54 ข้อ 20", y:"2554", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=12", ans:"4" },
+  { n:13, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:5, s:"Pat1 มี.ค. 54 ข้อ 42", y:"2554", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=13", ans:"1" },
+  { n:14, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:4, s:"Pat1 ต.ค. 54 ข้อ 17", y:"2554", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=14", ans:"2" },
+  { n:15, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:5, s:"Pat1 ต.ค. 54 ข้อ 28", y:"2554", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=15", ans:"3" },
+  { n:16, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"Pat1 มี.ค. 55 ข้อ 17", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=16", ans:"4" },
+  { n:17, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"Pat1 มี.ค. 55 ข้อ 18", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=17", ans:"2" },
+  { n:18, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:5, s:"Pat1 ต.ค. 55 ข้อ 19", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=18", ans:"2" },
+  { n:19, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:3, s:"7 วิชาสามัญ 55 ข้อ 9", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=19", ans:"3" },
+  { n:20, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"7 วิชาสามัญ 55 ข้อ 24", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=20", ans:"1" },
+  { n:21, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:4, s:"7 วิชาสามัญ 55 ข้อ 28", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=21", ans:"3" },
+  { n:22, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:3, s:"7 วิชาสามัญ 56 ข้อ 10", y:"2556", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=22", ans:"12" },
+  { n:23, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"7 วิชาสามัญ 56 ข้อ 30", y:"2556", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=23", ans:"3" },
+  { n:24, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:5, s:"Pat1 มี.ค. 56 ข้อ 20", y:"2556", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=24", ans:"2" },
+  { n:25, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"7 วิชา มค 57 ข้อ 23", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=25", ans:"5" },
+  { n:26, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"7 วิชา มค 57 ข้อ 30", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=26", ans:"4" },
+  { n:27, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:4, s:"Pat1 มี.ค.57 ข้อ 10", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=27", ans:"3" },
+  { n:28, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"Pat1 มี.ค.57 ข้อ 19", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=28", ans:"3" },
+  { n:29, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:5, s:"Pat1 เม.ย.57 ข้อ 42", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=29", ans:"634" },
+  { n:30, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:5, s:"Pat1 พ.ย.57 ข้อ 44", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=30", ans:"4" },
+  { n:31, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"Pat1 พ.ย.57 ข้อ 7", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=31", ans:"1" },
+  { n:32, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:3, s:"7 วิชา ม ค 58 ข้อ 9", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=32", ans:"1" },
+  { n:33, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:4, s:"7 วิชา ม ค 58 ข้อ 23", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=33", ans:"3" },
+  { n:34, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:4, s:"7 วิชา ม ค 58 ข้อ 24", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=34", ans:"5" },
+  { n:35, c:"อนุพันธ์อันดับสูง & ความเว้า", l:5, s:"Pat1 มี.ค.58 ข้อ 35", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=35", ans:"35" },
+  { n:36, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:4, s:"Pat1 ต.ค.58 ข้อ 14", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=36", ans:"1" },
+  { n:37, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"Pat1 ต.ค.58 ข้อ 15", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=37", ans:"2" },
+  { n:38, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:5, s:"Pat1 ต.ค.58 ข้อ 33", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=38", ans:"5" },
+  { n:39, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:3, s:"9 วิชาสามัญ 59 ข้อ 10", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=39", ans:"1" },
+  { n:40, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"Pat1 มี.ค.59 ข้อ 17", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=40", ans:"1" },
+  { n:41, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"Pat1 ตค 59 ข้อ 8", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=41", ans:"4" },
+  { n:42, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:4, s:"Pat1 ตค 59 ข้อ 19", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=42", ans:"4" },
+  { n:43, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:3, s:"9 วิชาสามัญ1 61 ข้อ 9", y:"2561", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=43", ans:"3" },
+  { n:44, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"9 วิชาสามัญ1 61 ข้อ 21", y:"2561", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=44", ans:"4" },
+  { n:45, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:3, s:"9 วิชาสามัญ 1 62 ข้อ 21", y:"2562", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=45", ans:"2" },
+  { n:46, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:5, s:"Pat1 กพ 63 ข้อ 41", y:"2563", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=46", ans:"33" },
+  { n:47, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:3, s:"9 วิชาสามัญ 63 ข้อ 7", y:"2563", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=47", ans:"4" },
+  { n:48, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"9 วิชาสามัญ 63 ข้อ 21", y:"2563", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=48", ans:"3" },
+  { n:49, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"Pat1 มี ค 64 ข้อ 24", y:"2564", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=49", ans:"5" },
+  { n:50, c:"โจทย์ประยุกต์ค่าสุดขีด (optimization)", l:5, s:"Pat1 มี ค 64 ข้อ 41", y:"2564", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=50", ans:"5" },
+  { n:51, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:3, s:"9 วิชาสามัญ 64 ข้อ 22", y:"2564", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=51", ans:"4" },
+  { n:52, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:4, s:"9 วิชาสามัญ 64 ข้อ 26", y:"2564", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=52", ans:"81" },
+  { n:53, c:"โจทย์ประยุกต์ค่าสุดขีด (optimization)", l:4, s:"Pat1 มี.ค. 65 ข้อ 27", y:"2565", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=53", ans:"1" },
+  { n:54, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:5, s:"Pat1 มี.ค. 65 ข้อ 44", y:"2565", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=54", ans:"2" },
+  { n:55, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:3, s:"9 วิชาสามัญ 65 ข้อ 24", y:"2565", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=55", ans:"4" },
+  { n:56, c:"ลิมิตซ้าย-ขวา & ฟังก์ชันเป็นช่วง", l:3, s:"9 วิชาสามัญ 65 ข้อ 25", y:"2565", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=56", ans:"2" },
+  { n:57, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:3, s:"A Level 66 ข้อ 25", y:"2566", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=57", ans:"3" },
+  { n:58, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:3, s:"A Level 67 ข้อ 9", y:"2567", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=58", ans:"2" },
+  { n:59, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:3, s:"A Level 67 ข้อ 19", y:"2567", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=59", ans:"5" },
+  { n:60, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:3, s:"A Level 68 ข้อ 25", y:"2568", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl&index=60", ans:"3" },
+  // ── 41-52 (หน้าเฉลย HTML) : 31 ข้อ ──
+  { n:61, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"ต.ค. 41 / 4", y:"2541", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q1", ans:"ข้อ 4) 192" },
+  { n:62, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:3, s:"ต.ค. 41 / 3", y:"2541", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q2", ans:"ข้อ 2) (3/2)" },
+  { n:63, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"มี.ค. 42 / 3", y:"2542", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q3", ans:"ข้อ 2) (x=-1/3)" },
+  { n:64, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:2, s:"มี.ค. 42 / 2", y:"2542", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q4", ans:"(g'(3)=0.62)" },
+  { n:65, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:2, s:"ต.ค. 42 / 2", y:"2542", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q5", ans:"(f'(3)=5)" },
+  { n:66, c:"อนุพันธ์อันดับสูง & ความเว้า", l:3, s:"มี.ค. 43 / 3", y:"2543", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q6", ans:"ข้อ 1) (-16)" },
+  { n:67, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:3, s:"มี.ค. 43 / 3", y:"2543", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q7", ans:"ข้อ 1) ((-3,1))" },
+  { n:68, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:3, s:"ต.ค. 43 / ตอนที่ 1", y:"2543", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q8", ans:"ข้อ 2) (5/2)" },
+  { n:69, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:3, s:"ต.ค. 43 / ตอนที่ 1", y:"2543", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q9", ans:"ข้อ 1) (-2)" },
+  { n:70, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"มี.ค. 44 / 3", y:"2544", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q10", ans:"ข้อ 4) ((-2,0))" },
+  { n:71, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:4, s:"มี.ค. 44 / 2", y:"2544", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q11", ans:"( ^2 /2=0.1)" },
+  { n:72, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"ต.ค. 44 / 3", y:"2544", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q12", ans:"ข้อ 2) (n=6)" },
+  { n:73, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"ต.ค. 44 / 3", y:"2544", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q13", ans:"ข้อ 4) 28" },
+  { n:74, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"มี.ค. 45 / 3", y:"2545", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q14", ans:"ข้อ 1) (41/12)" },
+  { n:75, c:"อนุพันธ์อันดับสูง & ความเว้า", l:3, s:"มี.ค. 45 / 3", y:"2545", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q15", ans:"ข้อ 3) 13" },
+  { n:76, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:3, s:"ต.ค. 45 / 3", y:"2545", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q16", ans:"ข้อ 1) (-38)" },
+  { n:77, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"ต.ค. 45 / 3", y:"2545", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q17", ans:"ข้อ 3) 84" },
+  { n:78, c:"โจทย์ประยุกต์ค่าสุดขีด (optimization)", l:4, s:"มี.ค. 46 / 3", y:"2546", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q18", ans:"ข้อ 1) 16,000 บาท" },
+  { n:79, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:3, s:"ต.ค. 46 / 2", y:"2546", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q19", ans:"ค่าสูงสุดสัมพัทธ์ (= 5)" },
+  { n:80, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:4, s:"Ent' มี.ค. 47: 3 คะแนน", y:"2547", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q20", ans:"ข้อ 1) ก. ถูก และ ข. ถูก" },
+  { n:81, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"Ent' มี.ค. 47: 3 คะแนน", y:"2547", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q21", ans:"ข้อ 3) (a=2, b=2)" },
+  { n:82, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"Ent' มี.ค. 47: 3 คะแนน", y:"2547", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q22", ans:"ข้อ 2) max ที่จุด (a) ค่าเท่ากับ 2" },
+  { n:83, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:4, s:"Ent' ต.ค. 47: 3 คะแนน", y:"2547", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q23", ans:"ข้อ 1) (-4)" },
+  { n:84, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"Ent' ต.ค. 47: 3 คะแนน", y:"2547", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q24", ans:"ข้อ 4) 7" },
+  { n:85, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:4, s:"Ent' มี.ค. 48: 3 คะแนน", y:"2548", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q25", ans:"ข้อ 2) ก. ถูก และ ข. ผิด" },
+  { n:86, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:3, s:"A-NET' ก.พ. 49: 3 คะแนน", y:"2549", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q26", ans:"ข้อ 4) (5/3)" },
+  { n:87, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"A-NET' มี.ค. 50: 3 คะแนน", y:"2550", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q27", ans:"ข้อ 4) (1/3)" },
+  { n:88, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"A-NET' มี.ค. 51: 3 คะแนน", y:"2551", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q28", ans:"ข้อ 1) ก. จริง และ ข. จริง" },
+  { n:89, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"A-NET' มี.ค. 51: 3 คะแนน", y:"2551", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q29", ans:"((f f)! (-1/ [3]2 )=1.5)" },
+  { n:90, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:4, s:"A-NET พ.ศ. 2552: 3 คะแนน", y:"2552", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q30", ans:"ข้อ 2) (-4)" },
+  { n:91, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"A-NET พ.ศ. 2552: 3 คะแนน", y:"2552", yt:"https://bankkungchin.github.io/answer-sheet/calculus_derivative_2541-2552_final.html#q31", ans:"ข้อ 2) (-2/3)" },
+];
+ 
+PRACTICE_BANK["อินทิกรัล"] = [
+  // ── 52-68 (YouTube playlist) : 74 ข้อ ──
+  { n:1, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"Pat1 มี.ค. 52 ข้อ 32", y:"2552", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=1", ans:"2" },
+  { n:2, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"Pat1 ก.ค. 52 ข้อ 32", y:"2552", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=2", ans:"2" },
+  { n:3, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"Pat1 ต.ค. 52 ตอนที่ 2 ข้อ 17", y:"2552", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=3", ans:"0.25" },
+  { n:4, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"Pat1 ต.ค. 52 ตอนที่ 2 ข้อ 19", y:"2552", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=4", ans:"8" },
+  { n:5, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"Pat1 มี.ค. 53 ข้อ 38", y:"2553", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=5", ans:"6" },
+  { n:6, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 ก.ค. 53 ข้อ 37", y:"2553", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=6", ans:"18" },
+  { n:7, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:5, s:"Pat1 ก.ค. 53 ข้อ 38", y:"2553", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=7", ans:"10" },
+  { n:8, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 ต.ค. 53 ข้อ 19", y:"2553", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=8", ans:"3" },
+  { n:9, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"Pat1 มี.ค. 54 ข้อ 19", y:"2554", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=9", ans:"3" },
+  { n:10, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 มี.ค. 54 ข้อ 43", y:"2554", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=10", ans:"8" },
+  { n:11, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"Pat1 ต.ค. 54 ข้อ 18", y:"2554", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=11", ans:"1" },
+  { n:12, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 ต.ค. 54 ข้อ 38", y:"2554", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=12", ans:"63" },
+  { n:13, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"Pat1 ต.ค. 54 ข้อ 39", y:"2554", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=13", ans:"18" },
+  { n:14, c:"ความชัน & เส้นสัมผัส-เส้นตั้งฉาก", l:4, s:"Pat1 มี.ค. 55 ข้อ 16", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=14", ans:"2" },
+  { n:15, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 มี.ค. 55 ข้อ 37", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=15", ans:"990" },
+  { n:16, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 มี.ค. 55 ข้อ 39", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=16", ans:"4" },
+  { n:17, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 ต.ค. 55 ข้อ 20", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=17", ans:"1" },
+  { n:18, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:5, s:"Pat1 ต.ค. 55 ข้อ 37", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=18", ans:"2.25" },
+  { n:19, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 ต.ค. 55 ข้อ 38", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=19", ans:"3" },
+  { n:20, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:5, s:"Pat1 ต.ค. 55 ข้อ 39", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=20", ans:"157" },
+  { n:21, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:3, s:"7 วิชาสามัญ 55 ข้อ 10", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=21", ans:"8" },
+  { n:22, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"7 วิชาสามัญ 55 ข้อ 23", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=22", ans:"36" },
+  { n:23, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:4, s:"7 วิชาสามัญ 56 ข้อ 23", y:"2556", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=23", ans:"4" },
+  { n:24, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"7 วิชาสามัญ 55 ข้อ 24", y:"2555", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=24", ans:"3" },
+  { n:25, c:"กฎลูกโซ่ / ผลคูณ-ผลหาร", l:5, s:"Pat1 มี.ค. 56 ข้อ 39", y:"2556", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=25", ans:"354" },
+  { n:26, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 มี.ค. 56 ข้อ 40", y:"2556", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=26", ans:"168" },
+  { n:27, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"7 วิชา มค 57 ข้อ 24", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=27", ans:"2" },
+  { n:28, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"Pat1 มี.ค.57 ข้อ 18", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=28", ans:"4" },
+  { n:29, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 มี.ค.57 ข้อ 38", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=29", ans:"12" },
+  { n:30, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:5, s:"Pat1 มี.ค.57 ข้อ 42", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=30", ans:"100" },
+  { n:31, c:"การเปลี่ยนตัวแปร (substitution)", l:4, s:"Pat1 เม.ย.57 ข้อ 18", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=31", ans:"3" },
+  { n:32, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 เม.ย.57 ข้อ 19", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=32", ans:"2" },
+  { n:33, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 เม.ย.57 ข้อ 41", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=33", ans:"38" },
+  { n:34, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 พ.ย.57 ข้อ 16", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=34", ans:"3" },
+  { n:35, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:5, s:"Pat1 พ.ย.57 ข้อ 19", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=35", ans:"4" },
+  { n:36, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 พ.ย.57 ข้อ 41", y:"2557", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=36", ans:"34.5" },
+  { n:37, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"7 วิชา ม ค 58 ข้อ 27", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=37", ans:"1" },
+  { n:38, c:"การเปลี่ยนตัวแปร (substitution)", l:4, s:"Pat1 มี.ค.58 ข้อ 16", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=38", ans:"3" },
+  { n:39, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 มี.ค.58 ข้อ 40", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=39", ans:"132" },
+  { n:40, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 ต.ค.58 ข้อ 34", y:"2558", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=40", ans:"9.25" },
+  { n:41, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"9 วิชาสามัญ 59 ข้อ 24", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=41", ans:"3" },
+  { n:42, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"9 วิชาสามัญ 59 ข้อ 25", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=42", ans:"5" },
+  { n:43, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"Pat1 มี.ค.59 ข้อ 28", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=43", ans:"1" },
+  { n:44, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 มี.ค.59 ข้อ 34", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=44", ans:"3" },
+  { n:45, c:"อนุพันธ์โดยนิยาม & สูตรพื้นฐาน", l:5, s:"Pat1 มี.ค.59 ข้อ 40", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=45", ans:"48" },
+  { n:46, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"Pat1 ตค 59 ข้อ 26", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=46", ans:"5" },
+  { n:47, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"Pat1 ตค 59 ข้อ 35", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=47", ans:"23" },
+  { n:48, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 ตค 59 ข้อ 43", y:"2559", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=48", ans:"30" },
+  { n:49, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"9 วิชาสามัญ 60 ข้อ 23", y:"2560", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=49", ans:"3" },
+  { n:50, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"9 วิชาสามัญ 60 ข้อ 24", y:"2560", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=50", ans:"4" },
+  { n:51, c:"ฟังก์ชันเพิ่ม-ลด & ค่าสูงสุด-ต่ำสุดสัมพัทธ์", l:4, s:"9 วิชาสามัญ 60 ข้อ 27", y:"2560", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=51", ans:"4" },
+  { n:52, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"Pat1 มีค 60 ข้อ 17", y:"2560", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=52", ans:"3" },
+  { n:53, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 มีค 60 ข้อ 33", y:"2560", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=53", ans:"6" },
+  { n:54, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"Pat1 ก พ 61 ข้อ 15", y:"2561", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=54", ans:"1" },
+  { n:55, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 ก พ 61 ข้อ 36", y:"2561", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=55", ans:"11" },
+  { n:56, c:"อนุพันธ์อันดับสูง & ความเว้า", l:5, s:"Pat1 ก พ 61 ข้อ 37", y:"2561", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=56", ans:"18" },
+  { n:57, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"9 วิชาสามัญ1 61 ข้อ 22", y:"2561", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=57", ans:"5" },
+  { n:58, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:5, s:"Pat1 ก.พ. 62 ข้อ 10", y:"2562", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=58", ans:"3" },
+  { n:59, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"Pat1 ก.พ. 62 ข้อ 22", y:"2562", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=59", ans:"2" },
+  { n:60, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"Pat1 ก.พ. 62 ข้อ 26", y:"2562", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=60", ans:"1" },
+  { n:61, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Pat1 ก.พ. 62 ข้อ 42", y:"2562", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=61", ans:"76" },
+  { n:62, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:3, s:"9 วิชาสามัญ 1 62 ข้อ 7", y:"2562", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=62", ans:"4" },
+  { n:63, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"9 วิชาสามัญ 1 62 ข้อ 22", y:"2562", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=63", ans:"2" },
+  { n:64, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"Pat1 กพ 63 ข้อ 17", y:"2563", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=64", ans:"4" },
+  { n:65, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"Pat1 กพ 63 ข้อ 33", y:"2563", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=65", ans:"1" },
+  { n:66, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"9 วิชาสามัญ 63 ข้อ 22", y:"2563", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=66", ans:"5" },
+  { n:67, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"Pat1 มี ค 64 ข้อ 25", y:"2564", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=67", ans:"3" },
+  { n:68, c:"โจทย์ประยุกต์อินทิกรัล (ระยะทาง/สะสม)", l:4, s:"Pat1 มี ค 64 ข้อ 34 35", y:"2564", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=68" },
+  { n:69, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"Pat1 มี.ค. 65 ข้อ 25", y:"2565", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=70", ans:"5" },
+  { n:70, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:5, s:"Pat1 มี.ค. 65 ข้อ 45", y:"2565", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=71", ans:"18" },
+  { n:71, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"9 วิชาสามัญ 65 ข้อ 29", y:"2565", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=72", ans:"16" },
+  { n:72, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"A Level 66 ข้อ 23", y:"2566", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=73", ans:"1" },
+  { n:73, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"A Level 67 ข้อ 11", y:"2567", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=74", ans:"3" },
+  { n:74, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"A Level 68 ข้อ 23", y:"2568", yt:"https://www.youtube.com/watch?list=PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W&index=75", ans:"2" },
+  // ── 41-52 (หน้าเฉลย HTML) : 36 ข้อ ──
+  { n:75, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:3, s:"ต.ค. 41/3", y:"2541", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q1", ans:"(f(0) = 5) → ตอบ ข้อ 1" },
+  { n:76, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:3, s:"ต.ค. 41/3", y:"2541", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q2", ans:"พื้นที่ (= 5/6) ตารางหน่วย → ตอบ ข้อ 4" },
+  { n:77, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"มี.ค. 42/3", y:"2542", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q3", ans:"( 2 = -1) หรือ (1/2) → ตอบ ข้อ 3" },
+  { n:78, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:3, s:"ต.ค. 42/3", y:"2542", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q4", ans:"ค่าสูงสุดสัมพัทธ์ (= 6) → ตอบ ข้อ 3" },
+  { n:79, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"ต.ค. 42/4", y:"2542", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q5", ans:"(f'(5) = 6) → ตอบ ข้อ 1" },
+  { n:80, c:"ปฏิยานุพันธ์ & สูตรอินทิเกรตพื้นฐาน", l:3, s:"มี.ค. 43/3", y:"2543", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q6", ans:"(F(c) = F(2) = 1) → ตอบ ข้อ 3" },
+  { n:81, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:3, s:"มี.ค. 43/3", y:"2543", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q7", ans:"(f'(1) = 3/4) → ตอบ ข้อ 1" },
+  { n:82, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:3, s:"ต.ค. 43/ตอนที่ 1", y:"2543", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q8", ans:"(c = 7/3) → ตอบ ข้อ 2" },
+  { n:83, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"ต.ค. 43/ตอนที่ 2", y:"2543", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q9", ans:"(c = 9)" },
+  { n:84, c:"ปฏิยานุพันธ์ & สูตรอินทิเกรตพื้นฐาน", l:3, s:"มี.ค. 44/3", y:"2544", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q10", ans:"(5x^3 + 9x^2 - 10x + c) → ตอบ ข้อ 1" },
+  { n:85, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:3, s:"มี.ค. 44/3", y:"2544", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q11", ans:"(3/2) → ตอบ ข้อ 3" },
+  { n:86, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"ต.ค. 44/2", y:"2544", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q12", ans:"(a^3 = 128)" },
+  { n:87, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"ต.ค. 44/3", y:"2544", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q13", ans:"(a + b = 4) → ตอบ ข้อ 4" },
+  { n:88, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"มี.ค. 45/2", y:"2545", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q14", ans:"พื้นที่ต่ำสุด (= 7) ตารางหน่วย" },
+  { n:89, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"มี.ค. 45/3", y:"2545", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q15", ans:"(x = 1) → ตอบ ข้อ 2" },
+  { n:90, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:3, s:"ต.ค. 45/2", y:"2545", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q16", ans:"(b = 2)" },
+  { n:91, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"ต.ค. 45/3", y:"2545", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q17", ans:"(23/4) → ตอบ ข้อ 2" },
+  { n:92, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"มี.ค. 46/3", y:"2546", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q18", ans:"ค่าต่ำสุดสัมพัทธ์ (= 1/3) → ตอบ ข้อ 4" },
+  { n:93, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"มี.ค. 46/3", y:"2546", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q19", ans:"(a = 3 3) → ตอบ ข้อ 2" },
+  { n:94, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"มี.ค. 46/3", y:"2546", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q20", ans:"จุด ( (0, 4/3 )) → ตอบ ข้อ 1" },
+  { n:95, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"ต.ค. 46/3", y:"2546", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q21", ans:"(-4) → ตอบ ข้อ 1" },
+  { n:96, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:3, s:"ต.ค. 46/3", y:"2546", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q22", ans:"(f(1) = 10) → ตอบ ข้อ 2" },
+  { n:97, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"ต.ค. 46/3", y:"2546", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q23", ans:"ก. ผิด, ข. ถูก → ตอบ ข้อ 3" },
+  { n:98, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:3, s:"Ent' มี.ค. 47: 2 คะแนน", y:"2547", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q24", ans:"( ∫_0^1 g(x),dx = 1.25)" },
+  { n:99, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"Ent' มี.ค. 47: 3 คะแนน", y:"2547", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q25", ans:"(f(-1) = 13) → ตอบ ข้อ 3" },
+  { n:100, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"Ent' ต.ค. 47: 3 คะแนน", y:"2547", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q26", ans:"(f(g(2)) = 7) → ตอบ ข้อ 4" },
+  { n:101, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"Ent' ต.ค. 47: 3 คะแนน", y:"2547", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q27", ans:"( ∫_1^2 g''(x),dx = 7) → ตอบ ข้อ 2" },
+  { n:102, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:5, s:"Ent' ต.ค. 47: 3 คะแนน", y:"2547", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q28", ans:"( ∫_0^20 f(x),dx = 105) → ตอบ ข้อ 1" },
+  { n:103, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:3, s:"Ent' มี.ค. 48: 3 คะแนน", y:"2548", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q29", ans:"อยู่ในช่วง ((6.2, 6.3)) → ตอบ ข้อ 4" },
+  { n:104, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"Ent' มี.ค. 48: 3 คะแนน", y:"2548", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q30", ans:"พื้นที่ (= 33) → ตอบ ข้อ 1" },
+  { n:105, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"A-NET' ก.พ. 49: 3 คะแนน", y:"2549", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q31", ans:"พื้นที่ (= 8/3) ตารางหน่วย → ตอบ ข้อ 2" },
+  { n:106, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"A-NET' มี.ค. 50: 3 คะแนน", y:"2550", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q32", ans:"พื้นที่ (= 16.25) ตารางหน่วย → ตอบ ข้อ 2" },
+  { n:107, c:"ทฤษฎีบทหลักแคลคูลัส (FTC) & อินทิกรัลจำกัดเขต", l:4, s:"A-NET' มี.ค. 51: 3 คะแนน", y:"2551", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q33", ans:"ข้อ 4 → ตอบ ข้อ 4" },
+  { n:108, c:"หาฟังก์ชันจากอนุพันธ์ + เงื่อนไขเริ่มต้น", l:4, s:"A-NET' มี.ค. 51: 3 คะแนน", y:"2551", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q34", ans:"จุด ((2, 66)) → ตอบ ข้อ 2" },
+  { n:109, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:4, s:"A-NET' มี.ค. 51: 3 คะแนน", y:"2551", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q35", ans:"พื้นที่ (= 3) ตารางหน่วย" },
+  { n:110, c:"พื้นที่ใต้กราฟ/ระหว่างเส้นโค้ง", l:3, s:"A-NET พ.ศ. 2552 ข้อ 2 คะแนน", y:"2552", yt:"https://bankkungchin.github.io/answer-sheet/calculus_integral_2541-2552_final.html#q36", ans:"พื้นที่ (= 23/4 = 5.75) ตารางหน่วย" },
+];
+
+
