@@ -46,3 +46,8 @@ PLAYLISTS["ความน่าจะเป็น"] = "PLc4ncgz2CJ7PUzCaq0lqTb8
 PLAYLISTS["ลิมิตและความต่อเนื่อง"] = "PLc4ncgz2CJ7OHRHPqFA8A4LWWmEOwW-OK"; // บท16, 32 คลิป
 PLAYLISTS["อัตราการเปลี่ยนแปลง"]   = "PLc4ncgz2CJ7Nt9wq-txy8uq1XKzPrJNbl"; // บท17, 60 คลิป
 PLAYLISTS["อินทิกรัล"]             = "PLc4ncgz2CJ7Ppz-rOTjVKYFfkaMCv_89W"; // บท18, 75 คลิป
+
+// ==========================================================================
+//  PATCH — เพิ่ม playlist "เมทริกซ์" ใน config.js (วางต่อท้ายไฟล์)
+// ==========================================================================
+PLAYLISTS["เมทริกซ์"] = "PLc4ncgz2CJ7MjHpl2beFOkDCBc3pwOtWO";
