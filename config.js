@@ -51,3 +51,7 @@ PLAYLISTS["อินทิกรัล"]             = "PLc4ncgz2CJ7Ppz-rOTjVKYF
 //  PATCH — เพิ่ม playlist "เมทริกซ์" ใน config.js (วางต่อท้ายไฟล์)
 // ==========================================================================
 PLAYLISTS["เมทริกซ์"] = "PLc4ncgz2CJ7MjHpl2beFOkDCBc3pwOtWO";
+
+// PATCH — เพิ่ม playlist "ตรรกศาสตร์" (วางต่อท้าย config.js)
+PLAYLISTS["ตรรกศาสตร์"] = "PLc4ncgz2CJ7PMXRLpmq8MBEOz7bXV-1pz";
+
