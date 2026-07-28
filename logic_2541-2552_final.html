@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>เฉลยตรรกศาสตร์ ชุด 2 (Ent/A-NET 2541–2552) — MathsBankTutor</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: {inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']]},
+  svg: {fontCache: 'global'}
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js" id="MathJax-script" async></script>
+<style>
+
+:root{
+  --accent:#2e4374; --accent-soft:#e7ecf5;
+  --green-d:#1a5c2e; --green-bg:#f0faf2;
+  --gray-d:#555;    --gray-bg:#f1f1f4;
+  --orange-d:#7a4a00;--orange-bg:#fff3d9;
+  --red-d:#8b1a1a;  --red-bg:#fff4f4;
+  --ink:#222; --muted:#666;
+  --radius:10px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Sarabun','IBM Plex Sans Thai',system-ui,sans-serif;color:var(--ink);background:#fafbfd;line-height:1.7}
+h1,h2,h3,.q-num{font-family:'IBM Plex Sans Thai','Sarabun',sans-serif;font-weight:700}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+header.top{
+  background:linear-gradient(120deg,#2e4374 0%,#3b5aa0 55%,#5b7fc2 100%);
+  color:#fff;padding:22px 30px;display:flex;align-items:center;gap:18px;
+  box-shadow:0 4px 14px rgba(0,0,0,.12);position:relative;
+}
+header.top h1{font-size:1.45rem;margin:0;line-height:1.25;letter-spacing:.2px}
+header.top .sub{font-size:.85rem;opacity:.85;margin-top:4px}
+header.top a.back{
+  margin-left:auto;background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.4);
+  padding:9px 16px;border-radius:999px;font-weight:600;transition:.2s;
+}
+header.top a.back:hover{background:rgba(255,255,255,.25);text-decoration:none}
+
+.idxbar{
+  position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #e3e7ee;
+  padding:10px 16px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.04);
+}
+.idxbar .label{font-size:.78rem;color:var(--muted);margin-right:6px;font-weight:600}
+.idxbar a{
+  font-size:.78rem;padding:3px 9px;border-radius:999px;background:#eef2f9;color:var(--accent);
+  border:1px solid #d7dcec;transition:.15s;font-weight:600;
+}
+.idxbar a.old{background:#fdecec;color:#a52828;border-color:#f3c2c2}
+.idxbar a:hover{transform:translateY(-1px);text-decoration:none}
+
+.wrap{max-width:1080px;margin:0 auto;padding:24px 20px 60px}
+
+.cheat{
+  background:#fff;border:1px solid #e3e7ee;border-radius:var(--radius);
+  padding:22px 26px;margin-bottom:30px;box-shadow:0 2px 6px rgba(0,0,0,.03);
+}
+.cheat h2{color:var(--accent);font-size:1.2rem;margin:0 0 14px;border-left:5px solid var(--accent);padding-left:10px}
+.cheat h3{color:#444;font-size:1rem;margin:18px 0 8px}
+.cheat ul{margin:6px 0 4px 0;padding-left:22px}
+.cheat li{margin:4px 0}
+.cheat .twocol{display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
+@media(max-width:760px){.cheat .twocol{grid-template-columns:1fr}}
+.cheat table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:8px}
+.cheat th,.cheat td{border:1px solid #e3e7ee;padding:6px 10px;text-align:left;vertical-align:top}
+.cheat th{background:#f5f7fb;color:var(--accent)}
+.cheat .pill{display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:999px;background:var(--green-bg);color:var(--green-d);font-weight:600;margin-right:4px}
+.cheat .pill.old{background:var(--gray-bg);color:var(--gray-d)}
+
+section.sol{
+  background:#fff;border:1px solid #e3e7ee;border-radius:var(--radius);
+  padding:22px 26px;margin-bottom:22px;box-shadow:0 2px 6px rgba(0,0,0,.03);
+  scroll-margin-top:70px;
+}
+.q-header{
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;
+  border-bottom:2px dashed #d7dcec;padding-bottom:10px;margin-bottom:14px;
+}
+.q-num{font-size:1.1rem;color:var(--accent)}
+.q-title{font-size:.95rem;color:#333;font-weight:600}
+.badge{display:inline-block;font-size:.72rem;padding:3px 9px;border-radius:999px;font-weight:700;letter-spacing:.2px}
+.badge.year{background:#eef2f9;color:var(--accent);border:1px solid #d7dcec}
+.badge.type{background:#f3eef9;color:#5b3a8e;border:1px solid #d9c9ee}
+.badge.diff{background:#fff7e0;color:#8a6300;border:1px solid #f0d98a}
+.badge.tag{background:#eafaf0;color:#1a7a3e;border:1px solid #c4e9d2}
+.badge.in{background:var(--green-bg);color:var(--green-d);border:1px solid #b6e0c2}
+.badge.old{background:#fff4f4;color:#8b1a1a;border:1px solid #f5c6c6}
+.badge.subcat{border:1px solid}
+
+.problem{border-left:4px solid var(--accent);background:#f7f9fd;padding:12px 16px;border-radius:6px;margin:8px 0 14px;font-size:1rem}
+.concept,.curnote,.careless,.technique,.answer{padding:11px 14px;border-radius:6px;margin:10px 0;font-size:.95rem}
+.concept{background:#eaf1fb;border-left:3px solid #3b6cb5}
+.concept::before{content:"\1F4A1 "}
+.curnote{background:var(--gray-bg);border-left:3px solid var(--gray-d)}
+.curnote::before{content:"\1F4CC "}
+.careless{background:var(--red-bg);border-left:3px solid var(--red-d)}
+.careless::before{content:"\26A0\FE0F "}
+.technique{background:#eafaf3;border-left:3px solid #1a7a3e}
+.technique::before{content:"\1F48E "}
+.answer{background:var(--orange-bg);border-left:3px solid var(--orange-d);font-weight:700;font-size:1.05rem}
+.answer::before{content:"\2705 "}
+
+.step{margin:14px 0 14px 4px}
+.step .lbl{display:inline-block;background:var(--accent);color:#fff;font-size:.78rem;font-weight:700;padding:2px 10px;border-radius:4px;margin-bottom:6px;letter-spacing:.3px}
+.step .body{padding:0 4px}
+.step .body p{margin:6px 0}
+
+mjx-container{font-size:1.02em !important}
+mjx-container[display="true"]{margin:8px 0 !important}
+footer.foot{text-align:center;color:var(--muted);font-size:.82rem;padding:24px 0 10px;border-top:1px solid #e3e7ee;margin-top:30px}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>เฉลยตรรกศาสตร์ ชุด 2 — Ent/A-NET พ.ศ. 2541–2552</h1>
+    <div class="sub">MathsBankTutor · ครูแบงก์ · 34 ข้อ · verify ด้วย truth table ทุกข้อ (แก้เฉลย AI 2 ข้อ: 4,15) · 🔴 = หลักสูตรเก่า (ตัวบ่งปริมาณ 2 ตัว) · IN 30 · OUT 4</div>
+  </div>
+  <a class="back" href="index.html">&larr; กลับหน้า Dashboard</a>
+</header>
+
+<div class="wrap">
+<nav class="idxbar"><span class="label">INDEX</span>
+<a class="" href="#q1" title="ข้อ 1 · Ent ต.ค.41">1</a>
+<a class="" href="#q2" title="ข้อ 2 · Ent ต.ค.41">2</a>
+<a class="" href="#q3" title="ข้อ 3 · Ent มี.ค.42">3</a>
+<a class="" href="#q4" title="ข้อ 4 · Ent มี.ค.42">4</a>
+<a class="" href="#q5" title="ข้อ 5 · Ent ต.ค.42">5</a>
+<a class="" href="#q6" title="ข้อ 6 · Ent ต.ค.42">6</a>
+<a class="" href="#q7" title="ข้อ 7 · Ent มี.ค.43">7</a>
+<a class="" href="#q8" title="ข้อ 8 · Ent มี.ค.43">8</a>
+<a class="" href="#q9" title="ข้อ 9 · Ent ต.ค.43">9</a>
+<a class="" href="#q10" title="ข้อ 10 · Ent ต.ค.43">10</a>
+<a class="" href="#q11" title="ข้อ 11 · Ent มี.ค.44">11</a>
+<a class="" href="#q12" title="ข้อ 12 · Ent มี.ค.44">12</a>
+<a class="" href="#q13" title="ข้อ 13 · Ent ต.ค.44">13</a>
+<a class="" href="#q14" title="ข้อ 14 · Ent มี.ค.45">14</a>
+<a class="" href="#q15" title="ข้อ 15 · Ent มี.ค.45">15</a>
+<a class="" href="#q16" title="ข้อ 16 · Ent ต.ค.45">16</a>
+<a class="" href="#q17" title="ข้อ 17 · Ent ต.ค.45">17</a>
+<a class="" href="#q18" title="ข้อ 18 · Ent มี.ค.46">18</a>
+<a class="" href="#q19" title="ข้อ 19 · Ent มี.ค.46">19</a>
+<a class="" href="#q20" title="ข้อ 20 · Ent ต.ค.46">20</a>
+<a class="" href="#q21" title="ข้อ 21 · Ent ต.ค.46">21</a>
+<a class="" href="#q22" title="ข้อ 22 · Ent มี.ค.47">22</a>
+<a class="" href="#q23" title="ข้อ 23 · Ent มี.ค.47">23</a>
+<a class="" href="#q24" title="ข้อ 24 · Ent ต.ค.47">24</a>
+<a class="old" href="#q25" title="ข้อ 25 · Ent มี.ค.48">🔴 25</a>
+<a class="" href="#q26" title="ข้อ 26 · Ent มี.ค.48">26</a>
+<a class="old" href="#q27" title="ข้อ 27 · A-NET ก.พ.49">🔴 27</a>
+<a class="" href="#q28" title="ข้อ 28 · A-NET ก.พ.49">28</a>
+<a class="old" href="#q29" title="ข้อ 29 · A-NET มี.ค.50">🔴 29</a>
+<a class="" href="#q30" title="ข้อ 30 · A-NET มี.ค.50">30</a>
+<a class="" href="#q31" title="ข้อ 31 · A-NET มี.ค.51">31</a>
+<a class="" href="#q32" title="ข้อ 32 · A-NET มี.ค.52">32</a>
+<a class="" href="#q33" title="ข้อ 33 · A-NET มี.ค.52">33</a>
+<a class="old" href="#q34" title="ข้อ 34 · A-NET มี.ค.52">🔴 34</a>
+</nav>
+
+
+<section class="cheat" id="cheat">
+  <h2>Cheat Sheet — สรุปตรรกศาสตร์ (หลักสูตร 2561)</h2>
+  <div class="twocol">
+    <div>
+      <h3>สมบัติประพจน์และสมมูล</h3>
+      <ul>
+        <li>\(p\to q\equiv\sim p\vee q\equiv\sim q\to\sim p\) (contrapositive)</li>
+        <li>\(\sim(p\wedge q)\equiv\sim p\vee\sim q\) (De Morgan)</li>
+        <li>\(\sim(p\vee q)\equiv\sim p\wedge\sim q\) (De Morgan)</li>
+        <li>\(\sim(p\to q)\equiv p\wedge\sim q\)</li>
+        <li>\(p\leftrightarrow q\equiv(p\to q)\wedge(q\to p)\)</li>
+        <li>\(p\vee(p\wedge q)\equiv p\) (absorption)</li>
+        <li>\(p\to(q\to r)\equiv(p\wedge q)\to r\equiv q\to(p\to r)\)</li>
+      </ul>
+      <h3>การอ้างเหตุผล (กฎสำคัญ)</h3>
+      <ul>
+        <li><b>Modus Ponens:</b> \(p,\ p\to q\Rightarrow q\)</li>
+        <li><b>Modus Tollens:</b> \(\sim q,\ p\to q\Rightarrow\sim p\)</li>
+        <li><b>Syllogism:</b> \(p\to q,\ q\to r\Rightarrow p\to r\)</li>
+        <li><b>Disjunctive:</b> \(p\vee q,\ \sim p\Rightarrow q\)</li>
+        <li><b>Constructive Dilemma:</b> \((p\to q)\wedge(r\to s),\ p\vee r\Rightarrow q\vee s\)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>ตัวบ่งปริมาณ <span class="pill">IN</span></h3>
+      <ul>
+        <li>นิเสธ: \(\sim\forall x[P(x)]\equiv\exists x[\sim P(x)]\)</li>
+        <li>นิเสธ: \(\sim\exists x[P(x)]\equiv\forall x[\sim P(x)]\)</li>
+        <li>นิเสadh 2 ตัว: พลิกทุกตัวบ่งปริมาณ + นิเสธส่วนใน</li>
+        <li>\(\sim\forall x\exists y[P]\equiv\exists x\forall y[\sim P]\)</li>
+        <li>\(\sim(p\to q)\equiv p\wedge\sim q\) — สำคัญมาก</li>
+      </ul>
+      <h3>เนื้อหา <span class="pill old">OUT</span> จากหลักสูตร 2561</h3>
+      <ul>
+        <li>การหา <b>ค่าความจริง</b> ของ \(\forall x\forall y,\ \forall x\exists y,\ \exists x\forall y,\ \exists x\exists y\) บนประโยคเปิด 2 ตัวแปร</li>
+        <li>แต่ <b>การหานิเสธ</b> ของประโยค 2 ตัวบ่งปริมาณยังอยู่ในหลักสูตร</li>
+      </ul>
+      <h3>จุดพลาดบ่อย</h3>
+      <table>
+        <tr><th>กับดัก</th><th>ระวัง</th></tr>
+        <tr><td>\(\sim(p\to q)\)</td><td>\(=p\wedge\sim q\) ไม่ใช่ \(p\to\sim q\)</td></tr>
+        <tr><td>\(p\to q\) เท็จ</td><td>\(p\) จริง \(q\) เท็จ เท่านั้น</td></tr>
+        <tr><td>นิเสadh \(\forall\)</td><td>\(\exists\sim\) พลิกทั้งสอง — ไม่ใช่ \(\forall\sim\)</td></tr>
+        <tr><td>นิเสธ \(\exists\)</td><td>\(\forall\sim\) — ไม่ใช่ \(\exists\sim\)</td></tr>
+        <tr><td>\(p\leftrightarrow q\) เท็จ</td><td>\(p,q\) ต่างค่าเท่านั้น</td></tr>
+        <tr><td>สมเหตุสมผล</td><td>เหตุทั้งหมดจริง และผลต้องจริง</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="sol" id="q1">
+<div class="q-header">
+<span class="q-num">ข้อ 1</span>
+<span class="badge year">Ent ต.ค.41</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★</span>
+<span class="badge subcat" style="color:#2e4374;background:#eef2fb;border-color:#2e437433">🔵 สมมูลของประพจน์</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">ประพจน์ \(\sim p\to(q\to(r\vee p))\) สมมูลกับประพจน์ในข้อใด — 1) \((\sim p)\vee q\vee r\)  2) \(p\vee(\sim q)\vee r\)  3) \(p\vee q\vee(\sim r)\)  4) \(p\vee(\sim q)\vee(\sim r)\)</div>
+<div class="concept">ใช้สมบัติ \(a\to b\equiv\sim a\vee b\) ซ้ำจนกลายเป็น OR ล้วน แล้ว De Morgan</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>\(\sim p\to(q\to(r\vee p))\equiv\sim(\sim p)\vee(q\to(r\vee p))\equiv p\vee\big(\sim q\vee(r\vee p)\big)\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>จัดกลุ่ม (OR เปลี่ยนหน่วยได้): \(p\vee\sim q\vee r\vee p\equiv p\vee\sim q\vee r\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>ตรงกับข้อ 2: \(p\vee(\sim q)\vee r\)</p>
+</div></div>
+<div class="technique"><b>เทคนิค:</b> เปลี่ยน \(\to\) ทุกตัวเป็น OR ก่อน แล้วค่อยจัดกลุ่ม จะเร็วกว่าทำ truth table</div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 2: }p\vee(\sim q)\vee r}\)</div>
+</section>
+<section class="sol" id="q2">
+<div class="q-header">
+<span class="q-num">ข้อ 2</span>
+<span class="badge year">Ent ต.ค.41</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★</span>
+<span class="badge subcat" style="color:#7a6a00;background:#fbfae6;border-color:#7a6a0033">🟡 การอ้างเหตุผล</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">พิจารณาการอ้างเหตุผล (p,q,r เป็นประพจน์)  ก. เหตุ 1) \(p\vee(p\wedge\sim q)\) 2) \(p\to q\) ผล \(q\)   ข. เหตุ 1) \(\sim p\to r\) 2) \(\sim r\vee s\) 3) \(\sim s\) ผล \(p\)  — 1) ก และ ข สมเหตุสมผล  2) ก สมเหตุสมผล แต่ ข ไม่  3) ก ไม่ แต่ ข สมเหตุสมผล  4) ก และ ข ไม่สมเหตุสมผล</div>
+<div class="concept">ตรวจสมเหตุสมผล = ดูว่าเมื่อเหตุทั้งหมดเป็นจริง ผลต้องเป็นจริงเสมอ ใช้ absorption, modus tollens, disjunctive syllogism</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> เหตุ 1: \(p\vee(p\wedge\sim q)\equiv p\) (absorption) ดังนั้นจาก \(p\) จริง และ \(p\to q\) จริง โดย Modus Ponens ได้ \(q\) จริง <b>ก สมเหตุสมผล</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p><b>ข)</b> เหตุ 2: \(\sim r\vee s\equiv r\to s\) และเหตุ 3: \(\sim s\) จริง โดย Modus Tollens กับ \(r\to s\) ได้ \(r\) เท็จ คือ \(\sim r\) จริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>เหตุ 1: \(\sim p\to r\) จริง และ \(r\) เท็จ โดย Modus Tollens ได้ \(\sim(\sim p)\) จริง คือ \(p\) จริง <b>ข สมเหตุสมผล</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>ก และ ข สมเหตุสมผลทั้งคู่ ตรงกับข้อ 1</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 1: ก และ ข สมเหตุสมผล}}\)</div>
+</section>
+<section class="sol" id="q3">
+<div class="q-header">
+<span class="q-num">ข้อ 3</span>
+<span class="badge year">Ent มี.ค.42</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★</span>
+<span class="badge subcat" style="color:#2e4374;background:#eef2fb;border-color:#2e437433">🔵 สมมูลของประพจน์</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">ประพจน์ \(\sim[(p\wedge q)\to(\sim q\vee r)]\) สมมูลกับข้อใด — 1) \(p\wedge\sim(q\to r)\)  2) \(\sim q\vee(\sim p\wedge r)\)  3) \(\sim(p\wedge q)\wedge(q\wedge r)\)  4) \(\sim(p\wedge q)\to(q\wedge\sim r)\)</div>
+<div class="concept">ใช้ \(\sim(a\to b)\equiv a\wedge\sim b\) แล้ว De Morgan \(\sim(\sim q\vee r)\equiv q\wedge\sim r\)</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>\(\sim[(p\wedge q)\to(\sim q\vee r)]\equiv(p\wedge q)\wedge\sim(\sim q\vee r)\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\(\sim(\sim q\vee r)\equiv q\wedge\sim r\) (De Morgan)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>รวม: \((p\wedge q)\wedge(q\wedge\sim r)\equiv p\wedge q\wedge\sim r\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>พิจารณาตัวเลือก 1: \(p\wedge\sim(q\to r)\equiv p\wedge(q\wedge\sim r)\equiv p\wedge q\wedge\sim r\) ✓ ตรงกับข้อ 1</p>
+</div></div>
+<div class="careless"><b>Careless:</b> \(\sim(a\to b)\) ไม่ใช่ \(a\to\sim b\) แต่เป็น \(a\wedge\sim b\) — จำให้แม่น</div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 1: }p\wedge\sim(q\to r)}\)</div>
+</section>
+<section class="sol" id="q4">
+<div class="q-header">
+<span class="q-num">ข้อ 4</span>
+<span class="badge year">Ent มี.ค.42</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#7a6a00;background:#fbfae6;border-color:#7a6a0033">🟡 การอ้างเหตุผล</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">พิจารณาการให้เหตุผล  ก. เหตุ 1) \(p\to(q\to r)\) 2) \(p\) 3) \(\sim t\to q\) ผล \(r\to t\)   ข. เหตุ 1) \(p\to(q\to\sim s)\) 2) \(p\wedge s\) ผล \(q\)  — 1) ก และ ข สมเหตุสมผล  2) ก สมเหตุสมผล แต่ ข ไม่  3) ก ไม่ แต่ ข สมเหตุสมผล  4) ก และ ข ไม่สมเหตุสมผล</div>
+<div class="concept">ก. ใช้ \(p\to(q\to r)\equiv(p\wedge q)\to r\) และ contrapositive ข. ใช้ \(p\to(q\to\sim s)\equiv(p\wedge q)\to\sim s\) แล้ว Modus Tollens</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> เหตุ 1: \(p\to(q\to r)\) จริง และ \(p\) จริง (เหตุ 2) โดย Modus Ponens ได้ \(q\to r\) จริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>ตั้งผล \(r\to t\) จริงเทียบกับเหตุ 3 \(\sim t\to q\equiv\sim q\to t\) จริง เราได้ \(q\to r\) และ \(\sim q\to t\) — ถ้า \(r\) จริงก็ OK แต่ถ้า \(r\) เท็จ \(\sim q\) ต้องจริง \(\Rightarrow t\) จริง ผล \(r\to t\) ยังเป็นจริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>แต่ลอง counter: \(p=T,q=T,r=F,t=F\): เหตุ 1 \(T\to(T\to F)=F\) ไม่จริง ตัด; \(p=T,q=F,r=F,t=F\): เหตุ 1 \(T\to(F\to F)=T\), เหตุ 2 \(T\), เหตุ 3 \(T\to F=F\) ตัด; ดังนั้นเหตุ 3 บังคับ \(t\) เมื่อ \(\sim q\) จริง — สรุป ก สมเหตุสมผล</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p><b>ข)</b> เหตุ 1: \(p\to(q\to\sim s)\equiv(p\wedge q)\to\sim s\) จริง เหตุ 2: \(p\wedge s\) จริง \(\Rightarrow p=T,s=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ถ้า \(q=T\): \((p\wedge q)\to\sim s\) ให้ \(T\to\sim T=T\to F=F\) ขัดเหตุ 1 จริง ดังนั้น \(q\) ต้องเป็น \(F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>ผลคือ \(q\) จริง — แต่เราได้ \(q=F\) ดังนั้นผลที่ถูกต้องคือ \(\sim q\) ไม่ใช่ \(q\) <b>ข ไม่สมเหตุสมผล</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>ก สมเหตุสมผล แต่ ข ไม่ ตรงกับข้อ 2</p>
+</div></div>
+<div class="careless"><b>⚠️ แก้เฉลย (ยืนยันด้วยตารางค่าความจริง):</b> ตรวจ truth table: ก. เหตุ \(p\to(q\to r)\), \(p\), \(\sim t\to q\) ผล \(r\to t\) — มีกรณีเหตุจริงแต่ผลเท็จ จึง<b>ไม่สมเหตุสมผล</b>; ข. เหตุ \(p\to(q\to\sim s)\), \(p\wedge s\) ผล \(q\) — ก็<b>ไม่สมเหตุสมผล</b> เช่นกัน → ตอบ ข้อ 4</div><div class="answer">คำตอบ: \(\boxed{\text{ข้อ 4: ก และ ข ไม่สมเหตุสมผล}}\)</div>
+</section>
+<section class="sol" id="q5">
+<div class="q-header">
+<span class="q-num">ข้อ 5</span>
+<span class="badge year">Ent ต.ค.42</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#7a6a00;background:#fbfae6;border-color:#7a6a0033">🟡 การอ้างเหตุผล</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">พิจารณาการอ้างเหตุผล  ก. เหตุ 1) \(p\to(q\to\sim r)\) 2) \(q\) 3) \(r\) ผล \(p\)   ข. เหตุ 1) \((p\wedge q)\to r\) 2) \(\sim(r\vee s)\) 3) \(p\) ผล \(\sim q\)  — 1) ก และ ข สมเหตุสมผล  2) ก สมเหตุสมผล แต่ ข ไม่  3) ก ไม่ แต่ ข สมเหตุสมผล  4) ก และ ข ไม่สมเหตุสมผล</div>
+<div class="concept">ก. ตรวจว่าเหตุจริงบังคับให้ผลจริง ข. ใช้ De Morgan และ Modus Tollens</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> เหตุ 1: \(p\to(q\to\sim r)\equiv(p\wedge q)\to\sim r\) จริง; เหตุ 2: \(q=T\); เหตุ 3: \(r=T\) \(\Rightarrow\sim r=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>แทน: \((p\wedge T)\to F\equiv p\to F\) จริง \(\Rightarrow p=F\) แต่ผลที่ต้องการคือ \(p\) จริง — ขัดแย้ง <b>ก ไม่สมเหตุสมผล</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p><b>ข)</b> เหตุ 2: \(\sim(r\vee s)\equiv\sim r\wedge\sim s\) จริง \(\Rightarrow r=F,s=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>เหตุ 1: \((p\wedge q)\to r\) จริง และ \(r=F\) \(\Rightarrow p\wedge q=F\) (contrapositive); เหตุ 3: \(p=T\) \(\Rightarrow q=F\) \(\Rightarrow\sim q\) จริง <b>ข สมเหตุสมผล</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ก ไม่ ข สมเหตุสมผล ตรงกับข้อ 3</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 3: ก ไม่ แต่ ข สมเหตุสมผล}}\)</div>
+</section>
+<section class="sol" id="q6">
+<div class="q-header">
+<span class="q-num">ข้อ 6</span>
+<span class="badge year">Ent ต.ค.42</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#6d3d9e;background:#f3ecfb;border-color:#6d3d9e33">🟣 ตัวบ่งปริมาณตัวเดียว</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">เอกภพสัมพัทธ์ \(U\) ในข้อใดทำให้ประโยค \(\exists x[\,2x^2+x-1\le 0\ \wedge\ \sqrt{x^2-4x+4}\le 3\,]\) มีค่าความจริงเป็นจริง — 1) เซตจำนวนเต็มบวกคู่  2) เซตจำนวนเต็มบวกคี่  3) เซตจำนวนเต็มลบคู่  4) เซตจำนวนเต็มลบคี่</div>
+<div class="concept">\(\exists x\) จริง ต้องมีอย่างน้อยหนึ่งสมาชิกใน \(U\) ที่ทำให้เงื่อนไขทั้งสองเป็นจริงพร้อมกัน หา solution ของแต่ละเงื่อนไขแล้ว intersect</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>เงื่อนไขที่ 1: \(2x^2+x-1\le0\) ตัวประกอบ \((2x-1)(x+1)\le0\) ราก \(x=-1,\frac12\) ช่วงคำตอบ \(x\in[-1,\frac12]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>เงื่อนไขที่ 2: \(\sqrt{x^2-4x+4}\le3\Leftrightarrow|x-2|\le3\Leftrightarrow-3\le x-2\le3\Leftrightarrow-1\le x\le5\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>intersect: \(x\in[-1,\frac12]\cap[-1,5]=[-1,\frac12]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>สมาชิกเป็นจำนวนเต็มใน \([-1,\frac12]\): มี \(-1\) และ \(0\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>\(-1\) เป็นจำนวนเต็มลบคี่ — ตรงกับข้อ 4 (เซตจำนวนเต็มลบคี่ มี \(-1\in U\))</p>
+</div></div>
+<div class="careless"><b>Careless:</b> \(\sqrt{x^2-4x+4}=|x-2|\) ไม่ใช่ \(x-2\) — เพราะภายใต้รากเป็นกำลังสองสมบูรณ์</div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 4: เซตจำนวนเต็มลบคี่}}\)</div>
+</section>
+<section class="sol" id="q7">
+<div class="q-header">
+<span class="q-num">ข้อ 7</span>
+<span class="badge year">Ent มี.ค.43</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★</span>
+<span class="badge subcat" style="color:#6d3d9e;background:#f3ecfb;border-color:#6d3d9e33">🟣 ตัวบ่งปริมาณตัวเดียว</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">นิเสธของข้อความ \(\exists x[P(x)\wedge\sim Q(x)]\) คือข้อใด — 1) \(\forall x[P(x)\to\sim Q(x)]\)  2) \(\exists x[\sim P(x)\to Q(x)]\)  3) \(\forall x[P(x)\to Q(x)]\)  4) \(\exists x[Q(x)\to P(x)]\)</div>
+<div class="concept">\(\sim\exists=\forall\sim\) พลิกตัวบ่งปริมาณและนิเสธส่วนใน \(\sim(P\wedge\sim Q)=\sim P\vee Q=P\to Q\)</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>\(\sim\!\big(\exists x[P(x)\wedge\sim Q(x)]\big)\equiv\forall x[\sim(P(x)\wedge\sim Q(x))]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>De Morgan: \(\sim(P\wedge\sim Q)\equiv\sim P\vee\sim(\sim Q)\equiv\sim P\vee Q\equiv P\to Q\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>ดังนั้นนิเสธคือ \(\forall x[P(x)\to Q(x)]\) ตรงกับข้อ 3</p>
+</div></div>
+<div class="technique"><b>เทคนิค:</b> \(\sim P\vee Q\equiv P\to Q\) เป็นสมมูลมาตรฐาน — เปลี่ยน OR เป็น \(\to\) ได้เลย</div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 3: }\forall x[P(x)\to Q(x)]}\)</div>
+</section>
+<section class="sol" id="q8">
+<div class="q-header">
+<span class="q-num">ข้อ 8</span>
+<span class="badge year">Ent มี.ค.43</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#7a6a00;background:#fbfae6;border-color:#7a6a0033">🟡 การอ้างเหตุผล</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">กำหนดเหตุ 1) \(\sim p\to\sim q\) 2) \(p\to(r\vee s)\) 3) \(q\vee t\) 4) \(\sim t\) ผลในข้อใดทำให้การอ้างเหตุผลสมเหตุสมผล — 1) \(s\to r\)  2) \(s\to\sim r\)  3) \(r\to\sim s\)  4) \(\sim r\to s\)</div>
+<div class="concept">Modus Tollens, Disjunctive Syllogism, และ contrapositive เชื่อมโยงเหตุทั้งหมดจนได้ \(r\vee s\) และ \(\sim r\vee\sim s\) จึงได้ความสัมพันธ์ระหว่าง \(r,s\)</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>เหตุ 4 \(\sim t\) จริง และเหตุ 3 \(q\vee t\) จริง โดย Disjunctive Syllogism: \(q\) จริง \(\Rightarrow\sim q=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>เหตุ 1 \(\sim p\to\sim q\equiv q\to p\) (contrapositive) จริง; \(q\) จริง \(\Rightarrow p\) จริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>เหตุ 2 \(p\to(r\vee s)\) จริง และ \(p\) จริง โดย Modus Ponens: \(r\vee s\) จริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>ตอนนี้เรารู้ว่า \(r\vee s\) จริง แต่ไม่ทราบค่า \(r,s\) แยก — เราต้องหาผลที่จริงเสมอเมื่อ \(r\vee s\) จริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>\(r\vee s\) จริง หมายความว่าอย่างน้อยหนึ่งใน \(r,s\) จริง ดังนั้น \(\sim r\to s\) (ถ้า \(r\) เท็จ \(s\) ต้องจริง) จะเป็นจริงเสมอ ตรงกับข้อ 4</p>
+</div></div>
+<div class="technique"><b>เทคนิค:</b> contrapositive \(\sim p\to\sim q\equiv q\to p\) เปลี่ยนทิศทางการให้เหตุผลให้สะดวก</div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 4: }\sim r\to s}\)</div>
+</section>
+<section class="sol" id="q9">
+<div class="q-header">
+<span class="q-num">ข้อ 9</span>
+<span class="badge year">Ent ต.ค.43</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#6d3d9e;background:#f3ecfb;border-color:#6d3d9e33">🟣 ตัวบ่งปริมาณตัวเดียว</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">เอกภพสัมพัทธ์ \(U=\{2n\mid n\in I^+\}\) พิจารณา  ก. \(\exists x[\,2^{2x+3}-18(2^x)+4=0\,]\) มีค่าความจริงเป็นจริง   ข. \(\exists x[\,\log_2(x+2)+\log_2(x-1)=2\,]\) มีค่าความจริงเป็นจริง</div>
+<div class="concept">\(U=\{2,4,6,\ldots\}\) คือจำนวนเต็มบวกคู่ ทดแต่ละสมการว่ามีคำตอบอยู่ใน \(U\) หรือไม่</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> ให้ \(u=2^x\) สมการ \(2^{2x+3}-18\cdot2^x+4=0\Rightarrow 8u^2-18u+4=0\Rightarrow4u^2-9u+2=0\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\((4u-1)(u-2)=0\Rightarrow u=\frac14\) หรือ \(u=2\); \(2^x=\frac14\Rightarrow x=-2\) (ไม่อยู่ใน \(U\)); \(2^x=2\Rightarrow x=1\) (ไม่อยู่ใน \(U\)) — <b>ก เท็จ</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p><b>ข)</b> \(\log_2(x+2)+\log_2(x-1)=2\Rightarrow\log_2[(x+2)(x-1)]=2\Rightarrow(x+2)(x-1)=4\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>\(x^2+x-6=0\Rightarrow(x+3)(x-2)=0\Rightarrow x=-3\) หรือ \(x=2\); \(x=-3\) ทำให้ \(\log\) ไม่นิยาม (ตัด), \(x=2\in U\) ✓ — <b>ข จริง</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ก ผิด ข ถูก ตรงกับข้อ 3</p>
+</div></div>
+<div class="careless"><b>Careless:</b> หลังแก้ log ต้องตรวจ domain ของ log ด้วย — คำตอบอาจไม่นิยาม</div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 3: ก ผิด ข ถูก}}\)</div>
+</section>
+<section class="sol" id="q10">
+<div class="q-header">
+<span class="q-num">ข้อ 10</span>
+<span class="badge year">Ent ต.ค.43</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★</span>
+<span class="badge subcat" style="color:#8a5a00;background:#fff6e6;border-color:#8a5a0033">🟠 ค่าความจริงของประพจน์</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">\(p,q,r,s,t\) เป็นประพจน์ ถ้า \((p\wedge q)\to(r\vee s)\) มีค่าความจริงเป็นเท็จ แล้วประพจน์ในข้อใดมีค่าความจริงเป็นเท็จ — 1) \((p\wedge r)\leftrightarrow(s\wedge t)\)  2) \((p\wedge s)\to(q\vee t)\)  3) \((p\wedge s)\vee(r\wedge t)\)  4) \((r\to p)\wedge(s\to t)\)</div>
+<div class="concept">\((p\wedge q)\to(r\vee s)\) เท็จ \(\Leftrightarrow(p\wedge q)\) จริง และ \((r\vee s)\) เท็จ \(\Leftrightarrow p=T,q=T,r=F,s=F\) (\(t\) ไม่กำหนด)</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>\((p\wedge q)\to(r\vee s)\) เท็จ \(\Rightarrow p=T,q=T,r=F,s=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>พิจารณาข้อ 1: \((p\wedge r)\leftrightarrow(s\wedge t)=(T\wedge F)\leftrightarrow(F\wedge t)=F\leftrightarrow F=T\) (จริง ไม่ใช่เท็จ)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>ข้อ 2: \((p\wedge s)\to(q\vee t)=(T\wedge F)\to(T\vee t)=F\to T=T\) (จริง)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>ข้อ 3: \((p\wedge s)\vee(r\wedge t)=(T\wedge F)\vee(F\wedge t)=F\vee F=F\) (เท็จ) ✓</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ข้อ 4: \((r\to p)\wedge(s\to t)=(F\to T)\wedge(F\to t)=T\wedge T=T\) (จริง)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>เฉลยข้อ 3 (ข้อ 4 ในตัวเลือก) — ตรงกับข้อ 3</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 3: }(p\wedge s)\vee(r\wedge t)}\)</div>
+</section>
+<section class="sol" id="q11">
+<div class="q-header">
+<span class="q-num">ข้อ 11</span>
+<span class="badge year">Ent มี.ค.44</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#8a5a00;background:#fff6e6;border-color:#8a5a0033">🟠 ค่าความจริงของประพจน์</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">\(p,q,r\) ประพจน์ ถ้า \(p\to(q\wedge r)\) มีค่าความจริงเป็นเท็จ และ \((p\vee q)\leftrightarrow r\) มีค่าความจริงเป็นจริง พิจารณาค่าความจริงของ  ก. \((p\leftrightarrow q)\leftrightarrow\sim r\)   ข. \(p\leftrightarrow(q\vee\sim r)\)</div>
+<div class="concept">\(p\to(q\wedge r)\) เท็จ \(\Leftrightarrow p=T,q\wedge r=F\) แล้วใช้เงื่อนไขที่ 2 ค่าความจริงเป็นจริง \(\Leftrightarrow(p\vee q)\leftrightarrow r\) เพื่อกำหนดค่าที่แน่นอน</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>\(p\to(q\wedge r)\) เท็จ \(\Rightarrow p=T\) และ \(q\wedge r=F\) (i.e. \(q=F\) หรือ \(r=F\) อย่างน้อยหนึ่ง)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\((p\vee q)\leftrightarrow r\) จริง \(\Rightarrow(p\vee q)=r\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>กรณี A: \(q=T\): \(p\vee q=T\) จาก \(p=T\) \(\Rightarrow r=T\); แต่ \(q\wedge r=T\wedge T=T\) ขัด \(q\wedge r=F\) — ตัด</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>กรณี B: \(q=F,r=F\): \(p\vee q=T\vee F=T\), \(r=F\), \(T\ne F\) — ขัด — ตัด</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>กรณี C: \(q=F,r=T\): \(p\vee q=T\vee F=T\), \(r=T\), \(T=T\) ✓ และ \(q\wedge r=F\wedge T=F\) ✓</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>สรุป: \(p=T,q=F,r=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p><b>ก)</b> \((p\leftrightarrow q)\leftrightarrow\sim r=(T\leftrightarrow F)\leftrightarrow\sim T=F\leftrightarrow F=T\) จริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p><b>ข)</b> \(p\leftrightarrow(q\vee\sim r)=T\leftrightarrow(F\vee F)=T\leftrightarrow F=F\) เท็จ</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 9</span>
+<div class="body">
+<p>ก จริง ข เท็จ ตรงกับข้อ 2</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 2: ก จริง ข เท็จ}}\)</div>
+</section>
+<section class="sol" id="q12">
+<div class="q-header">
+<span class="q-num">ข้อ 12</span>
+<span class="badge year">Ent มี.ค.44</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★</span>
+<span class="badge subcat" style="color:#6d3d9e;background:#f3ecfb;border-color:#6d3d9e33">🟣 ตัวบ่งปริมาณตัวเดียว</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">เอกภพสัมพัทธ์ในข้อใดทำให้ข้อความ \((\forall x[x^2\le 2x+3])\wedge(\exists y[y^2-4>0])\) มีค่าความจริงเป็นจริง — 1) \([-3,0]\)  2) \([-1.5,1.5]\)  3) \([-1,2]\)  4) \([-0.5,2.5]\)</div>
+<div class="concept">\(\wedge\) ของสองประโยคจริง \(\Leftrightarrow\) ทั้งสองจริง; \(\forall x\) ใช้ทุกสมาชิกใน \(U\), \(\exists y\) ใช้อย่างน้อยหนึ่งสมาชิก</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>\(\forall x[x^2\le2x+3]\Leftrightarrow\forall x[x^2-2x-3\le0]\Leftrightarrow\forall x[(x-3)(x+1)\le0]\Leftrightarrow U\subseteq[-1,3]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\(\exists y[y^2-4>0]\Leftrightarrow\exists y[y<-2\text{ หรือ }y>2]\Leftrightarrow U\cap\big((-\infty,-2)\cup(2,\infty)\big)\ne\varnothing\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>ตรวจแต่ละตัวเลือกว่า \(U\subseteq[-1,3]\) และมีสมาชิก \(\notin[-2,2]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>ข้อ 1 \([-3,0]\): ไม่ subset ของ \([-1,3]\) (\(-3<-1\)) — ตัด</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ข้อ 2 \([-1.5,1.5]\): ไม่ subset ของ \([-1,3]\) (\(-1.5<-1\)) — ตัด</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>ข้อ 3 \([-1,2]\): subset ของ \([-1,3]\) ✓ แต่ \(U\subseteq[-2,2]\) จึงไม่มีสมาชิกที่ \(y^2>4\) — ตัด</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>ข้อ 4 \([-0.5,2.5]\): subset ของ \([-1,3]\) ✓ และ \(2.5\in U\) ที่ \(2.5>2\Rightarrow y^2-4>0\) ✓ — จริง</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 4: }[-0.5,2.5]}\)</div>
+</section>
+<section class="sol" id="q13">
+<div class="q-header">
+<span class="q-num">ข้อ 13</span>
+<span class="badge year">Ent ต.ค.44</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★</span>
+<span class="badge subcat" style="color:#8a5a00;background:#fff6e6;border-color:#8a5a0033">🟠 ค่าความจริงของประพจน์</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">\(p,q,r\) มีค่าความจริงเป็น จริง, เท็จ, เท็จ ตามลำดับ ประพจน์ในข้อใดมีค่าความจริงเหมือนกับ \((p\to\sim q)\vee(r\wedge\sim p)\) — 1) \((\sim r\to p)\wedge(q\vee r)\)  2) \((q\wedge\sim r)\leftrightarrow(\sim p\to\sim q)\)  3) \((\sim p\vee r)\to(q\wedge\sim r)\)  4) \((p\to q)\vee(\sim r\leftrightarrow q)\)</div>
+<div class="concept">คำนวณค่าของประพจน์ตั้งต้นจาก \(p=T,q=F,r=F\) แล้วเทียบกับแต่ละตัวเลือก</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>\((p\to\sim q)\vee(r\wedge\sim p)=(T\to\sim F)\vee(F\wedge\sim T)=(T\to T)\vee(F\wedge F)=T\vee F=T\) — เป้าหมายคือจริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>ข้อ 1: \((\sim r\to p)\wedge(q\vee r)=(T\to T)\wedge(F\vee F)=T\wedge F=F\) — ไม่ตรง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>ข้อ 2: \((q\wedge\sim r)\leftrightarrow(\sim p\to\sim q)=(F\wedge T)\leftrightarrow(F\to T)=F\leftrightarrow T=F\) — ไม่ตรง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>ข้อ 3: \((\sim p\vee r)\to(q\wedge\sim r)=(F\vee F)\to(F\wedge T)=F\to F=T\) ✓</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ข้อ 4: \((p\to q)\vee(\sim r\leftrightarrow q)=(T\to F)\vee(T\leftrightarrow F)=F\vee F=F\) — ไม่ตรง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>ตรงกับข้อ 3</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 3: }(\sim p\vee r)\to(q\wedge\sim r)}\)</div>
+</section>
+<section class="sol" id="q14">
+<div class="q-header">
+<span class="q-num">ข้อ 14</span>
+<span class="badge year">Ent มี.ค.45</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#6d3d9e;background:#f3ecfb;border-color:#6d3d9e33">🟣 ตัวบ่งปริมาณตัวเดียว</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">พิจารณา  ก. ถ้าเอกภพสัมพัทธ์คือ \(U=(0,1)\cup(2,\infty)\) แล้วประพจน์ \(\forall x[(x-\tfrac12)^2<\tfrac14\ \text{เมื่อ}\ (x-1)^2>1]\) มีค่าความจริงเป็นจริง   ข. ถ้า \(p,q,r\) เป็นประพจน์แล้ว \(p\to(q\wedge r)\) สมมูลกับ \((p\to q)\vee(p\to r)\)</div>
+<div class="concept">ก. วลี 'เมื่อ' = \(\to\) (ถ้า \((x-1)^2>1\) แล้ว \((x-\frac12)^2<\frac14\)) ข. ใช้ \(p\to(q\wedge r)\equiv\sim p\vee(q\wedge r)\) เทียบกับ \((\sim p\vee q)\vee(\sim p\vee r)\)</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> \((x-\frac12)^2<\frac14\Leftrightarrow-\frac12<x-\frac12<\frac12\Leftrightarrow0<x<1\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\((x-1)^2>1\Leftrightarrow x-1<-1\) หรือ \(x-1>1\Leftrightarrow x<0\) หรือ \(x>2\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>\(U=(0,1)\cup(2,\infty)\); เงื่อนไข \((x-1)^2>1\) ใน \(U\) ให้ \(x\in(2,\infty)\) (เพราะ \(x<0\) ไม่ตัดกับ \(U\))</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>\((x-\frac12)^2<\frac14\) ให้ \(x\in(0,1)\) ซึ่งไม่ contain \((2,\infty)\) — ดังนั้นมี \(x\in U\) เช่น \(x=3\) ที่ \((x-1)^2>1\) จริง แต่ \((x-\frac12)^2=\frac{25}{4}>\frac14\) เท็จ</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p><b>ก เท็จ</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p><b>ข)</b> \(p\to(q\wedge r)\equiv\sim p\vee(q\wedge r)\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>\((p\to q)\vee(p\to r)\equiv(\sim p\vee q)\vee(\sim p\vee r)\equiv\sim p\vee q\vee r\ne\sim p\vee(q\wedge r)\) (ยกตัวอย่าง \(p=F,q=T,r=F\): ซ้าย \(F\), ขวา \(T\)) <b>ข ผิด</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p>ก ผิด ข ผิด ตรงกับข้อ 4</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 4: ก ผิด ข ผิด}}\)</div>
+</section>
+<section class="sol" id="q15">
+<div class="q-header">
+<span class="q-num">ข้อ 15</span>
+<span class="badge year">Ent มี.ค.45</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★★</span>
+<span class="badge subcat" style="color:#8a5a00;background:#fff6e6;border-color:#8a5a0033">🟠 ค่าความจริงของประพจน์</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">\(p,q,r,s\) ประพจน์ ถ้า \([p\to(q\to r)]\leftrightarrow s\wedge r\) มีค่าความจริงเป็นจริง และ \(\sim p\vee s\) มีค่าความจริงเป็นเท็จ แล้วข้อใดถูก — 1) \(p\to q\) จริง  2) \(q\to r\) จริง  3) \(r\to s\) เท็จ  4) \(s\to p\) เท็จ</div>
+<div class="concept">\(\sim p\vee s\) เท็จ \(\Leftrightarrow\sim p=F,s=F\Rightarrow p=T,s=F\); แล้วใช้สมการที่ 1 เป็นจริง \(\Rightarrow(p\to(q\to r))\leftrightarrow(F\wedge r)\Leftrightarrow(p\to(q\to r))\leftrightarrow F\) จริง หมายค่าทั้งสองข้างต่างกัน</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>\(\sim p\vee s\) เท็จ \(\Rightarrow p=T,s=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>แทนในสมการที่ 1: \([T\to(q\to r)]\leftrightarrow(F\wedge r)\equiv(q\to r)\leftrightarrow F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>ประพจน์นี้จริง \(\Rightarrow(q\to r)\) และ \(F\) ต่างกัน \(\Rightarrow(q\to r)=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>\(q\to r\) จริง ตรงกับข้อ 2</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ตรวจที่เหลือ: \(r\) ยังไม่กำหนดแน่นอน (อาจ \(T\) หรือ \(F\) แล้วแต่ \(q\)) ดังนั้นข้อ 3 ไม่แน่นอน; \(s\to p=F\to T=T\) จริง (ไม่ใช่เท็จ) ข้อ 4 ผิด; \(p\to q=T\to q=q\) ไม่แน่นอน ข้อ 1 ไม่แน่นอน</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>ข้อที่ถูกคือข้อ 2</p>
+</div></div>
+<div class="careless"><b>⚠️ แก้เฉลย (ยืนยันด้วยตารางค่าความจริง):</b> จาก \(\sim p\vee s\) เท็จ ได้ \(p=\)จริง, \(s=\)เท็จ; แทนใน \([p\to(q\to r)]\leftrightarrow(s\wedge r)\)=จริง ได้แบบจำลองเดียว \((p,q,r,s)=(T,T,F,F)\) ⇒ \(p\to q\) จริง (ข้ออื่นเป็นเท็จหมด) → ตอบ ข้อ 1</div><div class="answer">คำตอบ: \(\boxed{\text{ข้อ 1: }p\to q\text{ มีค่าความจริงจริง}}\)</div>
+</section>
+<section class="sol" id="q16">
+<div class="q-header">
+<span class="q-num">ข้อ 16</span>
+<span class="badge year">Ent ต.ค.45</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#6d3d9e;background:#f3ecfb;border-color:#6d3d9e33">🟣 ตัวบ่งปริมาณตัวเดียว</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">พิจารณา  ก. ถ้า \(p,q\) ประพจน์ โดย \(p\) จริง และ \(\sim q\to(\sim p\vee q)\) เป็นสัจนิรันดร์ แล้ว \(q\) จริง   ข. นิเสธของ \(\exists x[(\sim P(x))\wedge Q(x)\wedge(\sim R(x))]\) คือ \(\forall x[Q(x)\to(P(x)\vee R(x))]\)</div>
+<div class="concept">ก. สัจนิรันดร์ = จริงเสมอ ใช้ Modus Ponens ข. \(\sim\exists=\forall\sim\) และ De Morgan</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> \(\sim q\to(\sim p\vee q)\equiv\sim q\to(p\to q)\) เป็นสัจนิรันดร์ (จริงเสมอ)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>แต่เราสามารถตรวจ: \(\sim q\to(\sim p\vee q)\equiv q\vee\sim p\vee q\equiv q\vee\sim p\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>\(q\vee\sim p\) จะเป็นสัจนิรันดร์ก็ต่อเมื่อไม่มี \(p,q\) ที่ทำให้เป็นเท็จ — เท็จเมื่อ \(q=F,p=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>แต่โจทย์บอก \(p=T\) จริง — ถ้า \(q=F\) จะทำให้ \(\sim q\to(\sim p\vee q)=F\to F=F\) ไม่เป็นสัจนิรันดร์</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ดังนั้น \(q\ne F\) \(\Rightarrow q=T\) <b>ก ถูก</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p><b>ข)</b> \(\sim\!\big(\exists x[\sim P\wedge Q\wedge\sim R]\big)\equiv\forall x[\sim(\sim P\wedge Q\wedge\sim R)]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>De Morgan: \(\sim(\sim P\wedge Q\wedge\sim R)\equiv P\vee\sim Q\vee R\equiv\sim Q\vee(P\vee R)\equiv Q\to(P\vee R)\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p>ดังนั้นนิเสธคือ \(\forall x[Q(x)\to(P(x)\vee R(x))]\) ✓ <b>ข ถูก</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 9</span>
+<div class="body">
+<p>ก ถูก ข ถูก ตรงกับข้อ 1</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 1: ก ถูก ข ถูก}}\)</div>
+</section>
+<section class="sol" id="q17">
+<div class="q-header">
+<span class="q-num">ข้อ 17</span>
+<span class="badge year">Ent ต.ค.45</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#6d3d9e;background:#f3ecfb;border-color:#6d3d9e33">🟣 ตัวบ่งปริมาณตัวเดียว</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">\(P(x),Q(x)\) ประโยคเปิด เอกภพคือเซตจำนวนจริง ถ้า \(\forall x[P(x)]\to\exists x[\sim Q(x)]\) มีค่าความจริงเป็นเท็จ ข้อใดมีค่าความจริงเป็นจริง</div>
+<div class="concept">\(\sim(A\to B)=A\wedge\sim B\) นำไปสู่ \(\forall x[P(x)]\wedge\sim\exists x[\sim Q(x)]\equiv\forall x[P(x)]\wedge\forall x[Q(x)]\equiv\forall x[P(x)\wedge Q(x)]\)</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>\(\sim\!\big(\forall x[P(x)]\to\exists x[\sim Q(x)]\big)\equiv\forall x[P(x)]\wedge\sim\exists x[\sim Q(x)]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\(\sim\exists x[\sim Q(x)]\equiv\forall x[Q(x)]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>ดังนั้นโจทย์บอก: \(\forall x[P(x)]\wedge\forall x[Q(x)]\) จริง — คือทุก \(x\) ทำให้ \(P(x)\) จริง และทุก \(x\) ทำให้ \(Q(x)\) จริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>ดังนั้น \(\forall x[P(x)\wedge Q(x)]\) จริง \(\equiv\forall x[P(x)\to Q(x)]\) จริง (เพราะ \(P(x)\) จริงเสมอ)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ตรงกับข้อ 4: \(\forall x[P(x)\to Q(x)]\) จริง</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 4: }\forall x[P(x)\to Q(x)]\text{ จริง}}\)</div>
+</section>
+<section class="sol" id="q18">
+<div class="q-header">
+<span class="q-num">ข้อ 18</span>
+<span class="badge year">Ent มี.ค.46</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★★</span>
+<span class="badge subcat" style="color:#8a5a00;background:#fff6e6;border-color:#8a5a0033">🟠 ค่าความจริงของประพจน์</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">\(p,q,r\) ประพจน์ พิจารณา  ก. ถ้า \([(p\wedge\sim r)\wedge q]\to\sim(p\wedge q)\) เป็นเท็จ แล้ว \((p\vee q)\to r\) เป็นจริง   ข. ถ้า \(q\vee\sim r\) เป็นเท็จ แล้ว \([p\vee(q\to r)]\to\sim q\) เป็นเท็จ</div>
+<div class="concept">ก. ใช้ \(\sim(A\to B)=A\wedge\sim B\) เพื่อหาค่า \(p,q,r\) ข. ใช้ \(q\vee\sim r\) เท็จ \(\Rightarrow q=F,r=T\) แล้วเช็คประพจน์ที่สอง</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> \([(p\wedge\sim r)\wedge q]\to\sim(p\wedge q)\) เท็จ \(\Rightarrow(p\wedge\sim r\wedge q)=T\) และ \(\sim(p\wedge q)=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\(p=T,\sim r=T\Rightarrow r=F,q=T\); \(\sim(p\wedge q)=\sim(T\wedge T)=F\) ✓</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>\(p=T,q=T,r=F\): \((p\vee q)\to r=(T\vee T)\to F=T\to F=F\) ไม่จริง <b>ก ผิด</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p><b>ข)</b> \(q\vee\sim r\) เท็จ \(\Rightarrow q=F,\sim r=F\Rightarrow r=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>\(q\to r=F\to T=T\); \(p\vee(q\to r)=p\vee T=T\) (ไม่ขึ้นกับ \(p\))</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>\([p\vee(q\to r)]\to\sim q=T\to\sim F=T\to T=T\) จริง ไม่ใช่เท็จ <b>ข ผิด</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>ก ผิด ข ผิด ตรงกับข้อ 4</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 4: ก ผิด ข ผิด}}\)</div>
+</section>
+<section class="sol" id="q19">
+<div class="q-header">
+<span class="q-num">ข้อ 19</span>
+<span class="badge year">Ent มี.ค.46</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#7a6a00;background:#fbfae6;border-color:#7a6a0033">🟡 การอ้างเหตุผล</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">\(p,q,r,s\) ประพจน์ในการอ้างเหตุผล เหตุ 1) \((p\vee q)\to(r\wedge s)\) 2) \(r\to\sim s\) ประพจน์ในข้อใดเป็นผลที่ทำให้สมเหตุสมผล — 1) \(p\)  2) \(q\)  3) \(\sim p\wedge\sim q\)  4) \(\sim p\wedge q\)</div>
+<div class="concept">\(r\to\sim s\equiv\sim(r\wedge s)\); ถ้าเหตุ 1 จริง จะได้ \((p\vee q)\to(r\wedge s)\) จริง แต่ \((r\wedge s)\) ขัดแย้งกับเหตุ 2 จึงได้ \(\sim(p\vee q)\)</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>เหตุ 2: \(r\to\sim s\equiv\sim r\vee\sim s\equiv\sim(r\wedge s)\) จริง \(\Rightarrow(r\wedge s)\) เท็จ</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>เหตุ 1: \((p\vee q)\to(r\wedge s)\) จริง และ \((r\wedge s)\) เท็จ โดย Modus Tollens: \(\sim(p\vee q)\) จริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>\(\sim(p\vee q)\equiv\sim p\wedge\sim q\) — ตรงกับข้อ 3</p>
+</div></div>
+<div class="technique"><b>เทคนิค:</b> \(\sim(p\vee q)=\sim p\wedge\sim q\) (De Morgan) สังเกตเหตุ 2 ทำให้ \((r\wedge s)\) เป็นเท็จ</div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 3: }\sim p\wedge\sim q}\)</div>
+</section>
+<section class="sol" id="q20">
+<div class="q-header">
+<span class="q-num">ข้อ 20</span>
+<span class="badge year">Ent ต.ค.46</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#6d3d9e;background:#f3ecfb;border-color:#6d3d9e33">🟣 ตัวบ่งปริมาณตัวเดียว</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">เอกภพคือเซตจำนวนจริง \(P(x)\): \(x^2-3x<0\) และ \(Q(x)\): \(-2<\log_{1/3}x<-1\) ประโยคในข้อใดมีค่าความจริงเป็นจริง — 1) \(\forall x[P(x)\to Q(x)]\)  2) \(\forall x[Q(x)\to P(x)]\)  3) \(\forall x[\sim P(x)\to Q(x)]\)  4) \(\forall x[P(x)\to\sim Q(x)]\)</div>
+<div class="concept">หาเซตคำตอบของ \(P(x)\) และ \(Q(x)\) แล้วดูความสัมพันธ์ (containment) ระหว่างเซต</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>\(P(x):x^2-3x<0\Rightarrow x(x-3)<0\Rightarrow x\in(0,3)\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\(Q(x):-2<\log_{1/3}x<-1\); เนื่องจากฐาน \(1/3<1\) กลับทิศ: \((1/3)^{-1}>x>(1/3)^{-2}\Rightarrow 3>x>9\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>รอบสอง: \((1/3)^{-2}<x<(1/3)^{-1}\Rightarrow 9<x<3\) — ผิด; ลองใหม่: \(-2<\log_{1/3}x<-1\) ให้ \((1/3)^{-1}<x<(1/3)^{-2}\) คือ \(3<x<9\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>ดังนั้น \(Q(x)\Leftrightarrow x\in(3,9)\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>\(P=(0,3),Q=(3,9)\); สังเกต \(Q\cap P=\varnothing\) และ \(Q\subseteq\sim P\) (เพราะ \(Q\cap(0,3)=\varnothing\))</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>\(\forall x[P(x)\to\sim Q(x)]\): ทุก \(x\) ถ้า \(x\in(0,3)\) แล้ว \(x\notin(3,9)\) ✓ จริง (เพราะ \(P\cap Q=\varnothing\)) — ตรงกับข้อ 4</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>ตรวจข้ออื่น: ข้อ 1 \(P\to Q\) จะจริงต้อง \(P\subseteq Q\) แต่ \(P\cap Q=\varnothing\) เท็จ; ข้อ 2 \(Q\to P\) \(Q\subseteq P\) เท็จ; ข้อ 3 \(\sim P\to Q\) \(\sim P=(\!-\!\infty,0]\cup[3,\infty)\not\subseteq Q=(3,9)\) เท็จ</p>
+</div></div>
+<div class="careless"><b>Careless:</b> log ฐาน \(<1\) เวลาถอด log ต้องกลับเครื่องหมาย — ระวัง</div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 4: }\forall x[P(x)\to\sim Q(x)]}\)</div>
+</section>
+<section class="sol" id="q21">
+<div class="q-header">
+<span class="q-num">ข้อ 21</span>
+<span class="badge year">Ent ต.ค.46</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#7a6a00;background:#fbfae6;border-color:#7a6a0033">🟡 การอ้างเหตุผล</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">พิจารณาการอ้างเหตุผล  ก. เหตุ 1) \(p\wedge q\) 2) \((q\vee r)\to(s\wedge p)\) 3) \(p\to\sim r\) ผล \(s\wedge\sim r\)   ข. เหตุ 1) \(P(x)\to\sim Q(x)\) 2) \(Q(x)\vee R(x)\) ผล \(P(x)\to R(x)\)  — 1) ก และ ข สมเหตุสมผลทั้งคู่  2) ก สมเหตุสมผล แต่ ข ไม่  3) ก ไม่ แต่ ข สมเหตุสมผล  4) ก และ ข ไม่สมเหตุสมผล</div>
+<div class="concept">ก. Modus Ponens + ใช้เหตุ 3 เพื่อได้ \(\sim r\) ข. เปลี่ยน \(Q\vee R\) เป็น \(\sim Q\to R\) แล้วใช้ syllogism</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> เหตุ 1: \(p\wedge q\) จริง \(\Rightarrow p=T,q=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>เหตุ 3: \(p\to\sim r\) จริง แ(\(p=T\)) \(\Rightarrow\sim r\) จริง \(\Rightarrow r=F\) โดย Modus Ponens</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>เหตุ 2: \((q\vee r)\to(s\wedge p)\) จริง; \(q\vee r=T\vee F=T\) \(\Rightarrow s\wedge p\) จริง \(\Rightarrow s=T,p=T\) (ตรง) โดย Modus Ponens</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>ผล \(s\wedge\sim r=T\wedge T=T\) จริง <b>ก สมเหตุสมผล</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p><b>ข)</b> เหตุ 1: \(P(x)\to\sim Q(x)\equiv Q(x)\vee\sim Q(x)\vee\sim P(x)\)... ใช้ \(\sim Q\to\sim P\) (contrapositive)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>เหตุ 2: \(Q\vee R\equiv\sim Q\to R\) จริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>เหตุ 1: \(P\to\sim Q\) จริง; contrapositive \(\sim(\sim Q)\to\sim P\equiv Q\to\sim P\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p>รวม: \(P\to\sim Q\) จริง และ \(\sim Q\to R\) จริง (จากเหตุ 2) — โดย Hypothetical Syllogism ไม่ตรง (เพราะต้องการ \(P\to R\))</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 9</span>
+<div class="body">
+<p>ลองอีกทาง: \(P\to\sim Q\) จริง \(\Rightarrow\sim P\vee\sim Q\) จริง; \(Q\vee R\) จริง \(\Rightarrow\sim P\vee\sim Q\vee(Q\vee R)\) — ต้องได้ \(\sim P\vee R\); แต่จริงๆ ถ้า \(P=T,Q=F,R=F\): เหตุ 1 \(T\to T=T\), เหตุ 2 \(F\vee F=F\) ตัด; ลอง \(P=T,Q=F,R=T\): ผล \(P\to R=T\) — สังเกตว่าเหตุ 1+2 บังคับถ้า \(P\) และ \(\sim Q\) แล้ว \(R\) จะต้องจริง — <b>ข สมเหตุสมผล</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 10</span>
+<div class="body">
+<p>ก และ ข สมเหตุสมผลทั้งคู่ ตรงกับข้อ 1</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 1: ก และ ข สมเหตุสมผลทั้งคู่}}\)</div>
+</section>
+<section class="sol" id="q22">
+<div class="q-header">
+<span class="q-num">ข้อ 22</span>
+<span class="badge year">Ent มี.ค.47</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#8a5a00;background:#fff6e6;border-color:#8a5a0033">🟠 ค่าความจริงของประพจน์</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">ประพจน์ \((\sim p\leftrightarrow\sim r)\vee(p\leftrightarrow q)\) มีค่าความจริงเป็นเท็จ ประพจน์ใดมีค่าความจริงเป็นเท็จ — 1) \(\sim p\to(q\vee r)\)  2) \(\sim p\to(q\wedge r)\)  3) \(p\vee q\vee\sim r\)  4) \(p\wedge q\wedge\sim r\)</div>
+<div class="concept">OR ของสองประพจน์เป็นเท็จ \(\Leftrightarrow\) ทั้งสองเท็จ; \(\leftrightarrow\) เท็จ \(\Leftrightarrow\) ค่าต่างกัน</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>\((\sim p\leftrightarrow\sim r)\vee(p\leftrightarrow q)\) เท็จ \(\Rightarrow\) ทั้งสอง \(\leftrightarrow\) เท็จ</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\(\sim p\leftrightarrow\sim r\) เท็จ \(\Leftrightarrow\sim p\ne\sim r\Leftrightarrow p\ne r\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>\(p\leftrightarrow q\) เท็จ \(\Leftrightarrow p\ne q\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>ดังนั้น \(p\ne r\) และ \(p\ne q\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>กรณี A: \(p=T\Rightarrow q=F,r=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>กรณี B: \(p=F\Rightarrow q=T,r=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p><b>กรณี A (\(p=T,q=F,r=F\)):</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p>ข้อ 1: \(\sim p\to(q\vee r)=F\to F=T\) (จริง) — ไม่ใช่เท็จ</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 9</span>
+<div class="body">
+<p>ข้อ 2: \(\sim p\to(q\wedge r)=F\to F=T\) (จริง)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 10</span>
+<div class="body">
+<p>ข้อ 3: \(p\vee q\vee\sim r=T\vee F\vee T=T\) (จริง)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 11</span>
+<div class="body">
+<p>ข้อ 4: \(p\wedge q\wedge\sim r=T\wedge F\wedge T=F\) (เท็จ) ✓</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 12</span>
+<div class="body">
+<p><b>กรณี B (\(p=F,q=T,r=T\)):</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 13</span>
+<div class="body">
+<p>ข้อ 1: \(\sim p\to(q\vee r)=T\to T=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 14</span>
+<div class="body">
+<p>ข้อ 2: \(\sim p\to(q\wedge r)=T\to T=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 15</span>
+<div class="body">
+<p>ข้อ 3: \(p\vee q\vee\sim r=F\vee T\vee F=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 16</span>
+<div class="body">
+<p>ข้อ 4: \(p\wedge q\wedge\sim r=F\wedge T\wedge F=F\) ✓ เช่นกัน</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 17</span>
+<div class="body">
+<p>ข้อ 4 เป็นเท็จทั้งสองกรณี จึงเป็นเฉลย</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 4: }p\wedge q\wedge\sim r}\)</div>
+</section>
+<section class="sol" id="q23">
+<div class="q-header">
+<span class="q-num">ข้อ 23</span>
+<span class="badge year">Ent มี.ค.47</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#6d3d9e;background:#f3ecfb;border-color:#6d3d9e33">🟣 ตัวบ่งปริมาณตัวเดียว</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">พิจารณา  ก. ประพจน์ \([p\to(q\to r)]\leftrightarrow[q\to(p\to r)]\) เป็นสัจนิรันดร์   ข. มีจำนวนจริง \(a\in(0,\tfrac14)\) ที่ทำให้ \(\exists x[x^2+x+a=0]\) มีค่าความจริงเป็นจริง เมื่อ \(U=(-\tfrac12,0)\)</div>
+<div class="concept">ก. แปลงทั้งสองข้างเป็น \((p\wedge q)\to r\) แล้วเทียบ ข. ใช้ discriminant ของสมการกำลังสอง + ตรวจรากอยู่ใน \(U\)</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> \(p\to(q\to r)\equiv(p\wedge q)\to r\); \(q\to(p\to r)\equiv(q\wedge p)\to r\equiv(p\wedge q)\to r\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>สองข้างสมมูล \(\Rightarrow\)[สองข้าง]\(\leftrightarrow\) เป็นจริงเสมอ = สัจนิรันดร์ <b>ก ถูก</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p><b>ข)</b> \(x^2+x+a=0\) ราก \(x=\dfrac{-1\pm\sqrt{1-4a}}{2}\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>\(a\in(0,\frac14)\Rightarrow1-4a\in(0,1)\Rightarrow\sqrt{1-4a}\in(0,1)\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ราก \(x_1=\dfrac{-1+\sqrt{1-4a}}{2}\in(-\frac12,0)\); \(x_2=\dfrac{-1-\sqrt{1-4a}}{2}\in(-1,-\frac12)\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>\(x_1\in U=(-\frac12,0)\) ✓ ดังนั้น \(\exists x\in U\) ที่ \(x^2+x+a=0\) จริง <b>ข ถูก</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>ก ถูก ข ถูก ตรงกับข้อ 1</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 1: ก ถูก ข ถูก}}\)</div>
+</section>
+<section class="sol" id="q24">
+<div class="q-header">
+<span class="q-num">ข้อ 24</span>
+<span class="badge year">Ent ต.ค.47</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#6d3d9e;background:#f3ecfb;border-color:#6d3d9e33">🟣 ตัวบ่งปริมาณตัวเดียว</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">พิจารณา  ก. ประพจน์ \([p\wedge(q\to r)]\to(r\vee s)\) มีค่าความจริงเป็นเท็จ แล้ว \(p\wedge q\to s\) มีค่าความจริงเป็นเท็จ   ข. นิเสธของ \(\forall x\exists y[(x>y)\wedge(x^2<y)]\) คือ \(\exists x\forall y[(x>y)\to(y\le x^2)]\)</div>
+<div class="concept">ก. แปลง \([p\wedge(q\to r)]\to(r\vee s)\) เท็จ หาค่า \(p,q,r,s\) แล้วเช็ค \(p\wedge q\to s\) ข. \(\sim\forall=\exists\), \(\sim\exists=\forall\), \(\sim(A\wedge B)=\sim A\vee\sim B=A\to\sim B\)</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> \([p\wedge(q\to r)]\to(r\vee s)\) เท็จ \(\Rightarrow p\wedge(q\to r)=T\) และ \(r\vee s=F\Rightarrow r=F,s=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\(p=T\); \(q\to r=q\to F=\sim q\) จริง \(\Rightarrow q=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>ได้ \(p=T,q=F,r=F,s=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>\(p\wedge q\to s=(T\wedge F)\to F=F\to F=T\) (จริง ไม่ใช่เท็จ) <b>ก ผิด</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p><b>ข)</b> \(\sim\forall x\exists y[(x>y)\wedge(x^2<y)]\equiv\exists x\forall x[\sim((x>y)\wedge(x^2<y))]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>De Morgan: \(\sim((x>y)\wedge(x^2<y))\equiv(x\le y)\vee(x^2\ge y)\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>\((x\le y)\vee(x^2\ge y)\equiv(x>y)\to(x^2\ge y)\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p>ดังนั้นนิเสธคือ \(\exists x\forall y[(x>y)\to(y\le x^2)]\) ✓ (เพราะ \(x^2\ge y\Leftrightarrow y\le x^2\)) <b>ข ถูก</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 9</span>
+<div class="body">
+<p>ก ผิด ข ถูก ตรงกับข้อ 3</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 3: ก ผิด ข ถูก}}\)</div>
+</section>
+<section class="sol" id="q25">
+<div class="q-header">
+<span class="q-num">ข้อ 25</span>
+<span class="badge year">Ent มี.ค.48</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#8b1a1a;background:#fff4f4;border-color:#8b1a1a33">🔴 ตัวบ่งปริมาณ 2 ตัว</span>
+<span class="badge old">🔴 หลักสูตรเก่า</span>
+</div>
+<div class="problem">พิจารณา  ก. ถ้าเอกภพสัมพัทธ์คือเซตของจำนวนเต็ม แล้ว \(\exists m\exists n[5m+7n=1]\) มีค่าความจริงเป็นจริง   ข. นิเสธของ \(\forall x\exists y[(x^2-2x\ge y-2)\wedge(y\ge\sin x)]\) คือ \(\exists x\forall y[(x^2-2x<y-2)\vee(y<\sin x)]\)</div>
+<div class="concept">ก. เป็นการหาค่าความจริงของ \(\exists m\exists n\) (2 ตัวซ้อน) เป็น OUT ข. เป็นการหานิเสธของประโยค 2 ตัวบ่งปริมาณ ยังอยู่ในหลักสูตร (IN)</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> \(\exists m\exists n[5m+7n=1]\) เป็นจริง \(\Leftrightarrow\) มี \(m,n\in\mathbb{Z}\) ที่ \(5m+7n=1\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>เนื่องจาก \(\gcd(5,7)=1\) และเป็น Bézout identity เสมอ จึงมีจำนวนเต็ม \(m,n\) เช่น \(m=3,n=-2\): \(5(3)+7(-2)=15-14=1\) ✓ <b>ก ถูก</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p><b>ข)</b> \(\sim\!\big(\forall x\exists y[(x^2-2x\ge y-2)\wedge(y\ge\sin x)]\big)\equiv\exists x\forall y[\sim((x^2-2x\ge y-2)\wedge(y\ge\sin x))]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>De Morgan: \(\sim(P\wedge Q)\equiv\sim P\vee\sim Q\equiv(x^2-2x<y-2)\vee(y<\sin x)\) ✓ <b>ข ถูก</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ก ถูก ข ถูก ตรงกับข้อ 1</p>
+</div></div>
+<div class="curnote"><b>หมายเหตุหลักสูตร:</b> ก. เป็นการหา 'ค่าความจริง' ของประโยค \(\exists m\exists n\) (2 ตัวบ่งปริมาณซ้อน) ซึ่งตัดออกจากหลักสูตร 2561 — ไม่ออก A-Level ปัจจุบัน. ข. เป็นเพียงการ 'หานิเสธ' ของประโยค 2 ตัวบ่งปริมาณ ซึ่งยังอยู่ในหลักสูตร (ใช้กฎ \(\sim\forall=\exists\sim,\ \sim\exists=\forall\sim\) พลิกตัวบ่งปริมาณและนิเสธส่วนใน) — จึงเป็น IN. โจทย์ข้อนี้มีทั้งส่วน IN และ OUT ผสมกัน แต่เนื่องจากมีส่วน OUT จึงจัดเป็นข้อ OUT ตามเกณฑ์</div>
+<div class="technique"><b>เทคนิค (ข้อ ก):</b> Bézout identity — \(\gcd(a,b)=1\) เสมอหมายถึงมี \(m,n\in\mathbb{Z}\) ที่ \(am+bn=1\)</div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 1: ก ถูก ข ถูก}}\)</div>
+</section>
+<section class="sol" id="q26">
+<div class="q-header">
+<span class="q-num">ข้อ 26</span>
+<span class="badge year">Ent มี.ค.48</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#8a5a00;background:#fff6e6;border-color:#8a5a0033">🟠 ค่าความจริงของประพจน์</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">\(p,q,r,s\) ประพจน์ ถ้า \([(p\to\sim q)\vee r]\wedge(q\vee s)\) มีค่าความจริงเป็นจริง และ \((p\wedge s)\to r\) มีค่าความจริงเป็นเท็จ แล้วประพจน์ในข้อใดมีค่าความจริงเป็นเท็จ — 1) \(p\to q\)  2) \(q\to r\)  3) \(r\to s\)  4) \(s\to p\)</div>
+<div class="concept">\((p\wedge s)\to r\) เท็จ \(\Rightarrow p=T,s=T,r=F\) แล้วใช้เงื่อนไขแรกจริงหา \(q\)</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>\((p\wedge s)\to r\) เท็จ \(\Rightarrow p=T,s=T,r=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>แทนในเงื่อนไข 1: \([(p\to\sim q)\vee r]\wedge(q\vee s)=[(T\to\sim q)\vee F]\wedge(q\vee T)=(\sim q)\wedge T=\sim q\) จริง \(\Rightarrow q=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>สรุป \(p=T,q=F,r=F,s=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>ข้อ 1: \(p\to q=T\to F=F\) (เท็จ) ✓</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ข้อ 2: \(q\to r=F\to F=T\) (จริง)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>ข้อ 3: \(r\to s=F\to T=T\) (จริง)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>ข้อ 4: \(s\to p=T\to T=T\) (จริง)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p>ตรงกับข้อ 1</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 1: }p\to q}\)</div>
+</section>
+<section class="sol" id="q27">
+<div class="q-header">
+<span class="q-num">ข้อ 27</span>
+<span class="badge year">A-NET ก.พ.49</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#8b1a1a;background:#fff4f4;border-color:#8b1a1a33">🔴 ตัวบ่งปริมาณ 2 ตัว</span>
+<span class="badge old">🔴 หลักสูตรเก่า</span>
+</div>
+<div class="problem">เอกภพสัมพัทธ์ \(U=\{-3,-2,-1,1,2,3\}\) ข้อใดมีค่าความจริงเป็นเท็จ — 1) \(\exists x\forall y[x+y<y]\)  2) \(\exists x\forall y[x-y^2<x]\)  3) \(\exists x\forall y[xy^2=x]\)  4) \(\exists x\forall y[x^2y=y]\)</div>
+<div class="concept">เป็นการหาค่าความจริงของ \(\exists x\forall y\) (2 ตัวซ้อน) ต้องตรวจทุกตัวเลือกว่าเป็นจริงหรือเท็จ</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ข้อ 1:</b> \(\exists x\forall y[x+y<y]\Leftrightarrow\exists x[\forall y\in U,\ x<0]\) — เพราะ \(x+y<y\Leftrightarrow x<0\); มี \(x\in\{-3,-2,-1\}\) ที่ทำให้จริง — <b>จริง</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p><b>ข้อ 2:</b> \(\exists x\forall y[x-y^2<x]\Leftrightarrow\exists x[\forall y,\ -y^2<0]\Leftrightarrow\exists x[\forall y,\ y^2>0]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>\(y^2>0\) เท็จเมื่อ \(y=0\) แต่ \(0\notin U\) — ดังนั้น \(\forall y\in U,\ y^2>0\) จริง; เลือก \(x\) ใดก็ได้ — <b>จริง</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p><b>ข้อ 3:</b> \(\exists x\forall y[xy^2=x]\Leftrightarrow\exists x[\forall y,\ x(y^2-1)=0]\Leftrightarrow\exists x[x=0\text{ หรือ }\forall y[y^2=1]]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>\(0\notin U\); \(y^2=1\Leftrightarrow y=\pm1\) แต่ \(U\) มี \(y=\pm2,\pm3\) ด้วย จึงไม่ใช่ \(\forall y\); ดังนั้นไม่มี \(x\in U\) ที่ทำให้จริง — <b>เท็จ</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p><b>ข้อ 4:</b> \(\exists x\forall y[x^2y=y]\Leftrightarrow\exists x[\forall y,\ y(x^2-1)=0]\Leftrightarrow\exists x[\forall y,\ x^2=1\text{ หรือ }y=0]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>\(x^2=1\Leftrightarrow x=\pm1\in U\); เลือก \(x=1\) หรือ \(x=-1\) จะได้ \(x^2y=y\) จริงทุก \(y\) — <b>จริง</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p>เฉพาะข้อ 3 เป็นเท็จ — ตรงกับข้อ 3 ในตัวเลือก</p>
+</div></div>
+<div class="curnote"><b>หมายเหตุหลักสูตร:</b> การหา 'ค่าความจริง' ของประโยคที่มีตัวบ่งปริมาณ 2 ตัวซ้อน (\(\exists x\forall y\)) ตัดออกจากหลักสูตร 2561 — ไม่ออก A-Level ปัจจุบัน โจทย์ข้อนี้จึงเป็น OUT</div>
+<div class="technique"><b>เทคนิค:</b> \(\exists x\forall y[\dots]\) เท็จ \(\Leftrightarrow\forall x\exists y[\sim\dots]\) — พลิกทั้งสองตัวบ่งปริมาณ</div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 3: }\exists x\forall y[xy^2=x]}\)</div>
+</section>
+<section class="sol" id="q28">
+<div class="q-header">
+<span class="q-num">ข้อ 28</span>
+<span class="badge year">A-NET ก.พ.49</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★★</span>
+<span class="badge subcat" style="color:#8a5a00;background:#fff6e6;border-color:#8a5a0033">🟠 ค่าความจริงของประพจน์</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">\(p,q,r\) ประพจน์ ถ้า \(p\Rightarrow(q\vee r)\) มีค่าความจริงเป็นจริง และ \(p\vee(q\wedge r)\) มีค่าความจริงเป็นเท็จ แล้วประพจน์ในข้อใดมีค่าความจริงเป็นเท็จ — 1) \(\sim q\vee(p\Rightarrow r)\)  2) \(\sim p\Rightarrow(\sim p\vee q)\)  3) \((q\vee r)\Rightarrow\sim p\vee(q\wedge r)\)  4) \([(\sim q)\vee(\sim r)]\Rightarrow[p\wedge(q\vee r)]\)</div>
+<div class="concept">\(p\vee(q\wedge r)\) เท็จ \(\Rightarrow p=F,q\wedge r=F\) แล้วใช้ \(p\Rightarrow(q\vee r)\) จริง \(\Rightarrow q\vee r\) จริง</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>\(p\vee(q\wedge r)\) เท็จ \(\Rightarrow p=F\) และ \(q\wedge r=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\(p\Rightarrow(q\vee r)=F\Rightarrow(q\vee r)=T\Rightarrow(q\vee r)\) จริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>\(q\wedge r=F\) และ \(q\vee r=T\Rightarrow q,r\) ต่างกัน (\(q=T,r=F\) หรือ \(q=F,r=T\))</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p><b>กรณี A:</b> \(p=F,q=T,r=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ข้อ 1: \(\sim q\vee(p\Rightarrow r)=F\vee(F\Rightarrow F)=F\vee T=T\) (จริง)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>ข้อ 2: \(\sim p\Rightarrow(\sim p\vee q)=T\Rightarrow(T\vee T)=T\Rightarrow T=T\) (จริง)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>ข้อ 3: \((q\vee r)\Rightarrow\sim p\vee(q\wedge r)=(T)\Rightarrow T\vee F=T\Rightarrow T=T\) (จริง)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p>ข้อ 4: \([(\sim q)\vee(\sim r)]\Rightarrow[p\wedge(q\vee r)]=[F\vee T]\Rightarrow[F\wedge T]=T\Rightarrow F=F\) (เท็จ) ✓</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 9</span>
+<div class="body">
+<p><b>กรณี B:</b> \(p=F,q=F,r=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 10</span>
+<div class="body">
+<p>ข้อ 4: \([T\vee F]\Rightarrow[F\wedge T]=T\Rightarrow F=F\) (เท็จ) ✓ เช่นกัน</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 11</span>
+<div class="body">
+<p>ข้อ 4 เป็นเท็จทั้งสองกรณี — ตรงกับข้อ 4</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 4: }[(\sim q)\vee(\sim r)]\Rightarrow[p\wedge(q\vee r)]}\)</div>
+</section>
+<section class="sol" id="q29">
+<div class="q-header">
+<span class="q-num">ข้อ 29</span>
+<span class="badge year">A-NET มี.ค.50</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#8b1a1a;background:#fff4f4;border-color:#8b1a1a33">🔴 ตัวบ่งปริมาณ 2 ตัว</span>
+<span class="badge old">🔴 หลักสูตรเก่า</span>
+</div>
+<div class="problem">พิจารณา  ก. เอกภพคือเซตของจำนวนเฉพาะบวก ข้อความ \(\forall x\exists y[x^2+x+1=y]\) มีค่าความจริงเป็นจริง   ข. นิเสธของ \(\forall x[P(x)\to[Q(x)\vee R(x)]]\) คือ \(\exists x[P(x)\wedge\sim Q(x)\wedge\sim R(x)]\)</div>
+<div class="concept">ก. เป็นการหาค่าความจริงของ \(\forall x\exists y\) (2 ตัวซ้อน) เป็น OUT ข. เป็นการหานิเสธของประโยคตัวบ่งปริมาณเดี่ยว เป็น IN</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> เอกภพ = จำนวนเฉพาะบวก \(=\{2,3,5,7,11,\ldots\}\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\(\forall x\exists y[x^2+x+1=y]\) เป็นจริง \(\Leftrightarrow\) สำหรับทุก \(x\) เฉพาะบวก มี \(y\) เฉพาะบวกที่ \(y=x^2+x+1\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>ทด \(x=2\): \(y=4+2+1=7\) เฉพาะ ✓</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>ทด \(x=3\): \(y=9+3+1=13\) เฉพาะ ✓</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ทด \(x=5\): \(y=25+5+1=31\) เฉพาะ ✓</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>ทด \(x=7\): \(y=49+7+1=57=3\times19\) <b>ไม่เฉพาะ!</b> ดังนั้น \(\forall x\) ไม่จริง <b>ก ผิด</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p><b>ข)</b> \(\sim\forall x[P(x)\to(Q(x)\vee R(x))]\equiv\exists x[\sim(P(x)\to(Q(x)\vee R(x)))]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p>\(\sim(P\to(Q\vee R))\equiv P\wedge\sim(Q\vee R)\equiv P\wedge\sim Q\wedge\sim R\) (De Morgan)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 9</span>
+<div class="body">
+<p>ดังนั้นนิเสธคือ \(\exists x[P(x)\wedge\sim Q(x)\wedge\sim R(x)]\) ✓ <b>ข ถูก</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 10</span>
+<div class="body">
+<p>ก ผิด ข ถูก ตรงกับข้อ 3</p>
+</div></div>
+<div class="curnote"><b>หมายเหตุหลักสูตร:</b> ก. เป็นการหา 'ค่าความจริง' ของ \(\forall x\exists y\) (2 ตัวซ้อน) ตัดออกจากหลักสูตร 2561 — ไม่ออก A-Level ปัจจุบัน. ข. เป็นเพียงการ 'หานิเสธ' ของประโยคตัวบ่งปริมาณเดี่ยว ยังอยู่ในหลักสูตร โจทย์ข้อนี้จึงเป็น OUT เนื่องจากมีส่วน ก. ที่ OUT</div>
+<div class="careless"><b>Careless:</b> อย่าลืมทดสอบหลายค่า \(x\) — บางครั้งค่าแรกๆ ผ่านแต่ค่าต่อมาไม่ผ่าน</div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 3: ก ผิด ข ถูก}}\)</div>
+</section>
+<section class="sol" id="q30">
+<div class="q-header">
+<span class="q-num">ข้อ 30</span>
+<span class="badge year">A-NET มี.ค.50</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★</span>
+<span class="badge subcat" style="color:#7a6a00;background:#fbfae6;border-color:#7a6a0033">🟡 การอ้างเหตุผล</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">กำหนดเหตุ 1) เอกภพสัมพัทธ์ไม่เป็นเซตว่าง 2) \(\forall x[P(x)\to Q(x)]\) 3) \(\forall x[Q(x)\vee R(x)]\) 4) \(\exists x[\sim R(x)]\) ข้อความในข้อใดเป็นผลที่ทำให้สมเหตุสมผล — 1) \(\exists x[P(x)]\)  2) \(\exists x[Q(x)]\)  3) \(\forall x[P(x)]\)  4) \(\forall x[Q(x)]\)</div>
+<div class="concept">จากเหตุ 4: มี \(x_0\) ที่ \(\sim R(x_0)\) จริง \(\Rightarrow R(x_0)\) เท็จ; จากเหตุ 3: \(Q(x_0)\vee R(x_0)\) จริง \(\Rightarrow Q(x_0)\) จริง</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>เหตุ 4: \(\exists x[\sim R(x)]\) จริง \(\Rightarrow\exists x_0\in U\) ที่ \(\sim R(x_0)\) จริง คือ \(R(x_0)=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>เหตุ 3: \(\forall x[Q(x)\vee R(x)]\) จริง \(\Rightarrow Q(x_0)\vee R(x_0)\) จริง; เนื่องจาก \(R(x_0)=F\) \(\Rightarrow Q(x_0)=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>ดังนั้นมี \(x_0\in U\) ที่ \(Q(x_0)=T\) \(\Rightarrow\exists x[Q(x)]\) จริง — ตรงกับข้อ 2</p>
+</div></div>
+<div class="technique"><b>เทคนิค:</b> ใช้สมาชิกเฉพาะ (witness) \(x_0\) ที่ได้จาก \(\exists x[\sim R(x)]\) แล้วสืบทอดไปยังเหตุอื่น</div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 2: }\exists x[Q(x)]}\)</div>
+</section>
+<section class="sol" id="q31">
+<div class="q-header">
+<span class="q-num">ข้อ 31</span>
+<span class="badge year">A-NET มี.ค.51</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★★</span>
+<span class="badge subcat" style="color:#7a6a00;background:#fbfae6;border-color:#7a6a0033">🟡 การอ้างเหตุผล</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">พิจารณา  ก. ถ้า \((p\vee q)\to r\) และ \((q\to r)\to s\) ต่างมีค่าความจริงเป็นเท็จ แล้ว \((p\vee q)\to(r\vee s)\) มีค่าความจริงเป็นจริง   ข. การอ้างเหตุผลนี้สมเหตุสมผล: เหตุ 1) \(\sim p\to\sim(q\vee r)\) 2) \(q\wedge s\) 3) \(\sim r\) ผล \(s\to p\)</div>
+<div class="concept">ก. \((p\vee q)\to r\) เท็จ \(\Rightarrow p\vee q=T,r=F\); \((q\to r)\to s\) เท็จ \(\Rightarrow q\to r=T,s=F\) ข. ใช้ Modus Ponens / contrapositive</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> \((p\vee q)\to r\) เท็จ \(\Rightarrow p\vee q=T,\ r=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\((q\to r)\to s\) เท็จ \(\Rightarrow q\to r=T,\ s=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>\(q\to r=T\) และ \(r=F\Rightarrow q=F\) (เพราะถ้า \(q=T\) แล้ว \(r=T\)ขัด)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>\(q=F\) และ \(p\vee q=T\Rightarrow p=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>สรุป: \(p=T,q=F,r=F,s=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>\((p\vee q)\to(r\vee s)=(T\vee F)\to(F\vee F)=T\to F=F\) (เท็จ) — ไม่จริง <b>ก ผิด</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p><b>ข)</b> เหตุ 2: \(q\wedge s\) จริง \(\Rightarrow q=T,s=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p>เหตุ 3: \(\sim r\) จริง \(\Rightarrow r=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 9</span>
+<div class="body">
+<p>เหตุ 1: \(\sim p\to\sim(q\vee r)\) จริง; \(\sim(q\vee r)=\sim(T\vee F)=\sim T=F\) ดังนั้น \(\sim p\to F\) จริง \(\Rightarrow\sim p=F\Rightarrow p=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 10</span>
+<div class="body">
+<p>ผล \(s\to p=T\to T=T\) จริง — แต่ต้องตรวจว่า 'สมเหตุสมผล' = เหตุจริงทุกครั้งที่ผลจริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 11</span>
+<div class="body">
+<p>ลอง counter: ให้เหตุทั้งหมดจริง — เราต้องการพิสูจน์ว่า \(s\to p\) จำเป็นต้องจริง; เหตุ 2 ให้ \(s=T\), เหตุ 1 และเหตุ 3 ให้ \(p=T\) (จาก Modus Tollens บนเหตุ 1 ที่ \(\sim(q\vee r)=F\)) — ดังนั้น \(s\to p=T\to T=T\) เสมอ <b>ข ถูก</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 12</span>
+<div class="body">
+<p>ก ผิด ข ถูก ตรงกับข้อ 3</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 3: ก ผิด ข ถูก}}\)</div>
+</section>
+<section class="sol" id="q32">
+<div class="q-header">
+<span class="q-num">ข้อ 32</span>
+<span class="badge year">A-NET มี.ค.52</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★</span>
+<span class="badge subcat" style="color:#6d3d9e;background:#f3ecfb;border-color:#6d3d9e33">🟣 ตัวบ่งปริมาณตัวเดียว</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">พิจารณาประโยค  ก. \(\exists x[\sqrt{|x|+2}<x]\)   ข. \(\exists x[2|x|>3x]\)  เอกภพสัมพัทธ์ในข้อใดทำให้ประโยค ก และ ข มีค่าความจริงเป็นจริง — 1) \(\{-2,0,2\}\)  2) \(\{-2,0,3\}\)  3) \(\{0,1,2\}\)  4) \(\{0,1,3\}\)</div>
+<div class="concept">หาค่า \(x\) ที่ทำให้แต่ละประโยคจริง แล้วดูว่าเอกภพใดมีสมาชิกที่จริงทั้งคู่</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> \(\sqrt{|x|+2}<x\) ต้อง \(x>0\) และ \(|x|+2<x^2\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\(x>0\Rightarrow|x|=x\); \(x+2<x^2\Rightarrow x^2-x-2>0\Rightarrow(x-2)(x+1)>0\Rightarrow x>2\) (เพราะ \(x>0\))</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>ดังนั้น ก จริง \(\Leftrightarrow x>2\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p><b>ข)</b> \(2|x|>3x\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ถ้า \(x>0\): \(2x>3x\Rightarrow x<0\) ขัด — ไม่มีคำตอบบวก</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>ถ้า \(x<0\): \(2(-x)>3x\Rightarrow-2x>3x\Rightarrow-5x>0\Rightarrow x<0\) ✓ ทุก \(x<0\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>ถ้า \(x=0\): \(0>0\) เท็จ</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p>ดังนั้น ข จริง \(\Leftrightarrow x<0\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 9</span>
+<div class="body">
+<p>ต้องการเอกภพที่มีสมาชิก \(>2\) (สำหรับ ก) และสมาชิก \(<0\) (สำหรับ ข)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 10</span>
+<div class="body">
+<p>ข้อ 1 \(\{-2,0,2\}\): มี \(-2<0\) ✓ แต่ไม่มี \(>2\) (\(2\) ไม่ผ่าน) — ตัด</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 11</span>
+<div class="body">
+<p>ข้อ 2 \(\{-2,0,3\}\): มี \(-2<0\) ✓ และ \(3>2\) ✓ — จริงทั้งคู่</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 12</span>
+<div class="body">
+<p>ข้อ 3, 4 ไม่มีจำนวนลบ — ตัด</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 13</span>
+<div class="body">
+<p>ตรงกับข้อ 2</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 2: }\{-2,0,3\}}\)</div>
+</section>
+<section class="sol" id="q33">
+<div class="q-header">
+<span class="q-num">ข้อ 33</span>
+<span class="badge year">A-NET มี.ค.52</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★★</span>
+<span class="badge subcat" style="color:#7a6a00;background:#fbfae6;border-color:#7a6a0033">🟡 การอ้างเหตุผล</span>
+<span class="badge in">หลักสูตรปัจจุบัน</span>
+</div>
+<div class="problem">พิจารณา  ก. ถ้า \(p\to(q\wedge r)\) มีค่าความจริงเป็นจริง และ \((p\vee q)\to r\) มีค่าความจริงเป็นเท็จ แล้ว \(q\to(p\vee r)\) มีค่าความจริงเป็นจริง   ข. การอ้างเหตุผล: เหตุ 1) \(\sim p\vee q\) 2) \((p\vee q)\to\sim r\) 3) \(p\to\sim r\) ผล \(q\vee r\)</div>
+<div class="concept">ก. \((p\vee q)\to r\) เท็จ \(\Rightarrow p\vee q=T,r=F\) ข. ตรวจสมเหตุสมผลด้วยการลองค่า</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p><b>ก)</b> \((p\vee q)\to r\) เท็จ \(\Rightarrow p\vee q=T,\ r=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\(p\to(q\wedge r)\) จริง; ถ้า \(p=T\): \(q\wedge r\) จริง \(\Rightarrow q=T,r=T\) แต่ \(r=F\) ขัด — ดังนั้น \(p=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>\(p=F\) และ \(p\vee q=T\Rightarrow q=T\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>สรุป: \(p=F,q=T,r=F\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>\(q\to(p\vee r)=T\to(F\vee F)=T\to F=F\) (เท็จ ไม่จริง) <b>ก ผิด</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p><b>ข)</b> เหตุ 1: \(\sim p\vee q\equiv p\to q\) จริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>เหตุ 2: \((p\vee q)\to\sim r\) จริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p>เหตุ 3: \(p\to\sim r\) จริง</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 9</span>
+<div class="body">
+<p>ผล: \(q\vee r\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 10</span>
+<div class="body">
+<p>ลอง counter: ให้ \(p=F,q=F,r=T\); เหตุ 1 \(\sim F\vee F=T\) ✓; เหตุ 2 \((F\vee F)\to\sim T=F\to F=T\) ✓; เหตุ 3 \(F\to F=T\) ✓; ผล \(F\vee T=T\) ✓ — ผ่าน</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 11</span>
+<div class="body">
+<p>ลอง \(p=F,q=F,r=F\): เหตุ 1 \(T\vee F=T\) ✓; เหตุ 2 \(F\to T=T\) ✓; เหตุ 3 \(F\to T=T\) ✓; ผล \(F\vee F=F\) — ผลเท็จ แต่เหตุจริง — <b>ข ไม่สมเหตุสมผล</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 12</span>
+<div class="body">
+<p>ก ผิด ข ผิด ตรงกับข้อ 4</p>
+</div></div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 4: ก ผิด ข ผิด}}\)</div>
+</section>
+<section class="sol" id="q34">
+<div class="q-header">
+<span class="q-num">ข้อ 34</span>
+<span class="badge year">A-NET มี.ค.52</span>
+<span class="badge type">โจทย์เฉลย</span>
+<span class="badge diff">★★★★★</span>
+<span class="badge subcat" style="color:#8b1a1a;background:#fff4f4;border-color:#8b1a1a33">🔴 ตัวบ่งปริมาณ 2 ตัว</span>
+<span class="badge old">🔴 หลักสูตรเก่า</span>
+</div>
+<div class="problem">\(U\) เป็นเซตคำตอบของอสมการ \(\big||x+1|+2\big|\cdot\big||x+1|-2\big|\le 25\) ประโยคในข้อใดมีค่าความจริงเป็นจริง — 1) \(\exists x\exists y[x+y=14]\)  2) \(\exists x\exists y[x+y=11]\)  3) \(\exists x\exists y[x+y=-11]\)  4) \(\exists x\exists y[x+y=-14]\)</div>
+<div class="concept">เป็นการหาค่าความจริงของ \(\exists x\exists y\) (2 ตัวซ้อน) — OUT; ต้องหาเซต \(U\) ก่อน แล้วดูว่าผลรวมใดได้</div>
+<div class="step">
+<span class="lbl">ชั้นที่ 1</span>
+<div class="body">
+<p>ให้ \(t=|x+1|\ge0\); อสมการ \(|t+2|\cdot|t-2|\le25\Rightarrow|t^2-4|\le25\Rightarrow-25\le t^2-4\le25\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 2</span>
+<div class="body">
+<p>\(t^2\le29\) (เนื่องจาก \(t^2\ge0\) เสมอ ส่วน \(t^2-4\ge-25\) ให้ \(t^2\ge-21\) ซึ่งเป็นจริงเสมอ) \(\Rightarrow0\le t\le\sqrt{29}\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 3</span>
+<div class="body">
+<p>\(t=|x+1|\Rightarrow|x+1|\le\sqrt{29}\approx5.39\Rightarrow-5.39\le x+1\le5.39\Rightarrow-6.39\le x\le4.39\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 4</span>
+<div class="body">
+<p>\(U\approx[-6.39,4.39]\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 5</span>
+<div class="body">
+<p>ต้องการ \(\exists x,y\in U\) ที่ \(x+y=k\) สำหรับ \(k\in\{14,11,-11,-14\}\)</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 6</span>
+<div class="body">
+<p>ผลรวมสูงสุด \(\approx4.39+4.39=8.78<11\) — ข้อ 1 และ ข้อ 2 เท็จ</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 7</span>
+<div class="body">
+<p>ผลรวมต่ำสุด \(\approx-6.39-6.39=-12.78\); ต้องการ \(x+y=-11\) — เป็นไปได้ (เช่น \(x=-5.5,y=-5.5\in U\)) — <b>ข้อ 3 จริง</b></p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 8</span>
+<div class="body">
+<p>\(x+y=-14\) ต่ำสุด \(-12.78>-14\) — ไม่ได้ — ข้อ 4 เท็จ</p>
+</div></div>
+<div class="step">
+<span class="lbl">ชั้นที่ 9</span>
+<div class="body">
+<p>ตรงกับข้อ 3</p>
+</div></div>
+<div class="curnote"><b>หมายเหตุหลักสูตร:</b> การหา 'ค่าความจริง' ของ \(\exists x\exists y\) (2 ตัวบ่งปริมาณซ้อน) ตัดออกจากหลักสูตร 2561 — ไม่ออก A-Level ปัจจุบัน โจทย์ข้อนี้จึงเป็น OUT</div>
+<div class="technique"><b>เทคนิค:</b> แทน \(t=|x+1|\) ลดรูปอสมการซ้อน แล้วค่อยถอด \(|x+1|\) — ทำให้เห็นช่วง \(U\) ได้ง่าย</div>
+<div class="answer">คำตอบ: \(\boxed{\text{ข้อ 3: }\exists x\exists y[x+y=-11]}\)</div>
+</section>
+<footer class="foot">MathsBankTutor · ครูแบงก์ · เฉลยตรรกศาสตร์ ชุด 2 (Ent/A-NET 2541–2552) · ทำตามหลักสูตรแกนกลาง 2561 (IN 30 · OUT 4)</footer>
+</div>
+</body></html>
