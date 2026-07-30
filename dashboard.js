@@ -329,12 +329,12 @@ async function fetchDashData(){
   // dedup: เก็บเฉพาะ row แรกของแต่ละข้อ (กัน results_long มีหลาย row ต่อข้อ)
   const seenQ={}; myAna=myAna.filter(r=>{const q=r[4]; if(seenQ[q])return false; seenQ[q]=true; return true;});
   // Fallback: results_long ยังไม่มีข้อมูลการสอบนี้ → คำนวณจาก QUESTION_BANK ที่ฝังไว้
-  if(!myAna.length&&EMBEDDED_QB[embTopic]){
+  if(!myAna.length){
     myAna=[];
     for(let q=1;q<=30;q++){
       const st=myRow[5+q]||'';
       if(!st)continue;
-      const qb=EMBEDDED_QB[embTopic][q]||{};
+      const qb=(EMBEDDED_QB[embTopic]||{})[q]||{};
       myAna.push([currentStudent,group,date,topic,q,st,qb.sub||'—',qb.level||0]);
     }
   }
