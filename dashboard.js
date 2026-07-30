@@ -313,8 +313,9 @@ async function fetchDashData(){
   const normTopic=(t)=>{
     if(!t) return t;
     // "Exponential logarithm" → "Expo Logarithm"
-    return t.replace(/^Exponential logarithm/i,'Expo Logarithm')
-            .replace(/^exponential logarithm/i,'Expo Logarithm');
+   return t.replace(/^Exponential logarithm/i,'Expo Logarithm')
+              .replace(/^exponential logarithm/i,'Expo Logarithm')
+              .replace(/^เรียงลำดับและจัดหมู่$/,'การเรียงลำดับและการจัดหมู่');
   };
   const embTopic = normTopic(topic);
   if(myAna.length&&EMBEDDED_QB[embTopic]){
