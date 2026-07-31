@@ -148,6 +148,7 @@ function emojiOf(cat){
 // บทแบบใหม่ (ตรีโกณ ฯลฯ): sub = ชื่อหมวดพร้อม emoji อยู่แล้ว → คืนค่าตรงๆ
 // บทเก่า (Expo Logarithm): เดาหมวดจาก keyword
 function catOf(s){
+   if(typeof CAT_EMOJI!=='undefined' && CAT_EMOJI[s]) return s;
   s=s||'';
   // ถ้าขึ้นต้นด้วย emoji วงกลมสี (หมวดแบบใหม่) → เป็นชื่อหมวดอยู่แล้ว คืนค่าตรงๆ
   if(/^[\u{1F534}\u{1F535}\u{1F7E0}\u{1F7E1}\u{1F7E2}\u{1F7E3}\u{1F7E4}\u{26AB}\u{26AA}]/u.test(s)) return s;
