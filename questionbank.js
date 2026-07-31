@@ -3052,7 +3052,7 @@ EMBEDDED_QB["เมทริกซ์ ชุดที่ 2"] = {
 };
 
 // PRACTICE_BANK: ข้อ 1-81 = คลิป YouTube (52-68), ข้อ 82-118 = หน้าเฉลย HTML (Ent 41-52)
-PRACTICE_BANK["เมทริกซ์"] = [
+PRACTICE_BANK["เมทริกซ์ Ent"] = [
   {n:1,c:"🔴 โคแฟกเตอร์/ไมเนอร์/แอดจอยต์",sub:"โคแฟกเตอร์/ไมเนอร์/แอดจอยต์",l:4,s:"PAT1 มี.ค.52",y:"2552",yt:"https://www.youtube.com/watch?v=-0P0Xvc_5AM&list=PLc4ncgz2CJ7MjHpl2beFOkDCBc3pwOtWO"},
   {n:2,c:"🔵 อินเวอร์ส & สมการเมทริกซ์",sub:"อินเวอร์ส & สมการเมทริกซ์",l:4,s:"PAT1 มี.ค.52",y:"2552",yt:"https://www.youtube.com/watch?v=Aevt6SlHZQI&list=PLc4ncgz2CJ7MjHpl2beFOkDCBc3pwOtWO"},
   {n:3,c:"🟢 ระบบสมการ & ดำเนินการตามแถว",sub:"ระบบสมการ & ดำเนินการตามแถว",l:3,s:"PAT1 มี.ค.52",y:"2552",yt:"https://www.youtube.com/watch?v=jycjMcZs1DA&list=PLc4ncgz2CJ7MjHpl2beFOkDCBc3pwOtWO"},
@@ -3212,7 +3212,7 @@ EMBEDDED_QB["ตรรกศาสตร์ ชุดที่ 1"] = {
 };
 
 // PRACTICE_BANK: ข้อ 1-50 = คลิป YouTube (52-68), 51-84 = หน้าเฉลย HTML (Ent 41-52)
-PRACTICE_BANK["ตรรกศาสตร์"] = [
+PRACTICE_BANK["ตรรกศาสตร์ Ent"] = [
   {n:1,c:"🔵 สมมูลของประพจน์",sub:"สมมูลของประพจน์",l:3,s:"PAT1 มี.ค.52",y:"2552",yt:"https://www.youtube.com/watch?v=NquECc-zmv8&list=PLc4ncgz2CJ7PMXRLpmq8MBEOz7bXV-1pz"},
   {n:2,c:"🔴 หาค่าความจริงตัวบ่งปริมาณ 2 ตัว",sub:"หาค่าความจริงตัวบ่งปริมาณ 2 ตัว",l:4,s:"PAT1 มี.ค.52",y:"2552",yt:"https://www.youtube.com/watch?v=efYoRaHOYOM&list=PLc4ncgz2CJ7PMXRLpmq8MBEOz7bXV-1pz"},
   {n:3,c:"🟣 ตัวบ่งปริมาณ (เดี่ยว/สมมูล/นิเสธ)",sub:"ตัวบ่งปริมาณ (เดี่ยว/สมมูล/นิเสธ)",l:3,s:"PAT1 ก.ค.52",y:"2552",yt:"https://www.youtube.com/watch?v=FQGwPXDjC-U&list=PLc4ncgz2CJ7PMXRLpmq8MBEOz7bXV-1pz"},
