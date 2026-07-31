@@ -218,9 +218,15 @@ function renderPracticePlan(d){
   // normalize topic ก่อน lookup (เช่น "Exponential logarithm" → "Expo Logarithm")
   const _normT=(t)=>t?t.replace(/^Exponential logarithm/i,'Expo Logarithm'):t;
   const _nTopic=_normT(d.topic);
+  
+
+   
+   const PB_ALIAS={'เรียงลำดับและจัดหมู่':['การเรียงลำดับและการจัดหมู่'],'เรขาคณิตวิเคราะห์และภาคตัดกรวย':['เรขาคณิตวิเคราะห์','ภาคตัดกรวย']};
   let bank=PRACTICE_BANK[_nTopic];
-  if(!bank){ const baseTopic=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); bank=PRACTICE_BANK[baseTopic]; }
-  // รวมคลัง Ent เข้ากับคลังหลัก (เช่น ตรีโกณมิติ + ตรีโกณมิติ Ent)
+  if(!bank){ const baseTopic=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); bank=PRACTICE_BANK[baseTopic];
+    if(!bank){ const _al=PB_ALIAS[baseTopic]||PB_ALIAS[_nTopic]; if(_al){ const _m=_al.reduce((a,k)=>a.concat(PRACTICE_BANK[k]||[]),[]); if(_m.length) bank=_m; } }
+  }
+   // รวมคลัง Ent เข้ากับคลังหลัก (เช่น ตรีโกณมิติ + ตรีโกณมิติ Ent)
   if(bank){ const _base=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); const _ent=PRACTICE_BANK[_base+' Ent']; if(_ent) bank=[...bank,..._ent]; }
   if(!bank){ el.innerHTML='<div class="d-card"><div style="font-size:13px;color:var(--text2);line-height:1.6;padding:4px 0">ยังไม่มีคลังฝึกพร้อมเฉลยวิดีโอสำหรับบท <b>'+d.topic+'</b> ครับ — ตอนนี้พร้อมบท: <b>'+Object.keys(PRACTICE_BANK).filter(k=>!/ Ent$/.test(k)).join(', ')+'</b></div></div>'; return; }
   // รวมยอดพลาดตามหมวด (จาก d.subtopics)
