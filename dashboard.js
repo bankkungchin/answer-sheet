@@ -10,8 +10,13 @@
    แก้ dropdown รายชื่อโชว์ครบทุกคน (เดิมตัดที่ 80 ชื่อ ทำให้กลุ่มวันจันทร์หาย),
    switchTab รองรับจำนวนแท็บไม่จำกัด, ปุ่มสลับธีม สว่าง/มืด/ตามระบบ,
    ปรับข้อความ 🦉/🐘 ไม่ผูกมัดว่าครูจะติดต่อผู้ปกครอง
+   ── v3.0 (SECURITY) ──
+   รองรับ Apps Script proxy: ถ้า config.js มี PROXY_URL → ทุกอย่างวิ่งผ่าน proxy
+   (ไม่ใช้ API key ฝั่งเว็บ, PIN ตรวจฝั่งเซิร์ฟเวอร์, กันเดา PIN รัว)
+   ถ้ายังไม่มี PROXY_URL → ทำงานแบบเดิมทุกประการ (ช่วงเปลี่ยนผ่านเว็บไม่ล่ม)
    ============================================================ */
-let pinBuffer='', pinAttempts=0, currentStudent='';
+const _USE_PROXY=()=> (typeof PROXY_URL!=='undefined' && PROXY_URL);
+let pinBuffer='', pinAttempts=0, currentStudent='', currentPin='';
 let dashData = null;let dashErr='';let selectedGroups=null;
 let diffChartInst=null, groupChartInst=null, distChartInst=null;
 let trendChartInst=null, mixChartInst=null;
@@ -24,11 +29,18 @@ async function loadStudents(){
   document.getElementById('p1status').className='status';
   document.getElementById('p1status').textContent='กำลังโหลดรายชื่อ...';
   try{
-    const res=await fetch(`${BASE}/${SHEET_ID}/values/students!B2:B500?key=${API_KEY}`);
-    const data=await res.json();
-    if(data.error){document.getElementById('p1status').className='status err';document.getElementById('p1status').textContent='Error: '+data.error.message;return;}
-    const seen=new Set(); studentList=[];
-    (data.values||[]).forEach(r=>{if(r[0]&&!seen.has(r[0])){seen.add(r[0]);studentList.push(r[0]);}});
+    if(_USE_PROXY()){
+      const res=await fetch(PROXY_URL+'?action=students');
+      const data=await res.json();
+      if(!data.ok){document.getElementById('p1status').className='status err';document.getElementById('p1status').textContent='Error: '+(data.error||'โหลดรายชื่อไม่ได้');return;}
+      studentList=data.students||[];
+    }else{
+      const res=await fetch(`${BASE}/${SHEET_ID}/values/students!B2:B500?key=${API_KEY}`);
+      const data=await res.json();
+      if(data.error){document.getElementById('p1status').className='status err';document.getElementById('p1status').textContent='Error: '+data.error.message;return;}
+      const seen=new Set(); studentList=[];
+      (data.values||[]).forEach(r=>{if(r[0]&&!seen.has(r[0])){seen.add(r[0]);studentList.push(r[0]);}});
+    }
     document.getElementById('p1status').className='status ok';
     document.getElementById('p1status').textContent=`โหลดแล้ว ${studentList.length} คน — พิมพ์ชื่อเพื่อค้นหาได้เลย ✓`;
     const inp=document.getElementById('studentSearch'); if(inp){inp.placeholder='พิมพ์ชื่อเพื่อค้นหา… ('+studentList.length+' คน)';}
@@ -97,19 +109,30 @@ function pinDel(){if(pinBuffer.length>0){pinBuffer=pinBuffer.slice(0,-1);updateP
 async function verifyPin(){
   document.getElementById('p2status').textContent='กำลังตรวจสอบ...';
   try{
-    const res=await fetch(`${BASE}/${SHEET_ID}/values/students!B2:F200?key=${API_KEY}`);
-    const data=await res.json();
-    if(data.error){document.getElementById('p2status').textContent='Error: '+data.error.message;return;}
-    const rows=data.values||[];
-    const row=rows.find(r=>r[0]===currentStudent);
-    const correctPin=row&&row[4]?String(row[4]).trim():null;
-    // ถ้าไม่มี PIN ตั้งไว้ หรือ PIN ไม่ตรง → reject
-    if(!correctPin){
+    let pinOk=false, pinErr='';
+    if(_USE_PROXY()){
+      // v3: ตรวจ PIN ฝั่งเซิร์ฟเวอร์ — PIN ของคนอื่นไม่ถูกส่งมาที่เบราว์เซอร์เลย
+      const res=await fetch(PROXY_URL+'?action=login&name='+encodeURIComponent(currentStudent)+'&pin='+encodeURIComponent(pinBuffer));
+      const data=await res.json();
+      pinOk=!!data.ok; pinErr=data.error||'';
+    }else{
+      const res=await fetch(`${BASE}/${SHEET_ID}/values/students!B2:F500?key=${API_KEY}`);
+      const data=await res.json();
+      if(data.error){document.getElementById('p2status').textContent='Error: '+data.error.message;return;}
+      const rows=data.values||[];
+      const row=rows.find(r=>r[0]===currentStudent);
+      const correctPin=row&&row[4]?String(row[4]).trim():null;
+      if(!correctPin){pinErr='ยังไม่ได้ตั้ง PIN — กรุณาติดต่อครู';}
+      else pinOk=(pinBuffer===correctPin);
+    }
+    // error พิเศษ (ยังไม่ตั้ง PIN / โดนล็อกชั่วคราว) → แจ้งตรงๆ ไม่นับครั้งผิด
+    if(!pinOk&&pinErr&&pinErr!=='PIN ไม่ถูกต้อง'){
       document.getElementById('p2status').className='status err';
-      document.getElementById('p2status').textContent='ยังไม่ได้ตั้ง PIN — กรุณาติดต่อครู';
+      document.getElementById('p2status').textContent=pinErr;
       pinBuffer=''; updatePinDots(); return;
     }
-    if(pinBuffer===correctPin){
+    if(pinOk){
+      currentPin=pinBuffer;
       document.getElementById('p2status').textContent='';
       const short=currentStudent.replace(/\s*\(.*\)/,'');
       document.getElementById('modeAvatar').textContent=short.substring(0,3);
@@ -148,7 +171,6 @@ function emojiOf(cat){
 // บทแบบใหม่ (ตรีโกณ ฯลฯ): sub = ชื่อหมวดพร้อม emoji อยู่แล้ว → คืนค่าตรงๆ
 // บทเก่า (Expo Logarithm): เดาหมวดจาก keyword
 function catOf(s){
-   if(typeof CAT_EMOJI!=='undefined' && CAT_EMOJI[s]) return s;
   s=s||'';
   // ถ้าขึ้นต้นด้วย emoji วงกลมสี (หมวดแบบใหม่) → เป็นชื่อหมวดอยู่แล้ว คืนค่าตรงๆ
   if(/^[\u{1F534}\u{1F535}\u{1F7E0}\u{1F7E1}\u{1F7E2}\u{1F7E3}\u{1F7E4}\u{26AB}\u{26AA}]/u.test(s)) return s;
@@ -219,15 +241,9 @@ function renderPracticePlan(d){
   // normalize topic ก่อน lookup (เช่น "Exponential logarithm" → "Expo Logarithm")
   const _normT=(t)=>t?t.replace(/^Exponential logarithm/i,'Expo Logarithm'):t;
   const _nTopic=_normT(d.topic);
-  
-
-   
-   const PB_ALIAS={'เรียงลำดับและจัดหมู่':['การเรียงลำดับและการจัดหมู่'],'เรขาคณิตวิเคราะห์และภาคตัดกรวย':['เรขาคณิตวิเคราะห์','ภาคตัดกรวย']};
   let bank=PRACTICE_BANK[_nTopic];
-  if(!bank){ const baseTopic=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); bank=PRACTICE_BANK[baseTopic];
-    if(!bank){ const _al=PB_ALIAS[baseTopic]||PB_ALIAS[_nTopic]; if(_al){ const _m=_al.reduce((a,k)=>a.concat(PRACTICE_BANK[k]||[]),[]); if(_m.length) bank=_m; } }
-  }
-   // รวมคลัง Ent เข้ากับคลังหลัก (เช่น ตรีโกณมิติ + ตรีโกณมิติ Ent)
+  if(!bank){ const baseTopic=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); bank=PRACTICE_BANK[baseTopic]; }
+  // รวมคลัง Ent เข้ากับคลังหลัก (เช่น ตรีโกณมิติ + ตรีโกณมิติ Ent)
   if(bank){ const _base=_nTopic.replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); const _ent=PRACTICE_BANK[_base+' Ent']; if(_ent) bank=[...bank,..._ent]; }
   if(!bank){ el.innerHTML='<div class="d-card"><div style="font-size:13px;color:var(--text2);line-height:1.6;padding:4px 0">ยังไม่มีคลังฝึกพร้อมเฉลยวิดีโอสำหรับบท <b>'+d.topic+'</b> ครับ — ตอนนี้พร้อมบท: <b>'+Object.keys(PRACTICE_BANK).filter(k=>!/ Ent$/.test(k)).join(', ')+'</b></div></div>'; return; }
   // รวมยอดพลาดตามหมวด (จาก d.subtopics)
@@ -244,7 +260,6 @@ function renderPracticePlan(d){
     let pick=[];
     if(pool.length<=need){ pick=pool.slice(); }
     else { const step=pool.length/need; for(let i=0;i<need;i++) pick.push(pool[Math.floor(i*step)]); }
-    pick.sort(function(a,b){var ae=(a.yt||'').includes('.html#')?1:0,be=(b.yt||'').includes('.html#')?1:0;return (ae-be)||(a.n-b.n);});
     grand+=pick.length;
     planForPrint.push({cat:c.cat,emoji:emojiOf(c.cat),pct:pct,ok:c.ok,total:c.total,picks:pick.map(q=>({n:q.n,s:q.s,l:q.l,yt:q.yt}))});
     const emoji=emojiOf(c.cat);
@@ -274,12 +289,21 @@ function parseStatus(val){
 async function fetchDashData(){
   selectedGroups=null; // reset ตัวกรองกลุ่มทุกครั้งที่ดึงข้อมูลใหม่
   const topicFilter=document.getElementById('topicFilter').value.trim();
-  const [resData,longData]=await Promise.all([
-    fetch(`${BASE}/${SHEET_ID}/values/${encodeURIComponent('results!A:AR')}?key=${API_KEY}`).then(r=>r.json()),
-    fetch(`${BASE}/${SHEET_ID}/values/${encodeURIComponent('results_long!A:H')}?key=${API_KEY}`).then(r=>r.json())
-  ]);
+  let resData,longData;
+  if(_USE_PROXY()){
+    // v3: ดึงผ่าน proxy — ต้องมี PIN ที่ถูกต้องเท่านั้น คนนอกดึงข้อมูลไม่ได้
+    const r=await fetch(PROXY_URL+'?action=data&name='+encodeURIComponent(currentStudent)+'&pin='+encodeURIComponent(currentPin));
+    const j=await r.json();
+    if(!j.ok){dashData=null;dashErr='เชื่อมต่อระบบไม่ได้: '+(j.error||'ลองใหม่อีกครั้ง');return;}
+    resData={values:j.results||[]}; longData={values:j.results_long||[]};
+  }else{
+    [resData,longData]=await Promise.all([
+      fetch(`${BASE}/${SHEET_ID}/values/${encodeURIComponent('results!A:AR')}?key=${API_KEY}`).then(r=>r.json()),
+      fetch(`${BASE}/${SHEET_ID}/values/${encodeURIComponent('results_long!A:H')}?key=${API_KEY}`).then(r=>r.json())
+    ]);
+    if(resData.error){dashData=null;dashErr='เชื่อมต่อ Google Sheets ไม่ได้: '+(resData.error.message||'ตรวจสอบอินเทอร์เน็ต/API key');return;}
+  }
   const rows=resData.values||[];
-  if(resData.error){dashData=null;dashErr='เชื่อมต่อ Google Sheets ไม่ได้: '+(resData.error.message||'ตรวจสอบอินเทอร์เน็ต/API key');return;}
   const _norm=s=>String(s||'').replace(/\s+/g,' ').trim();
   const me=_norm(currentStudent);
   const allMine=rows.slice(1).filter(r=>_norm(r[1])===me);
@@ -320,9 +344,8 @@ async function fetchDashData(){
   const normTopic=(t)=>{
     if(!t) return t;
     // "Exponential logarithm" → "Expo Logarithm"
-   return t.replace(/^Exponential logarithm/i,'Expo Logarithm')
-              .replace(/^exponential logarithm/i,'Expo Logarithm')
-              .replace(/^เรียงลำดับและจัดหมู่$/,'การเรียงลำดับและการจัดหมู่');
+    return t.replace(/^Exponential logarithm/i,'Expo Logarithm')
+            .replace(/^exponential logarithm/i,'Expo Logarithm');
   };
   const embTopic = normTopic(topic);
   if(myAna.length&&EMBEDDED_QB[embTopic]){
@@ -337,12 +360,12 @@ async function fetchDashData(){
   // dedup: เก็บเฉพาะ row แรกของแต่ละข้อ (กัน results_long มีหลาย row ต่อข้อ)
   const seenQ={}; myAna=myAna.filter(r=>{const q=r[4]; if(seenQ[q])return false; seenQ[q]=true; return true;});
   // Fallback: results_long ยังไม่มีข้อมูลการสอบนี้ → คำนวณจาก QUESTION_BANK ที่ฝังไว้
-  if(!myAna.length){
+  if(!myAna.length&&EMBEDDED_QB[embTopic]){
     myAna=[];
     for(let q=1;q<=30;q++){
       const st=myRow[5+q]||'';
       if(!st)continue;
-      const qb=(EMBEDDED_QB[embTopic]||{})[q]||{};
+      const qb=EMBEDDED_QB[embTopic][q]||{};
       myAna.push([currentStudent,group,date,topic,q,st,qb.sub||'—',qb.level||0]);
     }
   }
@@ -805,6 +828,35 @@ const PARENT_TYPES={
   bee:     {em:'🐝',nm:'ผึ้ง',tag:'การ์ดเดียวจบ'}
 };
 function _getPType(){ try{return localStorage.getItem('ptype:'+currentStudent)||'dolphin';}catch(e){return 'dolphin';} }
+
+/* ═══════ v3.1: ระบบข้อความไม่ซ้ำ ═══════
+   (1) _pv() = หมุนสำนวนตามครั้งที่สอบ → ครั้งติดกันไม่ได้ประโยคเดิม แต่รายงานเดิมเปิดกี่รอบก็เหมือนเดิม
+   (2) _parentFacts() = ดึงข้อเท็จจริงเฉพาะตัวนักเรียน (เลขข้อ ชื่อหัวข้อ จุดที่พลาดซ้ำ) มาใส่ในประโยค */
+function _pSeed(d){ return ((d.history&&d.history.length)||1) + String(d.date||'').length; }
+function _pv(pool,d,off){ if(!pool||!pool.length)return''; return pool[(_pSeed(d)+(off||0))%pool.length]; }
+function _thaiList(a,max){ a=(a||[]).filter(Boolean); if(!a.length)return''; const t=a.slice(0,max||2); return t.join(' และ ')+(a.length>(max||2)?' (และหัวข้ออื่น)':''); }
+function _parentFacts(d){
+  const f={};
+  const st=s=>d.myAna.filter(r=>parseStatus(r[5]||'')===s);
+  const qn=s=>st(s).map(r=>parseInt(r[4])).filter(n=>n).sort((a,b)=>a-b);
+  const subs=s=>[...new Set(st(s).map(r=>r[6]).filter(x=>x&&x!=='—'))];
+  f.careQ=qn('care'); f.conceptQ=qn('concept'); f.cantQ=qn('cant'); f.timeQ=qn('timeout');
+  f.careSub=subs('care'); f.conceptSub=subs('concept'); f.cantSub=subs('cant');
+  f.weak=(d.subtopics||[]).filter(s=>s.total&&Math.round(s.ok/s.total*100)<70);
+  f.strong=(d.subtopics||[]).filter(s=>s.total>=2&&s.ok/s.total>=0.8);
+  f.weakName=f.weak.length?f.weak[0].name:'';
+  f.strongName=f.strong.length?f.strong[f.strong.length-1].name:'';
+  // จุดที่พลาดซ้ำข้ามการสอบ (จาก results_long ทุกครั้ง)
+  const mm={};
+  (d.myLongAll||[]).forEach(r=>{
+    const s=(r[6]&&r[6]!=='—')?r[6]:''; if(!s)return;
+    const k=parseStatus(r[5]||''); if(k==='ok'||k==='blank')return;
+    (mm[s]=mm[s]||new Set()).add((r[2]||'')+'|'+(r[3]||''));
+  });
+  f.chronic=Object.entries(mm).filter(([,v])=>v.size>=2).sort((a,b)=>b[1].size-a[1].size).map(([k,v])=>({sub:k,times:v.size}));
+  f.qList=(arr)=>arr.length?('ข้อ '+arr.slice(0,6).join(', ')+(arr.length>6?' …':'')):'';
+  return f;
+}
 function setPType(k){ try{localStorage.setItem('ptype:'+currentStudent,k);}catch(e){} if(dashData)renderParentDash(dashData); }
 function _fillParentQGrid(d){
   const qClass={ok:'q-ok',care:'q-care',concept:'q-concept',cant:'q-cant',timeout:'q-timeout',wrong:'q-wrong',blank:'q-blank'};
@@ -879,12 +931,36 @@ function _parentDolphin(d){
   // ── สรุปรวมต้องทบทวน ──
   const totalReview=(d.care||0)+(d.concept||0)+(d.cant||0)+(d.timeout||0);
   if(totalReview>0)problems.push({icon:'🔁',color:'var(--amber-bg,#fff7ed)',border:'var(--amber,#f59e0b)',count:totalReview,countColor:'var(--amber,#f59e0b)',title:'ต้องทบทวนรวม '+totalReview+' ข้อ',desc:'แบ่งเป็น: ⚠️สะเพร่า '+(d.care||0)+' | 🧠คอนเซปต์ '+(d.concept||0)+' | ❌ทำไม่ได้ '+(d.cant||0)+' | ⏰ไม่ทัน '+(d.timeout||0)+' ข้อ'});
-  if((d.concept||0)>0)problems.push({icon:'🧠',color:'#f3e8ff',border:'#a855f7',count:(d.concept||0),countColor:'#a855f7',title:'คอนเซปต์ยังไม่แน่น '+(d.concept||0)+' ข้อ',desc:'ทำผิดเพราะยังไม่เข้าใจทฤษฎี — ควรกลับไปทบทวนคอนเซปต์ก่อนทำโจทย์เพิ่ม'});
-  if((d.cant||0)>0)problems.push({icon:'❌',color:'#fee2e2',border:'#ef4444',count:(d.cant||0),countColor:'#ef4444',title:'ทำไม่ได้ '+(d.cant||0)+' ข้อ',desc:'ยังขาดทักษะ — ควรดูคลิปหรือให้ครูอธิบายเพิ่มเติมแล้วลองทำใหม่'});
-  if((d.timeout||0)>0)problems.push({icon:'⏰',color:'#f1f5f9',border:'#94a3b8',count:(d.timeout||0),countColor:'#94a3b8',title:'ไม่ทันเวลา '+(d.timeout||0)+' ข้อ',desc:'ทำไม่ทันในห้อง — ฝึกจับเวลาและทำข้อง่ายก่อนเพื่อสร้างความเร็ว'});
-  if(d.wrong>0)problems.push({icon:'🔴',color:'var(--red-l)',border:'var(--red)',title:'เนื้อหาที่ยังต้องเรียนรู้เพิ่ม',desc:`ทำผิด ${d.wrong} ข้อ — เป็นจุดที่ยังไม่เข้าใจเต็มที่ แก้ได้ด้วยการทบทวนเพิ่มเติมจากคลิป เอกสาร หรือถามผู้รู้ ไม่ใช่เรื่องน่ากังวล แต่เป็นโอกาสพัฒนา`,count:d.wrong,countColor:'var(--red)'});
-  if(d.care>0)problems.push({icon:'🟡',color:'var(--amber-l)',border:'var(--amber)',title:'รู้คำตอบแล้ว แต่พลาดจากความรีบ',desc:`พลาด ${d.care} ข้อทั้งที่ทำเป็น — ความรอบคอบเป็นทักษะที่ฝึกได้เหมือนกล้ามเนื้อ ลองชวนลูกอธิบายวิธีตรวจคำตอบให้ฟัง จะช่วยได้มากกว่าการเตือนให้ระวัง`,count:d.care,countColor:'var(--amber)'});
-  if(d.blank>0)problems.push({icon:'⬜',color:'var(--surf)',border:'var(--border-md)',title:'ข้อที่ยังไม่ได้ลงมือทำ',desc:`มี ${d.blank} ข้อที่เว้นไว้ — ลองถามลูกด้วยความเข้าใจว่าเป็นเพราะเวลาไม่พอ ยังไม่เข้าใจโจทย์ หรือไม่มั่นใจ เพื่อช่วยให้ตรงจุด`,count:d.blank,countColor:'var(--text3)'});
+  const F=_parentFacts(d);
+  if((d.concept||0)>0)problems.push({icon:'🧠',color:'#f3e8ff',border:'#a855f7',count:(d.concept||0),countColor:'#a855f7',title:'คอนเซปต์ยังไม่แน่น '+(d.concept||0)+' ข้อ',desc:_pv([
+    `${F.qList(F.conceptQ)||'บางข้อ'} ผิดเพราะหลักการยังไม่แน่น${F.conceptSub.length?' — อยู่ในหัวข้อ '+_thaiList(F.conceptSub):''} ควรทบทวนทฤษฎีให้เข้าใจก่อนทำโจทย์เพิ่ม`,
+    `กลุ่มนี้คือข้อที่น้อง "เข้าใจคลาดเคลื่อน" ไม่ใช่ "ไม่ตั้งใจ"${F.conceptSub.length?' โดยเฉพาะเรื่อง'+_thaiList(F.conceptSub):''} — ดูคลิปหรือให้ครูอธิบายซ้ำจะได้ผลกว่าการทำโจทย์เยอะๆ`,
+    `${F.qList(F.conceptQ)||'บางข้อ'} เป็นจุดที่ต้องกลับไปตั้งต้นใหม่ที่หลักการ การรีบทำโจทย์เพิ่มตอนนี้จะยิ่งจำวิธีผิดไปใช้ครับ`,
+    `ผิดจากความเข้าใจ ไม่ใช่ความประมาท${F.conceptSub.length?' — หัวข้อ '+_thaiList(F.conceptSub)+' ยังต้องปูพื้นเพิ่ม':''} เป็นจุดที่ครูจะอธิบายซ้ำให้ในคาบครับ`
+  ],d,0)});
+  if((d.cant||0)>0)problems.push({icon:'❌',color:'#fee2e2',border:'#ef4444',count:(d.cant||0),countColor:'#ef4444',title:'ทำไม่ได้ '+(d.cant||0)+' ข้อ',desc:_pv([
+    `${F.qList(F.cantQ)||'บางข้อ'} ยังทำไม่ได้ — ควรดูคลิปเฉลยแล้วลองทำใหม่ด้วยตัวเองอีกครั้ง`,
+    `เป็นโจทย์ที่เกินระดับที่น้องฝึกมาถึงตอนนี้${F.cantSub.length?' (หัวข้อ '+_thaiList(F.cantSub)+')':''} ไม่ใช่เรื่องน่ากังวล แต่เป็นลำดับถัดไปที่ต้องเก็บ`,
+    `ข้อกลุ่มนี้ครูแนะนำให้ทำทีหลังสุด หลังเก็บข้อที่พลาดจากความรีบครบแล้ว จะได้คะแนนคืนคุ้มแรงกว่า`,
+    `${F.qList(F.cantQ)||'บางข้อ'} คือเป้าหมายระยะถัดไป — ถ้าเก็บได้ครั้งหน้าคะแนนจะขยับชัดเจนครับ`
+  ],d,1)});
+  if((d.timeout||0)>0)problems.push({icon:'⏰',color:'#f1f5f9',border:'#94a3b8',count:(d.timeout||0),countColor:'#94a3b8',title:'ไม่ทันเวลา '+(d.timeout||0)+' ข้อ',desc:_pv([
+    `${F.qList(F.timeQ)||'บางข้อ'} หมดเวลาก่อน — ฝึกข้ามข้อที่ติดแล้ววนกลับมาทีหลัง จะเก็บคะแนนได้มากขึ้น`,
+    `การบริหารเวลาเป็นทักษะแยกจากความเก่ง ฝึกจับเวลาที่บ้านสัก 2-3 ครั้งก็เห็นผลแล้วครับ`,
+    `น้องใช้เวลากับข้อยากนานเกินไปจนไม่เหลือเวลาข้อท้าย ลองฝึกกวาดข้อง่ายให้ครบก่อนหนึ่งรอบ`,
+    `${F.qList(F.timeQ)||'ข้อท้ายๆ'} ยังไม่ได้ลงมือเพราะเวลาหมด — ไม่ได้แปลว่าทำไม่ได้ครับ`
+  ],d,2)});
+  if(d.care>0)problems.push({icon:'🟡',color:'var(--amber-l)',border:'var(--amber)',title:'รู้คำตอบแล้ว แต่พลาดจากความรีบ',desc:_pv([
+    `${F.qList(F.careQ)||''} พลาดทั้งที่ทำเป็น — ลองชวนน้องอธิบายวิธีตรวจคำตอบให้ฟัง ได้ผลกว่าการเตือนให้ระวังครับ`,
+    `นี่คือ ${d.care} คะแนนที่อยู่ใกล้มือที่สุด${F.careSub.length?' (หัวข้อ '+_thaiList(F.careSub)+')':''} ความรอบคอบฝึกได้เหมือนกล้ามเนื้อ`,
+    `น้องรู้วิธีทำครบแล้ว เหลือแค่จังหวะตรวจทาน — ลองให้จดว่าแต่ละข้อพลาดตรงไหน (อ่านโจทย์ตก/คำนวณ/ลอกเลข) จะเห็นรูปแบบตัวเอง`,
+    `ถ้าเก็บกลุ่มนี้ได้ครบ คะแนนจะขึ้นเป็น ${Math.min(30,d.score+d.care)}/30 ทันทีโดยไม่ต้องเรียนอะไรใหม่เลยครับ`
+  ],d,3),count:d.care,countColor:'var(--amber)'});
+  if(d.blank>0)problems.push({icon:'⬜',color:'var(--surf)',border:'var(--border-md)',title:'ข้อที่ยังไม่ได้ลงมือทำ',desc:_pv([
+    `มี ${d.blank} ข้อที่เว้นไว้ — ลองถามด้วยความเข้าใจว่าเพราะเวลาไม่พอ ไม่เข้าใจโจทย์ หรือไม่มั่นใจ`,
+    `${d.blank} ข้อที่ไม่ได้แตะ อาจบอกเรื่องการจัดลำดับข้อมากกว่าเรื่องความรู้ครับ`,
+    `การเว้นข้อไว้บางครั้งคือการตัดสินใจที่ดี (ไม่เสียเวลากับข้อยาก) ลองถามน้องว่าตั้งใจข้ามหรือทำไม่ทัน`
+  ],d,4),count:d.blank,countColor:'var(--text3)'});
 
   const pp=document.getElementById('p-problems');pp.innerHTML='';
   if(!problems.length){pp.innerHTML='<div style="font-size:14px;color:var(--green);padding:8px 0">ไม่พบปัญหา — ทำได้ดีมากทุกข้อ 🎉</div>';}
@@ -908,11 +984,37 @@ function _parentDolphin(d){
 
   // คำแนะนำ
   const actions=[];
-  if(d.wrong>=5)actions.push({title:'วางแผนทบทวนหัวข้อที่อ่อน',color:'var(--blue)',text:`มีจุดที่ยังไม่เข้าใจหลายข้อ โดยเฉพาะ "${weak.length?weak[0].name:'หัวข้อที่ทำผิด'}" — สนับสนุนให้ลูกวางแผนทบทวนเอง เช่น ดูคลิปติวเพิ่ม ทำโจทย์เก่าในหัวข้อนั้นซ้ำ หรือถามเพื่อน/ครูท่านอื่นที่โรงเรียน การเข้าใจให้แน่นสำคัญกว่าเร่งทำเยอะ`});
-  if(d.care>=3)actions.push({title:'ฝึกความรอบคอบแบบเจาะจุด',color:'var(--amber)',text:`พลาดจากความรีบ ${d.care} ข้อ — ลองให้ลูกจดว่าแต่ละข้อพลาดเพราะอะไร (อ่านโจทย์ตก/คำนวณพลาด/ลอกเลขผิด) พอเห็นรูปแบบที่ตัวเองพลาดซ้ำ จะแก้ได้ตรงจุด ตั้งเป้าแคบ ๆ ว่าครั้งหน้าลดให้เหลือครึ่งหนึ่ง`});
-  if(d.blank>=3)actions.push({title:'พูดคุยด้วยความเข้าใจ',color:'var(--text2)',text:`มี ${d.blank} ข้อที่ไม่ได้ทำ — ลองคุยกับลูกแบบเปิดใจว่าเป็นเพราะเวลาไม่พอ ไม่เข้าใจโจทย์ หรือกังวล การรับฟังโดยไม่ตำหนิจะช่วยให้ลูกกล้าบอกปัญหาที่แท้จริง`});
-  if(aboveAvg&&pct>=70)actions.push({title:'ชื่นชมที่ความพยายาม',color:'var(--green)',text:`${name} ทำได้ดีและเหนือค่าเฉลี่ยกลุ่ม — ลองชมที่ "ความตั้งใจและวิธีคิด" มากกว่าแค่ "เก่ง" เพราะช่วยให้ลูกเชื่อว่าความสำเร็จมาจากความพยายามที่ควบคุมได้`});
-  if(!actions.length)actions.push({title:'รักษาจังหวะที่ดีไว้',color:'var(--green)',text:`ผลการสอบอยู่ในเกณฑ์ดีมาก ให้กำลังใจและติดตามอย่างสม่ำเสมอ ความต่อเนื่องคือกุญแจสำคัญของการเตรียมสอบแพทย์`});
+  if(F.chronic.length)actions.push({title:'จุดที่พลาดซ้ำหลายครั้ง',color:'#8A5A10',text:_pv([
+    `หัวข้อ "${F.chronic[0].sub}" น้องพลาดใน ${F.chronic[0].times} การสอบแล้ว — จุดแบบนี้ต้องกลับไปเรียนแนวคิดใหม่กับครู การฝึกโจทย์เพิ่มอย่างเดียวมักไม่พอครับ`,
+    `"${F.chronic[0].sub}" เป็นจุดเรื้อรัง (พลาด ${F.chronic[0].times} ครั้ง) ครูจะจับน้องคุยเฉพาะหัวข้อนี้ — ที่บ้านช่วยได้ด้วยการถามว่า "หัวข้อนี้ติดตรงไหน" แทนการให้ทำโจทย์เพิ่ม`,
+    `ต่างจากข้อที่พลาดครั้งแรก (ปกติมาก) — "${F.chronic[0].sub}" พลาดมา ${F.chronic[0].times} ครั้งติด แปลว่ามีความเข้าใจบางอย่างคลาดเคลื่อนตั้งแต่ต้น ต้องรื้อใหม่ครับ`
+  ],d,5)});
+  if(d.wrong>=5)actions.push({title:'วางแผนทบทวนหัวข้อที่อ่อน',color:'var(--blue)',text:_pv([
+    `โฟกัสที่ "${weak.length?weak[0].name:'หัวข้อที่ทำผิด'}" ก่อนหัวข้ออื่น — สนับสนุนให้น้องวางแผนเอง (ดูคลิป/ทำโจทย์เก่าซ้ำ) การเข้าใจให้แน่นสำคัญกว่าเร่งทำเยอะ`,
+    `${weak.length>1?'สองหัวข้อที่ควรเก็บก่อนคือ '+_thaiList(weak.slice(0,2).map(w=>w.name)):'หัวข้อ "'+(weak.length?weak[0].name:'ที่ทำผิด')+'"'} — ทำทีละหัวข้อจนแน่น ดีกว่ากวาดทุกหัวข้อพร้อมกันครับ`,
+    `ลองให้น้องเป็นคนเลือกเองว่าจะเริ่มจากหัวข้อไหน แล้วคุณพ่อคุณแม่เป็นคนถามความคืบหน้า — ความรู้สึกเป็นเจ้าของแผนช่วยเรื่องแรงจูงใจมากครับ`
+  ],d,6)});
+  if(d.care>=3)actions.push({title:'ฝึกความรอบคอบแบบเจาะจุด',color:'var(--amber)',text:_pv([
+    `${F.qList(F.careQ)} พลาดจากความรีบ — ให้น้องจดว่าแต่ละข้อพลาดเพราะอะไร (อ่านโจทย์ตก/คำนวณ/ลอกเลข) พอเห็นรูปแบบซ้ำจะแก้ได้ตรงจุด`,
+    `ตั้งเป้าแคบๆ ว่าครั้งหน้าลดข้อสะเพร่าจาก ${d.care} เหลือ ${Math.max(1,Math.floor(d.care/2))} ข้อ — เป้าที่วัดได้ทำให้เด็กรู้ว่าตัวเองสำเร็จหรือยัง`,
+    `ลองให้น้องทำข้อเดิมซ้ำแบบไม่จับเวลา ถ้าทำถูกหมด = ปัญหาคือจังหวะ ไม่ใช่ความรู้ ซึ่งแก้ง่ายกว่ามากครับ`,
+    `เทคนิคที่ได้ผลกับเด็กหลายคน: อ่านโจทย์จบแล้วขีดเส้นใต้ "สิ่งที่โจทย์ถาม" ก่อนลงมือคำนวณ`
+  ],d,7)});
+  if(d.blank>=3)actions.push({title:'พูดคุยด้วยความเข้าใจ',color:'var(--text2)',text:_pv([
+    `มี ${d.blank} ข้อที่ไม่ได้ทำ — คุยแบบเปิดใจว่าเพราะเวลาไม่พอ ไม่เข้าใจโจทย์ หรือกังวล การฟังโดยไม่ตำหนิทำให้น้องกล้าบอกปัญหาจริง`,
+    `ลองถามว่า "ตอนเจอข้อที่ข้าม รู้สึกยังไง" — คำตอบจะบอกว่าเป็นปัญหาเวลา หรือความมั่นใจ ซึ่งแก้คนละวิธีครับ`,
+    `${d.blank} ข้อที่เว้นไว้อาจเป็นการตัดสินใจที่ถูกแล้วก็ได้ (ไม่จมกับข้อยาก) ลองฟังเหตุผลของน้องก่อนสรุปครับ`
+  ],d,8)});
+  if(aboveAvg&&pct>=70)actions.push({title:'ชื่นชมที่ความพยายาม',color:'var(--green)',text:_pv([
+    `${name} ทำได้เหนือค่าเฉลี่ยกลุ่ม — ชมที่ "ความตั้งใจและวิธีคิด" มากกว่า "เก่ง" ช่วยให้น้องเชื่อว่าความสำเร็จมาจากสิ่งที่ควบคุมได้`,
+    `${F.strongName?'หัวข้อ "'+F.strongName+'" น้องทำได้แม่นมาก ':''}ลองชมแบบเจาะจง เช่น "แม่เห็นว่าลูกทำเรื่องนี้ได้ดีขึ้นจริงๆ" — คำชมที่เจาะจงมีน้ำหนักกว่าคำว่าเก่งครับ`,
+    `${d.streak>=2?'ดีขึ้น '+d.streak+' ครั้งติด — ':''}ชมที่ความสม่ำเสมอ เพราะนั่นคือสิ่งที่พาไปถึงเป้าหมายจริงๆ ไม่ใช่คะแนนครั้งใดครั้งหนึ่ง`
+  ],d,9)});
+  if(!actions.length)actions.push({title:'รักษาจังหวะที่ดีไว้',color:'var(--green)',text:_pv([
+    `ผลอยู่ในเกณฑ์ดีมาก ให้กำลังใจและติดตามอย่างสม่ำเสมอ ความต่อเนื่องคือกุญแจของการเตรียมสอบครับ`,
+    `ไม่มีจุดที่ต้องแก้เร่งด่วน — ช่วงนี้เหมาะกับการรักษาวินัยเดิมและพักผ่อนให้พอ`,
+    `${F.strongName?'"'+F.strongName+'" แม่นแล้ว ':''}ขั้นถัดไปคือลองข้อที่ยากขึ้นเพื่อไม่ให้หยุดพัฒนา ครูเตรียมชุดฝึกไว้ให้แล้วครับ`
+  ],d,10)});
 
   const pa=document.getElementById('p-actions');pa.innerHTML='';
   actions.forEach(a=>{pa.innerHTML+=`<div class="action-card" style="border-left-color:${a.color}"><div class="action-title" style="color:${a.color}">${a.title}</div><div class="action-text">${a.text}</div></div>`;});
@@ -921,11 +1023,30 @@ function _parentDolphin(d){
   if(talkEl){
     talkEl.innerHTML='';
     const talks=[];
-    talks.push('"บทนี้ข้อไหนที่ภูมิใจว่าทำได้ที่สุด?" — เริ่มจากจุดแข็งก่อนเสมอ');
-    if(d.care>0)talks.push('"ข้อที่พลาดเพราะรีบ ถ้าย้อนกลับไปได้จะทำต่างจากเดิมยังไง?" — ให้ลูกคิดวิธีแก้เอง ดีกว่าบอกให้ระวัง');
-    if(d.blank>0)talks.push('"ข้อที่เว้นไว้ เจอตอนไหนของเวลาสอบ?" — ช่วยรู้ว่าปัญหาคือการจัดเวลาหรือความมั่นใจ');
-    if(d.wrong>0)talks.push('"หัวข้อไหนที่อยากเข้าใจมากขึ้น?" — เปิดทางให้ลูกขอความช่วยเหลือโดยไม่เสียหน้า');
-    talks.push('"มีอะไรให้พ่อแม่ช่วยไหม?" — บางครั้งแค่ถามก็เพียงพอแล้ว');
+    talks.push(_pv([
+      '"บทนี้ข้อไหนที่ภูมิใจว่าทำได้ที่สุด?" — เริ่มจากจุดแข็งก่อนเสมอ',
+      (F.strongName?'"เห็นครูบอกว่าเรื่อง '+F.strongName+' ลูกทำได้ดี ทำยังไงถึงเข้าใจเรื่องนี้?" — ให้เล่าความสำเร็จก่อน':'"ข้อไหนที่รู้สึกว่าทำได้ดีที่สุด?" — เปิดด้วยเรื่องบวกเสมอ'),
+      '"ครั้งนี้มีอะไรที่ทำได้ดีกว่าครั้งที่แล้วบ้าง?" — ให้ลูกเป็นคนสังเกตพัฒนาการตัวเอง'
+    ],d,11));
+    if(d.care>0)talks.push(_pv([
+      '"ข้อที่พลาดเพราะรีบ ถ้าย้อนกลับไปได้จะทำต่างจากเดิมยังไง?" — ให้ลูกคิดวิธีแก้เอง ดีกว่าบอกให้ระวัง',
+      '"ตอนทำข้อนั้น รีบเพราะอะไร — กลัวไม่ทัน หรือคิดว่าง่าย?" — สาเหตุต่างกัน วิธีแก้ก็ต่างกัน',
+      '"ถ้าจะกันพลาดแบบเดิมครั้งหน้า ลูกจะทำยังไง?" — ให้ลูกออกแบบวิธีของตัวเอง จะจำได้นานกว่า'
+    ],d,12));
+    if(d.blank>0)talks.push(_pv([
+      '"ข้อที่เว้นไว้ เจอตอนไหนของเวลาสอบ?" — ช่วยรู้ว่าปัญหาคือการจัดเวลาหรือความมั่นใจ',
+      '"ข้อที่ข้ามไป ถ้ามีเวลาอีก 5 นาทีคิดว่าทำได้ไหม?" — แยกว่า "ไม่ทัน" หรือ "ทำไม่ได้"'
+    ],d,13));
+    if(d.wrong>0)talks.push(_pv([
+      '"หัวข้อไหนที่อยากเข้าใจมากขึ้น?" — เปิดทางให้ลูกขอความช่วยเหลือโดยไม่เสียหน้า',
+      (F.weakName?'"เรื่อง '+F.weakName+' ตอนนี้ติดตรงไหน?" — คำถามเจาะจงได้คำตอบที่ใช้ได้จริงกว่า':'"มีหัวข้อไหนที่อยากให้ครูอธิบายซ้ำไหม?"'),
+      '"ถ้าให้เลือกเก็บหัวข้อเดียวก่อนสอบครั้งหน้า จะเลือกอะไร?" — ฝึกให้ลูกจัดลำดับความสำคัญเอง'
+    ],d,14));
+    talks.push(_pv([
+      '"มีอะไรให้พ่อแม่ช่วยไหม?" — บางครั้งแค่ถามก็เพียงพอแล้ว',
+      '"ช่วงนี้เหนื่อยไหม อยากให้บ้านช่วยอะไรเป็นพิเศษ?" — ดูแลสภาพใจควบคู่กับคะแนน',
+      '"อยากให้แม่/พ่อถามเรื่องเรียนบ่อยแค่ไหนถึงจะพอดี?" — ให้ลูกกำหนดระยะห่างเอง ลดแรงต้าน'
+    ],d,15));
     talks.forEach(t=>{
       talkEl.innerHTML+=`<div style="display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border)">
         <div style="color:var(--blue);flex-shrink:0">•</div>
@@ -948,62 +1069,155 @@ function _parentEagle(d){
     <div style="font-size:13px;color:var(--blue);font-weight:500;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">🦅 รายงานความก้าวหน้า — เทียบกับตัวเองเท่านั้น</div>
     <div class="summary-headline"><span class="summary-highlight">${name}</span> ได้ <span class="summary-highlight">${d.score}/30</span>${d.delta!=null?` (${deltaTxt} จากครั้งก่อน)`:''}${d.isBest?' · 🏆 สูงสุดตั้งแต่เริ่มเรียน':''}${d.streak>=2?` · 🔥 ดีขึ้น ${d.streak} ครั้งติด`:''}</div>
     ${hist.length>=2?`<div style="max-width:280px;margin-top:6px">${_sparkSvg(hist.map(h=>h.score),280,60)}<div style="font-size:10px;color:var(--text3)">เส้นประแดง = เป้า 25/30 · ${hist.map(h=>h.score).join(' → ')}</div></div>`:''}`;
+  const F=_parentFacts(d);
   const rows=[];
-  if(d.care>0)rows.push(['⚠️ สะเพร่า',d.care,'ฝึก checklist ตรวจทานก่อนตอบ ใช้ในคาบเรียนถัดไป']);
-  if(d.concept>0)rows.push(['🧠 คอนเซปต์',d.concept,'มอบคลิปเฉลย + แบบฝึกหัวข้อที่พลาด พร้อมกำหนดส่ง']);
-  if(d.cant>0)rows.push(['❌ ทำไม่ได้',d.cant,'ครูอธิบายเพิ่มรายบุคคล แล้วให้ลองทำซ้ำ']);
-  if(d.timeout>0)rows.push(['⏰ ไม่ทัน',d.timeout,'ฝึกจับเวลารายข้อ (2.5 นาที/ข้อ) เก็บข้อง่ายก่อน']);
+  if(d.care>0)rows.push([`⚠️ สะเพร่า${F.careQ.length?'<div style="font-size:10.5px;color:var(--text3)">'+F.qList(F.careQ)+'</div>':''}`,d.care,_pv([
+    'ฝึก checklist ตรวจทานก่อนตอบ ใช้ในคาบเรียนถัดไป',
+    'ให้ทำข้อเดิมซ้ำแบบไม่จับเวลา เพื่อยืนยันว่าเป็นเรื่องจังหวะไม่ใช่ความรู้',
+    'ฝึกขีดเส้นใต้สิ่งที่โจทย์ถามก่อนลงมือ — ลดพลาดจากการอ่านตก',
+    'ให้จดสาเหตุที่พลาดรายข้อ แล้วครูทวนรูปแบบที่ซ้ำกับน้อง'
+  ],d,0)]);
+  if(d.concept>0)rows.push([`🧠 คอนเซปต์${F.conceptSub.length?'<div style="font-size:10.5px;color:var(--text3)">'+_thaiList(F.conceptSub)+'</div>':''}`,d.concept,_pv([
+    'มอบคลิปเฉลย + แบบฝึกหัวข้อที่พลาด พร้อมกำหนดส่ง',
+    'อธิบายหลักการซ้ำในคาบ แล้วให้ลองอธิบายกลับให้ครูฟัง',
+    'ปูพื้นหัวข้อนี้ใหม่ก่อน แล้วค่อยกลับมาทำโจทย์ระดับเดิม',
+    'จับคู่ทบทวนกับข้อคล้ายกันจากคลัง เพื่อยืนยันว่าเข้าใจจริง'
+  ],d,1)]);
+  if(d.cant>0)rows.push([`❌ ทำไม่ได้${F.cantQ.length?'<div style="font-size:10.5px;color:var(--text3)">'+F.qList(F.cantQ)+'</div>':''}`,d.cant,_pv([
+    'ครูอธิบายเพิ่มรายบุคคล แล้วให้ลองทำซ้ำ',
+    'จัดไว้เป็นเป้าหมายรอบถัดไป หลังเก็บข้อที่ได้คืนง่ายครบแล้ว',
+    'ให้เริ่มจากโจทย์ระดับง่ายกว่าในหัวข้อเดียวกันก่อนไต่ขึ้น',
+    'ครูจะทำเป็นตัวอย่างให้ดูทีละขั้น แล้วให้ทำเวอร์ชันที่เปลี่ยนตัวเลข'
+  ],d,2)]);
+  if(d.timeout>0)rows.push([`⏰ ไม่ทัน${F.timeQ.length?'<div style="font-size:10.5px;color:var(--text3)">'+F.qList(F.timeQ)+'</div>':''}`,d.timeout,_pv([
+    'ฝึกจับเวลารายข้อ (2.5 นาที/ข้อ) เก็บข้อง่ายก่อน',
+    'ฝึกกลยุทธ์ "กวาดข้อง่ายรอบแรก แล้ววนกลับข้อยาก"',
+    'ซ้อมทำครึ่งชุดจับเวลา เพื่อสร้างความเร็วแบบไม่กดดัน',
+    'ตั้งกติกาว่าข้อไหนคิดเกิน 3 นาทีให้ข้ามก่อน'
+  ],d,3)]);
+  if(F.chronic.length)rows.push([`🔁 พลาดซ้ำ<div style="font-size:10.5px;color:var(--text3)">${F.chronic[0].sub}</div>`,F.chronic[0].times+' ครั้ง',_pv([
+    'ครูจะรื้อแนวคิดหัวข้อนี้ใหม่กับน้องเป็นรายบุคคล',
+    'จัดเป็นวาระพิเศษ — สอนใหม่จากต้น ไม่ใช่แค่เพิ่มโจทย์',
+    'นัดทบทวนเฉพาะหัวข้อนี้ก่อนสอบครั้งหน้า'
+  ],d,4)]);
   const td='padding:7px 8px;border-bottom:1px solid var(--border,#E7E4DC)';
   const th='text-align:left;padding:6px 8px;background:var(--surf,#FAF9F5);font-size:11.5px;color:var(--text3)';
   document.getElementById('p-problems').innerHTML=rows.length?
     `<table style="width:100%;border-collapse:collapse;font-size:13px"><tr><th style="${th}">ประเด็น</th><th style="${th}">จำนวน</th><th style="${th}">ติวเตอร์ดำเนินการแล้ว</th></tr>`
     +rows.map(r=>`<tr><td style="${td}">${r[0]}</td><td style="${td}">${r[1]} ข้อ</td><td style="${td}">${r[2]}</td></tr>`).join('')+'</table>'
     :'<div style="font-size:14px;color:var(--green);padding:8px 0">ครั้งนี้ไม่มีจุดต้องแก้ — ทำได้ครบทุกข้อ 🎉</div>';
+  const sayPool=[
+    `"ครูบอกว่า${d.streak>=2?'ลูกพัฒนาขึ้น '+d.streak+' ครั้งติด':'ทุกจุดที่ลูกพลาดมีแผนแก้ชัดเจนแล้ว'} เก่งมากที่ไม่หยุดพยายาม"`,
+    F.strongName?`"ครูบอกว่าเรื่อง ${F.strongName} ลูกทำได้แม่นมาก — พ่อ/แม่ดีใจที่เห็นลูกเก็บทีละเรื่องแบบนี้"`:`"เห็นความตั้งใจของลูกทุกสัปดาห์ ไม่ต้องรีบ ค่อยๆ เก็บไปทีละเรื่อง"`,
+    d.care>0?`"ครูบอกว่าลูกทำเป็นเกือบหมด เหลือแค่เรื่องความรอบคอบ — แปลว่าพื้นฐานลูกแน่นแล้วนะ"`:`"${d.score} คะแนนนี้มาจากความสม่ำเสมอของลูกเอง พ่อ/แม่ภูมิใจ"`,
+    `"อยากรู้ว่าช่วงนี้ลูกเหนื่อยไหม — เรื่องคะแนนค่อยว่ากัน ขอให้ลูกดูแลตัวเองก่อน"`
+  ];
+  const dontPool=[
+    `"ทำไมยังไม่เต็ม 30" / "เพื่อนได้เท่าไหร่" — การเทียบกับผู้อื่นช่วงเตรียมสอบเพิ่มความกังวล และทำให้เด็กเริ่มปิดบังคะแนน`,
+    `"แค่นี้เองเหรอ" / "ตั้งใจกว่านี้หน่อย" — เด็กที่ตั้งใจอยู่แล้วจะตีความว่าความพยายามที่ทำไปไม่ถูกมองเห็น`,
+    `"ถ้าไม่ขยันตอนนี้จะสอบไม่ติดนะ" — การขู่ด้วยอนาคตเพิ่ม anxiety แต่ไม่เพิ่มพฤติกรรมการอ่านหนังสือ`,
+    `เปรียบเทียบกับพี่น้องหรือลูกคนอื่น — ทำลายความสัมพันธ์ในบ้านโดยไม่ช่วยเรื่องคะแนนเลยครับ`
+  ];
   document.getElementById('p-actions').innerHTML=`
-    <div style="border-left:4px solid #3B7D2A;background:#EAF5E6;padding:11px 13px;border-radius:0 10px 10px 0;margin-bottom:8px;font-size:13px"><b style="display:block;font-size:12px;margin-bottom:3px">✅ ประโยคที่ช่วยลูกได้มากสัปดาห์นี้</b>"ครูบอกว่า${d.streak>=2?'ลูกพัฒนาขึ้น '+d.streak+' ครั้งติด':'ทุกจุดที่ลูกพลาดมีแผนแก้ชัดเจนแล้ว'} เก่งมากที่ไม่หยุดพยายาม"</div>
-    <div style="border-left:4px solid #A32D2D;background:#FBEAEA;padding:11px 13px;border-radius:0 10px 10px 0;font-size:13px"><b style="display:block;font-size:12px;margin-bottom:3px">⛔ ประโยคที่งานวิจัยพบว่าทำให้คะแนนครั้งหน้าแย่ลง</b>"ทำไมยังไม่เต็ม 30" / "เพื่อนได้เท่าไหร่" — การเทียบกับผู้อื่นช่วงเตรียมสอบเพิ่มความกังวล และทำให้เด็กเริ่มปิดบังคะแนน</div>`;
+    <div style="border-left:4px solid #3B7D2A;background:#EAF5E6;padding:11px 13px;border-radius:0 10px 10px 0;margin-bottom:8px;font-size:13px"><b style="display:block;font-size:12px;margin-bottom:3px">✅ ประโยคที่ช่วยลูกได้มากสัปดาห์นี้</b>${_pv(sayPool,d,5)}</div>
+    <div style="border-left:4px solid #A32D2D;background:#FBEAEA;padding:11px 13px;border-radius:0 10px 10px 0;font-size:13px"><b style="display:block;font-size:12px;margin-bottom:3px">⛔ ประโยคที่งานวิจัยพบว่าทำให้คะแนนครั้งหน้าแย่ลง</b>${_pv(dontPool,d,6)}</div>`;
   const talkEl=document.getElementById('p-talkList');
-  if(talkEl)talkEl.innerHTML='<div style="font-size:13px;color:var(--text1);line-height:1.9">• "เป้าครั้งหน้าลูกอยากได้เท่าไหร่ ให้พ่อแม่ช่วยอะไรได้บ้าง?" — ให้ลูกเป็นเจ้าของเป้าหมายเอง<br>• "ข้อไหนที่ภูมิใจว่าแก้ได้แล้ว?" — เริ่มจากความก้าวหน้าก่อนเสมอ</div>';
+  if(talkEl)talkEl.innerHTML='<div style="font-size:13px;color:var(--text1);line-height:1.9">• '+_pv([
+    '"เป้าครั้งหน้าลูกอยากได้เท่าไหร่ ให้พ่อแม่ช่วยอะไรได้บ้าง?" — ให้ลูกเป็นเจ้าของเป้าหมายเอง',
+    '"ถ้าจะขยับอีก 2-3 คะแนน ลูกคิดว่าต้องเก็บเรื่องไหนก่อน?" — ฝึกวางแผนด้วยตัวเอง',
+    (F.weakName?'"เรื่อง '+F.weakName+' ลูกอยากให้ครูช่วยแบบไหน?" — ให้ลูกเป็นคนขอความช่วยเหลือเอง':'"มีหัวข้อไหนที่อยากให้ครูช่วยเป็นพิเศษไหม?"')
+  ],d,7)+'<br>• '+_pv([
+    '"ข้อไหนที่ภูมิใจว่าแก้ได้แล้ว?" — เริ่มจากความก้าวหน้าก่อนเสมอ',
+    '"ครั้งนี้ลูกทำอะไรได้ดีกว่าครั้งก่อน?" — ให้ลูกฝึกมองพัฒนาการของตัวเอง',
+    '"อยากให้พ่อแม่เชียร์แบบไหนถึงจะรู้สึกดี?" — เด็กแต่ละคนต้องการแรงเชียร์คนละแบบ'
+  ],d,8)+'</div>';
   _fillParentQGrid(d);
 }
 
 // ── 🐘 ช้าง: ข่าวดีมาก่อน ไม่มีสีแดง มี context และคำสัญญาจากครู ──
 function _parentElephant(d){
-  const name=d.shortName;
+  const name=d.shortName, F=_parentFacts(d);
   const goods=[];
   if(d.isBest)goods.push(`คะแนนสูงสุดตั้งแต่เริ่มเรียน — ${d.score}/30`);
   if(d.streak>=2)goods.push(`พัฒนาดีขึ้นต่อเนื่อง ${d.streak} ครั้งติด`);
   else if(d.delta!=null&&d.delta>0)goods.push(`คะแนนเพิ่มขึ้น ${d.delta} ข้อจากครั้งก่อน`);
+  if(F.strongName)goods.push(`หัวข้อ "${F.strongName}" น้องทำได้แม่นมากในชุดนี้`);
   if(d.care>0)goods.push(`มี ${d.care} ข้อที่น้องรู้วิธีทำอยู่แล้ว เพียงฝึกความรอบคอบอีกนิดก็ได้คะแนนคืน`);
   if(d.grpStats&&d.score>=d.grpStats.avg)goods.push(`คะแนนอยู่เหนือค่าเฉลี่ยของกลุ่ม (${d.grpStats.avg}/30)`);
+  if(d.timeout===0&&d.blank===0)goods.push('น้องลงมือทำครบทุกข้อ ไม่มีข้อไหนถูกปล่อยว่าง — สะท้อนความตั้งใจได้ดีมาก');
+  if(F.strong.length>=2)goods.push(`มี ${F.strong.length} หัวข้อที่น้องทำได้เกิน 80% แล้วในบทนี้`);
   if(!goods.length)goods.push('น้องมาเรียนสม่ำเสมอและตั้งใจทำครบทุกขั้นตอน — ความต่อเนื่องแบบนี้คือรากฐานที่ดีที่สุดครับ');
+  // หมุนลำดับข่าวดี เพื่อไม่ให้เห็นชุดเดิมซ้ำเมื่อผลใกล้เคียงกัน
+  if(goods.length>3){ const k=_pSeed(d)%goods.length; goods.push(...goods.splice(0,k)); }
   document.getElementById('p-summary').innerHTML=`
     <div style="font-size:13px;color:#3B7D2A;font-weight:600;margin-bottom:8px">🐘 ข่าวดีของ${name}ประจำรายงานนี้ 🌱</div>
     ${goods.slice(0,3).map((g,i)=>`<div class="summary-headline" style="margin-bottom:4px">${i+1}. ${g}</div>`).join('')}`;
   const below=d.grpStats&&d.score<d.grpStats.avg;
   document.getElementById('p-problems').innerHTML=`
     <div style="font-size:13px;color:var(--text2);line-height:1.9">
-    <b>บริบทที่อยากให้ทราบ:</b> ค่าเฉลี่ยของกลุ่มครั้งนี้อยู่ที่ ${d.grpStats?d.grpStats.avg:'—'}/30 ${below?'— ชุดนี้ท้าทายทั้งกลุ่ม คะแนนของน้องอยู่ในจังหวะการเรียนรู้ที่เหมาะสมครับ':'— น้องทำได้ดีมากครับ'}<br>
-    <b>สิ่งที่ครูดูแลอยู่:</b> จุดเล็กๆ ที่ยังพลาด ครูมีแผนฝึกในคาบเรียนครบทุกจุดแล้ว ไม่ต้องเพิ่มอะไรที่บ้าน<br>
-    <b>จังหวะการเรียนรู้:</b> คะแนนขึ้นๆ ลงๆ ระหว่างเตรียมสอบเป็นเรื่องปกติมาก สิ่งที่ครูโฟกัสคือแนวโน้มระยะยาวของน้อง ซึ่งดูได้ที่แท็บพัฒนาการในมุมมองนักเรียนครับ</div>`;
-  document.getElementById('p-actions').innerHTML='<div class="action-card" style="border-left-color:#3B7D2A"><div class="action-title" style="color:#3B7D2A">สิ่งเดียวที่ช่วยได้มากที่สุด</div><div class="action-text">บรรยากาศผ่อนคลายที่บ้าน — เด็กที่ผู้ปกครองกังวลน้อย ทำข้อสอบได้ดีกว่าอย่างมีนัยสำคัญ ความห่วงใยของคุณส่งถึงน้องอยู่แล้วครับ</div></div>';
+    <b>บริบทที่อยากให้ทราบ:</b> ${_pv([
+      `ค่าเฉลี่ยของกลุ่มครั้งนี้อยู่ที่ ${d.grpStats?d.grpStats.avg:'—'}/30 ${below?'— ชุดนี้ท้าทายทั้งกลุ่ม คะแนนของน้องอยู่ในจังหวะการเรียนรู้ที่เหมาะสมครับ':'— น้องทำได้ดีมากครับ'}`,
+      `ข้อสอบชุดนี้คัดจากข้อสอบเข้ามหาวิทยาลัยจริง ระดับความยากจึงสูงกว่าข้อสอบในโรงเรียน ${below?'คะแนนที่เห็นจึงไม่ได้สะท้อนว่าน้องอ่อนครับ':'ซึ่งน้องรับมือได้ดี'}`,
+      `ครูออกแบบให้แต่ละชุดมีข้อยากปนอยู่เสมอ เพื่อวัดว่าควรเสริมตรงไหน ${below?'คะแนนไม่เต็มจึงเป็นเรื่องที่คาดไว้แล้ว':'น้องผ่านจุดที่ตั้งใจวัดไว้ได้'}ครับ`
+    ],d,0)}<br>
+    <b>สิ่งที่ครูดูแลอยู่:</b> ${_pv([
+      'จุดเล็กๆ ที่ยังพลาด ครูมีแผนฝึกในคาบเรียนครบทุกจุดแล้ว ไม่ต้องเพิ่มอะไรที่บ้าน',
+      (F.weakName?`ครูจะเสริมเรื่อง "${F.weakName}" ให้ในคาบถัดไป — เตรียมแบบฝึกไว้แล้ว ไม่ต้องหาเพิ่มที่บ้านครับ`:'ครูเตรียมแบบฝึกเฉพาะจุดให้น้องแล้ว ที่บ้านไม่ต้องเพิ่มภาระอะไร'),
+      'ทุกข้อที่พลาดถูกบันทึกและจัดลำดับให้แล้วว่าจะเก็บเรื่องไหนก่อน — เป็นหน้าที่ของครูครับ'
+    ],d,1)}<br>
+    <b>จังหวะการเรียนรู้:</b> ${_pv([
+      'คะแนนขึ้นๆ ลงๆ ระหว่างเตรียมสอบเป็นเรื่องปกติมาก สิ่งที่ครูโฟกัสคือแนวโน้มระยะยาวของน้อง',
+      'เด็กที่เตรียมสอบทุกคนมีช่วงที่คะแนนนิ่งหรือย่อลง ก่อนจะขยับขึ้นอีกครั้ง — เป็นธรรมชาติของการเรียนรู้ครับ',
+      'ครูไม่ตัดสินจากคะแนนครั้งเดียว แต่ดูทิศทางรวม 4-5 ครั้ง ซึ่งของน้องยังอยู่ในเส้นทางที่ดีครับ'
+    ],d,2)}</div>`;
+  document.getElementById('p-actions').innerHTML=`<div class="action-card" style="border-left-color:#3B7D2A"><div class="action-title" style="color:#3B7D2A">สิ่งเดียวที่ช่วยได้มากที่สุด</div><div class="action-text">${_pv([
+    'บรรยากาศผ่อนคลายที่บ้าน — เด็กที่ผู้ปกครองกังวลน้อย ทำข้อสอบได้ดีกว่าอย่างมีนัยสำคัญ ความห่วงใยของคุณส่งถึงน้องอยู่แล้วครับ',
+    'ดูแลเรื่องการนอนให้พอ — การพักผ่อนมีผลต่อคะแนนมากกว่าการอ่านเพิ่มอีก 1 ชั่วโมงในคืนก่อนสอบครับ',
+    'ให้น้องได้มีเวลาว่างที่ไม่เกี่ยวกับการเรียนบ้าง — สมองต้องการช่วงพักเพื่อจัดระเบียบสิ่งที่เรียนมา',
+    'เวลากินข้าวด้วยกันโดยไม่พูดเรื่องคะแนน มีค่ากับน้องมากกว่าที่คิดครับ'
+  ],d,3)}</div></div>`;
   const talkEl=document.getElementById('p-talkList');
-  if(talkEl)talkEl.innerHTML='<div style="font-size:13px;color:var(--text1);line-height:1.9">• "วันนี้เรียนอะไรสนุกที่สุด?" — คำถามที่ไม่มีคะแนนเป็นคำตอบ<br>• "อยากกินอะไรพิเศษหลังสอบเสร็จ?" — ให้การสอบจบด้วยความรู้สึกดี</div>';
+  if(talkEl)talkEl.innerHTML='<div style="font-size:13px;color:var(--text1);line-height:1.9">• '+_pv([
+    '"วันนี้เรียนอะไรสนุกที่สุด?" — คำถามที่ไม่มีคะแนนเป็นคำตอบ',
+    '"ช่วงนี้มีเรื่องอะไรอยากเล่าให้ฟังไหม?" — เปิดพื้นที่โดยไม่เจาะจงเรื่องเรียน',
+    '"เหนื่อยไหมช่วงนี้?" — ให้ลูกรู้ว่าคุณเห็นความพยายาม ไม่ใช่แค่ผลลัพธ์'
+  ],d,4)+'<br>• '+_pv([
+    '"อยากกินอะไรพิเศษหลังสอบเสร็จ?" — ให้การสอบจบด้วยความรู้สึกดี',
+    '"สุดสัปดาห์นี้อยากไปไหนกันไหม?" — ให้ลูกมีอะไรรอคอยนอกจากการสอบ',
+    '"มีอะไรที่พ่อแม่ทำแล้วช่วยลูกได้จริงๆ บ้าง?" — ถามตรงๆ ดีกว่าเดาครับ'
+  ],d,5)+'</div>';
   _fillParentQGrid(d);
 }
 
 // ── 🦉 นกฮูก: ไฟจราจร + 3 บรรทัดจบ + กติกาว่าครูจะติดต่อเมื่อไหร่ ──
 function _parentOwl(d){
-  const hist=d.history||[];
-  let st='🟢',color='#3B7D2A',head='เป็นไปตามแผน — ไม่ต้องดำเนินการใดๆ';
+  const hist=d.history||[], F=_parentFacts(d);
   const drop2=hist.length>=3&&hist[hist.length-1].score<hist[hist.length-2].score&&hist[hist.length-2].score<hist[hist.length-3].score;
-  if(d.score<15||drop2){st='🔴';color='#A32D2D';head='ชุดนี้ท้าทายสำหรับน้อง — ครูปรับแผนฝึกเฉพาะจุดให้แล้ว กำลังใจจากบ้านช่วยได้มากครับ';}
-  else if(d.delta!=null&&d.delta<0){st='🟡';color='#C77E1A';head='คะแนนย่อลงเล็กน้อย — อยู่ในช่วงผันผวนปกติของการเตรียมสอบ';}
+  let st='🟢',color='#3B7D2A',head;
+  if(d.score<15||drop2){ st='🔴';color='#A32D2D'; head=_pv([
+    'ชุดนี้ท้าทายสำหรับน้อง — ครูปรับแผนฝึกเฉพาะจุดให้แล้ว กำลังใจจากบ้านช่วยได้มากครับ',
+    'ช่วงนี้น้องกำลังเจอเนื้อหาที่ยากขึ้น ครูจัดลำดับการเก็บใหม่ให้แล้ว',
+    (F.chronic.length?`มีหัวข้อที่พลาดซ้ำ ("${F.chronic[0].sub}") ครูจะรื้อแนวคิดใหม่กับน้องครับ`:'ครูขอเวลาปรับแผนกับน้องอีกสักระยะ ยังอยู่ในช่วงที่แก้ได้ครับ')
+  ],d,0); }
+  else if(d.delta!=null&&d.delta<0){ st='🟡';color='#C77E1A'; head=_pv([
+    'คะแนนย่อลงเล็กน้อย — อยู่ในช่วงผันผวนปกติของการเตรียมสอบ',
+    'ครั้งนี้ขยับลงนิดหน่อย ยังอยู่ในกรอบที่ครูคาดไว้ครับ',
+    'คะแนนแกว่งเป็นเรื่องปกติเมื่อเนื้อหาเปลี่ยนบท — ครูติดตามอยู่'
+  ],d,1); }
+  else { head=_pv([
+    'เป็นไปตามแผน — ไม่ต้องดำเนินการใดๆ',
+    'ทุกอย่างอยู่ในเส้นทาง ให้กำลังใจตามปกติพอครับ',
+    (d.isBest?'ครั้งนี้ทำได้ดีที่สุดตั้งแต่เริ่มเรียน — น่าชื่นใจครับ':'น้องรักษาระดับได้ดี ไม่มีอะไรต้องกังวล')
+  ],d,2); }
   document.getElementById('p-summary').innerHTML=`
     <div style="display:flex;align-items:center;gap:14px">
       <div style="font-size:40px">${st}</div>
       <div><div style="font-size:16px;font-weight:700;color:${color}">${head}</div>
-      <div style="font-size:13.5px;color:var(--text2);margin-top:4px">${d.shortName} · ${d.topic} · ได้ <b>${d.score}/30</b>${d.delta!=null?(d.delta>=0?' (▲ +'+d.delta+')':' (▼ '+d.delta+')'):''}${d.isBest?' · สูงสุดตั้งแต่เริ่มเรียน':''}<br>${(d.care+d.concept+d.cant+d.timeout)>0?'จุดที่ต้องเก็บ ครูจัดแผนฝึกให้แล้ว':'ไม่มีจุดต้องเก็บเพิ่ม'}</div></div>
+      <div style="font-size:13.5px;color:var(--text2);margin-top:4px">${d.shortName} · ${d.topic} · ได้ <b>${d.score}/30</b>${d.delta!=null?(d.delta>=0?' (▲ +'+d.delta+')':' (▼ '+d.delta+')'):''}${d.isBest?' · สูงสุดตั้งแต่เริ่มเรียน':''}<br>${(d.care+d.concept+d.cant+d.timeout)>0?_pv([
+        'จุดที่ต้องเก็บ ครูจัดแผนฝึกให้แล้ว',
+        (F.weakName?'จุดที่ต้องเก็บหลักคือ "'+F.weakName+'" — อยู่ในแผนของครูแล้ว':'จุดที่ต้องเก็บมีครบในแผนทบทวนแล้ว'),
+        (d.care>0?'ส่วนใหญ่เป็นข้อที่น้องทำเป็นแต่พลาดจังหวะ — เก็บคืนได้ไม่ยาก':'ครูจัดลำดับสิ่งที่ต้องเก็บให้เรียบร้อยแล้ว')
+      ],d,3):'ไม่มีจุดต้องเก็บเพิ่ม'}</div></div>
     </div>`;
   const td='padding:6px 8px;border-bottom:1px solid var(--border,#E7E4DC)';
   document.getElementById('p-problems').innerHTML=`
@@ -1014,7 +1228,12 @@ function _parentOwl(d){
     <tr><td style="padding:6px 8px">🟢</td><td style="padding:6px 8px">ทุกอย่างอยู่ในแผน</td><td style="padding:6px 8px">ให้กำลังใจตามปกติ เท่านี้พอครับ</td></tr></table>`;
   document.getElementById('p-actions').innerHTML='';
   const talkEl=document.getElementById('p-talkList');
-  if(talkEl)talkEl.innerHTML='<div style="font-size:13px;color:var(--text1)">• "ช่วงนี้เป็นยังไงบ้าง?" — แค่ให้ลูกรู้ว่าคุณพร้อมฟัง เท่านี้พอครับ</div>';
+  if(talkEl)talkEl.innerHTML='<div style="font-size:13px;color:var(--text1)">• '+_pv([
+    '"ช่วงนี้เป็นยังไงบ้าง?" — แค่ให้ลูกรู้ว่าคุณพร้อมฟัง เท่านี้พอครับ',
+    '"มีอะไรอยากเล่าไหม?" — คำถามสั้นๆ ที่เปิดประตูไว้โดยไม่กดดัน',
+    '"ถ้าอยากให้ช่วยอะไรบอกได้นะ" — ประโยคเดียวที่ทำให้ลูกรู้ว่ามีที่พึ่ง',
+    (d.isBest?'"ได้ข่าวว่าครั้งนี้ทำได้ดีที่สุดเลย เก่งมาก" — ชมสั้นๆ ก็มีน้ำหนักครับ':'"เห็นว่าลูกตั้งใจมาตลอด พ่อ/แม่เห็นนะ" — การถูกมองเห็นสำคัญกับวัยรุ่นมาก')
+  ],d,4)+'</div>';
   _fillParentQGrid(d);
 }
 
@@ -1025,18 +1244,40 @@ function _parentBee(d){
   if(d.isBest)praise='ทำคะแนนสูงสุดตั้งแต่เริ่มเรียน';
   else if(d.streak>=2)praise='พัฒนาขึ้น '+d.streak+' ครั้งติด';
   else if(d.delta!=null&&d.delta>0)praise='คะแนนดีขึ้นจากครั้งก่อน';
+  const F=_parentFacts(d);
+  // พาดหัวการ์ด — หมุนสำนวนตามรอบสอบ
+  const headline=_pv([
+    `${praise} กำลังไปได้ดีครับ`,
+    (F.strongName?`เรื่อง "${F.strongName}" น้องทำได้แม่นมากในชุดนี้`:`${praise} — ครูเห็นความสม่ำเสมอครับ`),
+    (d.care>0?`ทำเป็นเกือบครบ เหลือเก็บเรื่องความรอบคอบอีกนิดเดียว`:`${praise} ครับ`),
+    (d.grpStats&&d.score>=d.grpStats.avg?`อยู่เหนือค่าเฉลี่ยกลุ่ม (${d.grpStats.avg}/30) ครับ`:`${praise} — ครูดูแลจุดที่เหลือให้แล้ว`)
+  ],d,0);
+  // "สิ่งเดียวที่อยากให้ทำ" — คลังใหญ่สุด เพราะเป็นหัวใจของสไตล์นี้
+  const askPool=[
+    {t:'ชมความพยายาม',b:`คืนนี้บอกน้องสั้นๆ ว่า <i>"พ่อ/แม่ได้ข่าวจากครูแบงก์ว่าลูก${praise} ภูมิใจนะ"</i>`,n:'10 วินาที แต่ผลต่อความมุ่งมั่นของลูกมากกว่าที่คิดครับ'},
+    {t:'ชมแบบเจาะจง',b:F.strongName?`ลองพูดว่า <i>"ได้ยินว่าเรื่อง ${F.strongName} ลูกทำได้ดีมาก"</i>`:`ลองพูดว่า <i>"เห็นว่าลูกตั้งใจมาตลอด แม่/พ่อเห็นนะ"</i>`,n:'คำชมที่เจาะจงมีน้ำหนักกว่าคำว่า "เก่ง" หลายเท่าครับ'},
+    {t:'ถามด้วยความสนใจ',b:`ลองถามน้องว่า <i>"ข้อไหนที่ภูมิใจว่าทำได้ที่สุด?"</i> แล้วฟังเฉยๆ`,n:'การถูกฟังโดยไม่ถูกตัดสิน คือสิ่งที่วัยรุ่นต้องการมากที่สุดครับ'},
+    {t:'ดูแลร่างกาย',b:`ช่วยดูให้น้องได้นอนก่อน 23.00 สัก 2-3 คืนสัปดาห์นี้`,n:'การนอนพอมีผลต่อคะแนนมากกว่าการอ่านเพิ่มอีก 1 ชั่วโมงครับ'},
+    {t:'ให้พื้นที่',b:`สัปดาห์นี้ลองไม่ถามเรื่องคะแนนสัก 2-3 วัน แล้วชวนทำอย่างอื่นแทน`,n:'ช่วงพักสมองทำให้สิ่งที่เรียนมาเข้าที่ — และลดความกดดันไปในตัว'},
+    {t:'ยืนยันว่าอยู่ข้างเดียวกัน',b:`บอกน้องว่า <i>"คะแนนขึ้นลงได้ ขอแค่ลูกไม่หยุดพยายาม พ่อ/แม่อยู่ข้างลูกเสมอ"</i>`,n:'ประโยคนี้สำคัญมากในช่วงที่คะแนนไม่เป็นไปตามหวังครับ'}
+  ];
+  const ask=askPool[(_pSeed(d)+1)%askPool.length];
   document.getElementById('p-summary').innerHTML=`
     <div style="max-width:340px;margin:0 auto;border:1px solid var(--border,#E7E4DC);border-radius:14px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.08)">
       <div style="background:#185FA5;color:#fff;padding:10px 14px;font-size:13px">📊 MathsBankTutor · รายงาน${name}</div>
       <div style="padding:14px">
         <div style="display:flex;align-items:center;gap:10px">
           <div style="font-size:28px">${d.score>=15?'🟢':'🟡'}</div>
-          <div><b style="font-size:18px">${d.score}/30</b> <span style="font-size:11px;color:var(--text3)">· ${d.topic}</span><br><span style="font-size:12.5px">${praise} กำลังไปได้ดีครับ</span></div>
+          <div><b style="font-size:18px">${d.score}/30</b> <span style="font-size:11px;color:var(--text3)">· ${d.topic}</span><br><span style="font-size:12.5px">${headline}</span></div>
         </div>
-        <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:10px 12px;margin-top:10px;font-size:12.5px">💬 <b style="color:#C2410C">สิ่งเดียวที่อยากรบกวน:</b><br>คืนนี้บอกน้องสั้นๆ ว่า <i>"พ่อ/แม่ได้ข่าวจากครูแบงก์ว่าลูก${praise} ภูมิใจนะ"</i><br><span style="font-size:11px;color:var(--text3)">10 วินาที แต่ผลต่อความมุ่งมั่นของลูกมากกว่าที่คิดครับ</span></div>
+        <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:10px 12px;margin-top:10px;font-size:12.5px">💬 <b style="color:#C2410C">สิ่งเดียวที่อยากรบกวน — ${ask.t}:</b><br>${ask.b}<br><span style="font-size:11px;color:var(--text3)">${ask.n}</span></div>
       </div>
     </div>`;
-  document.getElementById('p-problems').innerHTML='<div style="font-size:12px;color:var(--text3)">อยากเห็นรายละเอียดเต็ม สลับสไตล์เป็น 🐬 โลมา ด้านบนได้ทุกเมื่อ — หรือทักครูแบงก์ได้เลยครับ</div>';
+  document.getElementById('p-problems').innerHTML='<div style="font-size:12px;color:var(--text3)">'+_pv([
+    'อยากเห็นรายละเอียดเต็ม สลับสไตล์เป็น 🐬 โลมา ด้านบนได้ทุกเมื่อ — หรือทักครูแบงก์ได้เลยครับ',
+    'ถ้ามีเวลาอยากดูละเอียดขึ้น กดสไตล์ 🐬 โลมา ด้านบนได้เลยครับ',
+    'มีคำถามเพิ่มเติม ทักครูแบงก์ได้ตลอดครับ — หรือกด 🦅 นกอินทรี เพื่อดูแผนที่ครูวางไว้'
+  ],d,2)+'</div>';
   document.getElementById('p-actions').innerHTML='';
   const talkEl=document.getElementById('p-talkList');
   if(talkEl)talkEl.innerHTML='';
