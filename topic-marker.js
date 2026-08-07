@@ -1,6 +1,10 @@
 /**
- * topic-marker.js — ติดสัญลักษณ์ใน dropdown "กรองเฉพาะบท" (หน้า p3)
- * ✅ = บทนี้มีคะแนนของนักเรียนคนนี้แล้ว · 🔒 = ยังไม่มีคะแนน (เลือกไม่ได้)
+ * topic-marker.js — ส่วนเสริมเว็บนักเรียน (ไม่แตะโค้ดเดิม)
+ *
+ * 1) ติดสัญลักษณ์ใน dropdown "กรองเฉพาะบท" (หน้า p3)
+ *    ✅ = บทนี้มีคะแนนของนักเรียนคนนี้แล้ว · 🔒 = ยังไม่มีคะแนน (เลือกไม่ได้)
+ * 2) สร้าง "ชื่อพ้อง" ให้คลังฝึก — ชื่อบทในชีตกับใน questionbank.js สะกดต่างกันก็ยังเจอคลัง
+ *    เช่น "เรียงลำดับและจัดหมู่" (ชีต) = "การเรียงลำดับและการจัดหมู่" (คลัง)
  *
  * วิธีใช้: เพิ่มบรรทัดนี้ใน index.html ก่อน </body>
  *   <script src="topic-marker.js"></script>
@@ -148,8 +152,38 @@
     }).catch(function () { /* โหลดไม่ได้ → ปล่อย dropdown ตามเดิม */ });
   }
 
+  /* ── สร้างชื่อพ้องให้คลังฝึก/คลังข้อสอบ ──
+     ถ้าชื่อบทในชีตไม่ตรงกับคีย์ใน PRACTICE_BANK / EMBEDDED_QB แต่ normalize แล้วตรงกัน
+     → ผูกให้ชี้ข้อมูลชุดเดียวกัน (เพิ่ม property ใหม่ ไม่แก้ของเดิม) */
+  function aliasChapterBanks(rows) {
+    var chapters = {};
+    rows.forEach(function (r) { if (r && r[3]) chapters[String(r[3]).trim()] = true; });
+
+    function aliasOne(bank, label) {
+      if (!bank) return 0;
+      var byNorm = {};
+      Object.keys(bank).forEach(function (k) { byNorm[chapterKey(k)] = k; });
+      var n = 0;
+      Object.keys(chapters).forEach(function (ch) {
+        if (bank[ch]) return;                       // มีอยู่แล้ว
+        var hit = byNorm[chapterKey(ch)];
+        if (hit) { bank[ch] = bank[hit]; n++; }     // ผูกชื่อพ้อง
+      });
+      if (n) console.log('[topic-marker] ผูกชื่อพ้อง ' + label + ' ' + n + ' บท');
+      return n;
+    }
+
+    try { if (typeof PRACTICE_BANK !== 'undefined') aliasOne(PRACTICE_BANK, 'PRACTICE_BANK'); } catch (e) {}
+    try { if (typeof EMBEDDED_QB !== 'undefined') aliasOne(EMBEDDED_QB, 'EMBEDDED_QB'); } catch (e) {}
+    try { if (window.PRACTICE_BANK) aliasOne(window.PRACTICE_BANK, 'window.PRACTICE_BANK'); } catch (e) {}
+    try { if (window.EMBEDDED_QB) aliasOne(window.EMBEDDED_QB, 'window.EMBEDDED_QB'); } catch (e) {}
+  }
+
   /* รันเมื่อหน้า p3 ถูกเปิด (มี class active) */
   function watch() {
+    // ผูกชื่อพ้องให้คลังฝึกตั้งแต่เปิดหน้า (ทำครั้งเดียว)
+    loadResults().then(aliasChapterBanks).catch(function () {});
+
     var p3 = document.getElementById('p3');
     if (!p3) return;
     if (p3.classList.contains('active')) markOptions();
