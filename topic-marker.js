@@ -21,11 +21,39 @@
   /* คีย์บท — ให้ "เรียงลำดับและจัดหมู่" = "การเรียงลำดับและการจัดหมู่"
      (ตัวเลข "ชุดที่ 1/2" ยังแยกกัน) */
   function chapterKey(ch) {
-    return String(ch || '').replace(/\s+/g, '').replace(/การ/g, '').replace(/ที่/g, '').toLowerCase();
+    return String(ch || '')
+      .replace(/\s+/g, '')
+      .replace(/การ/g, '')
+      .replace(/[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/g, '')   // ตัดสระบน/ล่าง + วรรณยุกต์ + ์
+      .replace(/ชดท/g, 'ชด')
+      .toLowerCase();
   }
 
-  function stripGroup(s) {
-    return String(s || '').replace(/\s*\([^)]*\)\s*$/, '').trim();
+  /* ⚠️ ชื่อคน: ห้ามตัดสระ/วรรณยุกต์ ("ปัณ" ≠ "ปุณ") */
+  function nameKey(s) {
+    return String(s || '').replace(/\s+/g, '').toLowerCase();
+  }
+
+  /* คีย์หลวม — ใช้เทียบชื่อกลุ่มเท่านั้น */
+  function looseKey(s) {
+    return String(s || '')
+      .replace(/\s+/g, '')
+      .replace(/[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/g, '')
+      .toLowerCase();
+  }
+
+  /* ดึงชื่อจริง — รองรับ "ดอม (วันพุธ)", "ดอม (กลุ่มวันพุธ)", "เซ้นส์ เสาร์ 13.00" */
+  function stripGroup(s, group) {
+    var base = String(s || '').replace(/\s*\([^)]*\)\s*$/, '').trim();
+    if (!group) return base;
+    var gkey = looseKey(String(group).replace(/^\s*กลุ่ม\s*/, ''));
+    var t = base.split(/\s+/);
+    var cut = t.length;
+    for (var i = t.length - 1; i >= 1; i--) {
+      var suf = looseKey(t.slice(i).join(''));
+      if (suf && gkey.indexOf(suf) !== -1) cut = i; else break;
+    }
+    return t.slice(0, cut).join(' ').trim();
   }
 
   function loadResults() {
@@ -37,24 +65,52 @@
       .then(function (j) { cache = j.values || []; return cache; });
   }
 
-  /* ชื่อนักเรียนที่ล็อกอินอยู่ — อ่านจากหัวหน้า p3 */
-  function currentStudentName() {
-    var el = document.getElementById('modeName');
-    return el ? stripGroup(el.textContent) : '';
+  function groupKeyTM(g) {
+    return looseKey(String(g || '').replace(/^\s*กลุ่ม\s*/, ''));
+  }
+
+  /* นักเรียนที่ล็อกอินอยู่ → {name, group}
+     ชื่อในช่องค้นหา (p1b) มีวงเล็บกลุ่มติดมาด้วย ใช้แยกคนชื่อซ้ำข้ามกลุ่มได้ */
+  function currentStudent() {
+    var full = '';
+    var inp = document.getElementById('studentSearch');
+    if (inp && inp.value) full = inp.value.trim();
+    if (!full) {
+      var el = document.getElementById('modeName');
+      full = el ? el.textContent.trim() : '';
+    }
+    if (!full) return null;
+    var m = full.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+    if (m) return { name: m[1].trim(), group: m[2].trim() };
+    return { name: full, group: '' };
   }
 
   function markOptions() {
     var sel = document.getElementById('topicFilter');
     if (!sel) return;
-    var who = currentStudentName();
-    if (!who) return;
-    if (sel.dataset.markedFor === who) return;   // ทำไปแล้วสำหรับคนนี้
+    var stu = currentStudent();
+    if (!stu) return;
+    var tag = stu.name + '|' + stu.group;
+    if (sel.dataset.markedFor === tag) return;   // ทำไปแล้วสำหรับคนนี้
 
     loadResults().then(function (rows) {
+      var myName = nameKey(stu.name);
+      var myGroup = groupKeyTM(stu.group);
+
+      // ถ้าไม่รู้กลุ่ม แต่มีชื่อซ้ำข้ามกลุ่ม → ไม่ติดสัญลักษณ์ ดีกว่าแสดงผิด
+      if (!myGroup) {
+        var g = {};
+        rows.forEach(function (r) {
+          if (r && r[0] && nameKey(stripGroup(r[0], r[1])) === myName) g[groupKeyTM(r[1])] = true;
+        });
+        if (Object.keys(g).length > 1) return;
+      }
+
       var mine = {};
       rows.forEach(function (r) {
         if (!r || !r[0] || !r[3]) return;
-        if (stripGroup(r[0]) !== who) return;     // B=ชื่อ, E=บท
+        if (nameKey(stripGroup(r[0], r[1])) !== myName) return;          // B=ชื่อ C=กลุ่ม E=บท
+        if (myGroup && groupKeyTM(r[1]) !== myGroup) return;             // คนละกลุ่ม = คนละคน
         mine[chapterKey(r[3])] = true;
       });
 
@@ -88,7 +144,7 @@
         sel.options[0].dataset.baseLabel = sel.options[0].textContent;
       }
 
-      sel.dataset.markedFor = who;
+      sel.dataset.markedFor = tag;
     }).catch(function () { /* โหลดไม่ได้ → ปล่อย dropdown ตามเดิม */ });
   }
 
