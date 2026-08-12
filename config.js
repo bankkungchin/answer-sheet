@@ -55,3 +55,5 @@ PLAYLISTS["เมทริกซ์"] = "PLc4ncgz2CJ7MjHpl2beFOkDCBc3pwOtWO";
 // PATCH — เพิ่ม playlist "ตรรกศาสตร์" (วางต่อท้าย config.js)
 PLAYLISTS["ตรรกศาสตร์"] = "PLc4ncgz2CJ7PMXRLpmq8MBEOz7bXV-1pz";
 
+// ═══ PATCH config.js — วางต่อท้ายไฟล์ ═══
+PLAYLISTS["สถิติ"] = "PLc4ncgz2CJ7NGH4sFolFhQqENsdl4_aB8";
