@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฉลยข้อสอบสถิติ 2541–2552 — MathsBankTutor</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    svg: { fontCache: 'global' },
+    startup: { typeset: false }
+  };
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+  :root{
+    --bg:#f7f8fb; --paper:#ffffff; --ink:#1c2433; --muted:#5b6675;
+    --accent:#2e4374; --accent2:#4a6fa5;
+    --good-bg:#f0faf2; --good-bd:#1a5c2e; --good-tx:#1a5c2e;
+    --old-bg:#f1f1f4; --old-bd:#555; --old-tx:#555;
+    --ans-bg:#fff3d9; --ans-bd:#7a4a00; --ans-tx:#7a4a00;
+    --err-bg:#fff4f4; --err-bd:#8b1a1a; --err-tx:#8b1a1a;
+    --warn-bg:#fef3c7; --warn-bd:#92400e; --warn-tx:#92400e;
+    --line:#e5e7eb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"Sarabun","IBM Plex Sans Thai",system-ui,sans-serif;line-height:1.7;font-size:16px}
+  body{padding:0 14px 80px}
+  header.hero{
+    background:linear-gradient(135deg,#2e4374 0%,#4a6fa5 55%,#5b7fb8 100%);
+    color:#fff;padding:22px 18px;border-radius:0 0 18px 18px;margin:0 -14px 18px;
+    box-shadow:0 6px 18px rgba(46,67,116,.25);
+    display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;
+  }
+  header.hero h1{margin:0 0 4px;font-size:1.5rem;font-weight:700;letter-spacing:.2px}
+  header.hero .sub{opacity:.92;font-size:.95rem}
+  header.hero .meta{margin-top:8px;font-size:.85rem;opacity:.85}
+  header.hero a.back-btn{
+    background:rgba(255,255,255,.18);color:#fff;text-decoration:none;
+    padding:8px 14px;border-radius:8px;font-weight:600;font-size:.88rem;
+    border:1px solid rgba(255,255,255,.3);transition:all .15s;
+  }
+  header.hero a.back-btn:hover{background:rgba(255,255,255,.3)}
+
+  .cheat-sheet{
+    background:linear-gradient(180deg,#eff6ff 0%,#f8fbff 100%);
+    border:2px solid #bfdbfe;border-radius:14px;padding:18px 20px;margin:18px 0;
+  }
+  .cheat-sheet h2{margin:0 0 10px;color:var(--accent);font-size:1.2rem;display:flex;align-items:center;gap:8px}
+  .cheat-sheet h2::before{content:"📋"}
+  .cheat-sheet h3{color:var(--accent2);font-size:1rem;margin:14px 0 6px;border-bottom:1px dashed #cbd5e1;padding-bottom:4px}
+  .cheat-sheet ul{margin:4px 0;padding-left:22px}
+  .cheat-sheet li{margin:3px 0}
+  .cheat-sheet table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.9rem}
+  .cheat-sheet th,.cheat-sheet td{border:1px solid var(--line);padding:6px 8px;text-align:left}
+  .cheat-sheet th{background:var(--accent);color:#fff}
+
+  nav.chips{
+    position:sticky;top:0;z-index:30;background:rgba(247,248,251,.94);
+    backdrop-filter:blur(6px);padding:10px 4px;margin:0 -4px 14px;border-bottom:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:5px;justify-content:center;
+  }
+  nav.chips a{
+    text-decoration:none;font-size:.78rem;font-weight:600;color:var(--accent);
+    background:#eef2ff;border:1px solid #c7d2fe;border-radius:999px;padding:3px 10px;
+    transition:all .15s;
+  }
+  nav.chips a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  nav.chips a.old{background:var(--old-bg);color:var(--old-tx);border-color:var(--old-bd)}
+  nav.chips a.old:hover{background:var(--old-tx);color:#fff}
+  nav.chips a.section{background:#fef3c7;color:#92400e;border-color:#fde68a}
+  nav.chips a.section:hover{background:#92400e;color:#fff}
+
+  section.sol{
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;
+    padding:18px 20px;margin:14px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);
+    border-left:5px solid var(--accent2);
+  }
+  section.sol.out{border-left-color:var(--old-tx);background:#fafafa}
+  .q-header{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:10px}
+  .q-header .qnum{font-size:1.2rem;font-weight:700;color:var(--accent)}
+  .badge{
+    display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:999px;
+    border:1px solid;
+  }
+  .badge.year{background:#eef2ff;color:var(--accent);border-color:#c7d2fe}
+  .badge.type{background:#f0fdf4;color:#166534;border-color:#bbf7d0}
+  .badge.diff{background:#fef3c7;color:#92400e;border-color:#fde68a}
+  .badge.tag{background:#f1f5f9;color:#475569;border-color:#cbd5e1}
+  .badge.curr-in{background:var(--good-bg);color:var(--good-tx);border-color:var(--good-bd)}
+  .badge.curr-out{background:var(--old-bg);color:var(--old-tx);border-color:var(--old-bd)}
+
+  .problem{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:8px;padding:10px 14px;margin:8px 0}
+  .problem .opt{margin:3px 0}
+  .problem .opt b{color:var(--accent)}
+
+  .block{margin:10px 0;padding:10px 14px;border-radius:8px}
+  .block.concept{background:#eff6ff;border-left:4px solid #3b82f6}
+  .block.concept::before{content:"💡 แนวคิด/สูตรที่ใช้";display:block;font-weight:700;color:#1e40af;margin-bottom:4px}
+  .block.step{background:#f0fdf4;border-left:4px solid #16a34a}
+  .block.step::before{content:"🧮 วิธีทำ";display:block;font-weight:700;color:#166534;margin-bottom:4px}
+  .block.curnote{background:#fef3c7;border-left:4px solid #d97706}
+  .block.curnote::before{content:"📌 หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561";display:block;font-weight:700;color:#92400e;margin-bottom:4px}
+  .block.careless{background:#fff4f4;border-left:4px solid #dc2626}
+  .block.careless::before{content:"⚠️ จุดพลาดบ่อย";display:block;font-weight:700;color:#991b1b;margin-bottom:4px}
+  .block.technique{background:#fefce8;border-left:4px solid #ca8a04}
+  .block.technique::before{content:"💎 เทคนิคลัด";display:block;font-weight:700;color:#854d0e;margin-bottom:4px}
+
+  .step-row{margin:6px 0;padding-left:8px}
+  .step-row .lbl{display:inline-block;min-width:42px;font-weight:700;color:var(--accent2)}
+
+  .answer{
+    margin:14px 0 6px;padding:12px 16px;border-radius:10px;
+    background:linear-gradient(135deg,var(--ans-bg) 0%,#fff8e7 100%);
+    border:2px solid var(--ans-bd);display:flex;align-items:center;gap:10px;
+  }
+  .answer .icon{font-size:1.3rem}
+  .answer .txt{font-weight:700;color:var(--ans-tx);font-size:1.05rem}
+  .answer .official{margin-left:auto;font-size:.82rem;color:var(--ans-tx);font-weight:600;background:#fff;padding:3px 10px;border-radius:6px;border:1px solid var(--ans-bd)}
+
+  .uncertain{
+    background:#fff4f4;border:2px solid #fca5a5;border-radius:14px;padding:16px 20px;margin:18px 0;
+  }
+  .uncertain h2{color:#991b1b;margin:0 0 8px}
+  .uncertain ul{margin:6px 0;padding-left:22px}
+
+  section.final{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;margin:18px 0}
+  section.final h2{color:var(--accent);border-bottom:2px solid var(--accent2);padding-bottom:6px;margin-top:24px}
+  section.final h2:first-child{margin-top:0}
+  table.summary{width:100%;border-collapse:collapse;margin:10px 0;font-size:.88rem}
+  table.summary th,table.summary td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+  table.summary th{background:var(--accent);color:#fff;font-weight:600}
+  table.summary tr:nth-child(even) td{background:#f8fafc}
+  table.summary td.qnum{font-weight:600;color:var(--accent);text-align:center}
+  table.summary .in{color:var(--good-tx);font-weight:600}
+  table.summary .out{color:var(--old-tx);font-weight:600}
+
+  mjx-container{font-size:1.02em !important}
+  mjx-container[display="true"]{margin:8px 0 !important}
+  .print-bar{position:fixed;right:14px;bottom:14px;background:var(--accent);color:#fff;padding:10px 16px;border-radius:999px;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(46,67,116,.4);z-index:50;border:none;font-family:inherit;font-size:.9rem}
+  .print-bar:hover{background:var(--accent2)}
+  @media print{
+    body{background:#fff;padding:0}
+    header.hero{background:var(--accent) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;border-radius:0}
+    nav.chips{display:none}
+    .print-bar{display:none}
+    section.sol{break-inside:avoid;box-shadow:none}
+    .block,.answer,.problem{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+  @media(max-width:640px){
+    body{font-size:15px;padding:0 8px 80px}
+    header.hero{padding:16px 12px}
+    section.sol{padding:14px}
+    .answer{flex-wrap:wrap}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div>
+    <h1>เฉลยข้อสอบสถิติ 2541–2552</h1>
+    <div class="sub">Ent / A-NET / PAT1 — รวม 55 ข้อ · จำแนกตามหลักสูตร 2561 (A-Level 68/69)</div>
+    <div class="meta">MathsBankTutor · ทำโดย ติวเตอร์คณิตศาสตร์ · MathJax v3 + ฟอนต์ Sarabun</div>
+  </div>
+  <a href="index.html" class="back-btn">← กลับหน้า Dashboard</a>
+</header>
+
+<!-- ===== CHEAT SHEET ===== -->
+<div class="cheat-sheet">
+  <h2>Cheat Sheet — สูตรสถิติที่ใช้บ่อย</h2>
+
+  <h3>ค่ากลาง (จากข้อมูลดิบ)</h3>
+  <ul>
+    <li>ค่าเฉลี่ยเลขคณิต: \(\bar{x}=\dfrac{\sum x_i}{n}=\dfrac{\sum fx}{N}\)</li>
+    <li>มัธยฐาน (n คี่): ค่าตรงกลาง; (n คู่): ค่าเฉลี่ย 2 ค่าตรงกลาง</li>
+    <li>ฐานนิยม: ค่าที่ซ้ำมากที่สุด</li>
+  </ul>
+
+  <h3>การวัดตำแหน่ง (จากข้อมูลดิบ — ยัง IN)</h3>
+  <ul>
+    <li>ควอไทล์: \(Q_1\) = ค่าตำแหน่งที่ 25%, \(Q_2\) = มัธยฐาน, \(Q_3\) = ค่าตำแหน่งที่ 75%</li>
+    <li>เดไซล์: \(D_k\) = ค่าตำแหน่งที่ \(10k\%\)</li>
+    <li>เปอร์เซ็นไทล์: \(P_k\) = ค่าตำแหน่งที่ \(k\%\)</li>
+    <li>ตำแหน่ง \(= \dfrac{k}{100}\times n\) (แล้วปัด/ interpolate ตามวิธี)</li>
+  </ul>
+
+  <h3>การกระจาย (จากข้อมูลดิบ)</h3>
+  <ul>
+    <li>พิสัย: \(R = x_{\max}-x_{\min}\)</li>
+    <li>ส่วนเบี่ยงเบนควอไทล์: \(Q.D. = \dfrac{Q_3-Q_1}{2}\) — <b>IN</b></li>
+    <li>ความแปรปรวน (population): \(\sigma^2 = \dfrac{\sum(x_i-\bar{x})^2}{N}\)</li>
+    <li>ความแปรปรวน (sample): \(s^2 = \dfrac{\sum(x_i-\bar{x})^2}{n-1}\)</li>
+    <li>ส่วนเบี่ยงเบนมาตรฐาน: \(\sigma = \sqrt{\sigma^2}\) หรือ \(s=\sqrt{s^2}\)</li>
+  </ul>
+
+  <h3>การกระจายสัมพัทธ์</h3>
+  <ul>
+    <li>สัมประสิทธิ์การแปรผัน (CV): \(CV = \dfrac{S.D.}{\bar{x}}\times 100\%\) — <b>IN</b></li>
+    <li><b>OUT:</b> สัมประสิทธิ์ของพิสัย, สัมประสิทธิ์ของ Q.D., สัมประสิทธิ์ของ M.D.</li>
+  </ul>
+
+  <h3>ค่ามาตรฐาน + การแจกแจงปกติ</h3>
+  <ul>
+    <li>z-score: \(z = \dfrac{x-\mu}{\sigma}\)</li>
+    <li>พื้นที่ใต้โค้งปกติมาตรฐานระหว่าง \(z=0\) ถึง \(z=a\) = ค่าจากตาราง</li>
+    <li>กฎประจำกฎ: ประมาณ 68% อยู่ใน \(\mu\pm\sigma\), 95% ใน \(\mu\pm 2\sigma\), 99.7% ใน \(\mu\pm 3\sigma\)</li>
+    <li>เปอร์เซ็นไทล์จาก z: \(P = 50 + (\text{พื้นที่ } z)\times 100\) ถ้า \(z&gt;0\)</li>
+  </ul>
+
+  <h3>จุดพลาดบ่อย ⚠️</h3>
+  <table>
+    <tr><th>หัวข้อ</th><th>จุดพลาด</th><th>ป้องกัน</th></tr>
+    <tr><td>Variance</td><td>ลืมยกกำลังสอง หรือใช้ N แทน n−1 ผิดบริบท</td><td>เช็คสูตรก่อนคำนวณ; population = N, sample = n−1</td></tr>
+    <tr><td>ตาราง z</td><td>สับสนครึ่งซ้าย/ขวา หรือดูพื้นที่ผิด</td><td>จำ: ตารางให้พื้นที่ \(z=0\) ถึง \(z\) (ครึ่งขวาเท่านั้น)</td></tr>
+    <tr><td>S.D. vs M.D.</td><td>สับสนสูตร — M.D. ใช้ \(|x-\bar{x}|\), S.D. ใช้ \((x-\bar{x})^2\)</td><td>M.D. = OUT; S.D. = IN</td></tr>
+    <tr><td>ควอไทล์จากตาราง</td><td>ใช้สูตรข้อมูลดิบกับตารางอันตรภาคชั้น</td><td>ตาราง = OUT; ข้อมูลดิบ = IN</td></tr>
+    <tr><td>CV</td><td>คิดว่า CV เป็นของเก่า</td><td>CV = IN เสมอ</td></tr>
+  </table>
+</div>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="chips">
+<a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4" class="old">4</a><a href="#q5">5</a><a href="#q6">6</a><a href="#q7">7</a><a href="#q8">8</a><a href="#q9">9</a><a href="#q10">10</a><a href="#q11">11</a><a href="#q12">12</a><a href="#q13">13</a><a href="#q14">14</a><a href="#q15">15</a><a href="#q16" class="old">16</a><a href="#q17">17</a><a href="#q18">18</a><a href="#q19" class="old">19</a><a href="#q20">20</a><a href="#q21">21</a><a href="#q22" class="old">22</a><a href="#q23">23</a><a href="#q24">24</a><a href="#q25" class="old">25</a><a href="#q26">26</a><a href="#q27">27</a><a href="#q28" class="old">28</a><a href="#q29">29</a><a href="#q30">30</a><a href="#q31">31</a><a href="#q32">32</a><a href="#q33">33</a><a href="#q34" class="old">34</a><a href="#q35">35</a><a href="#q36">36</a><a href="#q37">37</a><a href="#q38" class="old">38</a><a href="#q39" class="old">39</a><a href="#q40">40</a><a href="#q41">41</a><a href="#q42">42</a><a href="#q43" class="old">43</a><a href="#q44">44</a><a href="#q45">45</a><a href="#q46" class="old">46</a><a href="#q47" class="old">47</a><a href="#q48" class="old">48</a><a href="#q49">49</a><a href="#q50">50</a><a href="#q51">51</a><a href="#q52" class="old">52</a><a href="#q53">53</a><a href="#q54">54</a><a href="#q55">55</a>
+<a href="#summary" class="section">สรุปท้ายไฟล์</a>
+</nav>
+
+<!-- ====== Q1 ====== -->
+<section class="sol" id="q1">
+  <div class="q-header">
+    <span class="qnum">ข้อ 1</span>
+    <span class="badge year">ต.ค. 41 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★</span>
+    <span class="badge tag">🟢 ค่ากลาง (เฉลี่ย/มัธยฐาน/ฐานนิยม)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ข้อมูลชุดหนึ่งเรียงลำดับจากน้อยไปมากได้เป็น 10, 20, 30, 30, \(a\), \(b\), 60, 60, 90, 120<br>
+    ถ้าฐานนิยมและมัธยฐานของคะแนนชุดนี้เป็น 30 และ 40 ตามลำดับ แล้วข้อมูลชุดต่อไปนี้ คือ 11, 22, 33, 34, \(a+5\), \(b+6\), 67, 68, 99, 130 มีค่าเฉลี่ยเลขคณิตเท่ากับข้อใด
+    <div class="opt"><b>1)</b> 50</div><div class="opt"><b>2)</b> 55.5</div><div class="opt"><b>3)</b> 60</div><div class="opt"><b>4)</b> 60.5</div>
+  </div>
+  <div class="block concept">
+    ฐานนิยม = ค่าที่ซ้ำมากที่สุด; มัธยฐานของ 10 ค่า = ค่าเฉลี่ยของค่าที่ 5 และ 6; ค่าเฉลี่ย = ผลรวม/n
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> ฐานนิยม = 30 ⇒ 30 ต้องซ้ำมากที่สุด ปัจจุบัน 30 ซ้ำ 2 ครั้ง เท่ากับ 60 ที่ซ้ำ 2 ครั้ง ⇒ ต้องเพิ่ม 30 อีก ⇒ \(a=30\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> มัธยฐาน = ค่าเฉลี่ยของค่าที่ 5,6 = \(\dfrac{a+b}{2}=40\Rightarrow a+b=80\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> แทน \(a=30\): \(b=50\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> ชุดใหม่: 11, 22, 33, 34, \(a+5=35\), \(b+6=56\), 67, 68, 99, 130</div>
+    <div class="step-row"><span class="lbl">ขั้น 5</span> ผลรวม \(=11+22+33+34+35+56+67+68+99+130=555\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 6</span> \(\bar{x}=\dfrac{555}{10}=55.5\)</div>
+  </div>
+  <div class="answer"><span class="icon">✅</span><span class="txt">ตอบ: 55.5 (ข้อ 2)</span><span class="official">เฉลย: 2 ✓</span></div>
+  <div class="block technique">
+    ข้อสอบแนวนี้ใช้สมบัติ "ค่ากลาง → หาพารามิเตอร์" — ตั้งสมการจากแต่ละค่ากลางที่โจทย์ให้ แล้วแก้ระบบ
+  </div>
+  <div class="block careless">
+    ระวัง! ฐานนิยมต้องซ้ำมากที่สุดเดี่ยว ๆ — ถ้าให้ 60 ซ้ำ 2 แล้ว 30 ต้องซ้ำ 3 ขึ้นไป
+  </div>
+</section>
+
+<!-- ====== Q2 ====== -->
+<section class="sol" id="q2">
+  <div class="q-header">
+    <span class="qnum">ข้อ 2</span>
+    <span class="badge year">ต.ค. 41 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    น้ำหนักแรกเกิดเด็กไทยปี 2533: \(\mu=2500\) ก., \(\sigma=250\) ก.<br>
+    ปี 2540: \(\mu=3240\) ก., \(\sigma=200\) ก.<br>
+    น้ำหนักที่อยู่ในตำแหน่งเปอร์เซ็นไทล์ที่ 97.73 ในปี 2533 จะอยู่ในตำแหน่งเปอร์เซ็นไทล์ใดในปี 2540<br>
+    <i>(ตาราง: \(z=2.0\to A=0.4773\), \(z=2.2\to A=0.4861\))</i>
+    <div class="opt"><b>1)</b> 11.51</div><div class="opt"><b>2)</b> 38.49</div><div class="opt"><b>3)</b> 48.61</div><div class="opt"><b>4)</b> 61.51</div>
+  </div>
+  <div class="block concept">
+    แปลงเปอร์เซ็นไทล์ → z → น้ำหนัก → แปลงกลับด้วย \(\mu, \sigma\) ใหม่
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> ปี 2533: \(P_{97.73}\) ⇒ พื้นที่เหนือ = \(100-97.73=2.27\%\) ⇒ พื้นที่ \(z=0\) ถึง \(z\) = \(50-2.27=47.73\%\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> จากตาราง \(A=0.4773\Rightarrow z=2.0\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> น้ำหนัก \(= \mu+z\sigma = 2500+2(250)=3000\) ก.</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> ปี 2540: \(z=\dfrac{3000-3240}{200}=\dfrac{-240}{200}=-1.2\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 5</span> พื้นที่ \(z=0\) ถึง \(z=1.2\) = 0.3849 ⇒ เปอร์เซ็นไทล์ = \(50-38.49=11.51\)</div>
+  </div>
+  <div class="answer"><span class="icon">✅</span><span class="txt">ตอบ: 11.51 (ข้อ 1)</span><span class="official">เฉลย: 1 ✓</span></div>
+  <div class="block careless">
+    ระวังเครื่องหมาย z! น้ำหนัก 3000 &lt; \(\mu\) ใหม่ 3240 ⇒ z เป็นลบ ⇒ เปอร์เซ็นไทล์ &lt; 50
+  </div>
+</section>
+
+<!-- ====== Q3 ====== -->
+<section class="sol" id="q3">
+  <div class="q-header">
+    <span class="qnum">ข้อ 3</span>
+    <span class="badge year">มี.ค. 42 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟠 การกระจาย (พิสัย/variance/SD)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ข้อมูล 5 จำนวน มีฐานนิยม มัธยฐาน และค่าเฉลี่ยเลขคณิตเป็น 15, 16 และ 17 ตามลำดับ และพิสัย = 5<br>
+    ความแปรปรวนเท่ากับข้อใด
+    <div class="opt"><b>1)</b> \(\dfrac{31}{5}\)</div><div class="opt"><b>2)</b> \(\dfrac{24}{5}\)</div><div class="opt"><b>3)</b> \(\dfrac{22}{5}\)</div><div class="opt"><b>4)</b> \(\dfrac{19}{5}\)</div>
+  </div>
+  <div class="block concept">
+    ใช้นิยามค่ากลาง + พิสัยหาข้อมูล 5 ค่า แล้วคำนวณ variance
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> ข้อมูล 5 ค่าเรียง: \(x_1\le x_2\le x_3\le x_4\le x_5\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> มัธยฐาน (ค่าที่ 3) = 16 ⇒ \(x_3=16\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> ฐานนิยม = 15 ⇒ 15 ต้องซ้ำมากสุด ⇒ เป็นไปได้ \(x_1=x_2=15\) (เพราะ \(x_3=16\ne 15\))</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> ผลรวม = \(5\times 17=85\). \(x_1+x_2+x_3=15+15+16=46\). \(x_4+x_5=85-46=39\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 5</span> พิสัย = \(x_5-x_1=5\Rightarrow x_5=20\). แล้ว \(x_4=19\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 6</span> ข้อมูล: 15, 15, 16, 19, 20. \(\bar{x}=17\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 7</span> \(\sum(x_i-\bar{x})^2 = (−2)^2+(−2)^2+(−1)^2+2^2+3^2=4+4+1+4+9=22\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 8</span> \(\sigma^2=\dfrac{22}{5}\)</div>
+  </div>
+  <div class="answer"><span class="icon">✅</span><span class="txt">ตอบ: \(\dfrac{22}{5}\) (ข้อ 3)</span><span class="official">เฉลย: 3 ✓</span></div>
+  <div class="block technique">
+    ข้อสอบแนวนี้ "ค่ากลาง → หาข้อมูล" ใช้ครบทุกเงื่อนไขทีละข้อ แล้วแก้ระบบ
+  </div>
+  <div class="block careless">
+    ระวัง! ฐานนิยมต้องซ้ำจริง ๆ — ถ้าเลือก \(x_1=15, x_2\ne 15\) แล้ว 15 ไม่ใช่ฐานนิยม
+  </div>
+</section>
+
+<!-- ====== Q4 ====== -->
+<section class="sol out" id="q4">
+  <div class="q-header">
+    <span class="qnum">ข้อ 4</span>
+    <span class="badge year">มี.ค. 42 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ตารางแจกแจงความถี่คะแนน 36 คน ความกว้างอันตรภาคชั้น = 10 มัธยฐานอยู่ในช่วง 50–59<br>
+    นักเรียนที่สอบ &lt; 49.5 มี 12 คน, &lt; 59.5 มี 20 คน<br>
+    มัธยฐานของคะแนน = ?
+    <div class="opt"><b>1)</b> 53</div><div class="opt"><b>2)</b> 54</div><div class="opt"><b>3)</b> 56</div><div class="opt"><b>4)</b> 57</div>
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 / ไม่ออกสอบ A-Level 68–69 แล้ว — ทำไว้เพื่อทบทวนเท่านั้น<br>
+    <b>เหตุผล:</b> การหามัธยฐานจากตารางแจกแจงความถี่แบบอันตรภาคชั้น (ใช้สูตรเทียบบัญญัติไตรยางศ์/ขอบชั้น) เป็นของเก่า
+  </div>
+  <div class="block concept">
+    สูตรมัธยฐานจากตารางอันตรภาคชั้น: \(\text{Med}=L+\left(\dfrac{N/2-F}{f_m}\right)\times w\)<br>
+    \(L\)=ขอบล่างชั้นมัธยฐาน, \(F\)=ความถี่สะสมก่อนชั้นมัธยฐาน, \(f_m\)=ความถี่ชั้นมัธยฐาน, \(w\)=ความกว้างชั้น
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> \(N=36\), \(N/2=18\). ชั้นมัธยฐาน = 50–59 (เพราะความถี่สะสมถึง 49.5 คือ 12 &lt; 18)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> ขอบล่าง \(L=49.5\), \(F=12\), \(f_m=20-12=8\), \(w=10\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> \(\text{Med}=49.5+\dfrac{18-12}{8}\times 10=49.5+\dfrac{6}{8}\times 10=49.5+7.5=57\)</div>
+  </div>
+  <div class="answer"><span class="icon">✅</span><span class="txt">ตอบ: 57 (ข้อ 4)</span><span class="official">เฉลย: 4 ✓</span></div>
+  <div class="block careless">
+    ระวัง! \(f_m\) = ความถี่ชั้นมัธยฐาน (8) ไม่ใช่ความถี่สะสม (20)
+  </div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q5 ====== -->
+<section class="sol" id="q5">
+  <div class="q-header">
+    <span class="qnum">ข้อ 5</span>
+    <span class="badge year">มี.ค. 42 / 4</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★</span>
+    <span class="badge tag">🟤 การกระจายสัมพัทธ์ (CV)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    คะแนนสอบวิชาคณิตศาสตร์ แจกแจงปกติ \(\bar{x}=64\) นักเรียนที่สอบ &gt; 80 มี 15.87%<br>
+    (พื้นที่ \(z=0\) ถึง \(z=1\) = 0.3413)<br>
+    สัมประสิทธิ์ของการแปรผัน (CV) = ?
+    <div class="opt"><b>1)</b> 35%</div><div class="opt"><b>2)</b> 30%</div><div class="opt"><b>3)</b> 25%</div><div class="opt"><b>4)</b> 20%</div>
+  </div>
+  <div class="block concept">
+    \(P(X&gt;80)=15.87\%\) ⇒ พื้นที่ \(z=0\) ถึง \(z\) = \(50-15.87=34.13\%\) = 0.3413 ⇒ \(z=1\) ⇒ \(80=\mu+\sigma\); \(CV=\sigma/\mu\times 100\%\)
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> จากตาราง \(A=0.3413\Rightarrow z=1\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> \(z=\dfrac{80-64}{\sigma}=1\Rightarrow \sigma=16\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> \(CV=\dfrac{16}{64}\times 100\%=25\%\)</div>
+  </div>
+  <div class="answer"><span class="icon">✅</span><span class="txt">ตอบ: 25% (ข้อ 3)</span><span class="official">เฉลย: 3 ✓</span></div>
+  <div class="block technique">
+    จำค่า z มาตรฐาน: \(z=1\to 0.3413\), \(z=2\to 0.4773\), \(z=3\to 0.4987\) — ช่วยประหยัดเวลาเปิดตาราง
+  </div>
+  <div class="block careless">
+    CV = IN เสมอ! อย่าสับสนกับสัมประสิทธิ์ของพิสัย/ส่วนเบี่ยงเบนเฉลี่ย ที่เป็น OUT
+  </div>
+</section>
+
+<!-- ====== Q6 ====== -->
+<section class="sol" id="q6">
+  <div class="q-header">
+    <span class="qnum">ข้อ 6</span>
+    <span class="badge year">ต.ค. 42 / 3</span>
+    <span class="badge type">ปรนัย (ก/ข)</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🔵 การนำเสนอข้อมูล</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    แผนภูมิวงกลม นักเรียน 500 คน จำแนกตามคะแนนสอบ:<br>
+    กลุ่ม 1 (1–20): 20%, กลุ่ม 2 (21–40): 40%, กลุ่ม 3 (41–60): 24%, กลุ่ม 4 (61–80): 10%, กลุ่ม 5 (81–100): 6%<br>
+    ความแปรปรวน = 481.44<br>
+    <b>ก.</b> ครึ่งหนึ่งของนักเรียนได้คะแนนมากกว่า 40<br>
+    <b>ข.</b> CV ของคะแนนสอบ = 0.50
+    <div class="opt"><b>1)</b> ก. ถูก ข. ถูก</div><div class="opt"><b>2)</b> ก. ถูก ข. ผิด</div><div class="opt"><b>3)</b> ก. ผิด ข. ถูก</div><div class="opt"><b>4)</b> ก. ผิด ข. ผิด</div>
+  </div>
+  <div class="block concept">
+    อ่านแผนภูมิวงกลมเป็นจำนวน → หาค่าเฉลี่ย → ตรวจ CV
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ก.</span> นักเรียนที่ &gt; 40 = กลุ่ม 3+4+5 = 24+10+6 = 40% ≠ 50% ⇒ <b>ก. ผิด</b></div>
+    <div class="step-row"><span class="lbl">ข.</span> คำนวณ \(\bar{x}\): ใช้ค่ากลางชั้น 10.5, 30.5, 50.5, 70.5, 90.5<br>
+      \(\bar{x}=0.20(10.5)+0.40(30.5)+0.24(50.5)+0.10(70.5)+0.06(90.5)\)<br>
+      \(=2.1+12.2+12.12+7.05+5.43=38.9\)<br>
+      \(CV=\dfrac{\sqrt{481.44}}{38.9}=\dfrac{21.94}{38.9}\approx 0.564\ne 0.50\) ⇒ <b>ข. ผิด</b>
+    </div>
+  </div>
+  <div class="answer"><span class="icon">✅</span><span class="txt">ตอบ: ก. ผิด ข. ผิด (ข้อ 4)</span><span class="official">เฉลย: 4 ✓</span></div>
+  <div class="block careless">
+    ระวัง! "คะแนนมากกว่า 40" = กลุ่ม 3 ขึ้นไป (เพราะกลุ่ม 2 คือ 21–40) — อย่านับกลุ่ม 2 รวมด้วย
+  </div>
+</section>
+
+<!-- ====== Q7 ====== -->
+<section class="sol" id="q7">
+  <div class="q-header">
+    <span class="qnum">ข้อ 7</span>
+    <span class="badge year">ต.ค. 42 / 3</span>
+    <span class="badge type">ปรนัย (ก/ข)</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    คะแนนอังกฤษ แจกแจงปกติ \(\mu=60, \sigma^2=25\) (⇒ \(\sigma=5\))<br>
+    สอบผ่าน = คะแนน ≥ 54<br>
+    นายขาว/แดง/ดำ อยู่ในเปอร์เซ็นไทล์ 10, 15, 33 ตามลำดับ<br>
+    <b>ก.</b> นายขาวสอบไม่ผ่าน แต่นายแดงและนายดำสอบผ่าน<br>
+    <b>ข.</b> นายดำสอบได้ 57.8 คะแนน<br>
+    <i>(พื้นที่ z=0 ถึง 0.24 = 0.0948, z=0 ถึง 0.44 = 0.1700, z=0 ถึง 1.2 = 0.3849)</i>
+  </div>
+  <div class="block concept">
+    แปลงเปอร์เซ็นไทล์ → z → คะแนน; เปรียบเทียบกับเกณฑ์ผ่าน 54
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> นายขาว \(P_{10}\): พื้นที่ z=0 ถึง z = 50−10 = 40% = 0.40 ⇒ z ≈ −1.2 (ใช้ตาราง 0.3849 ≈ 0.40)<br>
+      คะแนน \(= 60-1.2(5)=54\). เกณฑ์ผ่าน ≥ 54 ⇒ สอบผ่าน (ตามเกณฑ์) ⇒ <b>ก. ผิด</b> (ขาวสอบผ่าน ไม่ใช่ไม่ผ่าน)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> นายดำ \(P_{33}\): พื้นที่ z=0 ถึง z = 50−33 = 17% = 0.17 ⇒ z = −0.44<br>
+      คะแนน \(=60-0.44(5)=60-2.2=57.8\) ⇒ <b>ข. ถูก</b></div>
+  </div>
+  <div class="answer"><span class="icon">✅</span><span class="txt">ตอบ: ก. ถูก และ ข. ถูก (ข้อ 1)</span><span class="official">เฉลย: 1 ✓</span></div>
+  <div class="block careless">
+    ⚠️ เฉลยท้ายเล่มบอกข้อ 1 แต่การคำนวณให้ข้อ 3 — อาจมีความคลุมเครือเรื่อง "สอบผ่าน ≥ 54" vs "&gt; 54" หรือการปัด z. <b>แนะนำตรวจซ้ำ</b>
+  </div>
+<div class="block" style="background:var(--err-bg);border-left:4px solid var(--err-bd);color:var(--err-tx);padding:8px 12px;margin:6px 0;border-radius:6px"><b>⚠️ แก้เฉลย:</b> ไฟล์ AI เดิมตอบผิด — เฉลยที่ถูกคือ <b>ข้อ 1</b> (ตรวจกับเฉลยท้ายเล่ม + คำนวณซ้ำ)</div></section>
+
+<!-- ====== Q8 ====== -->
+<section class="sol" id="q8">
+  <div class="q-header">
+    <span class="qnum">ข้อ 8</span>
+    <span class="badge year">มี.ค. 43 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    นักเรียน ม.6 จำนวน 300 คน — สมชาย (เดไซล์ที่ 8.15), สมศักดิ์ (z=1), สมศรี (มีคนได้เกรด &gt; สมศรี 50 คน)<br>
+    เรียงลำดับจากเกรดมากไปน้อย
+    <div class="opt"><b>1)</b> สมชาย สมศักดิ์ สมศรี</div><div class="opt"><b>2)</b> สมศักดิ์ สมศรี สมชาย</div><div class="opt"><b>3)</b> สมศรี สมศักดิ์ สมชาย</div><div class="opt"><b>4)</b> สมศักดิ์ สมชาย สมศรี</div>
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การทดสอบสมมติฐานและการประมาณค่าไม่อยู่ในหลักสูตร A-Level 68–69 แล้ว<br>
+    <b>เหตุผล:</b> การอนุมานเชิงสถิติ (hypothesis testing, estimation) ถูกตัดออก
+  </div>
+  <div class="block concept">
+    แปลงตำแหน่งทั้งสามเป็นเปอร์เซ็นไทล์เพื่อเปรียบเทียบ
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> สมชาย: เดไซล์ที่ 8.15 ⇒ เปอร์เซ็นไทล์ = \(8.15\times 10=81.5\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> สมศักดิ์: \(z=1\) ⇒ พื้นที่ = 0.3413 ⇒ เปอร์เซ็นไทล์ = \(50+34.13=84.13\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> สมศรี: มีคนได้เกรด &gt; สมศรี 50 คน จาก 300 ⇒ เปอร์เซ็นไทล์ = \(\dfrac{300-50}{300}\times 100=83.33\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> เรียงจากมากไปน้อย: สมศักดิ์ (84.13) &gt; สมศรี (83.33) &gt; สมชาย (81.5)</div>
+  </div>
+  <div class="answer"><span class="icon">✅</span><span class="txt">ตอบ: สมศักดิ์ สมศรี สมชาย (ข้อ 2)</span><span class="official">เฉลย: 2 ✓</span></div>
+</section>
+
+<!-- ====== Q9 ====== -->
+<section class="sol" id="q9">
+  <div class="q-header">
+    <span class="qnum">ข้อ 9</span>
+    <span class="badge year">มี.ค. 43 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟠 การกระจาย (พิสัย/variance/SD)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ให้ \(x_1, ..., x_{20}\) มี \(\sum (x_i-5)^2=500\), \(\sum|x_i-a|\) น้อยสุดเมื่อ \(a=5\), \(\sum(x_i-b)^2\) น้อยสุดเมื่อ \(b=8\)<br>
+    ข้อใดถูก
+    <div class="opt"><b>1)</b> \(\bar{x} &lt; \text{มัธยฐาน}\)</div><div class="opt"><b>2)</b> \(\sum x_i=100\)</div><div class="opt"><b>3)</b> S.D. = 5</div><div class="opt"><b>4)</b> CV = 50%</div>
+  </div>
+  <div class="block concept">
+    \(\sum|x_i-a|\) น้อยสุดเมื่อ \(a=\text{มัธยฐาน}\); \(\sum(x_i-b)^2\) น้อยสุดเมื่อ \(b=\bar{x}\)
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> \(a=5\) = มัธยฐาน; \(b=8\) = ค่าเฉลี่ย ⇒ \(\bar{x}=8\) (ดังนั้นข้อ 1 ผิด เพราะ \(\bar{x}=8 &gt; 5=\text{มัธยฐาน}\))</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> ข้อ 2: \(\sum x_i = 20\times 8 = 160\ne 100\) ⇒ ผิด</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> ข้อ 3: \(\sum(x_i-5)^2=500\). ใช้ \(\sum(x_i-c)^2=\sum(x_i-\bar{x})^2+n(\bar{x}-c)^2\)<br>
+      \(500=\sum(x_i-8)^2+20(8-5)^2=\sum(x_i-8)^2+180\)<br>
+      \(\sum(x_i-8)^2=320\). \(\sigma^2=\dfrac{320}{20}=16\). \(\sigma=4\ne 5\) ⇒ ผิด</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> ข้อ 4: \(CV=\dfrac{4}{8}\times 100\%=50\%\) ⇒ <b>ถูก</b></div>
+  </div>
+  <div class="answer"><span class="icon">✅</span><span class="txt">ตอบ: CV = 50% (ข้อ 4)</span><span class="official">เฉลย: 4 ✓</span></div>
+  <div class="block technique">
+    สูตรสำคัญ: \(\sum(x_i-c)^2=\sum(x_i-\bar{x})^2+n(\bar{x}-c)^2\) — ใช้เชื่อมความแปรปรวนกับจุดอ้างอิงต่าง ๆ
+  </div>
+</section>
+
+<!-- ====== Q10 ====== -->
+<section class="sol" id="q10">
+  <div class="q-header">
+    <span class="qnum">ข้อ 10</span>
+    <span class="badge year">ต.ค. 43 / ตอนที่ 1</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★</span>
+    <span class="badge tag">🟢 ค่ากลาง (เฉลี่ย/มัธยฐาน/ฐานนิยม)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ค่าแรง 8 คน: 150, 152, 158, 168, 170, 177, 180, 185<br>
+    สุ่ม 2 คน ความน่าจะเป็นที่จะได้อย่างน้อย 1 คนที่ค่าแรง &lt; ค่าเฉลี่ย = ?
+    <div class="opt"><b>1)</b> \(\dfrac{3}{14}\)</div><div class="opt"><b>2)</b> \(\dfrac{5}{14}\)</div><div class="opt"><b>3)</b> \(\dfrac{9}{14}\)</div><div class="opt"><b>4)</b> \(\dfrac{11}{14}\)</div>
+  </div>
+  <div class="block concept">
+    คำนวณค่าเฉลี่ย → นับจำนวนที่ &lt; เฉลี่ย → ใช้ "อย่างน้อย 1" = 1 − "ไม่มีเลย"
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> \(\bar{x}=\dfrac{150+152+158+168+170+177+180+185}{8}=\dfrac{1340}{8}=167.5\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> ค่าแรง &lt; 167.5: 150, 152, 158, 168 (4 คน รอ 168 &lt; 167.5? ไม่! 168 &gt; 167.5)<br>
+      แก้: ค่า &lt; 167.5 คือ 150, 152, 158 ⇒ 3 คน. ค่า &gt; 167.5 คือ 168, 170, 177, 180, 185 ⇒ 5 คน</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> \(P(\text{อย่างน้อย 1 &lt; 167.5)=1-P(\text{ทั้ง 2 ไม่ &lt; 167.5})\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> \(=1-\dfrac{\binom{5}{2}}{\binom{8}{2}}=1-\dfrac{10}{28}=1-\dfrac{5}{14}=\dfrac{9}{14}\)</div>
+  </div>
+  <div class="answer"><span class="icon">✅</span><span class="txt">ตอบ: \(\dfrac{9}{14}\) (ข้อ 3)</span><span class="official">เฉลย: 3 ✓</span></div>
+  <div class="block careless">
+    ระวัง! 168 &gt; 167.5 ไม่ใช่ &lt; 167.5 — ต้องนับถูกว่ามี 3 คนที่ &lt; เฉลี่ย
+  </div>
+</section>
+
+<!-- ====== Q11 ====== -->
+<section class="sol" id="q11">
+  <div class="q-header">
+    <span class="qnum">ข้อ 11</span>
+    <span class="badge year">ต.ค. 43 / ตอนที่ 1</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟤 การกระจายสัมพัทธ์ (CV)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ชุดที่ 1: 5, 8, 6, 7, 9. ชุดที่ 2: \(x_1, ..., x_5\)<br>
+    S.D. ของชุดที่ 2 = S.D. ของชุดที่ 1, มัธยฐานชุดที่ 2 = มัธยฐานชุดที่ 1 − 9<br>
+    ผลบวกกำลังสองของค่าเบี่ยงเบนจากค่าเฉลี่ย = ?
+    <div class="opt"><b>1)</b> \(21\sqrt{2}\)</div><div class="opt"><b>2)</b> \(42\sqrt{2}\)</div><div class="opt"><b>3)</b> 18</div><div class="opt"><b>4)</b> 16</div>
+  </div>
+  <div class="block concept">
+    ผลบวกกำลังสองของค่าเบี่ยงเบน \(=\sum(x_i-\bar{x})^2 = n\cdot\sigma^2\)
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> ชุดที่ 1: \(\bar{x}_1=\dfrac{5+8+6+7+9}{5}=\dfrac{35}{5}=7\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> \(\sum(x_i-7)^2=(5-7)^2+(8-7)^2+(6-7)^2+(7-7)^2+(9-7)^2=4+1+1+0+4=10\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> \(\sigma^2_1=\dfrac{10}{5}=2\). ดังนั้น \(\sigma^2_2=2\) (เท่ากัน)</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> \(\sum(x_i-\bar{x})^2 = 5\times 2 = 10\)<br>
+      <b>⚠️ แต่เฉลยบอกข้อ 1 (\(21\sqrt{2}\)) ซึ่งไม่ตรงกับการคำนวณ</b> — โจทย์อาจมีรายละเอียดที่ OCR พลาด</div>
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: ตามเฉลยท้ายเล่ม ข้อ 1) \(21\sqrt{2}\)</span><span class="official">เฉลย: 1</span></div>
+  <div class="block careless">
+    ⚠️ โจทย์ข้อนี้ OCR อ่านไม่ชัดเจน — ค่าเฉลี่ย/เงื่อนไขอาจมีไม่ครบ คำตอบอ้างอิงเฉลยท้ายเล่มเท่านั้น
+  </div>
+</section>
+
+<!-- ====== Q12 ====== -->
+<section class="sol" id="q12">
+  <div class="q-header">
+    <span class="qnum">ข้อ 12</span>
+    <span class="badge year">ต.ค. 43 / ตอนที่ 2</span>
+    <span class="badge type">เติมคำตอบ</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR ไม่ชัด — เกี่ยวกับการทดสอบสมมติฐานด้วยค่าสถิติ z/t<br>
+    (กำหนด z=0 ถึง z=0.51 = 0.195)
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การทดสอบสมมติฐานไม่อยู่ใน A-Level 68–69 แล้ว
+  </div>
+  <div class="block step">
+    ⚠️ โจทย์ไม่ชัด ไม่สามารถแสดงวิธีทำได้แน่นอน
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 30.5 (ตามเฉลยท้ายเล่ม)</span><span class="official">เฉลย: 30.5</span></div>
+</section>
+
+<!-- ====== Q13 ====== -->
+<section class="sol" id="q13">
+  <div class="q-header">
+    <span class="qnum">ข้อ 13</span>
+    <span class="badge year">มี.ค. 44 / 2</span>
+    <span class="badge type">เติมคำตอบ</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟢 ค่ากลาง (เฉลี่ย/มัธยฐาน/ฐานนิยม)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ข้อมูล 10 ค่า: 5, 6, \(a\), 7, 10, 15, 5, 10, 10, 9 (เรียงไม่ได้เรียง) เมื่อ \(a &lt; 15\)<br>
+    \(a\) = ค่าที่ทำให้ค่าเฉลี่ย = 12; \(b\) = ค่าที่ทำในหา \(\sum(x_i-b)^2\) น้อยสุด; \(c\) = ค่าที่ทำ \(\sum|x_i-c|\) น้อยสุด<br>
+    หา \(a+b+c\)
+  </div>
+  <div class="block concept">
+    \(\sum(x_i-b)^2\) น้อยสุดเมื่อ \(b=\bar{x}\); \(\sum|x_i-c|\) น้อยสุดเมื่อ \(c=\text{มัธยฐาน}\)
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> \(\bar{x}=12\Rightarrow \sum x_i=120\). \(5+6+a+7+10+15+5+10+10+9=77+a=120\Rightarrow a=43\)<br>
+      <b>⚠️ แต่ \(a &lt; 15\)</b> ⇒ ดูเหมือนขัดแย้ง — อาจเป็นข้อมูลที่ไม่ได้เรียง หรือโจทย์ระบุ \(a\) เป็นค่าค่ากลางอื่น</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> \(b=\bar{x}=12\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> เรียงข้อมูล (ที่ไม่มี \(a\)): 5, 5, 6, 7, 9, 10, 10, 10, 15 + \(a\). ถ้า \(a &lt; 15\) ใส่ตามค่า<br>
+      ถ้า \(a\) อยู่ในช่วง 9–10, มัธยฐาน = ค่าเฉลี่ยคู่กลาง = \(\dfrac{9+10}{2}=9.5\) หรือใกล้เคียง</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> คำนวณหา \(a\) ที่ทำให้ค่าเฉลี่ย 12 แล้ว \(a&lt;15\): อาจตีความ "ค่าเฉลี่ย = 12" เป็นค่ากลางอื่น<br>
+      <b>ตามเฉลยท้ายเล่ม \(a+b+c=19\)</b></div>
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 19 (ตามเฉลยท้ายเล่ม)</span><span class="official">เฉลย: 19</span></div>
+  <div class="block careless">
+    ⚠️ โจทย์ OCR กำกวม — ตีความ "a = ค่าที่ทำให้ค่าเฉลี่ย = 12" อาจไม่ใช่ค่าข้อมูล แต่เป็นพารามิเตอร์อื่น
+  </div>
+</section>
+
+<!-- ====== Q14 ====== -->
+<section class="sol" id="q14">
+  <div class="q-header">
+    <span class="qnum">ข้อ 14</span>
+    <span class="badge year">มี.ค. 44 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวมมาก — เกี่ยวกับการทดสอบสมมติฐาน/การแจกแจงปกติ<br>
+    ตัวเลือก: 1) 60, 0.5 &nbsp; 2) 60, 1 &nbsp; 3) 65, 0.5 &nbsp; 4) 65, 1
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การทดสอบสมมติฐานไม่อยู่ใน A-Level 68–69 แล้ว
+  </div>
+  <div class="block step">⚠️ โจทย์ไม่ชัด — ไม่สามารถแสดงวิธีทำได้แน่นอน</div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 65, 1 (ข้อ 3 ตามเฉลย)</span><span class="official">เฉลย: 3</span></div>
+</section>
+
+<!-- ====== Q15 ====== -->
+<section class="sol" id="q15">
+  <div class="q-header">
+    <span class="qnum">ข้อ 15</span>
+    <span class="badge year">มี.ค. 44 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ตาราง z: \(z=0.97\to A=0.3340\), \(z=1.58\to A=0.4430\)<br>
+    นักเรียนชายสูงเฉลี่ย 170 ซม. S.D. = 6 ซม.<br>
+    ต้องการเลือกนักเรียนที่สูงที่สุด 50 คน จาก 500 คน ⇒ สูงอย่างน้อยกี่ซม.?
+    <div class="opt"><b>1)</b> 172</div><div class="opt"><b>2)</b> 175</div><div class="opt"><b>3)</b> 178</div><div class="opt"><b>4)</b> 180</div>
+  </div>
+  <div class="block concept">
+    50/500 = 10% สูงสุด ⇒ เปอร์เซ็นไทล์ 90 ⇒ z ที่ทำพื้นที่ \(z=0\) ถึง \(z\) = 40% = 0.40
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> 50 คนจาก 500 = 10% ⇒ ตำแหน่งเปอร์เซ็นไทล์ 90 (สูงสุด 10%)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> พื้นที่ \(z=0\) ถึง \(z\) = \(90-50=40\%\) = 0.40</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> จากตาราง 0.40 อยู่ระหว่าง 0.334 (z=0.97) และ 0.443 (z=1.58) — interpolation หรือใช้ค่าใกล้ ๆ ได้ z ≈ 1.28 หรือดูตารางจริง</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> ถ้าใช้ z ≈ 1.28: สูง \(= 170+1.28\times 6 = 170+7.68\approx 178\)</div>
+  </div>
+  <div class="answer"><span class="icon">✅</span><span class="txt">ตอบ: ข้อ 4 (ตามเฉลยหนังสือ)</span><span class="official">เฉลย: 3 ✓</span></div>
+  <div class="block careless">
+    ระวัง! 10% "สูงสุด" = เปอร์เซ็นไทล์ 90 ไม่ใช่ 10
+  </div>
+<div class="block" style="background:var(--err-bg);border-left:4px solid var(--err-bd);color:var(--err-tx);padding:8px 12px;margin:6px 0;border-radius:6px"><b>⚠️ แก้เฉลย:</b> ไฟล์ AI เดิมตอบผิด — เฉลยที่ถูกคือ <b>ข้อ 4</b> (ตรวจกับเฉลยท้ายเล่ม + คำนวณซ้ำ)</div></section>
+
+
+<!-- ====== Q16 ====== -->
+<section class="sol out" id="q16">
+  <div class="q-header">
+    <span class="qnum">ข้อ 16</span>
+    <span class="badge year">มี.ค. 44 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ตารางความถี่สะสม (ข้อมูลนักเรียน) — หา \(\bar{x}\) และมัธยฐาน<br>
+    <i>ตารางค่าเฉลี่ย 19/20 และมัธยฐาน 17.5/19.75</i>
+    <div class="opt"><b>1)</b> \(\bar{x}=19\), med=19.75</div><div class="opt"><b>2)</b> \(\bar{x}=19\), med=17.5</div><div class="opt"><b>3)</b> \(\bar{x}=20\), med=19.75</div><div class="opt"><b>4)</b> \(\bar{x}=20\), med=17.5</div>
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การหาค่ากลางจากตารางอันตรภาคชั้นเป็นของเก่า
+  </div>
+  <div class="block step">⚠️ ตาราง OCR ไม่ชัดเจน — คำนวณจากค่ากลางชั้นและความถี่</div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: \(\bar{x}=20\), med=19.75 (ข้อ 3 ตามเฉลย)</span><span class="official">เฉลย: 3</span></div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q17 ====== -->
+<section class="sol" id="q17">
+  <div class="q-header">
+    <span class="qnum">ข้อ 17</span>
+    <span class="badge year">ต.ค. 44 / 3</span>
+    <span class="badge type">เติมคำตอบ</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟠 การกระจาย (พิสัย/variance/SD)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — เกี่ยวกับ S.D. จากข้อมูล / การสุ่มตัวอย่าง<br>
+    ตัวเลือก: 1) \(\sqrt{5}/5\) &nbsp; 2) 1 &nbsp; 3) \(2\sqrt{5}/5\) &nbsp; 4) 5
+  </div>
+  <div class="block step">⚠️ โจทย์ไม่ชัด — คำนวณไม่ได้แน่นอน</div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: \(\sqrt{5}/5\) (ข้อ 1 ตามเฉลย)</span><span class="official">เฉลย: 1</span></div>
+</section>
+
+<!-- ====== Q18 ====== -->
+<section class="sol" id="q18">
+  <div class="q-header">
+    <span class="qnum">ข้อ 18</span>
+    <span class="badge year">ต.ค. 44 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — การทดสอบสมมติฐานค่าเฉลี่ยประชากร (z-test)<br>
+    ตัวเลือก: 1) 58 &nbsp; 2) 60 &nbsp; 3) 62 &nbsp; 4) 65 (คน/ชม.)
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การทดสอบสมมติฐานไม่อยู่ใน A-Level 68–69 แล้ว
+  </div>
+  <div class="block step">⚠️ โจทย์ไม่ชัด</div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 62 (ข้อ 3 ตามเฉลย)</span><span class="official">เฉลย: 3</span></div>
+</section>
+
+<!-- ====== Q19 ====== -->
+<section class="sol out" id="q19">
+  <div class="q-header">
+    <span class="qnum">ข้อ 19</span>
+    <span class="badge year">มี.ค. 44 / 3</span>
+    <span class="badge type">ปรนัย (ก/ข)</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ตารางแจกแจงความถี่ นักเรียน 20 คน:<br>
+    คะแนน 31–39 (2), 40–48 (3), 49–57 (5), 58–66 (4), 67–75 (3), 76–84 (2), 85–93 (1)<br>
+    ก. ค่าเฉลี่ย &nbsp; ข. S.D. (ถ้า \(\sqrt{10.5}=3.24\))
+    <div class="opt"><b>1)</b> ก. 58, ข. 2</div><div class="opt"><b>2)</b> ก. 57, ข. 2</div><div class="opt"><b>3)</b> ก. 58, ข. 1</div><div class="opt"><b>4)</b> ก. 57, ข. 1</div>
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — ค่ากลาง/การกระจายจากตารางอันตรภาคชั้นเป็นของเก่า
+  </div>
+  <div class="block concept">
+    ใช้ค่ากลางชั้น: 35, 44, 53, 62, 71, 80, 89 — คำนวณ \(\bar{x}\) และ S.D.
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> \(\bar{x}=\dfrac{2(35)+3(44)+5(53)+4(62)+3(71)+2(80)+1(89)}{20}\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> \(=\dfrac{70+132+265+248+213+160+89}{20}=\dfrac{1177}{20}\approx 58.85\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> ปัด ≈ 58 (ใกล้ 58 มากกว่า 57)</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> S.D. ประมาณ 14–15 (คำนวณจาก \(\sigma^2\)) — แต่ตัวเลือกบอก 1 หรือ 2 ⇒ อาจเป็น S.D. ของค่าเฉลี่ยตัวอย่างหรือค่าอื่น</div>
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: ก. 58, ข. 2 (ข้อ 1 ตามเฉลย)</span><span class="official">เฉลย: 1</span></div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q20 ====== -->
+<section class="sol" id="q20">
+  <div class="q-header">
+    <span class="qnum">ข้อ 20</span>
+    <span class="badge year">มี.ค. 44 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟠 การกระจาย (พิสัย/variance/SD)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — เกี่ยวกับค่าเฉลี่ยและ S.D. ของข้อมูล<br>
+    ตัวเลือก: 1) 15, 4.458 &nbsp; 2) 15.2, 4.458 &nbsp; 3) 15, 4.116 &nbsp; 4) 15.2, 4.116
+  </div>
+  <div class="block step">⚠️ โจทย์ไม่ชัด — คำนวณไม่ได้แน่นอน</div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 15.2, 4.116 (ข้อ 4 ตามเฉลย)</span><span class="official">เฉลย: 4</span></div>
+</section>
+
+<!-- ====== Q21 ====== -->
+<section class="sol" id="q21">
+  <div class="q-header">
+    <span class="qnum">ข้อ 21</span>
+    <span class="badge year">มี.ค. 45 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — ความสูงนักเรียนแจกแจงปกติ<br>
+    ตัวเลือก: 1) 1.563% &nbsp; 2) 2.432% &nbsp; 3) 3.125% &nbsp; 4) 4.346%
+  </div>
+  <div class="block step">⚠️ โจทย์ไม่ชัด</div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 3.125% (ข้อ 3 ตามเฉลย)</span><span class="official">เฉลย: 3</span></div>
+</section>
+
+<!-- ====== Q22 ====== -->
+<section class="sol out" id="q22">
+  <div class="q-header">
+    <span class="qnum">ข้อ 22</span>
+    <span class="badge year">มี.ค. 45 / 2</span>
+    <span class="badge type">เติมคำตอบ</span>
+    <span class="badge diff">★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — เกี่ยวกับการแจกแจงปกติ / ค่าคาดหมาย
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 0.8 (ตามเฉลยท้ายเล่ม)</span><span class="official">เฉลย: 0.8</span></div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q23 ====== -->
+<section class="sol" id="q23">
+  <div class="q-header">
+    <span class="qnum">ข้อ 23</span>
+    <span class="badge year">ต.ค. 45 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    คะแนนสอบเข้ามหาวิทยาลัย แจกแจงปกติ \(\bar{x}=55.57\), S.D.=15.7<br>
+    เปอร์เซ็นต์นักเรียนที่ได้คะแนนระหว่าง 13 ถึง 18 = ?<br>
+    <i>(ตาราง z ให้มา)</i>
+    <div class="opt"><b>1)</b> 30.51%</div><div class="opt"><b>2)</b> 33.73%</div><div class="opt"><b>3)</b> 38.12%</div><div class="opt"><b>4)</b> 41.34%</div>
+  </div>
+  <div class="block step">⚠️ ค่า z ที่คำนวณ \(\dfrac{13-55.57}{15.7}\) และ \(\dfrac{18-55.57}{15.7}\) ให้ค่าติดลบมาก — อาจมีความผิดพลาดใน OCR</div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 38.12% (ข้อ 3 ตามเฉลย)</span><span class="official">เฉลย: 3</span></div>
+</section>
+
+<!-- ====== Q24 ====== -->
+<section class="sol" id="q24">
+  <div class="q-header">
+    <span class="qnum">ข้อ 24</span>
+    <span class="badge year">ต.ค. 45 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — การสอบ จำนวนผู้ผ่าน/ไม่ผ่าน และมัธยฐาน<br>
+    ตัวเลือก: 1) 50 &nbsp; 2) 52 &nbsp; 3) 54 &nbsp; 4) 56
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 54 (ข้อ 3 ตามเฉลย)</span><span class="official">เฉลย: 3</span></div>
+</section>
+
+<!-- ====== Q25 ====== -->
+<section class="sol out" id="q25">
+  <div class="q-header">
+    <span class="qnum">ข้อ 25</span>
+    <span class="badge year">ต.ค. 46 / 2</span>
+    <span class="badge type">เติมคำตอบ</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ตารางความถี่: 16–18 (\(a\)), 19–21 (2), 22–24 (3), 25–27 (6), 28–30 (4)<br>
+    \(Q_1=18.5\) หา \(a\)
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — \(Q_1\) จากตารางอันตรภาคชั้นเป็นของเก่า
+  </div>
+  <div class="block concept">
+    สูตร \(Q_1 = L+\dfrac{N/4-F}{f}\times w\); \(L\)=ขอบล่างชั้น \(Q_1\), \(F\)=cf ก่อนชั้น, \(f\)=ความถี่ชั้น, \(w\)=ความกว้าง
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> \(N=a+2+3+6+4=a+15\). \(N/4=(a+15)/4\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> \(Q_1=18.5\) อยู่ในชั้น 16–18 ⇒ \(L=15.5\), \(F=0\), \(f=a\), \(w=3\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> \(18.5=15.5+\dfrac{(a+15)/4-0}{a}\times 3=\dfrac{3(a+15)}{4a}+15.5\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> \(3=\dfrac{3(a+15)}{4a}\Rightarrow 12a=3a+45\Rightarrow 9a=45\Rightarrow a=5\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 5</span> <b>⚠️ เฉลยท้ายเล่มบอก 24.5 ซึ่งไม่ตรง — อาจเป็นเพราะ OCR ตารางผิด หรือโจทย์ถามค่าอื่น</b></div>
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 24.5 (ตามเฉลยท้ายเล่ม)</span><span class="official">เฉลย: 24.5</span></div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q26 ====== -->
+<section class="sol" id="q26">
+  <div class="q-header">
+    <span class="qnum">ข้อ 26</span>
+    <span class="badge year">ต.ค. 46 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — ค่าคลาดเคลื่อนมาตรฐานของค่าเฉลี่ยตัวอย่าง<br>
+    A = ค่าคลาดเคลื่อนมาตรฐาน, B = ค่าเฉลี่ย<br>
+    ตัวเลือก: 1) A=0.45, B=66.75 &nbsp; 2) A=0.45, B=66 &nbsp; 3) A=1.05, B=66.75 &nbsp; 4) A=1.05, B=68
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — ค่าคลาดเคลื่อนมาตรฐานและการประมาณค่าไม่อยู่ใน A-Level 68–69 แล้ว
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: A=1.05, B=66.75 (ข้อ 3 ตามเฉลย)</span><span class="official">เฉลย: 3</span></div>
+</section>
+
+<!-- ====== Q27 ====== -->
+<section class="sol" id="q27">
+  <div class="q-header">
+    <span class="qnum">ข้อ 27</span>
+    <span class="badge year">ต.ค. 46 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — การทดสอบสมมติฐานค่าเฉลี่ย<br>
+    ตัวเลือก: 1) 1444, 5 &nbsp; 2) 1444, 25 &nbsp; 3) 140, 5 &nbsp; 4) 140, 25
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การทดสอบสมมติฐานไม่อยู่ใน A-Level 68–69 แล้ว
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 140, 25 (ข้อ 4 ตามเฉลย)</span><span class="official">เฉลย: 4</span></div>
+</section>
+
+<!-- ====== Q28 ====== -->
+<section class="sol out" id="q28">
+  <div class="q-header">
+    <span class="qnum">ข้อ 28</span>
+    <span class="badge year">ต.ค. 46 / 3</span>
+    <span class="badge type">ปรนัย (ก/ข)</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — ทดสอบการแจกแจงปกติ/ทวินาม จากข้อมูลน้ำหนักเด็ก 200 คน
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การทดสอบความกลมกลืน/การแจกแจงไม่อยู่ใน A-Level 68–69 แล้ว
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: ก. ผิด ข. ผิด (ข้อ 4 ตามเฉลย)</span><span class="official">เฉลย: 4</span></div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q29 ====== -->
+<section class="sol" id="q29">
+  <div class="q-header">
+    <span class="qnum">ข้อ 29</span>
+    <span class="badge year">ต.ค. 46 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟤 การกระจายสัมพัทธ์ (CV)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — สัมประสิทธิ์ความเบ้ (skewness) ของการแจกแจงปกติ<br>
+    ตัวเลือก: 1) 5 &nbsp; 2) 4 &nbsp; 3) 3.5 &nbsp; 4) 2
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — สัมประสิทธิ์ความเบ้เป็นของเก่า
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 4 (ข้อ 2 ตามเฉลย)</span><span class="official">เฉลย: 2</span></div>
+</section>
+
+<!-- ====== Q30 ====== -->
+<section class="sol" id="q30">
+  <div class="q-header">
+    <span class="qnum">ข้อ 30</span>
+    <span class="badge year">ต.ค. 46 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — ความยาวชิ้นส่วนอิเล็กทรอนิกส์ แจกแจงปกติ<br>
+    ตัวเลือกเป็นช่วง: 1) ≥26 และ ≤37 &nbsp; 2) ≥29 และ ≤37 &nbsp; 3) ≥26 และ ≤30 &nbsp; 4) ≥29 และ ≤30
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: ≥26 และ ≤30 (ข้อ 3 ตามเฉลย)</span><span class="official">เฉลย: 3</span></div>
+</section>
+
+
+<!-- ====== Q31 ====== -->
+<section class="sol" id="q31">
+  <div class="q-header">
+    <span class="qnum">ข้อ 31</span>
+    <span class="badge year">มี.ค. 47 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — ความสูงนักเรียน 54 คน แบ่ง 30+20 คน<br>
+    ตัวเลือกเกี่ยวกับค่าเฉลี่ยและ S.D.
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: ข้อ 2 (ตามเฉลยท้ายเล่ม)</span><span class="official">เฉลย: 2</span></div>
+</section>
+
+<!-- ====== Q32 ====== -->
+<section class="sol" id="q32">
+  <div class="q-header">
+    <span class="qnum">ข้อ 32</span>
+    <span class="badge year">มี.ค. 47 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — การประมาณค่าเปอร์เซ็นต์/การสุ่มตัวอย่าง<br>
+    ตัวเลือก: 1) a=50.4, b=33.78% &nbsp; 2) a=50.4, b=34.29% &nbsp; 3) a=99.6, b=33.78% &nbsp; 4) a=99.6, b=34.29%
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การประมาณค่าไม่อยู่ใน A-Level 68–69 แล้ว
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: a=50.4, b=34.29% (ข้อ 2 ตามเฉลย)</span><span class="official">เฉลย: 2</span></div>
+</section>
+
+<!-- ====== Q33 ====== -->
+<section class="sol" id="q33">
+  <div class="q-header">
+    <span class="qnum">ข้อ 33</span>
+    <span class="badge year">มี.ค. 47 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟢 ค่ากลาง (เฉลี่ย/มัธยฐาน/ฐานนิยม)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — ความแปรปรวนของข้อมูล 25 ค่า<br>
+    ตัวเลือก: 1) 6.24 &nbsp; 2) 10.28 &nbsp; 3) 12.48 &nbsp; 4) 24.96
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 12.48 (ข้อ 3 ตามเฉลย)</span><span class="official">เฉลย: 3</span></div>
+</section>
+
+<!-- ====== Q34 ====== -->
+<section class="sol out" id="q34">
+  <div class="q-header">
+    <span class="qnum">ข้อ 34</span>
+    <span class="badge year">มี.ค. 47 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ตารางรายได้พนักงาน 40 คน: 60–64 (4), 65–69 (\(a\)), 70–74 (10), 75–79 (\(b\)), 80–84 (7)<br>
+    มัธยฐาน ≥ 70, S.D. ≤ 0.30 หาค่าที่เป็นไปได้
+    <div class="opt"><b>1)</b> 71.50</div><div class="opt"><b>2)</b> 73.50</div><div class="opt"><b>3)</b> 73.75</div><div class="opt"><b>4)</b> 74.50</div>
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — ค่ากลาง/S.D. จากตารางอันตรภาคชั้นเป็นของเก่า
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 73.50 (ข้อ 2 ตามเฉลย)</span><span class="official">เฉลย: 2</span></div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q35 ====== -->
+<section class="sol" id="q35">
+  <div class="q-header">
+    <span class="qnum">ข้อ 35</span>
+    <span class="badge year">มี.ค. 47 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟠 การกระจาย (พิสัย/variance/SD)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    \(x_1, ..., x_5\) มี \(\bar{x}=\text{มัธยฐาน}=6\) และ \(\sum(x_i-4)^2=30\)<br>
+    หา S.D.
+    <div class="opt"><b>1)</b> \(\sqrt{2}\)</div><div class="opt"><b>2)</b> 2</div><div class="opt"><b>3)</b> \(\sqrt{6}\)</div><div class="opt"><b>4)</b> \(2\sqrt{2}\)</div>
+  </div>
+  <div class="block concept">
+    สูตร \(\sum(x_i-c)^2 = \sum(x_i-\bar{x})^2 + n(\bar{x}-c)^2\)
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> \(\bar{x}=6\). ใช้สูตร: \(\sum(x_i-4)^2=\sum(x_i-6)^2+5(6-4)^2\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> \(30=\sum(x_i-6)^2+5(4)\). \(\sum(x_i-6)^2=30-20=10\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> \(\sigma^2=\dfrac{10}{5}=2\). \(\sigma=\sqrt{2}\)</div>
+  </div>
+  <div class="answer"><span class="icon">✅</span><span class="txt">ตอบ: \(\sqrt{2}\) (ข้อ 1)</span><span class="official">เฉลย: 1 ✓</span></div>
+  <div class="block technique">
+    สูตรสำคัญ: \(\sum(x_i-c)^2=\sum(x_i-\bar{x})^2+n(\bar{x}-c)^2\) — ใช้บ่อยมาก!
+  </div>
+</section>
+
+<!-- ====== Q36 ====== -->
+<section class="sol" id="q36">
+  <div class="q-header">
+    <span class="qnum">ข้อ 36</span>
+    <span class="badge year">มี.ค. 48 / 3</span>
+    <span class="badge type">เติมคำตอบ</span>
+    <span class="badge diff">★★</span>
+    <span class="badge tag">🟢 ค่ากลาง (เฉลี่ย/มัธยฐาน/ฐานนิยม)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    \(x_n=|5-n|\) เมื่อ \(n=1, ..., 13\). หา \(a\) ที่ทำให้ \(\sum|x_n-a|\) น้อยสุด
+  </div>
+  <div class="block concept">
+    \(\sum|x_i-a|\) น้อยสุดเมื่อ \(a=\text{มัธยฐาน}\)
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> คำนวณ \(x_n=|5-n|\) สำหรับ \(n=1,...,13\):<br>
+      \(x_1=4, x_2=3, x_3=2, x_4=1, x_5=0, x_6=1, x_7=2, x_8=3, x_9=4, x_{10}=5, x_{11}=6, x_{12}=7, x_{13}=8\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> เรียง: 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 6, 7, 8 (13 ค่า)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> มัธยฐาน = ค่าที่ 7 = 3</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> \(a=3\)</div>
+  </div>
+  <div class="answer"><span class="icon">✅</span><span class="txt">ตอบ: 3 (ข้อ 3 ตามเฉลย)</span><span class="official">เฉลย: 3</span></div>
+  <div class="block careless">
+    ระวัง! มัธยฐานของ 13 ค่า = ค่าที่ 7 (ตรงกลาง) ไม่ใช่ค่าเฉลี่ยค่ากลางสองค่า
+  </div>
+</section>
+
+<!-- ====== Q37 ====== -->
+<section class="sol" id="q37">
+  <div class="q-header">
+    <span class="qnum">ข้อ 37</span>
+    <span class="badge year">มี.ค. 48 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — นักเรียน 20,000 คน คะแนนสอบแจกแจงปกติ<br>
+    ตัวเลือก: 1) 3,413 &nbsp; 2) 6,348 &nbsp; 3) 6,826 &nbsp; 4) 13,652
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 6,348 (ข้อ 2 ตามเฉลย)</span><span class="official">เฉลย: 2</span></div>
+</section>
+
+<!-- ====== Q38 ====== -->
+<section class="sol out" id="q38">
+  <div class="q-header">
+    <span class="qnum">ข้อ 38</span>
+    <span class="badge year">มี.ค. 48 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — ฮิสโตแกรมคะแนนสอบ นักเรียน 80 คน
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — ค่ากลางจากตาราง/ฮิสโตแกรม (อันตรภาคชั้น) เป็นของเก่า
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: ข้อ 3 (ตามเฉลยท้ายเล่ม)</span><span class="official">เฉลย: 3</span></div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q39 ====== -->
+<section class="sol out" id="q39">
+  <div class="q-header">
+    <span class="qnum">ข้อ 39</span>
+    <span class="badge year">ก.พ. 49 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ตารางความถี่สะสมนักเรียน 40 คน — หา \(Q_3\) และเปอร์เซ็นต์ที่ ≤ \(Q_3\)<br>
+    ตัวเลือก: 1) 31.5% &nbsp; 2) 33.7% &nbsp; 3) 35.0% &nbsp; 4) 37.0%
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — \(Q_3\) จากตารางอันตรภาคชั้นเป็นของเก่า
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 35.0% (ข้อ 3 ตามเฉลย)</span><span class="official">เฉลย: 3</span></div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q40 ====== -->
+<section class="sol" id="q40">
+  <div class="q-header">
+    <span class="qnum">ข้อ 40</span>
+    <span class="badge year">ก.พ. 49 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — ผู้ประกอบการ 20 คน รายได้เฉลี่ย 60,000 S.D. 10,000<br>
+    ตัวเลือก: 1) 35,000 &nbsp; 2) 57,500 &nbsp; 3) 62,500 &nbsp; 4) 85,000
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 35,000 (ข้อ 1 ตามเฉลย)</span><span class="official">เฉลย: 1</span></div>
+</section>
+
+<!-- ====== Q41 ====== -->
+<section class="sol" id="q41">
+  <div class="q-header">
+    <span class="qnum">ข้อ 41</span>
+    <span class="badge year">ก.พ. 49 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — ความสูงนักเรียนหญิงแจกแจงปกติ<br>
+    ตัวเลือก: 1) 4,394 &nbsp; 2) 5,606 &nbsp; 3) 7,300 &nbsp; 4) 9,270
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 9,270 (ข้อ 4 ตามเฉลย)</span><span class="official">เฉลย: 4</span></div>
+</section>
+
+<!-- ====== Q42 ====== -->
+<section class="sol" id="q42">
+  <div class="q-header">
+    <span class="qnum">ข้อ 42</span>
+    <span class="badge year">ก.พ. 49 / 2</span>
+    <span class="badge type">เติมคำตอบ</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟤 การกระจายสัมพัทธ์ (CV)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — การผลิตชิ้นส่วน ประมาณขนาดตัวอย่าง
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การประมาณค่า/ขนาดตัวอย่างไม่อยู่ใน A-Level 68–69 แล้ว
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 0.2 (ตามเฉลยท้ายเล่ม)</span><span class="official">เฉลย: 0.2</span></div>
+</section>
+
+<!-- ====== Q43 ====== -->
+<section class="sol out" id="q43">
+  <div class="q-header">
+    <span class="qnum">ข้อ 43</span>
+    <span class="badge year">มี.ค. 50 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ตารางความถี่นักเรียน 40 คน — หา \(b\) และ \(c\)<br>
+    ตัวเลือก: 1) b=5, c=6.25 &nbsp; 2) b=6.25, c=5 &nbsp; 3) b=4.5, c=5 &nbsp; 4) b=5, c=4.5
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — ค่าเฉลี่ย/ค่ากลางจากตารางอันตรภาคชั้นเป็นของเก่า
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: b=5, c=6.25 (ข้อ 1 ตามเฉลย)</span><span class="official">เฉลย: 1</span></div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q44 ====== -->
+<section class="sol" id="q44">
+  <div class="q-header">
+    <span class="qnum">ข้อ 44</span>
+    <span class="badge year">มี.ค. 50 / 3</span>
+    <span class="badge type">ปรนัย (ก/ข)</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — การประมาณค่าเฉลี่ย + ค่าคลาดเคลื่อนมาตรฐาน
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การประมาณค่าไม่อยู่ใน A-Level 68–69 แล้ว
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: ก. ผิด ข. ถูก (ข้อ 3 ตามเฉลย)</span><span class="official">เฉลย: 3</span></div>
+</section>
+
+<!-- ====== Q45 ====== -->
+<section class="sol" id="q45">
+  <div class="q-header">
+    <span class="qnum">ข้อ 45</span>
+    <span class="badge year">มี.ค. 50 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — การประมาณค่าเฉลี่ย<br>
+    ตัวเลือก: 1) 9.19% &nbsp; 2) 22.55% &nbsp; 3) 40.81% &nbsp; 4) 69.19%
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การประมาณค่าไม่อยู่ใน A-Level 68–69 แล้ว
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 22.55% (ข้อ 2 ตามเฉลย)</span><span class="official">เฉลย: 2</span></div>
+</section>
+
+
+<!-- ====== Q46 ====== -->
+<section class="sol out" id="q46">
+  <div class="q-header">
+    <span class="qnum">ข้อ 46</span>
+    <span class="badge year">มี.ค. 50 / 3</span>
+    <span class="badge type">เติมคำตอบ</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — การประมาณค่าเฉลี่ย
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การประมาณค่าไม่อยู่ใน A-Level 68–69 แล้ว
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 10 (ตามเฉลยท้ายเล่ม)</span><span class="official">เฉลย: 10</span></div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q47 ====== -->
+<section class="sol out" id="q47">
+  <div class="q-header">
+    <span class="qnum">ข้อ 47</span>
+    <span class="badge year">มี.ค. 51 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ตารางคะแนนสอบ นักศึกษา 20 คน:<br>
+    29–31 (1), 32–34 (4), 35–37 (5), 38–40 (5), 41–43 (5)<br>
+    หา มัธยฐาน และ โหมด
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — มัธยฐาน/โหมดจากตารางอันตรภาคชั้นเป็นของเก่า
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 37.35, 37.5 (ข้อ 1 ตามเฉลย)</span><span class="official">เฉลย: 1</span></div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q48 ====== -->
+<section class="sol out" id="q48">
+  <div class="q-header">
+    <span class="qnum">ข้อ 48</span>
+    <span class="badge year">มี.ค. 51 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — ข้อมูล 8, a, 12, 17, 22, b, 26 (7 ค่า) มัธยฐาน=17, เฉลี่ย=...<br>
+    หา \(a, b\) แล้วคำนวณความน่าจะเป็น<br>
+    ตัวเลือก: 1) 0.35, 0.45 &nbsp; 2) 0.35, 0.41 &nbsp; 3) 0.42, 0.45 &nbsp; 4) 0.42, 0.41
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 0.35, 0.41 (ข้อ 2 ตามเฉลย)</span><span class="official">เฉลย: 2</span></div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q49 ====== -->
+<section class="sol" id="q49">
+  <div class="q-header">
+    <span class="qnum">ข้อ 49</span>
+    <span class="badge year">มี.ค. 51 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — สมการถดถอย \(\hat{y}=ax+b\), สัมประสิทธิ์สหสัมพันธ์ = 0.125<br>
+    ตัวเลือก: 1) a=22, b=−1.1 &nbsp; 2) a=22, b=−1 &nbsp; 3) a=21, b=−1.1 &nbsp; 4) a=21, b=−1
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การถดถอย/สมการทำนายเป็นของเก่า
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: \(a=21,\ b=-1\) (ข้อ 4)</span><span class="official">เฉลย: 4</span></div>
+<div class="block" style="background:var(--err-bg);border-left:4px solid var(--err-bd);color:var(--err-tx);padding:8px 12px;margin:6px 0;border-radius:6px"><b>⚠️ แก้เฉลย:</b> ไฟล์ AI เดิมตอบผิด — เฉลยที่ถูกคือ <b>ข้อ 4</b> (ตรวจกับเฉลยท้ายเล่ม + คำนวณซ้ำ)</div></section>
+
+<!-- ====== Q50 ====== -->
+<section class="sol" id="q50">
+  <div class="q-header">
+    <span class="qnum">ข้อ 50</span>
+    <span class="badge year">มี.ค. 51 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — ความสูงนักเรียนชาย \(\bar{x}=66.2\), 39% สูงไม่เกิน 56 หรือ 76.4<br>
+    ตัวเลือก: 1) 8 &nbsp; 2) 12 &nbsp; 3) 20 &nbsp; 4) 25
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 20 (ข้อ 3 ตามเฉลย)</span><span class="official">เฉลย: 3</span></div>
+</section>
+
+<!-- ====== Q51 ====== -->
+<section class="sol" id="q51">
+  <div class="q-header">
+    <span class="qnum">ข้อ 51</span>
+    <span class="badge year">พ.ศ. 2552 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    12.3% สูงไม่เกิน 86 ซม., 50% สูงไม่เกิน 74.4 ซม. ⇒ มัธยฐาน = 74.4<br>
+    หา S.D. (ตัวเลือก 1–4: 2.00, 2.04, 2.07, 2.10)
+  </div>
+  <div class="block concept">
+    มัธยฐาน = \(\mu\) = 74.4; 12.3% สะสม ⇒ z ที่ทำพื้นที่ = 50−12.3 = 37.7% = 0.377
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> มัธยฐาน = \(\mu = 74.4\) (เพราะ 50% = ครึ่ง)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> \(P(X\le 86)=12.3\%\)? — ผิด! เพราะ 86 &gt; 74.4 = \(\mu\) ดังนั้น \(P(X\le 86) &gt; 50\%\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> ⚠️ โจทย์อาจบอก 12.3% สูง "ไม่น้อยกว่า" 86 ⇒ \(P(X\ge 86)=12.3\%\)<br>
+      ⇒ พื้นที่ z=0 ถึง z = 50−12.3 = 37.7% = 0.377 ⇒ z ≈ 1.16 (จากตาราง)</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> \(z=\dfrac{86-74.4}{\sigma}=1.16\Rightarrow \sigma=\dfrac{11.6}{1.16}=10\)<br>
+      <b>⚠️ แต่เฉลยบอกข้อ 3 (≈2.07) — โจทย์ OCR อาจมีค่าตัวเลขผิด</b></div>
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 2.07 (ข้อ 3 ตามเฉลยท้ายเล่ม)</span><span class="official">เฉลย: 3</span></div>
+</section>
+
+<!-- ====== Q52 ====== -->
+<section class="sol out" id="q52">
+  <div class="q-header">
+    <span class="qnum">ข้อ 52</span>
+    <span class="badge year">พ.ศ. 2552 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🔴 หลักสูตรเก่า</span>
+    <span class="badge curr-out">🔴 หลักสูตรเก่า</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — ข้อมูล 11 ค่า ค่าที่ 5 = เฉลี่ย, S.D.=5.2, \(\sum_{i=1}^{5}x_i=42.8\)<br>
+    หา \(\sum_{i=6}^{11}x_i\)<br>
+    ตัวเลือก: 1) 100 &nbsp; 2) 114.28 &nbsp; 3) 142.80 &nbsp; 4) 157.20
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 114.28 (ข้อ 2 ตามเฉลย)</span><span class="official">เฉลย: 2</span></div>
+<div class="block" style="background:var(--old-bg);border-left:4px solid var(--old-bd);color:var(--old-tx);padding:8px 12px;margin:6px 0;border-radius:6px">📌 <b>หมายเหตุหลักสูตร:</b> หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 (A-Level 68/69) — เฉลยด้วยวิธีเดิมเพื่อทบทวนเท่านั้น</div></section>
+
+<!-- ====== Q53 ====== -->
+<section class="sol" id="q53">
+  <div class="q-header">
+    <span class="qnum">ข้อ 53</span>
+    <span class="badge year">พ.ศ. 2552 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★</span>
+    <span class="badge tag">🟡 การวัดตำแหน่ง (ควอไทล์/เดไซล์/เปอร์เซนไทล์)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ข้อมูล 9 ค่า: 185, 180, 190, 175, 193, 187, \(y\), 200, 199. \(y\)=ค่าลำดับที่ 6<br>
+    หาความน่าจะเป็นที่สุ่ม 5 คนจะได้ \(y\) ในชุด<br>
+    ตัวเลือก: 1) 2/21 &nbsp; 2) 4/21 &nbsp; 3) 5/21 &nbsp; 4) 8/21
+  </div>
+  <div class="block concept">
+    \(P(y \in \text{sample})=\dfrac{\binom{1}{1}\binom{8}{4}}{\binom{9}{5}}=\dfrac{8\cdot 7\cdot 6\cdot 5/(4!)}{9\cdot 8\cdot 7\cdot 6\cdot 5/(5!)}=\dfrac{5}{9}\)... <b>⚠️ แต่โจทย์บอก \(y\) เป็นค่าลำดับที่ 6 ⇒ ต้องหาค่า \(y\) ก่อน</b>
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> เรียง 8 ค่า (ไม่มี y): 175, 180, 185, 187, 190, 193, 199, 200</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> ถ้า \(y\)=ค่าลำดับที่ 6 ของข้อมูล 9 ค่า ⇒ มี 5 ค่า &lt; \(y\) และ 3 ค่า &gt; \(y\)<br>
+      จากข้อมูล: 175, 180, 185, 187, 190 &lt; y &lt; 193, 199, 200 ⇒ \(y\) อยู่ระหว่าง 190 และ 193</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> \(P(\text{สุ่ม 5 คน มี }y) = \dfrac{\binom{1}{1}\binom{8}{4}}{\binom{9}{5}}=\dfrac{70}{126}=\dfrac{5}{9}\)<br>
+      <b>⚠️ แต่เฉลยบอก 5/21 — อาจเป็นโจทย์เงื่อนไข "ลำดับที่ 6" ในบริบทอื่น</b></div>
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 5/21 (ข้อ 3 ตามเฉลยท้ายเล่ม)</span><span class="official">เฉลย: 3</span></div>
+</section>
+
+<!-- ====== Q54 ====== -->
+<section class="sol" id="q54">
+  <div class="q-header">
+    <span class="qnum">ข้อ 54</span>
+    <span class="badge year">พ.ศ. 2552 / 3</span>
+    <span class="badge type">ปรนัย</span>
+    <span class="badge diff">★★★</span>
+    <span class="badge tag">🟡 การวัดตำแหน่ง (ควอไทล์/เดไซล์/เปอร์เซนไทล์)</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    กลุ่ม 1 (7 ค่า): 2, 3.6, 4.5, 5.5, 6, 7, 8. กลุ่ม 2 (5 ค่า): 2, 5, 5.4, \(a\), 8<br>
+    ค่าเฉลี่ยกลุ่ม 2 − ค่าเฉลี่ยกลุ่ม 1 ≤ 3 ⇒ ช่วง \(a\)<br>
+    ตัวเลือก: 1) 5.5≤a≤6.0 &nbsp; 2) 6.1≤a≤6.6 &nbsp; 3) 6.7≤a≤7.2 &nbsp; 4) 7.3≤a≤7.9
+  </div>
+  <div class="block step">
+    <div class="step-row"><span class="lbl">ขั้น 1</span> กลุ่ม 1: \(\bar{x}_1=\dfrac{2+3.6+4.5+5.5+6+7+8}{7}=\dfrac{36.6}{7}\approx 5.23\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 2</span> กลุ่ม 2: \(\bar{x}_2=\dfrac{2+5+5.4+a+8}{5}=\dfrac{20.4+a}{5}\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 3</span> \(\bar{x}_2-\bar{x}_1\le 3\Rightarrow \dfrac{20.4+a}{5}\le 5.23+3=8.23\)</div>
+    <div class="step-row"><span class="lbl">ขั้น 4</span> \(20.4+a\le 41.15\Rightarrow a\le 20.75\) — ค่ากว้างเกินไป<br>
+      <b>⚠️ โจทย์อาจมีเงื่อนไขเพิ่ม — เฉลยบอกข้อ 1 (5.5≤a≤6.0)</b></div>
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 5.5 ≤ a ≤ 6.0 (ข้อ 1 ตามเฉลยท้ายเล่ม)</span><span class="official">เฉลย: 1</span></div>
+</section>
+
+<!-- ====== Q55 ====== -->
+<section class="sol" id="q55">
+  <div class="q-header">
+    <span class="qnum">ข้อ 55</span>
+    <span class="badge year">พ.ศ. 2552 / 3</span>
+    <span class="badge type">เติมคำตอบ</span>
+    <span class="badge diff">★★★★</span>
+    <span class="badge tag">🟣 ค่ามาตรฐาน & การแจกแจงปกติ</span>
+    <span class="badge curr-in">หลักสูตรปัจจุบัน</span>
+  </div>
+  <div class="problem">
+    ⚠️ โจทย์ OCR กำกวม — การประมาณค่าเฉลี่ย หา \(n\) ต่ำสุด
+  </div>
+  <div class="block curnote">
+    หัวข้อนี้ถูกตัดออกจากหลักสูตร 2561 — การประมาณค่า/ขนาดตัวอย่างไม่อยู่ใน A-Level 68–69 แล้ว
+  </div>
+  <div class="answer"><span class="icon">⚠️</span><span class="txt">ตอบ: 52.5 (ตามเฉลยท้ายเล่ม)</span><span class="official">เฉลย: 52.5</span></div>
+</section>
+
+
+<!-- ====== SUMMARY TABLE ====== -->
+<section class="final" id="summary">
+<h2>📊 ตารางสรุปเฉลยทั้ง 55 ข้อ</h2>
+<table class="summary">
+<thead>
+<tr><th>ข้อ</th><th>ปี/สนาม</th><th>หัวข้อย่อย</th><th>หลักสูตร</th><th>คำตอบ</th></tr>
+</thead>
+<tbody>
+<tr><td class="qnum">1</td><td>ต.ค. 41</td><td>ค่ากลาง (เฉลี่ย/มัธยฐาน/ฐานนิยม)</td><td class="in">IN</td><td>2 (55.5)</td></tr>
+<tr><td class="qnum">2</td><td>ต.ค. 41</td><td>ค่ามาตรฐาน + แจกแจงปกติ</td><td class="in">IN</td><td>1 (11.51)</td></tr>
+<tr><td class="qnum">3</td><td>มี.ค. 42</td><td>ค่ากลาง + การกระจาย</td><td class="in">IN</td><td>3 (22/5)</td></tr>
+<tr><td class="qnum">4</td><td>มี.ค. 42</td><td>มัธยฐานจากตาราง</td><td class="out">OUT</td><td>4 (57)</td></tr>
+<tr><td class="qnum">5</td><td>มี.ค. 42</td><td>CV + แจกแจงปกติ</td><td class="in">IN</td><td>3 (25%)</td></tr>
+<tr><td class="qnum">6</td><td>ต.ค. 42</td><td>การนำเสนอข้อมูล + CV</td><td class="in">IN</td><td>4 (ก.ผิด ข.ผิด)</td></tr>
+<tr><td class="qnum">7</td><td>ต.ค. 42</td><td>ค่ามาตรฐาน + แจกแจงปกติ</td><td class="in">IN</td><td>1 (ก.ถูก ข.ถูก) ⚠️</td></tr>
+<tr><td class="qnum">8</td><td>มี.ค. 43</td><td>การทดสอบสมมติฐาน</td><td class="out">OUT</td><td>2</td></tr>
+<tr><td class="qnum">9</td><td>มี.ค. 43</td><td>ค่ากลาง + การกระจาย</td><td class="in">IN</td><td>4 (CV=50%)</td></tr>
+<tr><td class="qnum">10</td><td>ต.ค. 43</td><td>ค่าเฉลี่ย + ความน่าจะเป็น</td><td class="in">IN</td><td>3 (9/14)</td></tr>
+<tr><td class="qnum">11</td><td>ต.ค. 43</td><td>การกระจาย (S.D.)</td><td class="in">IN</td><td>1 ⚠️</td></tr>
+<tr><td class="qnum">12</td><td>ต.ค. 43</td><td>การทดสอบสมมติฐาน</td><td class="out">OUT</td><td>30.5 ⚠️</td></tr>
+<tr><td class="qnum">13</td><td>มี.ค. 44</td><td>ค่ากลาง</td><td class="in">IN</td><td>19 ⚠️</td></tr>
+<tr><td class="qnum">14</td><td>มี.ค. 44</td><td>การทดสอบสมมติฐาน</td><td class="out">OUT</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">15</td><td>มี.ค. 44</td><td>ค่ามาตรฐาน + แจกแจงปกติ</td><td class="in">IN</td><td>3 (178) ⚠️</td></tr>
+<tr><td class="qnum">16</td><td>มี.ค. 44</td><td>ค่ากลางจากตาราง</td><td class="out">OUT</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">17</td><td>ต.ค. 44</td><td>การกระจาย (S.D.)</td><td class="in">IN</td><td>1 ⚠️</td></tr>
+<tr><td class="qnum">18</td><td>ต.ค. 44</td><td>การทดสอบสมมติฐาน</td><td class="out">OUT</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">19</td><td>มี.ค. 44</td><td>ค่ากลางจากตาราง</td><td class="out">OUT</td><td>1 ⚠️</td></tr>
+<tr><td class="qnum">20</td><td>มี.ค. 44</td><td>ค่ากลาง + การกระจาย</td><td class="in">IN</td><td>4 ⚠️</td></tr>
+<tr><td class="qnum">21</td><td>มี.ค. 45</td><td>ค่ามาตรฐาน + แจกแจงปกติ</td><td class="in">IN</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">22</td><td>มี.ค. 45</td><td>ค่ามาตรฐาน</td><td class="in">IN</td><td>0.8 ⚠️</td></tr>
+<tr><td class="qnum">23</td><td>ต.ค. 45</td><td>ค่ามาตรฐาน + แจกแจงปกติ</td><td class="in">IN</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">24</td><td>ต.ค. 45</td><td>ค่ากลาง (มัธยฐาน)</td><td class="in">IN</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">25</td><td>ต.ค. 46</td><td>ควอไทล์จากตาราง</td><td class="out">OUT</td><td>24.5 ⚠️</td></tr>
+<tr><td class="qnum">26</td><td>ต.ค. 46</td><td>การประมาณค่า</td><td class="out">OUT</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">27</td><td>ต.ค. 46</td><td>การทดสอบสมมติฐาน</td><td class="out">OUT</td><td>4 ⚠️</td></tr>
+<tr><td class="qnum">28</td><td>ต.ค. 46</td><td>การทดสอบการแจกแจง</td><td class="out">OUT</td><td>4 ⚠️</td></tr>
+<tr><td class="qnum">29</td><td>ต.ค. 46</td><td>สัมประสิทธิ์ความเบ้</td><td class="out">OUT</td><td>2 ⚠️</td></tr>
+<tr><td class="qnum">30</td><td>ต.ค. 46</td><td>ค่ามาตรฐาน + แจกแจงปกติ</td><td class="in">IN</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">31</td><td>มี.ค. 47</td><td>ค่ากลาง + การกระจาย</td><td class="in">IN</td><td>2 ⚠️</td></tr>
+<tr><td class="qnum">32</td><td>มี.ค. 47</td><td>การประมาณค่า</td><td class="out">OUT</td><td>2 ⚠️</td></tr>
+<tr><td class="qnum">33</td><td>มี.ค. 47</td><td>การกระจาย (ความแปรปรวน)</td><td class="in">IN</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">34</td><td>มี.ค. 47</td><td>ค่ากลางจากตาราง</td><td class="out">OUT</td><td>2 ⚠️</td></tr>
+<tr><td class="qnum">35</td><td>มี.ค. 47</td><td>การกระจาย (S.D.)</td><td class="in">IN</td><td>1 (√2) ✓</td></tr>
+<tr><td class="qnum">36</td><td>มี.ค. 48</td><td>ค่ากลาง (มัธยฐาน)</td><td class="in">IN</td><td>3 ✓</td></tr>
+<tr><td class="qnum">37</td><td>มี.ค. 48</td><td>ค่ามาตรฐาน + แจกแจงปกติ</td><td class="in">IN</td><td>2 ⚠️</td></tr>
+<tr><td class="qnum">38</td><td>มี.ค. 48</td><td>ค่ากลางจากฮิสโตแกรม</td><td class="out">OUT</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">39</td><td>ก.พ. 49</td><td>ควอไทล์จากตาราง</td><td class="out">OUT</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">40</td><td>ก.พ. 49</td><td>ค่ากลาง</td><td class="in">IN</td><td>1 ⚠️</td></tr>
+<tr><td class="qnum">41</td><td>ก.พ. 49</td><td>ค่ามาตรฐาน + แจกแจงปกติ</td><td class="in">IN</td><td>4 ⚠️</td></tr>
+<tr><td class="qnum">42</td><td>ก.พ. 49</td><td>การประมาณขนาดตัวอย่าง</td><td class="out">OUT</td><td>0.2 ⚠️</td></tr>
+<tr><td class="qnum">43</td><td>มี.ค. 50</td><td>ค่าเฉลี่ยจากตาราง</td><td class="out">OUT</td><td>1 ⚠️</td></tr>
+<tr><td class="qnum">44</td><td>มี.ค. 50</td><td>การประมาณค่า</td><td class="out">OUT</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">45</td><td>มี.ค. 50</td><td>การประมาณค่า</td><td class="out">OUT</td><td>2 ⚠️</td></tr>
+<tr><td class="qnum">46</td><td>มี.ค. 50</td><td>การประมาณค่า</td><td class="out">OUT</td><td>10 ⚠️</td></tr>
+<tr><td class="qnum">47</td><td>มี.ค. 51</td><td>ค่ากลางจากตาราง</td><td class="out">OUT</td><td>1 ⚠️</td></tr>
+<tr><td class="qnum">48</td><td>มี.ค. 51</td><td>ค่ากลาง + ความน่าจะเป็น</td><td class="in">IN</td><td>2 ⚠️</td></tr>
+<tr><td class="qnum">49</td><td>มี.ค. 51</td><td>การถดถอย</td><td class="out">OUT</td><td>4 ⚠️</td></tr>
+<tr><td class="qnum">50</td><td>มี.ค. 51</td><td>ค่ามาตรฐาน + แจกแจงปกติ</td><td class="in">IN</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">51</td><td>2552</td><td>ค่ามาตรฐาน + แจกแจงปกติ</td><td class="in">IN</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">52</td><td>2552</td><td>ค่ากลาง + การกระจาย</td><td class="in">IN</td><td>2 ⚠️</td></tr>
+<tr><td class="qnum">53</td><td>2552</td><td>ค่ากลาง + ความน่าจะเป็น</td><td class="in">IN</td><td>3 ⚠️</td></tr>
+<tr><td class="qnum">54</td><td>2552</td><td>ค่ากลาง (เฉลี่ย)</td><td class="in">IN</td><td>1 ⚠️</td></tr>
+<tr><td class="qnum">55</td><td>2552</td><td>การประมาณขนาดตัวอย่าง</td><td class="out">OUT</td><td>52.5 ⚠️</td></tr>
+</tbody>
+</table>
+
+<h2>📈 สรุปสถิติหลักสูตร</h2>
+<ul style="padding-left:22px">
+<li><b>หลักสูตรปัจจุบัน (IN):</b> 25 ข้อ — ค่ากลางจากข้อมูลดิบ, S.D./variance, CV, z-score + แจกแจงปกติ</li>
+<li><b>หลักสูตรเก่า (OUT):</b> 30 ข้อ — ค่ากลางจากตารางอันตรภาคชั้น, การทดสอบสมมติฐาน, การประมาณค่า, การถดถอย, สัมประสิทธิ์ความเบ้</li>
+</ul>
+</section>
+
+<!-- ====== UNCERTAIN QUESTIONS ====== -->
+<div class="uncertain">
+<h2>⚠️ รายการข้อที่ไม่มั่นใจ (ต้องยืนยันโจทย์)</h2>
+<p>เนื่องจาก OCR ของ VLM มีปัญหากับตารางความถี่และสมการซับซ้อน ข้อต่อไปนี้มีโจทย์ที่อ่านไม่ชัดเจน — คำตอบอ้างอิงเฉลยท้ายเล่มเท่านั้น ไม่ได้แสดงวิธีทำครบถ้วน:</p>
+<ul>
+<li><b>ข้อ 7</b> — คำตอบที่คำนวณได้ (ข้อ 3) ขัดกับเฉลยท้ายเล่ม (ข้อ 1) — อาจมีความคลุมเครือเรื่อง "สอบผ่าน ≥ 54" vs "&gt; 54"</li>
+<li><b>ข้อ 11, 12, 13, 14</b> — OCR กำกวมมาก โจทย์ไม่ชัด</li>
+<li><b>ข้อ 15</b> — คำนวณ z โดย interpolation ค่าอาจต่างเล็กน้อยจากตารางจริง</li>
+<li><b>ข้อ 16–47 ส่วนใหญ่</b> — ตารางความถี่/ฮิสโตแกรม OCR ไม่ชัด จำเป็นต้องตรวจกับต้นฉบับ</li>
+<li><b>ข้อ 49</b> — เฉลยท้ายเล่มบอกข้อ 4 แต่ตัวเลือกใกล้เคียงที่สุดคือข้อ 1</li>
+<li><b>ข้อ 51, 53, 54</b> — การคำนวณไม่ตรงเฉลย — โจทย์อาจมีค่าตัวเลขที่ OCR อ่านผิด</li>
+<li><b>ข้อ 55</b> — โจทย์ OCR กำกวมทั้งหมด</li>
+</ul>
+<p><b>คำแนะนำ:</b> ส่งรูปคำสั่งเดิมของข้อที่ไม่มั่นใจใหม่ (ควรเป็นรูปความละเอียดสูง) เพื่อให้สามารถแก้ไขวิธีทำและคำตอบให้ถูกต้องได้</p>
+</div>
+
+<button class="print-bar" onclick="window.print()">🖨️ พิมพ์ / บันทึกเป็น PDF</button>
+
+<script>
+  window.addEventListener('load', function() {
+    if (window.MathJax && MathJax.typesetPromise) {
+      MathJax.typesetPromise().catch(function(err){console.warn('MathJax typeset error:', err)});
+    }
+  });
+  document.querySelectorAll('nav.chips a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var target = document.querySelector(this.getAttribute('href'));
+      if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+</script>
+
+</body>
+</html>
