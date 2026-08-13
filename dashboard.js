@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 /* ============================================================
    dashboard.js — logic ทั้งหมด (render / fetch / combobox / ฝึก / พิมพ์)
    โหลดหลัง config.js และ questionbank.js
@@ -46,6 +53,42 @@ async function loadStudents(){
     const inp=document.getElementById('studentSearch'); if(inp){inp.placeholder='พิมพ์ชื่อเพื่อค้นหา… ('+studentList.length+' คน)';}
   }catch(e){document.getElementById('p1status').className='status err';document.getElementById('p1status').textContent='โหลดไม่ได้: '+e.message;}
 }
+/* ═══════════════════════════════════════════════════════════════
+   วันที่ — เพิ่ม 13 ส.ค. 69
+   ชีตตั้ง locale อเมริกา Google Sheets API จึงส่งวันที่กลับมาเป็นข้อความ
+   "7/23/2026" = เดือน/วัน/ปี  ทำให้ (1) แสดงผลสลับ (2) เรียงลำดับไม่ได้
+   ⚠️ ห้ามแก้ด้วยการเปลี่ยน locale ของชีต เพราะ saveExamScore ฝั่ง Apps Script
+      รับค่าเป็น M/D/YYYY อยู่ — ต้องแก้ที่ฝั่งแสดงผลเท่านั้น
+   ═══════════════════════════════════════════════════════════════ */
+function _dMake(y,mo,d){ if(y>2400)y-=543; return new Date(y,mo-1,d); }
+
+/* อ่านวันที่ได้ทุกรูปแบบที่เจอในชีต → Date (อ่านไม่ออกคืน null) */
+function _dParse(v){
+  if(v instanceof Date) return v;
+  var s=String(v==null?'':v).trim();
+  if(!s) return null;
+  var m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);            // 2026-08-01
+  if(m) return _dMake(+m[1],+m[2],+m[3]);
+  m=s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/);   // 7/23/2026 หรือ 23/7/2026
+  if(m){ var a=+m[1],b=+m[2];
+         return a>12 ? _dMake(+m[3],b,a) : _dMake(+m[3],a,b); }  // ตัวแรก>12 = วันมาก่อน
+  var t=Date.parse(s);
+  return isNaN(t)?null:new Date(t);
+}
+
+/* แสดงผลเป็น วัน/เดือน/ปี พ.ศ. เช่น 23/07/2569
+   ── อยากกลับไปใช้ ค.ศ. (23/07/2026) เปลี่ยน DATE_BE เป็น false บรรทัดเดียวจบ ── */
+var DATE_BE = true;
+function _dFmt(v){
+  var d=_dParse(v);
+  if(!d) return String(v==null?'':v);
+  var p=function(n){ return ('0'+n).slice(-2); };
+  return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+(d.getFullYear()+(DATE_BE?543:0));
+}
+
+/* คีย์สำหรับเรียงลำดับ — อ่านวันที่ไม่ออกให้ไปอยู่ท้ายสุด */
+function _dKey(v){ var d=_dParse(v); return d?d.getTime():8.64e15; }
+
 function _esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function filterStudents(){
   const inp=document.getElementById('studentSearch'); const box=document.getElementById('studentOptions');
@@ -222,7 +265,7 @@ td{padding:7px 8px;border-bottom:1px solid #e5e5e5;vertical-align:top}
 .ft{margin-top:20px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#888;line-height:1.6}
 @media print{body{padding:0}@page{margin:1.4cm}}
 </style></head><body>
-<div class="hd"><h1>🎯 ชุดฝึกเพิ่ม — ${esc(p.name)}</h1><div class="meta">บท ${esc(p.topic)} · จากผลสอบวันที่ ${esc(p.date)}</div><div class="sum">รวม ${p.grand} ข้อ · เลือกจากคลังข้อสอบจริง ${p.bankCount||''} ข้อ ตามสัดส่วนที่ยังไม่แม่น</div></div>
+<div class="hd"><h1>🎯 ชุดฝึกเพิ่ม — ${esc(p.name)}</h1><div class="meta">บท ${esc(p.topic)} · จากผลสอบวันที่ ${esc(_dFmt(p.date))}</div><div class="sum">รวม ${p.grand} ข้อ · เลือกจากคลังข้อสอบจริง ${p.bankCount||''} ข้อ ตามสัดส่วนที่ยังไม่แม่น</div></div>
 ${body}
 <div class="ft">วิธีใช้: ทำโจทย์แต่ละข้อก่อน (เปิดหนังสือรวมข้อสอบบท Expo+Log ตาม "ข้อ N") แล้วเช็กกล่อง ☐ เมื่อทำเสร็จ จากนั้นดูเฉลยวิดีโอตามลิงก์เพื่อทบทวนวิธีคิด · MathsBankTutor</div>
 </body></html>`;
@@ -307,6 +350,9 @@ async function fetchDashData(){
   const _norm=s=>String(s||'').replace(/\s+/g,' ').trim();
   const me=_norm(currentStudent);
   const allMine=rows.slice(1).filter(r=>_norm(r[1])===me);
+  // เรียงตามวันที่สอบจริง — เดิมเรียงตามลำดับแถวในชีต (ลำดับที่ครูกรอก)
+  // แก้จุดนี้จุดเดียวได้ทั้ง: ผลสอบ "ล่าสุด" · กราฟพัฒนาการ · ▲▼ เทียบครั้งก่อน · 🔥 ดีขึ้นติดกัน
+  allMine.sort(function(a,b){ return _dKey(a&&a[3]) - _dKey(b&&b[3]); });
   const myRows=allMine.filter(r=>!topicFilter||(r[4]||'').includes(topicFilter));
   if(!myRows.length){
     dashData=null;
@@ -520,7 +566,7 @@ function renderProgressTrend(d){
       <div class="slabel">สรุปรายครั้ง</div>
       <div id="s-trendTable"></div>
     </div>`;
-  const labels=hist.map((h,i)=>h.date||('ครั้ง '+(i+1)));
+  const labels=hist.map((h,i)=>h.date?_dFmt(h.date):('ครั้ง '+(i+1)));
   if(trendChartInst){trendChartInst.destroy();trendChartInst=null;}
   trendChartInst=new Chart(document.getElementById('s-trendChart'),{
     type:'line',
@@ -550,7 +596,7 @@ function renderProgressTrend(d){
     hist.forEach((h,i)=>{
       const dlt=i>0?h.score-hist[i-1].score:null;
       const dtxt=dlt==null?'<span style="color:var(--text3)">—</span>':(dlt>0?'<span style="color:#3B7D2A;font-weight:600">▲ +'+dlt+'</span>':(dlt<0?'<span style="color:#C77E1A;font-weight:600">▼ '+dlt+'</span>':'▬ 0'));
-      rowsH+=`<div class="rev-row"><div style="min-width:24px;font-size:12px;color:var(--text3)">${i+1}</div><div style="flex:1"><div style="font-size:12.5px;color:var(--text1)">${h.topic||'—'}</div><div style="font-size:10.5px;color:var(--text3)">${h.date||''}</div></div><div style="font-size:13px;font-weight:600;min-width:48px;text-align:right">${h.score}/30</div><div style="min-width:56px;text-align:right;font-size:12px">${dtxt}</div></div>`;
+      rowsH+=`<div class="rev-row"><div style="min-width:24px;font-size:12px;color:var(--text3)">${i+1}</div><div style="flex:1"><div style="font-size:12.5px;color:var(--text1)">${h.topic||'—'}</div><div style="font-size:10.5px;color:var(--text3)">${h.date?_dFmt(h.date):''}</div></div><div style="font-size:13px;font-weight:600;min-width:48px;text-align:right">${h.score}/30</div><div style="min-width:56px;text-align:right;font-size:12px">${dtxt}</div></div>`;
     });
     tbl.innerHTML=rowsH;
   }
@@ -560,7 +606,7 @@ function renderStudentDash(d){
   document.getElementById('s-avatar').textContent=d.shortName.substring(0,3);
   document.getElementById('s-name').textContent=d.shortName;
   document.getElementById('s-group').textContent='· '+d.group;
-  document.getElementById('s-topic').textContent=d.topic+' · '+d.date;
+  document.getElementById('s-topic').textContent=d.topic+' · '+_dFmt(d.date);
   document.getElementById('s-rank').innerHTML=d.rank+' <span style="font-size:12px;color:var(--text3)">/ '+d.groupMembers.length+'</span>'+(d.allMembers.length>d.groupMembers.length?'<div style="font-size:10px;color:var(--text3);font-weight:400;margin-top:2px">รวมทุกกลุ่ม '+d.allRank+'/'+d.allMembers.length+'</div>':'');
   const avg=d.groupMembers.length?Math.round(d.groupMembers.reduce((s,m)=>s+m.score,0)/d.groupMembers.length):0;
   document.getElementById('s-score').innerHTML=d.score+' <span style="font-size:13px;color:var(--text3);font-weight:400">/ 30</span>';
@@ -866,7 +912,7 @@ function _fillParentQGrid(d){
 function renderParentDash(d){
   const name=d.shortName;
   (function(){const el=document.getElementById('p-avatar');el.textContent=name;el.style.fontSize=name.length>5?'9px':name.length>3?'11px':'13px';el.style.lineHeight='1.2';el.style.textAlign='center';}());
-  document.getElementById('p-topic').textContent=d.topic+' · '+d.date;
+  document.getElementById('p-topic').textContent=d.topic+' · '+_dFmt(d.date);
   const _pHeader=document.querySelector('#p5 .container [style*="font-size:15px"]');
   if(_pHeader) _pHeader.textContent='รายงานผลการเรียน — '+name;
   // แถบเลือกสไตล์ (แทรกเหนือ summary ครั้งแรกครั้งเดียว)
