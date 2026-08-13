@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 function displayN(q){ var m=(q.yt||'').match(/\.html#q(\d+)/); return m?m[1]:q.n; }
 // ════════════════════════════════════════════════════════════
 // review.js — คลังทบทวน (เลือกข้อเอง / สุ่มข้อ) — ใช้ PRACTICE_BANK
@@ -11,6 +18,75 @@ var RV_CHAP_ICON = {
   "ลำดับและอนุกรม":"🔁", "แคลคูลัส":"∫", "เรียงลำดับและจัดหมู่":"🎲",
   "ความน่าจะเป็น":"🎰", "สถิติ":"📉", "เมทริกซ์":"🔲", "ตรรกศาสตร์":"💭"
 };
+
+/* ═══════════════════════════════════════════════════════════════
+   ลำดับบท — ให้ตรงกับดรอปดาวน์ "กรองเฉพาะบท" ในหน้ารายงานคะแนน
+   อยากสลับลำดับบทเมื่อไหร่ แก้ที่ลิสต์นี้ที่เดียว
+   ═══════════════════════════════════════════════════════════════ */
+var RV_CHAP_ORDER = [
+  'เซต',
+  'จำนวนจริง',
+  'ความสัมพันธ์',
+  'ฟังก์ชัน',
+  'ความสัมพันธ์และฟังก์ชัน',
+  'เรขาคณิตวิเคราะห์และภาคตัดกรวย',
+  'Expo Logarithm',
+  'เมทริกซ์',
+  'ตรีโกณมิติ',
+  'เวกเตอร์',
+  'จำนวนเชิงซ้อน',
+  'ลำดับและอนุกรม',
+  'แคลคูลัส',
+  'เรียงลำดับและจัดหมู่',
+  'ความน่าจะเป็น',
+  'สถิติ',
+  'ตรรกศาสตร์'
+];
+
+/* ชื่อที่สะกดต่างแต่เป็นบทเดียวกัน — ให้ได้ลำดับเดียวกับตัวหลัก
+   เจอชื่อไหนสะกดต่างอีก เติมได้ที่นี่ */
+var RV_CHAP_ALIAS = {
+  'Expo Logarithm'   : ['Exponential logarithm', 'Expo Log'],
+  'แคลคูลัส'          : ['แคลคูลลัส'],
+  'ลำดับและอนุกรม'    : ['อันดับและอนุกรม'],
+  'ความสัมพันธ์และฟังก์ชัน' : ['ความสัมพันธ์และฟังชัน']
+};
+
+/* คีย์เทียบชื่อบท — ตัดช่องว่าง/สระ/วรรณยุกต์/"การ"
+   ⚠️ ใช้กับชื่อบทเท่านั้น ห้ามใช้กับชื่อคน ("ปัณ" ≠ "ปุณ") */
+function rvChapKey(s){
+  return String(s || '')
+    .replace(/\s+/g, '')
+    .replace(/การ/g, '')
+    .replace(/[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/g, '')
+    .toLowerCase();
+}
+
+var _rvOrderIdx = null;
+function _rvBuildOrderIdx(){
+  _rvOrderIdx = {};
+  RV_CHAP_ORDER.forEach(function(n, i){
+    _rvOrderIdx[rvChapKey(n)] = i;
+    (RV_CHAP_ALIAS[n] || []).forEach(function(a){ _rvOrderIdx[rvChapKey(a)] = i; });
+  });
+}
+
+function rvOrderOf(name){
+  if(!_rvOrderIdx) _rvBuildOrderIdx();
+  var k = rvChapKey(name);
+  if(_rvOrderIdx[k] != null) return _rvOrderIdx[k];
+  // ชื่อไม่ตรงเป๊ะ → จับคู่แบบขึ้นต้นตรงกัน
+  // (เช่น "เรขาคณิตวิเคราะห์" = "เรขาคณิตวิเคราะห์และภาคตัดกรวย" · "เมทริกซ์ ชุดที่ 1" = "เมทริกซ์")
+  var keys = Object.keys(_rvOrderIdx), best = -1, bestLen = 0;
+  for(var i = 0; i < keys.length; i++){
+    var ok = keys[i];
+    if(ok.length < 3 || k.length < 3) continue;
+    if(k.indexOf(ok) === 0 || ok.indexOf(k) === 0){
+      if(ok.length > bestLen){ bestLen = ok.length; best = _rvOrderIdx[ok]; }
+    }
+  }
+  return best >= 0 ? best : 999;   // บทที่ไม่รู้จัก → ไปท้ายสุด ไม่หายไปไหน
+}
 
 // state
 var RV = {
@@ -52,7 +128,10 @@ function openReviewLibrary(){
     if(isEnt) chapMap[base].ent = arr;
     else chapMap[base].yt = arr;
   });
-  Object.keys(chapMap).forEach(function(base){
+  Object.keys(chapMap).sort(function(a, b){
+    var d = rvOrderOf(a) - rvOrderOf(b);
+    return d !== 0 ? d : (a < b ? -1 : 1);
+  }).forEach(function(base){
     var ch = chapMap[base];
     var totalQ = ch.yt.length + ch.ent.length;
     var icon = RV_CHAP_ICON[base] || '📘';
