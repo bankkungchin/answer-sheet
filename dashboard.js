@@ -1390,3 +1390,168 @@ function _initTheme(){
   _applyTheme(cur);
 }
 document.addEventListener('DOMContentLoaded',()=>{try{loadStudents();}catch(e){} try{_initTheme();}catch(e){}});
+
+/* ═══════════════════════════════════════════════════════════════════
+   เฟส 2 (14 ส.ค. 69) — นักเรียนกรอกคะแนนเอง ส่งให้ครูตรวจ (หน้า p8)
+
+   คะแนนที่ส่งจากหน้านี้ไปพักที่ชีต results_pending เท่านั้น
+   ไม่แตะ results จนกว่าครูจะกดอนุมัติ → ค่าเฉลี่ยกลุ่มกับอันดับของเพื่อนไม่เพี้ยน
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* URL ของ Apps Script "Maths Bank Tutor API" — ตัวเดียวกับที่หน้าครูใช้ */
+const SUBMIT_URL = 'https://script.google.com/macros/s/AKfycbzh0M26XbDfjrVuUjUgn1Dr-Z209ms9UibPAxfd-YiB7oHnD-1ubzc3PNtadO7tULjm/exec';
+
+const SUB_STATES = [
+  { v:'',            short:'–', label:'ยังไม่ระบุ', bg:'var(--surf)',  fg:'var(--text3)' },
+  { v:'✅ ถูก',       short:'✓', label:'ถูก',       bg:'#4C9A2A',      fg:'#fff' },
+  { v:'⚠️ สะเพร่า',   short:'ส', label:'สะเพร่า',   bg:'#FDE910',      fg:'#5C3A00' },
+  { v:'C คอนเซปต์',   short:'C', label:'คอนเซปต์',  bg:'#F5A623',      fg:'#fff' },
+  { v:'X ทำไม่ได้',   short:'X', label:'ทำไม่ได้',  bg:'#D93025',      fg:'#fff' },
+  { v:'⏰ ไม่ทัน',     short:'⏰', label:'ไม่ทัน',    bg:'#a855f7',      fg:'#fff' }
+];
+
+const subState = { st:new Array(30).fill(''), brush:1, sending:false };
+
+/* รายชื่อบทมาตรฐาน — อ่านจากดรอปดาวน์ "กรองเฉพาะบท" ที่มีอยู่แล้ว
+   จะได้ไม่ต้องเก็บรายการซ้ำอีกที่ (แก้ที่ index.html ที่เดียวพอ) */
+function subChapters(){
+  return [...document.querySelectorAll('#topicFilter option')]
+    .map(o => o.value).filter(Boolean);
+}
+
+function subIdx(v){ const i = SUB_STATES.findIndex(s => s.v === v); return i < 0 ? 0 : i; }
+
+function subCounts(){
+  const n = { ok:0, care:0, concept:0, cant:0, timeout:0, blank:0 };
+  subState.st.forEach(v => {
+    if(!v) n.blank++;
+    else if(v.indexOf('ถูก')!==-1) n.ok++;
+    else if(v.indexOf('สะเพร่า')!==-1) n.care++;
+    else if(v.indexOf('คอนเซปต์')!==-1) n.concept++;
+    else if(v.indexOf('ทำไม่ได้')!==-1) n.cant++;
+    else if(v.indexOf('ไม่ทัน')!==-1) n.timeout++;
+  });
+  return n;
+}
+
+function subOpen(){
+  if(!currentStudent){ goTo('p1b'); return; }
+  goTo('p8');
+
+  const short = currentStudent.replace(/\s*\([^)]*\)\s*$/,'').trim();
+  const av = document.getElementById('sub-avatar');
+  av.textContent = short.substring(0,3);
+  document.getElementById('sub-who').textContent = currentStudent;
+
+  const sel = document.getElementById('subChapter');
+  if(!sel.options.length){
+    sel.innerHTML = subChapters().map(c => `<option value="${_esc(c)}">${_esc(c)}</option>`).join('');
+  }
+  const dt = document.getElementById('subDate');
+  if(!dt.value){
+    const d = new Date();
+    dt.value = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
+  }
+  subRender();
+  subLoadList();
+}
+
+function subRender(){
+  const b = document.getElementById('subBrush');
+  b.innerHTML = SUB_STATES.map((s,i) => `
+    <button onclick="subState.brush=${i};subRender()"
+      style="background:${s.bg};color:${s.fg};border-color:${subState.brush===i?'var(--text1)':'var(--border-md)'}">
+      ${s.short} ${s.label}</button>`).join('');
+
+  document.getElementById('subGrid').innerHTML = subState.st.map((v,i) => {
+    const s = SUB_STATES[subIdx(v)];
+    return `<button onclick="subTap(${i})" style="background:${v?s.bg:'var(--card)'};color:${v?s.fg:'var(--text3)'}">
+      <span>${i+1}</span>${s.short}</button>`;
+  }).join('');
+
+  const n = subCounts();
+  document.getElementById('subCounts').innerHTML =
+    `คะแนน <b style="font-size:18px;color:var(--blue)">${n.ok}</b>/30` +
+    `<span style="font-size:11px;color:var(--text3)"> · ยังไม่ระบุ ${n.blank}</span>`;
+}
+
+function subTap(i){
+  const cur = subIdx(subState.st[i]);
+  subState.st[i] = (cur === subState.brush)
+    ? SUB_STATES[(cur+1) % SUB_STATES.length].v
+    : SUB_STATES[subState.brush].v;
+  subRender();
+}
+
+function subFillAll(v){ subState.st = new Array(30).fill(v); subRender(); }
+
+async function subPost(payload){
+  const res = await fetch(SUBMIT_URL, {
+    method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify(Object.assign({ name: currentStudent, pin: currentPin }, payload))
+  });
+  return res.json();
+}
+
+async function subSend(){
+  if(subState.sending) return;
+  const st = document.getElementById('subStatus');
+  const n = subCounts();
+  if(n.blank === 30){ st.className='status err'; st.textContent='ยังไม่ได้กรอกข้อไหนเลยครับ'; return; }
+  if(n.blank > 0 && !confirm(`ยังไม่ได้ระบุ ${n.blank} ข้อ (จะถูกส่งเป็น "ไม่ทำ")\nส่งเลยไหม?`)) return;
+
+  const chapter = document.getElementById('subChapter').value;
+  const date    = document.getElementById('subDate').value;
+  const note    = document.getElementById('subNote').value.trim();
+  if(!chapter){ st.className='status err'; st.textContent='เลือกบทก่อนครับ'; return; }
+
+  subState.sending = true;
+  const btn = document.getElementById('subSendBtn');
+  btn.disabled = true; btn.textContent = 'กำลังส่ง...';
+  st.className='status'; st.textContent='';
+
+  try{
+    const j = await subPost({ action:'submitMyScore', chapter, date, note, statuses: subState.st });
+    if(j && j.ok){
+      st.className='status ok';
+      st.textContent = (j.resubmitted ? 'ส่งใหม่แทนของเดิมแล้ว' : 'ส่งให้ครูแล้ว') + ` · ${j.score}/30 — รอครูตรวจครับ`;
+      subState.st = new Array(30).fill('');
+      document.getElementById('subNote').value = '';
+      subRender(); subLoadList();
+    }else{
+      st.className='status err';
+      st.textContent = (j && j.error) || 'ส่งไม่สำเร็จ';
+    }
+  }catch(e){
+    st.className='status err'; st.textContent='เชื่อมต่อไม่ได้: ' + e.message;
+  }
+  subState.sending = false;
+  btn.disabled = false; btn.textContent = '📤 ส่งให้ครูตรวจ';
+}
+
+async function subLoadList(){
+  const box = document.getElementById('subList');
+  box.innerHTML = '<div style="font-size:13px;color:var(--text3)">กำลังโหลด...</div>';
+  try{
+    const j = await subPost({ action:'myPendingList' });
+    if(!j || !j.ok){ box.innerHTML = '<div style="font-size:13px;color:var(--red)">โหลดไม่สำเร็จ</div>'; return; }
+    if(!j.items.length){ box.innerHTML = '<div style="font-size:13px;color:var(--text3)">ยังไม่เคยส่งคะแนนครับ</div>'; return; }
+
+    const badge = s => s === 'approved' ? '<span class="sub-badge sub-ok">✅ ครูอนุมัติแล้ว</span>'
+                     : s === 'rejected' ? '<span class="sub-badge sub-no">❌ ครูตีกลับ</span>'
+                     : '<span class="sub-badge sub-wait">⏳ รอครูตรวจ</span>';
+
+    box.innerHTML = j.items.slice().reverse().map(it => `
+      <div class="sub-row">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13.5px;font-weight:500;color:var(--text1)">${_esc(it.chapter)}</div>
+          <div style="font-size:11px;color:var(--text3)">${_dFmt(it.date)} · ส่งเมื่อ ${_esc(it.submittedAt)}</div>
+          ${it.note ? `<div style="font-size:11.5px;color:var(--red);margin-top:3px">ครูบอกว่า: ${_esc(it.note)}</div>` : ''}
+        </div>
+        <div style="font-family:var(--font-num,inherit);font-size:14px;font-weight:600;min-width:44px;text-align:right">${it.score}/30</div>
+        <div>${badge(it.status)}</div>
+      </div>`).join('');
+  }catch(e){
+    box.innerHTML = '<div style="font-size:13px;color:var(--red)">เชื่อมต่อไม่ได้</div>';
+  }
+}
