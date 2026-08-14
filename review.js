@@ -95,6 +95,24 @@ function rvOrderOf(name){
   return best >= 0 ? best : 999;   // บทที่ไม่รู้จัก → ไปท้ายสุด ไม่หายไปไหน
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   ตัดข้อซ้ำ — บางบทมีข้อเดียวกันอยู่ทั้งคีย์ฐานและคีย์ " Ent"
+   (ลิงก์เฉลย/คลิปเดียวกันเป๊ะ แต่เลขข้อกับระดับต่างกัน)
+   ทำให้นักเรียนเห็นข้อเดิมซ้ำ 2 รอบ — เก็บอันแรกไว้ตัวเดียว
+   ตรวจเมื่อ 14 ส.ค. 69: ตรรกศาสตร์ ซ้ำ 34 · เมทริกซ์ ซ้ำ 37 · ความน่าจะเป็น ซ้ำ 35
+   ═══════════════════════════════════════════════════════════════ */
+function rvDedupe(list){
+  var seen = {}, out = [];
+  (list || []).forEach(function(q){
+    var k = String((q && q.yt) || '').trim();
+    if(!k){ out.push(q); return; }          // ไม่มีลิงก์ = เก็บไว้ทุกอัน
+    if(seen[k]) return;
+    seen[k] = true;
+    out.push(q);
+  });
+  return out;
+}
+
 // state
 var RV = {
   chapter: null,      // ชื่อบทที่เลือก (key ใน PRACTICE_BANK)
@@ -168,7 +186,7 @@ function openReviewLibrary(){
       if(RV_SEEN[nm]) seenTotal += Object.keys(RV_SEEN[nm]).length;
       if(RV_SEEN[nm+' Ent']) seenTotal += Object.keys(RV_SEEN[nm+' Ent']).length;
     });
-    var all = ch.yt.concat(ch.ent);
+    var all = rvDedupe(ch.yt.concat(ch.ent));
     var clipN = 0, htmlN = 0;
     all.forEach(function(q){ if((q.yt||'').includes('.html#')) htmlN++; else clipN++; });
     var sub = clipN+' ข้อมีคลิป + '+htmlN+' ข้อเฉลย HTML';
@@ -188,13 +206,13 @@ function rvOpenChapterMerged(base){
   var ytBank = PRACTICE_BANK[base] || [];
   var entBank = PRACTICE_BANK[base+' Ent'] || [];
   RV.chapter = base;
-  RV.bank = ytBank.concat(entBank);
+  RV.bank = rvDedupe(ytBank.concat(entBank));
   if(!RV_SEEN[base]) RV_SEEN[base]={};
   rvOpenChapterCore();
 }
 function rvOpenChapter(chap){
   RV.chapter = chap;
-  RV.bank = PRACTICE_BANK[chap] || [];
+  RV.bank = rvDedupe(PRACTICE_BANK[chap] || []);
   if(!RV_SEEN[chap]) RV_SEEN[chap]={};
   rvOpenChapterCore();
 }

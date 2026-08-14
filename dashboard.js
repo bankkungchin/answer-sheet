@@ -1555,3 +1555,51 @@ async function subLoadList(){
     box.innerHTML = '<div style="font-size:13px;color:var(--red)">เชื่อมต่อไม่ได้</div>';
   }
 }
+
+
+/* ── โหมดวางจาก Gemini (หน้า p8) ─────────────────────────────────
+   ต่างจากหน้าครูตรงที่นักเรียนกรอกของตัวเองคนเดียว จึงไม่ต้องอ่านชื่อ/บท
+   อ่านแค่ "ข้อ N: สถานะ" แล้วเติมลงตาราง — ไม่ส่งทันที ให้ตรวจก่อน
+   ล็อก 30 ช่องตายตัว ข้อไหน Gemini ข้ามไปก็เว้นว่าง ไม่เลื่อนขึ้นมาแทนที่ */
+function subSetMode(m){
+  document.getElementById('subTabTap').classList.toggle('active', m==='tap');
+  document.getElementById('subTabPaste').classList.toggle('active', m==='paste');
+  document.getElementById('subPastePane').style.display = (m==='paste') ? '' : 'none';
+}
+
+function subStatusOf(raw){
+  const s = String(raw||'').trim();
+  if(!s || /^[-–—.\s]+$/.test(s)) return '';
+  if(s.indexOf('✅')>=0 || s.indexOf('ถูก')>=0) return '✅ ถูก';
+  if(s.indexOf('⚠')>=0 || s.indexOf('สะเพร่า')>=0) return '⚠️ สะเพร่า';
+  if(s.indexOf('⏰')>=0 || s.indexOf('ไม่ทัน')>=0) return '⏰ ไม่ทัน';
+  if(s.indexOf('C')>=0 || s.indexOf('คอนเซปต์')>=0) return 'C คอนเซปต์';
+  if(s.indexOf('X')>=0 || s.indexOf('❌')>=0 || s.indexOf('ทำไม่ได้')>=0 || s.indexOf('ผิด')>=0) return 'X ทำไม่ได้';
+  return '⏰ ไม่ทัน';
+}
+
+function subParsePaste(){
+  const box = document.getElementById('subPasteBox');
+  const msg = document.getElementById('subPasteMsg');
+  const raw = (box.value||'').trim();
+  if(!raw){ msg.style.color='var(--red)'; msg.textContent='ยังไม่ได้วางข้อความ'; return; }
+
+  const st = new Array(30).fill('');
+  const re = /ข้อ\s*(\d+)\s*:\s*([^ข\d\n]*)/g;
+  let m, found = 0;
+  while((m = re.exec(raw)) !== null){
+    const q = parseInt(m[1],10);
+    if(q>=1 && q<=30){ st[q-1] = subStatusOf(m[2]); found++; }
+  }
+  if(!found){
+    msg.style.color='var(--red)';
+    msg.textContent='อ่านไม่เจอเลย — ข้อความต้องอยู่ในรูป "ข้อ 1: ✅"';
+    return;
+  }
+  subState.st = st;
+  subRender();
+  const n = subCounts();
+  msg.style.color='var(--green)';
+  msg.textContent = `อ่านได้ ${found} ข้อ · คะแนน ${n.ok}/30` + (n.blank ? ` · ยังไม่ระบุ ${n.blank} ข้อ` : '');
+  subSetMode('tap');
+}
