@@ -29,7 +29,8 @@ var RV_CHAP_ORDER = [
   'ความสัมพันธ์',
   'ฟังก์ชัน',
   'ความสัมพันธ์และฟังก์ชัน',
-  'เรขาคณิตวิเคราะห์และภาคตัดกรวย',
+  'เรขาคณิตวิเคราะห์',
+  'ภาคตัดกรวย',
   'Expo Logarithm',
   'เมทริกซ์',
   'ตรีโกณมิติ',
@@ -37,7 +38,7 @@ var RV_CHAP_ORDER = [
   'จำนวนเชิงซ้อน',
   'ลำดับและอนุกรม',
   'แคลคูลัส',
-  'เรียงลำดับและจัดหมู่',
+  'การเรียงลำดับและการจัดหมู่',
   'ความน่าจะเป็น',
   'สถิติ',
   'ตรรกศาสตร์'
@@ -45,10 +46,16 @@ var RV_CHAP_ORDER = [
 
 /* ชื่อที่สะกดต่างแต่เป็นบทเดียวกัน — ให้ได้ลำดับเดียวกับตัวหลัก
    เจอชื่อไหนสะกดต่างอีก เติมได้ที่นี่ */
+/* บทที่ไม่ต้องแสดงในคลังทบทวน — เนื้อหาซ้ำกับบทอื่นที่แสดงอยู่แล้ว
+   'เรขาคณิตวิเคราะห์และภาคตัดกรวย' = 'เรขาคณิตวิเคราะห์' (25 ข้อ) + 'ภาคตัดกรวย' (118 ข้อ) = 143 ข้อ พอดี
+   ซ่อนตัวรวมไว้ ข้อสอบไม่หายไปไหน ยังเข้าถึงได้ครบผ่าน 2 บทแยก */
+var RV_CHAP_HIDE = ['เรขาคณิตวิเคราะห์และภาคตัดกรวย'];
+
 var RV_CHAP_ALIAS = {
   'Expo Logarithm'   : ['Exponential logarithm', 'Expo Log'],
   'แคลคูลัส'          : ['แคลคูลลัส'],
   'ลำดับและอนุกรม'    : ['อันดับและอนุกรม'],
+  'การเรียงลำดับและการจัดหมู่' : ['เรียงลำดับและจัดหมู่'],
   'ความสัมพันธ์และฟังก์ชัน' : ['ความสัมพันธ์และฟังชัน']
 };
 
@@ -128,16 +135,39 @@ function openReviewLibrary(){
     if(isEnt) chapMap[base].ent = arr;
     else chapMap[base].yt = arr;
   });
-  Object.keys(chapMap).sort(function(a, b){
+  /* ยุบบทที่เป็นชื่อพ้องกัน (เช่น "การเรียงลำดับและการจัดหมู่" กับ "เรียงลำดับและจัดหมู่"
+     ซึ่ง topic-marker.js สร้างขึ้นตอนผูกชื่อจากชีต) — เก็บชื่อที่ยาวกว่าไว้ตัวเดียว */
+  var byKey = {};
+  Object.keys(chapMap).forEach(function(base){
+    if(RV_CHAP_HIDE.indexOf(base) > -1) return;          // บทที่สั่งซ่อน
+    var k = rvChapKey(base);
+    var n = chapMap[base].yt.length + chapMap[base].ent.length;
+    var cur = byKey[k];
+    if(!cur || n > cur.n || (n === cur.n && base.length > cur.base.length)){
+      byKey[k] = { base: base, n: n, alts: cur ? cur.alts.concat([cur.base]) : [] };
+    } else {
+      cur.alts.push(base);
+    }
+  });
+  var chapAlts = {};
+  var visible = Object.keys(byKey).map(function(k){
+    chapAlts[byKey[k].base] = byKey[k].alts;
+    return byKey[k].base;
+  });
+
+  visible.sort(function(a, b){
     var d = rvOrderOf(a) - rvOrderOf(b);
     return d !== 0 ? d : (a < b ? -1 : 1);
   }).forEach(function(base){
     var ch = chapMap[base];
     var totalQ = ch.yt.length + ch.ent.length;
     var icon = RV_CHAP_ICON[base] || '📘';
-    var seenYt = RV_SEEN[base] ? Object.keys(RV_SEEN[base]).length : 0;
-    var seenEnt = RV_SEEN[base+' Ent'] ? Object.keys(RV_SEEN[base+' Ent']).length : 0;
-    var seenTotal = seenYt + seenEnt;
+    var seenNames = [base].concat(chapAlts[base] || []);
+    var seenTotal = 0;
+    seenNames.forEach(function(nm){
+      if(RV_SEEN[nm]) seenTotal += Object.keys(RV_SEEN[nm]).length;
+      if(RV_SEEN[nm+' Ent']) seenTotal += Object.keys(RV_SEEN[nm+' Ent']).length;
+    });
     var all = ch.yt.concat(ch.ent);
     var clipN = 0, htmlN = 0;
     all.forEach(function(q){ if((q.yt||'').includes('.html#')) htmlN++; else clipN++; });
