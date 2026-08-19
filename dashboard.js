@@ -32,6 +32,9 @@ function goTo(id){ document.querySelectorAll('.page').forEach(p=>p.classList.rem
 function resetAll(){ pinBuffer=''; pinAttempts=0; updatePinDots(); document.getElementById('attemptsMsg').textContent=''; document.getElementById('p2status').textContent=''; }
 
 let studentList=[], selectedStudent='', comboIdx=-1;
+/* ⚠️ 18 ส.ค. 69: ทุก fetch ที่ยิง Google Sheets API ต้องต่อ &t=Date.now() เสมอ
+   ไม่งั้นเบราว์เซอร์แคชคำตอบเดิมไว้ → ครูกรอกคะแนนใหม่แล้วนักเรียนยังเห็นข้อมูลเก่า
+   (หน้าครู teacher-dashboard.html ทำแบบนี้อยู่แล้ว จึงเห็นคะแนนใหม่ทันที) */
 async function loadStudents(){
   document.getElementById('p1status').className='status';
   document.getElementById('p1status').textContent='กำลังโหลดรายชื่อ...';
@@ -42,7 +45,7 @@ async function loadStudents(){
       if(!data.ok){document.getElementById('p1status').className='status err';document.getElementById('p1status').textContent='Error: '+(data.error||'โหลดรายชื่อไม่ได้');return;}
       studentList=data.students||[];
     }else{
-      const res=await fetch(`${BASE}/${SHEET_ID}/values/students!B2:B500?key=${API_KEY}`);
+      const res=await fetch(`${BASE}/${SHEET_ID}/values/students!B2:B500?key=${API_KEY}&t=${Date.now()}`);
       const data=await res.json();
       if(data.error){document.getElementById('p1status').className='status err';document.getElementById('p1status').textContent='Error: '+data.error.message;return;}
       const seen=new Set(); studentList=[];
@@ -159,7 +162,7 @@ async function verifyPin(){
       const data=await res.json();
       pinOk=!!data.ok; pinErr=data.error||'';
     }else{
-      const res=await fetch(`${BASE}/${SHEET_ID}/values/students!B2:F500?key=${API_KEY}`);
+      const res=await fetch(`${BASE}/${SHEET_ID}/values/students!B2:F500?key=${API_KEY}&t=${Date.now()}`);
       const data=await res.json();
       if(data.error){document.getElementById('p2status').textContent='Error: '+data.error.message;return;}
       const rows=data.values||[];
@@ -341,8 +344,8 @@ async function fetchDashData(){
     resData={values:j.results||[]}; longData={values:j.results_long||[]};
   }else{
     [resData,longData]=await Promise.all([
-      fetch(`${BASE}/${SHEET_ID}/values/${encodeURIComponent('results!A:AR')}?key=${API_KEY}`).then(r=>r.json()),
-      fetch(`${BASE}/${SHEET_ID}/values/${encodeURIComponent('results_long!A:H')}?key=${API_KEY}`).then(r=>r.json())
+      fetch(`${BASE}/${SHEET_ID}/values/${encodeURIComponent('results!A:AR')}?key=${API_KEY}&t=${Date.now()}`).then(r=>r.json()),
+      fetch(`${BASE}/${SHEET_ID}/values/${encodeURIComponent('results_long!A:H')}?key=${API_KEY}&t=${Date.now()}`).then(r=>r.json())
     ]);
     if(resData.error){dashData=null;dashErr='เชื่อมต่อ Google Sheets ไม่ได้: '+(resData.error.message||'ตรวจสอบอินเทอร์เน็ต/API key');return;}
   }

@@ -20,7 +20,13 @@
   var API_KEY  = (typeof API_KEY !== 'undefined' && API_KEY) ||
                  (window.API_KEY) || 'AIzaSyAW7uJtajKOWhfg_Pwc6-NK7siuCVyVpYs';
 
+  /* ⚠️ 18 ส.ค. 69 — ของเดิม cache = ผลที่ดึงตอนโหลดหน้า แล้วค้างทั้ง session
+     นักเรียนเปิดแท็บทิ้งไว้ → ครูกรอกคะแนนใหม่ → เมนูบทยังขึ้น 🔒 "ยังไม่มีคะแนน"
+     แม้จะ login ใหม่ก็ไม่หาย เพราะไม่เคยยิงซ้ำ
+     แก้: ให้ cache หมดอายุใน 60 วินาที + บังคับดึงใหม่ได้ */
   var cache = null;
+  var cacheAt = 0;
+  var CACHE_TTL_MS = 60000;
 
   /* คีย์บท — ให้ "เรียงลำดับและจัดหมู่" = "การเรียงลำดับและการจัดหมู่"
      (ตัวเลข "ชุดที่ 1/2" ยังแยกกัน) */
@@ -60,13 +66,14 @@
     return t.slice(0, cut).join(' ').trim();
   }
 
-  function loadResults() {
-    if (cache) return Promise.resolve(cache);
+  function loadResults(force) {
+    if (cache && !force && (Date.now() - cacheAt) < CACHE_TTL_MS) return Promise.resolve(cache);
     var url = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID +
               '/values/results!B2:E?key=' + API_KEY + '&t=' + Date.now();
     return fetch(url)
       .then(function (r) { return r.json(); })
-      .then(function (j) { cache = j.values || []; return cache; });
+      .then(function (j) { cache = j.values || []; cacheAt = Date.now(); return cache; })
+      .catch(function (e) { if (cache) return cache; throw e; });   // เน็ตสะดุด → ใช้ของเดิมไปก่อน
   }
 
   function groupKeyTM(g) {
@@ -97,7 +104,9 @@
     var tag = stu.name + '|' + stu.group;
     if (sel.dataset.markedFor === tag) return;   // ทำไปแล้วสำหรับคนนี้
 
-    loadResults().then(function (rows) {
+    // คนละคนกับรอบก่อน = เพิ่ง login → ดึงข้อมูลใหม่เสมอ ไม่ใช้ของที่ค้างไว้
+    var force = !!sel.dataset.markedFor && sel.dataset.markedFor !== tag;
+    loadResults(force).then(function (rows) {
       var myName = nameKey(stu.name);
       var myGroup = groupKeyTM(stu.group);
 
@@ -191,6 +200,15 @@
       if (p3.classList.contains('active')) markOptions();
     }).observe(p3, { attributes: true, attributeFilter: ['class'] });
   }
+
+  /* ให้หน้าอื่นสั่งรีเฟรชได้ เช่น หลังนักเรียนส่งคะแนนเอง
+     เรียก: window.refreshTopicMarks() */
+  window.refreshTopicMarks = function () {
+    var sel = document.getElementById('topicFilter');
+    if (sel) delete sel.dataset.markedFor;
+    cache = null; cacheAt = 0;
+    markOptions();
+  };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', watch);
