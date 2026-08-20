@@ -17,12 +17,25 @@
    แก้ dropdown รายชื่อโชว์ครบทุกคน (เดิมตัดที่ 80 ชื่อ ทำให้กลุ่มวันจันทร์หาย),
    switchTab รองรับจำนวนแท็บไม่จำกัด, ปุ่มสลับธีม สว่าง/มืด/ตามระบบ,
    ปรับข้อความ 🦉/🐘 ไม่ผูกมัดว่าครูจะติดต่อผู้ปกครอง
+   ── v3.1 (SECURITY) ──
+   ย้าย login/data ไปเป็น POST — PIN ไม่ไปโผล่ใน URL อีก (ของเดิม v3.0 ส่งเป็น query string)
    ── v3.0 (SECURITY) ──
    รองรับ Apps Script proxy: ถ้า config.js มี PROXY_URL → ทุกอย่างวิ่งผ่าน proxy
    (ไม่ใช้ API key ฝั่งเว็บ, PIN ตรวจฝั่งเซิร์ฟเวอร์, กันเดา PIN รัว)
    ถ้ายังไม่มี PROXY_URL → ทำงานแบบเดิมทุกประการ (ช่วงเปลี่ยนผ่านเว็บไม่ล่ม)
    ============================================================ */
 const _USE_PROXY=()=> (typeof PROXY_URL!=='undefined' && PROXY_URL);
+/* ⚠️ PIN ต้องส่งด้วย POST เท่านั้น — ถ้าใส่ใน query string มันจะไปติดใน
+   ประวัติเบราว์เซอร์ / Referer / log ของ Apps Script ตลอดไป
+   (Content-Type ต้องเป็น text/plain ไม่งั้น Apps Script โดน CORS preflight ปัด) */
+async function _proxyPost(payload){
+  const res = await fetch(PROXY_URL, {
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify(payload)
+  });
+  return res.json();
+}
 let pinBuffer='', pinAttempts=0, currentStudent='', currentPin='';
 let dashData = null;let dashErr='';let selectedGroups=null;
 let diffChartInst=null, groupChartInst=null, distChartInst=null;
@@ -40,7 +53,7 @@ async function loadStudents(){
   document.getElementById('p1status').textContent='กำลังโหลดรายชื่อ...';
   try{
     if(_USE_PROXY()){
-      const res=await fetch(PROXY_URL+'?action=students');
+      const res=await fetch(PROXY_URL+'?action=students&t='+Date.now());
       const data=await res.json();
       if(!data.ok){document.getElementById('p1status').className='status err';document.getElementById('p1status').textContent='Error: '+(data.error||'โหลดรายชื่อไม่ได้');return;}
       studentList=data.students||[];
@@ -158,8 +171,7 @@ async function verifyPin(){
     let pinOk=false, pinErr='';
     if(_USE_PROXY()){
       // v3: ตรวจ PIN ฝั่งเซิร์ฟเวอร์ — PIN ของคนอื่นไม่ถูกส่งมาที่เบราว์เซอร์เลย
-      const res=await fetch(PROXY_URL+'?action=login&name='+encodeURIComponent(currentStudent)+'&pin='+encodeURIComponent(pinBuffer));
-      const data=await res.json();
+      const data=await _proxyPost({action:'webLogin', name:currentStudent, pin:pinBuffer});
       pinOk=!!data.ok; pinErr=data.error||'';
     }else{
       const res=await fetch(`${BASE}/${SHEET_ID}/values/students!B2:F500?key=${API_KEY}&t=${Date.now()}`);
@@ -338,8 +350,7 @@ async function fetchDashData(){
   let resData,longData;
   if(_USE_PROXY()){
     // v3: ดึงผ่าน proxy — ต้องมี PIN ที่ถูกต้องเท่านั้น คนนอกดึงข้อมูลไม่ได้
-    const r=await fetch(PROXY_URL+'?action=data&name='+encodeURIComponent(currentStudent)+'&pin='+encodeURIComponent(currentPin));
-    const j=await r.json();
+    const j=await _proxyPost({action:'webData', name:currentStudent, pin:currentPin});
     if(!j.ok){dashData=null;dashErr='เชื่อมต่อระบบไม่ได้: '+(j.error||'ลองใหม่อีกครั้ง');return;}
     resData={values:j.results||[]}; longData={values:j.results_long||[]};
   }else{

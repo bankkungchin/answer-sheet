@@ -1,8 +1,23 @@
 /* ============================================================
    config.js — ตั้งค่าระบบ (แก้ที่นี่เมื่อเปลี่ยน Sheet / เพิ่มช่อง)
    ============================================================ */
+/* ═══════════════════════════════════════════════════════════════
+   ★ 20 ส.ค. 2569 — "ชุด B" : เว็บนักเรียนเลิกใช้ API key ★
+
+   ไฟล์นี้เป็นไฟล์ public — ใครเปิด view-source ก็อ่านได้ทั้งไฟล์
+   ของเดิมมี API_KEY ของ Google อยู่ตรงนี้ → ก๊อปไปดึงชีตทั้งใบได้
+   ทั้งคะแนนทุกคน และ PIN ของทุกคน (คอลัมน์ F ของ sheet students)
+
+   ของใหม่: ทุกคำขอวิ่งผ่าน Apps Script (PROXY_URL) ซึ่งตรวจ PIN ให้ก่อน
+   ────────────────────────────────────────────────────────────────
+   ★ ยังต้องทำอีก 1 ขั้น: เข้า Google Cloud Console → Credentials
+     → ลบคีย์ AIzaSyAW7… ทิ้ง (คีย์นี้ค้างใน git history ตลอดไป
+       ต่อให้ลบออกจากไฟล์แล้วก็ยังมีคนย้อนไปอ่านได้)
+   ═══════════════════════════════════════════════════════════════ */
+const PROXY_URL = 'https://script.google.com/macros/s/AKfycbzh0M26XbDfjrVuUjUgn1Dr-Z209ms9UibPAxfd-YiB7oHnD-1ubzc3PNtadO7tULjm/exec';
+
 const SHEET_ID = '1U49c1_y3QtTa6LP8rV4Z1dBM5gxKrdpxp5nY1M6ffnU';
-const API_KEY  = 'AIzaSyAW7uJtajKOWhfg_Pwc6-NK7siuCVyVpYs';
+const API_KEY  = '';   // ★ ห้ามใส่คีย์กลับมาอีก — ถ้ามีหน้าไหนพัง แปลว่าหน้านั้นยังเรียก Sheets API ตรง ๆ อยู่ ให้ส่งไฟล์นั้นมาแก้
 const BASE     = 'https://sheets.googleapis.com/v4/spreadsheets';
 
 // ── YouTube channel ของครู (ใช้สำหรับปุ่มค้นหาคลิปตามหัวข้อ) ──

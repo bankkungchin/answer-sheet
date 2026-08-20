@@ -10,20 +10,38 @@
  *   <script src="topic-marker.js"></script>
  *
  * ไม่แตะโค้ดเดิม ทำงานแยกอิสระ — ถ้าโหลดข้อมูลไม่ได้ dropdown จะกลับเป็นแบบเดิมทุกอย่าง
+ *
+ * ── v3.0 (20 ส.ค. 2569) ──
+ * 1) เลิกฝัง API key: ถ้า config.js มี PROXY_URL → ดึงผ่าน Apps Script proxy
+ *    (?action=marks คืนแค่ ชื่อ/กลุ่ม/วันที่/บท ไม่มีคะแนน)
+ *    ถ้ายังไม่มี PROXY_URL → ใช้ Sheets API แบบเดิม เว็บไม่ล่มระหว่างเปลี่ยนผ่าน
+ * 2) cache มีวันหมดอายุ 60 วินาที + บังคับดึงใหม่เมื่อเปลี่ยนคน
+ *    (ของเดิม cache ค้างทั้ง session → ครูกรอกคะแนนใหม่แล้วยังขึ้น 🔒 "ยังไม่มีคะแนน")
  */
 (function () {
   'use strict';
 
-  // ใช้ค่าจาก config.js ถ้ามี ไม่งั้นใช้ค่าสำรอง
-  var SHEET_ID = (typeof SHEET_ID !== 'undefined' && SHEET_ID) ||
-                 (window.SHEET_ID) || '1U49c1_y3QtTa6LP8rV4Z1dBM5gxKrdpxp5nY1M6ffnU';
-  var API_KEY  = (typeof API_KEY !== 'undefined' && API_KEY) ||
-                 (window.API_KEY) || 'AIzaSyAW7uJtajKOWhfg_Pwc6-NK7siuCVyVpYs';
+  /* ⚠️ ห้ามใส่ API key ไว้ในไฟล์นี้อีก — ไฟล์นี้เป็น public บน GitHub Pages
+     ค่าทั้งหมดอ่านจาก config.js เท่านั้น (ถ้าไม่มีก็ไม่ทำงาน ดีกว่าแอบใช้คีย์ที่รั่ว) */
+  /* หมายเหตุ: config.js ประกาศด้วย const → ไม่ได้อยู่บน window ต้องอ่านด้วย typeof
+     (ของเดิมเขียน var SHEET_ID = (typeof SHEET_ID ...) ซึ่ง var ตัวเองบังตัวเอง
+      ทำให้ตกไปใช้ค่า fallback ที่ hard-code ไว้ทุกครั้ง — คือที่มาของคีย์ในไฟล์นี้) */
+  function proxyUrl() {
+    try { if (typeof PROXY_URL !== 'undefined' && PROXY_URL) return PROXY_URL; } catch (e) {}
+    try { if (window.PROXY_URL) return window.PROXY_URL; } catch (e) {}
+    return '';
+  }
+  function sheetId() {
+    try { if (typeof SHEET_ID !== 'undefined' && SHEET_ID) return SHEET_ID; } catch (e) {}
+    try { if (window.SHEET_ID) return window.SHEET_ID; } catch (e) {}
+    return '';
+  }
+  function apiKey() {
+    try { if (typeof API_KEY !== 'undefined' && API_KEY) return API_KEY; } catch (e) {}
+    try { if (window.API_KEY) return window.API_KEY; } catch (e) {}
+    return '';
+  }
 
-  /* ⚠️ 18 ส.ค. 69 — ของเดิม cache = ผลที่ดึงตอนโหลดหน้า แล้วค้างทั้ง session
-     นักเรียนเปิดแท็บทิ้งไว้ → ครูกรอกคะแนนใหม่ → เมนูบทยังขึ้น 🔒 "ยังไม่มีคะแนน"
-     แม้จะ login ใหม่ก็ไม่หาย เพราะไม่เคยยิงซ้ำ
-     แก้: ให้ cache หมดอายุใน 60 วินาที + บังคับดึงใหม่ได้ */
   var cache = null;
   var cacheAt = 0;
   var CACHE_TTL_MS = 60000;
@@ -66,14 +84,26 @@
     return t.slice(0, cut).join(' ').trim();
   }
 
+  /* คืนแถว [ชื่อ, กลุ่ม, วันที่, บท] — เท่ากับ results!B2:E ของเดิมทุกช่อง */
   function loadResults(force) {
     if (cache && !force && (Date.now() - cacheAt) < CACHE_TTL_MS) return Promise.resolve(cache);
-    var url = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID +
-              '/values/results!B2:E?key=' + API_KEY + '&t=' + Date.now();
+
+    var px = proxyUrl(), url, pick;
+    if (px) {
+      url  = px + '?action=marks&t=' + Date.now();
+      pick = function (j) { return (j && j.ok && j.rows) ? j.rows : []; };
+    } else {
+      var sid = sheetId(), key = apiKey();
+      if (!sid || !key) return Promise.resolve(cache || []);          // ไม่มีทางดึง → ปล่อย dropdown ตามเดิม
+      url  = 'https://sheets.googleapis.com/v4/spreadsheets/' + sid +
+             '/values/results!B2:E?key=' + key + '&t=' + Date.now();
+      pick = function (j) { return (j && j.values) || []; };
+    }
+
     return fetch(url)
       .then(function (r) { return r.json(); })
-      .then(function (j) { cache = j.values || []; cacheAt = Date.now(); return cache; })
-      .catch(function (e) { if (cache) return cache; throw e; });   // เน็ตสะดุด → ใช้ของเดิมไปก่อน
+      .then(function (j) { cache = pick(j); cacheAt = Date.now(); return cache; })
+      .catch(function (e) { if (cache) return cache; throw e; });     // เน็ตสะดุด → ใช้ของเดิมไปก่อน
   }
 
   function groupKeyTM(g) {
@@ -104,8 +134,9 @@
     var tag = stu.name + '|' + stu.group;
     if (sel.dataset.markedFor === tag) return;   // ทำไปแล้วสำหรับคนนี้
 
-    // คนละคนกับรอบก่อน = เพิ่ง login → ดึงข้อมูลใหม่เสมอ ไม่ใช้ของที่ค้างไว้
+    // คนละคนกับรอบก่อน = เพิ่ง login ใหม่ → ดึงข้อมูลใหม่เสมอ ไม่ใช้ของที่ค้างไว้
     var force = !!sel.dataset.markedFor && sel.dataset.markedFor !== tag;
+
     loadResults(force).then(function (rows) {
       var myName = nameKey(stu.name);
       var myGroup = groupKeyTM(stu.group);
@@ -201,12 +232,11 @@
     }).observe(p3, { attributes: true, attributeFilter: ['class'] });
   }
 
-  /* ให้หน้าอื่นสั่งรีเฟรชได้ เช่น หลังนักเรียนส่งคะแนนเอง
-     เรียก: window.refreshTopicMarks() */
+  /* ให้หน้าอื่นสั่งรีเฟรชได้ เช่น หลังนักเรียนส่งคะแนนเอง */
   window.refreshTopicMarks = function () {
+    cache = null; cacheAt = 0;
     var sel = document.getElementById('topicFilter');
     if (sel) delete sel.dataset.markedFor;
-    cache = null; cacheAt = 0;
     markOptions();
   };
 
