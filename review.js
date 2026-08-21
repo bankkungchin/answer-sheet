@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 function displayN(q){ var m=(q.yt||'').match(/\.html#q(\d+)/); return m?m[1]:q.n; }
 // ════════════════════════════════════════════════════════════
 // review.js — คลังทบทวน (เลือกข้อเอง / สุ่มข้อ) — ใช้ PRACTICE_BANK
@@ -119,8 +112,10 @@ var RV = {
   bank: [],           // ข้อในบทนั้น
   cats: [],           // หมวดที่มี
   levels: [],         // ระดับที่มี
-  fCat: '', fLvl: 0, fUnseen: false,            // filter เลือกข้อเอง
-  rCat: '', rLvl: 0, rUnseen: false,            // filter สุ่ม
+  fCat: '', fLvl: 0, fUnseen: false,            // filter เลือกข้อเอง (ทีละอัน)
+  /* ★ 21 ส.ค. 69 — ฝั่งสุ่มเลือกได้หลายอันแล้ว (ครูขอ)
+     rCats/rLvls เป็น array · ว่าง = "ทั้งหมด" */
+  rCats: [], rLvls: [], rUnseen: false,         // filter สุ่ม (เลือกได้หลายอัน)
   fPeriod: 'all',     // filter ช่วงปี browse: 'all' | 'yt' | 'ent'
   rPeriod: 'all',     // filter ช่วงปี random: 'all' | 'yt' | 'ent'
   queue: [],          // ผลสุ่ม
@@ -225,7 +220,7 @@ function rvOpenChapterCore(){
   });
   RV.levels.sort(function(a,b){return a-b;});
   RV.fCat=''; RV.fLvl=0; RV.fUnseen=false; RV.fPeriod='all';
-  RV.rCat=''; RV.rLvl=0; RV.rUnseen=false; RV.rPeriod='all';
+  RV.rCats=[]; RV.rLvls=[]; RV.rUnseen=false; RV.rPeriod='all';
   RV.queue=[]; RV.tab='browse';
   if(!RV_SEEN[RV.chapter]) RV_SEEN[RV.chapter]={};
 
@@ -280,18 +275,20 @@ function rvBuildChips(){
     if(!document.getElementById('rv-fperiod')) filterDiv.insertBefore(frow, document.getElementById('rv-fcat'));
   }
 
-  // random cat
+  /* ── random cat · เลือกได้หลายหมวด ──
+     data-v เก็บค่าไว้กับตัวปุ่มเอง จะได้ทาสี active ใหม่ทั้งแถวได้จาก state
+     ไม่ต้องพึ่ง element ที่ถูกคลิก (เดิมใช้ rvChipActive ซึ่งรองรับได้อันเดียว) */
   var rcatHtml = '<span class="rv-flbl">หมวด</span>'+
-    '<button class="chip active" onclick="rvrSetCat(this,\'\')">ทั้งหมด</button>';
+    '<button class="chip active" data-v="" onclick="rvrSetCat(\'\')">ทั้งหมด</button>';
   RV.cats.forEach(function(c){
-    rcatHtml += '<button class="chip" onclick="rvrSetCat(this,\''+c.replace(/'/g,"\\'")+'\')">'+rvCatLabel(c)+'</button>';
+    rcatHtml += '<button class="chip" data-v="'+rvAttr(c)+'" onclick="rvrSetCat(this.dataset.v)">'+rvCatLabel(c)+'</button>';
   });
   document.getElementById('rvr-fcat').innerHTML = rcatHtml;
-  // random lvl
+  // random lvl · เลือกได้หลายระดับ
   var rlvlHtml = '<span class="rv-flbl">ระดับ</span>'+
-    '<button class="chip active" onclick="rvrSetLvl(this,0)">ทั้งหมด</button>';
+    '<button class="chip active" data-v="0" onclick="rvrSetLvl(0)">ทั้งหมด</button>';
   RV.levels.forEach(function(l){
-    rlvlHtml += '<button class="chip" onclick="rvrSetLvl(this,'+l+')">'+'★'.repeat(l)+'</button>';
+    rlvlHtml += '<button class="chip" data-v="'+l+'" onclick="rvrSetLvl('+l+')">'+'★'.repeat(l)+'</button>';
   });
   document.getElementById('rvr-flvl').innerHTML = rlvlHtml;
 
@@ -304,6 +301,64 @@ function rvBuildChips(){
     var rfrow = document.createElement('div'); rfrow.className='rv-frow'; rfrow.id='rvr-fperiod'; rfrow.innerHTML=rperiodHtml;
     var rfilterDiv = document.getElementById('rvr-fcat').parentNode;
     if(!document.getElementById('rvr-fperiod')) rfilterDiv.appendChild(rfrow);
+  }
+
+  /* ── แถวบอกจำนวนข้อที่ตรงเงื่อนไข ──
+     พอเลือกหลายเงื่อนไขได้ จะเกิดกรณีเลือกแล้วเหลือ 2 ข้อ แต่ตั้งจำนวนไว้ 5
+     ถ้าไม่บอกไว้ก่อน นักเรียนจะงงว่าทำไมสุ่มมาไม่ครบ */
+  if(!document.getElementById('rvr-count')){
+    var crow = document.createElement('div');
+    crow.className = 'rv-frow';
+    crow.id = 'rvr-count';
+    crow.style.cssText = 'font-size:12.5px; line-height:1.5;';
+    document.getElementById('rvr-fcat').parentNode.appendChild(crow);
+  }
+  var sld = document.getElementById('rvr-slider');
+  if(sld && !sld.dataset.rvBound){
+    sld.dataset.rvBound = '1';
+    sld.addEventListener('input', rvrUpdateCount);
+  }
+  rvrUpdateCount();
+}
+
+/** escape ค่าที่จะใส่ใน data-v (ชื่อหมวดมีวงเล็บ/อัญประกาศได้) */
+function rvAttr(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/"/g,'&quot;')
+    .replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/** ทาสี active ทั้งแถวตาม state (แทน rvChipActive ที่รองรับได้อันเดียว)
+    arr ว่าง = ปุ่ม "ทั้งหมด" (data-v = emptyVal) ติดอยู่อันเดียว */
+function rvChipMulti(rowId, arr, emptyVal){
+  var row = document.getElementById(rowId);
+  if(!row) return;
+  row.querySelectorAll('.chip').forEach(function(c){
+    var v = c.dataset.v;
+    var on = arr.length === 0 ? (v === emptyVal)
+                              : (arr.indexOf(emptyVal === '0' ? Number(v) : v) > -1);
+    c.classList.toggle('active', on);
+  });
+}
+
+/** บอกว่าเงื่อนไขที่เลือกอยู่ตอนนี้เหลือกี่ข้อ */
+function rvrUpdateCount(){
+  var el = document.getElementById('rvr-count');
+  if(!el) return;
+  var n = rvrPool().length;
+  var want = parseInt((document.getElementById('rvr-slider')||{}).value) || 5;
+  var parts = [];
+  if(RV.rCats.length) parts.push(RV.rCats.length + ' หมวด');
+  if(RV.rLvls.length) parts.push(RV.rLvls.length + ' ระดับ');
+  var pick = parts.length ? ' (เลือก ' + parts.join(' · ') + ')' : '';
+
+  if(n === 0){
+    el.innerHTML = '<span style="color:var(--danger,#e5484d)">ไม่มีข้อที่ตรงเงื่อนไขนี้' + pick + ' — ลองเลือกหมวดหรือระดับเพิ่มครับ</span>';
+  } else if(n < want){
+    el.innerHTML = '<span style="color:var(--warn,#d97706)">ตรงเงื่อนไข <b>' + n + '</b> ข้อ' + pick +
+                   ' — สุ่มได้ ' + n + ' ข้อ (ตั้งไว้ ' + want + ')</span>';
+  } else {
+    el.innerHTML = '<span style="color:var(--text2)">ตรงเงื่อนไข <b>' + n + '</b> ข้อ' + pick + '</span>';
   }
 }
 
@@ -321,7 +376,7 @@ function rvSwitchTab(t){
 function rvSetCat(el,v){ RV.fCat=v; rvChipActive('rv-fcat',el); rvRender(); }
 function rvSetLvl(el,v){ RV.fLvl=v; rvChipActive('rv-flvl',el); rvRender(); }
 function rvSetPeriod(el,v){ RV.fPeriod=v; rvChipActive('rv-fperiod',el); rvRender(); }
-function rvrSetPeriod(el,v){ RV.rPeriod=v; rvChipActive('rvr-fperiod',el); }
+function rvrSetPeriod(el,v){ RV.rPeriod=v; rvChipActive('rvr-fperiod',el); rvrUpdateCount(); }
 function rvToggleUnseen(){
   RV.fUnseen=!RV.fUnseen;
   var c=document.getElementById('rv-unseen-chip');
@@ -395,21 +450,40 @@ function rvMarkSeen(n){
   else setTimeout(rvrRenderResult,100);
 }
 
-// ── random filters ──
-function rvrSetCat(el,v){ RV.rCat=v; rvChipActive('rvr-fcat',el); }
-function rvrSetLvl(el,v){ RV.rLvl=v; rvChipActive('rvr-flvl',el); }
+// ── random filters (เลือกได้หลายอัน) ──
+/** กด "ทั้งหมด" = ล้างทั้งแถว · กดหมวดอื่น = สลับเปิด/ปิดทีละอัน */
+function rvrSetCat(v){
+  if(v === ''){ RV.rCats = []; }
+  else {
+    var i = RV.rCats.indexOf(v);
+    if(i > -1) RV.rCats.splice(i,1); else RV.rCats.push(v);
+  }
+  rvChipMulti('rvr-fcat', RV.rCats, '');
+  rvrUpdateCount();
+}
+function rvrSetLvl(v){
+  v = Number(v);
+  if(!v){ RV.rLvls = []; }
+  else {
+    var i = RV.rLvls.indexOf(v);
+    if(i > -1) RV.rLvls.splice(i,1); else RV.rLvls.push(v);
+  }
+  rvChipMulti('rvr-flvl', RV.rLvls, '0');
+  rvrUpdateCount();
+}
 function rvrToggleUnseen(){
   RV.rUnseen=!RV.rUnseen;
   var c=document.getElementById('rvr-unseen-chip');
   c.classList.toggle('active',RV.rUnseen);
   c.textContent = RV.rUnseen ? 'เน้นที่ยังไม่ดู ✓' : 'เน้นที่ยังไม่ดู';
+  rvrUpdateCount();
 }
 
 function rvrPool(){
   var seen = RV_SEEN[RV.chapter]||{};
   return RV.bank.filter(function(x){
-    if(RV.rCat && x.c!==RV.rCat) return false;
-    if(RV.rLvl && x.l!==RV.rLvl) return false;
+    if(RV.rCats.length && RV.rCats.indexOf(x.c) < 0) return false;
+    if(RV.rLvls.length && RV.rLvls.indexOf(x.l) < 0) return false;
     if(RV.rUnseen && seen['n'+x.n]) return false;
     if(RV.rPeriod==='yt' && (x.yt||'').includes('.html#')) return false;
     if(RV.rPeriod==='ent' && !(x.yt||'').includes('.html#')) return false;
@@ -432,6 +506,7 @@ function rvrGenerate(){
   RV.queue = rvShuffle(pool).slice(0,cnt);
   rvSortQueue();
   rvrRenderResult();
+  rvrUpdateCount();
 }
 function rvrAddMore(){
   var cnt = Math.max(1, Math.round((parseInt(document.getElementById('rvr-slider').value)||5)/2));
