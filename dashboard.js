@@ -219,6 +219,35 @@ function ytBtn(query,label){
 
 
 
+/* ★ 29 ส.ค. 69 — คะแนนไม่เท่ากันทุกข้อ (ชุดรวม/สนามสอบ)
+   ตัวจริงอยู่ใน questionbank.js (MOCK_SETS) — ตรงนี้เป็นทางถอยเผื่อโหลดไฟล์เก่าค้าง
+   บทปกติจะได้ 30 เสมอ พฤติกรรมเดิมจึงไม่เปลี่ยน */
+function _fullOf(topic){
+  try{ if(typeof fullScoreOf==='function') return fullScoreOf(topic); }catch(e){}
+  return 30;
+}
+function _scoreOf(row, topic){
+  try{ if(typeof scoreOfRow==='function') return scoreOfRow(row, topic); }catch(e){}
+  return parseInt(row[36])||0;
+}
+function _isMock(t){
+  try{ if(typeof isMockChapter==='function') return isMockChapter(t); }catch(e){}
+  return /^ชุดรวม\s*\d*/.test(String(t||'').trim());
+}
+
+/* ถ้าเก็บข้อที่สะเพร่าได้ครบ จะได้คะแนนเท่าไร — ชุดรวมต้องบวกตามคะแนนรายข้อ ไม่ใช่ +1 ต่อข้อ */
+function _careGain(d){
+  const full=d.full||30;
+  if(full===30) return Math.min(30,(d.score||0)+(d.care||0));
+  let g=0;
+  for(let q=1;q<=30;q++){
+    if((d.qResults||{})[q]==='care'){
+      try{ g+= (typeof ptsOfQuestion==='function')?ptsOfQuestion(d.topic,q):1; }catch(e){ g+=1; }
+    }
+  }
+  return Math.min(full,(d.score||0)+g);
+}
+
 // ── emoji ของหมวด: ถ้าชื่อหมวดมี emoji นำหน้าแล้ว (บทใหม่) → ไม่เติมซ้ำ ──
 function emojiOf(cat){
   cat=cat||'';
@@ -293,8 +322,179 @@ ${body}
 }
 
 // ── แผนฝึกเพิ่ม: เลือกข้อจากคลัง 129 ข้อ ตามสัดส่วนที่พลาดในแต่ละหัวข้อ ──
+
+/* ═══════════════════════════════════════════════════════════════
+   ★ 29 ส.ค. 69 — สนามสอบ (ชุดรวมทุกบท) ฝั่งนักเรียน
+   1) เติมชุดรวมเข้าช่องเลือกบทเอง — ไม่ต้องแก้ index.html
+   2) การ์ด "จุดอ่อนรายบท" — สร้าง element เองแล้วแทรกก่อนแท็บฝึกเพิ่ม
+   3) แท็บฝึกเพิ่มแบบข้ามบท — จัดกลุ่มตามบท เรียงบทที่พลาดหนักสุดก่อน
+   ═══════════════════════════════════════════════════════════════ */
+
+/* เติม option ชุดรวมเข้า #topicFilter (เรียกซ้ำได้ ไม่เพิ่มซ้ำ) */
+function ensureMockOptions(){
+  const sel=document.getElementById('topicFilter');
+  if(!sel||typeof MOCK_SETS==='undefined')return;
+  const have={}; Array.from(sel.options).forEach(o=>{have[String(o.value).trim()]=1;});
+  Object.keys(MOCK_SETS).sort().forEach(k=>{
+    if(have[k])return;
+    const o=document.createElement('option');
+    o.value=k;
+    o.textContent='🎯 '+k+(MOCK_SETS[k].title?' · '+MOCK_SETS[k].title:'');
+    sel.appendChild(o);
+  });
+}
+
+/* ข้อที่ออกในชุดรวม แยกตามบท → [{ch, ok, total, miss:[{q,sub,also}]}] เรียงพลาดหนักสุดก่อน */
+function mockByChapter(d){
+  const qb=(typeof EMBEDDED_QB!=='undefined')?EMBEDDED_QB[d.topic]:null;
+  if(!qb)return[];
+  const by={};
+  for(let q=1;q<=30;q++){
+    const info=qb[q]; if(!info||!info.ch)continue;
+    const st=(d.qResults||{})[q];
+    if(!st||st==='blank')continue;                  /* ข้อที่ไม่ได้ทำ/ยังไม่กรอก — ไม่นับ */
+    const g=by[info.ch]||(by[info.ch]={ch:info.ch,ok:0,total:0,qs:[],miss:[]});
+    g.total++; g.qs.push(q);
+    if(st==='ok')g.ok++;
+    else g.miss.push({q:q,sub:info.sub||'',also:info.also||[],st:st});
+  }
+  return Object.values(by).sort((a,b)=>{
+    const ra=(a.total-a.ok)/a.total, rb=(b.total-b.ok)/b.total;
+    return rb-ra || (b.total-b.ok)-(a.total-a.ok) || a.ch.localeCompare(b.ch,'th');
+  });
+}
+
+/* ── การ์ดจุดอ่อนรายบท (เฉพาะสนามสอบ) ── */
+function renderChapterWeak(d){
+  const host=document.getElementById('s-practice'); if(!host)return;
+  let el=document.getElementById('s-chapweak');
+  if(!d.isMock){ if(el)el.innerHTML=''; return; }
+  if(!el){ el=document.createElement('div'); el.id='s-chapweak'; host.parentNode.insertBefore(el,host); }
+
+  const list=mockByChapter(d);
+  if(!list.length){ el.innerHTML=''; return; }
+
+  const weak=list.filter(g=>g.ok<g.total);
+  const perfect=list.filter(g=>g.ok===g.total);
+  const colorOf=r=>r>=0.7?'#B42318':r>=0.5?'#C2410C':'#D97706';
+
+  const rows=weak.map(g=>{
+    const missN=g.total-g.ok, r=missN/g.total, pct=Math.round(r*100);
+    return '<div style="display:grid;grid-template-columns:minmax(96px,150px) 1fr 66px;gap:9px;align-items:center;padding:4px 0">'
+      + '<div style="font-size:12.5px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+_esc(g.ch)+'">'+_esc(g.ch)+'</div>'
+      + '<div style="height:15px;background:rgba(128,128,128,.13);border-radius:4px;overflow:hidden">'
+      +   '<div style="height:100%;width:'+pct+'%;background:'+colorOf(r)+';border-radius:0 4px 4px 0"></div></div>'
+      + '<div style="font-size:11px;color:var(--text2);text-align:right;white-space:nowrap">'+g.ok+'/'+g.total+' ข้อ</div></div>';
+  }).join('');
+
+  const okLine=perfect.length
+    ? '<div style="display:grid;grid-template-columns:minmax(96px,150px) 1fr 66px;gap:9px;align-items:center;padding:4px 0">'
+      + '<div style="font-size:12.5px;text-align:right;color:var(--text2)">อีก '+perfect.length+' บท</div><div></div>'
+      + '<div style="font-size:11px;color:var(--green,#2F855A);text-align:right">ถูกครบ ✓</div></div>'
+    : '';
+
+  const tbl=list.map(g=>'<tr><td style="padding:4px 6px;border-bottom:1px solid rgba(128,128,128,.15)">'+_esc(g.ch)
+      +'</td><td style="padding:4px 6px;border-bottom:1px solid rgba(128,128,128,.15);font-size:11px;color:var(--text3)">ข้อ '+g.qs.join(', ')
+      +'</td><td style="padding:4px 6px;border-bottom:1px solid rgba(128,128,128,.15);text-align:right">'+g.ok+'/'+g.total+'</td></tr>').join('');
+
+  el.innerHTML='<div class="d-card"><div class="slabel">🧭 จุดอ่อนรายบท</div>'
+    + '<div style="font-size:12.5px;color:var(--text2);line-height:1.7;margin-bottom:10px">'
+    +   'ชุดนี้ออกคละ <b>'+list.length+' บท</b> — แท่งยาว = บทที่พลาดสัดส่วนมาก ควรกลับไปซ่อมก่อน</div>'
+    + (rows||'<div style="font-size:13px;color:var(--green,#2F855A);padding:4px 0">ถูกครบทุกบทเลย เก่งมาก! 🎉</div>')
+    + okLine
+    + '<div style="font-size:11px;color:var(--text3);margin-top:9px;padding-top:8px;border-top:1px solid rgba(128,128,128,.15);line-height:1.8">'
+    +   'ตัวเลขขวา = ทำถูก/ข้อที่ออกในบทนั้น · แถบแดงเข้ม = พลาด 70%+ · ส้ม = 50–69% · เหลือง = ต่ำกว่า 50%</div>'
+    + '<details style="margin-top:8px"><summary style="font-size:12px;color:var(--text2);cursor:pointer">ดูว่าเป็นข้อไหนบ้าง</summary>'
+    +   '<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:6px">'+tbl+'</table></details>'
+    + '</div>';
+}
+
+/* ── แท็บฝึกเพิ่มสำหรับสนามสอบ — แยกกลุ่มตามบท ── */
+function renderMockPractice(d,el){
+  const list=mockByChapter(d).filter(g=>g.miss.length);
+  if(!list.length){
+    el.innerHTML='<div class="d-card"><div class="slabel">🎯 ฝึกเพิ่มตามจุดที่พลาด</div>'
+      +'<div style="font-size:14px;color:var(--green,#2F855A);padding:6px 0">ถูกครบทุกข้อในชุดนี้ ไม่ต้องฝึกเพิ่ม เก่งมาก! 🎉</div></div>';
+    return;
+  }
+
+  /* คลังของบทหนึ่ง = คลังหลัก + คลัง Ent ของบทเดียวกัน */
+  const bankOf=ch=>{
+    let b=PRACTICE_BANK[ch];
+    if(!b){ const base=String(ch).replace(/\s*ชุดที่\s*\d+\s*$/,'').trim(); b=PRACTICE_BANK[base]; }
+    if(!b)return null;
+    const base=String(ch).replace(/\s*ชุดที่\s*\d+\s*$/,'').trim();
+    const ent=PRACTICE_BANK[base+' Ent'];
+    return ent?b.concat(ent):b;
+  };
+
+  let grand=0; const cards=[]; const planForPrint=[];
+  list.forEach((g,gi)=>{
+    const missN=g.miss.length, rate=missN/g.total, pct=Math.round(rate*100);
+    const bank=bankOf(g.ch);
+    /* หมวดที่พลาดในบทนี้ (ไม่ซ้ำ) พร้อมจำนวนข้อที่พลาดในหมวดนั้น */
+    const subs={};
+    g.miss.forEach(m=>{ (subs[m.sub]=subs[m.sub]||{sub:m.sub,qs:[],also:m.also}).qs.push(m.q); });
+    const subList=Object.values(subs);
+
+    let rows='', picked=0;
+    if(bank){
+      subList.forEach(sObj=>{
+        /* พลาดหมวดนี้กี่ข้อ → เสนอ 2 เท่า (อย่างน้อย 2 มากสุด 5) และไม่เกินที่คลังมีจริง */
+        let pool=bank.filter(q=>q.c===sObj.sub);
+        if(!pool.length){
+          /* หมวดนี้ไม่มีในคลังของบทนี้ → ลองบทที่ข้อนั้นพาดถึง */
+          (sObj.also||[]).forEach(alt=>{ const ab=bankOf(alt); if(ab)pool=pool.concat(ab.filter(q=>q.c===sObj.sub)); });
+        }
+        if(!pool.length)return;
+        pool=pool.slice().sort((a,b)=>a.l-b.l);
+        let need=Math.min(5,Math.max(2,sObj.qs.length*2));
+        need=Math.min(need,pool.length);
+        const pick=[];
+        if(pool.length<=need){ pick.push.apply(pick,pool); }
+        else { const step=pool.length/need; for(let i=0;i<need;i++)pick.push(pool[Math.floor(i*step)]); }
+        picked+=pick.length; grand+=pick.length;
+        planForPrint.push({cat:g.ch+' · '+sObj.sub,emoji:'',pct:pct,ok:g.ok,total:g.total,
+          picks:pick.map(q=>({n:q.n,s:q.s,l:q.l,yt:q.yt}))});
+        pick.forEach(q=>{
+          const stars='★'.repeat(q.l)+'☆'.repeat(5-q.l);
+          rows+='<div class="rev-row"><div style="flex:1"><div style="font-size:12px;color:var(--text1);font-weight:500">ข้อ '+q.n
+            +' <span style="color:var(--text3);font-weight:400">· '+_esc(String(q.s||''))+'</span></div>'
+            +'<div style="font-size:10px;color:var(--text3)">'+_esc(String(sObj.sub))+' · ระดับ '+q.l+' <span style="color:#BA7517">'+stars+'</span></div></div>'
+            +'<a href="'+q.yt+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;background:var(--surf,#FAF9F5);color:#B3261E;border:1px solid #E4C7C5;font-size:11px;font-weight:500;padding:5px 12px;border-radius:12px;text-decoration:none;white-space:nowrap">▶ เฉลย</a></div>';
+        });
+      });
+    }
+
+    const missTxt=g.miss.map(m=>'<b>ข้อ '+m.q+'</b> · '+_esc(String(m.sub))).join(' &nbsp;·&nbsp; ');
+    const badgeCls=rate>=0.7?'diff-bad':'diff-warn';
+    const foot=!bank
+      ? 'ยังไม่มีคลังฝึกของบท "'+_esc(g.ch)+'" ในระบบ'
+      : (picked?('เลือกจากคลัง'+_esc(g.ch)+' '+bank.length+' ข้อ — เสนอ '+picked+' ข้อ ไล่จากง่ายไปยาก')
+               :('คลังบทนี้ยังไม่มีข้อในหัวข้อที่พลาด'));
+
+    cards.push('<div class="d-card" style="padding-top:12px">'
+      + '<div style="display:flex;align-items:center;gap:9px;justify-content:space-between;flex-wrap:wrap;margin-bottom:5px">'
+      +   '<div style="font-size:14px;font-weight:600;color:var(--text1)">'+(gi+1)+' · '+_esc(g.ch)+'</div>'
+      +   '<div class="diff-badge '+badgeCls+'">พลาด '+pct+'%</div></div>'
+      + '<div style="font-size:11.5px;color:var(--text2);line-height:1.8;margin-bottom:6px">ทำผิด '+missTxt+'</div>'
+      + rows
+      + '<div style="font-size:11px;color:var(--text3);margin-top:7px">'+foot+'</div></div>');
+  });
+
+  window.__practicePlan={name:d.shortName,topic:d.topic,date:d.date,grand:grand,bankCount:0,cats:planForPrint};
+  const head='<div class="d-card"><div class="slabel">🎯 ฝึกเพิ่มตามจุดที่พลาด — '+grand+' ข้อ</div>'
+    + '<div style="font-size:12px;color:var(--text2);line-height:1.6">สนามสอบออกคละบท — แยกเป็นกลุ่มตามบท เรียงบทที่พลาดหนักสุดไว้บน '
+    + 'แต่ละข้อดึงจากคลังข้อสอบจริงที่<b>หัวข้อเดียวกับข้อที่ทำผิด</b> พร้อมลิงก์เฉลย ✨</div>'
+    + (grand?'<button class="pr-print-btn" onclick="printPracticeSet()">🖨️ พิมพ์ชุดฝึก (PDF)</button>':'')
+    + '</div>';
+  el.innerHTML=head+cards.join('');
+}
+
 function renderPracticePlan(d){
   const el=document.getElementById('s-practice'); if(!el)return;
+  /* ★ 29 ส.ค. 69 — สนามสอบออกคละบท ดึงคลังบทเดียวไม่พอ ต้องแยกกลุ่มตามบท */
+  if(d.isMock){ renderMockPractice(d,el); return; }
   // หาคลังฝึก: ลองชื่อบทตรงๆ ก่อน ถ้าไม่เจอ ตัด "ชุดที่ N" ออกแล้วลองใหม่
   // normalize topic ก่อน lookup (เช่น "Exponential logarithm" → "Expo Logarithm")
   const _normT=(t)=>t?t.replace(/^Exponential logarithm/i,'Expo Logarithm'):t;
@@ -381,17 +581,17 @@ async function fetchDashData(){
   dashErr='';
   const myRow=myRows[myRows.length-1];
   const group=myRow[2]||'',date=myRow[3]||'',topic=myRow[4]||'';
-  const score=parseInt(myRow[36])||0,care=parseInt(myRow[37])||0,concept=parseInt(myRow[38])||0,cant=parseInt(myRow[39])||0,timeout=parseInt(myRow[40])||0,wrong=cant,blank=timeout;
+  const score=_scoreOf(myRow,topic),care=parseInt(myRow[37])||0,concept=parseInt(myRow[38])||0,cant=parseInt(myRow[39])||0,timeout=parseInt(myRow[40])||0,wrong=cant,blank=timeout;
   const qResults={};
   for(let i=1;i<=30;i++)qResults[i]=parseStatus(myRow[5+i]||'');
   const latestByName={};
   rows.slice(1).filter(r=>r[2]===group&&(!topicFilter||(r[4]||'').includes(topicFilter))).forEach(r=>{latestByName[r[1]]=r;});
-  const groupMembers=Object.values(latestByName).map(r=>({name:r[1],score:parseInt(r[36])||0,care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0,isMe:r[1]===currentStudent})).sort((a,b)=>b.score-a.score);
+  const groupMembers=Object.values(latestByName).map(r=>({name:r[1],score:_scoreOf(r,r[4]||topic),care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0,isMe:r[1]===currentStudent})).sort((a,b)=>b.score-a.score);
   const rank=groupMembers.findIndex(m=>m.isMe)+1;
   // เทียบทุกคนที่สอบบทเดียวกัน (ทุกกลุ่ม)
   const latestAllByName={};
   rows.slice(1).filter(r=>_norm(r[4])===_norm(topic)).forEach(r=>{latestAllByName[_norm(r[1])]=r;});
-  const allMembers=Object.values(latestAllByName).map(r=>({name:r[1],group:r[2]||'',score:parseInt(r[36])||0,care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0,isMe:_norm(r[1])===me})).sort((a,b)=>b.score-a.score);
+  const allMembers=Object.values(latestAllByName).map(r=>({name:r[1],group:r[2]||'',score:_scoreOf(r,r[4]||topic),care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0,isMe:_norm(r[1])===me})).sort((a,b)=>b.score-a.score);
   const allRank=allMembers.findIndex(m=>m.isMe)+1;
   const allAvg=allMembers.length?Math.round(allMembers.reduce((s,m)=>s+m.score,0)/allMembers.length):0;
   // รายชื่อกลุ่มทั้งหมดที่สอบบทนี้ (สำหรับ picker)
@@ -476,7 +676,7 @@ async function fetchDashData(){
   const grpLo=grpScores.length?Math.min(...grpScores):0;
   const grpStats={avg:grpAvg,careAvg:grpCareAvg,hi:grpHi,lo:grpLo,count:groupMembers.length};
   // ── v2: ประวัติการสอบทุกครั้งของนักเรียนคนนี้ (ตาม topicFilter) สำหรับ trend ──
-  const history=myRows.map(r=>({date:r[3]||'',topic:r[4]||'',score:parseInt(r[36])||0,care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0}));
+  const history=myRows.map(r=>({date:r[3]||'',topic:r[4]||'',full:_fullOf(r[4]||''),score:_scoreOf(r,r[4]||''),ok:parseInt(r[36])||0,care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0}));
   const prev=history.length>1?history[history.length-2]:null;
   const delta=prev?score-prev.score:null;
   let streak=0; for(let i=history.length-1;i>0;i--){ if(history[i].score>history[i-1].score)streak++; else break; }
@@ -484,8 +684,9 @@ async function fetchDashData(){
   // results_long ทุกแถวของนักเรียนคนนี้ (ทุกการสอบ) — ใช้หา "จุดอ่อนเรื้อรัง"
   const myLongAll=longRows.filter(r=>r[0]===currentStudent);
   // v2.1: ประวัติทุกบท (ไม่สน topicFilter) — fallback ของแท็บพัฒนาการเมื่อบทที่กรองมีสอบครั้งเดียว
-  const allHistory=allMine.map(r=>({date:r[3]||'',topic:r[4]||'',score:parseInt(r[36])||0,care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0}));
-  dashData={group,date,topic,score,care,concept,cant,timeout,wrong,blank,qResults,groupMembers,rank,allMembers,allRank,allAvg,groupsInTopic,subtopics,diffMap,myAna,grpSubtopics,grpStats,history,prev,delta,streak,isBest,myLongAll,allHistory,shortName:currentStudent.replace(/\s*\(.*\)/,'')};
+  const allHistory=allMine.map(r=>({date:r[3]||'',topic:r[4]||'',full:_fullOf(r[4]||''),score:_scoreOf(r,r[4]||''),ok:parseInt(r[36])||0,care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0}));
+  const full=_fullOf(topic), isMock=_isMock(topic);
+  dashData={group,date,topic,full,isMock,score,care,concept,cant,timeout,wrong,blank,qResults,groupMembers,rank,allMembers,allRank,allAvg,groupsInTopic,subtopics,diffMap,myAna,grpSubtopics,grpStats,history,prev,delta,streak,isBest,myLongAll,allHistory,shortName:currentStudent.replace(/\s*\(.*\)/,'')};
 }
 
 async function showDashboard(mode){
@@ -503,9 +704,9 @@ async function showDashboard(mode){
 }
 
 // ═══════ v2: การ์ดพัฒนาการ + trend ═══════
-function _sparkSvg(scores,w,h){
+function _sparkSvg(scores,w,h,full){
   if(!scores||scores.length<2)return'';
-  const n=scores.length,max=30,pad=7;
+  const n=scores.length,max=full||30,pad=7;
   const pts=scores.map((v,i)=>[
     Math.round((pad+i*(w-2*pad)/(n-1))*10)/10,
     Math.round((h-pad-(v/max)*(h-2*pad))*10)/10
@@ -534,8 +735,9 @@ function renderTrendCard(d){
   const mh=hist.slice(-8);
   if(mh.length>=2){
     const cols=mh.map(h=>{
+      /* ★ แถบนี้นับ "จำนวนข้อ" (เต็ม 30 เสมอ) ไม่ใช่คะแนนถ่วงน้ำหนัก */
       const seg=(v,c)=>v>0?`<div style="height:${Math.max(2,Math.round(v/30*66))}px;background:${c}"></div>`:'';
-      return `<div style="text-align:center"><div style="display:flex;flex-direction:column-reverse;width:20px;border-radius:4px;overflow:hidden;margin:0 auto">${seg(h.score,'#8FBF7F')}${seg(h.care,'#F2C94C')}${seg(h.concept,'#C9A6F0')}${seg(h.cant,'#E89090')}${seg(h.timeout,'#B8C2CC')}</div><div style="font-size:9px;color:var(--text3,#948F86);margin-top:2px">${h.score}</div></div>`;
+      return `<div style="text-align:center"><div style="display:flex;flex-direction:column-reverse;width:20px;border-radius:4px;overflow:hidden;margin:0 auto">${seg(h.ok!=null?h.ok:h.score,'#8FBF7F')}${seg(h.care,'#F2C94C')}${seg(h.concept,'#C9A6F0')}${seg(h.cant,'#E89090')}${seg(h.timeout,'#B8C2CC')}</div><div style="font-size:9px;color:var(--text3,#948F86);margin-top:2px">${h.score}</div></div>`;
     }).join('');
     mixHtml=`<div style="margin-top:10px;border-top:1px dashed var(--border,#E7E4DC);padding-top:8px"><div style="font-size:11px;color:var(--text3,#948F86);margin-bottom:6px">ส่วนผสมผลรายครั้ง — 🟩 ถูก · 🟨 สะเพร่า · 🟪 คอนเซปต์ · 🟥 ทำไม่ได้ · ⬜ ไม่ทัน <span style="color:var(--text2,#57534E)">(คะแนนเท่าเดิมแต่สีข้างบนหด = กำลังพัฒนา)</span></div><div style="display:flex;gap:9px;align-items:flex-end">${cols}</div></div>`;
   }
@@ -547,8 +749,8 @@ function renderTrendCard(d){
         <div style="margin-top:5px">${chips}</div>
       </div>
       <div style="flex:1;min-width:170px;max-width:250px">
-        ${_sparkSvg(scores,250,62)}
-        <div style="font-size:10px;color:var(--text3,#948F86);text-align:right">เส้นประแดง = เป้า 25/30 · ${scores.join(' → ')}</div>
+        ${_sparkSvg(scores,250,62,d.full||30)}
+        <div style="font-size:10px;color:var(--text3,#948F86);text-align:right">เส้นประแดง = เป้า ${Math.round((d.full||30)*25/30)}/${d.full||30} · ${scores.join(' → ')}</div>
       </div>
     </div>
     ${mixHtml}
@@ -569,7 +771,7 @@ function renderProgressTrend(d){
       <div class="slabel">📈 คะแนนรายครั้ง — เทียบกับตัวเองเท่านั้น</div>
       ${note?'<div style="font-size:11.5px;color:var(--amber);margin-bottom:8px">'+note+'</div>':''}
       <div style="position:relative;width:100%;height:220px"><canvas id="s-trendChart"></canvas></div>
-      <div style="font-size:11px;color:var(--text3);margin-top:6px">เส้นประแดง = เป้าหมาย 25/30 (เกณฑ์คณะแข่งขันสูง)</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:6px">${_mixedScale?'กราฟนี้รวมหลายชุดสอบที่คะแนนเต็มไม่เท่ากัน จึงแสดงเป็น % ของคะแนนเต็ม':'เส้นประแดง = เป้าหมาย '+Math.round(_trendFull*25/30)+'/'+_trendFull+' (เกณฑ์คณะแข่งขันสูง)'}</div>
     </div>
     <div class="d-card" style="padding:1rem">
       <div class="slabel">ส่วนผสมผลรายครั้ง</div>
@@ -580,22 +782,28 @@ function renderProgressTrend(d){
       <div class="slabel">สรุปรายครั้ง</div>
       <div id="s-trendTable"></div>
     </div>`;
+  /* ★ 29 ส.ค. 69 — ประวัติอาจปนบทปกติ (เต็ม 30) กับสนามสอบ (เต็ม 100)
+     คนละสเกลบนแกนเดียวกันอ่านผิดแน่ → ถ้าปนกันให้แปลงเป็น % ทั้งกราฟ */
+  const _fulls=[...new Set(hist.map(h=>h.full||30))];
+  const _mixedScale=_fulls.length>1;
+  const _trendFull=_mixedScale?100:_fulls[0];
+  const _sc=h=>_mixedScale?Math.round((h.score/(h.full||30))*100):h.score;
   const labels=hist.map((h,i)=>h.date?_dFmt(h.date):('ครั้ง '+(i+1)));
   if(trendChartInst){trendChartInst.destroy();trendChartInst=null;}
   trendChartInst=new Chart(document.getElementById('s-trendChart'),{
     type:'line',
     data:{labels,datasets:[
-      {label:'คะแนน',data:hist.map(h=>h.score),borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,.12)',fill:true,tension:.25,pointRadius:4,pointBackgroundColor:'#185FA5'},
-      {label:'เป้า 25',data:hist.map(()=>25),borderColor:'#A32D2D',borderDash:[6,4],pointRadius:0,fill:false}
+      {label:_mixedScale?'คะแนน (%)':'คะแนน',data:hist.map(h=>_sc(h)),borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,.12)',fill:true,tension:.25,pointRadius:4,pointBackgroundColor:'#185FA5'},
+      {label:'เป้า '+Math.round(_trendFull*25/30),data:hist.map(()=>Math.round(_trendFull*25/30)),borderColor:'#A32D2D',borderDash:[6,4],pointRadius:0,fill:false}
     ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw}}},
-      scales:{y:{min:0,max:30,ticks:{stepSize:5},grid:{color:'rgba(128,128,128,0.1)'}},x:{grid:{display:false},ticks:{font:{size:10}}}}}
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw+(_mixedScale?'%':'')}}},
+      scales:{y:{min:0,max:_trendFull,ticks:{stepSize:_trendFull>50?10:5},grid:{color:'rgba(128,128,128,0.1)'}},x:{grid:{display:false},ticks:{font:{size:10}}}}}
   });
   if(mixChartInst){mixChartInst.destroy();mixChartInst=null;}
   mixChartInst=new Chart(document.getElementById('s-mixChart'),{
     type:'bar',
     data:{labels,datasets:[
-      {label:'✅ ถูก',data:hist.map(h=>h.score),backgroundColor:'#4C9A2A'},
+      {label:'✅ ถูก',data:hist.map(h=>h.ok!=null?h.ok:h.score),backgroundColor:'#4C9A2A'},
       {label:'⚠️ สะเพร่า',data:hist.map(h=>h.care),backgroundColor:'#FDE910'},
       {label:'C คอนเซปต์',data:hist.map(h=>h.concept),backgroundColor:'#F5A623'},
       {label:'❌ ทำไม่ได้',data:hist.map(h=>h.cant),backgroundColor:'#ef4444'},
@@ -610,7 +818,7 @@ function renderProgressTrend(d){
     hist.forEach((h,i)=>{
       const dlt=i>0?h.score-hist[i-1].score:null;
       const dtxt=dlt==null?'<span style="color:var(--text3)">—</span>':(dlt>0?'<span style="color:#3B7D2A;font-weight:600">▲ +'+dlt+'</span>':(dlt<0?'<span style="color:#C77E1A;font-weight:600">▼ '+dlt+'</span>':'▬ 0'));
-      rowsH+=`<div class="rev-row"><div style="min-width:24px;font-size:12px;color:var(--text3)">${i+1}</div><div style="flex:1"><div style="font-size:12.5px;color:var(--text1)">${h.topic||'—'}</div><div style="font-size:10.5px;color:var(--text3)">${h.date?_dFmt(h.date):''}</div></div><div style="font-size:13px;font-weight:600;min-width:48px;text-align:right">${h.score}/30</div><div style="min-width:56px;text-align:right;font-size:12px">${dtxt}</div></div>`;
+      rowsH+=`<div class="rev-row"><div style="min-width:24px;font-size:12px;color:var(--text3)">${i+1}</div><div style="flex:1"><div style="font-size:12.5px;color:var(--text1)">${h.topic||'—'}</div><div style="font-size:10.5px;color:var(--text3)">${h.date?_dFmt(h.date):''}</div></div><div style="font-size:13px;font-weight:600;min-width:48px;text-align:right">${h.score}/${h.full||30}</div><div style="min-width:56px;text-align:right;font-size:12px">${dtxt}</div></div>`;
     });
     tbl.innerHTML=rowsH;
   }
@@ -624,7 +832,7 @@ function renderStudentDash(d){
   document.getElementById('s-rank').innerHTML=d.rank+' <span style="font-size:12px;color:var(--text3)">/ '+d.groupMembers.length+'</span>'+(d.allMembers.length>d.groupMembers.length?'<div style="font-size:10px;color:var(--text3);font-weight:400;margin-top:2px">รวมทุกกลุ่ม '+d.allRank+'/'+d.allMembers.length+'</div>':'');
   const avg=d.groupMembers.length?Math.round(d.groupMembers.reduce((s,m)=>s+m.score,0)/d.groupMembers.length):0;
   document.getElementById('s-score').innerHTML=d.score+' <span style="font-size:13px;color:var(--text3);font-weight:400">/ 30</span>';
-  document.getElementById('s-scorepct').textContent=Math.round(d.score/30*100)+'% · เฉลี่ยกลุ่ม '+Math.round(avg/30*100)+'%'+(d.allMembers.length>d.groupMembers.length?' · เฉลี่ยรวม '+Math.round(d.allAvg/30*100)+'%':'');
+  document.getElementById('s-scorepct').textContent=Math.round(d.score/(d.full||30)*100)+'% · เฉลี่ยกลุ่ม '+Math.round(avg/(d.full||30)*100)+'%'+(d.allMembers.length>d.groupMembers.length?' · เฉลี่ยรวม '+Math.round(d.allAvg/(d.full||30)*100)+'%':'');
   document.getElementById('s-wrong').innerHTML=(d.wrong+d.care+d.concept+d.blank)+' <span style="font-size:13px;color:var(--text3);font-weight:400">ข้อ</span>';
   document.getElementById('s-wrongsub').textContent=d.blank+' ไม่ทำ · '+d.care+' สะเพร่า · '+d.concept+' คอนเซปต์ · '+d.wrong+' ทำไม่ได้';
   // ข้อความให้กำลังใจ — เน้นสิ่งที่ควบคุมได้
@@ -666,6 +874,7 @@ function renderStudentDash(d){
     hintEl.innerHTML=`บทนี้มี <b>${d.subtopics.length} หัวข้อ</b> — ทำได้ดีทุกหัวข้อแล้ว เก่งมาก! 🎉 ลองท้าทายข้อระดับยากขึ้นได้เลย`;
   }
   d.subtopics.forEach(st=>{const pct=Math.round(st.ok/st.total*100);const cls=pct>=80?'diff-ok':pct>=50?'diff-warn':pct>0?'diff-bad':'diff-skip';const showYt=pct<70;sl.innerHTML+=`<div class="st-row"><div style="flex:1"><div style="font-size:12px;color:var(--text1)">${st.name}</div><div style="font-size:10px;color:var(--text3)">ระดับ ${st.level} · ${st.ok}/${st.total} ข้อ</div>${showYt?ytBtn(d.topic+' '+st.name):''}</div><div class="diff-badge ${cls}">${st.total===0?'—':pct+'%'}</div></div>`;});
+  try{renderChapterWeak(d);}catch(e){console.error("chapweak",e);}
   try{renderPracticePlan(d);}catch(e){console.error("practice",e);}
   // ── แผนทบทวน: เรียงตาม effort ต่ำ → ผลสูง ──
   const planEl=document.getElementById('s-studyPlan');
@@ -745,7 +954,7 @@ function renderStudentDash(d){
   if(gs&&d.grpStats){
     const st=d.grpStats;
     const box=(label,val,sub,color)=>`<div style="background:var(--surf);border-radius:var(--r-md);padding:10px 12px"><div style="font-size:10px;color:var(--text3)">${label}</div><div style="font-size:18px;font-weight:600;color:${color||'var(--text1)'}">${val}</div><div style="font-size:10px;color:var(--text3)">${sub||''}</div></div>`;
-    gs.innerHTML=box('คะแนนเฉลี่ยกลุ่ม',st.avg+'<span style="font-size:11px;color:var(--text3);font-weight:400"> /30</span>','จาก '+st.count+' คน','var(--blue)')
+    gs.innerHTML=box('คะแนนเฉลี่ยกลุ่ม',st.avg+'<span style="font-size:11px;color:var(--text3);font-weight:400"> /'+(d.full||30)+'</span>','จาก '+st.count+' คน','var(--blue)')
       +box('ช่วงคะแนน',st.lo+'–'+st.hi,'ต่ำสุด–สูงสุด')
       +box('สะเพร่าเฉลี่ย',st.careAvg+'<span style="font-size:11px;color:var(--text3);font-weight:400"> ข้อ</span>','ต่อคน','#C77E1A');
   }
@@ -767,7 +976,7 @@ function renderStudentDash(d){
   // ── การ์ด 2: เทียบกับกลุ่มอื่น (เลือกได้) ──
   renderAllComparison(d);
   let ac=0;
-  d.groupMembers.forEach(s=>{const pct=Math.round(s.score/30*100);cl.innerHTML+=`<div class="cmp-row"><div class="cmp-name">${s.isMe?d.shortName:'เพื่อน '+(s.isMe?0:++ac)}${s.isMe?'<span class="me-tag">คุณ</span>':''}</div><div class="bar-wrap"><div class="bar-fill" style="width:${pct}%;background:${s.isMe?'#185FA5':'#B5D4F4'}"></div></div><div class="cmp-score">${s.score}/30</div></div>`;});
+  d.groupMembers.forEach(s=>{const pct=Math.round(s.score/(d.full||30)*100);cl.innerHTML+=`<div class="cmp-row"><div class="cmp-name">${s.isMe?d.shortName:'เพื่อน '+(s.isMe?0:++ac)}${s.isMe?'<span class="me-tag">คุณ</span>':''}</div><div class="bar-wrap"><div class="bar-fill" style="width:${pct}%;background:${s.isMe?'#185FA5':'#B5D4F4'}"></div></div><div class="cmp-score">${s.score}/${d.full||30}</div></div>`;});
   if(groupChartInst){groupChartInst.destroy();groupChartInst=null;}
   let bc=0;
   groupChartInst=new Chart(document.getElementById('s-groupChart'),{type:'bar',data:{labels:d.groupMembers.map(s=>s.isMe?d.shortName:'เพื่อน '+(++bc)),datasets:[{label:'คะแนน',data:d.groupMembers.map(s=>s.score),backgroundColor:d.groupMembers.map(s=>s.isMe?'#185FA5':'#B5D4F4'),borderRadius:4,borderWidth:0},{label:'สะเพร่า',data:d.groupMembers.map(s=>s.care),backgroundColor:d.groupMembers.map(s=>s.isMe?'#BA7517':'#FAC775'),borderRadius:4,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw}}},scales:{y:{min:0,max:30,ticks:{stepSize:5},grid:{color:'rgba(128,128,128,0.1)'}},x:{grid:{display:false}}}}});
@@ -832,7 +1041,7 @@ function renderAllComparison(d){
   const box=(label,val,sub,color)=>`<div style="background:var(--surf);border-radius:var(--r-md);padding:10px 12px"><div style="font-size:10px;color:var(--text3)">${label}</div><div style="font-size:18px;font-weight:600;color:${color||'var(--text1)'}">${val}</div><div style="font-size:10px;color:var(--text3)">${sub||''}</div></div>`;
   statsEl.innerHTML=box('อันดับของคุณ',(myRank||'—')+'<span style="font-size:11px;color:var(--text3);font-weight:400"> /'+members.length+'</span>','จาก '+selectedGroups.length+' กลุ่ม','var(--blue)')
     +box('คุณอยู่ Top',topPct+'%','ของทุกคนที่สอบบทนี้',topPct<=25?'#3B7D2A':topPct<=50?'#185FA5':'#C77E1A')
-    +box('คะแนนคุณ',myScore+'<span style="font-size:11px;color:var(--text3);font-weight:400"> /30</span>',(myScore>=avg?'+':'')+(Math.round((myScore-avg)*10)/10)+' จากเฉลี่ย '+avg,myScore>=avg?'#3B7D2A':'#C77E1A');
+    +box('คะแนนคุณ',myScore+'<span style="font-size:11px;color:var(--text3);font-weight:400"> /'+(d.full||30)+'</span>',(myScore>=avg?'+':'')+(Math.round((myScore-avg)*10)/10)+' จากเฉลี่ย '+avg,myScore>=avg?'#3B7D2A':'#C77E1A');
 
   // ── กราฟ distribution: แบ่งช่วงคะแนน 0-5,6-10,...,26-30 ──
   const bins=[{lo:0,hi:5,label:'0-5'},{lo:6,hi:10,label:'6-10'},{lo:11,hi:15,label:'11-15'},{lo:16,hi:20,label:'16-20'},{lo:21,hi:25,label:'21-25'},{lo:26,hi:30,label:'26-30'}];
@@ -863,7 +1072,7 @@ function renderAllComparison(d){
       top10El.innerHTML+=`<div style="display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px;background:${bg};border-bottom:0.5px solid var(--border)">
         <div style="width:28px;text-align:center;font-size:13px;font-weight:600;color:var(--text2)">${medal}</div>
         <div style="flex:1;font-size:12px;color:var(--text1)">${label}${m.isMe?'<span class="me-tag">คุณ</span>':''}</div>
-        <div style="font-size:13px;font-weight:600;color:var(--text1)">${m.score}<span style="font-size:10px;color:var(--text3);font-weight:400">/30</span></div>
+        <div style="font-size:13px;font-weight:600;color:var(--text1)">${m.score}<span style="font-size:10px;color:var(--text3);font-weight:400">/${d.full||30}</span></div>
       </div>`;
     });
     // ถ้าฉันไม่ติด top 10 → แสดงแถวของฉันต่อท้าย
@@ -872,7 +1081,7 @@ function renderAllComparison(d){
       <div style="display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px;background:var(--blue-l)">
         <div style="width:28px;text-align:center;font-size:13px;font-weight:600;color:var(--blue)">${myRank}.</div>
         <div style="flex:1;font-size:12px;color:var(--text1)">${d.shortName}<span class="me-tag">คุณ</span></div>
-        <div style="font-size:13px;font-weight:600;color:var(--text1)">${myScore}<span style="font-size:10px;color:var(--text3);font-weight:400">/30</span></div>
+        <div style="font-size:13px;font-weight:600;color:var(--text1)">${myScore}<span style="font-size:10px;color:var(--text3);font-weight:400">/${d.full||30}</span></div>
       </div>`;
     }
   }
@@ -950,9 +1159,9 @@ function renderParentDash(d){
 // ── 🐬 โลมา: รายงานฉบับเต็ม (โค้ดเดิมทั้งหมด) ──
 function _parentDolphin(d){
   const name=d.shortName;
-  const pct=Math.round(d.score/30*100);
+  const pct=Math.round(d.score/(d.full||30)*100);
   const avg=d.groupMembers.length?Math.round(d.groupMembers.reduce((s,m)=>s+m.score,0)/d.groupMembers.length):0;
-  const avgPct=Math.round(avg/30*100);
+  const avgPct=Math.round(avg/(d.full||30)*100);
 
   // ระดับ
   let level,levelClass,levelDesc;
@@ -969,7 +1178,7 @@ function _parentDolphin(d){
     <div style="font-size:13px;color:var(--blue);font-weight:500;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">ภาพรวมการสอบครั้งนี้</div>
     <div class="summary-headline">
       <span class="summary-highlight">${name}</span> ทำคะแนนได้
-      <span class="summary-highlight">${d.score}/30 คะแนน (${pct}%)</span>
+      <span class="summary-highlight">${d.score}/${d.full||30} คะแนน (${pct}%)</span>
       อยู่ในระดับ <span class="level-badge ${levelClass}">${level}</span>
     </div>
     <div class="summary-headline" style="margin-bottom:0">
@@ -982,8 +1191,8 @@ function _parentDolphin(d){
     <div class="summary-headline" style="margin-bottom:0;margin-top:6px">
       <b>เทียบทุกคนที่สอบบทนี้:</b> อันดับที่ <span class="summary-highlight">${d.allRank}</span> จาก <span class="summary-highlight">${d.allMembers.length}</span> คน
       ${d.score>=d.allAvg
-        ? `— <span class="summary-highlight green">สูงกว่าค่าเฉลี่ยรวม</span> (${Math.round(d.allAvg/30*100)}%)`
-        : `— ค่าเฉลี่ยรวมอยู่ที่ ${Math.round(d.allAvg/30*100)}%`}
+        ? `— <span class="summary-highlight green">สูงกว่าค่าเฉลี่ยรวม</span> (${Math.round(d.allAvg/(d.full||30)*100)}%)`
+        : `— ค่าเฉลี่ยรวมอยู่ที่ ${Math.round(d.allAvg/(d.full||30)*100)}%`}
     </div>`:''}`;
 
   // วิเคราะห์ปัญหา
@@ -1014,7 +1223,7 @@ function _parentDolphin(d){
     `${F.qList(F.careQ)||''} พลาดทั้งที่ทำเป็น — ลองชวนน้องอธิบายวิธีตรวจคำตอบให้ฟัง ได้ผลกว่าการเตือนให้ระวังครับ`,
     `นี่คือ ${d.care} คะแนนที่อยู่ใกล้มือที่สุด${F.careSub.length?' (หัวข้อ '+_thaiList(F.careSub)+')':''} ความรอบคอบฝึกได้เหมือนกล้ามเนื้อ`,
     `น้องรู้วิธีทำครบแล้ว เหลือแค่จังหวะตรวจทาน — ลองให้จดว่าแต่ละข้อพลาดตรงไหน (อ่านโจทย์ตก/คำนวณ/ลอกเลข) จะเห็นรูปแบบตัวเอง`,
-    `ถ้าเก็บกลุ่มนี้ได้ครบ คะแนนจะขึ้นเป็น ${Math.min(30,d.score+d.care)}/30 ทันทีโดยไม่ต้องเรียนอะไรใหม่เลยครับ`
+    `ถ้าเก็บกลุ่มนี้ได้ครบ คะแนนจะขึ้นเป็น ${_careGain(d)}/${d.full||30} ทันทีโดยไม่ต้องเรียนอะไรใหม่เลยครับ`
   ],d,3),count:d.care,countColor:'var(--amber)'});
   if(d.blank>0)problems.push({icon:'⬜',color:'var(--surf)',border:'var(--border-md)',title:'ข้อที่ยังไม่ได้ลงมือทำ',desc:_pv([
     `มี ${d.blank} ข้อที่เว้นไว้ — ลองถามด้วยความเข้าใจว่าเพราะเวลาไม่พอ ไม่เข้าใจโจทย์ หรือไม่มั่นใจ`,
@@ -1127,8 +1336,8 @@ function _parentEagle(d){
   const deltaTxt=d.delta==null?'':(d.delta>0?'+'+d.delta:''+d.delta);
   document.getElementById('p-summary').innerHTML=`
     <div style="font-size:13px;color:var(--blue);font-weight:500;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">🦅 รายงานความก้าวหน้า — เทียบกับตัวเองเท่านั้น</div>
-    <div class="summary-headline"><span class="summary-highlight">${name}</span> ได้ <span class="summary-highlight">${d.score}/30</span>${d.delta!=null?` (${deltaTxt} จากครั้งก่อน)`:''}${d.isBest?' · 🏆 สูงสุดตั้งแต่เริ่มเรียน':''}${d.streak>=2?` · 🔥 ดีขึ้น ${d.streak} ครั้งติด`:''}</div>
-    ${hist.length>=2?`<div style="max-width:280px;margin-top:6px">${_sparkSvg(hist.map(h=>h.score),280,60)}<div style="font-size:10px;color:var(--text3)">เส้นประแดง = เป้า 25/30 · ${hist.map(h=>h.score).join(' → ')}</div></div>`:''}`;
+    <div class="summary-headline"><span class="summary-highlight">${name}</span> ได้ <span class="summary-highlight">${d.score}/${d.full||30}</span>${d.delta!=null?` (${deltaTxt} จากครั้งก่อน)`:''}${d.isBest?' · 🏆 สูงสุดตั้งแต่เริ่มเรียน':''}${d.streak>=2?` · 🔥 ดีขึ้น ${d.streak} ครั้งติด`:''}</div>
+    ${hist.length>=2?`<div style="max-width:280px;margin-top:6px">${_sparkSvg(hist.map(h=>h.score),280,60,d.full||30)}<div style="font-size:10px;color:var(--text3)">เส้นประแดง = เป้า ${Math.round((d.full||30)*25/30)}/${d.full||30} · ${hist.map(h=>h.score).join(' → ')}</div></div>`:''}`;
   const F=_parentFacts(d);
   const rows=[];
   if(d.care>0)rows.push([`⚠️ สะเพร่า${F.careQ.length?'<div style="font-size:10.5px;color:var(--text3)">'+F.qList(F.careQ)+'</div>':''}`,d.care,_pv([
@@ -1198,12 +1407,12 @@ function _parentEagle(d){
 function _parentElephant(d){
   const name=d.shortName, F=_parentFacts(d);
   const goods=[];
-  if(d.isBest)goods.push(`คะแนนสูงสุดตั้งแต่เริ่มเรียน — ${d.score}/30`);
+  if(d.isBest)goods.push(`คะแนนสูงสุดตั้งแต่เริ่มเรียน — ${d.score}/${d.full||30}`);
   if(d.streak>=2)goods.push(`พัฒนาดีขึ้นต่อเนื่อง ${d.streak} ครั้งติด`);
   else if(d.delta!=null&&d.delta>0)goods.push(`คะแนนเพิ่มขึ้น ${d.delta} ข้อจากครั้งก่อน`);
   if(F.strongName)goods.push(`หัวข้อ "${F.strongName}" น้องทำได้แม่นมากในชุดนี้`);
   if(d.care>0)goods.push(`มี ${d.care} ข้อที่น้องรู้วิธีทำอยู่แล้ว เพียงฝึกความรอบคอบอีกนิดก็ได้คะแนนคืน`);
-  if(d.grpStats&&d.score>=d.grpStats.avg)goods.push(`คะแนนอยู่เหนือค่าเฉลี่ยของกลุ่ม (${d.grpStats.avg}/30)`);
+  if(d.grpStats&&d.score>=d.grpStats.avg)goods.push(`คะแนนอยู่เหนือค่าเฉลี่ยของกลุ่ม (${d.grpStats.avg}/${d.full||30})`);
   if(d.timeout===0&&d.blank===0)goods.push('น้องลงมือทำครบทุกข้อ ไม่มีข้อไหนถูกปล่อยว่าง — สะท้อนความตั้งใจได้ดีมาก');
   if(F.strong.length>=2)goods.push(`มี ${F.strong.length} หัวข้อที่น้องทำได้เกิน 80% แล้วในบทนี้`);
   if(!goods.length)goods.push('น้องมาเรียนสม่ำเสมอและตั้งใจทำครบทุกขั้นตอน — ความต่อเนื่องแบบนี้คือรากฐานที่ดีที่สุดครับ');
@@ -1216,7 +1425,7 @@ function _parentElephant(d){
   document.getElementById('p-problems').innerHTML=`
     <div style="font-size:13px;color:var(--text2);line-height:1.9">
     <b>บริบทที่อยากให้ทราบ:</b> ${_pv([
-      `ค่าเฉลี่ยของกลุ่มครั้งนี้อยู่ที่ ${d.grpStats?d.grpStats.avg:'—'}/30 ${below?'— ชุดนี้ท้าทายทั้งกลุ่ม คะแนนของน้องอยู่ในจังหวะการเรียนรู้ที่เหมาะสมครับ':'— น้องทำได้ดีมากครับ'}`,
+      `ค่าเฉลี่ยของกลุ่มครั้งนี้อยู่ที่ ${d.grpStats?d.grpStats.avg:'—'}/${d.full||30} ${below?'— ชุดนี้ท้าทายทั้งกลุ่ม คะแนนของน้องอยู่ในจังหวะการเรียนรู้ที่เหมาะสมครับ':'— น้องทำได้ดีมากครับ'}`,
       `ข้อสอบชุดนี้คัดจากข้อสอบเข้ามหาวิทยาลัยจริง ระดับความยากจึงสูงกว่าข้อสอบในโรงเรียน ${below?'คะแนนที่เห็นจึงไม่ได้สะท้อนว่าน้องอ่อนครับ':'ซึ่งน้องรับมือได้ดี'}`,
       `ครูออกแบบให้แต่ละชุดมีข้อยากปนอยู่เสมอ เพื่อวัดว่าควรเสริมตรงไหน ${below?'คะแนนไม่เต็มจึงเป็นเรื่องที่คาดไว้แล้ว':'น้องผ่านจุดที่ตั้งใจวัดไว้ได้'}ครับ`
     ],d,0)}<br>
@@ -1273,7 +1482,7 @@ function _parentOwl(d){
     <div style="display:flex;align-items:center;gap:14px">
       <div style="font-size:40px">${st}</div>
       <div><div style="font-size:16px;font-weight:700;color:${color}">${head}</div>
-      <div style="font-size:13.5px;color:var(--text2);margin-top:4px">${d.shortName} · ${d.topic} · ได้ <b>${d.score}/30</b>${d.delta!=null?(d.delta>=0?' (▲ +'+d.delta+')':' (▼ '+d.delta+')'):''}${d.isBest?' · สูงสุดตั้งแต่เริ่มเรียน':''}<br>${(d.care+d.concept+d.cant+d.timeout)>0?_pv([
+      <div style="font-size:13.5px;color:var(--text2);margin-top:4px">${d.shortName} · ${d.topic} · ได้ <b>${d.score}/${d.full||30}</b>${d.delta!=null?(d.delta>=0?' (▲ +'+d.delta+')':' (▼ '+d.delta+')'):''}${d.isBest?' · สูงสุดตั้งแต่เริ่มเรียน':''}<br>${(d.care+d.concept+d.cant+d.timeout)>0?_pv([
         'จุดที่ต้องเก็บ ครูจัดแผนฝึกให้แล้ว',
         (F.weakName?'จุดที่ต้องเก็บหลักคือ "'+F.weakName+'" — อยู่ในแผนของครูแล้ว':'จุดที่ต้องเก็บมีครบในแผนทบทวนแล้ว'),
         (d.care>0?'ส่วนใหญ่เป็นข้อที่น้องทำเป็นแต่พลาดจังหวะ — เก็บคืนได้ไม่ยาก':'ครูจัดลำดับสิ่งที่ต้องเก็บให้เรียบร้อยแล้ว')
@@ -1310,7 +1519,7 @@ function _parentBee(d){
     `${praise} กำลังไปได้ดีครับ`,
     (F.strongName?`เรื่อง "${F.strongName}" น้องทำได้แม่นมากในชุดนี้`:`${praise} — ครูเห็นความสม่ำเสมอครับ`),
     (d.care>0?`ทำเป็นเกือบครบ เหลือเก็บเรื่องความรอบคอบอีกนิดเดียว`:`${praise} ครับ`),
-    (d.grpStats&&d.score>=d.grpStats.avg?`อยู่เหนือค่าเฉลี่ยกลุ่ม (${d.grpStats.avg}/30) ครับ`:`${praise} — ครูดูแลจุดที่เหลือให้แล้ว`)
+    (d.grpStats&&d.score>=d.grpStats.avg?`อยู่เหนือค่าเฉลี่ยกลุ่ม (${d.grpStats.avg}/${d.full||30}) ครับ`:`${praise} — ครูดูแลจุดที่เหลือให้แล้ว`)
   ],d,0);
   // "สิ่งเดียวที่อยากให้ทำ" — คลังใหญ่สุด เพราะเป็นหัวใจของสไตล์นี้
   const askPool=[
@@ -1328,7 +1537,7 @@ function _parentBee(d){
       <div style="padding:14px">
         <div style="display:flex;align-items:center;gap:10px">
           <div style="font-size:28px">${d.score>=15?'🟢':'🟡'}</div>
-          <div><b style="font-size:18px">${d.score}/30</b> <span style="font-size:11px;color:var(--text3)">· ${d.topic}</span><br><span style="font-size:12.5px">${headline}</span></div>
+          <div><b style="font-size:18px">${d.score}/${d.full||30}</b> <span style="font-size:11px;color:var(--text3)">· ${d.topic}</span><br><span style="font-size:12.5px">${headline}</span></div>
         </div>
         <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:10px 12px;margin-top:10px;font-size:12.5px">💬 <b style="color:#C2410C">สิ่งเดียวที่อยากรบกวน — ${ask.t}:</b><br>${ask.b}<br><span style="font-size:11px;color:var(--text3)">${ask.n}</span></div>
       </div>
@@ -1403,7 +1612,7 @@ function _initTheme(){
   let cur='auto'; try{cur=localStorage.getItem('themeMode')||'auto';}catch(e){}
   _applyTheme(cur);
 }
-document.addEventListener('DOMContentLoaded',()=>{try{loadStudents();}catch(e){} try{_initTheme();}catch(e){}});
+document.addEventListener('DOMContentLoaded',()=>{try{loadStudents();}catch(e){} try{_initTheme();}catch(e){} try{ensureMockOptions();}catch(e){}});
 
 /* ═══════════════════════════════════════════════════════════════════
    เฟส 2 (14 ส.ค. 69) — นักเรียนกรอกคะแนนเอง ส่งให้ครูตรวจ (หน้า p8)
@@ -1485,7 +1694,7 @@ function subRender(){
 
   const n = subCounts();
   document.getElementById('subCounts').innerHTML =
-    `คะแนน <b style="font-size:18px;color:var(--blue)">${n.ok}</b>/30` +
+    `ทำถูก <b style="font-size:18px;color:var(--blue)">${n.ok}</b>/30 ข้อ` +
     `<span style="font-size:11px;color:var(--text3)"> · ยังไม่ระบุ ${n.blank}</span>`;
 }
 
@@ -1528,7 +1737,7 @@ async function subSend(){
     const j = await subPost({ action:'submitMyScore', chapter, date, note, statuses: subState.st });
     if(j && j.ok){
       st.className='status ok';
-      st.textContent = (j.resubmitted ? 'ส่งใหม่แทนของเดิมแล้ว' : 'ส่งให้ครูแล้ว') + ` · ${j.score}/30 — รอครูตรวจครับ`;
+      st.textContent = (j.resubmitted ? 'ส่งใหม่แทนของเดิมแล้ว' : 'ส่งให้ครูแล้ว') + ` · ทำถูก ${j.score}/30 ข้อ — รอครูตรวจครับ`;
       subState.st = new Array(30).fill('');
       document.getElementById('subNote').value = '';
       subRender(); subLoadList();
@@ -1614,6 +1823,6 @@ function subParsePaste(){
   subRender();
   const n = subCounts();
   msg.style.color='var(--green)';
-  msg.textContent = `อ่านได้ ${found} ข้อ · คะแนน ${n.ok}/30` + (n.blank ? ` · ยังไม่ระบุ ${n.blank} ข้อ` : '');
+  msg.textContent = `อ่านได้ ${found} ข้อ · ทำถูก ${n.ok}/30 ข้อ` + (n.blank ? ` · ยังไม่ระบุ ${n.blank} ข้อ` : '');
   subSetMode('tap');
 }
