@@ -1764,21 +1764,81 @@ async function subLoadList(){
                      : s === 'rejected' ? '<span class="sub-badge sub-no">❌ ครูตีกลับ</span>'
                      : '<span class="sub-badge sub-wait">⏳ รอครูตรวจ</span>';
 
-    box.innerHTML = j.items.slice().reverse().map(it => `
-      <div class="sub-row">
+    /* ★ 30 ส.ค. 69 — เก็บไว้ให้ปุ่มแก้ไข/ยกเลิกใช้ (myPendingList ส่ง statuses กลับมาให้อยู่แล้ว) */
+    window.__subItems = j.items.slice();
+    box.innerHTML = j.items.slice().reverse().map(it => {
+      const editable = it.status !== 'approved';
+      /* ใช้ inline style — index.html ไม่มี class สำหรับปุ่มเล็กนี้ */
+      const _btn='font-family:inherit;font-size:11.5px;padding:5px 11px;border-radius:11px;cursor:pointer;background:var(--card,#FAF9F5);';
+      const acts = editable
+        ? `<div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
+             <button onclick="subEditItem('${_esc(String(it.pid))}')" style="${_btn}border:1px solid var(--border-md,#D9D2C6);color:var(--text1,#1A1815)">✏️ แก้ไข</button>
+             <button onclick="subCancelItem('${_esc(String(it.pid))}')" style="${_btn}border:1px solid #E4C7C5;color:#B3261E">🗑 ยกเลิกการส่ง</button>
+           </div>`
+        : `<div style="font-size:11px;color:var(--text3);margin-top:5px">ครูอนุมัติแล้ว — ถ้าต้องแก้ ต้องแจ้งครูครับ</div>`;
+      return `
+      <div class="sub-row" style="align-items:flex-start">
         <div style="flex:1;min-width:0">
           <div style="font-size:13.5px;font-weight:500;color:var(--text1)">${_esc(it.chapter)}</div>
           <div style="font-size:11px;color:var(--text3)">${_dFmt(it.date)} · ส่งเมื่อ ${_esc(it.submittedAt)}</div>
           ${it.note ? `<div style="font-size:11.5px;color:var(--red);margin-top:3px">ครูบอกว่า: ${_esc(it.note)}</div>` : ''}
+          ${acts}
         </div>
         <div style="font-family:var(--font-num,inherit);font-size:14px;font-weight:600;min-width:44px;text-align:right">${it.score}/30</div>
         <div>${badge(it.status)}</div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }catch(e){
     box.innerHTML = '<div style="font-size:13px;color:var(--red)">เชื่อมต่อไม่ได้</div>';
   }
 }
 
+
+/* ★ 30 ส.ค. 69 — ดึงของที่เคยส่งกลับมาแก้ แล้วส่งทับของเดิม
+   (ฝั่งเซิร์ฟเวอร์ submitMyScore เขียนทับแถวเดิมอยู่แล้วถ้าบทเดียวกันและยังไม่อนุมัติ) */
+function subEditItem(pid){
+  const it=(window.__subItems||[]).find(x=>String(x.pid)===String(pid));
+  const st=document.getElementById('subStatus');
+  if(!it){ if(st){st.className='status err'; st.textContent='ไม่พบรายการนี้ ลองรีเฟรชหน้าครับ';} return; }
+  if(it.status==='approved'){ if(st){st.className='status err'; st.textContent='ครูอนุมัติแล้ว แก้เองไม่ได้ครับ';} return; }
+
+  subState.st=(it.statuses||[]).slice(0,30);
+  while(subState.st.length<30) subState.st.push('');
+
+  const sel=document.getElementById('subChapter');
+  if(sel){
+    if(![...sel.options].some(o=>o.value===it.chapter)){
+      const o=document.createElement('option'); o.value=it.chapter; o.textContent=it.chapter; sel.appendChild(o);
+    }
+    sel.value=it.chapter;
+  }
+  const dt=document.getElementById('subDate');
+  if(dt&&it.date){ const d=_dParse(it.date);
+    if(d) dt.value=d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+  const nt=document.getElementById('subNote'); if(nt) nt.value='';
+
+  subRender();
+  if(st){ st.className='status'; st.textContent='ดึงคำตอบเดิมของบท "'+it.chapter+'" กลับมาแล้ว — แก้ข้อที่ต้องการ แล้วกด "ส่งให้ครูตรวจ" อีกครั้ง จะทับของเดิมให้เอง'; }
+  const grid=document.getElementById('subGrid'); if(grid&&grid.scrollIntoView) grid.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ยกเลิกการส่ง — ถอนออกจากรายการรอตรวจของครู */
+async function subCancelItem(pid){
+  const it=(window.__subItems||[]).find(x=>String(x.pid)===String(pid));
+  const st=document.getElementById('subStatus');
+  if(!it) return;
+  if(!confirm('ยกเลิกการส่งคะแนนบท "'+it.chapter+'" ?\n\nรายการนี้จะหายจากรายการรอตรวจของครู\nถ้าต้องการส่งใหม่ ต้องกรอกใหม่ทั้ง 30 ข้อ')) return;
+  if(st){ st.className='status'; st.textContent='กำลังยกเลิก...'; }
+  try{
+    const j=await subPost({action:'cancelMyScore', pid:it.pid});
+    if(j&&j.ok){
+      if(st){ st.className='status ok'; st.textContent='ยกเลิกการส่งบท "'+it.chapter+'" แล้วครับ'; }
+      subLoadList();
+    }else{
+      if(st){ st.className='status err'; st.textContent=(j&&j.error)||'ยกเลิกไม่สำเร็จ'; }
+    }
+  }catch(e){ if(st){ st.className='status err'; st.textContent='เชื่อมต่อไม่ได้: '+e.message; } }
+}
 
 /* ── โหมดวางจาก Gemini (หน้า p8) ─────────────────────────────────
    ต่างจากหน้าครูตรงที่นักเรียนกรอกของตัวเองคนเดียว จึงไม่ต้องอ่านชื่อ/บท
