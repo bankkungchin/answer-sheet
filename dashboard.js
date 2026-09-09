@@ -766,6 +766,16 @@ function renderProgressTrend(d){
     pane.innerHTML='<div class="d-card"><div class="slabel">📈 พัฒนาการ</div><div style="font-size:13px;color:var(--text2);line-height:1.7">ยังมีผลสอบครั้งเดียว — กราฟพัฒนาการจะเริ่มแสดงตั้งแต่การสอบครั้งที่ 2 เป็นต้นไปครับ 💪<br>ระหว่างนี้ดูจุดที่ต้องเก็บได้ที่แท็บ "แผนทบทวน" เลย</div></div>';
     return;
   }
+  /* ★ 29 ส.ค. 69 — ประวัติอาจปนบทปกติ (เต็ม 30) กับสนามสอบ (เต็ม 100)
+     คนละสเกลบนแกนเดียวกันอ่านผิดแน่ → ถ้าปนกันให้แปลงเป็น % ทั้งกราฟ
+     ★ 9 ก.ย. 69 — ต้องประกาศ "ก่อน" pane.innerHTML ที่ใช้ค่าพวกนี้
+        (เดิมประกาศไว้ข้างล่าง const จึงยังอยู่ใน TDZ → โยน ReferenceError
+         ตั้งแต่บรรทัดแรกของ template → แท็บพัฒนาการว่างเปล่าทั้งแท็บ) */
+  const _fulls=[...new Set(hist.map(h=>h.full||30))];
+  const _mixedScale=_fulls.length>1;
+  const _trendFull=_mixedScale?100:(_fulls[0]||30);
+  const _sc=h=>_mixedScale?Math.round((h.score/(h.full||30))*100):h.score;
+
   pane.innerHTML=`
     <div class="d-card" style="padding:1rem">
       <div class="slabel">📈 คะแนนรายครั้ง — เทียบกับตัวเองเท่านั้น</div>
@@ -782,12 +792,6 @@ function renderProgressTrend(d){
       <div class="slabel">สรุปรายครั้ง</div>
       <div id="s-trendTable"></div>
     </div>`;
-  /* ★ 29 ส.ค. 69 — ประวัติอาจปนบทปกติ (เต็ม 30) กับสนามสอบ (เต็ม 100)
-     คนละสเกลบนแกนเดียวกันอ่านผิดแน่ → ถ้าปนกันให้แปลงเป็น % ทั้งกราฟ */
-  const _fulls=[...new Set(hist.map(h=>h.full||30))];
-  const _mixedScale=_fulls.length>1;
-  const _trendFull=_mixedScale?100:_fulls[0];
-  const _sc=h=>_mixedScale?Math.round((h.score/(h.full||30))*100):h.score;
   const labels=hist.map((h,i)=>h.date?_dFmt(h.date):('ครั้ง '+(i+1)));
   if(trendChartInst){trendChartInst.destroy();trendChartInst=null;}
   trendChartInst=new Chart(document.getElementById('s-trendChart'),{
