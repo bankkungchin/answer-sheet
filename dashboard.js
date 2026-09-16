@@ -107,11 +107,137 @@ function gsErrorText(kind, msg, canRetry, tries) {
   return 'ต่อ Google ไม่ได้: ' + msg + tail;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   gsCache — สำรองคำตอบล่าสุดไว้ในเครื่อง (16 ก.ย. 2569)
+
+   ปัญหาที่แก้: gsFetch ลองใหม่ให้ 3 ครั้งแล้วก็จริง แต่ถ้า Apps Script
+   ล่มยาว (ไม่ใช่แค่สะดุด) ทั้ง 3 ครั้งก็พลาดหมด → จอ "โหลดไม่สำเร็จ" อยู่ดี
+   ชั้นนี้ทำให้ "อ่านของเก่าที่เคยโหลดสำเร็จ" ได้แทนการขึ้น error เปล่า ๆ
+
+   กฎเหล็ก 3 ข้อ (อย่าแก้โดยไม่อ่าน claude/browser-cache-16sep2569.md)
+   1. action ที่ตรวจสิทธิ์ (webLogin / teacherLogin) ห้าม cache เด็ดขาด —
+      ถ้าเก็บ ok:true ไว้ ตอน Google ล่มจะกลายเป็นเข้าระบบได้โดยไม่ตรวจ PIN
+   2. action ที่ผลลัพธ์ถูกเอาไป "เขียนกลับ" ห้าม cache — loadData ถูก
+      pullAttendanceFromSheet merge เข้า state แล้ว sync ขึ้นชีต
+      ป้อนของเก่าเข้าไป = ของเก่าทับของใหม่บนชีต
+   3. ตอนใช้ของเก่า ต้องเห็นบนจอเสมอ (แถบ gsStaleBar) ห้ามเงียบ — กฎข้อ 55
+
+   เก็บใน localStorage · TTL 24 ชม. · ผูกกับคนที่ล็อกอินอยู่
+   ไม่เก็บ token/pin ทั้งในคีย์และในเนื้อข้อมูล
+   ═══════════════════════════════════════════════════════════════ */
+const GS_CACHE_PREFIX  = 'gsc1:';
+const GS_CACHE_TTL_MS  = 24 * 60 * 60 * 1000;
+const GS_CACHE_MAX     = 1500000;          /* ~1.5 MB ต่อรายการ กันชน quota */
+const GS_CACHE_ACTIONS = ['webData', 'students'];
+
+let GS_STALE_AT = 0;                        /* >0 = กำลังโชว์ของเก่าอยู่ */
+
+/* ใครเป็นเจ้าของ cache ก้อนนี้ — เปลี่ยนคน = คนละก้อน ไม่ปนกัน */
+function gsCacheOwner() {
+  /* ผูกกับนักเรียนที่ล็อกอินอยู่ — เครื่องที่ใช้ร่วมกันจะไม่เห็นข้อมูลของคนก่อน */
+  try { return String(currentStudent || ''); } catch (e) { return ''; }
+}
+
+/* FNV-1a — ใช้ย่อคีย์เฉย ๆ ไม่ได้ใช้ด้านความปลอดภัย */
+function gsHash(s) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h * 0x01000193) >>> 0; }
+  return h.toString(36);
+}
+
+/* คีย์ต้องไม่มีความลับอยู่ในนั้น และต้องไม่เปลี่ยนตามเวลา
+   → ตัด t / _try / pin / token ออกก่อนแฮชทั้งใน URL และใน body */
+function gsCacheKey(action, url, init) {
+  const u = String(url || '').replace(/[?&](t|_try|pin|token)=[^&]*/g, '');
+  let b = '';
+  try {
+    if (init && typeof init.body === 'string') {
+      const o = JSON.parse(init.body);
+      if (o && typeof o === 'object') {
+        delete o.pin; delete o.token; delete o.t;
+        b = JSON.stringify(o);
+      }
+    }
+  } catch (e) {}
+  return GS_CACHE_PREFIX + action + ':' + gsHash(gsCacheOwner() + '|' + u + '|' + b);
+}
+
+function gsCacheable(action) { return GS_CACHE_ACTIONS.indexOf(action) !== -1; }
+
+function gsCacheSave(key, text) {
+  if (!key || typeof text !== 'string' || text.length > GS_CACHE_MAX) return;
+  const rec = JSON.stringify({ at: Date.now(), text: text });
+  try { localStorage.setItem(key, rec); }
+  catch (e) {
+    /* พื้นที่เต็ม → ทิ้ง cache ของ gsFetch ทั้งหมด แล้วลองอีกครั้งเดียว
+       (ไม่วนซ้ำ และไม่แตะคีย์อื่นของเว็บ เช่น ธีม / แผนทบทวน) */
+    try { gsCacheClear(); localStorage.setItem(key, rec); } catch (e2) {}
+  }
+}
+
+function gsCacheLoad(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const rec = JSON.parse(raw);
+    if (!rec || typeof rec.text !== 'string' || !rec.at) return null;
+    if (Date.now() - rec.at > GS_CACHE_TTL_MS) { localStorage.removeItem(key); return null; }
+    return rec;
+  } catch (e) { return null; }
+}
+
+/* ล้างเฉพาะคีย์ของ gsFetch — เรียกตอนออกจากระบบ / เปลี่ยนคนล็อกอิน
+   (โรคเดิมของ topic-marker.js: cache ที่ไม่มีวันหมดอายุ ทำให้เห็นข้อมูลคนก่อน) */
+function gsCacheClear() {
+  try {
+    const del = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.indexOf(GS_CACHE_PREFIX) === 0) del.push(k);
+    }
+    for (let i = 0; i < del.length; i++) localStorage.removeItem(del[i]);
+  } catch (e) {}
+}
+
+/* แถบเตือนบนสุด — สร้างเองด้วย JS จะได้ไม่ต้องแก้ไฟล์ HTML */
+function gsStaleBar(show, at) {
+  try {
+    if (typeof document === 'undefined' || !document.body) return;
+    let el = document.getElementById('gsStaleBar');
+    if (!show) { if (el) el.style.display = 'none'; return; }
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'gsStaleBar';
+      el.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:99999;' +
+        'background:#fef3c7;color:#92400e;border-bottom:1px solid #f59e0b;' +
+        'padding:8px 14px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.08);' +
+        'font:500 13px/1.6 "IBM Plex Sans Thai",Sarabun,system-ui,sans-serif;';
+      document.body.appendChild(el);
+    }
+    const d  = new Date(at || Date.now());
+    const hh = ('0' + d.getHours()).slice(-2), mm = ('0' + d.getMinutes()).slice(-2);
+    el.innerHTML =
+      '⚠️ Google กำลังสะดุด — กำลังแสดง<b>ข้อมูลเมื่อ ' + hh + ':' + mm + '</b> ' +
+      'ที่เก็บไว้ในเครื่อง · ข้อมูลที่บันทึกหลังจากนั้นจะยังไม่ขึ้น ' +
+      '<button type="button" id="gsStaleRetry" style="margin-left:8px;padding:3px 12px;' +
+      'border:1px solid #f59e0b;background:#fff;color:#92400e;border-radius:7px;' +
+      'font:inherit;cursor:pointer;">ลองใหม่</button>';
+    const btn = document.getElementById('gsStaleRetry');
+    if (btn) btn.onclick = function () { try { location.reload(); } catch (e) {} };
+    el.style.display = 'block';
+  } catch (e) {}
+}
+
+function gsStaleOn(at)  { GS_STALE_AT = at || Date.now(); gsStaleBar(true, GS_STALE_AT); }
+function gsStaleOff()   { if (GS_STALE_AT) { GS_STALE_AT = 0; gsStaleBar(false); } }
+
 async function gsFetch(url, init) {
   init = init || {};
   const action   = gsActionOf(url, init);
   const canRetry = GS_SAFE_ACTIONS.indexOf(action) !== -1;
   const maxTries = canRetry ? 3 : 1;
+  /* ★ 16 ก.ย. 69 — คีย์สำหรับสำรองข้อมูลในเครื่อง (เฉพาะ action ที่ cache ได้) */
+  const cacheKey = gsCacheable(action) ? gsCacheKey(action, url, init) : '';
   let lastKind = 'net', lastMsg = '';
 
   for (let n = 0; n < maxTries; n++) {
@@ -148,8 +274,12 @@ async function gsFetch(url, init) {
       /* HTTP ไม่ผ่าน (404/500/…) แต่ body อ่านเป็น JSON ได้ → ยังถือว่าสะดุด */
       if (!res.ok) { lastKind = 'http'; lastMsg = String(res.status); continue; }
 
+      /* สำเร็จ → เก็บไว้เผื่อรอบหน้า Google ล่ม
+         ไม่เก็บ error ทางธุรกิจ (ok:false) เพราะไม่ใช่ข้อมูล — กฎข้อ 51 */
+      if (cacheKey && !(data && data.ok === false)) gsCacheSave(cacheKey, text);
+      gsStaleOff();
       return {
-        ok: res.ok, status: res.status, gsTries: n + 1,
+        ok: res.ok, status: res.status, gsTries: n + 1, fromCache: false,
         json: async function () { return data; },
         text: async function () { return text; }
       };
@@ -158,6 +288,23 @@ async function gsFetch(url, init) {
       lastKind = (e && e.name === 'AbortError') ? 'timeout' : 'net';
       lastMsg  = String((e && e.message) || '');
       continue;
+    }
+  }
+  /* ★ 16 ก.ย. 69 — ยิงไม่ผ่านสักครั้ง แต่เคยโหลดสำเร็จไว้ → ใช้ของเก่าแทนจอ error
+     ผู้เรียกดูได้จาก res.fromCache ว่าเป็นของเก่า (fetchExamData ใช้ข้ามการเขียนกลับ) */
+  if (cacheKey) {
+    const hit = gsCacheLoad(cacheKey);
+    if (hit) {
+      let cached = null;
+      try { cached = JSON.parse(hit.text); } catch (e) { cached = null; }
+      if (cached && cached.ok !== false) {
+        gsStaleOn(hit.at);
+        return {
+          ok: true, status: 200, gsTries: maxTries, fromCache: true, cachedAt: hit.at,
+          json: async function () { return cached; },
+          text: async function () { return hit.text; }
+        };
+      }
     }
   }
   throw new Error(gsErrorText(lastKind, lastMsg, canRetry, maxTries));
@@ -282,6 +429,8 @@ function goToPin(){
   if(!name){ const typed=(document.getElementById('studentSearch').value||'').trim(); const exact=studentList.find(n=>n===typed); const ci=typed?studentList.filter(n=>n.toLowerCase().includes(typed.toLowerCase())):[]; if(exact)name=exact; else if(ci.length===1)name=ci[0]; }
   if(!name){document.getElementById('p1status').className='status err';document.getElementById('p1status').textContent='กรุณาพิมพ์แล้วเลือกชื่อจากรายการก่อนครับ';return;}
   selectedStudent=name; document.getElementById('studentSearch').value=name; document.getElementById('studentOptions').classList.remove('open');
+  /* ★ 16 ก.ย. 69 — เปลี่ยนคน = ทิ้ง cache ของคนก่อน (เครื่องที่ใช้ร่วมกัน) */
+  if(currentStudent && currentStudent!==name) gsCacheClear();
   currentStudent=name;
   const short=name.replace(/\s*\(.*\)/,'');
   document.getElementById('p2avatar').textContent=short.substring(0,3);
