@@ -155,6 +155,7 @@ function gsCacheKey(action, url, init) {
       const o = JSON.parse(init.body);
       if (o && typeof o === 'object') {
         delete o.pin; delete o.token; delete o.t;
+        delete o.have;          /* ★ 16 ก.ย. 69 — ฝั่งครูใช้ have เช็คเวอร์ชัน เก็บให้บล็อกตรงกันทั้งสองไฟล์ */
         b = JSON.stringify(o);
       }
     }
@@ -276,7 +277,9 @@ async function gsFetch(url, init) {
 
       /* สำเร็จ → เก็บไว้เผื่อรอบหน้า Google ล่ม
          ไม่เก็บ error ทางธุรกิจ (ok:false) เพราะไม่ใช่ข้อมูล — กฎข้อ 51 */
-      if (cacheKey && !(data && data.ok === false)) gsCacheSave(cacheKey, text);
+      /* ★ 16 ก.ย. 69 — คำตอบ unchanged ไม่มีข้อมูล ห้ามเก็บทับชุดจริงที่เก็บไว้ */
+      if (cacheKey && !(data && data.ok === false) && !(data && data.unchanged))
+        gsCacheSave(cacheKey, text);
       gsStaleOff();
       return {
         ok: res.ok, status: res.status, gsTries: n + 1, fromCache: false,
