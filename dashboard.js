@@ -25,11 +25,148 @@
    ถ้ายังไม่มี PROXY_URL → ทำงานแบบเดิมทุกประการ (ช่วงเปลี่ยนผ่านเว็บไม่ล่ม)
    ============================================================ */
 const _USE_PROXY=()=> (typeof PROXY_URL!=='undefined' && PROXY_URL);
+
+/* ===========================================================
+   ★ 14 ก.ย. 69 — GS FETCH · ยิงคำขอไป Apps Script แบบ "ทนสะดุด"
+
+   อาการที่เจอ: จอขึ้น "โหลดไม่สำเร็จ" บ่อยมาก 3 แบบ
+     1) unknown GET action:               (ไม่มีชื่อ action ต่อท้าย)
+     2) เชื่อมต่อระบบไม่ได้ (HTTP 404)
+     3) Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+
+   ทั้ง 3 แบบคืออาการเดียวกัน — Apps Script สะดุดชั่วคราว ไม่ใช่โค้ดเราพัง:
+     · Apps Script ตอบ POST ด้วย 302 ชี้ไป URL ผลลัพธ์ชั่วคราว
+       ถ้า redirect นั้นหลุด เบราว์เซอร์ยิงกลับมาที่ /exec เป็น GET เปล่า
+       → doGet เห็น action = '' → ข้อความแบบ (1)
+     · ระหว่าง Google รีโหลด deployment /exec จะ 404 แวบหนึ่ง → (2)
+     · บางจังหวะ Google ตอบหน้า HTML (error/sign-in) แทน JSON → (3)
+
+   วัดจริง 14 ก.ย. 69: listGroups (คำขอที่เบาที่สุด)
+   ปกติ 2–3 วินาที แต่สุ่มพุ่งเกิน 9 วินาที/หลุด ราว 1 ใน 9 ครั้ง
+   ของเดิมยิง fetch ตรง ๆ ไม่มี retry เลยสักจุด
+   → Google สะดุดครั้งเดียว = จอ "โหลดไม่สำเร็จ" ทันที
+
+   ของใหม่: ห่อทุกจุดด้วย gsFetch()
+     · คืนค่าหน้าตาเหมือน Response เดิม (.ok .status .json() .text())
+       โค้ดข้างล่างจึงไม่ต้องแก้อะไร เปลี่ยนแค่ชื่อ fetch → gsFetch
+     · action ที่อ่านอย่างเดียว หรือเขียนแบบ "ตั้งค่าเป็น X"
+       → ลองใหม่อัตโนมัติสูงสุด 3 ครั้ง (หน่วง 0.8 วิ แล้ว 2.2 วิ)
+     · action ที่ "เพิ่ม/ลบข้อมูล" → ห้ามยิงซ้ำเด็ดขาด
+       เพราะตอน redirect หลุด Apps Script อาจรันไปเรียบร้อยแล้ว
+       ยิงซ้ำ = คะแนนซ้ำแถว / ลบซ้ำ / ต่อคอร์สซ้ำ ← เสียหายกว่าขึ้น error
+     · timeout 30 วิ/ครั้ง กันค้างยาวจนนึกว่าเครื่องแฮงก์
+   =========================================================== */
+const GS_TIMEOUT_MS  = 30000;
+const GS_RETRY_DELAYS = [800, 2200];      /* หน่วงก่อนลองครั้งที่ 2 และ 3 */
+
+/* ยิงซ้ำแล้วผลลัพธ์เหมือนเดิม = ปลอดภัยที่จะ retry
+   (อ่านอย่างเดียว หรือเขียนแบบ "ตั้งค่าเป็น X" ไม่ใช่ "เพิ่มอีกหนึ่งแถว") */
+const GS_SAFE_ACTIONS = [
+  /* ── อ่านอย่างเดียว ── */
+  'listNames', 'listGroups', 'loadData', 'lookupCheckin', 'getCheckinUpdates',
+  'listLeave', 'listFaces', 'students', 'marks', 'data',
+  'examBatch', 'listPending', 'listArchivedGroups', 'getArchivedCourse',
+  'scoreSkipList', 'scanNameVariants', 'myPendingList',
+  'webLogin', 'webData', 'leaveOptions', 'login',
+  /* ── เขียนทับค่าเดิม ยิงซ้ำได้ผลเท่าเดิม ── */
+  'syncData', 'scoreSkipSet', 'examSetActive', 'saveFace', 'deleteFace',
+  'endCheckin', 'teacherLogin', 'teacherLogout', 'updateCheckinNote'
+];
+
+/* หาชื่อ action จาก body (POST) ก่อน ถ้าไม่มีค่อยดูใน query string (GET) */
+function gsActionOf(url, init) {
+  try {
+    if (init && typeof init.body === 'string') {
+      const b = JSON.parse(init.body);
+      if (b && b.action) return String(b.action);
+    }
+  } catch (e) {}
+  const m = String(url || '').match(/[?&]action=([^&]*)/);
+  return m ? decodeURIComponent(m[1]) : '';
+}
+
+/* ต่อ &_try=N ตอนลองใหม่ กันไปโดน cache ของรอบที่เพิ่งพลาด */
+function gsBust(url, n) {
+  if (!n) return url;
+  return url + (String(url).indexOf('?') === -1 ? '?' : '&') + '_try=' + n;
+}
+
+function gsSleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+function gsErrorText(kind, msg, canRetry, tries) {
+  const tail = canRetry
+    ? ' · ลองใหม่ให้แล้ว ' + tries + ' ครั้ง — กดโหลดอีกครั้งได้เลยครับ'
+    : ' · คำสั่งนี้เป็นการบันทึก/ลบข้อมูล ระบบจึงไม่ยิงซ้ำอัตโนมัติ' +
+      ' — กรุณาเช็คก่อนว่าเข้าไปแล้วหรือยัง แล้วค่อยกดใหม่';
+  if (kind === 'timeout') return 'Google ตอบช้าเกิน 30 วินาที' + tail;
+  if (kind === 'html')    return 'Google ส่งหน้าเว็บกลับมาแทนข้อมูล (ระบบกำลังสะดุด)' + tail;
+  if (kind === 'lost')    return 'คำตอบจาก Google หลุดกลางทาง' + tail;
+  if (kind === 'parse')   return 'อ่านคำตอบจาก Google ไม่ออก' + tail;
+  if (kind === 'http')    return 'เชื่อมต่อระบบไม่ได้ (HTTP ' + msg + ')' + tail;
+  try { if (navigator.onLine === false) return 'เครื่องนี้ไม่ได้ต่ออินเทอร์เน็ตอยู่ครับ'; } catch (e) {}
+  return 'ต่อ Google ไม่ได้: ' + msg + tail;
+}
+
+async function gsFetch(url, init) {
+  init = init || {};
+  const action   = gsActionOf(url, init);
+  const canRetry = GS_SAFE_ACTIONS.indexOf(action) !== -1;
+  const maxTries = canRetry ? 3 : 1;
+  let lastKind = 'net', lastMsg = '';
+
+  for (let n = 0; n < maxTries; n++) {
+    if (n) {
+      if (typeof toast === 'function')
+        toast('เชื่อมต่อสะดุด · กำลังลองใหม่ (' + (n + 1) + '/' + maxTries + ')…', 'success');
+      await gsSleep(GS_RETRY_DELAYS[n - 1] || 2200);
+    }
+    let timer = null;
+    try {
+      let opts = init;
+      if (typeof AbortController === 'function') {
+        const ctl = new AbortController();
+        timer = setTimeout(function () { try { ctl.abort(); } catch (e) {} }, GS_TIMEOUT_MS);
+        opts = Object.assign({}, init, { signal: ctl.signal });
+      }
+      const res = await fetch(gsBust(url, n), opts);
+      if (timer) { clearTimeout(timer); timer = null; }
+      const text = await res.text();
+
+      /* Google ตอบหน้า HTML แทน JSON */
+      if (/^\s*</.test(text)) { lastKind = 'html'; lastMsg = ''; continue; }
+
+      let data;
+      try { data = JSON.parse(text); }
+      catch (e) { lastKind = 'parse'; lastMsg = ''; continue; }
+
+      /* redirect หลุด → กลับมาที่ /exec เป็น GET เปล่า (action ว่าง) */
+      if (data && data.ok === false &&
+          /^unknown (GET|POST) action:\s*(undefined)?\s*$/.test(String(data.error || ''))) {
+        lastKind = 'lost'; lastMsg = ''; continue;
+      }
+
+      /* HTTP ไม่ผ่าน (404/500/…) แต่ body อ่านเป็น JSON ได้ → ยังถือว่าสะดุด */
+      if (!res.ok) { lastKind = 'http'; lastMsg = String(res.status); continue; }
+
+      return {
+        ok: res.ok, status: res.status, gsTries: n + 1,
+        json: async function () { return data; },
+        text: async function () { return text; }
+      };
+    } catch (e) {
+      if (timer) clearTimeout(timer);
+      lastKind = (e && e.name === 'AbortError') ? 'timeout' : 'net';
+      lastMsg  = String((e && e.message) || '');
+      continue;
+    }
+  }
+  throw new Error(gsErrorText(lastKind, lastMsg, canRetry, maxTries));
+}
 /* ⚠️ PIN ต้องส่งด้วย POST เท่านั้น — ถ้าใส่ใน query string มันจะไปติดใน
    ประวัติเบราว์เซอร์ / Referer / log ของ Apps Script ตลอดไป
    (Content-Type ต้องเป็น text/plain ไม่งั้น Apps Script โดน CORS preflight ปัด) */
 async function _proxyPost(payload){
-  const res = await fetch(PROXY_URL, {
+  const res = await gsFetch(PROXY_URL, {
     method:'POST',
     headers:{'Content-Type':'text/plain;charset=utf-8'},
     body: JSON.stringify(payload)
@@ -53,7 +190,7 @@ async function loadStudents(){
   document.getElementById('p1status').textContent='กำลังโหลดรายชื่อ...';
   try{
     if(_USE_PROXY()){
-      const res=await fetch(PROXY_URL+'?action=students&t='+Date.now());
+      const res=await gsFetch(PROXY_URL+'?action=students&t='+Date.now());
       const data=await res.json();
       if(!data.ok){document.getElementById('p1status').className='status err';document.getElementById('p1status').textContent='Error: '+(data.error||'โหลดรายชื่อไม่ได้');return;}
       studentList=data.students||[];
@@ -1713,7 +1850,7 @@ function subTap(i){
 function subFillAll(v){ subState.st = new Array(30).fill(v); subRender(); }
 
 async function subPost(payload){
-  const res = await fetch(SUBMIT_URL, {
+  const res = await gsFetch(SUBMIT_URL, {
     method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
     body: JSON.stringify(Object.assign({ name: currentStudent, pin: currentPin }, payload))
   });
