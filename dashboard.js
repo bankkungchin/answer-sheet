@@ -2173,6 +2173,38 @@ const SUB_STATES = [
   { v:'⏰ ไม่ทัน',     short:'⏰', label:'ไม่ทัน',    bg:'#a855f7',      fg:'#fff' }
 ];
 
+
+/* ═══════════════════════════════════════════════════════════════
+   ★ 17 ก.ย. 69 — นักเรียนกรอกคะแนน "สนามสอบ" เอง
+   ค้างมาตั้งแต่ 29 ส.ค.: หน้ากรอกเองนับเป็น "จำนวนข้อถูก /30" อย่างเดียว
+   พอเลือกชุดรวมจึงเห็น 22/30 ทั้งที่ของจริงคือ 66/100
+
+   คิดจากสถานะรายข้อเหมือนทุกที่ในระบบ (กฎ 41 — ชีตเก็บจำนวนข้อถูกเหมือนเดิม
+   คะแนนถ่วงน้ำหนักคิดตอนแสดงผล) จึงไม่ต้องแตะ submitMyScore ฝั่งเซิร์ฟเวอร์เลย
+   ═══════════════════════════════════════════════════════════════ */
+
+/* คะแนนถ่วงน้ำหนักจากอาร์เรย์สถานะ 30 ช่อง — คืน null ถ้าไม่ใช่สนามสอบ
+   หรือคลังยังไม่มีระบบคะแนนของชุดนั้น (จะได้ตกไปแสดงแบบเดิมอย่างปลอดภัย) */
+function subWeighted(chapter, st){
+  try{
+    if(!_isMock(chapter)) return null;
+    if(typeof ptsOfQuestion !== 'function' || typeof fullScoreOf !== 'function') return null;
+    const full = fullScoreOf(chapter);
+    if(!full || full === 30) return null;
+    let s = 0;
+    for(let q = 1; q <= 30; q++){
+      if(String((st||[])[q-1] || '').indexOf('ถูก') !== -1) s += ptsOfQuestion(chapter, q);
+    }
+    return { score:s, full:full };
+  }catch(e){ return null; }
+}
+
+/* ข้อความคะแนนสั้น ๆ ใช้ซ้ำหลายที่ — "66/100" หรือ "24/30" */
+function subScoreText(chapter, st, okCount){
+  const w = subWeighted(chapter, st);
+  return w ? (w.score + '/' + w.full) : (okCount + '/30');
+}
+
 const subState = { st:new Array(30).fill(''), brush:1, sending:false };
 
 /* รายชื่อบทมาตรฐาน — อ่านจากดรอปดาวน์ "กรองเฉพาะบท" ที่มีอยู่แล้ว
@@ -2208,8 +2240,14 @@ function subOpen(){
 
   const sel = document.getElementById('subChapter');
   if(!sel.options.length){
+    /* ensureMockOptions() เติมชุดรวมเข้า #topicFilter ไว้แล้วตอนโหลดหน้า
+       subChapters() อ่านจากที่นั่น ชุดรวมจึงมาเองโดยไม่ต้องแก้ index.html */
+    try{ if(typeof ensureMockOptions === 'function') ensureMockOptions(); }catch(e){}
     sel.innerHTML = subChapters().map(c => `<option value="${_esc(c)}">${_esc(c)}</option>`).join('');
   }
+  /* ★ 17 ก.ย. 69 — เปลี่ยนบท = คะแนนเต็มเปลี่ยน ต้องคิดใหม่ทันที
+     ผูกที่นี่แทนการแก้ index.html (onchange เดิมไม่มี) */
+  if(sel && !sel.__subBound){ sel.__subBound = true; sel.addEventListener('change', subRender); }
   const dt = document.getElementById('subDate');
   if(!dt.value){
     const d = new Date();
@@ -2233,9 +2271,20 @@ function subRender(){
   }).join('');
 
   const n = subCounts();
+  /* ★ 17 ก.ย. 69 — สนามสอบคิดคะแนนถ่วงน้ำหนัก ต้องเห็นตั้งแต่ตอนกรอก
+     ไม่ใช่ไปรู้ทีหลังตอนครูอนุมัติแล้ว */
+  const _chap = (document.getElementById('subChapter') || {}).value || '';
+  const _w = subWeighted(_chap, subState.st);
   document.getElementById('subCounts').innerHTML =
-    `ทำถูก <b style="font-size:18px;color:var(--blue)">${n.ok}</b>/30 ข้อ` +
-    `<span style="font-size:11px;color:var(--text3)"> · ยังไม่ระบุ ${n.blank}</span>`;
+    (_w
+      ? `<b style="font-size:18px;color:var(--blue)">${_w.score}</b>/${_w.full} คะแนน` +
+        `<span style="font-size:11.5px;color:var(--text2)"> · ทำถูก ${n.ok}/30 ข้อ</span>`
+      : `ทำถูก <b style="font-size:18px;color:var(--blue)">${n.ok}</b>/30 ข้อ`) +
+    `<span style="font-size:11px;color:var(--text3)"> · ยังไม่ระบุ ${n.blank}</span>` +
+    (_w
+      ? `<div style="font-size:11px;color:var(--text3);margin-top:4px;line-height:1.6">` +
+        `🎯 สนามสอบคิดคะแนนไม่เท่ากันทุกข้อ — ข้อ 1–25 ข้อละ 3 · ข้อ 26–30 ข้อละ 5 (เต็ม ${_w.full})</div>`
+      : '');
 }
 
 function subTap(i){
@@ -2273,11 +2322,19 @@ async function subSend(){
   btn.disabled = true; btn.textContent = 'กำลังส่ง...';
   st.className='status'; st.textContent='';
 
+  const _stSent = subState.st.slice();     /* ★ เก็บไว้คิดคะแนนตอนแจ้งผล — ของเดิมถูกล้างทิ้งทันทีหลังส่ง */
   try{
     const j = await subPost({ action:'submitMyScore', chapter, date, note, statuses: subState.st });
     if(j && j.ok){
       st.className='status ok';
-      st.textContent = (j.resubmitted ? 'ส่งใหม่แทนของเดิมแล้ว' : 'ส่งให้ครูแล้ว') + ` · ทำถูก ${j.score}/30 ข้อ — รอครูตรวจครับ`;
+      /* ★ 17 ก.ย. 69 — j.score จากเซิร์ฟเวอร์เป็น "จำนวนข้อถูก" เสมอ (ชีตเก็บแบบนั้น)
+         ถ้าเป็นสนามสอบให้บอกคะแนนถ่วงน้ำหนักคู่ไปด้วย จะได้ไม่งงว่าทำไมได้ 22 */
+      const _wSent = subWeighted(chapter, _stSent);
+      st.textContent = (j.resubmitted ? 'ส่งใหม่แทนของเดิมแล้ว' : 'ส่งให้ครูแล้ว')
+        + (_wSent
+            ? ` · ได้ ${_wSent.score}/${_wSent.full} คะแนน (ทำถูก ${j.score}/30 ข้อ)`
+            : ` · ทำถูก ${j.score}/30 ข้อ`)
+        + ' — รอครูตรวจครับ';
       subState.st = new Array(30).fill('');
       document.getElementById('subNote').value = '';
       subRender(); subLoadList();
@@ -2290,6 +2347,15 @@ async function subSend(){
   }
   subState.sending = false;
   btn.disabled = false; btn.textContent = '📤 ส่งให้ครูตรวจ';
+}
+
+/* ★ 17 ก.ย. 69 — รายการที่เคยส่ง: สนามสอบโชว์ /100 · บทปกติโชว์ /30 เหมือนเดิม
+   (myPendingList ส่ง statuses กลับมาด้วย จึงคิดคะแนนได้โดยไม่ต้องขอข้อมูลเพิ่ม) */
+function _subListScore(it){
+  const w = subWeighted(it.chapter, it.statuses || []);
+  if(!w) return it.score + '/30';
+  return w.score + '/' + w.full
+    + '<div style="font-size:10px;color:var(--text3);font-weight:400">ทำถูก ' + it.score + '/30 ข้อ</div>';
 }
 
 async function subLoadList(){
@@ -2324,7 +2390,7 @@ async function subLoadList(){
           ${it.note ? `<div style="font-size:11.5px;color:var(--red);margin-top:3px">ครูบอกว่า: ${_esc(it.note)}</div>` : ''}
           ${acts}
         </div>
-        <div style="font-family:var(--font-num,inherit);font-size:14px;font-weight:600;min-width:44px;text-align:right">${it.score}/30</div>
+        <div style="font-family:var(--font-num,inherit);font-size:14px;font-weight:600;min-width:52px;text-align:right">${_subListScore(it)}</div>
         <div>${badge(it.status)}</div>
       </div>`;
     }).join('');
@@ -2423,6 +2489,9 @@ function subParsePaste(){
   subRender();
   const n = subCounts();
   msg.style.color='var(--green)';
-  msg.textContent = `อ่านได้ ${found} ข้อ · ทำถูก ${n.ok}/30 ข้อ` + (n.blank ? ` · ยังไม่ระบุ ${n.blank} ข้อ` : '');
+  const _wP = subWeighted((document.getElementById('subChapter')||{}).value || '', subState.st);
+  msg.textContent = `อ่านได้ ${found} ข้อ · `
+    + (_wP ? `ได้ ${_wP.score}/${_wP.full} คะแนน (ทำถูก ${n.ok}/30 ข้อ)` : `ทำถูก ${n.ok}/30 ข้อ`)
+    + (n.blank ? ` · ยังไม่ระบุ ${n.blank} ข้อ` : '');
   subSetMode('tap');
 }
