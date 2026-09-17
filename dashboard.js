@@ -1114,12 +1114,39 @@ function _progCard(id, title, sub, hasAvg){
     + '</div>';
 }
 
+
+/* ★ 17 ก.ย. 69 — สอบประเภทนั้นครั้งเดียวยังวาดกราฟเส้นไม่ได้ (ต้องมีอย่างน้อย 2 จุด)
+   แต่ของเดิมขึ้นว่า "ยังไม่มีผลสนามสอบ" ซึ่งไม่จริง — ครูสอบไปแล้ว 1 ชุด
+   จึงแสดงการ์ดสรุปชุดนั้นแทน พร้อมบอกตรง ๆ ว่ากราฟจะเริ่มเมื่อสอบครั้งที่ 2 */
+function _progSingleCard(emoji, title, h, tail){
+  if(!h) return '';
+  const pct = h.full ? Math.round(h.score / h.full * 100) : 0;
+  const avgLine = (h.gAvg != null)
+    ? '<div style="font-size:12.5px;color:var(--text2);margin-top:6px;line-height:1.7">'
+      + 'ค่าเฉลี่ยของรุ่นในชุดนี้ <b>' + h.gAvg + '</b>'
+      + (h.gRank ? ' · อยู่อันดับ <b>' + h.gRank + '</b> จาก ' + h.gN + ' คน' : '')
+      + (h.score > h.gAvg ? ' <span style="color:#3B7D2A">· สูงกว่าค่าเฉลี่ย</span>' : '')
+      + '</div>'
+    : '';
+  return '<div class="d-card" style="padding:1rem">'
+    + '<div class="slabel">' + emoji + ' ' + title + '</div>'
+    + '<div style="font-size:12px;color:var(--text3);margin-bottom:8px">'
+    +   (h.topic || '') + (h.date ? ' · ' + _dFmt(h.date) : '') + '</div>'
+    + '<div style="font-size:30px;font-weight:700;color:#185FA5;line-height:1.2">'
+    +   h.score + '<span style="font-size:15px;color:var(--text3);font-weight:500"> / ' + h.full + '</span>'
+    +   '<span style="font-size:13px;color:var(--text3);font-weight:500;margin-left:8px">' + pct + '%</span></div>'
+    + avgLine
+    + '<div style="font-size:11.5px;color:var(--text3);margin-top:10px;padding-top:8px;'
+    +   'border-top:1px solid rgba(128,128,128,.15);line-height:1.7">' + tail + '</div>'
+    + '</div>';
+}
+
 function _progLineChart(canvasId, hist, full, goal){
   const el = document.getElementById(canvasId);
   if(!el || typeof Chart === 'undefined') return null;
   const labels = hist.map((h,i)=> h.date ? _dFmt(h.date) : ('ครั้ง '+(i+1)));
   const ds = [
-    { label:'คะแนนของหนู', data:hist.map(h=>h.score), borderColor:'#185FA5',
+    { label:'คะแนนของนักเรียน', data:hist.map(h=>h.score), borderColor:'#185FA5',
       backgroundColor:'rgba(24,95,165,.12)', fill:true, tension:.25, pointRadius:4,
       pointBackgroundColor:'#185FA5', order:1 }
   ];
@@ -1155,12 +1182,10 @@ function renderProgressTrend(d){
   const chap=(d.chapHist||[]), mock=(d.mockHist||[]);
   const hasChap=chap.length>=2, hasMock=mock.length>=2;
 
-  if(!hasChap && !hasMock){
-    const n=(chap.length+mock.length);
+  if(!chap.length && !mock.length){
     pane.innerHTML='<div class="d-card"><div class="slabel">📈 พัฒนาการ</div>'
       +'<div style="font-size:13px;color:var(--text2);line-height:1.7">'
-      +(n?'ยังมีผลสอบครั้งเดียว':'ยังไม่มีผลสอบ')
-      +' — กราฟพัฒนาการจะเริ่มแสดงตั้งแต่การสอบครั้งที่ 2 เป็นต้นไปครับ 💪<br>'
+      +'ยังไม่มีผลสอบ — กราฟพัฒนาการจะเริ่มแสดงตั้งแต่การสอบครั้งที่ 2 เป็นต้นไปครับ 💪<br>'
       +'ระหว่างนี้ดูจุดที่ต้องเก็บได้ที่แท็บ "แผนทบทวน" เลย</div></div>';
     return;
   }
@@ -1171,15 +1196,24 @@ function renderProgressTrend(d){
                    || Math.round(mockFull*25/30);
 
   let html='';
+  /* ── ข้อสอบแยกบท ── */
   if(hasChap){
     html += _progCard('s-trendChapter','📘 ข้อสอบแยกบท — คะแนนรายครั้ง',
       'เต็ม '+chapFull+' คะแนน · '+chap.length+' ครั้ง · เทียบกับตัวเองในบทที่เคยสอบมา', true);
+  }else if(chap.length===1){
+    html += _progSingleCard('📘','ข้อสอบแยกบท — ผลครั้งล่าสุด', chap[0],
+      'สอบแยกบทไปแล้ว 1 ครั้ง · กราฟแนวโน้มจะเริ่มแสดงเมื่อสอบครั้งที่ 2 เพราะยังไม่มีอะไรให้เทียบ');
   }
+
+  /* ── สนามสอบ ── */
   if(hasMock){
     html += _progCard('s-trendMock','🎯 สนามสอบ (รวมทุกบท) — คะแนนรายชุด',
       'เต็ม '+mockFull+' คะแนน · '+mock.length+' ชุด · ข้อ 1–25 ข้อละ 3 · ข้อ 26–30 ข้อละ 5', true);
-  }
-  if(hasChap && !hasMock){
+  }else if(mock.length===1){
+    html += _progSingleCard('🎯','สนามสอบ (รวมทุกบท) — ผลชุดล่าสุด', mock[0],
+      'ข้อ 1–25 ข้อละ 3 · ข้อ 26–30 ข้อละ 5 (เต็ม '+(mock[0].full||100)+') · '
+      + 'สอบสนามสอบไปแล้ว 1 ชุด — กราฟแนวโน้มจะเริ่มแสดงเมื่อสอบชุดที่ 2');
+  }else{
     html += '<div class="d-card" style="padding:.85rem 1rem"><div style="font-size:12px;color:var(--text2);line-height:1.7">'
       + '🎯 ยังไม่มีผลสนามสอบ (ชุดรวมทุกบท) — เมื่อเริ่มสอบแล้วจะมีกราฟแยกอีกใบขึ้นตรงนี้ '
       + 'เพราะคะแนนเต็มคนละแบบ เอามารวมกราฟเดียวกันจะอ่านผิด</div></div>';
