@@ -486,9 +486,11 @@ async function verifyPin(){
       const short=currentStudent.replace(/\s*\(.*\)/,'');
       document.getElementById('modeAvatar').textContent=short.substring(0,3);
       document.getElementById('modeName').textContent=short;
-      /* ★ 18 ก.ย. 69 — โหลดเป้าพร้อมข้อมูลหลัก ยิงคู่กันไม่เพิ่มเวลารอ
-         ถ้าเป้าโหลดไม่ได้ก็ไม่ขวางการเข้าหน้า — goalEffective() ตกไปใช้ค่าตั้งต้นเอง */
-      await Promise.all([ fetchDashData(), goalLoad(currentStudent) ]);
+      /* ★ 18 ก.ย. 69 (แก้ 2) — ห้ามให้ล็อกอินรอเป้า
+         getGoal อยู่ใน GS_SAFE_ACTIONS จึง retry ได้ 3 ครั้ง (หน่วง 0.8 + 2.2 วิ)
+         ถ้า Apps Script ยังไม่ deploy หรือสะดุด การล็อกอินจะช้าขึ้นหลายวินาทีทันที
+         ค่าเป้าใช้แค่ตอนเปิดแท็บพัฒนาการ → ย้ายไปโหลดตอนนั้นแทน (goalEnsure) */
+      await fetchDashData();
       goTo('p3');
     } else {
       pinAttempts++;
@@ -1130,6 +1132,20 @@ async function goalLoad(name){
   return MY_GOAL;
 }
 
+/* พยายามโหลดเป้าครั้งเดียวต่อการล็อกอิน — ล้มเหลวก็ไม่ลองใหม่ จะได้ไม่หน่วงซ้ำทุกครั้งที่วาด
+   วาดด้วยค่าตั้งต้นไปก่อน ได้ค่าจริงเมื่อไรค่อยวาดทับ (ไม่บล็อกการแสดงผล) */
+let _goalTried = false;
+function goalEnsure(){
+  if(_goalTried || !currentStudent) return;
+  _goalTried = true;
+  goalLoad(currentStudent).then(g => {
+    /* วาดใหม่เฉพาะเมื่อได้เป้าจริง และผู้ใช้ยังอยู่หน้าที่มีแถบเป้าอยู่ */
+    if(g && g.goal > 0 && document.getElementById('s-goalBar') && dashData){
+      try{ renderProgressTrend(dashData); }catch(e){ console.error('goal rerender', e); }
+    }
+  }).catch(()=>{});
+}
+
 /* เป้าที่ใช้จริงกับกราฟ */
 function goalEffective(chapter){
   if(MY_GOAL && MY_GOAL.goal > 0) return MY_GOAL.goal;
@@ -1179,7 +1195,9 @@ function goalBind(){
       if(j && j.ok){
         MY_GOAL = { goal: v, by: 'student', at: j.at || '', loaded: true };
         say('บันทึกแล้ว · ' + goalSourceText(), '#3B7D2A');
-        renderProgress();          /* วาดกราฟใหม่ให้เส้นเป้าขยับ */
+        /* ★ แก้ 2: ของเดิมเรียก renderProgress() ซึ่งไม่มีฟังก์ชันนี้อยู่จริง
+           → throw แล้วตกไปใน catch จนขึ้นว่า 'เชื่อมต่อไม่ได้' ทั้งที่บันทึกสำเร็จ */
+        if(dashData){ try{ renderProgressTrend(dashData); }catch(e){ console.error('goal rerender', e); } }
       }else{
         say(j && j.error ? j.error : 'บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง', '#B3261E');
       }
@@ -1328,6 +1346,7 @@ function renderProgressTrend(d){
   if(hasChap) trendChartInst=_progLineChart('s-trendChapter', chap, chapFull, Math.round(chapFull*25/30));
   if(hasMock) mockChartInst =_progLineChart('s-trendMock',    mock, mockFull, mockGoal);
   goalBind();
+  if(mock.length) goalEnsure();   /* โหลดเป้าจริงมาทับค่าตั้งต้น — ไม่บล็อกการวาด */
 
   /* ── แถบส่วนผสม: นับ "ข้อ" จึงรวมทั้งสองประเภทได้ แต่ต้องรู้ว่าครั้งไหนเป็นชุดอะไร ── */
   const all=(d.allHistory||[]).slice();
