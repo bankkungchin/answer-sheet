@@ -70,7 +70,9 @@ const GS_SAFE_ACTIONS = [
   'webLogin', 'webData', 'leaveOptions', 'login',
   /* ── เขียนทับค่าเดิม ยิงซ้ำได้ผลเท่าเดิม ── */
   'syncData', 'scoreSkipSet', 'examSetActive', 'saveFace', 'deleteFace',
-  'endCheckin', 'teacherLogin', 'teacherLogout', 'updateCheckinNote'
+  'endCheckin', 'teacherLogin', 'teacherLogout', 'updateCheckinNote',
+  /* ★ 18 ก.ย. 69 — เป้าหมายคะแนน: อ่าน + เขียนทับค่าเดิม ยิงซ้ำปลอดภัยทั้งคู่ */
+  'getGoal', 'setMyGoal'
 ];
 
 /* หาชื่อ action จาก body (POST) ก่อน ถ้าไม่มีค่อยดูใน query string (GET) */
@@ -484,7 +486,9 @@ async function verifyPin(){
       const short=currentStudent.replace(/\s*\(.*\)/,'');
       document.getElementById('modeAvatar').textContent=short.substring(0,3);
       document.getElementById('modeName').textContent=short;
-      await fetchDashData();
+      /* ★ 18 ก.ย. 69 — โหลดเป้าพร้อมข้อมูลหลัก ยิงคู่กันไม่เพิ่มเวลารอ
+         ถ้าเป้าโหลดไม่ได้ก็ไม่ขวางการเข้าหน้า — goalEffective() ตกไปใช้ค่าตั้งต้นเอง */
+      await Promise.all([ fetchDashData(), goalLoad(currentStudent) ]);
       goTo('p3');
     } else {
       pinAttempts++;
@@ -1103,6 +1107,90 @@ function renderTrendCard(d){
    ของเดิมกันด้วยการแปลงทั้งกราฟเป็น % ซึ่ง "กันอ่านผิด" ได้ แต่ไม่ได้ "แยกให้เห็น"
    ★ และคะแนนดิบข้ามชุดสนามสอบก็เทียบกันตรง ๆ ไม่ได้ เพราะแต่ละชุดยากไม่เท่ากัน
      จึงวาดเส้นค่าเฉลี่ยของทั้งรุ่นคู่ไปด้วยทุกจุด (กฎ 42 · 62) */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ★ 18 ก.ย. 69 — เป้าหมายคะแนนสนามสอบตั้งเองได้
+   ของเดิมเป็นค่าคงที่ทั้งรุ่น (83/100) ซึ่งสูงเกินจริงและไม่ตรงกับใครสักคน
+   ตอนนี้เก็บรายคนในชีต exam_goals → นักเรียนตั้งเอง ครูตั้งให้ก็ได้ ค่าล่าสุดชนะ
+
+   ลำดับที่ใช้:  เป้าของคนนี้ → MOCK_SETS[ชุด].goal (ครูตั้งในโค้ด) → ค่าตั้งต้นระบบ
+   ═══════════════════════════════════════════════════════════════════════ */
+const GOAL_MIN = 10, GOAL_MAX = 100;
+const MOCK_GOAL_FALLBACK = 65;     /* ค่าตั้งต้นเมื่อยังไม่มีใครตั้งเป้า */
+let MY_GOAL = { goal: 0, by: '', at: '', loaded: false };
+
+/* โหลดเป้าของนักเรียนคนนี้ — ล้มเหลวก็ไม่เป็นไร ตกไปใช้ค่าตั้งต้น */
+async function goalLoad(name){
+  MY_GOAL = { goal: 0, by: '', at: '', loaded: false };
+  if(!name) return MY_GOAL;
+  try{
+    const j = await _proxyPost({ action:'getGoal', name });
+    if(j && j.ok){ MY_GOAL = { goal: parseInt(j.goal)||0, by: j.by||'', at: j.at||'', loaded: true }; }
+  }catch(e){}
+  return MY_GOAL;
+}
+
+/* เป้าที่ใช้จริงกับกราฟ */
+function goalEffective(chapter){
+  if(MY_GOAL && MY_GOAL.goal > 0) return MY_GOAL.goal;
+  const fromSet = (typeof MOCK_GOAL_OF === 'function') ? MOCK_GOAL_OF(chapter) : 0;
+  return fromSet > 0 ? fromSet : MOCK_GOAL_FALLBACK;
+}
+
+function goalSourceText(){
+  if(!MY_GOAL || !MY_GOAL.goal) return 'ค่าตั้งต้นของระบบ — ยังไม่มีใครตั้งเป้า';
+  return MY_GOAL.by === 'teacher' ? 'ครูตั้งให้' : 'หนูตั้งเอง';
+}
+
+/* แถบตั้งเป้า — อยู่ใต้กราฟสนามสอบ ใช้ input number เพื่อให้มือถือขึ้นแป้นตัวเลข */
+function goalBarHTML(cur){
+  return '<div class="d-card" id="s-goalBar" style="padding:.85rem 1rem">'
+    + '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">'
+    +   '<span style="font-size:12.5px;color:var(--text1);font-weight:500">🎯 เป้าหมายของฉัน</span>'
+    +   '<input id="s-goalInput" type="number" inputmode="numeric" min="' + GOAL_MIN + '" max="' + GOAL_MAX + '" value="' + cur + '"'
+    +     ' style="width:74px;padding:5px 8px;font-size:14px;font-family:var(--font-num,inherit);'
+    +     'border:1px solid var(--line-strong,#ccc);border-radius:8px;background:var(--surf,#fff);color:var(--text1)">'
+    +   '<span style="font-size:12px;color:var(--text3)">/ 100 คะแนน</span>'
+    +   '<button id="s-goalSave" class="btn btn--sm btn--primary" style="font-size:12px;padding:5px 14px">บันทึก</button>'
+    +   '<span id="s-goalMsg" style="font-size:11.5px;color:var(--text3)">' + goalSourceText() + '</span>'
+    + '</div>'
+    + '<div style="font-size:11px;color:var(--text3);margin-top:7px;line-height:1.7">'
+    +   'ตั้งเท่าไรก็ได้ตั้งแต่ ' + GOAL_MIN + '–' + GOAL_MAX + ' · เส้นแดงในกราฟจะขยับตามทันที · '
+    +   'ครูเห็นเป้าที่หนูตั้งด้วย และครูตั้งให้ได้เหมือนกัน (ใครตั้งทีหลังใช้ค่านั้น)</div>'
+    + '</div>';
+}
+
+/* ผูกปุ่มบันทึก — เรียกหลัง pane.innerHTML เสร็จแล้วเท่านั้น */
+function goalBind(){
+  const inp = document.getElementById('s-goalInput');
+  const btn = document.getElementById('s-goalSave');
+  const msg = document.getElementById('s-goalMsg');
+  if(!inp || !btn || !msg) return;
+  const say = (text, color) => { msg.textContent = text; msg.style.color = color || 'var(--text3)'; };
+  btn.onclick = async () => {
+    const v = parseInt(inp.value, 10);
+    if(!(v >= GOAL_MIN && v <= GOAL_MAX)){
+      say('ใส่ตัวเลข ' + GOAL_MIN + '–' + GOAL_MAX + ' ครับ', '#B3261E');
+      return;
+    }
+    btn.disabled = true; say('กำลังบันทึก…');
+    try{
+      const j = await _proxyPost({ action:'setMyGoal', name: currentStudent, pin: currentPin, goal: v });
+      if(j && j.ok){
+        MY_GOAL = { goal: v, by: 'student', at: j.at || '', loaded: true };
+        say('บันทึกแล้ว · ' + goalSourceText(), '#3B7D2A');
+        renderProgress();          /* วาดกราฟใหม่ให้เส้นเป้าขยับ */
+      }else{
+        say(j && j.error ? j.error : 'บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง', '#B3261E');
+      }
+    }catch(e){
+      say('เชื่อมต่อไม่ได้ ลองใหม่อีกครั้ง', '#B3261E');
+    }
+    btn.disabled = false;
+  };
+  inp.onkeydown = e => { if(e.key === 'Enter') btn.click(); };
+}
+
 function _progCard(id, title, sub, hasAvg){
   return '<div class="d-card" style="padding:1rem">'
     + '<div class="slabel">' + title + '</div>'
@@ -1192,8 +1280,8 @@ function renderProgressTrend(d){
 
   const chapFull = chap.length ? (chap[chap.length-1].full||30) : 30;
   const mockFull = mock.length ? (mock[mock.length-1].full||100) : 100;
-  const mockGoal = (typeof MOCK_GOAL_OF==='function' ? MOCK_GOAL_OF(mock.length?mock[mock.length-1].topic:'') : 0)
-                   || Math.round(mockFull*25/30);
+  /* ★ 18 ก.ย. 69 — เป้ารายคนมาก่อนเสมอ (ของเดิมคิด 25/30 = 83 ให้ทุกคนเท่ากัน) */
+  const mockGoal = goalEffective(mock.length ? mock[mock.length-1].topic : '');
 
   let html='';
   /* ── ข้อสอบแยกบท ── */
@@ -1219,6 +1307,9 @@ function renderProgressTrend(d){
       + 'เพราะคะแนนเต็มคนละแบบ เอามารวมกราฟเดียวกันจะอ่านผิด</div></div>';
   }
 
+  /* แถบตั้งเป้า — ขึ้นเมื่อเคยสอบสนามสอบแล้วเท่านั้น ยังไม่เคยสอบก็ยังไม่มีอะไรให้เทียบ */
+  if(mock.length) html += goalBarHTML(mockGoal);
+
   html += '<div class="d-card" style="padding:1rem">'
     + '<div class="slabel">ส่วนผสมผลรายครั้ง — นับเป็น "จำนวนข้อ" ทั้งหมด</div>'
     + '<div style="font-size:12px;color:var(--text2);margin-bottom:8px;line-height:1.6">'
@@ -1236,6 +1327,7 @@ function renderProgressTrend(d){
 
   if(hasChap) trendChartInst=_progLineChart('s-trendChapter', chap, chapFull, Math.round(chapFull*25/30));
   if(hasMock) mockChartInst =_progLineChart('s-trendMock',    mock, mockFull, mockGoal);
+  goalBind();
 
   /* ── แถบส่วนผสม: นับ "ข้อ" จึงรวมทั้งสองประเภทได้ แต่ต้องรู้ว่าครั้งไหนเป็นชุดอะไร ── */
   const all=(d.allHistory||[]).slice();
