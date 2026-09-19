@@ -4145,3 +4145,79 @@ function allMockStats(){
   return Object.keys(EMBEDDED_QB).filter(function(k){ return /^ชุดรวม\s*\d+/.test(k); })
     .sort().map(mockStats).filter(Boolean);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   📋 ผังข้อสอบที่ครูแก้เองได้ (19 ก.ย. 69)
+   ครูแก้ บท/หมวด/ระดับ รายข้อจากหน้าครู → เก็บในชีต qb_map → ทั้งสองหน้าอ่านชุดเดียวกัน
+   ไฟล์คลังไม่ถูกแก้ · ค่าที่ครูตั้งทับตอนโหลดหน้าเท่านั้น (ย้อนกลับได้ด้วยการลบแถวในชีต)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+var QB_MAP = {};          /* {"ชุดรวม 04": {12: {ch,sub,level}}} — ค่าที่ครูแก้ */
+
+/* บทที่มีข้อฝึกในคลัง (ตัด " Ent" ที่เป็นคลังเสริมของบทเดียวกัน) */
+function bankChapters(){
+  if(typeof PRACTICE_BANK === 'undefined') return [];
+  return Object.keys(PRACTICE_BANK).filter(function(k){ return !/ Ent$/.test(k); }).sort();
+}
+
+/* หมวดย่อยของบทนั้นพร้อมจำนวนข้อฝึกที่มีจริง — ใช้ทำ dropdown ให้ครูเลือกเฉพาะหมวดที่มีของ */
+function bankSubs(ch){
+  if(typeof PRACTICE_BANK === 'undefined') return [];
+  var base = String(ch||'').replace(/\s*ชุดที่\s*\d+\s*$/,'').trim();
+  var list = (PRACTICE_BANK[base]||[]).concat(PRACTICE_BANK[base+' Ent']||[]);
+  var cnt = {};
+  list.forEach(function(q){ var c=q.c||q.sub||''; if(c) cnt[c]=(cnt[c]||0)+1; });
+  return Object.keys(cnt).sort().map(function(c){ return { sub:c, n:cnt[c] }; });
+}
+
+/* จำนวนข้อฝึกที่ข้อหนึ่ง ๆ จะดึงได้ ถ้าใช้ ch/sub คู่นี้ — 0 = นักเรียนจะไม่มีอะไรให้ฝึกซ้ำ */
+function bankCount(ch, sub){
+  var subs = bankSubs(ch);
+  for(var i=0;i<subs.length;i++) if(subs[i].sub === sub) return subs[i].n;
+  return 0;
+}
+
+/* ทับผังลง EMBEDDED_QB — rows = [[ชุด, ข้อ, ch, sub, level], ...]
+   คืนจำนวนข้อที่ทับสำเร็จ · ข้อที่ชุด/เลขข้อไม่มีจริงจะถูกข้ามเงียบ ๆ (ไม่ทำให้หน้าพัง) */
+function applyQBMap(rows){
+  if(typeof EMBEDDED_QB === 'undefined') return 0;
+  var done = 0;
+  (rows||[]).forEach(function(r){
+    var set = String(r[0]||'').trim(), q = parseInt(r[1],10);
+    if(!set || !q || !EMBEDDED_QB[set] || !EMBEDDED_QB[set][q]) return;
+    var ch = String(r[2]||'').trim(), sub = String(r[3]||'').trim(), lv = parseInt(r[4],10);
+    if(ch) EMBEDDED_QB[set][q].ch = ch;
+    if(sub) EMBEDDED_QB[set][q].sub = sub;
+    if(lv >= 1 && lv <= 5) EMBEDDED_QB[set][q].level = lv;
+    QB_MAP[set] = QB_MAP[set] || {};
+    QB_MAP[set][q] = { ch:ch, sub:sub, level:lv };
+    done++;
+  });
+  return done;
+}
+
+/* ผังรายข้อของชุดหนึ่ง พร้อมข้อมูลที่หน้าเว็บต้องใช้ครบในที่เดียว
+   [{q, ch, sub, level, grade, area, areaName, pts, edited, practiceN}] */
+function mockPlan(setName){
+  var key = String(setName||'').trim();
+  if(typeof EMBEDDED_QB === 'undefined' || !EMBEDDED_QB[key]) return [];
+  if(typeof fullScoreOf === 'function' && fullScoreOf(key) === 30) return [];
+  var AREA = {};
+  if(typeof ALEVEL_BLUEPRINT !== 'undefined')
+    ALEVEL_BLUEPRINT.areas.forEach(function(a){ AREA[a.key] = a.name; });
+  var out = [];
+  for(var q=1; q<=30; q++){
+    var it = EMBEDDED_QB[key][q]; if(!it) continue;
+    var ar = (typeof areaOfChapter === 'function') ? areaOfChapter(it.ch) : '??';
+    out.push({
+      q: q, ch: it.ch||'', sub: it.sub||'', level: parseInt(it.level,10)||4,
+      grade: (typeof gradeOfLevel === 'function') ? gradeOfLevel(it.level) : '',
+      area: ar, areaName: AREA[ar] || 'ยังไม่อยู่ในผัง',
+      pts: (typeof ptsOfQuestion === 'function') ? ptsOfQuestion(key,q) : 1,
+      also: it.also || '',
+      edited: !!(QB_MAP[key] && QB_MAP[key][q]),
+      practiceN: bankCount(it.ch, it.sub)
+    });
+  }
+  return out;
+}
