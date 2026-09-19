@@ -1325,6 +1325,12 @@ function renderProgressTrend(d){
       + 'เพราะคะแนนเต็มคนละแบบ เอามารวมกราฟเดียวกันจะอ่านผิด</div></div>';
   }
 
+  /* ★ 19 ก.ย. 69 — คะแนนที่ควรคาดหวังของชุดล่าสุด + ส่วนผสมความยาก (คำนวณสดจากผังข้อสอบ) */
+  if(mock.length){
+    try{ html += mockExpectLineHTML(mock[mock.length-1]); }catch(e){ console.error('expect line', e); }
+    try{ html += mockDiffCardHTML(d, mock[mock.length-1]); }catch(e){ console.error('diff card', e); }
+  }
+
   /* แถบตั้งเป้า — ขึ้นเมื่อเคยสอบสนามสอบแล้วเท่านั้น ยังไม่เคยสอบก็ยังไม่มีอะไรให้เทียบ */
   if(mock.length) html += goalBarHTML(mockGoal);
 
@@ -2639,4 +2645,92 @@ function subParsePaste(){
     + (_wP ? `ได้ ${_wP.score}/${_wP.full} คะแนน (ทำถูก ${n.ok}/30 ข้อ)` : `ทำถูก ${n.ok}/30 ข้อ`)
     + (n.blank ? ` · ยังไม่ระบุ ${n.blank} ข้อ` : '');
   subSetMode('tap');
+}
+/* ═══ 📐 คะแนนคาดหวัง & ส่วนผสมความยากของชุดสอบ (19 ก.ย. 69) ═══
+   ตัวเลขทั้งหมดมาจาก mockStats() ใน questionbank.js — คำนวณสดจากผังข้อสอบ
+   ถ้าโหลด questionbank.js เวอร์ชันเก่าที่ยังไม่มีฟังก์ชันนี้ การ์ดจะไม่ขึ้น (ไม่พัง) */
+
+/* ผลรายข้อของชุดนั้น → {q: 'ok'|'care'|...} จาก myLongAll */
+function _mockQStatus(d, h){
+  var out = {};
+  (d.myLongAll||[]).forEach(function(r){
+    if((r[3]||'') !== h.topic || (r[2]||'') !== h.date) return;
+    var q = parseInt(r[4],10); if(!q) return;
+    out[q] = parseStatus(r[5]||'');
+  });
+  return out;
+}
+
+/* บรรทัดสรุปใต้กราฟสนามสอบ — ชุดล่าสุดยากกว่าหรือง่ายกว่ามาตรฐานแค่ไหน */
+function mockExpectLineHTML(h){
+  if(typeof mockStats !== 'function') return '';
+  var s = mockStats(h && h.topic); if(!s) return '';
+  var dlt  = h.score - s.expect;
+  var tone = dlt >= 5 ? '#3B7D2A' : (dlt <= -5 ? '#B3261E' : 'var(--text2)');
+  var word = dlt >= 5 ? 'สูงกว่ามาตรฐานของชุดนี้ ' + dlt + ' คะแนน'
+           : (dlt <= -5 ? 'ต่ำกว่ามาตรฐานของชุดนี้ ' + (-dlt) + ' คะแนน'
+           : 'ใกล้เคียงมาตรฐานของชุดนี้ (' + (dlt >= 0 ? '+' : '') + dlt + ')');
+  return '<div class="d-card" style="padding:.8rem 1rem">'
+    + '<div style="font-size:12.5px;color:var(--text1);line-height:1.8">'
+    +   '📐 <b>' + s.set + '</b> — คะแนนที่ควรคาดหวังของชุดนี้ '
+    +   '<b style="font-family:var(--font-num,inherit)">≈ ' + s.expect + '</b> / ' + s.full
+    +   ' · ผลของหนู <b>' + h.score + '</b> → <span style="color:' + tone + ';font-weight:600">' + word + '</span></div>'
+    + '<div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.7">'
+    +   'คิดจากระดับความยากรายข้อของชุดนี้ (ง่าย ' + s.grades.easy.n + ' · กลาง ' + s.grades.mid.n
+    +   ' · ยาก ' + s.grades.hard.n + ' ข้อ) เทียบกับสถิติที่นักเรียนรุ่นก่อนทำได้จริงในข้อระดับเดียวกัน '
+    +   '— ไม่ใช่เป้าหมาย แต่เป็น "จุดที่ปกติแล้วควรได้" ของชุดนี้ · เป้าหมายตั้งเองได้ที่แถบข้างล่าง</div>'
+    + '</div>';
+}
+
+/* การ์ดแจกแจง ง่าย/กลาง/ยาก + เก็บได้จริงกี่คะแนนในแต่ละระดับ */
+function mockDiffCardHTML(d, h){
+  if(typeof mockStats !== 'function') return '';
+  var s = mockStats(h && h.topic); if(!s) return '';
+  var st = _mockQStatus(d, h);
+  var COL = { easy:'#4C9A2A', mid:'#D4A72C', hard:'#A32D2D' };
+  var NAME= { easy:'ง่าย', mid:'ปานกลาง', hard:'ยาก' };
+  var TAIL= { easy:'ข้อที่ต้องเก็บให้ได้', mid:'ต้องใช้ความพยายาม', hard:'วัดความสามารถจริง' };
+  var rows = '', bars = '', got = { easy:0, mid:0, hard:0 }, have = Object.keys(st).length > 0;
+
+  ['easy','mid','hard'].forEach(function(g){
+    s.grades[g].qs.forEach(function(q){
+      if(st[q] === 'ok') got[g] += (typeof ptsOfQuestion === 'function' ? ptsOfQuestion(s.set, q) : 0);
+    });
+    var w = Math.round(s.grades[g].pts / s.full * 100);
+    bars += '<div style="width:' + w + '%;background:' + COL[g] + ';height:100%"></div>';
+    var pct = s.grades[g].pts ? Math.round(got[g] / s.grades[g].pts * 100) : 0;
+    rows += '<div class="rev-row">'
+      + '<div style="min-width:74px;font-size:12.5px;color:' + COL[g] + ';font-weight:600">' + NAME[g] + '</div>'
+      + '<div style="flex:1"><div style="font-size:12px;color:var(--text2)">' + s.grades[g].n + ' ข้อ · '
+      +   s.grades[g].pts + ' คะแนน <span style="color:var(--text3)">· ' + TAIL[g] + '</span></div>'
+      + '<div style="font-size:10.5px;color:var(--text3)">ข้อ ' + s.grades[g].qs.join(', ') + '</div></div>'
+      + (have ? '<div style="min-width:74px;text-align:right;font-size:12.5px;font-weight:600">'
+          + got[g] + '/' + s.grades[g].pts + '<div style="font-size:10.5px;color:var(--text3);font-weight:400">'
+          + pct + '%</div></div>' : '')
+      + '</div>';
+  });
+
+  var tip = '';
+  if(have){
+    var lost = s.grades.easy.pts - got.easy;
+    tip = lost >= 6
+      ? '<b style="color:#B3261E">เสียไป ' + lost + ' คะแนนในข้อง่าย</b> — ตรงนี้ได้คืนง่ายที่สุด เก็บก่อนไปไล่ข้อยาก'
+      : (got.hard > 0 ? 'เก็บข้อยากได้ ' + got.hard + ' คะแนน — ข้อง่ายก็เก็บได้ดี รักษาไว้แบบนี้'
+                      : 'ข้อง่ายเก็บได้ดีแล้ว ขั้นต่อไปคือไล่เก็บข้อปานกลางให้มากขึ้น');
+  }
+
+  return '<div class="d-card" style="padding:1rem">'
+    + '<div class="slabel">🧱 ส่วนผสมความยาก — ' + s.set + '</div>'
+    + '<div style="font-size:11.5px;color:var(--text2);margin-bottom:10px;line-height:1.6">'
+    +   'แบ่งจากระดับความยากที่ให้ไว้รายข้อ · แถบกว้างตาม<b>คะแนน</b> ไม่ใช่จำนวนข้อ'
+    +   (have ? ' · ตัวเลขขวาสุดคือที่หนูเก็บได้จริงในชุดนี้' : '') + '</div>'
+    + '<div style="display:flex;height:12px;border-radius:6px;overflow:hidden;margin-bottom:12px">' + bars + '</div>'
+    + rows
+    + (tip ? '<div style="font-size:12px;color:var(--text2);margin-top:10px;padding-top:9px;'
+        + 'border-top:1px solid rgba(128,128,128,.15);line-height:1.7">' + tip + '</div>' : '')
+    + '<div style="font-size:11px;color:var(--text3);margin-top:8px;line-height:1.7">'
+    +   'ผังชุดนี้เทียบกับข้อสอบจริง: ' + s.areas.map(function(a){
+          return a.name + ' ' + a.count + (a.ok ? '' : ' ⚠️');
+        }).join(' · ') + '<br>อ้างอิง ' + s.source + '</div>'
+    + '</div>';
 }

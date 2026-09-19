@@ -4053,3 +4053,95 @@ MOCK_SETS["ชุดรวม 04"] = {
   title: "Test Gamm ครั้งที่ 13", year: "2569", questions: 30, full: 100,
   points: { ranges: [ { from:1, to:25, pts:3 }, { from:26, to:30, pts:5 } ] }
 };
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   📐 ผังข้อสอบ & ระดับความยาก — คำนวณสดจาก EMBEDDED_QB ทุกครั้ง (19 ก.ย. 69)
+   ไม่มีตัวเลขสรุปฝังไว้ที่ไหนเลย · เพิ่มชุดใหม่แล้วสถิติขึ้นเองทันที
+   ใช้ร่วมกัน 3 ที่: หน้านักเรียน (dashboard.js) · หน้าครู (fetch ไฟล์นี้) · สคริปต์ตรวจ
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* blueprint A-Level 61 คณิตศาสตร์ประยุกต์ 1 — mytcas (TCAS70)
+   30 ข้อ 100 คะแนน 90 นาที · ปรนัย 25 (75) + เติมคำตอบ 5 (25) */
+var ALEVEL_BLUEPRINT = {
+  source: 'A-Level 61 คณิตศาสตร์ประยุกต์ 1 · mytcas (TCAS70)',
+  areas: [
+    { key:'A1', name:'จำนวนและพีชคณิต', min:15, max:17,
+      chapters:['เซต','ตรรกศาสตร์','จำนวนจริง','ความสัมพันธ์และฟังก์ชัน','ความสัมพันธ์','ฟังก์ชัน',
+                'Expo Logarithm','ตรีโกณมิติ','จำนวนเชิงซ้อน','เมทริกซ์','ลำดับและอนุกรม'] },
+    { key:'A2', name:'การวัดและเรขาคณิต', min:3, max:5,
+      chapters:['เรขาคณิตวิเคราะห์และภาคตัดกรวย','เรขาคณิตวิเคราะห์','ภาคตัดกรวย','เวกเตอร์'] },
+    { key:'A3', name:'สถิติและความน่าจะเป็น', min:6, max:8,
+      chapters:['สถิติ','ความน่าจะเป็น','เรียงลำดับและจัดหมู่','การแจกแจงความน่าจะเป็น'] },
+    { key:'A4', name:'แคลคูลัส', min:2, max:4, chapters:['แคลคูลัส'] }
+  ]
+};
+
+/* %ทำถูกเฉลี่ยจริงของแต่ละ level — calibrate จากบทปกติ 420 ข้อ นักเรียน 27–73 คน/บท (18 ก.ย. 69)
+   ทวนใหม่เมื่อมีผลสนามสอบครบกลุ่ม */
+var LEVEL_PASS_RATE = { 1:0.72, 2:0.69, 3:0.63, 4:0.53, 5:0.42 };
+
+/* เกรดความยาก — L1–L3 ง่าย · L4 ปานกลาง · L5 ยาก (โหมดของการกระจายจริงในแต่ละชั้น) */
+function gradeOfLevel(lv){ lv = parseInt(lv,10)||4; return lv<=3 ? 'easy' : (lv===4 ? 'mid' : 'hard'); }
+
+/* ชื่อบท → สาระตาม blueprint · ตัดหาง "ชุดที่ N" / "Ent" ทิ้งก่อนเทียบ */
+function areaOfChapter(ch){
+  var name = String(ch||'').replace(/\s*ชุดที่\s*\d+\s*$/,'').replace(/\s+Ent\s*$/,'').trim();
+  for(var i=0;i<ALEVEL_BLUEPRINT.areas.length;i++){
+    if(ALEVEL_BLUEPRINT.areas[i].chapters.indexOf(name) >= 0) return ALEVEL_BLUEPRINT.areas[i].key;
+  }
+  return '??';                       /* บทใหม่ที่ยังไม่ได้ใส่ในผัง — ต้องเห็น ไม่ใช่เดาให้ */
+}
+
+/* สถิติของชุดสอบหนึ่งชุด — คืน null ถ้าไม่ใช่ชุดรวมหรือยังไม่มีผังในคลัง */
+function mockStats(setName){
+  var key = String(setName||'').trim();
+  if(typeof EMBEDDED_QB === 'undefined') return null;
+  var qb = EMBEDDED_QB[key];
+  if(!qb) return null;
+  if(typeof fullScoreOf === 'function' && fullScoreOf(key) === 30) return null;  /* บทปกติไม่ต้องเทียบ blueprint */
+
+  var pts = function(q){ return (typeof ptsOfQuestion === 'function') ? ptsOfQuestion(key,q) : 1; };
+  var areaCnt = {A1:{n:0,pts:0},A2:{n:0,pts:0},A3:{n:0,pts:0},A4:{n:0,pts:0},'??':{n:0,pts:0}};
+  var grades  = { easy:{n:0,pts:0,qs:[]}, mid:{n:0,pts:0,qs:[]}, hard:{n:0,pts:0,qs:[]} };
+  var byLevel = {}, byChapter = {}, unknown = [], expect = 0, full = 0, n = 0;
+
+  for(var q=1; q<=30; q++){
+    var item = qb[q]; if(!item) continue;
+    var p = pts(q), lv = parseInt(item.level,10)||4, ar = areaOfChapter(item.ch), g = gradeOfLevel(lv);
+    n++; full += p;
+    areaCnt[ar].n++; areaCnt[ar].pts += p;
+    if(ar === '??') unknown.push({ q:q, ch:item.ch });
+    grades[g].n++; grades[g].pts += p; grades[g].qs.push(q);
+    byLevel[lv] = (byLevel[lv]||0) + 1;
+    byChapter[item.ch] = (byChapter[item.ch]||0) + 1;
+    expect += p * (LEVEL_PASS_RATE[lv] != null ? LEVEL_PASS_RATE[lv] : 0.53);
+  }
+  if(!n) return null;
+
+  var areas = ALEVEL_BLUEPRINT.areas.map(function(a){
+    var c = areaCnt[a.key];
+    return { key:a.key, name:a.name, min:a.min, max:a.max, count:c.n, pts:c.pts,
+             ok: c.n >= a.min && c.n <= a.max,
+             diff: c.n < a.min ? (c.n - a.min) : (c.n > a.max ? (c.n - a.max) : 0) };
+  });
+
+  return {
+    set: key, n: n, full: full,
+    areas: areas,
+    blueprintOk: areas.every(function(a){ return a.ok; }) && !unknown.length,
+    unknown: unknown,
+    grades: grades,
+    byLevel: byLevel,
+    byChapter: byChapter,
+    expect: Math.round(expect),
+    expectPct: Math.round(expect / full * 100),
+    source: ALEVEL_BLUEPRINT.source
+  };
+}
+
+/* ทุกชุดรวมที่มีในคลัง เรียงตามชื่อ — ใช้กับตารางหน้าครู */
+function allMockStats(){
+  if(typeof EMBEDDED_QB === 'undefined') return [];
+  return Object.keys(EMBEDDED_QB).filter(function(k){ return /^ชุดรวม\s*\d+/.test(k); })
+    .sort().map(mockStats).filter(Boolean);
+}
