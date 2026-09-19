@@ -997,16 +997,23 @@ async function fetchDashData(){
   /* ★ ค่าเฉลี่ยของทั้งรุ่นในแต่ละชุดสอบ (คีย์ = บท|วันที่)
      ข้อสอบแต่ละชุดยากไม่เท่ากัน คะแนนดิบข้ามชุดจึงเทียบกันตรง ๆ ไม่ได้
      ต้องดูคู่กับค่าเฉลี่ยเสมอ ไม่งั้นชุดที่ยากขึ้นจะดูเหมือนนักเรียนถดถอย */
-  const _examAgg={};
+  /* ★ 19 ก.ย. 69 (รอบ 2) — ของเดิมคีย์เป็น บท|วันที่ ทำให้คนที่สอบคนละวันไม่ถูกนับรวมกัน
+     กลุ่มที่นัดสอบคนละวันจึงกลายเป็น "มีผลคนเดียว" ทั้งที่ทั้งรุ่นสอบชุดเดียวกัน
+     → เปลี่ยนเป็นคิดจาก "บท/ชุด" อย่างเดียว ไม่สนวันที่
+     และนับ 1 คน 1 ค่า (ใช้ผลล่าสุดของคนนั้นในบทนั้น) คนที่สอบซ้ำจึงไม่ถ่วงค่าเฉลี่ย */
+  const _byTopic={};
   rows.slice(1).forEach(r=>{
     const tp=r[4]||''; if(!tp||!r[1]) return;
-    const k=tp+'|'+(r[3]||'');
-    const a=(_examAgg[k]=_examAgg[k]||{sum:0,n:0,scores:[]});
-    const sc=_scoreOf(r,tp);
-    a.sum+=sc; a.n++; a.scores.push(sc);
+    const m=(_byTopic[tp]=_byTopic[tp]||{});
+    m[r[1]]=_scoreOf(r,tp);            /* แถวหลังทับแถวก่อน = ผลล่าสุดของคนนั้น */
+  });
+  const _examAgg={};
+  Object.keys(_byTopic).forEach(tp=>{
+    const scores=Object.keys(_byTopic[tp]).map(nm=>_byTopic[tp][nm]);
+    _examAgg[tp]={ sum:scores.reduce((x,y)=>x+y,0), n:scores.length, scores:scores };
   });
   const _fillStat=h=>{
-    const a=_examAgg[h.topic+'|'+h.date];
+    const a=_examAgg[h.topic];
     if(a&&a.n){
       h.gAvg=Math.round(a.sum/a.n*10)/10;
       h.gN=a.n;
@@ -1024,7 +1031,7 @@ async function fetchDashData(){
   let streak=0; for(let i=_kindHist.length-1;i>0;i--){ if(_kindHist[i].score>_kindHist[i-1].score)streak++; else break; }
   const isBest=_kindHist.length>1&&score>=Math.max(..._kindHist.map(h=>h.score));
   const myExamStat=(function(){
-    const a=_examAgg[topic+'|'+date];
+    const a=_examAgg[topic];
     if(!a||!a.n) return null;
     return {avg:Math.round(a.sum/a.n*10)/10,n:a.n,rank:a.scores.filter(s=>s>score).length+1};
   }());
@@ -1155,7 +1162,7 @@ function goalEffective(chapter){
 
 function goalSourceText(){
   if(!MY_GOAL || !MY_GOAL.goal) return 'ค่าตั้งต้นของระบบ — ยังไม่มีใครตั้งเป้า';
-  return MY_GOAL.by === 'teacher' ? 'ครูตั้งให้' : 'หนูตั้งเอง';
+  return MY_GOAL.by === 'teacher' ? 'ครูตั้งให้' : 'คุณตั้งเอง';
 }
 
 /* แถบตั้งเป้า — อยู่ใต้กราฟสนามสอบ ใช้ input number เพื่อให้มือถือขึ้นแป้นตัวเลข */
@@ -1172,7 +1179,7 @@ function goalBarHTML(cur){
     + '</div>'
     + '<div style="font-size:11px;color:var(--text3);margin-top:7px;line-height:1.7">'
     +   'ตั้งเท่าไรก็ได้ตั้งแต่ ' + GOAL_MIN + '–' + GOAL_MAX + ' · เส้นแดงในกราฟจะขยับตามทันที · '
-    +   'ครูเห็นเป้าที่หนูตั้งด้วย และครูตั้งให้ได้เหมือนกัน (ใครตั้งทีหลังใช้ค่านั้น)</div>'
+    +   'ครูเห็นเป้าที่คุณตั้งด้วย และครูตั้งให้ได้เหมือนกัน (ใครตั้งทีหลังใช้ค่านั้น)</div>'
     + '</div>';
 }
 
@@ -1209,14 +1216,22 @@ function goalBind(){
   inp.onkeydown = e => { if(e.key === 'Enter') btn.click(); };
 }
 
-function _progCard(id, title, sub, hasAvg){
+function _progCard(id, title, sub, hasAvg, hist){
+  /* ★ 19 ก.ย. 69 — hist ส่งมาเพื่อดูว่ามีชุดไหนที่มีเพื่อนสอบด้วยจริง ๆ หรือยัง */
+  var withPeers = (hist || []).some(function(h){ return h.gAvg != null && h.gN > 1; });
+  var note = '';
+  if(hasAvg){
+    note = withPeers
+      ? 'เส้นเทา = ค่าเฉลี่ยของ<b>ทุกคนที่สอบบท/ชุดเดียวกัน</b> (นับรวมคนที่สอบคนละวัน · 1 คนนับผลล่าสุดครั้งเดียว) · ข้อสอบแต่ละชุดยากไม่เท่ากัน '
+        + '<b>คะแนนลดลงแต่ยังอยู่เหนือเส้นเทา = ทำได้ดีขึ้นเมื่อเทียบกับเพื่อน</b>'
+      : 'ยังไม่มีเส้นค่าเฉลี่ยรุ่น เพราะ<b>ยังไม่มีเพื่อนกรอกผลของบท/ชุดเดียวกัน</b> — '
+        + 'ค่าเฉลี่ยจากคนเดียวคือคะแนนตัวเอง เอามาเทียบไม่ได้ · เส้นจะขึ้นเองเมื่อมีคนสอบบท/ชุดนั้น 2 คนขึ้นไป (สอบคนละวันก็นับรวม)';
+  }
   return '<div class="d-card" style="padding:1rem">'
     + '<div class="slabel">' + title + '</div>'
     + '<div style="font-size:11.5px;color:var(--text2);margin-bottom:8px;line-height:1.6">' + sub + '</div>'
     + '<div style="position:relative;width:100%;height:210px"><canvas id="' + id + '"></canvas></div>'
-    + (hasAvg ? '<div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.7">'
-        + 'เส้นเทา = ค่าเฉลี่ยของทั้งรุ่นในชุดนั้น ๆ · ข้อสอบแต่ละชุดยากไม่เท่ากัน '
-        + '<b>คะแนนลดลงแต่ยังอยู่เหนือเส้นเทา = ทำได้ดีขึ้นเมื่อเทียบกับเพื่อน</b></div>' : '')
+    + (note ? '<div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.7">' + note + '</div>' : '')
     + '</div>';
 }
 
@@ -1227,13 +1242,15 @@ function _progCard(id, title, sub, hasAvg){
 function _progSingleCard(emoji, title, h, tail){
   if(!h) return '';
   const pct = h.full ? Math.round(h.score / h.full * 100) : 0;
-  const avgLine = (h.gAvg != null)
+  /* ★ 19 ก.ย. 69 — มีผลคนเดียว = ยังไม่มีค่าเฉลี่ยให้เทียบ (ของเดิมขึ้น "อันดับ 1 จาก 1 คน") */
+  const avgLine = (h.gAvg != null && h.gN > 1)
     ? '<div style="font-size:12.5px;color:var(--text2);margin-top:6px;line-height:1.7">'
-      + 'ค่าเฉลี่ยของรุ่นในชุดนี้ <b>' + h.gAvg + '</b>'
+      + 'ค่าเฉลี่ยของรุ่นในบท/ชุดนี้ <b>' + h.gAvg + '</b>'
       + (h.gRank ? ' · อยู่อันดับ <b>' + h.gRank + '</b> จาก ' + h.gN + ' คน' : '')
       + (h.score > h.gAvg ? ' <span style="color:#3B7D2A">· สูงกว่าค่าเฉลี่ย</span>' : '')
       + '</div>'
-    : '';
+    : '<div style="font-size:12px;color:var(--text3);margin-top:6px;line-height:1.7">'
+      + 'ยังไม่มีเพื่อนกรอกผลของบท/ชุดนี้ จึงยังไม่มีค่าเฉลี่ยรุ่นให้เทียบ</div>';
   return '<div class="d-card" style="padding:1rem">'
     + '<div class="slabel">' + emoji + ' ' + title + '</div>'
     + '<div style="font-size:12px;color:var(--text3);margin-bottom:8px">'
@@ -1256,9 +1273,11 @@ function _progLineChart(canvasId, hist, full, goal){
       backgroundColor:'rgba(24,95,165,.12)', fill:true, tension:.25, pointRadius:4,
       pointBackgroundColor:'#185FA5', order:1 }
   ];
-  /* เส้นค่าเฉลี่ยรุ่น — วาดเฉพาะเมื่อมีข้อมูลจริงอย่างน้อย 1 จุด */
-  if(hist.some(h=>h.gAvg!=null)){
-    ds.push({ label:'ค่าเฉลี่ยรุ่น', data:hist.map(h=>h.gAvg!=null?h.gAvg:null),
+  /* ★ 19 ก.ย. 69 — เส้นค่าเฉลี่ยรุ่นต้องมีเพื่อนอย่างน้อย 2 คนในชุดนั้นถึงจะมีความหมาย
+     ของเดิมชุดที่มีผลคนเดียว gAvg = คะแนนตัวเอง → เส้นเทาทับเส้นน้ำเงินสนิท
+     ครูจึงเห็นแค่ชื่อใน legend แต่ไม่เห็นเส้น (ดูเหมือนเส้นหาย ทั้งที่วาดอยู่) */
+  if(hist.some(h=>h.gAvg!=null && h.gN>1)){
+    ds.push({ label:'ค่าเฉลี่ยรุ่น', data:hist.map(h=>(h.gAvg!=null && h.gN>1)?h.gAvg:null),
       borderColor:'#948F86', borderDash:[4,3], pointRadius:3, pointBackgroundColor:'#948F86',
       fill:false, tension:.25, spanGaps:true, order:2 });
   }
@@ -1305,7 +1324,7 @@ function renderProgressTrend(d){
   /* ── ข้อสอบแยกบท ── */
   if(hasChap){
     html += _progCard('s-trendChapter','📘 ข้อสอบแยกบท — คะแนนรายครั้ง',
-      'เต็ม '+chapFull+' คะแนน · '+chap.length+' ครั้ง · เทียบกับตัวเองในบทที่เคยสอบมา', true);
+      'เต็ม '+chapFull+' คะแนน · '+chap.length+' ครั้ง · เทียบกับตัวเองในบทที่เคยสอบมา', true, chap);
   }else if(chap.length===1){
     html += _progSingleCard('📘','ข้อสอบแยกบท — ผลครั้งล่าสุด', chap[0],
       'สอบแยกบทไปแล้ว 1 ครั้ง · กราฟแนวโน้มจะเริ่มแสดงเมื่อสอบครั้งที่ 2 เพราะยังไม่มีอะไรให้เทียบ');
@@ -1314,7 +1333,7 @@ function renderProgressTrend(d){
   /* ── สนามสอบ ── */
   if(hasMock){
     html += _progCard('s-trendMock','🎯 สนามสอบ (รวมทุกบท) — คะแนนรายชุด',
-      'เต็ม '+mockFull+' คะแนน · '+mock.length+' ชุด · ข้อ 1–25 ข้อละ 3 · ข้อ 26–30 ข้อละ 5', true);
+      'เต็ม '+mockFull+' คะแนน · '+mock.length+' ชุด · ข้อ 1–25 ข้อละ 3 · ข้อ 26–30 ข้อละ 5', true, mock);
   }else if(mock.length===1){
     html += _progSingleCard('🎯','สนามสอบ (รวมทุกบท) — ผลชุดล่าสุด', mock[0],
       'ข้อ 1–25 ข้อละ 3 · ข้อ 26–30 ข้อละ 5 (เต็ม '+(mock[0].full||100)+') · '
@@ -1394,7 +1413,7 @@ function renderProgressTrend(d){
         ? '<span style="color:var(--text3)">—</span>'
         : (dlt>0?'<span style="color:#3B7D2A;font-weight:600">▲ +'+dlt+'</span>'
           :(dlt<0?'<span style="color:#C77E1A;font-weight:600">▼ '+dlt+'</span>':'▬ 0'));
-      const avgTxt=h.gAvg!=null
+      const avgTxt=(h.gAvg!=null && h.gN>1)
         ? '<div style="font-size:10.5px;color:var(--text3)">เฉลี่ยรุ่น '+h.gAvg
           +(h.gRank?' · อันดับ '+h.gRank+'/'+h.gN:'')+'</div>'
         : '';
@@ -1471,7 +1490,8 @@ function renderStudentDash(d){
   document.getElementById('s-topic').textContent=d.topic+' · '+_dFmt(d.date);
   document.getElementById('s-rank').innerHTML=d.rank+' <span style="font-size:12px;color:var(--text3)">/ '+d.groupMembers.length+'</span>'+(d.allMembers.length>d.groupMembers.length?'<div style="font-size:10px;color:var(--text3);font-weight:400;margin-top:2px">รวมทุกกลุ่ม '+d.allRank+'/'+d.allMembers.length+'</div>':'');
   const avg=d.groupMembers.length?Math.round(d.groupMembers.reduce((s,m)=>s+m.score,0)/d.groupMembers.length):0;
-  document.getElementById('s-score').innerHTML=d.score+' <span style="font-size:13px;color:var(--text3);font-weight:400">/ 30</span>';
+  /* ★ 19 ก.ย. 69 — ของเดิมตรึงไว้ที่ /30 ชุดรวมจึงขึ้น "74 / 30" ทั้งที่เต็ม 100 */
+  document.getElementById('s-score').innerHTML=d.score+' <span style="font-size:13px;color:var(--text3);font-weight:400">/ '+(d.full||30)+'</span>';
   document.getElementById('s-scorepct').textContent=Math.round(d.score/(d.full||30)*100)+'% · เฉลี่ยกลุ่ม '+Math.round(avg/(d.full||30)*100)+'%'+(d.allMembers.length>d.groupMembers.length?' · เฉลี่ยรวม '+Math.round(d.allAvg/(d.full||30)*100)+'%':'');
   document.getElementById('s-wrong').innerHTML=(d.wrong+d.care+d.concept+d.blank)+' <span style="font-size:13px;color:var(--text3);font-weight:400">ข้อ</span>';
   document.getElementById('s-wrongsub').textContent=d.blank+' ไม่ทำ · '+d.care+' สะเพร่า · '+d.concept+' คอนเซปต์ · '+d.wrong+' ทำไม่ได้';
@@ -1794,55 +1814,84 @@ function renderParentDash(d){
   else if(cur==='owl'){if(wc)wc.style.display='none';_parentOwl(d);}
   else if(cur==='bee'){if(wc)wc.style.display='none';_parentBee(d);}
   else _parentDolphin(d);
-  /* ★ 17 ก.ย. 69 — การ์ดสรุปแยกประเภทข้อสอบ ใช้ร่วมกันทั้ง 5 สไตล์
-     (แทรกท้ายสุด ไม่แตะเนื้อรายงานเดิมของแต่ละสไตล์) */
-  try{ renderParentExamSplit(d); }catch(e){}
+  /* ★ 19 ก.ย. 69 — การ์ด "ผลสอบ 2 ครั้งล่าสุด" ใช้ร่วมกันทั้ง 5 สไตล์
+     (แทรกท้ายสุด ไม่แตะเนื้อรายงานเดิมของแต่ละสไตล์) · ของเดิมแยกตามประเภทข้อสอบ */
+  try{ renderParentLastTwo(d); }catch(e){}
 }
 
-/* ── การ์ด "ผลสอบสองแบบ" สำหรับผู้ปกครอง ──
-   ผู้ปกครองเห็นเลข 62 แล้วตกใจว่าน้อยกว่า 24 ของครั้งก่อน ทั้งที่คนละเต็ม
-   การ์ดนี้จึงแยกให้ชัด และบอกค่าเฉลี่ยรุ่นกำกับทุกตัวเลข */
-function renderParentExamSplit(d){
+/* ── การ์ด "ผลสอบ 2 ครั้งล่าสุด" สำหรับผู้ปกครอง (19 ก.ย. 69) ──
+   ของเดิมแยกเป็น "แยกบท / สนามสอบ" ซึ่งอ่านยากสำหรับผู้ปกครอง —
+   เปลี่ยนเป็นเรียงตามเวลา 2 ครั้งล่าสุดไม่ว่าจะเป็นแบบไหน
+   คะแนนเต็มต่างกันจึงเทียบกันด้วย % เสมอ และบอกกำกับว่าคนละแบบ */
+function renderParentLastTwo(d){
   const host=document.getElementById('p-summary'); if(!host||!host.parentNode)return;
   let el=document.getElementById('p-examSplit');
   if(!el){ el=document.createElement('div'); el.id='p-examSplit'; host.parentNode.appendChild(el); }
-  const chap=(d.chapHist||[]), mock=(d.mockHist||[]);
-  if(!chap.length && !mock.length){ el.innerHTML=''; return; }
+  const all=(d.allHistory||[]).slice();
+  if(!all.length){ el.innerHTML=''; return; }
 
-  const box=(title,emoji,list,note)=>{
-    if(!list.length) return '';
-    const last=list[list.length-1];
-    const prev=list.length>1?list[list.length-2]:null;
-    const dlt=prev?(last.score-prev.score):null;
-    const dtxt=dlt==null?'ครั้งแรก'
-      :(dlt>0?'ดีขึ้น +'+dlt+' คะแนน':(dlt<0?'ลดลง '+Math.abs(dlt)+' คะแนน':'เท่าเดิม'));
-    const dcol=dlt==null?'#948F86':(dlt>0?'#3B7D2A':(dlt<0?'#C77E1A':'#948F86'));
-    const avgLine=last.gAvg!=null
+  const two=all.slice(-2);                 /* [ครั้งก่อน, ครั้งล่าสุด] หรือ [ครั้งเดียว] */
+  const last=two[two.length-1], prev=two.length>1?two[0]:null;
+  const pctOf=h=>h.full?Math.round(h.score/h.full*100):0;
+
+  const box=(h,isLast)=>{
+    const pct=pctOf(h);
+    const kind=h.isMock?'🎯 สนามสอบรวมทุกบท':'📘 ข้อสอบแยกบท';
+    const avgLine=(h.gAvg!=null && h.gN>1)
       ? '<div style="font-size:12px;color:var(--text2,#6B6660);margin-top:4px;line-height:1.7">'
-        +'ค่าเฉลี่ยของรุ่นในชุดนี้ <b>'+last.gAvg+'</b>'
-        +(last.gRank?' · อยู่อันดับ <b>'+last.gRank+'</b> จาก '+last.gN+' คน':'')
+        +'ค่าเฉลี่ยของรุ่นในบท/ชุดนี้ <b>'+h.gAvg+'</b>'
+        +(h.gRank?' · อยู่อันดับ <b>'+h.gRank+'</b> จาก '+h.gN+' คน':'')
+        +(h.score>h.gAvg?' <span style="color:#3B7D2A">· สูงกว่าค่าเฉลี่ย</span>':'')
+        +'</div>'
+      : '<div style="font-size:11.5px;color:var(--text3,#948F86);margin-top:4px;line-height:1.7">'
+        +'ยังไม่มีเพื่อนกรอกผลของบท/ชุดนี้ จึงยังไม่มีค่าเฉลี่ยให้เทียบ</div>';
+    const miss=(h.care||0)+(h.concept||0)+(h.cant||0)+(h.timeout||0);
+    const missLine=miss
+      ? '<div style="font-size:11.5px;color:var(--text3,#948F86);margin-top:6px;line-height:1.6">'
+        +'จุดที่ยังพลาด '+miss+' ข้อ'
+        +((h.care||0)?' · สะเพร่า '+h.care:'')
+        +((h.concept||0)?' · คอนเซปต์ '+h.concept:'')
+        +((h.timeout||0)?' · ไม่ทัน '+h.timeout:'')
         +'</div>'
       : '';
-    return '<div style="flex:1 1 220px;border:1px solid var(--border,#E7E4DC);border-radius:12px;padding:12px 14px;background:#fff">'
-      +'<div style="font-size:12px;color:var(--text3,#948F86)">'+emoji+' '+title+'</div>'
+    return '<div style="flex:1 1 220px;border:'+(isLast?'2px solid #185FA5':'1px solid var(--border,#E7E4DC)')
+      +';border-radius:12px;padding:12px 14px;background:#fff">'
+      +'<div style="font-size:12px;color:'+(isLast?'#185FA5':'var(--text3,#948F86)')+';font-weight:'+(isLast?'600':'400')+'">'
+      +  (isLast?'ครั้งล่าสุด':'ครั้งก่อนหน้า')+(h.date?' · '+_dFmt(h.date):'')+'</div>'
       +'<div style="font-size:24px;font-weight:700;color:#185FA5;line-height:1.3">'
-      +   last.score+'<span style="font-size:14px;color:var(--text3,#948F86);font-weight:500"> / '+(last.full||30)+'</span></div>'
-      +'<div style="font-size:11.5px;color:var(--text3,#948F86)">'+(last.topic||'')+'</div>'
-      + avgLine
-      +'<div style="font-size:12px;color:'+dcol+';margin-top:6px">เทียบครั้งก่อนของแบบเดียวกัน: '+dtxt+'</div>'
-      +'<div style="font-size:11px;color:var(--text3,#948F86);margin-top:6px;line-height:1.6">'+note+'</div>'
+      +  h.score+'<span style="font-size:14px;color:var(--text3,#948F86);font-weight:500"> / '+(h.full||30)+'</span>'
+      +  '<span style="font-size:14px;color:var(--text3,#948F86);font-weight:500;margin-left:8px">'+pct+'%</span></div>'
+      +'<div style="font-size:11.5px;color:var(--text3,#948F86)">'+kind+' · '+(h.topic||'')+'</div>'
+      + avgLine + missLine
       +'</div>';
   };
 
+  let cmp='';
+  if(prev){
+    const dPct=pctOf(last)-pctOf(prev);
+    const same=(last.full||30)===(prev.full||30);
+    const word=dPct>0?'ดีขึ้น '+dPct+'%':(dPct<0?'ลดลง '+Math.abs(dPct)+'%':'เท่าเดิม');
+    const col=dPct>0?'#3B7D2A':(dPct<0?'#C77E1A':'#948F86');
+    cmp='<div style="font-size:12.5px;margin-top:10px;line-height:1.8">'
+      +'เทียบสองครั้งล่าสุด: <b style="color:'+col+'">'+word+'</b> '
+      +'<span style="color:var(--text3,#948F86)">('+pctOf(prev)+'% → '+pctOf(last)+'%)</span>'
+      + (same ? '' : '<br><span style="font-size:11.5px;color:var(--text3,#948F86)">'
+          + 'สองครั้งนี้เป็นข้อสอบคนละแบบ (เต็ม '+(prev.full||30)+' กับเต็ม '+(last.full||30)+') '
+          + 'จึงเทียบด้วย<b>เปอร์เซ็นต์</b> ไม่ใช่คะแนนดิบ</span>')
+      +'</div>';
+  }else{
+    cmp='<div style="font-size:12px;color:var(--text3,#948F86);margin-top:10px;line-height:1.8">'
+      +'เพิ่งสอบไป 1 ครั้ง — จะเริ่มเห็นแนวโน้มตั้งแต่ครั้งที่ 2 เป็นต้นไปครับ</div>';
+  }
+
   el.innerHTML='<div style="margin-top:18px">'
-    +'<div style="font-size:13px;font-weight:600;margin-bottom:8px">ผลสอบแบ่งตามประเภทข้อสอบ</div>'
+    +'<div style="font-size:13px;font-weight:600;margin-bottom:8px">ผลสอบ 2 ครั้งล่าสุด</div>'
     +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
-    + box('ข้อสอบแยกบท','📘',chap,'สอบทีละบท เต็ม 30 คะแนน — วัดว่าบทนั้นแม่นแค่ไหน')
-    + box('สนามสอบรวมทุกบท','🎯',mock,'ออกคละทุกบท เต็ม 100 คะแนน — จำลองสนามสอบจริง')
+    + (prev?box(prev,false):'') + box(last,true)
     +'</div>'
-    +'<div style="font-size:11.5px;color:var(--text3,#948F86);margin-top:10px;line-height:1.8">'
-    +'⚠️ คะแนนสองแบบนี้<b>เทียบกันตรง ๆ ไม่ได้</b> เพราะคะแนนเต็มคนละแบบ · '
-    +'และข้อสอบแต่ละชุดยากไม่เท่ากัน จึงควรดู<b>ค่าเฉลี่ยของรุ่น</b>ประกอบเสมอ — '
+    + cmp
+    +'<div style="font-size:11.5px;color:var(--text3,#948F86);margin-top:8px;line-height:1.8">'
+    +'ข้อสอบแต่ละชุดยากไม่เท่ากัน จึงควรดู<b>ค่าเฉลี่ยของรุ่น</b>ประกอบเสมอ — '
     +'คะแนนลดลงแต่ยังสูงกว่าค่าเฉลี่ย แปลว่าชุดนั้นยากขึ้นสำหรับทุกคน ไม่ใช่ถดถอย</div>'
     +'</div>';
 }
@@ -2674,7 +2723,7 @@ function mockExpectLineHTML(h){
     + '<div style="font-size:12.5px;color:var(--text1);line-height:1.8">'
     +   '📐 <b>' + s.set + '</b> — คะแนนที่ควรคาดหวังของชุดนี้ '
     +   '<b style="font-family:var(--font-num,inherit)">≈ ' + s.expect + '</b> / ' + s.full
-    +   ' · ผลของหนู <b>' + h.score + '</b> → <span style="color:' + tone + ';font-weight:600">' + word + '</span></div>'
+    +   ' · ผลของคุณ <b>' + h.score + '</b> → <span style="color:' + tone + ';font-weight:600">' + word + '</span></div>'
     + '<div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.7">'
     +   'คิดจากระดับความยากรายข้อของชุดนี้ (ง่าย ' + s.grades.easy.n + ' · กลาง ' + s.grades.mid.n
     +   ' · ยาก ' + s.grades.hard.n + ' ข้อ) เทียบกับสถิติที่นักเรียนรุ่นก่อนทำได้จริงในข้อระดับเดียวกัน '
@@ -2723,7 +2772,7 @@ function mockDiffCardHTML(d, h){
     + '<div class="slabel">🧱 ส่วนผสมความยาก — ' + s.set + '</div>'
     + '<div style="font-size:11.5px;color:var(--text2);margin-bottom:10px;line-height:1.6">'
     +   'แบ่งจากระดับความยากที่ให้ไว้รายข้อ · แถบกว้างตาม<b>คะแนน</b> ไม่ใช่จำนวนข้อ'
-    +   (have ? ' · ตัวเลขขวาสุดคือที่หนูเก็บได้จริงในชุดนี้' : '') + '</div>'
+    +   (have ? ' · ตัวเลขขวาสุดคือที่คุณเก็บได้จริงในชุดนี้' : '') + '</div>'
     + '<div style="display:flex;height:12px;border-radius:6px;overflow:hidden;margin-bottom:12px">' + bars + '</div>'
     + rows
     + (tip ? '<div style="font-size:12px;color:var(--text2);margin-top:10px;padding-top:9px;'
