@@ -650,6 +650,45 @@ function ensureMockOptions(){
     o.textContent='🎯 '+k+(MOCK_SETS[k].title?' · '+MOCK_SETS[k].title:'');
     sel.appendChild(o);
   });
+  /* ★ 20 ก.ย. 69 — จัดกลุ่มตัวเลือกให้เห็นชัดว่าอันไหนแยกบท อันไหนสนามสอบ
+     (ของเดิมปนกันในรายการเดียว นักเรียนเลือกแล้วไม่รู้ว่ากำลังดูประเภทไหนอยู่) */
+  if(!sel.querySelector('optgroup')){
+    const opts=Array.from(sel.options);
+    const gChap=document.createElement('optgroup'); gChap.label='📘 ข้อสอบแยกบท (เต็ม 30)';
+    const gMock=document.createElement('optgroup'); gMock.label='🎯 สนามสอบรวมทุกบท (เต็ม 100)';
+    opts.forEach(o=>{
+      const v=String(o.value||'').trim();
+      if(!v) return;                       /* ตัวเลือก "ทุกบท" ให้อยู่บนสุดนอกกลุ่ม */
+      (_isMock(v)?gMock:gChap).appendChild(o);
+    });
+    if(gChap.children.length) sel.appendChild(gChap);
+    if(gMock.children.length) sel.appendChild(gMock);
+  }
+}
+
+/* ★ 20 ก.ย. 69 — ตอนนี้กำลังดูประเภทไหน: ยึดตามบทที่เลือกในช่องด้านบน
+   ไม่ได้เลือก (ทุกบท) → ใช้ประเภทของผลสอบล่าสุด */
+function viewKind(d){
+  const sel=document.getElementById('topicFilter');
+  const v=sel?String(sel.value||'').trim():'';
+  if(v) return _isMock(v)?'mock':'chap';
+  if(d && d.allHistory && d.allHistory.length) return d.allHistory[d.allHistory.length-1].isMock?'mock':'chap';
+  if(d && d.isMock!=null) return d.isMock?'mock':'chap';
+  return 'chap';
+}
+
+/* แถบบอกว่ากำลังดูประเภทไหน + วิธีสลับ (ขึ้นบนสุดของแท็บพัฒนาการ) */
+function kindBannerHTML(kind, nChap, nMock){
+  const isMock = kind==='mock';
+  const other  = isMock ? ('ข้อสอบแยกบท' + (nChap?' ('+nChap+' ครั้ง)':'')) 
+                        : ('สนามสอบรวมบท' + (nMock?' ('+nMock+' ชุด)':''));
+  return '<div class="d-card" style="padding:.8rem 1rem;border-left:4px solid '+(isMock?'#185FA5':'#4C9A2A')+'">'
+    + '<div style="font-size:13px;color:var(--text1);font-weight:600">'
+    +   (isMock?'🎯 กำลังดู: สนามสอบรวมทุกบท (เต็ม 100)':'📘 กำลังดู: ข้อสอบแยกบท (เต็ม 30)') + '</div>'
+    + '<div style="font-size:11.5px;color:var(--text2);margin-top:5px;line-height:1.7">'
+    +   'หน้านี้แสดงเฉพาะ' + (isMock?'สนามสอบ':'ข้อสอบแยกบท') + 'อย่างเดียว ไม่ปนกัน — '
+    +   'อยากดู<b>' + other + '</b> ให้เลือกจากช่อง<b>เลือกบท</b>ด้านบนสุดของหน้า</div>'
+    + '</div>';
 }
 
 /* ข้อที่ออกในชุดรวม แยกตามบท → [{ch, ok, total, miss:[{q,sub,also}]}] เรียงพลาดหนักสุดก่อน */
@@ -1469,51 +1508,66 @@ function renderProgressTrend(d){
   /* ★ 18 ก.ย. 69 — เป้ารายคนมาก่อนเสมอ (ของเดิมคิด 25/30 = 83 ให้ทุกคนเท่ากัน) */
   const mockGoal = goalEffective(mock.length ? mock[mock.length-1].topic : '');
 
+  /* ★ 20 ก.ย. 69 — แยกโหมดชัดเจน: ดูแยกบท = เห็นเฉพาะแยกบท · ดูสนามสอบ = เห็นเฉพาะสนามสอบ
+     ประเภทมาจากบทที่เลือกในช่องด้านบน (ไม่ได้เลือก → ประเภทของผลสอบล่าสุด) */
+  const kind = viewKind(d);
+  const isMockView = kind === 'mock';
+
+  /* ประเภทที่เลือกยังไม่มีผลสอบเลย → บอกให้ชัด ไม่ต้องวาดกราฟเปล่า */
+  if(isMockView && !mock.length){
+    pane.innerHTML = kindBannerHTML('mock', chap.length, 0)
+      + '<div class="d-card"><div style="font-size:13px;color:var(--text2);line-height:1.7">'
+      + '🎯 ยังไม่มีผลสนามสอบ (ชุดรวมทุกบท) — เมื่อสอบแล้วกราฟและสถิติของสนามสอบจะขึ้นตรงนี้<br>'
+      + (chap.length ? 'ตอนนี้มีผลข้อสอบแยกบท ' + chap.length + ' ครั้ง — เลือกบทจากช่องด้านบนเพื่อดูครับ' : '')
+      + '</div></div>';
+    return;
+  }
+  if(!isMockView && !chap.length){
+    pane.innerHTML = kindBannerHTML('chap', 0, mock.length)
+      + '<div class="d-card"><div style="font-size:13px;color:var(--text2);line-height:1.7">'
+      + '📘 ยังไม่มีผลข้อสอบแยกบท<br>'
+      + (mock.length ? 'ตอนนี้มีผลสนามสอบ ' + mock.length + ' ชุด — เลือกชุดรวมจากช่องด้านบนเพื่อดูครับ' : '')
+      + '</div></div>';
+    return;
+  }
+
+  const hist = isMockView ? mock : chap;          /* ประวัติเฉพาะประเภทที่กำลังดู */
   let html='';
-  /* ★ 20 ก.ย. 69 — แถบเลือกเส้นกราฟ (ใช้กับทั้งสองกราฟ) */
+  html += kindBannerHTML(kind, chap.length, mock.length);
+  /* ★ 20 ก.ย. 69 — แถบเลือกเส้นกราฟ */
   html += lineChipsHTML();
-  /* ── ข้อสอบแยกบท ── */
-  if(hasChap){
-    html += _progCard('s-trendChapter','📘 ข้อสอบแยกบท — คะแนนรายครั้ง',
-      'เต็ม '+chapFull+' คะแนน · '+chap.length+' ครั้ง · เทียบกับตัวเองในบทที่เคยสอบมา', true, chap);
-  }else if(chap.length===1){
-    html += _progSingleCard('📘','ข้อสอบแยกบท — ผลครั้งล่าสุด', chap[0],
-      'สอบแยกบทไปแล้ว 1 ครั้ง · กราฟแนวโน้มจะเริ่มแสดงเมื่อสอบครั้งที่ 2 เพราะยังไม่มีอะไรให้เทียบ');
-  }
 
-  /* ── สนามสอบ ── */
-  if(hasMock){
-    html += _progCard('s-trendMock','🎯 สนามสอบ (รวมทุกบท) — คะแนนรายชุด',
-      'เต็ม '+mockFull+' คะแนน · '+mock.length+' ชุด · ข้อ 1–25 ข้อละ 3 · ข้อ 26–30 ข้อละ 5', true, mock);
-  }else if(mock.length===1){
-    html += _progSingleCard('🎯','สนามสอบ (รวมทุกบท) — ผลชุดล่าสุด', mock[0],
-      'ข้อ 1–25 ข้อละ 3 · ข้อ 26–30 ข้อละ 5 (เต็ม '+(mock[0].full||100)+') · '
-      + 'สอบสนามสอบไปแล้ว 1 ชุด — กราฟแนวโน้มจะเริ่มแสดงเมื่อสอบชุดที่ 2');
-  }else{
-    html += '<div class="d-card" style="padding:.85rem 1rem"><div style="font-size:12px;color:var(--text2);line-height:1.7">'
-      + '🎯 ยังไม่มีผลสนามสอบ (ชุดรวมทุกบท) — เมื่อเริ่มสอบแล้วจะมีกราฟแยกอีกใบขึ้นตรงนี้ '
-      + 'เพราะคะแนนเต็มคนละแบบ เอามารวมกราฟเดียวกันจะอ่านผิด</div></div>';
-  }
-
-  /* ★ 19 ก.ย. 69 — คะแนนที่ควรคาดหวังของชุดล่าสุด + ส่วนผสมความยาก (คำนวณสดจากผังข้อสอบ) */
-  if(mock.length){
+  if(isMockView){
+    if(hasMock){
+      html += _progCard('s-trendMock','🎯 สนามสอบ (รวมทุกบท) — คะแนนรายชุด',
+        'เต็ม '+mockFull+' คะแนน · '+mock.length+' ชุด · ข้อ 1–25 ข้อละ 3 · ข้อ 26–30 ข้อละ 5', true, mock);
+    }else{
+      html += _progSingleCard('🎯','สนามสอบ (รวมทุกบท) — ผลชุดล่าสุด', mock[0],
+        'ข้อ 1–25 ข้อละ 3 · ข้อ 26–30 ข้อละ 5 (เต็ม '+(mock[0].full||100)+') · '
+        + 'สอบสนามสอบไปแล้ว 1 ชุด — กราฟแนวโน้มจะเริ่มแสดงเมื่อสอบชุดที่ 2');
+    }
+    /* ★ 19 ก.ย. 69 — คะแนนที่ควรคาดหวัง + ส่วนผสมความยาก + ผังรายข้อ (เฉพาะสนามสอบ) */
     try{ html += mockExpectLineHTML(mock[mock.length-1]); }catch(e){ console.error('expect line', e); }
     try{ html += mockDiffCardHTML(d, mock[mock.length-1]); }catch(e){ console.error('diff card', e); }
     try{ html += mockPlanCardHTML(d, mock[mock.length-1]); }catch(e){ console.error('plan card', e); }
+    html += goalBarHTML(mockGoal);
+  }else{
+    if(hasChap){
+      html += _progCard('s-trendChapter','📘 ข้อสอบแยกบท — คะแนนรายครั้ง',
+        'เต็ม '+chapFull+' คะแนน · '+chap.length+' ครั้ง · เทียบกับตัวเองในบทที่เคยสอบมา', true, chap);
+    }else{
+      html += _progSingleCard('📘','ข้อสอบแยกบท — ผลครั้งล่าสุด', chap[0],
+        'สอบแยกบทไปแล้ว 1 ครั้ง · กราฟแนวโน้มจะเริ่มแสดงเมื่อสอบครั้งที่ 2 เพราะยังไม่มีอะไรให้เทียบ');
+    }
+    html += goalBarHTML(0, chap.map(h => goalChapKey(h.topic)).filter(Boolean));
   }
 
-  /* แถบตั้งเป้า — ขึ้นเมื่อเคยสอบแล้วเท่านั้น ยังไม่เคยสอบก็ยังไม่มีอะไรให้เทียบ
-     ★ 20 ก.ย. 69 — แยกเป็นสองแถบ: สนามสอบ (เต็ม 100) และรายบท (เต็ม 30 เลือกบทได้) */
-  if(chap.length) html += goalBarHTML(0, chap.map(h => goalChapKey(h.topic)).filter(Boolean));
-  if(mock.length) html += goalBarHTML(mockGoal);
-
   html += '<div class="d-card" style="padding:1rem">'
-    + '<div class="slabel">ส่วนผสมผลรายครั้ง — นับเป็น "จำนวนข้อ" ทั้งหมด</div>'
+    + '<div class="slabel">ส่วนผสมผลรายครั้ง — นับเป็น "จำนวนข้อ"' + (isMockView?' (เฉพาะสนามสอบ)':' (เฉพาะข้อสอบแยกบท)') + '</div>'
     + '<div style="font-size:12px;color:var(--text2);margin-bottom:8px;line-height:1.6">'
-    +   'ทุกชุดมี 30 ข้อเท่ากัน (ทั้งแยกบทและสนามสอบ) แถบนี้จึงเทียบข้ามประเภทได้ '
-    +   '· คะแนนรวมเท่าเดิมแต่แถบแดงหดลง = กำลังพัฒนา (❌ กลายเป็น ⚠️)</div>'
+    +   'ทุกชุดมี 30 ข้อเท่ากัน · คะแนนรวมเท่าเดิมแต่แถบแดงหดลง = กำลังพัฒนา (❌ กลายเป็น ⚠️)</div>'
     + '<div style="position:relative;width:100%;height:220px"><canvas id="s-mixChart"></canvas></div></div>'
-    + '<div class="d-card"><div class="slabel">สรุปรายครั้ง</div><div id="s-trendTable"></div></div>';
+    + '<div class="d-card"><div class="slabel">สรุปรายครั้ง' + (isMockView?' — สนามสอบ':' — ข้อสอบแยกบท') + '</div><div id="s-trendTable"></div></div>';
 
   pane.innerHTML = html;
 
@@ -1522,17 +1576,17 @@ function renderProgressTrend(d){
   if(mockChartInst){ try{mockChartInst.destroy();}catch(e){} mockChartInst=null; }
   if(mixChartInst){ try{mixChartInst.destroy();}catch(e){} mixChartInst=null; }
 
-  if(hasChap) trendChartInst=_progLineChart('s-trendChapter', chap, chapFull, CHAP_GOAL_FALLBACK);
-  if(hasMock) mockChartInst =_progLineChart('s-trendMock',    mock, mockFull, mockGoal);
+  if(!isMockView && hasChap) trendChartInst=_progLineChart('s-trendChapter', chap, chapFull, CHAP_GOAL_FALLBACK);
+  if(isMockView && hasMock)  mockChartInst =_progLineChart('s-trendMock',    mock, mockFull, mockGoal);
   goalBind();
-  if(mock.length) goalEnsure();   /* โหลดเป้าจริงมาทับค่าตั้งต้น — ไม่บล็อกการวาด */
-  if(mock.length) qbMapEnsure();  /* ★ 19 ก.ย. 69 — ผังที่ครูแก้เอง (ชีต qb_map) ยิงครั้งเดียว */
+  goalEnsure();                   /* โหลดเป้าจริงมาทับค่าตั้งต้น — ไม่บล็อกการวาด */
+  if(isMockView) qbMapEnsure();   /* ★ 19 ก.ย. 69 — ผังที่ครูแก้เอง (ชีต qb_map) ยิงครั้งเดียว */
 
   /* ── แถบส่วนผสม: นับ "ข้อ" จึงรวมทั้งสองประเภทได้ แต่ต้องรู้ว่าครั้งไหนเป็นชุดอะไร ── */
-  const all=(d.allHistory||[]).slice();
+  const all=(d.allHistory||[]).filter(h => !!h.isMock === isMockView);
   const mixEl=document.getElementById('s-mixChart');
   if(mixEl && typeof Chart!=='undefined' && all.length){
-    const labels=all.map((h,i)=>(h.isMock?'🎯 ':'')+(h.date?_dFmt(h.date):('ครั้ง '+(i+1))));
+    const labels=all.map((h,i)=>(h.date?_dFmt(h.date):('ครั้ง '+(i+1))));
     mixChartInst=new Chart(mixEl,{
       type:'bar',
       data:{labels,datasets:[
@@ -1559,10 +1613,10 @@ function renderProgressTrend(d){
     const seq={};              /* นับลำดับแยกตามประเภท */
     let rowsH='';
     all.forEach(h=>{
-      const kind=h.isMock?'mock':'chap';
+      const k2=h.isMock?'mock':'chap';
       const list=h.isMock?mock:chap;
-      seq[kind]=(seq[kind]||0)+1;
-      const i=seq[kind]-1;
+      seq[k2]=(seq[k2]||0)+1;
+      const i=seq[k2]-1;
       const dlt=(i>0&&list[i]&&list[i-1])?(list[i].score-list[i-1].score):null;
       const dtxt=dlt==null
         ? '<span style="color:var(--text3)">—</span>'
@@ -1581,12 +1635,13 @@ function renderProgressTrend(d){
     });
     tbl.innerHTML=rowsH
       +'<div style="font-size:11px;color:var(--text3);margin-top:8px;padding-top:8px;border-top:1px solid rgba(128,128,128,.15);line-height:1.8">'
-      +'📘 = ข้อสอบแยกบท (เต็ม 30) · 🎯 = สนามสอบรวมทุกบท (เต็ม 100)<br>'
-      +'▲▼ เทียบกับ<b>ครั้งก่อนในประเภทเดียวกัน</b>เท่านั้น — คะแนนคนละสเกลเอามาลบกันไม่ได้</div>';
+      + (isMockView ? '🎯 สนามสอบรวมทุกบท เต็ม 100 คะแนน' : '📘 ข้อสอบแยกบท เต็ม 30 คะแนน')
+      + ' — ตารางนี้แสดงเฉพาะประเภทที่กำลังดูอยู่<br>'
+      +'▲▼ เทียบกับ<b>ครั้งก่อนของประเภทเดียวกัน</b> — อีกประเภทหนึ่งดูได้โดยเลือกบทจากช่องด้านบน</div>';
   }
 
-  /* ── บทที่พลาดบ่อยในสนามสอบหลายชุด ── */
-  try{ renderMockChronic(d); }catch(e){}
+  /* ── บทที่พลาดบ่อยในสนามสอบหลายชุด (เฉพาะโหมดสนามสอบ) ── */
+  if(isMockView){ try{ renderMockChronic(d); }catch(e){} }
 }
 
 /* ── 🔁 บทที่พลาดบ่อยจากสนามสอบหลายชุด (ต่างจากการ์ด 🧭 ที่ดูทีละชุด) ── */
