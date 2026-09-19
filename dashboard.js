@@ -1348,6 +1348,7 @@ function renderProgressTrend(d){
   if(mock.length){
     try{ html += mockExpectLineHTML(mock[mock.length-1]); }catch(e){ console.error('expect line', e); }
     try{ html += mockDiffCardHTML(d, mock[mock.length-1]); }catch(e){ console.error('diff card', e); }
+    try{ html += mockPlanCardHTML(d, mock[mock.length-1]); }catch(e){ console.error('plan card', e); }
   }
 
   /* แถบตั้งเป้า — ขึ้นเมื่อเคยสอบสนามสอบแล้วเท่านั้น ยังไม่เคยสอบก็ยังไม่มีอะไรให้เทียบ */
@@ -1372,6 +1373,7 @@ function renderProgressTrend(d){
   if(hasMock) mockChartInst =_progLineChart('s-trendMock',    mock, mockFull, mockGoal);
   goalBind();
   if(mock.length) goalEnsure();   /* โหลดเป้าจริงมาทับค่าตั้งต้น — ไม่บล็อกการวาด */
+  if(mock.length) qbMapEnsure();  /* ★ 19 ก.ย. 69 — ผังที่ครูแก้เอง (ชีต qb_map) ยิงครั้งเดียว */
 
   /* ── แถบส่วนผสม: นับ "ข้อ" จึงรวมทั้งสองประเภทได้ แต่ต้องรู้ว่าครั้งไหนเป็นชุดอะไร ── */
   const all=(d.allHistory||[]).slice();
@@ -2782,4 +2784,59 @@ function mockDiffCardHTML(d, h){
           return a.name + ' ' + a.count + (a.ok ? '' : ' ⚠️');
         }).join(' · ') + '<br>อ้างอิง ' + s.source + '</div>'
     + '</div>';
+}
+
+/* ═══ 📋 ผังรายข้อของชุดสอบ + ผังที่ครูแก้เอง (19 ก.ย. 69) ═══
+   ครูแก้ บท/หมวด/ระดับ จากหน้าครู → เก็บในชีต qb_map → หน้านี้ดึงมาทับคลังตอนเปิดแท็บพัฒนาการ
+   ยิงครั้งเดียวต่อการล็อกอิน · ล้มเหลวก็ใช้ค่าจากไฟล์คลังตามเดิม ไม่บล็อกการวาด */
+let _qbMapTried = false;
+function qbMapEnsure(){
+  if(_qbMapTried) return;
+  _qbMapTried = true;
+  if(typeof applyQBMap !== 'function') return;          /* คลังเวอร์ชันเก่า — ข้ามไป ไม่พัง */
+  _proxyPost({ action:'listQBMap' }).then(r => {
+    if(!r || !r.ok || !Array.isArray(r.rows) || !r.rows.length) return;
+    const n = applyQBMap(r.rows);
+    if(n && dashData){ try{ renderProgressTrend(dashData); }catch(e){ console.error('qbmap rerender', e); } }
+  }).catch(()=>{});
+}
+
+/* การ์ดผังรายข้อของชุดที่นักเรียนเพิ่งสอบ — กางดูได้ ปิดไว้ก่อนเพื่อไม่ให้หน้ายาวเกิน */
+let _planShown = {};
+function mockPlanCardHTML(d, h){
+  if(typeof mockPlan !== 'function') return '';
+  const plan = mockPlan(h && h.topic); if(!plan.length) return '';
+  const st = _mockQStatus(d, h);
+  const open = !!_planShown[h.topic];
+  const LABEL = { ok:['✅','ทำถูก','#4C9A2A'], care:['⚠️','สะเพร่า','#D4A72C'], concept:['C','คอนเซปต์','#F5A623'],
+                  cant:['❌','ทำไม่ได้','#ef4444'], timeout:['⏰','ไม่ทัน','#a855f7'] };
+  const GRADE = { easy:['ง่าย','#4C9A2A'], mid:['กลาง','#D4A72C'], hard:['ยาก','#A32D2D'] };
+
+  const rows = plan.map(it => {
+    const s = st[it.q], lb = LABEL[s] || ['–','ยังไม่ระบุ','var(--text3)'];
+    const g = GRADE[it.grade] || ['—','var(--text3)'];
+    return '<div class="rev-row" style="align-items:flex-start">'
+      + '<div style="min-width:30px;font-size:12px;color:var(--text3);font-family:var(--font-num,inherit)">' + it.q + '</div>'
+      + '<div style="min-width:26px;font-size:13px" title="' + lb[1] + '">' + lb[0] + '</div>'
+      + '<div style="flex:1"><div style="font-size:12.5px;color:var(--text1)">' + it.ch + '</div>'
+      +   '<div style="font-size:11px;color:var(--text3)">' + it.sub + '</div></div>'
+      + '<div style="min-width:52px;text-align:right;font-size:11.5px;color:' + g[1] + '">' + g[0] + '</div>'
+      + '<div style="min-width:40px;text-align:right;font-size:11px;color:var(--text3)">' + it.pts + ' คะแนน</div>'
+      + '</div>';
+  }).join('');
+
+  return '<div class="d-card" style="padding:1rem">'
+    + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'
+    +   '<span class="slabel" style="margin:0">📋 ข้อนี้เป็นเนื้อหาบทอะไร — ' + h.topic + '</span>'
+    +   '<button class="btn btn--sm btn--ghost" style="margin-left:auto;font-size:11.5px;padding:4px 12px"'
+    +     ' onclick="mockPlanToggle(\'' + h.topic + '\')">' + (open ? 'ซ่อนรายข้อ' : 'ดูรายข้อทั้ง 30') + '</button>'
+    + '</div>'
+    + '<div style="font-size:11.5px;color:var(--text2);margin-top:6px;line-height:1.7">'
+    +   'ดูว่าข้อที่พลาดไปอยู่บทไหน หมวดไหน และเป็นข้อระดับไหน — ใช้เลือกว่าจะกลับไปทบทวนบทอะไรก่อน</div>'
+    + (open ? '<div style="margin-top:10px">' + rows + '</div>' : '')
+    + '</div>';
+}
+function mockPlanToggle(topic){
+  _planShown[topic] = !_planShown[topic];
+  if(dashData){ try{ renderProgressTrend(dashData); }catch(e){ console.error('plan toggle', e); } }
 }
