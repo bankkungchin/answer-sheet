@@ -1126,15 +1126,43 @@ function renderTrendCard(d){
    ═══════════════════════════════════════════════════════════════════════ */
 const GOAL_MIN = 10, GOAL_MAX = 100;
 const MOCK_GOAL_FALLBACK = 65;     /* ค่าตั้งต้นเมื่อยังไม่มีใครตั้งเป้า */
-let MY_GOAL = { goal: 0, by: '', at: '', loaded: false };
+let MY_GOAL = { goal: 0, by: '', at: '', loaded: false };   /* เป้าสนามสอบ (คีย์ '') — คงชื่อเดิมไว้ */
+/* ★ 20 ก.ย. 69 — เป้าแยกรายบท: { '': {...}, 'เซต': {...}, 'Expo Logarithm ชุดที่ 1': {...} }
+   คีย์ '' = สนามสอบทุกชุด · บทปกติใช้ชื่อบท (normalize แล้ว) · เต็มคนละสเกล (100 / 30) */
+let MY_GOALS = {};
+const CHAP_GOAL_FALLBACK = 25;      /* ค่าตั้งต้นของบทปกติ (เท่ากับ 25/30 ที่ใช้มาตลอด) */
+function goalChapKey(ch){
+  const c = String(ch || '').trim();
+  if(!c || /^ชุดรวม\s*\d*/.test(c)) return '';
+  return (typeof normChapterKey === 'function') ? normChapterKey(c) : c;
+}
+function goalFullOf(ch){ return goalChapKey(ch) ? 30 : 100; }
 
 /* โหลดเป้าของนักเรียนคนนี้ — ล้มเหลวก็ไม่เป็นไร ตกไปใช้ค่าตั้งต้น */
 async function goalLoad(name){
   MY_GOAL = { goal: 0, by: '', at: '', loaded: false };
+  MY_GOALS = {};
   if(!name) return MY_GOAL;
   try{
+    /* API ใหม่: ได้เป้าทุกบทในครั้งเดียว — rows = [[บท, เป้า, ตั้งโดย, เมื่อ], ...] */
+    const all = await _proxyPost({ action:'getMyGoals', name });
+    if(all && all.ok && Array.isArray(all.rows)){
+      all.rows.forEach(r => {
+        const key = goalChapKey(r[0]);
+        MY_GOALS[key] = { goal: parseInt(r[1])||0, by: r[2]||'', at: r[3]||'', loaded: true };
+      });
+      MY_GOAL = MY_GOALS[''] || { goal: 0, by: '', at: '', loaded: true };
+      MY_GOAL.loaded = true;
+      return MY_GOAL;
+    }
+  }catch(e){}
+  try{
+    /* Apps Script เวอร์ชันเก่ายังไม่มี getMyGoals → ใช้เป้ารวมแบบเดิม */
     const j = await _proxyPost({ action:'getGoal', name });
-    if(j && j.ok){ MY_GOAL = { goal: parseInt(j.goal)||0, by: j.by||'', at: j.at||'', loaded: true }; }
+    if(j && j.ok){
+      MY_GOAL = { goal: parseInt(j.goal)||0, by: j.by||'', at: j.at||'', loaded: true };
+      MY_GOALS[''] = MY_GOAL;
+    }
   }catch(e){}
   return MY_GOAL;
 }
@@ -1154,56 +1182,116 @@ function goalEnsure(){
 }
 
 /* เป้าที่ใช้จริงกับกราฟ */
+function goalOf(chapter){
+  const key = goalChapKey(chapter);
+  const g = MY_GOALS[key];
+  if(g && g.goal > 0) return g;
+  if(key === '' && MY_GOAL && MY_GOAL.goal > 0) return MY_GOAL;   /* ทางถอย API เก่า */
+  return null;
+}
 function goalEffective(chapter){
-  if(MY_GOAL && MY_GOAL.goal > 0) return MY_GOAL.goal;
+  const g = goalOf(chapter);
+  if(g) return g.goal;
+  if(goalChapKey(chapter)) return CHAP_GOAL_FALLBACK;              /* บทปกติ 25/30 */
   const fromSet = (typeof MOCK_GOAL_OF === 'function') ? MOCK_GOAL_OF(chapter) : 0;
   return fromSet > 0 ? fromSet : MOCK_GOAL_FALLBACK;
 }
 
-function goalSourceText(){
-  if(!MY_GOAL || !MY_GOAL.goal) return 'ค่าตั้งต้นของระบบ — ยังไม่มีใครตั้งเป้า';
-  return MY_GOAL.by === 'teacher' ? 'ครูตั้งให้' : 'คุณตั้งเอง';
+let _goalJustSaved = { key: null, at: 0 };
+function goalSourceText(chapter){
+  const key = goalChapKey(chapter);
+  const g = goalOf(chapter);
+  const fresh = _goalJustSaved.key === key && (Date.now() - _goalJustSaved.at) < 5000;
+  const src = !g ? 'ค่าตั้งต้นของระบบ — ยังไม่มีใครตั้งเป้า'
+                 : (g.by === 'teacher' ? 'ครูตั้งให้' : 'คุณตั้งเอง');
+  return fresh ? ('บันทึกแล้ว · ' + src) : src;
 }
 
 /* แถบตั้งเป้า — อยู่ใต้กราฟสนามสอบ ใช้ input number เพื่อให้มือถือขึ้นแป้นตัวเลข */
-function goalBarHTML(cur){
-  return '<div class="d-card" id="s-goalBar" style="padding:.85rem 1rem">'
+/* แถบตั้งเป้า — ใช้ได้ทั้งสนามสอบ (chapters ว่าง = เป้าเดียวเต็ม 100)
+   และข้อสอบแยกบท (ส่งรายชื่อบทมา → มีตัวเลือกบท ตั้งเป้าแยกกันได้ เต็ม 30) */
+function goalBarHTML(cur, chapters){
+  const list = (chapters || []).filter((c, i, a) => c && a.indexOf(c) === i);
+  const isChap = list.length > 0;
+  const sel = isChap ? (_goalChapSel && list.indexOf(_goalChapSel) >= 0 ? _goalChapSel : list[list.length-1]) : '';
+  const shown = isChap ? goalEffective(sel) : cur;
+  const full = isChap ? 30 : 100;
+  const id = isChap ? 'chap' : 'mock';
+  const picker = isChap
+    ? '<select id="s-goalChap-' + id + '" style="font-size:12px;padding:5px 8px;max-width:190px;'
+      + 'border:1px solid var(--line-strong,#ccc);border-radius:8px;background:var(--surf,#fff);color:var(--text1)">'
+      + list.map(c => '<option value="' + c + '"' + (c === sel ? ' selected' : '') + '>' + c + '</option>').join('')
+      + '</select>'
+    : '';
+  return '<div class="d-card" id="s-goalBar-' + id + '" style="padding:.85rem 1rem">'
     + '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">'
-    +   '<span style="font-size:12.5px;color:var(--text1);font-weight:500">🎯 เป้าหมายของฉัน</span>'
-    +   '<input id="s-goalInput" type="number" inputmode="numeric" min="' + GOAL_MIN + '" max="' + GOAL_MAX + '" value="' + cur + '"'
+    +   '<span style="font-size:12.5px;color:var(--text1);font-weight:500">🎯 เป้าหมายของฉัน'
+    +     (isChap ? ' — รายบท' : '') + '</span>'
+    +   picker
+    +   '<input id="s-goalInput-' + id + '" type="number" inputmode="numeric" min="' + GOAL_MIN + '" max="' + full + '" value="' + shown + '"'
     +     ' style="width:74px;padding:5px 8px;font-size:14px;font-family:var(--font-num,inherit);'
     +     'border:1px solid var(--line-strong,#ccc);border-radius:8px;background:var(--surf,#fff);color:var(--text1)">'
-    +   '<span style="font-size:12px;color:var(--text3)">/ 100 คะแนน</span>'
-    +   '<button id="s-goalSave" class="btn btn--sm btn--primary" style="font-size:12px;padding:5px 14px">บันทึก</button>'
-    +   '<span id="s-goalMsg" style="font-size:11.5px;color:var(--text3)">' + goalSourceText() + '</span>'
+    +   '<span style="font-size:12px;color:var(--text3)">/ ' + full + ' คะแนน</span>'
+    +   '<button id="s-goalSave-' + id + '" class="btn btn--sm btn--primary" style="font-size:12px;padding:5px 14px">บันทึก</button>'
+    +   '<span id="s-goalMsg-' + id + '" style="font-size:11.5px;color:var(--text3)">' + goalSourceText(sel) + '</span>'
     + '</div>'
     + '<div style="font-size:11px;color:var(--text3);margin-top:7px;line-height:1.7">'
-    +   'ตั้งเท่าไรก็ได้ตั้งแต่ ' + GOAL_MIN + '–' + GOAL_MAX + ' · เส้นแดงในกราฟจะขยับตามทันที · '
-    +   'ครูเห็นเป้าที่คุณตั้งด้วย และครูตั้งให้ได้เหมือนกัน (ใครตั้งทีหลังใช้ค่านั้น)</div>'
+    +   (isChap
+        ? 'ตั้งเป้า<b>แยกได้ทีละบท</b> — เลือกบทแล้วใส่ตัวเลข 10–30 · เส้นแดงในกราฟจะขยับเป็นขั้นตามเป้าของแต่ละบท'
+        : 'ตั้งเท่าไรก็ได้ตั้งแต่ ' + GOAL_MIN + '–' + GOAL_MAX + ' · เส้นแดงในกราฟจะขยับตามทันที')
+    +   ' · ครูเห็นเป้าที่คุณตั้งด้วย และครูตั้งให้ได้เหมือนกัน (ใครตั้งทีหลังใช้ค่านั้น)</div>'
     + '</div>';
 }
+let _goalChapSel = '';
 
-/* ผูกปุ่มบันทึก — เรียกหลัง pane.innerHTML เสร็จแล้วเท่านั้น */
+/* ผูกปุ่มบันทึกของแถบเป้า — เรียกหลัง pane.innerHTML เสร็จแล้วเท่านั้น
+   ผูกทั้งแถบสนามสอบ (mock) และแถบรายบท (chap) ถ้ามีอยู่บนหน้า */
 function goalBind(){
-  const inp = document.getElementById('s-goalInput');
-  const btn = document.getElementById('s-goalSave');
-  const msg = document.getElementById('s-goalMsg');
+  ['mock','chap'].forEach(goalBindOne);
+  /* ชื่อ id แบบเก่า (ไม่มี suffix) — เผื่อหน้าอื่นที่ยังเรียกใช้อยู่ */
+  const oldInp = document.getElementById('s-goalInput');
+  if(oldInp) goalBindOne('');
+}
+
+function goalBindOne(kind){
+  const sfx = kind ? '-' + kind : '';
+  const inp = document.getElementById('s-goalInput' + sfx);
+  const btn = document.getElementById('s-goalSave' + sfx);
+  const msg = document.getElementById('s-goalMsg' + sfx);
   if(!inp || !btn || !msg) return;
+  const pick = document.getElementById('s-goalChap' + sfx);
+  const chapOf = () => pick ? pick.value : '';
+  const maxOf = () => goalFullOf(chapOf());
   const say = (text, color) => { msg.textContent = text; msg.style.color = color || 'var(--text3)'; };
+
+  if(pick){
+    pick.onchange = () => {
+      _goalChapSel = pick.value;
+      inp.value = goalEffective(pick.value);
+      inp.max = maxOf();
+      say(goalSourceText(pick.value));
+      if(dashData){ try{ renderProgressTrend(dashData); }catch(e){} }
+    };
+  }
   btn.onclick = async () => {
+    const ch = chapOf(), max = maxOf();
     const v = parseInt(inp.value, 10);
-    if(!(v >= GOAL_MIN && v <= GOAL_MAX)){
-      say('ใส่ตัวเลข ' + GOAL_MIN + '–' + GOAL_MAX + ' ครับ', '#B3261E');
+    if(!(v >= GOAL_MIN && v <= max)){
+      say('ใส่ตัวเลข ' + GOAL_MIN + '–' + max + ' ครับ', '#B3261E');
       return;
     }
     btn.disabled = true; say('กำลังบันทึก…');
     try{
-      const j = await _proxyPost({ action:'setMyGoal', name: currentStudent, pin: currentPin, goal: v });
+      const payload = { action:'setMyGoal', name: currentStudent, pin: currentPin, goal: v };
+      if(goalChapKey(ch)) payload.chapter = goalChapKey(ch);
+      const j = await _proxyPost(payload);
       if(j && j.ok){
-        MY_GOAL = { goal: v, by: 'student', at: j.at || '', loaded: true };
-        say('บันทึกแล้ว · ' + goalSourceText(), '#3B7D2A');
-        /* ★ แก้ 2: ของเดิมเรียก renderProgress() ซึ่งไม่มีฟังก์ชันนี้อยู่จริง
-           → throw แล้วตกไปใน catch จนขึ้นว่า 'เชื่อมต่อไม่ได้' ทั้งที่บันทึกสำเร็จ */
+        const key = goalChapKey(ch);
+        MY_GOALS[key] = { goal: v, by: 'student', at: j.at || '', loaded: true };
+        if(key === '') MY_GOAL = MY_GOALS[''];
+        _goalJustSaved = { key: key, at: Date.now() };
+        say(goalSourceText(ch), '#3B7D2A');
+        /* ★ แก้ 2 (18 ก.ย.): ของเดิมเรียก renderProgress() ซึ่งไม่มีฟังก์ชันนี้อยู่จริง */
         if(dashData){ try{ renderProgressTrend(dashData); }catch(e){ console.error('goal rerender', e); } }
       }else{
         say(j && j.error ? j.error : 'บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง', '#B3261E');
@@ -1222,10 +1310,12 @@ function _progCard(id, title, sub, hasAvg, hist){
   var note = '';
   if(hasAvg){
     note = withPeers
-      ? 'เส้นเทา = ค่าเฉลี่ยของ<b>ทุกคนที่สอบบท/ชุดเดียวกัน</b> (นับรวมคนที่สอบคนละวัน · 1 คนนับผลล่าสุดครั้งเดียว) · ข้อสอบแต่ละชุดยากไม่เท่ากัน '
+      ? 'เส้นเทา = ค่าเฉลี่ยของ<b>ทุกคนที่สอบบท/ชุดเดียวกัน</b> (นับรวมคนที่สอบคนละวัน · 1 คนนับผลล่าสุดครั้งเดียว) · '
+        + '<b style="color:#7A5AA8">เส้นม่วง = คะแนนที่ควรได้ของชุดนั้น</b> (คิดจากระดับความยากรายข้อ ไม่ใช่เป้าหมาย) · '
         + '<b>คะแนนลดลงแต่ยังอยู่เหนือเส้นเทา = ทำได้ดีขึ้นเมื่อเทียบกับเพื่อน</b>'
       : 'ยังไม่มีเส้นค่าเฉลี่ยรุ่น เพราะ<b>ยังไม่มีเพื่อนกรอกผลของบท/ชุดเดียวกัน</b> — '
-        + 'ค่าเฉลี่ยจากคนเดียวคือคะแนนตัวเอง เอามาเทียบไม่ได้ · เส้นจะขึ้นเองเมื่อมีคนสอบบท/ชุดนั้น 2 คนขึ้นไป (สอบคนละวันก็นับรวม)';
+        + 'ค่าเฉลี่ยจากคนเดียวคือคะแนนตัวเอง เอามาเทียบไม่ได้ · เส้นจะขึ้นเองเมื่อมีคนสอบบท/ชุดนั้น 2 คนขึ้นไป (สอบคนละวันก็นับรวม) · '
+        + '<b style="color:#7A5AA8">เส้นม่วง = คะแนนที่ควรได้ของชุดนั้น</b> คิดจากระดับความยากรายข้อ จึงใช้เทียบได้แม้ยังไม่มีเพื่อน';
   }
   return '<div class="d-card" style="padding:1rem">'
     + '<div class="slabel">' + title + '</div>'
@@ -1264,6 +1354,43 @@ function _progSingleCard(emoji, title, h, tail){
     + '</div>';
 }
 
+/* ★ 20 ก.ย. 69 — นักเรียนเลือกเองว่าจะให้กราฟมีเส้นไหนบ้าง (เก็บไว้ในเครื่องนี้)
+   ค่าเริ่มต้น: คะแนนตัวเอง + คะแนนที่ควรได้ + เป้า · ค่าเฉลี่ยรุ่นปิดไว้ (4 เส้นพร้อมกันแน่นเกินบนมือถือ) */
+const LINE_KEY = 'mb_trend_lines_v1';
+const LINE_DEFAULT = { avg:false, expect:true, goal:true };
+let LINE_SHOW = Object.assign({}, LINE_DEFAULT);
+(function(){
+  try{
+    const raw = localStorage.getItem(LINE_KEY);
+    if(raw){ const o = JSON.parse(raw); ['avg','expect','goal'].forEach(k => { if(typeof o[k] === 'boolean') LINE_SHOW[k] = o[k]; }); }
+  }catch(e){}
+})();
+function lineToggle(k){
+  LINE_SHOW[k] = !LINE_SHOW[k];
+  try{ localStorage.setItem(LINE_KEY, JSON.stringify(LINE_SHOW)); }catch(e){}
+  if(dashData){ try{ renderProgressTrend(dashData); }catch(e){ console.error('line toggle', e); } }
+}
+function lineChipsHTML(){
+  const chip = (k, label, color) => {
+    const on = !!LINE_SHOW[k];
+    return '<button onclick="lineToggle(\'' + k + '\')" class="btn btn--sm" style="font-size:11.5px;padding:5px 12px;'
+      + 'border-radius:999px;border:1.5px solid ' + (on ? color : 'var(--line-strong,#ccc)') + ';'
+      + 'background:' + (on ? color : 'transparent') + ';color:' + (on ? '#fff' : 'var(--text3)') + ';font-weight:500">'
+      + (on ? '✓ ' : '') + label + '</button>';
+  };
+  return '<div class="d-card" style="padding:.7rem 1rem">'
+    + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'
+    +   '<span style="font-size:12px;color:var(--text2)">เส้นที่อยากเห็นในกราฟ:</span>'
+    +   '<span style="font-size:11.5px;padding:5px 12px;border-radius:999px;background:#185FA5;color:#fff;font-weight:500">คะแนนของฉัน</span>'
+    +   chip('expect','คะแนนที่ควรได้','#7A5AA8')
+    +   chip('goal','เป้าของฉัน','#A32D2D')
+    +   chip('avg','ค่าเฉลี่ยรุ่น','#948F86')
+    + '</div>'
+    + '<div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.6">'
+    +   'กดเพื่อเปิด/ปิดได้ · เครื่องนี้จะจำไว้ให้ครั้งหน้า · เปิดพร้อมกันหลายเส้นได้ แต่ 2–3 เส้นจะอ่านง่ายที่สุด</div>'
+    + '</div>';
+}
+
 function _progLineChart(canvasId, hist, full, goal){
   const el = document.getElementById(canvasId);
   if(!el || typeof Chart === 'undefined') return null;
@@ -1276,14 +1403,31 @@ function _progLineChart(canvasId, hist, full, goal){
   /* ★ 19 ก.ย. 69 — เส้นค่าเฉลี่ยรุ่นต้องมีเพื่อนอย่างน้อย 2 คนในชุดนั้นถึงจะมีความหมาย
      ของเดิมชุดที่มีผลคนเดียว gAvg = คะแนนตัวเอง → เส้นเทาทับเส้นน้ำเงินสนิท
      ครูจึงเห็นแค่ชื่อใน legend แต่ไม่เห็นเส้น (ดูเหมือนเส้นหาย ทั้งที่วาดอยู่) */
-  if(hist.some(h=>h.gAvg!=null && h.gN>1)){
+  if(LINE_SHOW.avg && hist.some(h=>h.gAvg!=null && h.gN>1)){
     ds.push({ label:'ค่าเฉลี่ยรุ่น', data:hist.map(h=>(h.gAvg!=null && h.gN>1)?h.gAvg:null),
       borderColor:'#948F86', borderDash:[4,3], pointRadius:3, pointBackgroundColor:'#948F86',
       fill:false, tension:.25, spanGaps:true, order:2 });
   }
-  if(goal){
-    ds.push({ label:'เป้า '+goal, data:hist.map(()=>goal), borderColor:'#A32D2D',
-      borderDash:[6,4], pointRadius:0, fill:false, order:3 });
+  /* ★ 19 ก.ย. 69 — เส้นคะแนนที่ควรได้ของแต่ละชุด (คิดจากระดับความยากรายข้อของชุดนั้น)
+     ต่างกับเส้นเป้า: เป้าเป็นค่าเดียวตลอด ส่วนเส้นนี้ขยับตามว่าชุดไหนยากง่ายแค่ไหน */
+  if(LINE_SHOW.expect && typeof expectScoreOf === 'function'){
+    const expArr = hist.map(h => expectScoreOf(h.topic));
+    if(expArr.some(v => v != null)){
+      ds.push({ label:'คะแนนที่ควรได้', data:expArr, borderColor:'#7A5AA8', borderDash:[2,3],
+        pointRadius:3, pointStyle:'triangle', pointBackgroundColor:'#7A5AA8',
+        fill:false, tension:.25, spanGaps:true, order:2 });
+    }
+  }
+  if(LINE_SHOW.goal){
+    /* ★ 20 ก.ย. 69 — เป้าแยกรายบท: แต่ละจุดใช้เป้าของบท/ชุดนั้น ๆ (เส้นจึงเป็นขั้นบันได)
+       บทที่ยังไม่ได้ตั้งเป้าใช้ค่าตั้งต้น (บทปกติ 25/30 · สนามสอบ 65/100) */
+    const goalArr = hist.map(h => goalEffective(h.topic) || goal || null);
+    const uniq = goalArr.filter((v,i,a) => v != null && a.indexOf(v) === i);
+    if(goalArr.some(v => v != null)){
+      ds.push({ label: uniq.length === 1 ? ('เป้า ' + uniq[0]) : 'เป้าของแต่ละบท',
+        data: goalArr, borderColor:'#A32D2D', borderDash:[6,4], pointRadius:0,
+        stepped: uniq.length > 1, fill:false, spanGaps:true, order:3 });
+    }
   }
   return new Chart(el, {
     type:'line', data:{ labels, datasets:ds },
@@ -1293,6 +1437,11 @@ function _progLineChart(canvasId, hist, full, goal){
           const h = hist[items[0].dataIndex]; if(!h) return '';
           const out = [];
           if(h.topic) out.push('ชุด: ' + h.topic);
+          if(typeof expectScoreOf === 'function'){
+            const ex = expectScoreOf(h.topic);
+            if(ex != null) out.push('คะแนนที่ควรได้ของชุดนี้ ' + ex + ' · ' +
+              (h.score >= ex ? 'สูงกว่า ' + (h.score - ex) : 'ต่ำกว่า ' + (ex - h.score)));
+          }
           if(h.gRank && h.gN) out.push('อันดับในรุ่น ' + h.gRank + ' จาก ' + h.gN + ' คน');
           return out;
         } } } },
@@ -1321,6 +1470,8 @@ function renderProgressTrend(d){
   const mockGoal = goalEffective(mock.length ? mock[mock.length-1].topic : '');
 
   let html='';
+  /* ★ 20 ก.ย. 69 — แถบเลือกเส้นกราฟ (ใช้กับทั้งสองกราฟ) */
+  html += lineChipsHTML();
   /* ── ข้อสอบแยกบท ── */
   if(hasChap){
     html += _progCard('s-trendChapter','📘 ข้อสอบแยกบท — คะแนนรายครั้ง',
@@ -1351,7 +1502,9 @@ function renderProgressTrend(d){
     try{ html += mockPlanCardHTML(d, mock[mock.length-1]); }catch(e){ console.error('plan card', e); }
   }
 
-  /* แถบตั้งเป้า — ขึ้นเมื่อเคยสอบสนามสอบแล้วเท่านั้น ยังไม่เคยสอบก็ยังไม่มีอะไรให้เทียบ */
+  /* แถบตั้งเป้า — ขึ้นเมื่อเคยสอบแล้วเท่านั้น ยังไม่เคยสอบก็ยังไม่มีอะไรให้เทียบ
+     ★ 20 ก.ย. 69 — แยกเป็นสองแถบ: สนามสอบ (เต็ม 100) และรายบท (เต็ม 30 เลือกบทได้) */
+  if(chap.length) html += goalBarHTML(0, chap.map(h => goalChapKey(h.topic)).filter(Boolean));
   if(mock.length) html += goalBarHTML(mockGoal);
 
   html += '<div class="d-card" style="padding:1rem">'
@@ -1369,7 +1522,7 @@ function renderProgressTrend(d){
   if(mockChartInst){ try{mockChartInst.destroy();}catch(e){} mockChartInst=null; }
   if(mixChartInst){ try{mixChartInst.destroy();}catch(e){} mixChartInst=null; }
 
-  if(hasChap) trendChartInst=_progLineChart('s-trendChapter', chap, chapFull, Math.round(chapFull*25/30));
+  if(hasChap) trendChartInst=_progLineChart('s-trendChapter', chap, chapFull, CHAP_GOAL_FALLBACK);
   if(hasMock) mockChartInst =_progLineChart('s-trendMock',    mock, mockFull, mockGoal);
   goalBind();
   if(mock.length) goalEnsure();   /* โหลดเป้าจริงมาทับค่าตั้งต้น — ไม่บล็อกการวาด */

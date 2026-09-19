@@ -4265,3 +4265,25 @@ function mockPlan(setName){
   }
   return out;
 }
+
+/* ═══ 📈 คะแนนที่ควรได้ของ "ชุดสอบใดก็ได้" (19 ก.ย. 69 รอบดึก) ═══
+   ใช้กับทั้งบทปกติ (เต็ม 30 · ข้อละ 1) และสนามสอบ (เต็ม 100 · ข้อ 1–25 ละ 3, 26–30 ละ 5)
+   คิดจากระดับความยากรายข้อ × %ทำถูกจริงของนักเรียนในข้อระดับนั้น (LEVEL_PASS_RATE)
+   คืน null เมื่อยังไม่มีผังของชุดนั้นในคลัง — หน้าเว็บจะไม่วาดเส้นให้จุดนั้น */
+function normChapterKey(t){
+  return String(t||'').trim().replace(/^Exponential logarithm/i,'Expo Logarithm');
+}
+function expectScoreOf(chapter){
+  var key = normChapterKey(chapter);
+  if(typeof EMBEDDED_QB === 'undefined' || !EMBEDDED_QB[key]) return null;
+  var isMock = (typeof fullScoreOf === 'function') ? (fullScoreOf(key) !== 30) : false;
+  var sum = 0, n = 0;
+  for(var q=1; q<=30; q++){
+    var it = EMBEDDED_QB[key][q]; if(!it) continue;
+    var p = (isMock && typeof ptsOfQuestion === 'function') ? ptsOfQuestion(key,q) : 1;
+    var lv = parseInt(it.level,10) || 4;
+    sum += p * (LEVEL_PASS_RATE[lv] != null ? LEVEL_PASS_RATE[lv] : 0.53);
+    n++;
+  }
+  return n ? Math.round(sum) : null;
+}
