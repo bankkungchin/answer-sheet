@@ -654,8 +654,8 @@ function ensureMockOptions(){
      (ของเดิมปนกันในรายการเดียว นักเรียนเลือกแล้วไม่รู้ว่ากำลังดูประเภทไหนอยู่) */
   if(!sel.querySelector('optgroup')){
     const opts=Array.from(sel.options);
-    const gChap=document.createElement('optgroup'); gChap.label='📘 ข้อสอบแยกบท (เต็ม 30)';
-    const gMock=document.createElement('optgroup'); gMock.label='🎯 สนามสอบรวมทุกบท (เต็ม 100)';
+    const gChap=document.createElement('optgroup'); gChap.label='📘 ข้อสอบแยกบท (เต็ม 30 คะแนน)';
+    const gMock=document.createElement('optgroup'); gMock.label='🎯 สนามสอบรวมทุกบท (เต็ม 100 คะแนน)';
     opts.forEach(o=>{
       const v=String(o.value||'').trim();
       if(!v) return;                       /* ตัวเลือก "ทุกบท" ให้อยู่บนสุดนอกกลุ่ม */
@@ -684,7 +684,7 @@ function kindBannerHTML(kind, nChap, nMock){
                         : ('สนามสอบรวมบท' + (nMock?' ('+nMock+' ชุด)':''));
   return '<div class="d-card" style="padding:.8rem 1rem;border-left:4px solid '+(isMock?'#185FA5':'#4C9A2A')+'">'
     + '<div style="font-size:13px;color:var(--text1);font-weight:600">'
-    +   (isMock?'🎯 กำลังดู: สนามสอบรวมทุกบท (เต็ม 100)':'📘 กำลังดู: ข้อสอบแยกบท (เต็ม 30)') + '</div>'
+    +   (isMock?'🎯 กำลังดู: สนามสอบรวมทุกบท (เต็ม 100 คะแนน)':'📘 กำลังดู: ข้อสอบแยกบท (เต็ม 30 คะแนน)') + '</div>'
     + '<div style="font-size:11.5px;color:var(--text2);margin-top:5px;line-height:1.7">'
     +   'หน้านี้แสดงเฉพาะ' + (isMock?'สนามสอบ':'ข้อสอบแยกบท') + 'อย่างเดียว ไม่ปนกัน — '
     +   'อยากดู<b>' + other + '</b> ให้เลือกจากช่อง<b>เลือกบท</b>ด้านบนสุดของหน้า</div>'
@@ -1540,10 +1540,10 @@ function renderProgressTrend(d){
   if(isMockView){
     if(hasMock){
       html += _progCard('s-trendMock','🎯 สนามสอบ (รวมทุกบท) — คะแนนรายชุด',
-        'เต็ม '+mockFull+' คะแนน · '+mock.length+' ชุด · ข้อ 1–25 ข้อละ 3 · ข้อ 26–30 ข้อละ 5', true, mock);
+        'เต็ม '+mockFull+' คะแนน · '+mock.length+' ชุด · ข้อ 1–25 ข้อละ 3 คะแนน · ข้อ 26–30 ข้อละ 5 คะแนน', true, mock);
     }else{
       html += _progSingleCard('🎯','สนามสอบ (รวมทุกบท) — ผลชุดล่าสุด', mock[0],
-        'ข้อ 1–25 ข้อละ 3 · ข้อ 26–30 ข้อละ 5 (เต็ม '+(mock[0].full||100)+') · '
+        'ข้อ 1–25 ข้อละ 3 คะแนน · ข้อ 26–30 ข้อละ 5 คะแนน (เต็ม '+(mock[0].full||100)+' คะแนน) · '
         + 'สอบสนามสอบไปแล้ว 1 ชุด — กราฟแนวโน้มจะเริ่มแสดงเมื่อสอบชุดที่ 2');
     }
     /* ★ 19 ก.ย. 69 — คะแนนที่ควรคาดหวัง + ส่วนผสมความยาก + ผังรายข้อ (เฉพาะสนามสอบ) */
@@ -1693,6 +1693,78 @@ function renderMockChronic(d){
   pane.appendChild(el);
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   ★ 22 ก.ย. 69 — คิด "คะแนน" ควบคู่กับ "จำนวนข้อ" ทุกที่ที่พูดถึงข้อที่พลาด
+   สนามสอบให้คะแนนไม่เท่ากันทุกข้อ (ตอนที่ 1 ข้อละ 3 คะแนน · ตอนที่ 2 ข้อละ 5 คะแนน)
+   "พลาด 7 ข้อ" จึงไม่ได้แปลว่าเสีย 7 คะแนนเสมอไป — ต้องบอกเป็นคะแนนด้วย
+   ═══════════════════════════════════════════════════════════════ */
+function _ptsOf(topic, q){
+  try{ if(typeof ptsOfQuestion === 'function') return ptsOfQuestion(topic, q); }catch(e){}
+  return 1;
+}
+/* แบ่ง "ตอน" ของข้อสอบจากคะแนนจริง ไม่ hardcode — เปลี่ยนเกณฑ์คะแนนแล้วตามเอง
+   คืน null เมื่อทุกข้อคะแนนเท่ากัน (บทปกติ) */
+function examSections(topic){
+  const p1 = _ptsOf(topic, 1);
+  for(let q = 2; q <= 30; q++){
+    const p = _ptsOf(topic, q);
+    if(p !== p1) return { cut: q - 1, pts1: p1, pts2: p };
+  }
+  return null;
+}
+/* คะแนนที่เสียไป แยกตามสาเหตุ — อ่านจากสถานะรายข้อ (qResults) ซึ่งเป็นแหล่งเดียวกับกริดสี
+   wrong นับรวมกับ cant · blank นับรวมกับ timeout (ตรงกับที่การ์ดแสดงมาแต่เดิม) */
+function lostPointsOf(d){
+  const r = (d && d.qResults) || {};
+  const cnt = { care:0, concept:0, cant:0, timeout:0 };
+  const pts = { care:0, concept:0, cant:0, timeout:0 };
+  for(let q = 1; q <= 30; q++){
+    let t = r[q];
+    if(t === 'wrong') t = 'cant';
+    if(t === 'blank') t = 'timeout';
+    if(cnt[t] == null) continue;
+    cnt[t]++; pts[t] += _ptsOf(d.topic, q);
+  }
+  const sum = cnt.care + cnt.concept + cnt.cant + cnt.timeout;
+  const fromSheet = (d.care||0) + (d.concept||0) + (d.cant||0) + (d.timeout||0);
+  /* ใช้ตัวเลขคะแนนก็ต่อเมื่อสถานะรายข้อตรงกับยอดในชีต — ไม่งั้นเงียบไว้ ดีกว่าบอกเลขที่ไม่ตรง */
+  return { cnt: cnt, pts: pts, usable: sum > 0 && sum === fromSheet };
+}
+function _ptsTxt(n){ return n + ' คะแนน'; }
+
+/* ★ 22 ก.ย. 69 — สนามสอบแบ่งกริดตาม "ตอน" ของข้อสอบจริง (1–25 / 26–30)
+   ไม่ใช่แบ่งครึ่ง 1–15 / 16–30 ซึ่งไม่ตรงกับวิธีคิดคะแนน
+   บทปกติคะแนนเท่ากันทุกข้อ จึงยังแบ่งครึ่งเหมือนเดิม
+   หัวข้อของกริดเขียนทับจาก JS เพื่อไม่ต้องแก้ index.html */
+function paintQGrid(d, id1, id2){
+  const g1 = document.getElementById(id1), g2 = document.getElementById(id2);
+  if(!g1 || !g2) return;
+  const qClass = { ok:'q-ok', care:'q-care', concept:'q-concept', cant:'q-cant',
+                   timeout:'q-timeout', wrong:'q-wrong', blank:'q-blank' };
+  const sec = examSections(d.topic);
+  const cut = sec ? sec.cut : 15;
+  /* เขียนทับเฉพาะหัวข้อที่เป็นของกริดเอง ("ข้อ 1–15" / "ตอนที่ …")
+     หน้าผู้ปกครองใช้หัวข้อ "ภาพรวมรายข้อ" ร่วมกับทั้งสองกริด — ต้องไม่ไปทับ */
+  const lab = (g, txt) => { const el = g.previousElementSibling;
+    if(!el || !el.classList || !el.classList.contains('slabel')) return;
+    const cur = (el.textContent || '').trim();
+    if(cur.indexOf('ข้อ ') === 0 || cur.indexOf('ตอนที่ ') === 0) el.textContent = txt; };
+  if(sec){
+    lab(g1, 'ตอนที่ 1 · ข้อ 1–' + cut + ' · ข้อละ ' + sec.pts1 + ' คะแนน');
+    lab(g2, 'ตอนที่ 2 · ข้อ ' + (cut+1) + '–30 · ข้อละ ' + sec.pts2 + ' คะแนน');
+  } else {
+    lab(g1, 'ข้อ 1–15'); lab(g2, 'ข้อ 16–30');
+  }
+  g1.innerHTML = ''; g2.innerHTML = '';
+  for(let i = 1; i <= 30; i++){
+    const g = i <= cut ? g1 : g2;
+    const el = document.createElement('div');
+    el.className = 'q-cell ' + qClass[d.qResults[i]];
+    el.textContent = i;
+    g.appendChild(el);
+  }
+}
+
 function renderStudentDash(d){
   document.getElementById('s-avatar').textContent=d.shortName.substring(0,3);
   document.getElementById('s-name').textContent=d.shortName;
@@ -1704,7 +1776,26 @@ function renderStudentDash(d){
   document.getElementById('s-score').innerHTML=d.score+' <span style="font-size:13px;color:var(--text3);font-weight:400">/ '+(d.full||30)+'</span>';
   document.getElementById('s-scorepct').textContent=Math.round(d.score/(d.full||30)*100)+'% · เฉลี่ยกลุ่ม '+Math.round(avg/(d.full||30)*100)+'%'+(d.allMembers.length>d.groupMembers.length?' · เฉลี่ยรวม '+Math.round(d.allAvg/(d.full||30)*100)+'%':'');
   document.getElementById('s-wrong').innerHTML=(d.wrong+d.care+d.concept+d.blank)+' <span style="font-size:13px;color:var(--text3);font-weight:400">ข้อ</span>';
-  document.getElementById('s-wrongsub').textContent=d.blank+' ไม่ทำ · '+d.care+' สะเพร่า · '+d.concept+' คอนเซปต์ · '+d.wrong+' ทำไม่ได้';
+  /* ★ 22 ก.ย. 69 — บอกด้วยว่าแต่ละสาเหตุคิดเป็นกี่คะแนน (สนามสอบข้อละ 3/5 คะแนน ไม่เท่ากัน) */
+  {
+    const _lp = lostPointsOf(d);
+    const _wsEl = document.getElementById('s-wrongsub');
+    if(_lp.usable){
+      const bits = [];
+      if(_lp.cnt.timeout) bits.push(_lp.cnt.timeout + ' ไม่ทำ (' + _ptsTxt(_lp.pts.timeout) + ')');
+      if(_lp.cnt.care)    bits.push(_lp.cnt.care    + ' สะเพร่า (' + _ptsTxt(_lp.pts.care) + ')');
+      if(_lp.cnt.concept) bits.push(_lp.cnt.concept + ' คอนเซปต์ (' + _ptsTxt(_lp.pts.concept) + ')');
+      if(_lp.cnt.cant)    bits.push(_lp.cnt.cant    + ' ทำไม่ได้ (' + _ptsTxt(_lp.pts.cant) + ')');
+      const _lost = _lp.pts.timeout + _lp.pts.care + _lp.pts.concept + _lp.pts.cant;
+      _wsEl.innerHTML = bits.join(' · ') +
+        '<div style="margin-top:3px">รวมที่เสียไป <b>' + _ptsTxt(_lost) + '</b> จาก ' + (d.full||30) + ' คะแนน</div>';
+      _wsEl.title = 'คิดจากคะแนนจริงของแต่ละข้อ' +
+        (examSections(d.topic) ? ' (ข้อ 1–' + examSections(d.topic).cut + ' ข้อละ ' + examSections(d.topic).pts1 +
+          ' คะแนน · ข้อ ' + (examSections(d.topic).cut+1) + '–30 ข้อละ ' + examSections(d.topic).pts2 + ' คะแนน)' : '');
+    } else {
+      _wsEl.textContent = d.blank+' ไม่ทำ · '+d.care+' สะเพร่า · '+d.concept+' คอนเซปต์ · '+d.wrong+' ทำไม่ได้';
+    }
+  }
   // ข้อความให้กำลังใจ — เน้นสิ่งที่ควบคุมได้
   const encEl=document.getElementById('s-encourage');
   if(encEl){
@@ -1718,9 +1809,7 @@ function renderStudentDash(d){
   }
   try{renderTrendCard(d);}catch(e){console.error('trend',e);}
   try{renderProgressTrend(d);}catch(e){console.error('progress',e);}
-  const qClass={ok:'q-ok',care:'q-care',concept:'q-concept',cant:'q-cant',timeout:'q-timeout',wrong:'q-wrong',blank:'q-blank'};
-  ['qgrid1','qgrid2'].forEach(id=>document.getElementById(id).innerHTML='');
-  for(let i=1;i<=30;i++){const g=document.getElementById(i<=15?'qgrid1':'qgrid2');const el=document.createElement('div');el.className='q-cell '+qClass[d.qResults[i]];el.textContent=i;g.appendChild(el);}
+  paintQGrid(d, 'qgrid1', 'qgrid2');
   const needReview=d.myAna.filter(r=>['wrong','blank','care','concept','cant','timeout'].includes(parseStatus(r[5]||''))).map(r=>({q:parseInt(r[4]),sub:r[6]||'',year:r[3]||'',level:parseInt(r[7])||0,type:parseStatus(r[5]||'')})).sort((a,b)=>{
     const pri={care:0,concept:1,wrong:2,cant:2,timeout:3,blank:4};
     const pa=pri[a.type]!=null?pri[a.type]:9;
@@ -1826,7 +1915,16 @@ function renderStudentDash(d){
     const box=(label,val,sub,color)=>`<div style="background:var(--surf);border-radius:var(--r-md);padding:10px 12px"><div style="font-size:10px;color:var(--text3)">${label}</div><div style="font-size:18px;font-weight:600;color:${color||'var(--text1)'}">${val}</div><div style="font-size:10px;color:var(--text3)">${sub||''}</div></div>`;
     gs.innerHTML=box('คะแนนเฉลี่ยกลุ่ม',st.avg+'<span style="font-size:11px;color:var(--text3);font-weight:400"> /'+(d.full||30)+'</span>','จาก '+st.count+' คน','var(--blue)')
       +box('ช่วงคะแนน',st.lo+'–'+st.hi,'ต่ำสุด–สูงสุด')
-      +box('สะเพร่าเฉลี่ย',st.careAvg+'<span style="font-size:11px;color:var(--text3);font-weight:400"> ข้อ</span>','ต่อคน','#C77E1A');
+      /* ★ 22 ก.ย. 69 — บอกด้วยว่าสะเพร่าเฉลี่ยคิดเป็นกี่คะแนน
+         รู้แค่ "จำนวนข้อ" ของเพื่อนแต่ละคน ไม่รู้ว่าเป็นข้อไหน จึงเป็นค่าประมาณจากคะแนนเฉลี่ยต่อข้อ
+         (บทปกติข้อละ 1 คะแนน — ตัวเลขจะเท่ากับจำนวนข้อ จึงไม่ต้องบอกซ้ำ) */
+      +box('สะเพร่าเฉลี่ย',st.careAvg+'<span style="font-size:11px;color:var(--text3);font-weight:400"> ข้อ</span>',
+           (function(){
+             const full=d.full||30;
+             if(full===30) return 'ต่อคน';
+             const per=full/30, lost=Math.round(st.careAvg*per*10)/10;
+             return 'ต่อคน ≈ '+lost+' คะแนน';
+           })(),'#C77E1A');
   }
   // ── หัวข้อที่กลุ่มควรทบทวนร่วมกัน ──
   const gw=document.getElementById('s-grpWeak');
@@ -1998,9 +2096,7 @@ function _parentFacts(d){
 }
 function setPType(k){ try{localStorage.setItem('ptype:'+currentStudent,k);}catch(e){} if(dashData)renderParentDash(dashData); }
 function _fillParentQGrid(d){
-  const qClass={ok:'q-ok',care:'q-care',concept:'q-concept',cant:'q-cant',timeout:'q-timeout',wrong:'q-wrong',blank:'q-blank'};
-  ['p-qgrid1','p-qgrid2'].forEach(id=>{const g=document.getElementById(id);if(g)g.innerHTML='';});
-  for(let i=1;i<=30;i++){const g=document.getElementById(i<=15?'p-qgrid1':'p-qgrid2');if(!g)continue;const el=document.createElement('div');el.className='q-cell '+qClass[d.qResults[i]];el.textContent=i;g.appendChild(el);}
+  paintQGrid(d, 'p-qgrid1', 'p-qgrid2');
 }
 function renderParentDash(d){
   const name=d.shortName;
@@ -2086,7 +2182,7 @@ function renderParentLastTwo(d){
       +'เทียบสองครั้งล่าสุด: <b style="color:'+col+'">'+word+'</b> '
       +'<span style="color:var(--text3,#948F86)">('+pctOf(prev)+'% → '+pctOf(last)+'%)</span>'
       + (same ? '' : '<br><span style="font-size:11.5px;color:var(--text3,#948F86)">'
-          + 'สองครั้งนี้เป็นข้อสอบคนละแบบ (เต็ม '+(prev.full||30)+' กับเต็ม '+(last.full||30)+') '
+          + 'สองครั้งนี้เป็นข้อสอบคนละแบบ (เต็ม '+(prev.full||30)+' คะแนน กับเต็ม '+(last.full||30)+' คะแนน) '
           + 'จึงเทียบด้วย<b>เปอร์เซ็นต์</b> ไม่ใช่คะแนนดิบ</span>')
       +'</div>';
   }else{
@@ -2275,9 +2371,7 @@ function _parentDolphin(d){
   }
 
   // q-grid
-  const qClass={ok:'q-ok',care:'q-care',concept:'q-concept',cant:'q-cant',timeout:'q-timeout',wrong:'q-wrong',blank:'q-blank'};
-  ['p-qgrid1','p-qgrid2'].forEach(id=>document.getElementById(id).innerHTML='');
-  for(let i=1;i<=30;i++){const g=document.getElementById(i<=15?'p-qgrid1':'p-qgrid2');const el=document.createElement('div');el.className='q-cell '+qClass[d.qResults[i]];el.textContent=i;g.appendChild(el);}
+  paintQGrid(d, 'p-qgrid1', 'p-qgrid2');
 }
 
 // ── 🦅 นกอินทรี: เทียบกับตัวเองเท่านั้น + ตารางแผนที่ครูดำเนินการแล้ว + ประโยคแนะนำ ──
@@ -2693,7 +2787,7 @@ function subRender(){
     `<span style="font-size:11px;color:var(--text3)"> · ยังไม่ระบุ ${n.blank}</span>` +
     (_w
       ? `<div style="font-size:11px;color:var(--text3);margin-top:4px;line-height:1.6">` +
-        `🎯 สนามสอบคิดคะแนนไม่เท่ากันทุกข้อ — ข้อ 1–25 ข้อละ 3 · ข้อ 26–30 ข้อละ 5 (เต็ม ${_w.full})</div>`
+        `🎯 สนามสอบคิดคะแนนไม่เท่ากันทุกข้อ — ข้อ 1–25 ข้อละ 3 คะแนน · ข้อ 26–30 ข้อละ 5 คะแนน (เต็ม ${_w.full} คะแนน)</div>`
       : '');
 }
 
