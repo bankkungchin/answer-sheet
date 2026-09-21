@@ -1775,20 +1775,25 @@ function renderStudentDash(d){
   /* ★ 19 ก.ย. 69 — ของเดิมตรึงไว้ที่ /30 ชุดรวมจึงขึ้น "74 / 30" ทั้งที่เต็ม 100 */
   document.getElementById('s-score').innerHTML=d.score+' <span style="font-size:13px;color:var(--text3);font-weight:400">/ '+(d.full||30)+'</span>';
   document.getElementById('s-scorepct').textContent=Math.round(d.score/(d.full||30)*100)+'% · เฉลี่ยกลุ่ม '+Math.round(avg/(d.full||30)*100)+'%'+(d.allMembers.length>d.groupMembers.length?' · เฉลี่ยรวม '+Math.round(d.allAvg/(d.full||30)*100)+'%':'');
-  document.getElementById('s-wrong').innerHTML=(d.wrong+d.care+d.concept+d.blank)+' <span style="font-size:13px;color:var(--text3);font-weight:400">ข้อ</span>';
-  /* ★ 22 ก.ย. 69 — บอกด้วยว่าแต่ละสาเหตุคิดเป็นกี่คะแนน (สนามสอบข้อละ 3/5 คะแนน ไม่เท่ากัน) */
+  /* ★ 22 ก.ย. 69 — หัวการ์ดบอกทั้งจำนวนข้อและคะแนนที่เสียไป · รายละเอียดแยกสองบรรทัด
+     บรรทัดบน = เสียเพราะจังหวะ/ความรีบ (แก้ได้เร็ว) · บรรทัดล่าง = เสียเพราะเนื้อหา (ต้องกลับไปทบทวน) */
   {
     const _lp = lostPointsOf(d);
+    const _nQ = d.wrong + d.care + d.concept + d.blank;
+    const _unit = 'font-size:13px;color:var(--text3);font-weight:400';
+    const _lost = _lp.pts.timeout + _lp.pts.care + _lp.pts.concept + _lp.pts.cant;
+    document.getElementById('s-wrong').innerHTML = _lp.usable
+      ? _nQ + ' <span style="' + _unit + '">ข้อ /</span> ' + _lost + ' <span style="' + _unit + '">คะแนน</span>'
+      : _nQ + ' <span style="' + _unit + '">ข้อ</span>';
     const _wsEl = document.getElementById('s-wrongsub');
     if(_lp.usable){
-      const bits = [];
-      if(_lp.cnt.timeout) bits.push(_lp.cnt.timeout + ' ไม่ทำ (' + _ptsTxt(_lp.pts.timeout) + ')');
-      if(_lp.cnt.care)    bits.push(_lp.cnt.care    + ' สะเพร่า (' + _ptsTxt(_lp.pts.care) + ')');
-      if(_lp.cnt.concept) bits.push(_lp.cnt.concept + ' คอนเซปต์ (' + _ptsTxt(_lp.pts.concept) + ')');
-      if(_lp.cnt.cant)    bits.push(_lp.cnt.cant    + ' ทำไม่ได้ (' + _ptsTxt(_lp.pts.cant) + ')');
-      const _lost = _lp.pts.timeout + _lp.pts.care + _lp.pts.concept + _lp.pts.cant;
-      _wsEl.innerHTML = bits.join(' · ') +
-        '<div style="margin-top:3px">รวมที่เสียไป <b>' + _ptsTxt(_lost) + '</b> จาก ' + (d.full||30) + ' คะแนน</div>';
+      const line = arr => arr.filter(Boolean).join(' · ');
+      const part = (n, pts, label) => n ? (label + ' ' + n + ' ข้อ (' + _ptsTxt(pts) + ')') : '';
+      const l1 = line([ part(_lp.cnt.timeout, _lp.pts.timeout, 'ทำไม่ทัน'),
+                        part(_lp.cnt.care,    _lp.pts.care,    'สะเพร่า') ]);
+      const l2 = line([ part(_lp.cnt.concept, _lp.pts.concept, 'ผิดคอนเซปต์'),
+                        part(_lp.cnt.cant,    _lp.pts.cant,    'ทำไม่ได้') ]);
+      _wsEl.innerHTML = (l1 ? '<div>' + l1 + '</div>' : '') + (l2 ? '<div>' + l2 + '</div>' : '');
       _wsEl.title = 'คิดจากคะแนนจริงของแต่ละข้อ' +
         (examSections(d.topic) ? ' (ข้อ 1–' + examSections(d.topic).cut + ' ข้อละ ' + examSections(d.topic).pts1 +
           ' คะแนน · ข้อ ' + (examSections(d.topic).cut+1) + '–30 ข้อละ ' + examSections(d.topic).pts2 + ' คะแนน)' : '');
