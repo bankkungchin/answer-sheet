@@ -1787,13 +1787,14 @@ function renderStudentDash(d){
       : _nQ + ' <span style="' + _unit + '">ข้อ</span>';
     const _wsEl = document.getElementById('s-wrongsub');
     if(_lp.usable){
-      const line = arr => arr.filter(Boolean).join(' · ');
-      const part = (n, pts, label) => n ? (label + ' ' + n + ' ข้อ (' + _ptsTxt(pts) + ')') : '';
-      const l1 = line([ part(_lp.cnt.timeout, _lp.pts.timeout, 'ทำไม่ทัน'),
-                        part(_lp.cnt.care,    _lp.pts.care,    'สะเพร่า') ]);
-      const l2 = line([ part(_lp.cnt.concept, _lp.pts.concept, 'ผิดคอนเซปต์'),
-                        part(_lp.cnt.cant,    _lp.pts.cant,    'ทำไม่ได้') ]);
-      _wsEl.innerHTML = (l1 ? '<div>' + l1 + '</div>' : '') + (l2 ? '<div>' + l2 + '</div>' : '');
+      /* บรรทัดละสาเหตุ — จอแคบแล้วข้อความไม่ตกบรรทัดจนอ่านยาก
+         เรียงจาก "เก็บคืนง่ายสุด" ลงไป: สะเพร่า → ผิดคอนเซปต์ → ทำไม่ได้ → ทำไม่ทัน */
+      const part = (n, pts, label) => n ? ('<div>' + label + ' ' + n + ' ข้อ (' + _ptsTxt(pts) + ')</div>') : '';
+      _wsEl.innerHTML =
+        part(_lp.cnt.care,    _lp.pts.care,    'สะเพร่า') +
+        part(_lp.cnt.concept, _lp.pts.concept, 'ผิดคอนเซปต์') +
+        part(_lp.cnt.cant,    _lp.pts.cant,    'ทำไม่ได้') +
+        part(_lp.cnt.timeout, _lp.pts.timeout, 'ทำไม่ทัน');
       _wsEl.title = 'คิดจากคะแนนจริงของแต่ละข้อ' +
         (examSections(d.topic) ? ' (ข้อ 1–' + examSections(d.topic).cut + ' ข้อละ ' + examSections(d.topic).pts1 +
           ' คะแนน · ข้อ ' + (examSections(d.topic).cut+1) + '–30 ข้อละ ' + examSections(d.topic).pts2 + ' คะแนน)' : '');
