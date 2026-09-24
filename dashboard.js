@@ -3276,7 +3276,7 @@ function grdItemHtml(it){
   const chips = [];
   if(it.needFill) chips.push(`<span style="background:#FEF3C7;color:#92400E;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700">ต้องเติม ${it.needFill} ข้อ</span>`);
   if(it.reqCount) chips.push(`<span style="background:#EDE9FE;color:#5B21B6;padding:2px 8px;border-radius:999px;font-size:11px">รอครู ${it.reqCount} ข้อ</span>`);
-  if(it.state === 'locked') chips.push(`<span style="font-size:11px;color:var(--text3)">🔒 ครูล็อกแล้ว</span>`);
+  if(it.state === 'locked') chips.push(`<span style="font-size:11px;color:var(--text3)">🔒 ครูปิดการแก้แล้ว</span>`);
   if(GRD.notesOn && (it.notes||[]).length) chips.push(`<span style="font-size:11px;color:var(--text2)">📝 ${(it.notes||[]).length}</span>`);
   let body = '';
   if(open){
@@ -3285,7 +3285,7 @@ function grdItemHtml(it){
     const needWhy = Object.keys(GRD.draft).some(q => grdKind(it, +q, GRD.draft[q]) === 'req');
     body = `
       <div style="font-size:11.5px;color:var(--text2);line-height:1.6;margin:8px 0">
-        ${it.state === 'locked' ? 'ครูล็อกใบนี้แล้ว — ดูได้อย่างเดียว ถ้าต้องแก้ แจ้งครูครับ' :
+        ${it.state === 'locked' ? 'ครูปิดการแก้ใบนี้แล้ว — ดูได้อย่างเดียว ถ้าต้องแก้ แจ้งครูครับ' :
         'เลือกสัญลักษณ์ แล้วแตะข้อ · <b>แตะซ้ำที่ข้อเดิม = เปลี่ยนเป็นสัญลักษณ์ถัดไป</b> · <b>ขอบส้มประ = ยังไม่ได้ส่งตรวจ</b> ให้เติมเอง<br>' +
         'ข้อที่ครูให้ไว้ แก้ได้ถ้าไม่เกี่ยวกับ ✓ (เช่น C → ⚠️ มีผลทันที) · ถ้าเกี่ยวกับ ✓ จะส่งเป็นคำขอให้ครูตัดสิน'}
       </div>
