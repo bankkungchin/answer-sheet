@@ -74,7 +74,8 @@ const GS_SAFE_ACTIONS = [
   /* ★ 18 ก.ย. 69 — เป้าหมายคะแนน: อ่าน + เขียนทับค่าเดิม ยิงซ้ำปลอดภัยทั้งคู่ */
   'getGoal', 'setMyGoal',
   /* ★ 24 ก.ย. 69 — ใบตรวจ: อ่าน 2 ตัว · gradeFill ยิงซ้ำได้ผลเท่าเดิม (ข้อที่เป็นค่านั้นแล้วเซิร์ฟเวอร์ข้าม) */
-  'myGraded', 'gradeNotes', 'gradeFill'
+  'myGraded', 'gradeNotes', 'gradeFill',
+  'subNoteSave'   /* ★ 25 ก.ย. 69 — เซิร์ฟเวอร์กันภาพซ้ำด้วย noteId */
 ];
 
 /* หาชื่อ action จาก body (POST) ก่อน ถ้าไม่มีค่อยดูใน query string (GET) */
@@ -930,6 +931,7 @@ async function fetchDashData(){
   dashErr='';
   const myRow=myRows[myRows.length-1];
   const group=myRow[2]||'',date=myRow[3]||'',topic=myRow[4]||'';
+  const unfilled=_unfilledOf(myRow);   /* ★ 25 ก.ย. 69 — ยังไม่ครบ 30 ข้อ */
   const score=_scoreOf(myRow,topic),care=parseInt(myRow[37])||0,concept=parseInt(myRow[38])||0,cant=parseInt(myRow[39])||0,timeout=parseInt(myRow[40])||0,wrong=cant,blank=timeout;
   const qResults={};
   for(let i=1;i<=30;i++)qResults[i]=parseStatus(myRow[5+i]||'');
@@ -1081,7 +1083,7 @@ async function fetchDashData(){
   // v2.1: ประวัติทุกบท (ไม่สน topicFilter) — fallback ของแท็บพัฒนาการเมื่อบทที่กรองมีสอบครั้งเดียว
   const allHistory=allMine.map(_mkHist).map(_fillStat);
   const full=_fullOf(topic), isMock=_isMock(topic);
-  dashData={group,date,topic,full,isMock,score,care,concept,cant,timeout,wrong,blank,qResults,groupMembers,rank,allMembers,allRank,allAvg,groupsInTopic,subtopics,diffMap,myAna,grpSubtopics,grpStats,history,mockHist,chapHist,myExamStat,prev,delta,streak,isBest,myLongAll,allHistory,shortName:currentStudent.replace(/\s*\(.*\)/,'')};
+  dashData={unfilled,group,date,topic,full,isMock,score,care,concept,cant,timeout,wrong,blank,qResults,groupMembers,rank,allMembers,allRank,allAvg,groupsInTopic,subtopics,diffMap,myAna,grpSubtopics,grpStats,history,mockHist,chapHist,myExamStat,prev,delta,streak,isBest,myLongAll,allHistory,shortName:currentStudent.replace(/\s*\(.*\)/,'')};
 }
 
 async function showDashboard(mode){
@@ -1778,6 +1780,7 @@ function renderStudentDash(d){
   /* ★ 19 ก.ย. 69 — ของเดิมตรึงไว้ที่ /30 ชุดรวมจึงขึ้น "74 / 30" ทั้งที่เต็ม 100 */
   document.getElementById('s-score').innerHTML=d.score+' <span style="font-size:13px;color:var(--text3);font-weight:400">/ '+(d.full||30)+'</span>';
   document.getElementById('s-scorepct').textContent=Math.round(d.score/(d.full||30)*100)+'% · เฉลี่ยกลุ่ม '+Math.round(avg/(d.full||30)*100)+'%'+(d.allMembers.length>d.groupMembers.length?' · เฉลี่ยรวม '+Math.round(d.allAvg/(d.full||30)*100)+'%':'');
+  try{ paintUnfilledStudent(d); }catch(e){}   /* ★ 25 ก.ย. 69 — ป้าย "ยังไม่ครบ 30 ข้อ" */
   /* ★ 22 ก.ย. 69 — หัวการ์ดบอกทั้งจำนวนข้อและคะแนนที่เสียไป · รายละเอียดแยกสองบรรทัด
      บรรทัดบน = เสียเพราะจังหวะ/ความรีบ (แก้ได้เร็ว) · บรรทัดล่าง = เสียเพราะเนื้อหา (ต้องกลับไปทบทวน) */
   {
@@ -2132,6 +2135,7 @@ function renderParentDash(d){
   /* ★ 19 ก.ย. 69 — การ์ด "ผลสอบ 2 ครั้งล่าสุด" ใช้ร่วมกันทั้ง 5 สไตล์
      (แทรกท้ายสุด ไม่แตะเนื้อรายงานเดิมของแต่ละสไตล์) · ของเดิมแยกตามประเภทข้อสอบ */
   try{ renderParentLastTwo(d); }catch(e){}
+  try{ paintUnfilledParent(d); }catch(e){}   /* ★ 25 ก.ย. 69 */
 }
 
 /* ── การ์ด "ผลสอบ 2 ครั้งล่าสุด" สำหรับผู้ปกครอง (19 ก.ย. 69) ──
@@ -2768,6 +2772,7 @@ function subOpen(){
   }
   subRender();
   subLoadList();
+  try{ subPdfEnsure(); }catch(e){}   /* ★ 25 ก.ย. 69 — กล่องใส่ PDF ใบตรวจ */
 }
 
 function subRender(){
@@ -2783,6 +2788,7 @@ function subRender(){
       <span>${i+1}</span>${s.short}</button>`;
   }).join('');
 
+  try{ subPdfDecor(); }catch(e){}   /* ★ 25 ก.ย. 69 — กรอบส้มข้อที่อ่านจาก PDF ไม่แน่ใจ */
   const n = subCounts();
   /* ★ 17 ก.ย. 69 — สนามสอบคิดคะแนนถ่วงน้ำหนัก ต้องเห็นตั้งแต่ตอนกรอก
      ไม่ใช่ไปรู้ทีหลังตอนครูอนุมัติแล้ว */
@@ -2801,6 +2807,7 @@ function subRender(){
 }
 
 function subTap(i){
+  if(SUBPDF.item && !SUBPDF.item.sentPid) SUBPDF.item.unsure[i] = '';   /* แตะแก้ = ตรวจแล้ว */
   const cur = subIdx(subState.st[i]);
   subState.st[i] = (cur === subState.brush)
     ? SUB_STATES[(cur+1) % SUB_STATES.length].v
@@ -2829,6 +2836,7 @@ async function subSend(){
   const date    = document.getElementById('subDate').value;
   const note    = document.getElementById('subNote').value.trim();
   if(!chapter){ st.className='status err'; st.textContent='เลือกบทก่อนครับ'; return; }
+  if(!subPdfReady(st)) return;
 
   subState.sending = true;
   const btn = document.getElementById('subSendBtn');
@@ -2837,7 +2845,7 @@ async function subSend(){
 
   const _stSent = subState.st.slice();     /* ★ เก็บไว้คิดคะแนนตอนแจ้งผล — ของเดิมถูกล้างทิ้งทันทีหลังส่ง */
   try{
-    const j = await subPost({ action:'submitMyScore', chapter, date, note, statuses: subState.st });
+    const j = await subPost({ action:'submitMyScore', chapter, date, note, statuses: subState.st, gid: subPdfGid() });
     if(j && j.ok){
       st.className='status ok';
       /* ★ 17 ก.ย. 69 — j.score จากเซิร์ฟเวอร์เป็น "จำนวนข้อถูก" เสมอ (ชีตเก็บแบบนั้น)
@@ -2848,6 +2856,7 @@ async function subSend(){
             ? ` · ได้ ${_wSent.score}/${_wSent.full} คะแนน (ทำถูก ${j.score}/30 ข้อ)`
             : ` · ทำถูก ${j.score}/30 ข้อ`)
         + ' — รอครูตรวจครับ';
+      try{ await subPdfAfterSend(j, st); }catch(e){}   /* ★ 25 ก.ย. 69 — ภาพโน้ตตามไป */
       subState.st = new Array(30).fill('');
       document.getElementById('subNote').value = '';
       subRender(); subLoadList();
@@ -2894,12 +2903,15 @@ async function subLoadList(){
              <button onclick="subEditItem('${_esc(String(it.pid))}')" style="${_btn}border:1px solid var(--border-md,#D9D2C6);color:var(--text1,#1A1815)">✏️ แก้ไข</button>
              <button onclick="subCancelItem('${_esc(String(it.pid))}')" style="${_btn}border:1px solid #E4C7C5;color:#B3261E">🗑 ยกเลิกการส่ง</button>
            </div>`
-        : `<div style="font-size:11px;color:var(--text3);margin-top:5px">ครูอนุมัติแล้ว — ถ้าต้องแก้ ต้องแจ้งครูครับ</div>`;
+        : `<div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;align-items:center">
+             <button onclick="subEditItem('${_esc(String(it.pid))}')" style="${_btn}border:1px solid var(--border-md,#D9D2C6);color:var(--text1,#1A1815)">✏️ ขอแก้คะแนน</button>
+             <span style="font-size:11px;color:var(--text3)">ครูอนุมัติแล้ว — ส่งแก้ได้ ครูจะได้รับแจ้งและต้องยืนยันก่อน</span>
+           </div>`;
       return `
       <div class="sub-row" style="align-items:flex-start">
         <div style="flex:1;min-width:0">
           <div style="font-size:13.5px;font-weight:500;color:var(--text1)">${_esc(it.chapter)}</div>
-          <div style="font-size:11px;color:var(--text3)">${_dFmt(it.date)} · ส่งเมื่อ ${_esc(it.submittedAt)}</div>
+          <div style="font-size:11px;color:var(--text3)">${_dFmt(it.date)} · ส่งเมื่อ ${_esc(it.submittedAt)}${it.gid?' · 📄 จาก PDF':''}${it.noteCount?' · 📝 '+it.noteCount+' รูป':''}</div>
           ${it.note ? `<div style="font-size:11.5px;color:var(--red);margin-top:3px">ครูบอกว่า: ${_esc(it.note)}</div>` : ''}
           ${acts}
         </div>
@@ -2919,7 +2931,6 @@ function subEditItem(pid){
   const it=(window.__subItems||[]).find(x=>String(x.pid)===String(pid));
   const st=document.getElementById('subStatus');
   if(!it){ if(st){st.className='status err'; st.textContent='ไม่พบรายการนี้ ลองรีเฟรชหน้าครับ';} return; }
-  if(it.status==='approved'){ if(st){st.className='status err'; st.textContent='ครูอนุมัติแล้ว แก้เองไม่ได้ครับ';} return; }
 
   subState.st=(it.statuses||[]).slice(0,30);
   while(subState.st.length<30) subState.st.push('');
@@ -2937,7 +2948,9 @@ function subEditItem(pid){
   const nt=document.getElementById('subNote'); if(nt) nt.value='';
 
   subRender();
-  if(st){ st.className='status'; st.textContent='ดึงคำตอบเดิมของบท "'+it.chapter+'" กลับมาแล้ว — แก้ข้อที่ต้องการ แล้วกด "ส่งให้ครูตรวจ" อีกครั้ง จะทับของเดิมให้เอง'; }
+  if(st){ st.className='status'; st.textContent = it.status==='approved'
+      ? 'ดึงคะแนนที่ครูอนุมัติแล้วของบท "'+it.chapter+'" มา — แก้ข้อที่ต้องการแล้วกดส่ง จะเป็น "คำขอแก้คะแนน" ครูต้องยืนยันก่อน'
+      : 'ดึงคำตอบเดิมของบท "'+it.chapter+'" กลับมาแล้ว — แก้ข้อที่ต้องการ แล้วกด "ส่งให้ครูตรวจ" อีกครั้ง จะทับของเดิมให้เอง'; }
   const grid=document.getElementById('subGrid'); if(grid&&grid.scrollIntoView) grid.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
@@ -3266,7 +3279,7 @@ function grdItemHtml(it){
     body = `
       <div style="font-size:11.5px;color:var(--text2);line-height:1.6;margin:8px 0">
         ${it.state === 'locked' ? 'ครูล็อกใบนี้แล้ว — ดูได้อย่างเดียว ถ้าต้องแก้ แจ้งครูครับ' :
-        'เลือกสัญลักษณ์ แล้วแตะข้อ · <b>ขอบส้มประ = ยังไม่ได้ส่งตรวจ</b> ให้เติมเอง<br>' +
+        'เลือกสัญลักษณ์ แล้วแตะข้อ · <b>แตะซ้ำที่ข้อเดิม = เปลี่ยนเป็นสัญลักษณ์ถัดไป</b> · <b>ขอบส้มประ = ยังไม่ได้ส่งตรวจ</b> ให้เติมเอง<br>' +
         'ข้อที่ครูให้ไว้ แก้ได้ถ้าไม่เกี่ยวกับ ✓ (เช่น C → ⚠️ มีผลทันที) · ถ้าเกี่ยวกับ ✓ จะส่งเป็นคำขอให้ครูตัดสิน'}
       </div>
       ${it.state === 'locked' ? '' : `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
@@ -3328,13 +3341,28 @@ function grdToggle(gid){
   grdPaint();
 }
 
+/* แตะข้อ:
+   · แตะครั้งแรก = ใส่สัญลักษณ์ที่เลือกไว้ด้านบน
+   · ★ 25 ก.ย. 69 — แตะซ้ำที่ข้อเดิม = วนเป็นสัญลักษณ์ถัดไป (ไม่ต้องขึ้นไปกดปุ่มด้านบน)
+     ข้อที่ยังไม่ได้ส่งตรวจ: ⚠️ → C → X → ⏰ → ว่าง (ไม่มี ✓ เพราะเลือกเองไม่ได้)
+     ข้อที่ครูให้ไว้:        ⚠️ → C → X → ⏰ → ✓ → ⚠️ … (วนกลับมาที่ค่าของครู = ยกเลิกการแก้ข้อนั้น) */
+const GRD_CYCLE_BLANK = ['', 'W', 'C', 'X', 'T'];
+const GRD_CYCLE_GRADED = ['W', 'C', 'X', 'T', 'O'];
 function grdTap(gid, q){
   const it = grdItem(gid);
   if(!it || it.state === 'locked' || GRD.busy) return;
-  const to = GRD.brush;
-  const k = grdKind(it, q, to);
-  if(k === 'no'){ GRD.msg = 'ข้อ ' + q + ' ยังไม่ได้ส่งตรวจ เลือก ✓ เองไม่ได้ครับ — ส่งงานให้ครูตรวจก่อน'; GRD.msgErr = true; grdPaint(); return; }
-  if(k === 'same' || GRD.draft[q] === to) delete GRD.draft[q];
+  const from = it.final[q-1] || '';
+  let to;
+  if(GRD.draft[q] === undefined && GRD.brush !== from){
+    to = GRD.brush;                                   /* แตะครั้งแรก */
+  }else{
+    const cyc = from ? GRD_CYCLE_GRADED : GRD_CYCLE_BLANK;
+    const cur = GRD.draft[q] !== undefined ? GRD.draft[q] : from;
+    const i = cyc.indexOf(cur);
+    to = cyc[(i + 1) % cyc.length];                   /* แตะซ้ำ = ถัดไป */
+  }
+  if(grdKind(it, q, to) === 'no'){ GRD.msg = 'ข้อ ' + q + ' ยังไม่ได้ส่งตรวจ เลือก ✓ เองไม่ได้ครับ — ส่งงานให้ครูตรวจก่อน'; GRD.msgErr = true; grdPaint(); return; }
+  if(to === from) delete GRD.draft[q];                /* วนกลับมาที่ค่าเดิม = ไม่แก้ข้อนี้ */
   else GRD.draft[q] = to;
   GRD.msg = '';
   grdPaint();
@@ -3390,3 +3418,691 @@ function grdPaint(){
     ${items.length > 4 ? `<button onclick="GRD.showAll=!GRD.showAll;grdPaint()" style="margin-top:8px;background:none;border:0;color:var(--text2);font:inherit;font-size:12px;cursor:pointer">${GRD.showAll?'ย่อ':'ดูทั้งหมด ' + items.length + ' ใบ'}</button>` : ''}
   </div>`;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   ★ 25 ก.ย. 69 — ผลสอบที่ยังกรอกไม่ครบ 30 ข้อ (เช่น ใบตรวจที่นักเรียนยังไม่เติม)
+   นับช่องว่างในคำตอบรายข้อ · ถ้าว่างทั้ง 30 ช่อง = แถวรุ่นเก่าที่มีแต่ตัวเลขคะแนน → ไม่นับว่าไม่ครบ
+   ═══════════════════════════════════════════════════════════════════ */
+function _unfilledOf(row){
+  const st = (row || []).slice(6, 36);
+  let filled = 0;
+  for(let i = 0; i < 30; i++) if(String(st[i] == null ? '' : st[i]).trim()) filled++;
+  return filled ? 30 - filled : 0;
+}
+
+function paintUnfilledStudent(d){
+  const el = document.getElementById('s-scorepct');
+  if(!el || !d || !d.unfilled) return;
+  el.insertAdjacentHTML('beforeend',
+    '<div class="unfilled-badge" style="margin-top:6px;display:inline-block;padding:3px 9px;border-radius:999px;background:#FEF3C7;color:#92400E;font-size:11px;font-weight:700;border:1px dashed #F59E0B">' +
+    '⏳ ยังไม่ครบ 30 ข้อ — ว่าง ' + d.unfilled + ' ข้อ · คะแนนยังไม่สมบูรณ์</div>');
+}
+
+function paintUnfilledParent(d){
+  const old = document.getElementById('p-unfilled');
+  if(old) old.remove();
+  if(!d || !d.unfilled) return;
+  const host = document.getElementById('p-summary');
+  if(!host || !host.parentNode) return;
+  host.insertAdjacentHTML('beforebegin',
+    '<div id="p-unfilled" style="margin:0 0 12px;padding:10px 14px;border-radius:12px;background:#FEF3C7;border:1.5px dashed #F59E0B;color:#92400E;font-size:13px;line-height:1.6">' +
+    '<b>⏳ ผลสอบครั้งนี้ยังไม่สมบูรณ์</b> — ยังไม่ได้บันทึกผล ' + d.unfilled + ' ข้อจาก 30 ข้อ<br>' +
+    '<span style="font-size:12px">คะแนนและคำแนะนำด้านล่างอาจเปลี่ยนเมื่อบันทึกครบ</span></div>');
+}
+/* ==SHEET_DETECT_BEGIN== ─────────────────────────────────────────────
+   ★ 24 ก.ย. 69 — อ่านกระดาษคำตอบ PDF เองโดยไม่ใช้ AI
+   ใช้กับแม่แบบกระดาษคำตอบของครู (หน้าละ 15 ข้อ · 5 ช่อง: ✅ ⚠️ C X ⏰ · ช่อง Photos/Notes)
+
+   วิธีคิด: กระดาษทุกใบใช้แม่แบบเดียวกัน ช่องจึงอยู่ตำแหน่งเดิมเสมอ
+     1. หาขอบกล่องสีเขียว (คอลัมน์ ✅) → ได้ตำแหน่ง 15 แถวจริงของหน้านั้น
+        (หาไม่ครบ 15 → ใช้ตำแหน่งมาตรฐานของแม่แบบแทน และติดธง layoutGuess)
+     2. นับ "จุดหมึก" ในแต่ละช่อง (ตัดขอบกล่องออก) — ช่องว่างได้ 0 จุด
+     3. ช่องที่หมึกน้อยผิดปกติ หรือติ๊กสองช่องในแถวเดียว → unsure ให้ครูแตะแก้เอง ห้ามเดา
+     4. ช่อง Notes: หาก้อนภาพ/ลายมือ แล้วบอกว่าคร่อมข้อไหนบ้าง
+   ฟังก์ชันในบล็อกนี้ไม่แตะ DOM — รับ RGBA ล้วน ๆ เทสด้วย node ได้
+   ─────────────────────────────────────────────────────────────────── */
+const SHEET_CODES = ['O', 'W', 'C', 'X', 'T'];          /* ลำดับคอลัมน์บนกระดาษ */
+/* ตำแหน่งอ้างอิงวัดจากแม่แบบจริง (หน้ากว้าง 1241 px ที่ 150 dpi) */
+const SHEET_REF_W = 1241;
+const SHEET_COL_OFF = [0, 88, 189.5, 295.5, 401.5];     /* ระยะจากกลางช่อง ✅ */
+const SHEET_BOX_HALF = 20;                              /* ครึ่งกว้างของพื้นที่ในกล่องที่ใช้นับ */
+const SHEET_MARK_MIN = 25;                              /* จุดหมึกขั้นต่ำ = ติ๊กแน่ ๆ */
+const SHEET_WEAK_MIN = 8;                               /* ต่ำกว่านี้ = ฝุ่น/เงา */
+
+function sheetIsInk(r, g, b) {
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+  return mn < 170 && (mx - mn > 35 || mx < 110);
+}
+function sheetIsGreenLine(r, g, b) {
+  return (g - r > 50) && (g - b > 30) && g < 200;
+}
+
+/* หาตำแหน่ง 15 กล่องในคอลัมน์ ✅ */
+function sheetLayout(px, W, H) {
+  const s = W / SHEET_REF_W;
+  const x0 = Math.floor(W * 0.07), x1 = Math.floor(W * 0.2);
+  const colCount = new Array(x1).fill(0);
+  for (let y = 0; y < H; y++) {
+    for (let x = x0; x < x1; x++) {
+      const i = (y * W + x) * 4;
+      if (sheetIsGreenLine(px[i], px[i + 1], px[i + 2])) colCount[x]++;
+    }
+  }
+  let xL = -1, xR = -1;
+  const need = Math.max(40, H * 0.1);
+  for (let x = x0; x < x1; x++) if (colCount[x] > need) { if (xL < 0) xL = x; xR = x; }
+  let rows = [], guess = false, gx;
+  if (xL >= 0 && xR - xL > 30 * s) {
+    gx = (xL + xR) / 2;
+    const runs = [];
+    let st = -1, last = -10;
+    for (let y = 0; y < H; y++) {
+      let on = false;
+      for (let x = xL; x <= xL + 3; x++) {
+        const i = (y * W + x) * 4;
+        if (sheetIsGreenLine(px[i], px[i + 1], px[i + 2])) { on = true; break; }
+      }
+      if (on) { if (y - last > 2) { if (st >= 0) runs.push([st, last]); st = y; } last = y; }
+    }
+    if (st >= 0) runs.push([st, last]);
+    rows = runs.filter(r => r[1] - r[0] > 35 * s && r[1] - r[0] < 80 * s);
+  }
+  if (rows.length !== 15) {
+    guess = true;
+    gx = 159.5 * s;
+    rows = [];
+    for (let i = 0; i < 15; i++) {
+      const c = H * (0.1736 + i * 0.05188);
+      rows.push([Math.round(c - 27.5 * s), Math.round(c + 27.5 * s)]);
+    }
+  }
+  return { s: s, gx: gx, rows: rows, guess: guess };
+}
+
+function sheetCountInk(px, W, H, cx, cy, hx, hy) {
+  let n = 0;
+  for (let y = Math.max(0, Math.round(cy - hy)); y < Math.min(H, Math.round(cy + hy)); y++) {
+    for (let x = Math.max(0, Math.round(cx - hx)); x < Math.min(W, Math.round(cx + hx)); x++) {
+      const i = (y * W + x) * 4;
+      if (sheetIsInk(px[i], px[i + 1], px[i + 2])) n++;
+    }
+  }
+  return n;
+}
+
+/* อ่าน 1 หน้า → 15 แถว + ก้อนโน้ต
+   rows[i] = { code:'O'|'W'|'C'|'X'|'T'|'', counts:[5], unsure:bool, why:'' } */
+function sheetDetectPage(px, W, H) {
+  const L = sheetLayout(px, W, H);
+  const s = L.s, s2 = s * s;
+  const out = [];
+  L.rows.forEach(function (r) {
+    const cy = (r[0] + r[1]) / 2;
+    const hy = Math.max(6, (r[1] - r[0]) / 2 - 9 * s);
+    const counts = SHEET_COL_OFF.map(off => sheetCountInk(px, W, H, L.gx + off * s, cy, SHEET_BOX_HALF * s, hy));
+    const norm = counts.map(c => c / s2);
+    const order = norm.map((v, i) => i).sort((a, b) => norm[b] - norm[a]);
+    const top = norm[order[0]], second = norm[order[1]];
+    let code = '', unsure = false, why = '';
+    if (top >= SHEET_MARK_MIN) {
+      code = SHEET_CODES[order[0]];
+      if (second >= SHEET_MARK_MIN) { unsure = true; why = 'ติ๊กมากกว่า 1 ช่อง'; }
+      else if (second >= SHEET_WEAK_MIN) { unsure = true; why = 'มีรอยในช่องอื่นด้วย'; }
+    } else if (top >= SHEET_WEAK_MIN) {
+      unsure = true; why = 'รอยจางเกินไป';
+    }
+    out.push({ code: code, counts: counts, unsure: unsure, why: why });
+  });
+  return { rows: out, bands: L.rows, guess: L.guess, notes: sheetNoteBlobs(px, W, H, L) };
+}
+
+/* ก้อนเนื้อหาในช่อง Photos/Notes — คืน [{y0,y1,x0,x1,rows:[index 0–14 ที่คร่อม], main}] */
+function sheetNoteBlobs(px, W, H, L, exclude) {
+  /* exclude = กรอบรูปที่แปะ (จาก PDF) — ไม่นับพิกเซลในรูปเป็นลายมือ
+     ไม่งั้นรูปที่วางชิดกันจะกลายเป็นก้อนเดียวคร่อมหลายรูป */
+  const ex = (exclude || []).map(b => [Math.floor(b.x0), Math.floor(b.y0), Math.ceil(b.x1), Math.ceil(b.y1)]);
+  const s = L.s;
+  const xa = Math.round(W * 0.505), xb = Math.round(W * 0.945);
+  const top = Math.max(0, Math.round(L.rows[0][0] - 12 * s));
+  const bot = Math.min(H - 1, Math.round(L.rows[14][1] + 12 * s));
+  const width = xb - xa;
+  const lineHas = [];
+  const colMin = [], colMax = [];
+  for (let y = top; y <= bot; y++) {
+    let n = 0, mn = W, mx = -1;
+    for (let x = xa; x < xb; x++) {
+      const i = (y * W + x) * 4;
+      const m = Math.min(px[i], px[i + 1], px[i + 2]);
+      if (m < 215) {
+        let inImg = false;
+        for (let e = 0; e < ex.length; e++) { const r = ex[e]; if (x >= r[0] && x < r[2] && y >= r[1] && y < r[3]) { inImg = true; break; } }
+        if (inImg) continue;
+        n++; if (x < mn) mn = x; if (x > mx) mx = x;
+      }
+    }
+    /* เส้นคั่นแถวยาวเกือบเต็มความกว้าง = ของแม่แบบ ไม่ใช่โน้ต */
+    const has = n > 3 && n < width * 0.6;
+    lineHas.push(has); colMin.push(mn); colMax.push(mx);
+  }
+  const blobs = [];
+  let st = -1, lastOn = -100, gap = Math.round(18 * s);
+  for (let k = 0; k < lineHas.length; k++) {
+    if (!lineHas[k]) continue;
+    if (st < 0 || k - lastOn > gap) { if (st >= 0) blobs.push([st, lastOn]); st = k; }
+    lastOn = k;
+  }
+  if (st >= 0) blobs.push([st, lastOn]);
+  const bands = L.rows.map(function (r, i) {
+    const prev = i ? (L.rows[i - 1][1] + r[0]) / 2 : r[0] - 18 * s;
+    const next = i < 14 ? (r[1] + L.rows[i + 1][0]) / 2 : r[1] + 18 * s;
+    return [prev, next];
+  });
+  const out = [];
+  blobs.forEach(function (b) {
+    const y0 = b[0] + top, y1 = b[1] + top;
+    if (y1 - y0 < 10 * s) return;
+    let x0 = W, x1 = -1, ink = 0;
+    for (let k = b[0]; k <= b[1]; k++) {
+      if (!lineHas[k]) continue;
+      ink++;
+      if (colMin[k] < x0) x0 = colMin[k];
+      if (colMax[k] > x1) x1 = colMax[k];
+    }
+    if (x1 - x0 < 12 * s || ink < 8) return;
+    const rows = [];
+    let best = -1, bestOv = 0;
+    bands.forEach(function (bd, i) {
+      const ov = Math.min(y1, bd[1]) - Math.max(y0, bd[0]);
+      if (ov > 0 && (ov >= (y1 - y0) * 0.15 || ov >= (bd[1] - bd[0]) * 0.3)) rows.push(i);
+      if (ov > bestOv) { bestOv = ov; best = i; }
+    });
+    if (!rows.length && best >= 0) rows.push(best);
+    if (!rows.length) return;
+    out.push({ y0: y0, y1: y1, x0: x0, x1: x1, rows: rows, main: best });
+  });
+  return out;
+}
+
+/* ★ 25 ก.ย. 69 — วางโน้ตให้ถูกข้อ
+   rawImgs = กรอบรูปที่ครูแปะ (อ่านจากคำสั่งวาดใน PDF — แม่นทุกพิกเซล แยกรูปที่ชิดกันได้)
+   inkBlobs = ก้อนลายมือในช่อง Notes (sheetNoteBlobs)
+   · ลายมือที่ทับ/ติดกับรูป → รวมเป็นโน้ตเดียวกับรูปนั้น (เช่น วงแดงบนรูปโจทย์)
+   · ข้อของโน้ต = แถวที่ "จุดกึ่งกลางแนวตั้ง" ของโน้ตตกอยู่
+   · ห้ามเดาเงียบ: โน้ตคร่อมหลายแถวและกึ่งกลางอยู่ใกล้เส้นแบ่งแถว หรือกึ่งกลางอยู่ข้อที่ ✅
+     แต่คร่อมข้อที่ผิด → unsure ให้ครูเลือกเองก่อนบันทึก */
+function sheetRowBands(rows, s) {
+  return rows.map(function (r, i) {
+    const prev = i ? (rows[i - 1][1] + r[0]) / 2 : r[0] - 18 * s;
+    const next = i < rows.length - 1 ? (r[1] + rows[i + 1][0]) / 2 : r[1] + 18 * s;
+    return [prev, next];
+  });
+}
+
+function sheetPlaceNotes(rawImgs, inkBlobs, rows, codes, pageIdx, s) {
+  const bands = sheetRowBands(rows, s);
+  const hit = (a, b, pad) => a.x0 - pad < b.x1 && b.x0 - pad < a.x1 && a.y0 - pad < b.y1 && b.y0 - pad < a.y1;
+  const notes = (rawImgs || []).map(b => ({ x0: b.x0, y0: b.y0, x1: b.x1, y1: b.y1, kind: 'img' }));
+  (inkBlobs || []).forEach(function (b) {
+    const hosts = notes.filter(n => n.kind === 'img' && hit(n, b, 6 * s));
+    const host = hosts.length === 1 ? hosts[0] : null;     /* ติดรูปเดียว = ของรูปนั้น · ติดหลายรูป = ไม่เดา แยกเป็นโน้ตเอง */
+    if (host) {                      /* ลายมือบนรูป → ขยายกรอบรูปให้ครอบด้วย */
+      host.x0 = Math.min(host.x0, b.x0); host.y0 = Math.min(host.y0, b.y0);
+      host.x1 = Math.max(host.x1, b.x1); host.y1 = Math.max(host.y1, b.y1);
+    } else notes.push({ x0: b.x0, y0: b.y0, x1: b.x1, y1: b.y1, kind: 'ink' });
+  });
+  notes.sort((a, b) => a.y0 - b.y0);
+  return notes.map(function (n) {
+    const h = n.y1 - n.y0, cy = (n.y0 + n.y1) / 2;
+    let ci = bands.findIndex(bd => cy >= bd[0] && cy < bd[1]);
+    if (ci < 0) ci = cy < bands[0][0] ? 0 : bands.length - 1;
+    const touch = [];
+    bands.forEach(function (bd, i) {
+      const ov = Math.min(n.y1, bd[1]) - Math.max(n.y0, bd[0]);
+      if (ov > 0 && (i === ci || ov >= h * 0.15 || ov >= (bd[1] - bd[0]) * 0.3)) touch.push(i);
+    });
+    const q = pageIdx * 15 + ci + 1;
+    const pitch = bands[ci][1] - bands[ci][0];
+    const edge = Math.min(cy - bands[ci][0], bands[ci][1] - cy);
+    let why = '';
+    if (touch.length > 1 && edge < pitch * 0.2) why = 'คร่อมเส้นแบ่งข้อ';
+    else if (codes[q - 1] === 'O' && touch.some(i => i !== ci && codes[pageIdx * 15 + i] && codes[pageIdx * 15 + i] !== 'O'))
+      why = 'กึ่งกลางอยู่ข้อที่ถูก แต่คร่อมข้อที่ผิด';
+    return { x0: n.x0, y0: n.y0, x1: n.x1, y1: n.y1, kind: n.kind, q: q,
+             touch: touch.map(i => pageIdx * 15 + i + 1), unsure: why };
+  });
+}
+
+/* ★ 25 ก.ย. 69 — อ่าน "เลขข้อ" จากรูปโจทย์ที่ครูแปะ (เช่น "22. จงหา…")
+   words = คำที่ตัวอ่านตัวอักษร (Tesseract) อ่านได้ [{text, x0, y0}] · w = ความกว้างรูป
+   เลือกคำรูปแบบ "NN." ที่อยู่ชิดซ้าย (x < 25% ของรูป) และอยู่บนสุด · เลข 1–30 เท่านั้น
+   ตัวเลือกข้อสอบใช้ "1)" หรือ "1." ที่อยู่ต่ำกว่าเลขข้อเสมอ → เลือกตัวบนสุดจึงปลอดภัย */
+function sheetQFromWords(words, w) {
+  const c = (words || []).map(function (x) {
+    const m = String(x.text || '').trim().match(/^(\d{1,2})\.$/);
+    return m ? { q: +m[1], x0: x.x0, y0: x.y0 } : null;
+  }).filter(x => x && x.q >= 1 && x.q <= 30 && x.x0 < w * 0.25);
+  if (!c.length) return 0;
+  c.sort((a, b) => a.y0 - b.y0);
+  return c[0].q;
+}
+
+/* ชื่อไฟล์ "เมฆ วันพุธ.pdf" → { name:'เมฆ', group:'วันพุธ' } ถ้าหาชื่อกลุ่มท้ายชื่อไฟล์เจอ */
+function sheetNameFromFile(fname, groups) {
+  let base = String(fname || '').replace(/\.pdf$/i, '').replace(/[_]+/g, ' ').replace(/\s+/g, ' ').trim();
+  base = base.replace(/\s*\(\d+\)$/, '').trim();                /* "เมฆ วันพุธ (1)" = ไฟล์ซ้ำ */
+  const m = base.match(/^(.*?)\s*\(([^)]*)\)\s*$/);              /* "เมฆ (วันพุธ)" */
+  if (m) return { name: m[1].trim(), group: m[2].trim(), raw: base };
+  const flat = x => String(x || '').replace(/\s+/g, '');
+  const fb = flat(base);
+  let hit = null;
+  (groups || []).slice().sort((a, b) => flat(b).length - flat(a).length).forEach(function (g) {
+    if (hit || !flat(g)) return;
+    if (fb.length > flat(g).length && fb.slice(-flat(g).length) === flat(g)) hit = g;
+  });
+  if (hit) {
+    let nm = base;
+    const gi = base.replace(/\s+/g, ' ');
+    const idx = gi.lastIndexOf(String(hit).trim());
+    nm = idx > 0 ? gi.slice(0, idx).trim() : base.slice(0, base.length - String(hit).length).trim();
+    return { name: nm, group: hit, raw: base };
+  }
+  return { name: base, group: '', raw: base };
+}
+/* ==SHEET_DETECT_END== */
+/* ═══════════════════════════════════════════════════════════════════
+   ★ 25 ก.ย. 69 — ตัวอ่าน PDF ใบตรวจ (ใช้ร่วมกันทั้งหน้าครูและหน้านักเรียน)
+   pdf.js อ่านหน้า → sheetDetectPage หาช่องที่ติ๊ก → ตัดภาพโน้ต → Tesseract อ่านเลขข้อในภาพ
+   ไม่มีตัวแปรของหน้าไหนอยู่ในนี้ — build.py แปะไฟล์นี้ลงทั้ง teacher-dashboard.html และ dashboard.js
+   ═══════════════════════════════════════════════════════════════════ */
+const PDFJS_SRC    = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+const PDFJS_WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+const PDF_CYCLE = ['', 'O', 'W', 'C', 'X', 'T'];
+const PDF_CODE_ST = { O: '✅ ถูก', W: '⚠️ สะเพร่า', C: 'C คอนเซปต์', X: 'X ทำไม่ได้', T: '⏰ ไม่ทัน', '': '' };
+let _pdfjsP = null;
+
+function pdfjsReady() {
+  if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+  if (_pdfjsP) return _pdfjsP;
+  _pdfjsP = new Promise(function (res, rej) {
+    const s = document.createElement('script');
+    s.src = PDFJS_SRC;
+    s.onload = function () {
+      try { window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER; } catch (e) {}
+      res(window.pdfjsLib);
+    };
+    s.onerror = function () { _pdfjsP = null; rej(new Error('โหลดตัวอ่าน PDF ไม่ได้ — ตรวจอินเทอร์เน็ตแล้วลองใหม่')); };
+    document.head.appendChild(s);
+  });
+  return _pdfjsP;
+}
+
+function pdfEsc(v) {
+  return String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function pdfUid(prefix) {
+  return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+
+/* กรอบของรูปที่ครูแปะในหน้า PDF — อ่านจากคำสั่งวาดของ PDF ตรง ๆ (ไม่ต้องเดาจากพิกเซล)
+   รูปพื้นหลังเต็มหน้า (ตัวแม่แบบ+ลายมือ) ข้ามไป · เอาเฉพาะที่อยู่ฝั่งช่อง Notes */
+async function sheetImageBoxes(lib, page, vp, W, H) {
+  /* ★ 25 ก.ย. 69 — รูปที่ครูครอปใน iPad: PDF เก็บรูปเต็ม + "กรอบตัด" (clip) บังส่วนที่ครอปทิ้ง
+     ต้องเอากรอบรูป ∩ กรอบตัด ไม่งั้นได้รูปเต็มที่กินไปถึงข้ออื่น (เคสใบปุณ)
+     และรูปที่วางทีหลังทับรูปก่อนหน้า → ตัดส่วนที่ถูกทับออกจากรูปก่อนหน้า */
+  const out = [];
+  try {
+    const ol = await page.getOperatorList();
+    const O = lib.OPS;
+    const full = { x0: -1e9, y0: -1e9, x1: 1e9, y1: 1e9 };
+    let ctm = [1, 0, 0, 1, 0, 0], clip = full, lastPath = null;
+    const stack = [];
+    const mul = (a, b) => [a[0] * b[0] + a[2] * b[1], a[1] * b[0] + a[3] * b[1], a[0] * b[2] + a[2] * b[3],
+                           a[1] * b[2] + a[3] * b[3], a[0] * b[4] + a[2] * b[5] + a[4], a[1] * b[4] + a[3] * b[5] + a[5]];
+    /* สี่เหลี่ยมในพิกัด PDF (ผ่าน ctm) → พิกัดบนภาพที่เรนเดอร์ */
+    const toView = (m, x0, y0, x1, y1) => {
+      const pts = [[x0, y0], [x1, y0], [x0, y1], [x1, y1]].map(p => [m[0] * p[0] + m[2] * p[1] + m[4], m[1] * p[0] + m[3] * p[1] + m[5]]);
+      const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+      const r = vp.convertToViewportRectangle([Math.min.apply(null, xs), Math.min.apply(null, ys), Math.max.apply(null, xs), Math.max.apply(null, ys)]);
+      return { x0: Math.min(r[0], r[2]), x1: Math.max(r[0], r[2]), y0: Math.min(r[1], r[3]), y1: Math.max(r[1], r[3]) };
+    };
+    const inter = (a, b) => ({ x0: Math.max(a.x0, b.x0), y0: Math.max(a.y0, b.y0), x1: Math.min(a.x1, b.x1), y1: Math.min(a.y1, b.y1) });
+    const drawn = [];
+    for (let i = 0; i < ol.fnArray.length; i++) {
+      const fn = ol.fnArray[i], a = ol.argsArray[i];
+      if (fn === O.save) stack.push({ ctm: ctm.slice(), clip: clip });
+      else if (fn === O.restore) { const st = stack.pop(); if (st) { ctm = st.ctm; clip = st.clip; } }
+      else if (fn === O.transform) ctm = mul(ctm, a);
+      else if (fn === O.constructPath) {
+        const mm = a && a[2];
+        /* pdf.js 3.x เก็บกรอบของ path เป็น [minX, maxX, minY, maxY] (ไม่ใช่ x0,y0,x1,y1) */
+        lastPath = (mm && mm.length === 4 && isFinite(mm[0])) ? toView(ctm, mm[0], mm[2], mm[1], mm[3]) : null;
+      }
+      else if (fn === O.clip || fn === O.eoClip) { if (lastPath) clip = inter(clip, lastPath); }
+      else if (fn === O.paintImageXObject || fn === O.paintInlineImageXObject || fn === O.paintJpegXObject || fn === O.paintImageXObjectRepeat) {
+        const b = inter(inter(toView(ctm, 0, 0, 1, 1), clip), { x0: 0, y0: 0, x1: W, y1: H });
+        if (b.x1 - b.x0 < 12 || b.y1 - b.y0 < 12) continue;
+        drawn.push(b);
+      }
+    }
+    drawn.forEach(function (b, i) {
+      if ((b.x1 - b.x0) * (b.y1 - b.y0) > W * H * 0.5) return;       /* พื้นหลังเต็มหน้า */
+      if ((b.x0 + b.x1) / 2 < W * 0.45) return;                        /* ไม่ใช่ช่อง Notes */
+      const v = { x0: b.x0, y0: b.y0, x1: b.x1, y1: b.y1 };
+      drawn.slice(i + 1).forEach(function (c) {                         /* รูปที่วางทีหลังทับอยู่ */
+        if ((c.x1 - c.x0) * (c.y1 - c.y0) > W * H * 0.5) return;
+        const ox = Math.min(v.x1, c.x1) - Math.max(v.x0, c.x0);
+        if (ox < (v.x1 - v.x0) * 0.8) return;                           /* ทับแค่บางส่วนแนวนอน → ไม่ตัด */
+        if (c.y0 <= v.y0 && c.y1 > v.y0 && c.y1 < v.y1) v.y0 = c.y1;    /* ทับขอบบน */
+        else if (c.y1 >= v.y1 && c.y0 < v.y1 && c.y0 > v.y0) v.y1 = c.y0; /* ทับขอบล่าง */
+      });
+      if (v.y1 - v.y0 >= 12) out.push(v);
+    });
+  } catch (e) { /* อ่านคำสั่งวาดไม่ได้ → ใช้การหาก้อนจากพิกเซลอย่างเดียว */ }
+  return out;
+}
+
+/* ── ตัวอ่านเลขข้อจากรูป (Tesseract · ทำงานในเบราว์เซอร์ ไม่ส่งรูปออกไปไหน ไม่ใช่ AI แบบถามตอบ) ──
+   โหลดครั้งแรก ~7 MB จาก jsdelivr แล้วเบราว์เซอร์จำไว้ · โหลดไม่ได้ = ใช้ตำแหน่งรูปอย่างเดียวเหมือนเดิม
+   ปิดได้ด้วย SHEET_OCR = false */
+const SHEET_OCR = true;
+const TESS_SRC = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+const TESS_OPT = {
+  workerPath: 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/worker.min.js',
+  corePath: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.1',
+  langPath: 'https://cdn.jsdelivr.net/npm/@tesseract.js-data/eng@1.0.0/4.0.0_best_int'
+};
+let _tessP = null;
+function tessReady() {
+  if (!SHEET_OCR) return Promise.resolve(null);
+  if (_tessP) return _tessP;
+  _tessP = new Promise(function (res) {
+    const go = async function () {
+      try {
+        const w = await window.Tesseract.createWorker('eng', 1, TESS_OPT);
+        await w.setParameters({ tessedit_pageseg_mode: '11' });
+        res(w);
+      } catch (e) { res(null); }
+    };
+    if (window.Tesseract) return go();
+    const s = document.createElement('script');
+    s.src = TESS_SRC;
+    s.onload = go;
+    s.onerror = function () { res(null); };
+    document.head.appendChild(s);
+  });
+  return _tessP;
+}
+
+/* อ่านเลขข้อจากรูปที่แปะ — เรนเดอร์หน้าใหม่ที่ความละเอียด 4 เท่า (ตัวเลขในรูปเล็กมาก อ่านที่ขนาดปกติไม่ออก) */
+async function sheetOcrNotes(page, notes, pageIdx) {
+  const imgs = notes.filter(n => n.kind === 'img' && n.page === pageIdx);
+  if (!imgs.length) return;
+  const w = await tessReady();
+  if (!w) return;
+  const K = 4;
+  const vp = page.getViewport({ scale: K * SHEET_REF_W / page.getViewport({ scale: 1 }).width });
+  const cv = document.createElement('canvas');
+  cv.width = Math.round(vp.width); cv.height = Math.round(vp.height);
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
+  await page.render({ canvasContext: ctx, viewport: vp }).promise;
+  for (const n of imgs) {
+    try {
+      const c2 = document.createElement('canvas');
+      c2.width = Math.round((n.box.x1 - n.box.x0) * K); c2.height = Math.round((n.box.y1 - n.box.y0) * K);
+      c2.getContext('2d').drawImage(cv, n.box.x0 * K, n.box.y0 * K, c2.width, c2.height, 0, 0, c2.width, c2.height);
+      const r = await w.recognize(c2);
+      const words = ((r && r.data && r.data.words) || []).map(x => ({ text: x.text, x0: x.bbox.x0, y0: x.bbox.y0 }));
+      const q = sheetQFromWords(words, c2.width);
+      if (!q) continue;
+      n.ocrQ = q;
+      if (q !== n.q) n.geoQ = n.q;
+      n.q = q;
+      if (n.touch.indexOf(q) === -1) n.touch = n.touch.concat([q]).sort((a, b) => a - b);
+      /* เลขข้ออยู่ในหน้าเดียวกับรูป = เชื่อได้ · ข้ามหน้า = ให้ครูดู */
+      n.unsure = (q > pageIdx * 15 && q <= pageIdx * 15 + 15) ? '' : 'เลขข้อในรูป (' + q + ') อยู่คนละหน้ากับรูป';
+    } catch (e) { /* อ่านไม่ได้ → ใช้ตำแหน่งตามเดิม */ }
+  }
+}
+
+/* อ่าน PDF 1 ไฟล์ → { codes[30], unsure[30], notes[], pages, guess } */
+async function sheetReadPdf(file) {
+  const lib = await pdfjsReady();
+  const buf = await file.arrayBuffer();
+  const doc = await lib.getDocument({ data: buf }).promise;
+  const codes = new Array(30).fill(''), unsure = new Array(30).fill(''), counts = [];
+  const notes = [];
+  let guess = false;
+  const pages = Math.min(doc.numPages, 2);
+  for (let p = 0; p < pages; p++) {
+    const page = await doc.getPage(p + 1);
+    const vp1 = page.getViewport({ scale: 1 });
+    const vp = page.getViewport({ scale: SHEET_REF_W / vp1.width });
+    const cv = document.createElement('canvas');
+    cv.width = Math.round(vp.width); cv.height = Math.round(vp.height);
+    const ctx = cv.getContext('2d', { willReadFrequently: true });
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
+    await page.render({ canvasContext: ctx, viewport: vp }).promise;
+    const img = ctx.getImageData(0, 0, cv.width, cv.height);
+    const r = sheetDetectPage(img.data, cv.width, cv.height);
+    if (r.guess) guess = true;
+    r.rows.forEach(function (row, i) {
+      const q = p * 15 + i;
+      codes[q] = row.code;
+      unsure[q] = row.unsure ? row.why : '';
+      counts[q] = row.counts;
+    });
+    const imgs = await sheetImageBoxes(lib, page, vp, cv.width, cv.height);
+    /* หาลายมือใหม่โดยไม่นับพิกเซลที่อยู่ในรูป → ลายมือที่เหลือถ้าติดรูปจะรวมเข้ากับรูปนั้น */
+    const ink = imgs.length ? sheetNoteBlobs(img.data, cv.width, cv.height, { rows: r.bands, s: cv.width / SHEET_REF_W }, imgs) : r.notes;
+    sheetPlaceNotes(imgs, ink, r.bands, codes, p, cv.width / SHEET_REF_W).forEach(function (b) {
+      const pad = 8;
+      const x0 = Math.max(0, Math.floor(b.x0 - pad)), y0 = Math.max(0, Math.floor(b.y0 - pad));
+      const w = Math.min(cv.width, Math.ceil(b.x1 + pad)) - x0, h = Math.min(cv.height, Math.ceil(b.y1 + pad)) - y0;
+      if (w < 4 || h < 4) return;
+      const k = Math.min(1, 900 / w);
+      const c2 = document.createElement('canvas');
+      c2.width = Math.round(w * k); c2.height = Math.round(h * k);
+      const g2 = c2.getContext('2d');
+      g2.fillStyle = '#fff'; g2.fillRect(0, 0, c2.width, c2.height);
+      g2.drawImage(cv, x0, y0, w, h, 0, 0, c2.width, c2.height);
+      notes.push({ page: p, q: b.q, touch: b.touch, unsure: b.unsure, kind: b.kind,
+                   box: { x0: b.x0, y0: b.y0, x1: b.x1, y1: b.y1 },
+                   dataUrl: c2.toDataURL('image/jpeg', 0.72), noteId: pdfUid('N') });
+    });
+    await sheetOcrNotes(page, notes, p);
+  }
+  return { codes: codes, unsure: unsure, counts: counts, notes: notes, pages: doc.numPages, guess: guess };
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ★ 25 ก.ย. 69 — นักเรียนใส่ PDF ใบตรวจเองในหน้า "กรอกคะแนนเอง" (p8)
+   ใช้ตัวอ่านชุดเดียวกับหน้าครู (sheet_detect_block + sheet_read_block แปะไว้ข้างบน)
+   อ่านช่องที่ครูติ๊ก → เติมตาราง 30 ข้อให้ → นักเรียนตรวจ/แตะแก้ → ส่งให้ครูตรวจตามเดิม
+   ภาพโน้ตของครูส่งตามไปทีละภาพ (subNoteSave) → ครูอนุมัติแล้วเห็นในการ์ด "ใบตรวจจากครู" เหมือนใบที่ครูอัปเอง
+   กล่องนี้ถูกสร้างด้วย JS (ไม่ต้องแก้ index.html)
+   ═══════════════════════════════════════════════════════════════════ */
+const SUBPDF = { item:null, busy:false, msg:'', msgKind:'' };
+
+function subPdfHost(){
+  let el = document.getElementById('subPdfBox');
+  if(el) return el;
+  const pane = document.getElementById('subPastePane');
+  const brush = document.getElementById('subBrush');
+  const anchor = pane || (brush && brush.closest ? (brush.closest('.d-card') || brush) : brush);
+  if(!anchor || !anchor.parentNode) return null;
+  el = document.createElement('div');
+  el.id = 'subPdfBox';
+  el.className = 'd-card';
+  anchor.parentNode.insertBefore(el, anchor);
+  return el;
+}
+
+function subPdfEnsure(){ if(subPdfHost()) subPdfPaint(); }
+
+function _spEsc(v){ return String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function subPdfGid(){ return SUBPDF.item && !SUBPDF.item.sentPid ? SUBPDF.item.gid : ''; }
+
+function subPdfPaint(){
+  const el = subPdfHost();
+  if(!el) return;
+  const it = SUBPDF.item;
+  const btn = 'font-family:inherit;font-size:12px;padding:6px 12px;border-radius:11px;cursor:pointer;background:var(--card,#FAF9F5);border:1px solid var(--border-md,#D9D2C6);color:var(--text1,#1A1815)';
+  const msg = SUBPDF.msg ? `<div class="sp-msg" style="font-size:12px;margin-top:8px;line-height:1.6;color:${SUBPDF.msgKind==='err'?'var(--red,#B3261E)':SUBPDF.msgKind==='ok'?'var(--green,#1E7B3A)':'var(--text2,#555)'}">${_spEsc(SUBPDF.msg)}</div>` : '';
+  let body;
+  if(!it){
+    body = `<label style="${btn};display:inline-flex;align-items:center;gap:6px;${SUBPDF.busy?'opacity:.5;pointer-events:none;':''}">
+        📄 เลือกไฟล์ PDF ใบตรวจ
+        <input type="file" id="subPdfFile" accept="application/pdf,.pdf" style="display:none" onchange="subPdfPick(this.files);this.value=''">
+      </label>
+      <div style="font-size:11.5px;color:var(--text3);margin-top:6px;line-height:1.6">
+        ใส่ไฟล์ที่ครูตรวจแล้วส่งกลับมา · ระบบอ่านช่องที่ครูติ๊กให้เอง (ไม่ใช้ AI) แล้วเติมตารางด้านล่าง<br>
+        ภาพโน้ตของครูจะถูกเก็บไว้ดูทีหลังได้ · ตรวจให้ตรงกระดาษก่อนกดส่งนะครับ</div>`;
+  }else{
+    const filled = subState.st.filter(Boolean).length;
+    const uq = it.unsure.map((u,i)=>u?i+1:0).filter(Boolean);
+    const nu = it.notes.filter(n=>n.unsure).length;
+    const opts = q => Array.from({length:30},(_,i)=>`<option value="${i+1}" ${q===i+1?'selected':''}>ข้อ ${i+1}</option>`).join('');
+    const notes = it.notes.map(n => `
+      <div class="sp-note" data-note="${n.noteId}" style="border:${n.unsure?'2px dashed #F59E0B':'1px solid var(--border-md,#D9D2C6)'};border-radius:10px;padding:6px;background:#fff">
+        <img src="${n.dataUrl}" alt="โน้ตข้อ ${n.q}" style="width:100%;display:block;border-radius:6px">
+        <div style="display:flex;gap:6px;align-items:center;margin-top:5px">
+          <select onchange="subPdfNoteQ('${n.noteId}',this.value)" ${n.saved||it.sentPid?'disabled':''} style="flex:1;font-family:inherit;font-size:12px;padding:4px;border-radius:8px">${opts(n.q)}</select>
+          ${n.saved ? '<span style="font-size:11px;color:var(--green,#1E7B3A)">✓ ส่งแล้ว</span>'
+                    : it.sentPid ? '' : `<button onclick="subPdfNoteDrop('${n.noteId}')" title="ไม่ใช่โน้ต ตัดทิ้ง" style="${btn};padding:4px 8px">✕</button>`}
+        </div>
+        ${n.unsure ? `<div style="font-size:10.5px;color:#92400E;margin-top:3px">${_spEsc(n.unsure)} — เลือกข้อให้ถูก</div>` : ''}
+      </div>`).join('');
+    body = `<div style="font-size:13px;color:var(--text1)"><b>📄 ${_spEsc(it.fileName)}</b></div>
+      <div style="font-size:12px;color:var(--text2);margin-top:3px">อ่านได้ ${filled}/30 ข้อ${30-filled?` · ว่าง ${30-filled} ข้อ (ข้อที่ยังไม่ได้ส่งตรวจ — แตะเติมเองได้)`:''} · ภาพโน้ต ${it.notes.length} ภาพ</div>
+      ${it.warn ? `<div style="font-size:12px;color:#92400E;margin-top:4px">⚠️ ${_spEsc(it.warn)}</div>` : ''}
+      ${uq.length && !it.sentPid ? `<div class="sp-unsure" style="margin-top:8px;padding:8px 10px;border-radius:10px;background:#FEF3C7;border:1.5px dashed #F59E0B;font-size:12px;color:#92400E;line-height:1.6">
+          อ่านไม่แน่ใจ ${uq.length} ข้อ (กรอบส้มในตาราง): ข้อ ${uq.join(', ')} — แตะแก้ให้ตรงกระดาษ
+          <button onclick="subPdfConfirm()" style="${btn};margin-left:6px;padding:4px 10px">ยืนยันตามที่อ่านได้</button></div>` : ''}
+      ${nu && !it.sentPid ? `<div style="font-size:12px;color:#92400E;margin-top:6px">มีภาพโน้ต ${nu} ภาพที่ไม่แน่ใจว่าเป็นข้อไหน (กรอบส้ม) — เลือกข้อใต้ภาพ</div>` : ''}
+      ${it.notes.length ? `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-top:10px">${notes}</div>` : ''}
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">
+        ${it.sentPid && it.notes.some(n=>!n.saved) ? `<button onclick="subPdfRetry()" style="${btn}">📤 ส่งภาพที่ค้างอีกครั้ง</button>` : ''}
+        <button onclick="subPdfClear()" style="${btn};color:#B3261E;border-color:#E4C7C5">${it.sentPid ? 'ปิด' : 'ล้างไฟล์นี้'}</button>
+      </div>`;
+  }
+  el.innerHTML = `<div class="slabel">📄 ใส่ไฟล์ PDF ใบตรวจจากครู</div>${body}${msg}`;
+}
+
+/* กรอบส้มบนข้อที่อ่านไม่แน่ใจ — เรียกท้าย subRender ทุกครั้ง */
+function subPdfDecor(){
+  const it = SUBPDF.item;
+  const grid = document.getElementById('subGrid');
+  if(!grid) return;
+  [...grid.children].forEach((b,i) => {
+    const u = it && !it.sentPid && it.unsure[i];
+    b.style.outline = u ? '3px dashed #F59E0B' : '';
+    b.style.outlineOffset = u ? '-2px' : '';
+    if(u) b.title = 'อ่านไม่แน่ใจ: ' + u; else b.removeAttribute('title');
+    b.classList.toggle('sp-unsure-q', !!u);
+  });
+  subPdfPaint();
+}
+
+async function subPdfPick(files){
+  const f = (files && files[0]) || null;
+  if(!f) return;
+  if(!/\.pdf$/i.test(f.name) && f.type !== 'application/pdf'){ SUBPDF.msg='เลือกไฟล์ PDF ครับ'; SUBPDF.msgKind='err'; subPdfPaint(); return; }
+  SUBPDF.busy = true; SUBPDF.msg = 'กำลังอ่านไฟล์… (ครั้งแรกต้องโหลดตัวอ่านเลขข้อ ~7 MB รอสักครู่)'; SUBPDF.msgKind = '';
+  subPdfPaint();
+  try{
+    const r = await sheetReadPdf(f);
+    if(r.codes.every(c=>!c)) throw new Error('ไม่พบช่องที่ครูติ๊กเลย — ใช่ใบตรวจที่ครูตรวจแล้วหรือเปล่าครับ');
+    subState.st = r.codes.map(c => PDF_CODE_ST[c] || '');
+    SUBPDF.item = { gid: pdfUid('G'), fileName: f.name, unsure: r.unsure.slice(),
+      notes: r.notes.map(n => ({ noteId:n.noteId, q:n.q, unsure:n.unsure || '', dataUrl:n.dataUrl, saved:false })),
+      warn: r.pages > 2 ? 'ไฟล์นี้มี ' + r.pages + ' หน้า — ระบบอ่านแค่ 2 หน้าแรก (ใบตรวจ 1 คน = 2 หน้า)'
+          : r.guess ? 'หาเส้นตารางไม่เจอ ใช้ตำแหน่งมาตรฐาน — ตรวจให้ดีก่อนส่ง' : '' };
+    SUBPDF.msg = 'อ่านเสร็จแล้ว — เลือกบทและวันที่สอบด้านบนให้ตรงกับใบนี้ ตรวจตาราง แล้วกด "ส่งให้ครูตรวจ"'; SUBPDF.msgKind = 'ok';
+  }catch(e){
+    SUBPDF.msg = 'อ่านไฟล์ไม่ได้: ' + ((e && e.message) || e); SUBPDF.msgKind = 'err';
+  }
+  SUBPDF.busy = false;
+  subRender();
+  subPdfPaint();
+}
+
+function subPdfConfirm(){ if(SUBPDF.item){ SUBPDF.item.unsure = new Array(30).fill(''); subRender(); } }
+function subPdfNoteQ(id, q){
+  const n = SUBPDF.item && SUBPDF.item.notes.find(x=>x.noteId===id);
+  if(n && !n.saved){ n.q = parseInt(q,10); n.unsure = ''; }
+  subPdfPaint();
+}
+function subPdfNoteDrop(id){
+  if(SUBPDF.item) SUBPDF.item.notes = SUBPDF.item.notes.filter(x=>x.noteId!==id);
+  subPdfPaint();
+}
+function subPdfClear(){
+  const sent = SUBPDF.item && SUBPDF.item.sentPid;
+  if(!sent && SUBPDF.item && !confirm('ล้างไฟล์นี้? (ตารางที่อ่านได้จะถูกล้างด้วย)')) return;
+  if(!sent){ subState.st = new Array(30).fill(''); }
+  SUBPDF.item = null; SUBPDF.msg = ''; SUBPDF.msgKind = '';
+  subRender(); subPdfPaint();
+}
+
+/* เช็คก่อนส่ง — คืน false = ยังส่งไม่ได้ (เขียนเหตุผลลง #subStatus ให้แล้ว) */
+function subPdfReady(stEl){
+  const it = SUBPDF.item;
+  if(!it || it.sentPid) return true;
+  const uq = it.unsure.filter(Boolean).length;
+  const nu = it.notes.filter(n=>n.unsure).length;
+  if(uq || nu){
+    stEl.className = 'status err';
+    stEl.textContent = uq ? `ยังมี ${uq} ข้อที่ระบบอ่านไม่แน่ใจ (กรอบส้ม) — แตะแก้ หรือกด "ยืนยันตามที่อ่านได้" ก่อนส่งครับ`
+                          : `ยังมีภาพโน้ต ${nu} ภาพที่ยังไม่ได้เลือกข้อ — เลือกข้อใต้ภาพก่อนส่งครับ`;
+    return false;
+  }
+  return true;
+}
+
+/* หลังส่งคะแนนสำเร็จ → ส่งภาพโน้ตทีละภาพ (ยิงซ้ำได้ เซิร์ฟเวอร์กันซ้ำด้วย noteId) */
+async function subPdfAfterSend(j, stEl){
+  if(j && j.replaceOf != null){
+    stEl.textContent += ` · ⚠️ ครูกรอกคะแนนบทนี้ไว้แล้ว (${j.replaceOf}/30) — ส่งเป็น "คำขอแก้คะแนน" ครูต้องยืนยันก่อน`;
+  }
+  const it = SUBPDF.item;
+  if(!it || it.sentPid) return;
+  it.sentPid = true;
+  it.unsure = new Array(30).fill('');
+  if(j.gid !== it.gid){ it.notes = []; subPdfPaint(); return; }
+  if(!it.notes.length){ SUBPDF.item = null; SUBPDF.msg = ''; subPdfPaint(); return; }
+  if(j.notesOn === false){
+    SUBPDF.msg = 'ส่งคะแนนแล้ว · ครูยังไม่ได้เปิดระบบเก็บภาพโน้ต ภาพจึงยังไม่ถูกส่ง'; SUBPDF.msgKind = 'err';
+    it.notes = []; subPdfPaint(); return;
+  }
+  await subPdfUpload(stEl);
+}
+
+async function subPdfUpload(stEl){
+  const it = SUBPDF.item;
+  if(!it) return;
+  const todo = it.notes.filter(n=>!n.saved);
+  let done = 0, fail = 0, lastErr = '';
+  for(const n of todo){
+    SUBPDF.msg = `กำลังส่งภาพโน้ต ${done+fail+1}/${todo.length}…`; SUBPDF.msgKind = '';
+    subPdfPaint();
+    try{
+      const r = await subPost({ action:'subNoteSave', gid: it.gid, noteId: n.noteId, qs:[n.q],
+                                data: String(n.dataUrl).replace(/^data:image\/\w+;base64,/, '') });
+      if(r && r.ok){ n.saved = true; done++; }
+      else { fail++; lastErr = (r && r.error) || ''; if(r && r.notesOff) break; }
+    }catch(e){ fail++; lastErr = e.message; }
+  }
+  if(!fail){
+    if(stEl) stEl.textContent += ` · ภาพโน้ต ${it.notes.length} ภาพ`;
+    SUBPDF.item = null; SUBPDF.msg = 'ส่งภาพโน้ตครบ ' + it.notes.length + ' ภาพแล้ว — ครูอนุมัติแล้วจะดูได้ในการ์ด "ใบตรวจจากครู"'; SUBPDF.msgKind = 'ok';
+  }else{
+    SUBPDF.msg = `ส่งภาพโน้ตไม่สำเร็จ ${fail} ภาพ${lastErr ? ' (' + lastErr + ')' : ''} — กด "ส่งภาพที่ค้างอีกครั้ง"`; SUBPDF.msgKind = 'err';
+  }
+  subPdfPaint();
+}
+
+async function subPdfRetry(){ await subPdfUpload(null); subLoadList(); }
