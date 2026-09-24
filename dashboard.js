@@ -72,7 +72,9 @@ const GS_SAFE_ACTIONS = [
   'syncData', 'scoreSkipSet', 'examSetActive', 'saveFace', 'deleteFace',
   'endCheckin', 'teacherLogin', 'teacherLogout', 'updateCheckinNote',
   /* ★ 18 ก.ย. 69 — เป้าหมายคะแนน: อ่าน + เขียนทับค่าเดิม ยิงซ้ำปลอดภัยทั้งคู่ */
-  'getGoal', 'setMyGoal'
+  'getGoal', 'setMyGoal',
+  /* ★ 24 ก.ย. 69 — ใบตรวจ: อ่าน 2 ตัว · gradeFill ยิงซ้ำได้ผลเท่าเดิม (ข้อที่เป็นค่านั้นแล้วเซิร์ฟเวอร์ข้าม) */
+  'myGraded', 'gradeNotes', 'gradeFill'
 ];
 
 /* หาชื่อ action จาก body (POST) ก่อน ถ้าไม่มีค่อยดูใน query string (GET) */
@@ -1766,6 +1768,7 @@ function paintQGrid(d, id1, id2){
 }
 
 function renderStudentDash(d){
+  try{ gradedEnsure(); }catch(e){}   /* ★ 24 ก.ย. 69 — การ์ดใบตรวจจากครู (วาดใต้ #s-encourage) */
   document.getElementById('s-avatar').textContent=d.shortName.substring(0,3);
   document.getElementById('s-name').textContent=d.shortName;
   document.getElementById('s-group').textContent='· '+d.group;
@@ -3147,4 +3150,243 @@ function mockPlanCardHTML(d, h){
 function mockPlanToggle(topic){
   _planShown[topic] = !_planShown[topic];
   if(dashData){ try{ renderProgressTrend(dashData); }catch(e){ console.error('plan toggle', e); } }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ★ 24 ก.ย. 69 — 📄 ใบตรวจจากครู (หน้า Student Dashboard)
+
+   ครูอ่าน PDF ใบตรวจเข้าระบบแล้ว (gradeSave) → คะแนนอยู่ใน results แล้ว
+   การ์ดนี้ให้นักเรียน:
+     · เติมข้อที่ว่าง (ข้อที่ยังไม่ได้ส่งตรวจ) เป็น ⚠️ / C / X / ⏰
+     · แก้ข้อที่ครูให้ไว้ถ้าไม่กระทบคะแนน เช่น C → ⚠️ (ครูเข้าใจผิดว่าผิดคอนเซปต์)
+     · อะไรที่เข้า/ออกจาก ✅ ส่งเป็น "คำขอ" รอครูกดยอมรับ
+     · ดูภาพโน้ตที่ครูวงไว้ในแต่ละข้อ
+   เซิร์ฟเวอร์ตัดสินกติกาทั้งหมด (gradeFill) หน้าเว็บแค่บอกล่วงหน้าให้เข้าใจ
+   วางการ์ดไว้ใต้ #s-encourage (สร้าง element เองตอนรัน — ไม่ต้องแก้ index.html)
+   ═══════════════════════════════════════════════════════════════════ */
+const GRD_STATES = [
+  { c:'W', short:'⚠️', label:'สะเพร่า',  bg:'#FDE910', fg:'#5C3A00' },
+  { c:'C', short:'C',  label:'คอนเซปต์', bg:'#F5A623', fg:'#fff' },
+  { c:'X', short:'X',  label:'ทำไม่ได้', bg:'#D93025', fg:'#fff' },
+  { c:'T', short:'⏰', label:'ไม่ทัน',   bg:'#a855f7', fg:'#fff' },
+  { c:'O', short:'✓',  label:'ถูก (ต้องรอครู)', bg:'#4C9A2A', fg:'#fff' }
+];
+const GRD_OF = { O:GRD_STATES[4], W:GRD_STATES[0], C:GRD_STATES[1], X:GRD_STATES[2], T:GRD_STATES[3] };
+const GRD = { items:null, notesOn:false, at:0, who:'', open:'', brush:'W', draft:{}, why:'', busy:false,
+              msg:'', msgErr:false, notes:{}, notesOpen:'', showAll:false, loading:false };
+
+function grdHost(){
+  let el = document.getElementById('s-graded');
+  if(el) return el;
+  const anchor = document.getElementById('s-encourage');
+  if(!anchor || !anchor.parentNode) return null;
+  el = document.createElement('div');
+  el.id = 's-graded';
+  el.style.cssText = 'margin:10px 0 12px';
+  anchor.parentNode.insertBefore(el, anchor.nextSibling);
+  return el;
+}
+
+function grdFmtDate(s){
+  const m = String(s||'').match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(!m) return _esc(String(s||''));
+  const th = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return (+m[2]) + ' ' + th[(+m[1])-1] + ' ' + String(+m[3]+543).slice(-2);
+}
+
+/* เรียกทุกครั้งที่วาดหน้านักเรียน — วาดจากของที่มีทันที แล้วดึงใหม่ถ้าเก่ากว่า 60 วิ */
+function gradedEnsure(force){
+  if(!currentStudent || !currentPin) return;
+  if(GRD.who !== currentStudent){ Object.assign(GRD, { items:null, at:0, who:currentStudent, open:'', draft:{}, notes:{}, msg:'' }); }
+  grdPaint();
+  if(force || (!GRD.loading && Date.now() - GRD.at > 60000)) gradedRefresh();
+}
+
+async function gradedRefresh(){
+  if(GRD.loading) return;
+  GRD.loading = true;
+  try{
+    const j = await subPost({ action:'myGraded' });
+    if(j && j.ok){ GRD.items = j.items || []; GRD.notesOn = !!j.notesOn; GRD.at = Date.now(); }
+    else if(GRD.items === null){ GRD.items = []; }
+  }catch(e){ if(GRD.items === null) GRD.items = []; }
+  GRD.loading = false;
+  grdPaint();
+}
+
+function grdItem(gid){ return (GRD.items||[]).find(x => x.gid === gid); }
+
+/* สถานะที่จะแสดงของข้อ q (0-based) = ร่างที่เพิ่งแตะ > ของจริง */
+function grdShown(it, q){
+  const d = GRD.open === it.gid ? GRD.draft[q+1] : undefined;
+  return d !== undefined ? d : (it.final[q] || '');
+}
+
+/* บอกล่วงหน้าว่าการแก้ข้อนี้จะเป็นแบบไหน (เซิร์ฟเวอร์ตัดสินจริงอีกชั้น) */
+function grdKind(it, q, to){
+  const from = it.final[q-1] || '';
+  if(to === from) return 'same';
+  if(!from && to === 'O') return 'no';
+  if(from === 'O' || to === 'O') return 'req';
+  return 'direct';
+}
+
+function grdCell(it, q){
+  const c = grdShown(it, q);
+  const st = GRD_OF[c];
+  const teacher = it.teacher[q] || '';
+  const draft = GRD.open === it.gid && GRD.draft[q+1] !== undefined;
+  const req = it.requests && it.requests[q+1];
+  const hasNote = (it.notes||[]).some(n => (n.qs||[]).indexOf(q+1) !== -1);
+  const editable = GRD.open === it.gid && it.state !== 'locked';
+  const border = draft ? '3px solid var(--text1)' : req ? '3px solid #7C3AED' : (!c ? '2px dashed #f59e0b' : '1px solid var(--border-md)');
+  const tag = draft ? '' : req ? '<span style="position:absolute;bottom:1px;left:0;right:0;font-size:8px;color:#7C3AED;font-weight:700">รอครู</span>'
+            : (teacher && c !== teacher) ? '<span style="position:absolute;bottom:1px;left:0;right:0;font-size:8px;opacity:.85">ครู:' + (GRD_OF[teacher]||{short:'?'}).short + '</span>' : '';
+  return `<button class="grd-cell" data-q="${q+1}" data-code="${c}" ${editable?`onclick="grdTap('${it.gid}',${q+1})"`:'disabled'}
+    style="position:relative;aspect-ratio:1;min-height:38px;border-radius:9px;border:${border};padding:0;
+           background:${c?st.bg:'var(--card)'};color:${c?st.fg:'var(--text3)'};font-weight:700;font-size:12px;
+           display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;cursor:${editable?'pointer':'default'}">
+    <span style="font-size:9px;opacity:.75">${q+1}</span><span>${c?st.short:'เติม'}</span>${tag}
+    ${hasNote?'<span style="position:absolute;top:0;right:2px;font-size:9px">📝</span>':''}
+  </button>`;
+}
+
+function grdItemHtml(it){
+  const open = GRD.open === it.gid;
+  const chips = [];
+  if(it.needFill) chips.push(`<span style="background:#FEF3C7;color:#92400E;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700">ต้องเติม ${it.needFill} ข้อ</span>`);
+  if(it.reqCount) chips.push(`<span style="background:#EDE9FE;color:#5B21B6;padding:2px 8px;border-radius:999px;font-size:11px">รอครู ${it.reqCount} ข้อ</span>`);
+  if(it.state === 'locked') chips.push(`<span style="font-size:11px;color:var(--text3)">🔒 ครูล็อกแล้ว</span>`);
+  if(GRD.notesOn && (it.notes||[]).length) chips.push(`<span style="font-size:11px;color:var(--text2)">📝 ${(it.notes||[]).length}</span>`);
+  let body = '';
+  if(open){
+    const nDraft = Object.keys(GRD.draft).length;
+    const touchTeacher = Object.keys(GRD.draft).some(q => it.teacher[q-1]);
+    const needWhy = Object.keys(GRD.draft).some(q => grdKind(it, +q, GRD.draft[q]) === 'req');
+    body = `
+      <div style="font-size:11.5px;color:var(--text2);line-height:1.6;margin:8px 0">
+        ${it.state === 'locked' ? 'ครูล็อกใบนี้แล้ว — ดูได้อย่างเดียว ถ้าต้องแก้ แจ้งครูครับ' :
+        'เลือกสัญลักษณ์ แล้วแตะข้อ · <b>ขอบส้มประ = ยังไม่ได้ส่งตรวจ</b> ให้เติมเอง<br>' +
+        'ข้อที่ครูให้ไว้ แก้ได้ถ้าไม่เกี่ยวกับ ✓ (เช่น C → ⚠️ มีผลทันที) · ถ้าเกี่ยวกับ ✓ จะส่งเป็นคำขอให้ครูตัดสิน'}
+      </div>
+      ${it.state === 'locked' ? '' : `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+        ${GRD_STATES.map(s => `<button onclick="GRD.brush='${s.c}';grdPaint()" style="padding:6px 10px;border-radius:9px;font-size:12px;font-weight:600;
+          background:${s.bg};color:${s.fg};border:2px solid ${GRD.brush===s.c?'var(--text1)':'transparent'}">${s.short} ${s.label}</button>`).join('')}
+      </div>`}
+      <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:4px">${it.final.map((c,q)=>grdCell(it,q)).join('')}</div>
+      ${nDraft ? `<div style="margin-top:10px">
+        ${touchTeacher || needWhy ? `<input id="grdWhy" value="${_esc(GRD.why)}" oninput="GRD.why=this.value" maxlength="200"
+          placeholder="เหตุผลที่แก้ (ครูจะเห็น) เช่น อ่านโจทย์ผิด" style="width:100%;box-sizing:border-box;padding:9px 11px;border-radius:9px;border:1px solid var(--border-md);font:inherit;margin-bottom:8px">` : ''}
+        <div style="display:flex;gap:8px">
+          <button onclick="grdSend('${it.gid}')" ${GRD.busy?'disabled':''} style="flex:1;padding:10px;border-radius:10px;border:0;background:var(--blue,#185FA5);color:#fff;font-weight:700;font:inherit">
+            ${GRD.busy?'กำลังส่ง…':'ส่ง ' + nDraft + ' ข้อ'}</button>
+          <button onclick="GRD.draft={};GRD.msg='';grdPaint()" style="padding:10px 14px;border-radius:10px;border:1px solid var(--border-md);background:var(--card);font:inherit">ยกเลิก</button>
+        </div></div>` : ''}
+      ${GRD.msg ? `<div class="grd-msg" style="margin-top:8px;font-size:12px;color:${GRD.msgErr?'#D93025':'#2E7D32'};line-height:1.6">${GRD.msg}</div>` : ''}
+      ${grdReqList(it)}
+      ${grdNotesHtml(it)}`;
+  }
+  return `<div class="grd-item" data-gid="${it.gid}" style="border:1px solid var(--border-md);border-radius:12px;padding:10px 12px;margin-top:8px;background:var(--card)">
+    <div onclick="grdToggle('${it.gid}')" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;cursor:pointer">
+      <b style="font-size:13px">${_esc(it.chapter)}</b><span style="font-size:11.5px;color:var(--text3)">${grdFmtDate(it.date)}</span>
+      ${chips.join('')}<span style="margin-left:auto;font-size:12px;color:var(--text3)">${open?'▲':'▼'}</span>
+    </div>${body}</div>`;
+}
+
+function grdReqList(it){
+  const qs = Object.keys(it.requests||{}).map(Number).sort((a,b)=>a-b);
+  if(!qs.length) return '';
+  return `<div style="margin-top:8px;font-size:11.5px;color:#5B21B6;line-height:1.7">รอครูตัดสิน: ` +
+    qs.map(q => `ข้อ ${q} → ${(GRD_OF[it.requests[q].to]||{short:'?'}).short}`).join(' · ') + `</div>`;
+}
+
+function grdNotesHtml(it){
+  if(!GRD.notesOn || !(it.notes||[]).length) return '';
+  const got = GRD.notes[it.gid];
+  if(!got) return `<button onclick="grdLoadNotes('${it.gid}')" style="margin-top:10px;padding:8px 12px;border-radius:9px;border:1px solid var(--border-md);background:var(--card);font:inherit;font-size:12.5px">📝 ดูโน้ตที่ครูเขียน (${it.notes.length})</button>`;
+  if(got.loading) return `<div style="margin-top:10px;font-size:12px;color:var(--text3)">กำลังโหลดโน้ต…</div>`;
+  if(got.error) return `<div style="margin-top:10px;font-size:12px;color:#D93025">โหลดโน้ตไม่ได้: ${_esc(got.error)} <a href="#" onclick="delete GRD.notes['${it.gid}'];grdPaint();return false">ลองใหม่</a></div>`;
+  return `<div style="margin-top:10px">${(got.list||[]).map(n => `
+    <div class="grd-note" style="margin-top:8px"><div style="font-size:12px;font-weight:700;margin-bottom:4px">📝 ข้อ ${(n.qs||[]).join(', ')}</div>
+      <img src="data:image/jpeg;base64,${n.data}" style="max-width:100%;border-radius:8px;border:1px solid var(--border-md)"></div>`).join('')}</div>`;
+}
+
+async function grdLoadNotes(gid){
+  GRD.notes[gid] = { loading:true };
+  grdPaint();
+  try{
+    const j = await subPost({ action:'gradeNotes', gid:gid });
+    GRD.notes[gid] = (j && j.ok) ? { list: j.notes || [] } : { error: (j && j.error) || 'ลองใหม่อีกครั้ง' };
+    if(j && j.notesOff){ GRD.notesOn = false; }
+  }catch(e){ GRD.notes[gid] = { error: String(e && e.message || e) }; }
+  grdPaint();
+}
+
+function grdToggle(gid){
+  GRD.open = GRD.open === gid ? '' : gid;
+  GRD.draft = {}; GRD.why = ''; GRD.msg = '';
+  grdPaint();
+}
+
+function grdTap(gid, q){
+  const it = grdItem(gid);
+  if(!it || it.state === 'locked' || GRD.busy) return;
+  const to = GRD.brush;
+  const k = grdKind(it, q, to);
+  if(k === 'no'){ GRD.msg = 'ข้อ ' + q + ' ยังไม่ได้ส่งตรวจ เลือก ✓ เองไม่ได้ครับ — ส่งงานให้ครูตรวจก่อน'; GRD.msgErr = true; grdPaint(); return; }
+  if(k === 'same' || GRD.draft[q] === to) delete GRD.draft[q];
+  else GRD.draft[q] = to;
+  GRD.msg = '';
+  grdPaint();
+}
+
+async function grdSend(gid){
+  const it = grdItem(gid);
+  if(!it || GRD.busy) return;
+  const changes = Object.keys(GRD.draft).map(q => ({ q:+q, to:GRD.draft[q], why:GRD.why.trim() }));
+  if(!changes.length) return;
+  if(changes.some(c => grdKind(it, c.q, c.to) === 'req') && !GRD.why.trim()){
+    GRD.msg = 'ข้อที่เกี่ยวกับ ✓ ต้องใส่เหตุผลให้ครูก่อนครับ'; GRD.msgErr = true; grdPaint(); return;
+  }
+  GRD.busy = true; GRD.msg = ''; grdPaint();
+  let j = null;
+  try{ j = await subPost({ action:'gradeFill', gid:gid, changes:changes }); }
+  catch(e){ j = { ok:false, error:String(e && e.message || e) }; }
+  GRD.busy = false;
+  if(j && j.ok){
+    const parts = [];
+    if((j.applied||[]).length) parts.push('✓ บันทึกแล้ว ' + j.applied.length + ' ข้อ');
+    if((j.requested||[]).length) parts.push('📨 ส่งคำขอให้ครู ' + j.requested.length + ' ข้อ (ข้อ ' + j.requested.join(', ') + ')');
+    if((j.rejected||[]).length) parts.push('✗ ไม่ผ่าน ' + j.rejected.map(r => 'ข้อ ' + r.q + ': ' + _esc(r.why)).join(' · '));
+    GRD.msg = parts.join('<br>') || 'ไม่มีอะไรเปลี่ยน'; GRD.msgErr = false;
+    GRD.draft = {}; GRD.why = '';
+    await gradedRefresh();
+    if((j.applied||[]).length){
+      /* สถานะรายข้อเปลี่ยน → การ์ดจุดต้องแก้/แผนทบทวนต้องคิดใหม่ */
+      try{ await fetchDashData(); if(dashData) renderStudentDash(dashData); }catch(e){}
+    }
+  }else{
+    GRD.msg = 'ส่งไม่สำเร็จ: ' + _esc((j && j.error) || 'ลองใหม่อีกครั้ง'); GRD.msgErr = true;
+    if(j && j.locked) await gradedRefresh();
+  }
+  grdPaint();
+}
+
+function grdPaint(){
+  const el = grdHost();
+  if(!el) return;
+  const items = GRD.items;
+  if(!items || !items.length){ el.innerHTML = ''; el.style.display = 'none'; return; }
+  el.style.display = '';
+  const need = items.reduce((s,x) => s + (x.needFill||0), 0);
+  const needSheets = items.filter(x => x.needFill).length;
+  const shown = GRD.showAll ? items : items.slice(0, 4);
+  el.innerHTML = `<div class="d-card" style="padding:12px 14px">
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <b style="font-size:14px">📄 ใบตรวจจากครู</b>
+      ${need ? `<span style="font-size:12px;color:#B45309;font-weight:700">ต้องเติม ${need} ข้อ ใน ${needSheets} ใบ</span>` : '<span style="font-size:12px;color:var(--text3)">เติมครบแล้ว</span>'}
+    </div>
+    ${shown.map(grdItemHtml).join('')}
+    ${items.length > 4 ? `<button onclick="GRD.showAll=!GRD.showAll;grdPaint()" style="margin-top:8px;background:none;border:0;color:var(--text2);font:inherit;font-size:12px;cursor:pointer">${GRD.showAll?'ย่อ':'ดูทั้งหมด ' + items.length + ' ใบ'}</button>` : ''}
+  </div>`;
 }
