@@ -75,7 +75,8 @@ const GS_SAFE_ACTIONS = [
   'getGoal', 'setMyGoal',
   /* ★ 24 ก.ย. 69 — ใบตรวจ: อ่าน 2 ตัว · gradeFill ยิงซ้ำได้ผลเท่าเดิม (ข้อที่เป็นค่านั้นแล้วเซิร์ฟเวอร์ข้าม) */
   'myGraded', 'gradeNotes', 'gradeFill',
-  'subNoteSave'   /* ★ 25 ก.ย. 69 — เซิร์ฟเวอร์กันภาพซ้ำด้วย noteId */
+  'subNoteSave',  /* ★ 25 ก.ย. 69 — เซิร์ฟเวอร์กันภาพซ้ำด้วย noteId */
+  'setParentGoal' /* ★ 26 ก.ย. 69 — เขียนทับค่าเดิม ยิงซ้ำได้ผลเท่าเดิม */
 ];
 
 /* หาชื่อ action จาก body (POST) ก่อน ถ้าไม่มีค่อยดูใน query string (GET) */
@@ -650,7 +651,7 @@ function ensureMockOptions(){
     if(have[k])return;
     const o=document.createElement('option');
     o.value=k;
-    o.textContent='🎯 '+k+(MOCK_SETS[k].title?' · '+MOCK_SETS[k].title:'');
+    o.textContent='🎯 '+k;   /* ★ 26 ก.ย. 69 — ไม่ต่อท้ายชื่อ Test Gamm ครั้งที่ … แล้ว */
     sel.appendChild(o);
   });
   /* ★ 20 ก.ย. 69 — จัดกลุ่มตัวเลือกให้เห็นชัดว่าอันไหนแยกบท อันไหนสนามสอบ
@@ -937,7 +938,7 @@ async function fetchDashData(){
   for(let i=1;i<=30;i++)qResults[i]=parseStatus(myRow[5+i]||'');
   const latestByName={};
   rows.slice(1).filter(r=>r[2]===group&&(!topicFilter||(r[4]||'').includes(topicFilter))).forEach(r=>{latestByName[r[1]]=r;});
-  const groupMembers=Object.values(latestByName).map(r=>({name:r[1],score:_scoreOf(r,r[4]||topic),care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0,isMe:r[1]===currentStudent})).sort((a,b)=>b.score-a.score);
+  const groupMembers=Object.values(latestByName).map(r=>({name:r[1],score:_scoreOf(r,r[4]||topic),carePts:_carePtsOf(r,r[4]||topic),care:parseInt(r[37])||0,concept:parseInt(r[38])||0,cant:parseInt(r[39])||0,timeout:parseInt(r[40])||0,isMe:r[1]===currentStudent})).sort((a,b)=>b.score-a.score);
   const rank=groupMembers.findIndex(m=>m.isMe)+1;
   // เทียบทุกคนที่สอบบทเดียวกัน (ทุกกลุ่ม)
   const latestAllByName={};
@@ -1221,7 +1222,7 @@ function goalEnsure(){
     if(g && g.goal > 0 && document.getElementById('s-goalBar') && dashData){
       try{ renderProgressTrend(dashData); }catch(e){ console.error('goal rerender', e); }
     }
-    if(g && g.goal > 0 && document.getElementById('p-trend') && dashData){
+    if(document.getElementById('p-trend') && dashData){   /* ผู้ปกครองอาจตั้งความคาดหวังไว้แม้นักเรียนยังไม่ตั้งเป้า */
       try{ renderParentTrend(dashData); }catch(e){ console.error('parent goal rerender', e); }
     }
   }).catch(()=>{});
@@ -1403,12 +1404,12 @@ function _progSingleCard(emoji, title, h, tail){
 /* ★ 20 ก.ย. 69 — นักเรียนเลือกเองว่าจะให้กราฟมีเส้นไหนบ้าง (เก็บไว้ในเครื่องนี้)
    ค่าเริ่มต้น: คะแนนตัวเอง + คะแนนที่ควรได้ + เป้า · ค่าเฉลี่ยรุ่นปิดไว้ (4 เส้นพร้อมกันแน่นเกินบนมือถือ) */
 const LINE_KEY = 'mb_trend_lines_v1';
-const LINE_DEFAULT = { avg:false, expect:true, goal:true };
+const LINE_DEFAULT = { avg:false, expect:true, goal:true, pgoal:true };   /* pgoal = ผู้ปกครองคาดหวัง (เฉพาะหน้าผู้ปกครอง) */
 let LINE_SHOW = Object.assign({}, LINE_DEFAULT);
 (function(){
   try{
     const raw = localStorage.getItem(LINE_KEY);
-    if(raw){ const o = JSON.parse(raw); ['avg','expect','goal'].forEach(k => { if(typeof o[k] === 'boolean') LINE_SHOW[k] = o[k]; }); }
+    if(raw){ const o = JSON.parse(raw); ['avg','expect','goal','pgoal'].forEach(k => { if(typeof o[k] === 'boolean') LINE_SHOW[k] = o[k]; }); }
   }catch(e){}
 })();
 function lineToggle(k){
@@ -1434,13 +1435,14 @@ function lineChipsHTML(who){
     +   chip('expect','คะแนนที่ควรได้','#7A5AA8')
     +   chip('goal', _par ? 'เป้าของลูก' : 'เป้าของฉัน','#A32D2D')
     +   chip('avg','ค่าเฉลี่ยรุ่น','#948F86')
+    +   (_par ? chip('pgoal','ผู้ปกครองคาดหวัง','#2E7D5B') : '')
     + '</div>'
     + '<div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.6">'
     +   'กดเพื่อเปิด/ปิดได้ · เครื่องนี้จะจำไว้ให้ครั้งหน้า · เปิดพร้อมกันหลายเส้นได้ แต่ 2–3 เส้นจะอ่านง่ายที่สุด</div>'
     + '</div>';
 }
 
-function _progLineChart(canvasId, hist, full, goal){
+function _progLineChart(canvasId, hist, full, goal, extra){
   const el = document.getElementById(canvasId);
   if(!el || typeof Chart === 'undefined') return null;
   const labels = hist.map((h,i)=> h.date ? _dFmt(h.date) : ('ครั้ง '+(i+1)));
@@ -1477,6 +1479,11 @@ function _progLineChart(canvasId, hist, full, goal){
         data: goalArr, borderColor:'#A32D2D', borderDash:[6,4], pointRadius:0,
         stepped: uniq.length > 1, fill:false, spanGaps:true, order:3 });
     }
+  }
+  /* ★ 26 ก.ย. 69 — เส้นความคาดหวังของผู้ปกครอง (หน้าผู้ปกครองส่ง extra.pgoal มา) */
+  if(extra && extra.pgoal > 0 && LINE_SHOW.pgoal){
+    ds.push({ label:'ผู้ปกครองคาดหวัง ' + extra.pgoal, data: hist.map(() => extra.pgoal), borderColor:'#2E7D5B',
+      borderDash:[10,4], borderWidth:2, pointRadius:0, fill:false, order:3 });
   }
   return new Chart(el, {
     type:'line', data:{ labels, datasets:ds },
@@ -1755,10 +1762,23 @@ function paintQGrid(d, id1, id2){
   const cut = sec ? sec.cut : 15;
   /* เขียนทับเฉพาะหัวข้อที่เป็นของกริดเอง ("ข้อ 1–15" / "ตอนที่ …")
      หน้าผู้ปกครองใช้หัวข้อ "ภาพรวมรายข้อ" ร่วมกับทั้งสองกริด — ต้องไม่ไปทับ */
+  /* ★ 26 ก.ย. 69 — กริดที่ไม่มีหัวข้อของตัวเอง (หน้าผู้ปกครอง) → ใส่ป้ายตอนเล็ก ๆ เหนือกริดแทน
+     "ตอนที่ 1 · ข้อ 1–25 · ข้อละ 3 คะแนน" / "ตอนที่ 2 · ข้อ 26–30 · ข้อละ 5 คะแนน" · ข้อสอบแยกบทไม่มีป้าย */
+  const cap = (g, txt) => {
+    let c = g.previousElementSibling;
+    if(!(c && c.classList && c.classList.contains('q-sec-cap'))){
+      if(!txt) return;
+      c = document.createElement('div'); c.className = 'q-sec-cap';
+      c.style.cssText = 'font-size:11.5px;color:var(--text2);font-weight:600;margin:8px 0 5px';
+      g.parentNode.insertBefore(c, g);
+    }
+    if(txt){ c.textContent = txt; c.style.display = ''; } else c.style.display = 'none';
+  };
   const lab = (g, txt) => { const el = g.previousElementSibling;
-    if(!el || !el.classList || !el.classList.contains('slabel')) return;
-    const cur = (el.textContent || '').trim();
-    if(cur.indexOf('ข้อ ') === 0 || cur.indexOf('ตอนที่ ') === 0) el.textContent = txt; };
+    const own = el && el.classList && el.classList.contains('slabel') &&
+      (((el.textContent || '').trim().indexOf('ข้อ ') === 0) || ((el.textContent || '').trim().indexOf('ตอนที่ ') === 0));
+    if(own){ el.textContent = txt; return; }
+    cap(g, txt.indexOf('ตอนที่ ') === 0 ? txt : ''); };
   if(sec){
     lab(g1, 'ตอนที่ 1 · ข้อ 1–' + cut + ' · ข้อละ ' + sec.pts1 + ' คะแนน');
     lab(g2, 'ตอนที่ 2 · ข้อ ' + (cut+1) + '–30 · ข้อละ ' + sec.pts2 + ' คะแนน');
@@ -1843,12 +1863,14 @@ function renderStudentDash(d){
   // คำแนะนำว่าควรโฟกัสหัวข้อไหน
   const weakSt=d.subtopics.filter(st=>Math.round(st.ok/st.total*100)<70);
   const hintEl=document.getElementById('s-subtopicHint');
+  /* ★ 26 ก.ย. 69 — "แผนที่บท" → "แผนที่ข้อสอบชุดนี้" (ใช้ได้ทั้งแยกบทและชุดรวม) */
+  try{ const _sl=hintEl&&hintEl.previousElementSibling; if(_sl&&_sl.classList.contains('slabel')) _sl.textContent='แผนที่ข้อสอบชุดนี้ — ผลแยกตามหัวข้อ'; }catch(e){}
   if(d.subtopics.length===0){
-    hintEl.innerHTML=`ยังไม่มีข้อมูลแยกหัวข้อสำหรับบทนี้ — ดูผลรายข้อได้ที่ tab "รายข้อ" ครับ`;
+    hintEl.innerHTML=`ยังไม่มีข้อมูลแยกหัวข้อสำหรับข้อสอบชุดนี้ — ดูผลรายข้อได้ที่ tab "รายข้อ" ครับ`;
   } else if(weakSt.length>0){
-    hintEl.innerHTML=`บทนี้มี <b>${d.subtopics.length} หัวข้อ</b> — ลองโฟกัสที่ <b style="color:var(--red)">${weakSt[0].name}</b>${weakSt.length>1?` และ <b style="color:var(--amber)">${weakSt[1].name}</b>`:''} ก่อน เพราะยังทำได้ต่ำกว่า 70% 💪`;
+    hintEl.innerHTML=`ข้อสอบชุดนี้มี <b>${d.subtopics.length} หัวข้อ</b> — ลองโฟกัสที่ <b style="color:var(--red)">${weakSt[0].name}</b>${weakSt.length>1?` และ <b style="color:var(--amber)">${weakSt[1].name}</b>`:''} ก่อน เพราะยังทำได้ต่ำกว่า 70% 💪`;
   } else {
-    hintEl.innerHTML=`บทนี้มี <b>${d.subtopics.length} หัวข้อ</b> — ทำได้ดีทุกหัวข้อแล้ว เก่งมาก! 🎉 ลองท้าทายข้อระดับยากขึ้นได้เลย`;
+    hintEl.innerHTML=`ข้อสอบชุดนี้มี <b>${d.subtopics.length} หัวข้อ</b> — ทำได้ดีทุกหัวข้อแล้ว เก่งมาก! 🎉 ลองท้าทายข้อระดับยากขึ้นได้เลย`;
   }
   d.subtopics.forEach(st=>{const pct=Math.round(st.ok/st.total*100);const cls=pct>=80?'diff-ok':pct>=50?'diff-warn':pct>0?'diff-bad':'diff-skip';const showYt=pct<70;sl.innerHTML+=`<div class="st-row"><div style="flex:1"><div style="font-size:12px;color:var(--text1)">${st.name}</div><div style="font-size:10px;color:var(--text3)">ระดับ ${st.level} · ${st.ok}/${st.total} ข้อ</div>${showYt?ytBtn(d.topic+' '+st.name):''}</div><div class="diff-badge ${cls}">${st.total===0?'—':pct+'%'}</div></div>`;});
   try{renderChapterWeak(d);}catch(e){console.error("chapweak",e);}
@@ -1965,7 +1987,10 @@ function renderStudentDash(d){
   d.groupMembers.forEach(s=>{const pct=Math.round(s.score/(d.full||30)*100);cl.innerHTML+=`<div class="cmp-row"><div class="cmp-name">${s.isMe?d.shortName:'เพื่อน '+(s.isMe?0:++ac)}${s.isMe?'<span class="me-tag">คุณ</span>':''}</div><div class="bar-wrap"><div class="bar-fill" style="width:${pct}%;background:${s.isMe?'#185FA5':'#B5D4F4'}"></div></div><div class="cmp-score">${s.score}/${d.full||30}</div></div>`;});
   if(groupChartInst){groupChartInst.destroy();groupChartInst=null;}
   let bc=0;
-  groupChartInst=new Chart(document.getElementById('s-groupChart'),{type:'bar',data:{labels:d.groupMembers.map(s=>s.isMe?d.shortName:'เพื่อน '+(++bc)),datasets:[{label:'คะแนน',data:d.groupMembers.map(s=>s.score),backgroundColor:d.groupMembers.map(s=>s.isMe?'#185FA5':'#B5D4F4'),borderRadius:4,borderWidth:0},{label:'สะเพร่า',data:d.groupMembers.map(s=>s.care),backgroundColor:d.groupMembers.map(s=>s.isMe?'#BA7517':'#FAC775'),borderRadius:4,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw}}},scales:{y:{min:0,max:30,ticks:{stepSize:5},grid:{color:'rgba(128,128,128,0.1)'}},x:{grid:{display:false}}}}});
+  groupChartInst=new Chart(document.getElementById('s-groupChart'),{type:'bar',data:{labels:d.groupMembers.map(s=>s.isMe?d.shortName:'เพื่อน '+(++bc)),datasets:[{label:'คะแนน',data:d.groupMembers.map(s=>s.score),backgroundColor:d.groupMembers.map(s=>s.isMe?'#185FA5':'#B5D4F4'),borderRadius:4,borderWidth:0},
+    /* ★ 26 ก.ย. 69 — สีสะเพร่าให้ตรงกับจุดสีใต้กราฟ (เหลือง #FDE910 เดียวกับตารางรายข้อ) · เดิมเป็นน้ำตาล #BA7517
+       สนามสอบ: สะเพร่าคิดเป็นคะแนน และแกนเต็ม 100 (เดิมตัดที่ 30 แท่งคะแนน 74 เลยชนเพดาน) */
+    {label:d.isMock?'สะเพร่า (คะแนนที่เสีย)':'สะเพร่า (ข้อ)',data:d.groupMembers.map(s=>d.isMock?(s.carePts!=null?s.carePts:s.care):s.care),backgroundColor:d.groupMembers.map(s=>s.isMe?'#FDE910':'#FBF3A6'),borderColor:d.groupMembers.map(s=>s.isMe?'#C9B800':'#E6DA7A'),borderRadius:4,borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw+(c.datasetIndex===0?'/'+(d.full||30):'')}}},scales:{y:{min:0,max:(d.full||30),ticks:{stepSize:(d.full||30)>50?10:5},grid:{color:'rgba(128,128,128,0.1)'}},x:{grid:{display:false}}}}});
 }
 
 function renderAllComparison(d){
@@ -4164,14 +4189,85 @@ function renderParentTrend(d){
     body = _progSingleCard(isMock ? '🎯' : '📘', (isMock ? 'สนามสอบ' : 'ข้อสอบแยกบท') + ' — ผลครั้งล่าสุด', hist[0],
       'สอบประเภทนี้ไป 1 ครั้ง · กราฟแนวโน้มจะเริ่มแสดงเมื่อสอบครั้งที่ 2');
   }
+  const pg = pGoalOf(kind);
   host.innerHTML = '<div class="d-card p-trend-card" style="padding:1rem 1rem .6rem">'
     + '<div class="slabel">📈 กราฟพัฒนาการของ' + _esc(name) + '</div>'
     + switcher
+    + pGoalRowHTML(kind, full, pg)
     + '<div style="font-size:11.5px;color:var(--text3);line-height:1.6">เทียบกับตัวเองในแต่ละครั้ง · เลือกเส้นที่อยากเห็นได้จากปุ่มด้านล่าง</div>'
     + '</div>' + body;
   if(hist.length >= 2){
     parentTrendInst = _progLineChart('p-trendChart', hist, full,
-      isMock ? goalEffective(hist[hist.length-1].topic) : CHAP_GOAL_FALLBACK);
+      isMock ? goalEffective(hist[hist.length-1].topic) : CHAP_GOAL_FALLBACK, { pgoal: pg });
   }
   try{ goalEnsure(); }catch(e){}
+}
+
+/* ★ 26 ก.ย. 69 — ความคาดหวังของผู้ปกครอง (แยกจากเป้าของนักเรียน)
+   เก็บที่ชีต exam_goals บท = 'ผู้ปกครอง:mock' / 'ผู้ปกครอง:chap' (ตั้งค่าเดียวใช้ทุกชุดในประเภทนั้น)
+   ยืนยันด้วย PIN เดียวกับที่ใช้เปิดรายงาน (setParentGoal · Code F9b) */
+const PGOAL_COLOR = '#2E7D5B';
+function pGoalKey(kind){ return 'ผู้ปกครอง:' + (kind === 'mock' ? 'mock' : 'chap'); }
+function pGoalOf(kind){
+  const g = (typeof MY_GOALS !== 'undefined') && MY_GOALS[pGoalKey(kind)];
+  return g && g.goal > 0 ? g.goal : 0;
+}
+function pGoalRowHTML(kind, full, cur){
+  const btn = 'width:auto;height:auto;display:inline-flex;align-items:center;cursor:pointer;font-family:inherit;margin:0;'
+    + 'font-size:12px;padding:5px 12px;border-radius:999px;';
+  return '<div class="p-goal-row" style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:4px 0 10px;padding:8px 10px;border-radius:10px;background:#EEF6F1;border:1px solid #CFE5D8">'
+    + '<span style="font-size:12.5px;color:' + PGOAL_COLOR + ';font-weight:600">🎯 คะแนนที่ผู้ปกครองคาดหวัง</span>'
+    + '<span style="font-size:11.5px;color:var(--text2)">(' + (kind === 'mock' ? 'สนามสอบ' : 'ข้อสอบแยกบททุกบท') + ')</span>'
+    + '<input id="p-pgoal-input" type="number" inputmode="numeric" min="1" max="' + full + '" value="' + (cur || '') + '" placeholder="เช่น ' + (kind === 'mock' ? 75 : 24) + '"'
+    + ' style="width:80px;height:auto;padding:5px 8px;border:1px solid var(--border-md,#D9D2C6);border-radius:8px;font-family:inherit;font-size:13px">'
+    + '<span style="font-size:12px;color:var(--text2)">/ ' + full + '</span>'
+    + '<button onclick="pGoalSave(\'' + kind + '\')" style="' + btn + 'border:1.5px solid ' + PGOAL_COLOR + ';background:' + PGOAL_COLOR + ';color:#fff">บันทึก</button>'
+    + (cur ? '<button onclick="pGoalSave(\'' + kind + '\', true)" style="' + btn + 'border:1px solid var(--border-md,#D9D2C6);background:transparent;color:var(--text2)">ลบ</button>' : '')
+    + '<span id="p-pgoal-msg" style="font-size:11.5px;color:var(--text2);width:100%">'
+    + (cur ? 'เส้นสีเขียวในกราฟ = ' + cur + '/' + full + ' · แยกจากเป้าที่' + _esc((dashData && dashData.shortName) || 'นักเรียน') + 'ตั้งเอง' : 'ใส่แล้วจะมีเส้นสีเขียวในกราฟ · ไม่กระทบเป้าที่นักเรียนตั้งเอง')
+    + '</span></div>';
+}
+let _pGoalBusy = false;
+async function pGoalSave(kind, clear){
+  if(_pGoalBusy) return;
+  const inp = document.getElementById('p-pgoal-input');
+  const msg = document.getElementById('p-pgoal-msg');
+  const full = kind === 'mock' ? 100 : 30;
+  const v = clear ? '' : String((inp && inp.value) || '').trim();
+  const n = Math.round(Number(v));
+  if(!clear && (!v || !isFinite(n) || n < 1 || n > full)){
+    if(msg){ msg.style.color = '#B3261E'; msg.textContent = 'ใส่ตัวเลข 1–' + full + ' คะแนน'; }
+    return;
+  }
+  _pGoalBusy = true;
+  if(msg){ msg.style.color = 'var(--text2)'; msg.textContent = 'กำลังบันทึก…'; }
+  try{
+    const j = await _proxyPost({ action:'setParentGoal', name: currentStudent, pin: currentPin, kind: kind, goal: clear ? '' : n });
+    if(j && j.ok){
+      if(clear) delete MY_GOALS[pGoalKey(kind)];
+      else MY_GOALS[pGoalKey(kind)] = { goal: n, by: 'parent', at: j.at || '', loaded: true };
+      LINE_SHOW.pgoal = true;
+      _pTrendKind = kind;
+      if(dashData) renderParentTrend(dashData);
+      const m2 = document.getElementById('p-pgoal-msg');
+      if(m2){ m2.style.color = '#3B7D2A'; m2.textContent = clear ? 'ลบแล้ว' : 'บันทึกแล้ว — เส้นสีเขียว ' + n + '/' + full + ' (ทุกเครื่องเห็นเหมือนกัน)'; }
+    }else if(msg){
+      msg.style.color = '#B3261E';
+      msg.textContent = (j && /unknown POST action/.test(j.error || '')) ? 'ระบบยังไม่รองรับ — แจ้งครูให้อัปเดต Apps Script' : ((j && j.error) || 'บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง');
+    }
+  }catch(e){ if(msg){ msg.style.color = '#B3261E'; msg.textContent = 'เชื่อมต่อไม่ได้ ลองใหม่อีกครั้ง'; } }
+  _pGoalBusy = false;
+}
+
+/* ★ 26 ก.ย. 69 — "คะแนน vs สะเพร่า": สนามสอบคิดสะเพร่าเป็นคะแนน (ข้อ 1–25 = 3 · 26–30 = 5) ให้หน่วยเดียวกับคะแนน */
+function _carePtsOf(r, topic){
+  const n = parseInt(r[37]) || 0;
+  if(!_isMock(topic) || typeof ptsOfQuestion !== 'function') return n;
+  let pts = 0, seen = 0;
+  for(let q = 1; q <= 30; q++){
+    const v = String(r[5 + q] || '');
+    if(v) seen++;
+    if(v.indexOf('สะเพร่า') !== -1) pts += ptsOfQuestion(topic, q);
+  }
+  return seen ? pts : n * 3;
 }
