@@ -1221,6 +1221,9 @@ function goalEnsure(){
     if(g && g.goal > 0 && document.getElementById('s-goalBar') && dashData){
       try{ renderProgressTrend(dashData); }catch(e){ console.error('goal rerender', e); }
     }
+    if(g && g.goal > 0 && document.getElementById('p-trend') && dashData){
+      try{ renderParentTrend(dashData); }catch(e){ console.error('parent goal rerender', e); }
+    }
   }).catch(()=>{});
 }
 
@@ -1412,11 +1415,14 @@ function lineToggle(k){
   LINE_SHOW[k] = !LINE_SHOW[k];
   try{ localStorage.setItem(LINE_KEY, JSON.stringify(LINE_SHOW)); }catch(e){}
   if(dashData){ try{ renderProgressTrend(dashData); }catch(e){ console.error('line toggle', e); } }
+  if(dashData && document.getElementById('p-trend')){ try{ renderParentTrend(dashData); }catch(e){ console.error('parent line toggle', e); } }
 }
-function lineChipsHTML(){
+function lineChipsHTML(who){
+  const _par = who === 'parent';   /* ★ 26 ก.ย. 69 — ใช้ในรายงานผู้ปกครองด้วย */
   const chip = (k, label, color) => {
     const on = !!LINE_SHOW[k];
-    return '<button onclick="lineToggle(\'' + k + '\')" class="btn btn--sm" style="font-size:11.5px;padding:5px 12px;'
+    /* ★ 26 ก.ย. 69 — ไม่ใช้ class "btn" แล้ว: index.html ตั้ง .btn กว้าง 100% สูง 54px ชิปจึงกลายเป็นแท่งยาวเต็มจอ */
+    return '<button onclick="lineToggle(\'' + k + '\')" class="line-chip" data-line="' + k + '" style="width:auto;height:auto;display:inline-flex;align-items:center;cursor:pointer;font-family:inherit;margin:0;font-size:11.5px;padding:5px 12px;'
       + 'border-radius:999px;border:1.5px solid ' + (on ? color : 'var(--line-strong,#ccc)') + ';'
       + 'background:' + (on ? color : 'transparent') + ';color:' + (on ? '#fff' : 'var(--text3)') + ';font-weight:500">'
       + (on ? '✓ ' : '') + label + '</button>';
@@ -1424,9 +1430,9 @@ function lineChipsHTML(){
   return '<div class="d-card" style="padding:.7rem 1rem">'
     + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'
     +   '<span style="font-size:12px;color:var(--text2)">เส้นที่อยากเห็นในกราฟ:</span>'
-    +   '<span style="font-size:11.5px;padding:5px 12px;border-radius:999px;background:#185FA5;color:#fff;font-weight:500">คะแนนของฉัน</span>'
+    +   '<span style="font-size:11.5px;padding:5px 12px;border-radius:999px;background:#185FA5;color:#fff;font-weight:500">' + (_par ? 'คะแนนของลูก' : 'คะแนนของฉัน') + '</span>'
     +   chip('expect','คะแนนที่ควรได้','#7A5AA8')
-    +   chip('goal','เป้าของฉัน','#A32D2D')
+    +   chip('goal', _par ? 'เป้าของลูก' : 'เป้าของฉัน','#A32D2D')
     +   chip('avg','ค่าเฉลี่ยรุ่น','#948F86')
     + '</div>'
     + '<div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.6">'
@@ -2126,6 +2132,7 @@ function renderParentDash(d){
       +Object.entries(PARENT_TYPES).map(([k,a])=>`<button onclick="setPType('${k}')" style="flex:1 1 100px;min-width:96px;border:1.5px solid ${k===cur?'#185FA5':'var(--border,#E7E4DC)'};background:${k===cur?'var(--blue-l,#E8F1FA)':'#fff'};border-radius:10px;padding:7px 4px;cursor:pointer;text-align:center;font-family:inherit"><span style="font-size:20px;display:block">${a.em}</span><b style="font-size:12px">${a.nm}</b><span style="display:block;font-size:9.5px;color:var(--text3,#948F86)">${a.tag}</span></button>`).join('')
       +'</div>';
   }
+  try{ renderParentTrend(d); }catch(e){ console.error('parent trend', e); }   /* ★ 26 ก.ย. 69 — กราฟพัฒนาการ เหนือแถบสไตล์ */
   const wc=document.getElementById('p-weakcard');
   if(cur==='eagle'){if(wc)wc.style.display='none';_parentEagle(d);}
   else if(cur==='elephant'){if(wc)wc.style.display='none';_parentElephant(d);}
@@ -4106,3 +4113,65 @@ async function subPdfUpload(stEl){
 }
 
 async function subPdfRetry(){ await subPdfUpload(null); subLoadList(); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   ★ 26 ก.ย. 69 — กราฟพัฒนาการในรายงานผู้ปกครอง (วางเหนือแถบเลือกสไตล์ 🦅🐬🐘🦉🐝)
+   ใช้ตัววาดกราฟตัวเดียวกับแท็บ 📈 พัฒนาการของนักเรียน (_progLineChart) + ชิปเลือกเส้นชุดเดียวกัน
+   (เลือกเส้นที่หน้าไหนก็จำร่วมกันในเครื่องนั้น) · มีทั้งแยกบทและสนามสอบ → สลับดูได้
+   ═══════════════════════════════════════════════════════════════════ */
+let parentTrendInst = null, _pTrendKind = '';
+
+function pTrendKind(k){ _pTrendKind = k; if(dashData) renderParentTrend(dashData); }
+
+function renderParentTrend(d){
+  let host = document.getElementById('p-trend');
+  if(!host){
+    const anchor = document.getElementById('p-animalBar') || document.getElementById('p-summary');
+    if(!anchor || !anchor.parentNode) return;
+    anchor.insertAdjacentHTML('beforebegin', '<div id="p-trend"></div>');
+    host = document.getElementById('p-trend');
+  }
+  if(parentTrendInst){ try{ parentTrendInst.destroy(); }catch(e){} parentTrendInst = null; }
+  const chap = d.chapHist || [], mock = d.mockHist || [];
+  if(!chap.length && !mock.length){ host.innerHTML = ''; return; }
+  let kind = _pTrendKind || viewKind(d);
+  if(kind === 'mock' && !mock.length) kind = 'chap';
+  if(kind !== 'mock' && !chap.length) kind = 'mock';
+  const isMock = kind === 'mock';
+  const hist = isMock ? mock : chap;
+  const full = hist[hist.length-1].full || (isMock ? 100 : 30);
+  const name = d.shortName || '';
+
+  const tab = (k, label, n) => {
+    const on = kind === k;
+    return '<button onclick="pTrendKind(\'' + k + '\')" style="width:auto;height:auto;display:inline-flex;align-items:center;cursor:pointer;font-family:inherit;'
+      + 'font-size:12px;padding:6px 14px;border-radius:999px;border:1.5px solid ' + (on ? '#185FA5' : 'var(--border-md,#D9D2C6)') + ';'
+      + 'background:' + (on ? '#185FA5' : 'transparent') + ';color:' + (on ? '#fff' : 'var(--text2)') + ';font-weight:500">'
+      + label + ' (' + n + ')</button>';
+  };
+  const switcher = (chap.length && mock.length)
+    ? '<div class="p-trend-switch" style="display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 10px">'
+      + tab('chap', '📘 ข้อสอบแยกบท', chap.length) + tab('mock', '🎯 สนามสอบ', mock.length) + '</div>'
+    : '';
+
+  let body;
+  if(hist.length >= 2){
+    body = lineChipsHTML('parent')
+      + _progCard('p-trendChart',
+          isMock ? '🎯 สนามสอบ (รวมทุกบท) — คะแนนรายชุด' : '📘 ข้อสอบแยกบท — คะแนนรายครั้ง',
+          'เต็ม ' + full + ' คะแนน · ' + hist.length + (isMock ? ' ชุด' : ' ครั้ง') + ' · เส้นน้ำเงิน = คะแนนของ' + _esc(name), true, hist);
+  }else{
+    body = _progSingleCard(isMock ? '🎯' : '📘', (isMock ? 'สนามสอบ' : 'ข้อสอบแยกบท') + ' — ผลครั้งล่าสุด', hist[0],
+      'สอบประเภทนี้ไป 1 ครั้ง · กราฟแนวโน้มจะเริ่มแสดงเมื่อสอบครั้งที่ 2');
+  }
+  host.innerHTML = '<div class="d-card p-trend-card" style="padding:1rem 1rem .6rem">'
+    + '<div class="slabel">📈 กราฟพัฒนาการของ' + _esc(name) + '</div>'
+    + switcher
+    + '<div style="font-size:11.5px;color:var(--text3);line-height:1.6">เทียบกับตัวเองในแต่ละครั้ง · เลือกเส้นที่อยากเห็นได้จากปุ่มด้านล่าง</div>'
+    + '</div>' + body;
+  if(hist.length >= 2){
+    parentTrendInst = _progLineChart('p-trendChart', hist, full,
+      isMock ? goalEffective(hist[hist.length-1].topic) : CHAP_GOAL_FALLBACK);
+  }
+  try{ goalEnsure(); }catch(e){}
+}
