@@ -1507,6 +1507,23 @@ function _progLineChart(canvasId, hist, full, goal, extra){
   });
 }
 
+/* ★ 27 ก.ย. 69 — การ์ดคะแนนคาดหวัง / ส่วนผสมความยาก / ผังรายข้อ ต้องเป็นของ "ชุดที่เลือกไว้ข้างบน"
+   ของเดิมตรึงไว้ที่ mock[mock.length-1] = ชุดที่สอบล่าสุดเสมอ
+   → เลือกชุดรวม 01 แต่การ์ดขึ้นชุดรวม 03 (ชุดที่สอบล่าสุด) ซึ่งอ่านแล้วเข้าใจผิดทันที
+   คืน null เมื่อเลือกชุดที่ยังไม่เคยสอบ — ให้ผู้เรียกบอกตรง ๆ ดีกว่าโชว์ชุดอื่นเงียบ ๆ */
+function pickMockFocus(mock){
+  if(!mock || !mock.length) return null;
+  const sel = document.getElementById('topicFilter');
+  const v = sel ? String(sel.value||'').trim() : '';
+  if(v && typeof _isMock === 'function' && _isMock(v)){
+    for(let i = mock.length-1; i >= 0; i--){
+      if(String(mock[i].topic||'').trim() === v) return mock[i];
+    }
+    return null;                 /* เลือกชุดนี้ไว้ แต่ยังไม่เคยสอบ */
+  }
+  return mock[mock.length-1];    /* ไม่ได้เจาะจงชุด → ชุดล่าสุด */
+}
+
 function renderProgressTrend(d){
   const pane=document.getElementById('pane-progress'); if(!pane)return;
   const chap=(d.chapHist||[]), mock=(d.mockHist||[]);
@@ -1523,7 +1540,9 @@ function renderProgressTrend(d){
   const chapFull = chap.length ? (chap[chap.length-1].full||30) : 30;
   const mockFull = mock.length ? (mock[mock.length-1].full||100) : 100;
   /* ★ 18 ก.ย. 69 — เป้ารายคนมาก่อนเสมอ (ของเดิมคิด 25/30 = 83 ให้ทุกคนเท่ากัน) */
-  const mockGoal = goalEffective(mock.length ? mock[mock.length-1].topic : '');
+  /* ★ 27 ก.ย. 69 — เป้าก็ต้องเป็นของชุดที่เลือก ไม่ใช่ชุดล่าสุดเสมอ */
+  const _focus0 = pickMockFocus(mock);
+  const mockGoal = goalEffective(_focus0 ? _focus0.topic : (mock.length ? mock[mock.length-1].topic : ''));
 
   /* ★ 20 ก.ย. 69 — แยกโหมดชัดเจน: ดูแยกบท = เห็นเฉพาะแยกบท · ดูสนามสอบ = เห็นเฉพาะสนามสอบ
      ประเภทมาจากบทที่เลือกในช่องด้านบน (ไม่ได้เลือก → ประเภทของผลสอบล่าสุด) */
@@ -1563,10 +1582,21 @@ function renderProgressTrend(d){
         'ข้อ 1–25 ข้อละ 3 คะแนน · ข้อ 26–30 ข้อละ 5 คะแนน (เต็ม '+(mock[0].full||100)+' คะแนน) · '
         + 'สอบสนามสอบไปแล้ว 1 ชุด — กราฟแนวโน้มจะเริ่มแสดงเมื่อสอบชุดที่ 2');
     }
-    /* ★ 19 ก.ย. 69 — คะแนนที่ควรคาดหวัง + ส่วนผสมความยาก + ผังรายข้อ (เฉพาะสนามสอบ) */
-    try{ html += mockExpectLineHTML(mock[mock.length-1]); }catch(e){ console.error('expect line', e); }
-    try{ html += mockDiffCardHTML(d, mock[mock.length-1]); }catch(e){ console.error('diff card', e); }
-    try{ html += mockPlanCardHTML(d, mock[mock.length-1]); }catch(e){ console.error('plan card', e); }
+    /* ★ 19 ก.ย. 69 — คะแนนที่ควรคาดหวัง + ส่วนผสมความยาก + ผังรายข้อ (เฉพาะสนามสอบ)
+       ★ 27 ก.ย. 69 — ยึด "ชุดที่เลือกไว้ข้างบน" ไม่ใช่ชุดที่สอบล่าสุด */
+    const _focus = pickMockFocus(mock);
+    if(_focus){
+      try{ html += mockExpectLineHTML(_focus); }catch(e){ console.error('expect line', e); }
+      try{ html += mockDiffCardHTML(d, _focus); }catch(e){ console.error('diff card', e); }
+      try{ html += mockPlanCardHTML(d, _focus); }catch(e){ console.error('plan card', e); }
+    }else{
+      const _sel = document.getElementById('topicFilter');
+      const _v = _sel ? String(_sel.value||'').trim() : '';
+      html += '<div class="d-card"><div style="font-size:13px;color:var(--text2);line-height:1.7">'
+        + '📐 ยังไม่เคยสอบ <b>' + _esc(_v) + '</b> — สถิติของชุดนี้ (คะแนนที่ควรได้ · ส่วนผสมความยาก · ผังรายข้อ) '
+        + 'จะขึ้นเมื่อสอบชุดนี้แล้ว<br>กราฟด้านบนยังเป็นพัฒนาการของสนามสอบทุกชุดที่เคยสอบไปตามปกติ'
+        + '</div></div>';
+    }
     html += goalBarHTML(mockGoal);
   }else{
     if(hasChap){
