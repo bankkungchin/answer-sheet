@@ -42,8 +42,8 @@ PLAYLISTS["จำนวนเชิงซ้อน"] = "PLc4ncgz2CJ7N8O-4pbXPYeL
 // ═══ PLAYLISTS["เวกเตอร์"] — วางต่อท้ายไฟล์ config.js ═══
 PLAYLISTS["เวกเตอร์"] = "PLc4ncgz2CJ7Or-3xHTxmhDg3BKrqUND-L";
 // ═══ PLAYLISTS["เรขาคณิตวิเคราะห์"] และ ["ภาคตัดกรวย"] ═══
-PLAYLISTS["เรขาคณิตวิเคราะห์"] = "TBD_ANALYTIC_PLAYLIST";
-PLAYLISTS["ภาคตัดกรวย"] = "PLc4ncgz2CJ7OXjl9Xww2mUZZR9vedES8Z";
+PLAYLISTS["เรขาคณิตวิเคราะห์"] = "PLc4ncgz2CJ7MZoCUPV4M3Asy-75mo01ev";
+PLAYLISTS["ภาคตัดกรวย"] = "PLc4ncgz2CJ7OXjI9Xww2mUZZR9vedES8Z";
 // ── config.js : เพิ่มใน PLAYLISTS ──
 
 // ═══ ไฟล์ 1/2 : config.js — วางต่อท้ายไฟล์ ═══
